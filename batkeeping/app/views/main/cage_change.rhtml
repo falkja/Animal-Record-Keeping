@@ -1,0 +1,17 @@
+<h1>Cage Change</h1>
+
+<%= start_form_tag :action => 'move' %>
+
+Move bat(s) <br>
+<%= select_tag("bat[id][]", options_from_collection_for_select(@bats, "id", "band"), 
+:multiple => true) %>
+
+to Cage 
+<%= collection_select("cage", "id" , @cages, "id", "name") %>
+<%#= select_tag("cage[id][]", options_from_collection_for_select(@cages, "id", "name")) %>
+
+<p>
+  <%= submit_tag 'Move' %>
+</p>
+
+<%= end_form_tag %>

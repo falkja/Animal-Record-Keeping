@@ -1,0 +1,37 @@
+<%= error_messages_for 'user' %>
+
+<% if @deactivating == true %>
+<%   @disable_end_date = false %>
+<%   @everything_else = '<div class="hidden">' %>
+<%   @end_date = '<div>' %>
+<% else %>
+<%   @disable_end_date = true %>
+<%   @everything_else = '<div>' %>
+<%   @end_date = '<div class="hidden">' %>
+<% end %>
+
+
+<!--[form:user]-->
+
+<%= @everything_else %>
+<p><label for="user_name">Name</label><br/>
+<%= text_field 'user', 'name'  %></p>
+
+<p><label for="user_initials">Initials</label><br/>
+<%= text_field 'user', 'initials'  %></p>
+
+<p><label for="user_email">Email</label><br/>
+<%= text_field 'user', 'email'  %></p>
+
+<p><label for="user_start_date">Start date</label><br/>
+<%= date_select 'user', 'start_date' %></p>
+</div>
+
+<%= @end_date  %>
+<p><label for="user_end_date">End date</label><br/>
+<%= date_select 'user', 'end_date', :disabled => @disable_end_date %>
+</p>
+</div>
+
+<!--[eoform:user]-->
+

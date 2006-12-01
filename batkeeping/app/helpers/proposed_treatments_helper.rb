@@ -1,0 +1,2 @@
+module ProposedTreatmentsHelper
+end

@@ -1,0 +1,2 @@
+module MedicalProblemsHelper
+end

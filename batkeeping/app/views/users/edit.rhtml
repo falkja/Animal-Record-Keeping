@@ -1,0 +1,10 @@
+<h1>Editing user</h1>
+
+<%= start_form_tag :action => 'update', :id => @user %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag 'Edit' %>
+<%= end_form_tag %>
+
+<%= link_to 'Show', :action => 'show', :id => @user %> |
+<%= link_to 'List Current Users', :action => 'list' %> |
+<%= link_to 'Deactivate User', { :action => 'deactivate', :id => @user }, :confirm => 'Are you sure?', :post => true %>

@@ -1,0 +1,16 @@
+<%= error_messages_for 'medical_care_action' %>
+
+<!--[form:medical_care_action]-->
+<p><label for="medical_care_action_date">Date</label><br/>
+<%= datetime_select 'medical_care_action', 'date'  %></p>
+
+<p><label for="medical_care_action_medicine">Medicine</label><br/>
+<%= text_field 'medical_care_action', 'medicine'  %></p>
+
+<p><label for="medical_care_action_dosage">Dosage</label><br/>
+<%= text_field 'medical_care_action', 'dosage'  %></p>
+
+<p><label for="medical_care_action_remarks">Remarks</label><br/>
+<%= text_area 'medical_care_action', 'remarks'  %></p>
+<!--[eoform:medical_care_action]-->
+

@@ -1,0 +1,9 @@
+<h1>Editing proposed_treatment</h1>
+
+<%= start_form_tag :action => 'update', :id => @proposed_treatment %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag 'Edit' %>
+<%= end_form_tag %>
+
+<%= link_to 'Show', :action => 'show', :id => @proposed_treatment %> |
+<%= link_to 'Back', :action => 'list' %>

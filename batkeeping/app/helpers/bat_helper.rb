@@ -1,0 +1,2 @@
+module BatHelper
+end

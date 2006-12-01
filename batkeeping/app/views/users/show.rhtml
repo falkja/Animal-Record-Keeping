@@ -1,0 +1,17 @@
+<% for column in User.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> 
+  <% if column.name == 'start_date' or (column.name== 'end_date' and @user.end_date != nil ) %>
+	<%=h nice_date(@user.send(column.name)) %>
+	<% else %>
+		<% if column.name == 'end_date' %>
+			N/A
+		<% else %>
+			<%=h @user.send(column.name) %>
+		<% end %>
+	<% end %>
+</p>
+<% end %>
+
+<%= link_to 'Edit', :action => 'edit', :id => @user %> |
+<%= link_to 'List Current Users', :action => 'list' %>

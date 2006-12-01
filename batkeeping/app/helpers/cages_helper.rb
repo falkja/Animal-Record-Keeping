@@ -1,0 +1,2 @@
+module CagesHelper
+end

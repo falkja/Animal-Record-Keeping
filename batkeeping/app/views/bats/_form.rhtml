@@ -1,0 +1,49 @@
+<%= error_messages_for 'bat' %>
+
+<% if @deactivating == true %>
+<%   @disable_leave_date = false %>
+<%   @everything_else = '<div class="hidden">' %>
+<%   @leave_date = '<div>' %>
+<% else %>
+<%   @disable_leave_date = true %>
+<%   @everything_else = '<div>' %>
+<%   @leave_date = '<div class="hidden">' %>
+<% end %>
+
+<!--[form:bat]-->
+<%= @everything_else %>
+
+
+<p><label for="bat_band">Band</label><br/>
+<%= text_field 'bat', 'band'  %></p>
+
+<p><label for="bat_collection_date">Collection date</label><br/>
+<%= date_select 'bat', 'collection_date'  %></p>
+
+<p><label for="bat_collection_age">Collection age</label><br/>
+<%= select_tag("bat[collection_age]", options_for_select([["Juvenile","Juvenile"],["Adult", "Adult"]], @bat.collection_age)) %>
+</p>
+
+<p><label for="bat_collection_place">Collection place</label><br/>
+<%= text_field 'bat', 'collection_place'  %></p>
+
+<p><label for="bat_species">Species</label><br/>
+<%= select_tag("bat[species]", options_for_select([["Eptesicus fuscus","Eptesicus fuscus"],["Glossophaga soricina","Glossophaga soricina"],["Myotis septentrionalis","Myotis septentrionalis"],["Carollia","Carollia"]],@bat.species)) %></p>
+
+<p><label for="bat_gender">Gender</label><br/>
+<%= select_tag("bat[gender]", options_for_select([["Male","M"],["Female","F"]],@bat.gender)) %></p>
+
+<p><label for="cage">Cage</label><br/><%= collection_select("bat", "cage_id" , @cages, "id", "name") %></p>
+
+</div>
+
+<%= @leave_date %>
+<p><label for="bat_leave_date">Leave date</label><br/>
+<%= date_select 'bat', 'leave_date',  :disabled => @disable_leave_date%></p>
+
+<p><label for="bat_leave_reason">Leave reason</label><br/>
+<%= text_field 'bat', 'leave_reason',  :disabled => @disable_leave_date%></p>
+</div>
+
+<!--[eoform:bat]-->
+

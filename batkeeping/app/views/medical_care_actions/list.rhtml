@@ -1,0 +1,27 @@
+<h1>Listing medical_care_actions</h1>
+
+<table>
+  <tr>
+  <% for column in MedicalCareAction.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+  </tr>
+  
+<% for medical_care_action in @medical_care_actions %>
+  <tr>
+  <% for column in MedicalCareAction.content_columns %>
+    <td><%=h medical_care_action.send(column.name) %></td>
+  <% end %>
+    <td><%= link_to 'Show', :action => 'show', :id => medical_care_action %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => medical_care_action %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => medical_care_action }, :confirm => 'Are you sure?', :post => true %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page', { :page => @medical_care_action_pages.current.previous } if @medical_care_action_pages.current.previous %>
+<%= link_to 'Next page', { :page => @medical_care_action_pages.current.next } if @medical_care_action_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New medical_care_action', :action => 'new' %>

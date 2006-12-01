@@ -1,0 +1,64 @@
+<h1>Listing all bats</h1>
+
+<table>
+  <tr>
+    <th>Band</th>
+	<th>Cage</th>
+	<th>Species</th>
+	<th>Gender</th>
+	<th>Collection Age</th>
+	<th>Collection Date</th>
+	<th>Collection Place</th>
+	<th>Leave Date</th>
+	<th>Leave Reason</th>
+  </tr>
+  
+<% for bat in @bats %>
+  <tr>
+    <td>
+		<%=h bat.band %>
+	</td>
+    <td>
+		<%=h bat.cage.name %>
+	</td>
+	<td>
+		<%=h bat.species %>
+	</td>
+	<td>
+		<%=h bat.gender %>
+	</td>
+	<td>
+		<%=h bat.collection_age %>
+	</td>
+	<td>
+		<%=h nice_date_no_day(bat.collection_date) %>
+	</td>
+	<td>
+		<%=h bat.collection_place %>
+	</td>
+	<td>
+		<%=h nice_date_no_day(bat.leave_date) %>
+	</td>
+	<td>
+		<%=h bat.leave_reason %>
+	</td>
+    <td><%= link_to 'Show', :action => 'show', :id => bat %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => bat %></td>
+    <td>
+	<% if bat.leave_date == nil %>
+	<%= link_to 'Deactivate', { :action => 'deactivate', :id => bat }, :confirm => 'Are you sure?', :post => true %>
+	<% else %>
+	<%=  link_to 'Reactivate', { :action => 'reactivate', :id => bat }, :confirm => 'Are you sure?', :post => true %>
+    <% end %>
+	</td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page', { :page => @bat_pages.current.previous } if @bat_pages.current.previous %>
+<%= link_to 'Next page', { :page => @bat_pages.current.next } if @bat_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New bat', :action => 'new' %>
+<%= link_to 'List Current Bats', :action => 'list' %>

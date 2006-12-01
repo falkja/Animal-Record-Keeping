@@ -1,0 +1,2 @@
+module CageOutHistoriesHelper
+end

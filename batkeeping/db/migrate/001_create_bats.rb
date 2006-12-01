@@ -1,0 +1,11 @@
+class CreateBats < ActiveRecord::Migration
+  def self.up
+    create_table :bats do |t|
+      # t.column :name, :string
+    end
+  end
+
+  def self.down
+    drop_table :bats
+  end
+end

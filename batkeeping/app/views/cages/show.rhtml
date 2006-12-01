@@ -1,0 +1,15 @@
+<% for column in Cage.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> <%=h @cage.send(column.name) %>
+</p>
+<% end %>
+
+<p>
+  <b>Bats:</b>
+  <% for bat in @cage.bats %>
+    <%=h bat.band %>
+  <% end %>
+</p>
+
+<%= link_to 'Edit', :action => 'edit', :id => @cage %> |
+<%= link_to 'Back', :action => 'list' %>

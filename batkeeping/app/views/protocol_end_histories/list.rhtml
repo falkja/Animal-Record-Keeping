@@ -1,0 +1,27 @@
+<h1>Listing protocol_end_histories</h1>
+
+<table>
+  <tr>
+  <% for column in ProtocolEndHistory.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+  </tr>
+  
+<% for protocol_end_history in @protocol_end_histories %>
+  <tr>
+  <% for column in ProtocolEndHistory.content_columns %>
+    <td><%=h protocol_end_history.send(column.name) %></td>
+  <% end %>
+    <td><%= link_to 'Show', :action => 'show', :id => protocol_end_history %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => protocol_end_history %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => protocol_end_history }, :confirm => 'Are you sure?', :post => true %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page', { :page => @protocol_end_history_pages.current.previous } if @protocol_end_history_pages.current.previous %>
+<%= link_to 'Next page', { :page => @protocol_end_history_pages.current.next } if @protocol_end_history_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New protocol_end_history', :action => 'new' %>

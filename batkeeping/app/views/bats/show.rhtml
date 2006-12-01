@@ -1,0 +1,20 @@
+<% for column in Bat.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> 
+  <% if column.name == 'collection_date' or column.name == 'leave_date' %>
+	<%=h nice_date(@bat.send(column.name)) %>
+  <% else %>
+	<%=h @bat.send(column.name) %>
+  <% end %>
+<% end %>
+</p>
+
+<p><b>Cage: </b><%= @bat.cage.name %></p>
+
+<%= link_to 'Edit', :action => 'edit', :id => @bat %> |
+<%= link_to 'List Current Bats', :action => 'list' %> |
+<% if @bat.leave_date == nil %>
+	<%= link_to 'Deactivate', { :action => 'deactivate', :id => @bat }, :confirm => 'Are you sure?', :post => true %>
+<% else %>
+	<%=  link_to 'Reactivate', { :action => 'reactivate', :id => @bat }, :confirm => 'Are you sure?', :post => true %>
+<% end %>

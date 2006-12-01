@@ -1,0 +1,15 @@
+<% if session[:person] != nil %>
+Currently logged in as <%= session[:person].name %>
+<%= link_to 'Logout', :action => 'logout' %>
+<% else %>
+Not currently logged in
+<% end %>
+
+<%= start_form_tag :action => 'login', :id => @user %>
+
+<p>User: <%= select_tag("user[id]", options_from_collection_for_select(@users, "id", "name")) %>
+
+<%#= collection_select("User", "user_id" , @users, "id", "name") %>
+<%= submit_tag 'Login' %><%= end_form_tag %></p>
+
+<p><%= link_to 'Add User', :controller => 'users', :action => 'new' %></p>

@@ -1,0 +1,27 @@
+<h1>Listing proposed_treatments</h1>
+
+<table>
+  <tr>
+  <% for column in ProposedTreatment.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+  </tr>
+  
+<% for proposed_treatment in @proposed_treatments %>
+  <tr>
+  <% for column in ProposedTreatment.content_columns %>
+    <td><%=h proposed_treatment.send(column.name) %></td>
+  <% end %>
+    <td><%= link_to 'Show', :action => 'show', :id => proposed_treatment %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => proposed_treatment %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => proposed_treatment }, :confirm => 'Are you sure?', :post => true %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page', { :page => @proposed_treatment_pages.current.previous } if @proposed_treatment_pages.current.previous %>
+<%= link_to 'Next page', { :page => @proposed_treatment_pages.current.next } if @proposed_treatment_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New proposed_treatment', :action => 'new' %>

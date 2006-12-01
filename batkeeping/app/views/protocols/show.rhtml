@@ -1,0 +1,13 @@
+<% for column in Protocol.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> 
+    <% if column.name == 'start_date' or column.name == 'renewal_A_date' or column.name == 'renewal_B_date' %>
+	<%=h nice_date(@protocol.send(column.name)) %>
+	<% else %>
+	<%=h @protocol.send(column.name) %>
+	<% end %>
+</p>
+<% end %>
+
+<%= link_to 'Edit', :action => 'edit', :id => @protocol %> |
+<%= link_to 'Back', :action => 'list' %>

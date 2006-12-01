@@ -1,0 +1,8 @@
+<% for column in ProposedTreatment.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> <%=h @proposed_treatment.send(column.name) %>
+</p>
+<% end %>
+
+<%= link_to 'Edit', :action => 'edit', :id => @proposed_treatment %> |
+<%= link_to 'Back', :action => 'list' %>

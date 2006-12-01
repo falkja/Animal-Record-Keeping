@@ -1,0 +1,16 @@
+<%= error_messages_for 'proposed_treatment' %>
+
+<!--[form:proposed_treatment]-->
+<p><label for="proposed_treatment_date_started">Date started</label><br/>
+<%= datetime_select 'proposed_treatment', 'date_started'  %></p>
+
+<p><label for="proposed_treatment_date_finished">Date finished</label><br/>
+<%= datetime_select 'proposed_treatment', 'date_finished'  %></p>
+
+<p><label for="proposed_treatment_date_closed">Date closed</label><br/>
+<%= datetime_select 'proposed_treatment', 'date_closed'  %></p>
+
+<p><label for="proposed_treatment_treatment">Treatment</label><br/>
+<%= text_area 'proposed_treatment', 'treatment'  %></p>
+<!--[eoform:proposed_treatment]-->
+

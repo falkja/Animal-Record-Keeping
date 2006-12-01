@@ -1,0 +1,27 @@
+<h1>Listing bat_notes</h1>
+
+<table>
+  <tr>
+  <% for column in BatNote.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+  </tr>
+  
+<% for bat_note in @bat_notes %>
+  <tr>
+  <% for column in BatNote.content_columns %>
+    <td><%=h bat_note.send(column.name) %></td>
+  <% end %>
+    <td><%= link_to 'Show', :action => 'show', :id => bat_note %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => bat_note %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => bat_note }, :confirm => 'Are you sure?', :post => true %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page', { :page => @bat_note_pages.current.previous } if @bat_note_pages.current.previous %>
+<%= link_to 'Next page', { :page => @bat_note_pages.current.next } if @bat_note_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New bat_note', :action => 'new' %>

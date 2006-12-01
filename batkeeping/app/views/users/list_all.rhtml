@@ -1,0 +1,48 @@
+<h1>Listing all users</h1>
+
+<table>
+  <tr>
+  <% for column in User.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+  </tr>
+  
+<% for user in @users %>
+  <tr>
+  <% for column in User.content_columns %>
+    <td>
+	<% if column.name == 'name' %><b>
+		<%= link_to user.send(column.name), :action => 'show', :id => user  %></b>
+	<% else %>
+		<% if column.name == 'start_date' or (column.name== 'end_date' and user.end_date != nil )%>
+			<%=h nice_date_no_day(user.send(column.name)) %>
+		<% else %>
+			<% if column.name == 'end_date' %>
+				N/A
+			<% else %>
+				<%=h user.send(column.name) %>
+			<% end %>
+		<% end %>
+	<% end %>
+	</td>
+  <% end %>
+    <td><%= link_to 'Edit', :action => 'edit', :id => user %></td>
+    <td>
+	<% if user.end_date == nil %>
+	<%=  link_to 'Deactivate', { :action => 'deactivate', :id => user }, :confirm => 'Are you sure?', :post => true %>
+	<% else %>
+	<%=  link_to 'Reactivate', { :action => 'reactivate', :id => user }, :confirm => 'Are you sure?', :post => true %>
+    <% end %>
+	
+	</td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page', { :page => @user_pages.current.previous } if @user_pages.current.previous %>
+<%= link_to 'Next page', { :page => @user_pages.current.next } if @user_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New user', :action => 'new' %>
+<%= link_to 'List Current Members', :action => 'list' %>

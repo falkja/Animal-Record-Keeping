@@ -1,0 +1,8 @@
+<% for column in CageOutHistory.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> <%=h @cage_out_history.send(column.name) %>
+</p>
+<% end %>
+
+<%= link_to 'Edit', :action => 'edit', :id => @cage_out_history %> |
+<%= link_to 'Back', :action => 'list' %>

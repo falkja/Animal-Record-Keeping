@@ -1,6 +1,6 @@
 class MainController < ApplicationController
   def index
-	@users = User.find(:all, :order => "name")
+	@users = User.find(:all, :conditions => "end_date is null", :order => "name")
   end
 
   def cage_change

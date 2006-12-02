@@ -1,0 +1,10 @@
+<% if session[:person] == nil %>
+<p>You are not signed in. <%= link_to 'Login', :controller => 'main', :action => 'index' %>.</p>
+<% else %>
+<p>You are signed in as <b><%= session[:person].name %></b>.
+<%= link_to 'Logout', :controller => 'main', :action => 'logout' %></p>
+<%= link_to 'Move a bat', :controller => 'main', :action => 'cage_change' %> | 
+<%= link_to 'List bats', :controller => 'bats', :action => 'list' %> | 
+<%= link_to 'List cages', :controller => 'cages', :action => 'list' %> | 
+<%= link_to 'List Protocols', :controller => 'protocols', :action => 'list' %> | 
+<% end %>

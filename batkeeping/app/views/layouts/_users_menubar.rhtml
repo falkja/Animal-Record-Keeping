@@ -1,5 +1,5 @@
 <% if session[:person] == nil %>
-<p>You are not signed in.</p>
+<p>You are not signed in. <%= link_to 'Sign In', :controller => 'main', :action => 'index' %></p>
 <% else %>
 <p>You are signed in as <b><%= session[:person].name %></b>.
 <%= link_to 'Logout', :controller => 'main', :action => 'logout' %></p>
@@ -15,5 +15,4 @@ Weigh Bats
 </p>
 
 <% end %>
-
 <hr />

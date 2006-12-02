@@ -9,7 +9,7 @@ class ProtocolsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @protocol_pages, @protocols = paginate :protocols, :per_page => 10
+    @protocol_pages, @protocols = paginate :protocols, :order => 'number', :per_page => 10
   end
 
   def show

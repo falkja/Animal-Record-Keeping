@@ -9,8 +9,12 @@ class UsersController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @user_pages, @users = paginate :users, :per_page => 10
+    @user_pages, @users = paginate :users, :order => 'name', :per_page => 10
   end
+  
+  def list_all
+  @user_pages, @users = paginate :users, :order => 'name', :per_page => 10
+	end
 
   def show
     @user = User.find(params[:id])
@@ -63,10 +67,6 @@ class UsersController < ApplicationController
       render :action => 'edit'
     end
   end
-  
-  def list_all
-  @user_pages, @users = paginate :users, :per_page => 10
-	end
   
   def destroy
     User.find(params[:id]).destroy

@@ -28,7 +28,7 @@
 <%= text_field 'bat', 'collection_place'  %></p>
 
 <p><label for="bat_species">Species</label><br/>
-<%= select_tag("bat[species]", options_for_select([["Eptesicus fuscus","Eptesicus fuscus"],["Glossophaga soricina","Glossophaga soricina"],["Myotis septentrionalis","Myotis septentrionalis"],["Carollia","Carollia"]],@bat.species)) %></p>
+<%= select_tag("bat[species]", options_for_select([["Eptesicus fuscus","Eptesicus fuscus"],["Glossophaga soricina","Glossophaga soricina"],["Carollia perspicillata","Carollia perspicillata"],["Myotis septentrionalis","Myotis septentrionalis"]],@bat.species)) %></p>
 
 <p><label for="bat_gender">Gender</label><br/>
 <%= select_tag("bat[gender]", options_for_select([["Male","M"],["Female","F"]],@bat.gender)) %></p>

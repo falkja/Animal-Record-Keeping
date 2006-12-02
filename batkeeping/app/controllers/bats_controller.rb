@@ -9,15 +9,19 @@ class BatsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @bat_pages, @bats = paginate :bats, :per_page => 10
+    @bat_pages, @bats = paginate :bats, :order => 'band', :per_page => 10
   end
-
+  
+  def list_all
+	@bat_pages, @bats = paginate :bats, :order => 'band', :per_page => 10
+  end
+  
   def show
     @bat = Bat.find(params[:id])
   end
 
   def new
-	@cages = Cage.find_all
+	@cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name")
 	@bat = Bat.new
 	@deactivating = false
   end
@@ -71,8 +75,16 @@ class BatsController < ApplicationController
 	@bat.save
 	redirect_to :action => 'list'
   end
-  
-  def list_all
-	@bat_pages, @bats = paginate :bats, :per_page => 10
+
+  def cage_change
+	@cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name")
+	@bats = Bat.find(:all, :conditions => "leave_date is null", :order => "band")
+  end
+
+  def move
+	@bats = Bat.find(params[:bat][:id], :order => "band")
+	@cage = Cage.find(params[:cage][:id])
+	@cage.bats << @bats 
+	@cage.bats = @cage.bats.uniq
   end
 end

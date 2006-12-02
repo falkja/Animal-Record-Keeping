@@ -9,11 +9,11 @@ class CagesController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @cage_pages, @cages = paginate :cages, :per_page => 10
+    @cage_pages, @cages = paginate :cages, :order => 'name', :per_page => 10
   end
 
   def list_all
-    @cage_pages, @cages = paginate :cages, :per_page => 10
+    @cage_pages, @cages = paginate :cages, :order => 'name', :per_page => 10
   end
   
   def show

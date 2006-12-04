@@ -4,6 +4,6 @@ class ApplicationController < ActionController::Base
 	session_times_out_in 15.minutes, :after_timeout => :send_to_login
 	
 	def send_to_login
-	  redirect_to :controller => 'main', :action => 'index'
+    redirect_to :controller => 'main', :action => 'timeout'
 	end
 end

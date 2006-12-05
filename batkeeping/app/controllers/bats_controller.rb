@@ -84,7 +84,7 @@ class BatsController < ApplicationController
   def move
 	@bats = Bat.find(params[:bat][:id], :order => 'band')
 	@cage = Cage.find(params[:cage][:id], :order => 'name')
-	@cage.bats << @bats 
+	@cage.bats << @bats
 	@cage.bats = @cage.bats.uniq
   end
 end

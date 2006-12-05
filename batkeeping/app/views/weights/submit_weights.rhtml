@@ -1,0 +1,14 @@
+<h1> Weighed Bats </h1>
+
+<p>Weighed bats in cage: <%= @cage.name %></p>
+<table>
+<th>Band</th>
+<th>Weight(g)</th>
+
+<% for weight in @weights %>
+<tr>
+<td><%= weight.bat.band %></td>
+<td><%=  %></td>
+</tr>
+<% end %>
+</table>

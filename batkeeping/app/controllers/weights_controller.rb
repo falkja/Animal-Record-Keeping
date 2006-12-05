@@ -48,4 +48,24 @@ class WeightsController < ApplicationController
     Weight.find(params[:id]).destroy
     redirect_to :action => 'list'
   end
+  
+  def choose_cage
+    @cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name")
+  end
+  
+  def weigh
+	@cage = Cage.find(params[:cage][:id])
+	@bats = @cage.bats
+	@weights = Array.new
+	for bat in @bats
+		@weight = Weight.new
+		@weight.bat = bat
+		@weight.date = Time
+		@weights << @weight
+	end
+  end
+  
+  def submit_weights
+	#needs to save the weights from the weigh page and save them for each data row
+  end
 end

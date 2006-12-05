@@ -1,0 +1,11 @@
+<h1>Choose cage</h1>
+
+<%= start_form_tag :action => 'weigh' %>
+
+Choose a cage to weigh: 
+
+<%= select_tag("cage[id]", options_from_collection_for_select(@cages, "id", "name")) %>
+
+<%= submit_tag 'Weigh Cage' %>
+
+<%= end_form_tag %>

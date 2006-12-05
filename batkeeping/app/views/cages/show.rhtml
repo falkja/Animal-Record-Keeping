@@ -5,11 +5,37 @@
 <% end %>
 
 <p>
-  <b>Bats:</b>
+  <b>Current Bats:</b><br />
+  <table>
+  <th>Band</th>
+  <th>Date in</th>
   <% for bat in @cage.bats %>
-    <%=h bat.band %>
+    <% cih = bat.cage_in_histories %>
+    <% cih ? @date_in = cih[0].date : @date_in ="" %>  
+    <tr>
+    <td><%=h bat.band %></td>
+    <td><%=h nice_date @date_in %></td>
+    </tr>
   <% end %>
+  </table>
 </p>
+
+<p>
+  <b>Past Bats:</b><br />
+  <table>
+  <th>Band</th>
+  <th>Date in</th>
+  <th>Date out</th>
+  <% for coh in @cohs %>
+    <tr>
+    <td><%=h coh.bat.band %></td>
+    <td><%=h nice_date coh.cage_in_history.date %></td>
+    <td><%=h nice_date coh.date %></td>
+    </tr>
+  <% end %>
+  </table>
+</p>
+
 
 <%= link_to 'Edit', :action => 'edit', :id => @cage %> |
 <%= link_to 'Back', :action => 'list' %>

@@ -1,10 +1,12 @@
-<h1>Listing cage_in_histories</h1>
+<h1>Listing </h1>
 
 <table>
   <tr>
-  <% for column in CageInHistory.content_columns %>
-    <th><%= column.human_name %></th>
-  <% end %>
+    <th>Bat</th>
+    <th>cage</th>
+    <th></th>
+    <th>Date</th>
+    <th>Sig</th>
   </tr>
   
 <% for cage_in_history in @cage_in_histories %>
@@ -23,5 +25,3 @@
 <%= link_to 'Next page', { :page => @cage_in_history_pages.current.next } if @cage_in_history_pages.current.next %> 
 
 <br />
-
-<%= link_to 'New cage_in_history', :action => 'new' %>

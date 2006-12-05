@@ -18,6 +18,12 @@ class BatsController < ApplicationController
   
   def show
     @bat = Bat.find(params[:id])
+    cihs = @bat.cage_in_histories
+    @cohs = Array.new
+    for cih in cihs
+        coh = cih.cage_out_history
+        coh ? @cohs << coh : ''
+    end        
   end
 
   def new
@@ -38,7 +44,8 @@ class BatsController < ApplicationController
   end
 
   def edit
-	@cages = Cage.find_all
+    @current_user = session[:person]  
+    @cages = Cage.find_all
 	@bat = Bat.find(params[:id])
 	@deactivating = false
   end
@@ -81,6 +88,7 @@ class BatsController < ApplicationController
 	@bats = Bat.find(:all, :conditions => "leave_date is null", :order => "band")
   end
 
+  #move a set of bats from one cage to another
   def move
 	@bats = Bat.find(params[:bat][:id], :order => 'band')
 	@cage = Cage.find(params[:cage][:id], :order => 'name')

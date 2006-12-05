@@ -11,6 +11,21 @@
 
 <p><b>Cage: </b><%= @bat.cage.name %></p>
 
+<p><b>Cage History:</b>
+  <table>
+  <th>Cage</th>
+  <th>Date in</th>
+  <th>Date out</th>
+  <% for coh in @cohs %>
+    <tr>
+    <td><%=h coh.cage.name %></td>
+    <td><%=h nice_date coh.cage_in_history.date %></td>
+    <td><%=h nice_date coh.date %></td>
+    </tr>
+  <% end %>
+  </table>
+</p>
+
 <%= link_to 'Edit', :action => 'edit', :id => @bat %> |
 <%= link_to 'List Current Bats', :action => 'list' %> |
 <% if @bat.leave_date == nil %>

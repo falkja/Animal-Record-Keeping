@@ -9,11 +9,11 @@ class BatsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @bat_pages, @bats = paginate :bats, :order => 'band', :per_page => 10
+    @bat_pages, @bats = paginate :bats, :order => 'cage_id, band', :per_page => 10
   end
   
   def list_all
-	@bat_pages, @bats = paginate :bats, :order => 'band', :per_page => 10
+	@bat_pages, @bats = paginate :bats, :order => 'cage_id, band', :per_page => 10
   end
   
   def show
@@ -82,8 +82,8 @@ class BatsController < ApplicationController
   end
 
   def move
-	@bats = Bat.find(params[:bat][:id], :order => "band")
-	@cage = Cage.find(params[:cage][:id])
+	@bats = Bat.find(params[:bat][:id], :order => 'band')
+	@cage = Cage.find(params[:cage][:id], :order => 'name')
 	@cage.bats << @bats 
 	@cage.bats = @cage.bats.uniq
   end

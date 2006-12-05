@@ -6,28 +6,12 @@ class Bat < ActiveRecord::Base
     
     #call this whenever you think the bat's cage could have changed
     #it updates both the cage out and cage in histories as required
-    #Call this BEFORE saving the bat, otherwise the memory of the original
-    #cage will be lost for ever
-    def log_cage_change
+    def log_cage_change(old_cage, new_cage)
         
-        #Here we test to see if the cage has changed
-        old_bat = Bat.find(self.id)    
-        
-        if old_bat == nil  #we are creating a new bat
-                            #we should log a cage change event
-            old_cage = nil
-        
-        else        #we are updating an existing cage
-            old_bat.cage == self.cage ? return : #nothing to see here
-            old_cage = old_bat.cage #we really changed the cage
-        end
-
-        new_cage = self.cage
-
         #We may have to close out the last cage_in_history
         #by creating a cage_out_history and attaching it to the cage_in_history
-        unless old_bat == nil
-            cih = old_bat.cage_in_histories #a list of histories sorted by latest date
+        unless old_cage == nil #this means we just created it
+            cih = self.cage_in_histories #a list of histories sorted by latest date
             if cih
                 cih = cih[0]
             else
@@ -60,14 +44,21 @@ class Bat < ActiveRecord::Base
     
     #called just before creation
     def before_create
-        log_cage_change
+        @old_cage = nil
     end
     
     #before_save is called automatically just before a class is saved to the db
-    #Tasks
-    # 1. Update the cage_out_history and cage_in_history if needed
+    # Tasks
+    # 1. Save the original cage so we can use it to update cage change histories
     def before_save
-        log_cage_change
+        self.id ? @old_cage = Bat.find(self.id).cage : old_cage = nil
     end
+        
+    def after_save
+        @new_cage = self.cage
+        unless @old_cage == @new_cage
+            log_cage_change(@old_cage, @new_cage)
+        end
+    end        
         
 end

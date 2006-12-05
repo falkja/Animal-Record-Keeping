@@ -21,7 +21,7 @@ class MainController < ApplicationController
   
   def timeout
 	session[:person] = nil
-  flash[:notice] = "Session timed out."
+	flash[:notice] = "Session timed out."
 	redirect_to :action => 'index'
   end
 

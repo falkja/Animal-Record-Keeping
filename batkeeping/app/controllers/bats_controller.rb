@@ -94,5 +94,6 @@ class BatsController < ApplicationController
 	@cage = Cage.find(params[:cage][:id], :order => 'name')
 	@cage.bats << @bats
 	@cage.bats = @cage.bats.uniq
+    @current_user = session[:person]
   end
 end

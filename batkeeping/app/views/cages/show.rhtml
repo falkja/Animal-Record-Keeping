@@ -9,12 +9,20 @@
   <table>
   <th>Band</th>
   <th>Date in</th>
+  <th>Who</th>
   <% for bat in @cage.bats %>
     <% cih = bat.cage_in_histories %>
-    <% cih ? @date_in = cih[0].date : @date_in ="" %>  
+    <% if cih %>
+    <%      @date_in = cih[0].date %>
+    <%      @sig = cih[0].user.initials %>
+    <% else %>
+    <%      @date_in ="" %>
+    <%      @sig = "" %>  
+    <% end %>
     <tr>
     <td><%=h bat.band %></td>
     <td><%=h nice_date @date_in %></td>
+    <td><%=h @sig %></td>
     </tr>
   <% end %>
   </table>
@@ -25,12 +33,16 @@
   <table>
   <th>Band</th>
   <th>Date in</th>
+  <th>Who</th>
   <th>Date out</th>
+  <th>Who</th>
   <% for coh in @cohs %>
     <tr>
     <td><%=h coh.bat.band %></td>
     <td><%=h nice_date coh.cage_in_history.date %></td>
+    <td><%=h coh.cage_in_history.user.initials %></td>
     <td><%=h nice_date coh.date %></td>
+    <td><%=h coh.user.initials %></td>
     </tr>
   <% end %>
   </table>

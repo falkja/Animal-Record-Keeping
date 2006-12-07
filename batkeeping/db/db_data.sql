@@ -92,7 +92,7 @@ CREATE TABLE `cage_in_histories` (
 
 /*!40000 ALTER TABLE `cage_in_histories` DISABLE KEYS */;
 LOCK TABLES `cage_in_histories` WRITE;
-INSERT INTO `cage_in_histories` VALUES (1,1,1,'2006-12-05 18:44:03',NULL,NULL),(2,2,1,'2006-12-05 18:45:05',NULL,NULL),(3,3,1,'2006-12-05 18:48:42',NULL,NULL),(4,4,1,'2006-12-05 18:49:02',NULL,NULL),(5,5,1,'2006-12-05 18:49:37',NULL,NULL),(6,6,3,'2006-12-05 18:50:36',NULL,NULL),(7,7,1,'2006-12-05 18:51:54',NULL,NULL),(8,4,3,'2006-12-05 18:52:55',NULL,NULL);
+INSERT INTO `cage_in_histories` VALUES (1,1,1,'2006-12-05 18:44:03',1,NULL),(2,2,1,'2006-12-05 18:45:05',1,NULL),(3,3,1,'2006-12-05 18:48:42',1,NULL),(4,4,1,'2006-12-05 18:49:02',1,NULL),(5,5,1,'2006-12-05 18:49:37',1,NULL),(6,6,3,'2006-12-05 18:50:36',1,NULL),(7,7,1,'2006-12-05 18:51:54',1,NULL),(8,4,3,'2006-12-05 18:52:55',1,NULL);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `cage_in_histories` ENABLE KEYS */;
 
@@ -102,13 +102,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `cage_out_histories`;
 CREATE TABLE `cage_out_histories` (
-  `id` int(10) unsigned NOT NULL default '0',
+  `id` int(10) unsigned NOT NULL auto_increment,
   `bat_id` int(10) unsigned NOT NULL,
   `cage_id` int(10) unsigned NOT NULL,
   `date` datetime default NULL,
   `user_id` int(10) unsigned default NULL COMMENT 'sig of user who did the change',
   `note` text character set utf8,
-  `cage_in_history_id` int(10) unsigned NOT NULL COMMENT 'each cage_out belongs to a cage in event'
+  `cage_in_history_id` int(10) unsigned NOT NULL COMMENT 'each cage_out belongs to a cage in event',
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -118,7 +119,7 @@ CREATE TABLE `cage_out_histories` (
 
 /*!40000 ALTER TABLE `cage_out_histories` DISABLE KEYS */;
 LOCK TABLES `cage_out_histories` WRITE;
-INSERT INTO `cage_out_histories` VALUES (0,4,1,'2006-12-05 18:52:55',NULL,NULL,4);
+INSERT INTO `cage_out_histories` VALUES (1,4,1,'2006-12-05 18:52:55',1,NULL,4);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `cage_out_histories` ENABLE KEYS */;
 

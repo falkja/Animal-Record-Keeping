@@ -45,6 +45,7 @@ end
   def create
 	@bat = Bat.new(params[:bat])
 	@bat.leave_date = nil
+    Bat::set_user_and_comment(session[:person], params[:move]['note']) #Do this before saving!
 	if @bat.save
 	  flash[:notice] = 'Bat was successfully created.'
 	  redirect_to :action => 'list'
@@ -55,14 +56,15 @@ end
 
   def edit
 	@current_user = session[:person]  
-	@cages = Cage.find_all
+	@cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name" )
 	@bat = Bat.find(params[:id])
 	@deactivating = false
   end
 
   def update
 	@bat = Bat.find(params[:id])
-	if @bat.update_attributes(params[:bat])
+    Bat::set_user_and_comment(session[:person], params[:move]['note']) #Do this before saving!
+    if @bat.update_attributes(params[:bat])
 	  flash[:notice] = 'Bat was successfully updated.'
 	  if params[:redirectme] == 'list'
 		redirect_to :action => 'list'

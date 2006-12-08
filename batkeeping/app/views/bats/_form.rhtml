@@ -33,7 +33,9 @@
 <p><label for="bat_gender">Gender</label><br/>
 <%= select_tag("bat[gender]", options_for_select([["Male","M"],["Female","F"]],@bat.gender)) %></p>
 
-<p><label for="cage">Cage</label><br/><%= collection_select("bat", "cage_id" , @cages, "id", "name") %></p>
+<p><label for="cage">Cage</label><br/><%= collection_select("bat", "cage_id" , @cages, "id", "name") %>
+Cage change note: <%= text_field "move","note" %> (Only fill in if changing cage or making a note for a new bat entry)
+</p>
 
 </div>
 

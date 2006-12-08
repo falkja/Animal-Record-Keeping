@@ -14,6 +14,16 @@ class BatsController < ApplicationController
   
   def list_all
 	@bat_pages, @bats = paginate :bats, :order => 'cage_id, band', :per_page => 10
+end
+  
+  def list_by_band
+    @bat_pages, @bats = paginate :bats, :order => 'band, cage_id', :per_page => 10
+    render :action => 'list'
+  end
+  
+  def list_all_by_band
+    @bat_pages, @bats = paginate :bats, :order => 'band, cage_id', :per_page => 10
+    render :action => 'list_all'
   end
   
   def show

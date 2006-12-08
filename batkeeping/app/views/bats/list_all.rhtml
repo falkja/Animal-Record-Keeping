@@ -1,9 +1,10 @@
 <h1>Listing all bats</h1>
+<%= @all %>
 
 <table>
   <tr>
-    <th>Band</th>
-	<th>Cage</th>
+    <th><%= link_to 'Band', :action => 'list_all_by_band', :all => true%></th>
+	<th><%= link_to 'Cage', :action => 'list_all' %></th>
 	<th>Species</th>
 	<th>Gender</th>
 	<th>Collection Age</th>

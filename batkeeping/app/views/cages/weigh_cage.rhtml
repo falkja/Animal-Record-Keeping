@@ -6,13 +6,18 @@
 <table>
 <th>Band</th>
 <th>Weight(g)</th>
-<th align='left'>Notes</th>
+<th align='left'>Weight Notes</th>
+<th>Cage</th>
+<th>Cage change reason</th>
 
 <% for @bat in @bats %>
 <tr>
 <td><%= @bat.band %></td>
 <td><%= text_field 'weight', @bat.id, :size => 4 %> g</td>
 <td><%= text_field 'note', @bat.id %></td>
+<%# See http://www.rubyonrails.org/api/classes/ActionView/Helpers/FormOptionsHelper.html#M000404 %>
+<td><%= select 'bat_cage', @bat.id.to_s , @cages.collect {|c| [c.name , c.id] }, :selected => @bat.cage.id  %></td>
+<td><%= text_field 'cage_change_note', @bat.id %></td>
 </tr>
 <% end %>
 </table>

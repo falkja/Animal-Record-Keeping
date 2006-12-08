@@ -1,7 +1,7 @@
 class Bat < ActiveRecord::Base
 	belongs_to :cage
 	belongs_to :protocol
-    has_many :weights
+    has_many :weights, :order => "date desc"
     has_many :cage_in_histories, :order => "date desc"
     has_many :cage_out_histories, :order => "date desc"
     
@@ -66,7 +66,7 @@ class Bat < ActiveRecord::Base
     # Tasks
     # 1. Save the original cage so we can use it to update cage change histories
     def before_save
-        self.id ? @old_cage = Bat.find(self.id).cage : old_cage = nil
+        self.id ? @old_cage = Bat.find(self.id).cage : ''
     end
         
     def after_save

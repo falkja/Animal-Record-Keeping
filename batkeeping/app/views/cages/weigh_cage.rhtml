@@ -6,12 +6,12 @@
 <table>
 <th>Band</th>
 <th>Weight(g)</th>
-<th>Notes</th>
+<th align='left'>Notes</th>
 
 <% for @bat in @bats %>
 <tr>
 <td><%= @bat.band %></td>
-<td><%= text_field 'weight', @bat.id %> g</td>
+<td><%= text_field 'weight', @bat.id, :size => 4 %> g</td>
 <td><%= text_field 'note', @bat.id %></td>
 </tr>
 <% end %>

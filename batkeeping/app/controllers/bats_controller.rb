@@ -1,15 +1,15 @@
 class BatsController < ApplicationController
   def index
-    list
-    render :action => 'list'
+	list
+	render :action => 'list'
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
   verify :method => :post, :only => [ :destroy, :create, :update ],
-         :redirect_to => { :action => :list }
+		 :redirect_to => { :action => :list }
 
   def list
-    @bat_pages, @bats = paginate :bats, :order => 'cage_id, band', :per_page => 10
+	@bat_pages, @bats = paginate :bats, :order => 'cage_id, band', :per_page => 10
   end
   
   def list_all
@@ -17,23 +17,23 @@ class BatsController < ApplicationController
 end
   
   def list_by_band
-    @bat_pages, @bats = paginate :bats, :order => 'band, cage_id', :per_page => 10
-    render :action => 'list'
+	@bat_pages, @bats = paginate :bats, :order => 'band, cage_id', :per_page => 10
+	render :action => 'list'
   end
   
   def list_all_by_band
-    @bat_pages, @bats = paginate :bats, :order => 'band, cage_id', :per_page => 10
-    render :action => 'list_all'
+	@bat_pages, @bats = paginate :bats, :order => 'band, cage_id', :per_page => 10
+	render :action => 'list_all'
   end
   
   def show
-    @bat = Bat.find(params[:id])
-    cihs = @bat.cage_in_histories
-    @cohs = Array.new
-    for cih in cihs
-        coh = cih.cage_out_history
-        coh ? @cohs << coh : ''
-    end        
+	@bat = Bat.find(params[:id])
+	cihs = @bat.cage_in_histories
+	@cohs = Array.new
+	for cih in cihs
+		coh = cih.cage_out_history
+		coh ? @cohs << coh : ''
+	end        
   end
 
   def new
@@ -43,40 +43,40 @@ end
   end
 
   def create
-    @bat = Bat.new(params[:bat])
-    @bat.leave_date = nil
-    if @bat.save
-      flash[:notice] = 'Bat was successfully created.'
-      redirect_to :action => 'list'
-    else
-      render :action => 'new'
-    end
+	@bat = Bat.new(params[:bat])
+	@bat.leave_date = nil
+	if @bat.save
+	  flash[:notice] = 'Bat was successfully created.'
+	  redirect_to :action => 'list'
+	else
+	  render :action => 'new'
+	end
   end
 
   def edit
-    @current_user = session[:person]  
-    @cages = Cage.find_all
+	@current_user = session[:person]  
+	@cages = Cage.find_all
 	@bat = Bat.find(params[:id])
 	@deactivating = false
   end
 
   def update
-    @bat = Bat.find(params[:id])
-    if @bat.update_attributes(params[:bat])
-      flash[:notice] = 'Bat was successfully updated.'
+	@bat = Bat.find(params[:id])
+	if @bat.update_attributes(params[:bat])
+	  flash[:notice] = 'Bat was successfully updated.'
 	  if params[:redirectme] == 'list'
-	    redirect_to :action => 'list'
+		redirect_to :action => 'list'
 	  else
-        redirect_to :action => 'show', :id => @bat
+		redirect_to :action => 'show', :id => @bat
 	  end
-    else
-      render :action => 'edit'
-    end
+	else
+	  render :action => 'edit'
+	end
   end
 
   def destroy
-    Bat.find(params[:id]).destroy
-    redirect_to :action => 'list'
+	Bat.find(params[:id]).destroy
+	redirect_to :action => 'list'
   end
   
   def deactivate
@@ -95,28 +95,28 @@ end
 
   #choose a cage to move bats from
   def choose_cage
-    @all_cages = Cage.find(:all)
-    @cages = Array.new
-    for cage in @all_cages
-      if cage.bats.count > 0
-        @cages << cage
-      end
-    end
+	@all_cages = Cage.find(:all)
+	@cages = Array.new
+	for cage in @all_cages
+	  if cage.bats.count > 0
+		@cages << cage
+	  end
+	end
   end
 
   #choose bats to move from cage
   def cage_change
-  @cage = Cage.find(params[:id])
-  @bats = @cage.bats
-  @cages = Cage.find(:all, :conditions => "date_destroyed is null and id != " + @cage.id.to_s, :order => "name")
+	@cage = Cage.find(params[:id])
+	@bats = @cage.bats
+  	@cages = Cage.find(:all, :conditions => "date_destroyed is null and id != " + @cage.id.to_s, :order => "name")
   end
 
   #move a set of bats from one cage to another
   def move
-    @bats = Bat.find(params[:bat][:id], :order => 'band')
-    @cage = Cage.find(params[:cage][:id], :order => 'name')
-    @cage.bats << @bats
-    @cage.bats = @cage.bats.uniq
-    @current_user = session[:person]
+	@bats = Bat.find(params[:bat][:id], :order => 'band')
+	@cage = Cage.find(params[:cage][:id])
+	Bat::set_user_and_comment(session[:person], params[:move]['note']) #This must come before we mess with the list of bats for a cage. The moment we mess with the list, the cage and bat variables are updated. 
+	@cage.bats << @bats
+	@cage.bats = @cage.bats.uniq
   end
 end

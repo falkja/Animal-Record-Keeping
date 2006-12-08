@@ -5,6 +5,14 @@ class Bat < ActiveRecord::Base
     has_many :cage_in_histories, :order => "date desc"
     has_many :cage_out_histories, :order => "date desc"
     
+    @@current_user = nil #needed for the sig
+    @@comment = nil #needed if we wanna comment a cage move
+    
+    def Bat.set_user_and_comment(user, cmt)
+        @@current_user = user
+        @@comment = cmt
+    end
+    
     #call this whenever you think the bat's cage could have changed
     #it updates both the cage out and cage in histories as required
     def log_cage_change(old_cage, new_cage)
@@ -20,13 +28,17 @@ class Bat < ActiveRecord::Base
                 cih = CageInHistory.new
                 cih.bat = self
                 cih.cage = old_bat.cage
+                cih.user = @@current_user #blame the current user #@current_user
+                cih.note = "NOTE: This cage in event was generated automatically. No one logged this bat into this cage"
+                
                 cih.save
             end
             
             coh = CageOutHistory.new
             coh.bat = self
             coh.cage = old_cage
-            coh.user = @current_user #session[:person]
+            coh.user = @@current_user
+            coh.note = @@comment
             coh.date = Time.new 
             coh.cage_in_history = cih
             coh.save
@@ -37,8 +49,10 @@ class Bat < ActiveRecord::Base
         cih = CageInHistory.new
         cih.bat = self
         cih.cage = new_cage
-        cih.user = @current_user #session[:person]
+        cih.user = @@current_user
+        cih.note = @@comment
         cih.date = Time.new 
+        cih.note = @note
 
         cih.save
     end

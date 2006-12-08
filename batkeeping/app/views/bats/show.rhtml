@@ -22,12 +22,20 @@
   <table border='1'>
   <th>Cage</th>
   <th>Date in</th>
+  <th>Why</th>
+  <th>Who</th>
   <th>Date out</th>
+  <th>Why</th>
+  <th>Who</th>
   <% for coh in @cohs %>
     <tr>
     <td><%=h coh.cage.name %></td>
     <td><%=h nice_date coh.cage_in_history.date %></td>
+    <td><%=h coh.cage_in_history.note %></td>
+    <td><%=h coh.cage_in_history.user.initials %></td>
     <td><%=h nice_date coh.date %></td>
+    <td><%=h coh.note %></td>
+    <td><%=h coh.user.initials %></td>    
     </tr>
   <% end %>
   </table>

@@ -1,5 +1,7 @@
 <h1>Moving bats from <%= @cage.name %></h1>
 
+<%= @session[:person].name %>
+
 <%= start_form_tag :action => 'move' %>
 
 Select bat(s): 
@@ -8,6 +10,8 @@ Select bat(s):
 
 to move to cage: 
 <%= select_tag("cage[id]", options_from_collection_for_select(@cages, "id", "name")) %>
+
+Note : <%= text_field 'move', 'note' %>
 
 <%= submit_tag 'Move' %>
 

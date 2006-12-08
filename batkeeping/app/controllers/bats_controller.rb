@@ -96,7 +96,7 @@ class BatsController < ApplicationController
 
   #choose bats to move from cage
   def cage_change
-  @cage = Cage.find(params[:cage][:id])
+  @cage = Cage.find(params[:id])
   @bats = @cage.bats
   @cages = Cage.find(:all, :conditions => "date_destroyed is null and id != " + @cage.id.to_s, :order => "name")
   end

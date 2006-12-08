@@ -1,11 +1,7 @@
-<h1>Choose cage</h1>
+<h1>What cage are the bats coming from?</h1>
 
-<%= start_form_tag :action => 'cage_change' %>
-
-Choose a cage to move bats from: 
-
-<%= select_tag("cage[id]", options_from_collection_for_select(@cages, "id", "name")) %>
-
-<%= submit_tag 'Choose Cage' %>
-
-<%= end_form_tag %>
+<table>
+<% for cage in @cages %>
+<tr><td><%= link_to cage.name, :action => 'cage_change' , :id => cage %></td></tr>
+<% end %>
+</table>

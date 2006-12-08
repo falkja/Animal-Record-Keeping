@@ -1,6 +1,9 @@
 <h3>Dossier on <%=h @bat.band %></h3>
 
-<p><b>Cage: </b><%= @bat.cage.name %></p>
+<p>
+<b>Cage: </b>
+<%= link_to @bat.cage.name, :controller => 'cages', :action => 'show', :id => @bat.cage %>
+</p>
 
 <h3>Weight History:</h3>
 <table border='1'>
@@ -43,17 +46,42 @@
 
 <hr />
 
-<% for column in Bat.content_columns %>
 <p>
-  <b><%= column.human_name %>:</b> 
-  <% if column.name == 'collection_date' or column.name == 'leave_date' %>
-	<%=h nice_date(@bat.send(column.name)) %>
-  <% else %>
-	<%=h @bat.send(column.name) %>
-  <% end %>
-<% end %>
+<b>Species: </b>
+<em><%= @bat.species %></em>
 </p>
 
+<p>
+<b>Gender: </b>
+<%= @bat.gender %>
+</p>
+
+<p>
+<b>Collection Date: </b>
+<%= nice_date @bat.collection_date %>
+</p>
+
+<p>
+<b>Collection Age: </b>
+<%= @bat.collection_age %>
+</p>
+
+<p>
+<b>Collection Place: </b>
+<%= @bat.collection_place %>
+</p>
+
+<% if @bat.leave_date != nil %>
+<p>
+<b>Leave Date: </b>
+<%= nice_date @bat.leave_date %>
+</p>
+
+<p>
+<b>Leave Reason: </b>
+<%= @bat.leave_reason %>
+</p>
+<% end %>
 
 <%= link_to 'Edit', :action => 'edit', :id => @bat %> |
 <%= link_to 'List Current Bats', :action => 'list' %> |

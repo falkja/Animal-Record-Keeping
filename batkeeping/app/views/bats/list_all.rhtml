@@ -20,7 +20,7 @@
       <b><%= link_to bat.band, :action => 'show', :id => bat %></b>
     </td>
     <td>
-		<%=h bat.cage.name %>
+		<%= link_to bat.cage.name, :controller => 'cages', :action => 'show', :id => bat.cage %>
 	</td>
 	<td>
 		<%=h bat.species %>

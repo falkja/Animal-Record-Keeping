@@ -1,6 +1,14 @@
-<% for column in Cage.content_columns %>
 <p>
-  <b><%= column.human_name %>:</b> <%=h @cage.send(column.name) %>
+<b>Name: </b><%= @cage.name %>
+</p>
+
+<p>
+<b>Date created: </b><%= nice_date @cage.date_created %>
+</p>
+
+<% if @cage.date_destroyed != nil %>
+<p>
+<b>Date destroyed: </b><%= nice_date @cage.date_destroyed %>
 </p>
 <% end %>
 
@@ -38,7 +46,7 @@
   <th>Who</th>
   <% for coh in @cohs %>
     <tr>
-    <td><%=h coh.bat.band %></td>
+    <td><%=link_to coh.bat.band, :controller => 'bats', :action => 'show', :id => bat %></td>
     <td><%=h nice_date coh.cage_in_history.date %></td>
     <td><%=h coh.cage_in_history.user.initials %></td>
     <td><%=h nice_date coh.date %></td>

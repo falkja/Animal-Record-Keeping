@@ -1,0 +1,7 @@
+<h1>Choose a cage to weigh</h1>
+
+<table>
+<% for cage in @cages %>
+<tr><td><%= link_to cage.name, :action => 'weigh_cage' , :id => cage %></td></tr>
+<% end %>
+</table>

@@ -1,18 +1,25 @@
-<% for column in Bat.content_columns %>
-<p>
-  <b><%= column.human_name %>:</b> 
-  <% if column.name == 'collection_date' or column.name == 'leave_date' %>
-	<%=h nice_date(@bat.send(column.name)) %>
-  <% else %>
-	<%=h @bat.send(column.name) %>
-  <% end %>
-<% end %>
-</p>
+<h3>Dossier on <%=h @bat.band %></h3>
 
 <p><b>Cage: </b><%= @bat.cage.name %></p>
 
-<p><b>Cage History:</b>
-  <table>
+<h3>Weight History:</h3>
+<table border='1'>
+  <th>Date</th>
+  <th>Weight</th>
+  <th>Notes</th>
+  <th>Who</th>
+  <% for weight in @bat.weights %>
+  <tr>
+  <td><%= nice_date weight.date %></td>
+  <td><%= weight.weight %>g</td>
+  <td><%= weight.note %></td>
+  <td><%= weight.user.initials %></td>
+  </tr>
+  <% end %>
+</table>
+
+<h3>Cage History:</h3>
+  <table border='1'>
   <th>Cage</th>
   <th>Date in</th>
   <th>Date out</th>
@@ -25,6 +32,20 @@
   <% end %>
   </table>
 </p>
+
+<hr />
+
+<% for column in Bat.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> 
+  <% if column.name == 'collection_date' or column.name == 'leave_date' %>
+	<%=h nice_date(@bat.send(column.name)) %>
+  <% else %>
+	<%=h @bat.send(column.name) %>
+  <% end %>
+<% end %>
+</p>
+
 
 <%= link_to 'Edit', :action => 'edit', :id => @bat %> |
 <%= link_to 'List Current Bats', :action => 'list' %> |

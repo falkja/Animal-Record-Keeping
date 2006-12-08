@@ -20,7 +20,7 @@
     <%      @sig = "" %>  
     <% end %>
     <tr>
-    <td><%=h bat.band %></td>
+    <td><%= link_to bat.band, :controller => 'bats', :action => 'show', :id => bat %></td>
     <td><%=h nice_date @date_in %></td>
     <td><%=h @sig %></td>
     </tr>

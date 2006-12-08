@@ -1,0 +1,21 @@
+<h1> Weigh Bats </h1>
+
+<%= start_form_tag :action => 'submit_weights', :id => @cage %>
+
+<p>Weighing bats in cage: <%= @cage.name %></p>
+<table>
+<th>Band</th>
+<th>Weight(g)</th>
+<th>Notes</th>
+
+<% for @bat in @bats %>
+<tr>
+<td><%= @bat.band %></td>
+<td><%= text_field 'weight', @bat.id %> g</td>
+<td><%= text_field 'note', @bat.id %></td>
+</tr>
+<% end %>
+</table>
+<%= submit_tag 'Submit Weights' %>
+
+<%= end_form_tag %>

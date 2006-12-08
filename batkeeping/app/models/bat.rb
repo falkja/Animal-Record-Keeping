@@ -1,6 +1,7 @@
 class Bat < ActiveRecord::Base
 	belongs_to :cage
 	belongs_to :protocol
+    has_many :weights
     has_many :cage_in_histories, :order => "date desc"
     has_many :cage_out_histories, :order => "date desc"
     

@@ -15,8 +15,8 @@
   <% if bat.leave_date == nil %>
   <tr>
     <td>
-		<%=h bat.band %>
-	</td>
+      <b><%= link_to bat.band, :action => 'show', :id => bat %></b>
+    </td>
     <td>
 		<%= link_to bat.cage.name, :controller => 'cages', :action => 'show', :id => bat.cage %>
 	</td>
@@ -35,7 +35,6 @@
 	<td>
 		<%=h bat.collection_place %>
 	</td>
-    <td><%= link_to 'Show', :action => 'show', :id => bat %></td>
     <td><%= link_to 'Edit', :action => 'edit', :id => bat %></td>
     <td>
 	<%= link_to 'Deactivate', { :action => 'deactivate', :id => bat }, :confirm => 'Are you sure?', :post => true %>

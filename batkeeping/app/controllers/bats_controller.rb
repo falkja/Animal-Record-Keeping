@@ -85,22 +85,28 @@ class BatsController < ApplicationController
 
   #choose a cage to move bats from
   def choose_cage
-    @cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name")
+    @all_cages = Cage.find(:all)
+    @cages = Array.new
+    for cage in @all_cages
+      if cage.bats.count > 0
+        @cages << cage
+      end
+    end
   end
 
   #choose bats to move from cage
   def cage_change
   @cage = Cage.find(params[:cage][:id])
   @bats = @cage.bats
-  @cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name")
+  @cages = Cage.find(:all, :conditions => "date_destroyed is null and id != " + @cage.id.to_s, :order => "name")
   end
 
   #move a set of bats from one cage to another
   def move
-	@bats = Bat.find(params[:bat][:id], :order => 'band')
-	@cage = Cage.find(params[:cage][:id], :order => 'name')
-	@cage.bats << @bats
-	@cage.bats = @cage.bats.uniq
+    @bats = Bat.find(params[:bat][:id], :order => 'band')
+    @cage = Cage.find(params[:cage][:id], :order => 'name')
+    @cage.bats << @bats
+    @cage.bats = @cage.bats.uniq
     @current_user = session[:person]
   end
 end

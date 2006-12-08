@@ -1,10 +1,9 @@
 <h1>Listing all bats</h1>
-<%= @all %>
 
 <table>
   <tr>
     <th><%= link_to 'Band', :action => 'list_all_by_band'%></th>
-	<th><%= link_to 'Cage', :action => 'list_all' %></th>
+	<th><%= link_to 'Cage', :action => 'list_all_by_cage' %></th>
 	<th>Species</th>
 	<th>Gender</th>
 	<th>Collection Age</th>
@@ -37,12 +36,7 @@
 	<td>
 		<%=h bat.collection_place %>
 	</td>
-	<td>
-		<%=h nice_date_no_day(bat.leave_date) %>
-	</td>
-	<td>
-		<%=h bat.leave_reason %>
-	</td>
+
     <td><%= link_to 'Edit', :action => 'edit', :id => bat %></td>
     <td>
 	<% if bat.leave_date == nil %>

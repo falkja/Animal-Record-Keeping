@@ -2,6 +2,10 @@
 
 <table>
   <tr>
+    <% if @list_all %>
+<th><%= link_to 'Band', :action => 'list_all_by_band'%></th>
+	<th><%= link_to 'Cage', :action => 'list_all_by_cage' %></th>
+<% else %>
     <th><%= link_to 'Band', :action => 'list_by_band' %></th>
 	<th><%= link_to 'Cage', :action => 'list' %></th>
 	<th>Species</th>
@@ -9,6 +13,10 @@
 	<th>Collection Age</th>
 	<th>Collection Date</th>
 	<th>Collection Place</th>
+	<% if @list_all %>
+		<th>Leave Date</th>
+		<th>Leave Reason</th>
+	<% end %>
   </tr>
   
 <% for bat in @bats %>
@@ -35,10 +43,22 @@
 	<td>
 		<%=h bat.collection_place %>
 	</td>
+	<% if @list_all %>
+	<td>
+		<%=h nice_date_no_day(bat.leave_date) %>
+	</td>
+	<td>
+		<%=h bat.leave_reason %>
+	</td>
+	<% end %>
     <td><%= link_to 'Edit', :action => 'edit', :id => bat %></td>
     <td>
+	<% if bat.leave_date == nil %>
 	<%= link_to 'Deactivate', { :action => 'deactivate', :id => bat }, :confirm => 'Are you sure?', :post => true %>
-	</td>
+	<% else %>
+	<%=  link_to 'Reactivate', { :action => 'reactivate', :id => bat }, :confirm => 'Are you sure?', :post => true %>
+        <% end %>
+    </td>
   </tr>
   <% end %>
 <% end %>
@@ -50,4 +70,8 @@
 <br />
 
 <%= link_to 'New Bat', :action => 'new' %>
-<%= link_to 'List All Bats', :action => 'list_all' %>
+<% if @list_all %>
+<%= link_to 'List Current Bats', :action => 'list' %>
+<% else %>
+<%= link_to 'List All Bats', :action => 'list_all_by_cage' %>
+<% end %>

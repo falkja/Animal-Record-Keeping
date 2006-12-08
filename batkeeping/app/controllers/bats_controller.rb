@@ -9,20 +9,25 @@ class BatsController < ApplicationController
 		 :redirect_to => { :action => :list }
 
   def list
-	@bat_pages, @bats = paginate :bats, :order => 'cage_id, band', :per_page => 10
+	@bat_pages, @bats = paginate :bats, :order => 'cage_id, band', :conditions => "leave_date is null", :per_page => 10
+	@list_all = false
   end
   
-  def list_all
+  def list_all_by_cage
 	@bat_pages, @bats = paginate :bats, :order => 'cage_id, band', :per_page => 10
+	@list_all = true
+	render :action => 'list'
 end
   
   def list_by_band
-	@bat_pages, @bats = paginate :bats, :order => 'band, cage_id', :per_page => 10
+	@bat_pages, @bats = paginate :bats, :order => 'band, cage_id', :conditions => "leave_date is null", :per_page => 10
+	@list_all = false
 	render :action => 'list'
   end
   
   def list_all_by_band
 	@bat_pages, @bats = paginate :bats, :order => 'band, cage_id', :per_page => 10
+	@list_all = true
 	render :action => 'list_all'
   end
   

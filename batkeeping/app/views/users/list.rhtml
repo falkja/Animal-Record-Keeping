@@ -1,32 +1,33 @@
-<h1>Listing current users</h1>
+<h1>
+<% if @list_all %>
+Listing all users
+<% else %>
+Listing current users
+<% end %></h1>
 
 <table>
   <tr>
-  <% for column in User.content_columns %>
-    <th><%= column.human_name %></th>
-  <% end %>
+    <th>Name</th>
+    <th>Initials</th>
+    <th>Email</th>
+    <th>Start Date</th>
+    <% if @list_all %>
+      <th>End Date</th>
+    <% end %>
   </tr>
   
 <% for user in @users %>
-	<% if user.end_date == nil %>
 		<tr>
-		<% for column in User.content_columns %>
 		<td>
-		<% if column.name == 'name' %><b>
-			<%= link_to user.send(column.name), :action => 'show', :id => user  %></b>
-		<% else %>
-			<% if column.name == 'start_date' or (column.name== 'end_date' and user.end_date != nil )%>
-				<%=h nice_date_no_day(user.send(column.name)) %>
-			<% else %>
-				<% if column.name == 'end_date' %>
-					N/A
-				<% else %>
-					<%=h user.send(column.name) %>
-				<% end %>
-			<% end %>
-		<% end %>
-		</td>
-		<% end %>
+      <b>
+			<%= link_to user.name, :action => 'show', :id => user  %>
+      </b>
+    <td><%= user.initials %></td>
+    <td><%= user.email %></td>
+    <td><%= nice_date_no_day user.start_date %></td>
+    <% if @list_all %>
+      <td><%= nice_date_no_day user.end_date %></td>
+    <% end %>
 		<td><%= link_to 'Edit', :action => 'edit', :id => user %></td>
 		<td>
 		<% if user.end_date == nil %>
@@ -36,7 +37,6 @@
 		<% end %>
 		</td>
 	</tr>
-	<% end %>
 <% end %>
 </table>
 
@@ -46,4 +46,8 @@
 <br />
 
 <%= link_to 'New User', :action => 'new' %>
+<% if @list_all %>
+<%= link_to 'List Current Members', :action => 'list' %>
+<% else %>
 <%= link_to 'List All Members', :action => 'list_all' %>
+<% end %>

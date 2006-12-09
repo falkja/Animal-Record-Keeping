@@ -28,7 +28,7 @@ end
   def list_all_by_band
 	@bat_pages, @bats = paginate :bats, :order => 'band, cage_id', :per_page => 10
 	@list_all = true
-	render :action => 'list_all'
+	render :action => 'list'
   end
   
   def show

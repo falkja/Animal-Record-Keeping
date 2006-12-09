@@ -1,13 +1,20 @@
-<h1>Listing current bats</h1>
+<h1>
+<% if @list_all %>
+Listing all bats
+<% else %>
+Listing current bats
+<% end %>
+</h1>
 
 <table>
   <tr>
     <% if @list_all %>
-<th><%= link_to 'Band', :action => 'list_all_by_band'%></th>
-	<th><%= link_to 'Cage', :action => 'list_all_by_cage' %></th>
-<% else %>
-    <th><%= link_to 'Band', :action => 'list_by_band' %></th>
-	<th><%= link_to 'Cage', :action => 'list' %></th>
+      <th><%= link_to 'Band', :action => 'list_all_by_band'%></th>
+      <th><%= link_to 'Cage', :action => 'list_all_by_cage' %></th>
+    <% else %>
+      <th><%= link_to 'Band', :action => 'list_by_band' %></th>
+      <th><%= link_to 'Cage', :action => 'list' %></th>
+    <% end %>
 	<th>Species</th>
 	<th>Gender</th>
 	<th>Collection Age</th>
@@ -20,7 +27,6 @@
   </tr>
   
 <% for bat in @bats %>
-  <% if bat.leave_date == nil %>
   <tr>
     <td>
       <b><%= link_to bat.band, :action => 'show', :id => bat %></b>
@@ -60,7 +66,6 @@
         <% end %>
     </td>
   </tr>
-  <% end %>
 <% end %>
 </table>
 

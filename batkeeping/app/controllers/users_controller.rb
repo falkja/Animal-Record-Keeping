@@ -9,11 +9,14 @@ class UsersController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @user_pages, @users = paginate :users, :order => 'name', :per_page => 10
+    @user_pages, @users = paginate :users, :conditions => 'end_date is null', :order => 'name', :per_page => 10
+    @list_all = false
   end
   
   def list_all
-  @user_pages, @users = paginate :users, :order => 'name', :per_page => 10
+    @user_pages, @users = paginate :users, :order => 'name', :per_page => 10
+    @list_all = true
+    render :action => 'list'
 	end
 
   def show

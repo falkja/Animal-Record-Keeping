@@ -1,22 +1,28 @@
--- MySQL dump 10.10
+-- MySQL Administrator dump 1.4
 --
--- Host: localhost    Database: batkeeping
 -- ------------------------------------------------------
 -- Server version	5.0.17-nt
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
+
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
 
 --
--- Table structure for table `bat_notes`
+-- Create schema batkeeping
+--
+
+CREATE DATABASE IF NOT EXISTS batkeeping;
+USE batkeeping;
+
+--
+-- Definition of table `bat_notes`
 --
 
 DROP TABLE IF EXISTS `bat_notes`;
@@ -33,14 +39,12 @@ CREATE TABLE `bat_notes` (
 -- Dumping data for table `bat_notes`
 --
 
-
 /*!40000 ALTER TABLE `bat_notes` DISABLE KEYS */;
-LOCK TABLES `bat_notes` WRITE;
-UNLOCK TABLES;
 /*!40000 ALTER TABLE `bat_notes` ENABLE KEYS */;
 
+
 --
--- Table structure for table `bats`
+-- Definition of table `bats`
 --
 
 DROP TABLE IF EXISTS `bats`;
@@ -63,15 +67,20 @@ CREATE TABLE `bats` (
 -- Dumping data for table `bats`
 --
 
-
 /*!40000 ALTER TABLE `bats` DISABLE KEYS */;
-LOCK TABLES `bats` WRITE;
-INSERT INTO `bats` VALUES (1,1,'2006-01-05 00:00:00','Adult','Ben\'s Attic','Eptesicus fuscus','F',NULL,NULL,'A1',NULL),(2,1,'2006-01-05 00:00:00','Juvenile','Underneath the Sycamore Tree','Eptesicus fuscus','M',NULL,NULL,'A2',NULL),(3,1,'2006-03-05 00:00:00','Adult','Heaven','Eptesicus fuscus','M',NULL,NULL,'B1',NULL),(4,3,'2006-04-05 00:00:00','Juvenile','Hell','Eptesicus fuscus','M',NULL,NULL,'C1',NULL),(5,1,'2006-06-05 00:00:00','Juvenile','Murat\'s Hair','Carollia perspicillata','M',NULL,NULL,'D1',NULL),(6,3,'2006-04-05 00:00:00','Juvenile','Panda Cafe','Myotis septentrionalis','M',NULL,NULL,'E1',NULL),(7,1,'2006-03-05 00:00:00','Adult','Sam Spade\'s Office','Carollia perspicillata','F',NULL,NULL,'F1',NULL);
-UNLOCK TABLES;
+INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`species`,`gender`,`leave_date`,`leave_reason`,`band`,`user_id`) VALUES 
+ (1,3,'2006-01-05 00:00:00','Adult','Ben\'s Attic','Eptesicus fuscus','F',NULL,NULL,'A1',NULL),
+ (2,4,'2006-01-05 00:00:00','Juvenile','Underneath the Sycamore Tree','Eptesicus fuscus','M',NULL,NULL,'A2',NULL),
+ (3,3,'2006-03-05 00:00:00','Adult','Heaven','Eptesicus fuscus','M',NULL,NULL,'B1',NULL),
+ (4,4,'2006-04-05 00:00:00','Juvenile','Hell','Eptesicus fuscus','M',NULL,NULL,'C1',NULL),
+ (5,4,'2006-06-05 00:00:00','Juvenile','Murat\'s Hair','Carollia perspicillata','M',NULL,NULL,'D1',NULL),
+ (6,1,'2006-04-05 00:00:00','Juvenile','Panda Cafe','Myotis septentrionalis','M',NULL,NULL,'E1',NULL),
+ (7,1,'2006-03-05 00:00:00','Adult','Sam Spade\'s Office','Carollia perspicillata','F',NULL,NULL,'F1',NULL);
 /*!40000 ALTER TABLE `bats` ENABLE KEYS */;
 
+
 --
--- Table structure for table `cage_in_histories`
+-- Definition of table `cage_in_histories`
 --
 
 DROP TABLE IF EXISTS `cage_in_histories`;
@@ -89,15 +98,35 @@ CREATE TABLE `cage_in_histories` (
 -- Dumping data for table `cage_in_histories`
 --
 
-
 /*!40000 ALTER TABLE `cage_in_histories` DISABLE KEYS */;
-LOCK TABLES `cage_in_histories` WRITE;
-INSERT INTO `cage_in_histories` VALUES (1,1,1,'2006-12-05 18:44:03',1,NULL),(2,2,1,'2006-12-05 18:45:05',1,NULL),(3,3,1,'2006-12-05 18:48:42',1,NULL),(4,4,1,'2006-12-05 18:49:02',1,NULL),(5,5,1,'2006-12-05 18:49:37',1,NULL),(6,6,3,'2006-12-05 18:50:36',1,NULL),(7,7,1,'2006-12-05 18:51:54',1,NULL),(8,4,3,'2006-12-05 18:52:55',1,NULL);
-UNLOCK TABLES;
+INSERT INTO `cage_in_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note`) VALUES 
+ (1,1,1,'2006-12-05 18:44:03',1,NULL),
+ (2,2,1,'2006-12-05 18:45:05',1,NULL),
+ (3,3,1,'2006-12-05 18:48:42',1,NULL),
+ (4,4,1,'2006-12-05 18:49:02',1,NULL),
+ (5,5,1,'2006-12-05 18:49:37',1,NULL),
+ (6,6,3,'2006-12-05 18:50:36',1,NULL),
+ (7,7,1,'2006-12-05 18:51:54',1,NULL),
+ (8,4,3,'2006-12-05 18:52:55',1,NULL),
+ (9,1,4,'2006-12-07 22:18:55',2,NULL),
+ (10,7,4,'2006-12-07 22:18:55',2,NULL),
+ (11,1,1,'2006-12-07 22:32:14',2,NULL),
+ (26,4,3,'2006-12-07 23:48:36',2,NULL),
+ (27,6,1,'2006-12-07 23:57:45',2,NULL),
+ (28,2,1,'2006-12-07 23:58:31',2,NULL),
+ (29,2,2,'2006-12-08 00:10:27',2,NULL),
+ (30,2,3,'2006-12-08 00:13:04',2,NULL),
+ (31,1,4,'2006-12-08 16:20:13',2,NULL),
+ (32,2,4,'2006-12-08 16:20:13',2,NULL),
+ (33,3,4,'2006-12-08 16:20:13',2,NULL),
+ (34,4,4,'2006-12-08 16:20:13',2,NULL),
+ (35,1,3,'2006-12-08 16:53:49',2,NULL),
+ (36,3,3,'2006-12-08 16:56:44',2,NULL);
 /*!40000 ALTER TABLE `cage_in_histories` ENABLE KEYS */;
 
+
 --
--- Table structure for table `cage_out_histories`
+-- Definition of table `cage_out_histories`
 --
 
 DROP TABLE IF EXISTS `cage_out_histories`;
@@ -116,15 +145,28 @@ CREATE TABLE `cage_out_histories` (
 -- Dumping data for table `cage_out_histories`
 --
 
-
 /*!40000 ALTER TABLE `cage_out_histories` DISABLE KEYS */;
-LOCK TABLES `cage_out_histories` WRITE;
-INSERT INTO `cage_out_histories` VALUES (1,4,1,'2006-12-05 18:52:55',1,NULL,4);
-UNLOCK TABLES;
+INSERT INTO `cage_out_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note`,`cage_in_history_id`) VALUES 
+ (1,4,1,'2006-12-05 18:52:55',1,NULL,4),
+ (2,1,1,'2006-12-07 22:18:55',2,NULL,1),
+ (3,7,1,'2006-12-07 22:18:55',2,NULL,7),
+ (4,1,4,'2006-12-07 22:32:14',1,NULL,9),
+ (19,4,1,'2006-12-07 23:48:36',2,'Hi!',8),
+ (20,6,3,'2006-12-07 23:57:45',2,'Because',6),
+ (21,2,3,'2006-12-07 23:58:31',2,'Why Not?',2),
+ (22,2,1,'2006-12-08 00:10:27',2,'Wanted to, sue me',28),
+ (23,2,2,'2006-12-08 00:13:04',2,'Because',29),
+ (24,1,3,'2006-12-08 16:20:13',2,'Because',11),
+ (25,2,3,'2006-12-08 16:20:13',2,'',30),
+ (26,3,3,'2006-12-08 16:20:13',2,'',3),
+ (27,4,3,'2006-12-08 16:20:13',2,'',26),
+ (28,1,4,'2006-12-08 16:53:49',2,'sue me!!!!',31),
+ (29,3,4,'2006-12-08 16:56:44',2,'HEAVY!!!',33);
 /*!40000 ALTER TABLE `cage_out_histories` ENABLE KEYS */;
 
+
 --
--- Table structure for table `cages`
+-- Definition of table `cages`
 --
 
 DROP TABLE IF EXISTS `cages`;
@@ -133,7 +175,10 @@ CREATE TABLE `cages` (
   `name` varchar(45) NOT NULL,
   `date_created` datetime NOT NULL,
   `date_destroyed` datetime default NULL,
-  `user_id` int(10) unsigned default NULL,
+  `user_id` int(10) unsigned default NULL COMMENT 'investigators user_id, can be nil',
+  `food` float NOT NULL COMMENT 'food in grams',
+  `fed_by` varchar(45) NOT NULL COMMENT 'fed by "investigator" or "animal care"',
+  `species` varchar(45) NOT NULL COMMENT 'species of bat',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -141,15 +186,17 @@ CREATE TABLE `cages` (
 -- Dumping data for table `cages`
 --
 
-
 /*!40000 ALTER TABLE `cages` DISABLE KEYS */;
-LOCK TABLES `cages` WRITE;
-INSERT INTO `cages` VALUES (1,'Cage1','2006-01-05 00:00:00',NULL,NULL),(2,'Cage2','2006-02-05 00:00:00','2006-10-05 00:00:00',NULL),(3,'Cage3','2006-03-05 00:00:00',NULL,NULL),(4,'Cage4','2006-04-05 00:00:00',NULL,NULL);
-UNLOCK TABLES;
+INSERT INTO `cages` (`id`,`name`,`date_created`,`date_destroyed`,`user_id`,`food`,`fed_by`,`species`) VALUES 
+ (1,'Cage1','2006-01-05 00:00:00',NULL,1,20,'Animal Care',''),
+ (2,'Cage2','2006-02-05 00:00:00','2006-10-05 00:00:00',NULL,0,'',''),
+ (3,'Cage3','2006-03-05 00:00:00',NULL,NULL,100,'Animal Care',''),
+ (4,'Cage4','2006-04-05 00:00:00',NULL,NULL,0,'','');
 /*!40000 ALTER TABLE `cages` ENABLE KEYS */;
 
+
 --
--- Table structure for table `medical_care_actions`
+-- Definition of table `medical_care_actions`
 --
 
 DROP TABLE IF EXISTS `medical_care_actions`;
@@ -168,14 +215,12 @@ CREATE TABLE `medical_care_actions` (
 -- Dumping data for table `medical_care_actions`
 --
 
-
 /*!40000 ALTER TABLE `medical_care_actions` DISABLE KEYS */;
-LOCK TABLES `medical_care_actions` WRITE;
-UNLOCK TABLES;
 /*!40000 ALTER TABLE `medical_care_actions` ENABLE KEYS */;
 
+
 --
--- Table structure for table `medical_problems`
+-- Definition of table `medical_problems`
 --
 
 DROP TABLE IF EXISTS `medical_problems`;
@@ -193,14 +238,12 @@ CREATE TABLE `medical_problems` (
 -- Dumping data for table `medical_problems`
 --
 
-
 /*!40000 ALTER TABLE `medical_problems` DISABLE KEYS */;
-LOCK TABLES `medical_problems` WRITE;
-UNLOCK TABLES;
 /*!40000 ALTER TABLE `medical_problems` ENABLE KEYS */;
 
+
 --
--- Table structure for table `proposed_treatments`
+-- Definition of table `proposed_treatments`
 --
 
 DROP TABLE IF EXISTS `proposed_treatments`;
@@ -219,14 +262,12 @@ CREATE TABLE `proposed_treatments` (
 -- Dumping data for table `proposed_treatments`
 --
 
-
 /*!40000 ALTER TABLE `proposed_treatments` DISABLE KEYS */;
-LOCK TABLES `proposed_treatments` WRITE;
-UNLOCK TABLES;
 /*!40000 ALTER TABLE `proposed_treatments` ENABLE KEYS */;
 
+
 --
--- Table structure for table `protocol_end_histories`
+-- Definition of table `protocol_end_histories`
 --
 
 DROP TABLE IF EXISTS `protocol_end_histories`;
@@ -243,14 +284,12 @@ CREATE TABLE `protocol_end_histories` (
 -- Dumping data for table `protocol_end_histories`
 --
 
-
 /*!40000 ALTER TABLE `protocol_end_histories` DISABLE KEYS */;
-LOCK TABLES `protocol_end_histories` WRITE;
-UNLOCK TABLES;
 /*!40000 ALTER TABLE `protocol_end_histories` ENABLE KEYS */;
 
+
 --
--- Table structure for table `protocol_start_histories`
+-- Definition of table `protocol_start_histories`
 --
 
 DROP TABLE IF EXISTS `protocol_start_histories`;
@@ -267,14 +306,12 @@ CREATE TABLE `protocol_start_histories` (
 -- Dumping data for table `protocol_start_histories`
 --
 
-
 /*!40000 ALTER TABLE `protocol_start_histories` DISABLE KEYS */;
-LOCK TABLES `protocol_start_histories` WRITE;
-UNLOCK TABLES;
 /*!40000 ALTER TABLE `protocol_start_histories` ENABLE KEYS */;
 
+
 --
--- Table structure for table `protocols`
+-- Definition of table `protocols`
 --
 
 DROP TABLE IF EXISTS `protocols`;
@@ -292,14 +329,12 @@ CREATE TABLE `protocols` (
 -- Dumping data for table `protocols`
 --
 
-
 /*!40000 ALTER TABLE `protocols` DISABLE KEYS */;
-LOCK TABLES `protocols` WRITE;
-UNLOCK TABLES;
 /*!40000 ALTER TABLE `protocols` ENABLE KEYS */;
 
+
 --
--- Table structure for table `users`
+-- Definition of table `users`
 --
 
 DROP TABLE IF EXISTS `users`;
@@ -317,15 +352,17 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-LOCK TABLES `users` WRITE;
-INSERT INTO `users` VALUES (1,'Conan The Barbarian','CTB','ctb@slash.burn.net','2006-01-01 00:00:00',NULL),(2,'Adam The Apple','','','2006-02-05 00:00:00',NULL),(3,'Greyhound Bus','\"The Bus\"','','2006-03-05 00:00:00',NULL),(4,'Winston Churchill','WC','','2006-04-05 00:00:00','2006-11-05 00:00:00');
-UNLOCK TABLES;
+INSERT INTO `users` (`id`,`name`,`initials`,`email`,`start_date`,`end_date`) VALUES 
+ (1,'Conan The Barbarian','CTB','ctb@slash.burn.net','2006-01-01 00:00:00',NULL),
+ (2,'Adam The Apple','AA','','2006-02-05 00:00:00',NULL),
+ (3,'Greyhound Bus','\"The Bus\"','','2006-03-05 00:00:00',NULL),
+ (4,'Winston Churchill','WC','','2006-04-05 00:00:00','2006-11-05 00:00:00');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
+
 --
--- Table structure for table `weights`
+-- Definition of table `weights`
 --
 
 DROP TABLE IF EXISTS `weights`;
@@ -344,12 +381,39 @@ CREATE TABLE `weights` (
 -- Dumping data for table `weights`
 --
 
-
 /*!40000 ALTER TABLE `weights` DISABLE KEYS */;
-LOCK TABLES `weights` WRITE;
-UNLOCK TABLES;
+INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user_id`) VALUES 
+ (1,1,'2006-12-07 19:10:20',10,'','',2),
+ (2,2,'2006-12-07 19:10:20',20,'','',2),
+ (3,3,'2006-12-07 19:10:20',30,'','',2),
+ (4,5,'2006-12-07 19:10:21',40,'','',2),
+ (5,7,'2006-12-07 19:10:21',50,'','',2),
+ (6,4,'2006-12-07 19:26:30',0,'','',2),
+ (7,6,'2006-12-07 19:26:30',0,'','',2),
+ (8,4,'2006-12-07 19:28:23',20,'Good weight','',2),
+ (9,6,'2006-12-07 19:28:23',40,'Porker! Go on diet Now!','',2),
+ (10,1,'2006-12-08 16:16:53',10,'','',2),
+ (11,2,'2006-12-08 16:16:54',20,'','',2),
+ (12,3,'2006-12-08 16:16:54',30,'','',2),
+ (13,4,'2006-12-08 16:16:54',40,'','',2),
+ (14,1,'2006-12-08 16:20:13',40,'','',2),
+ (15,2,'2006-12-08 16:20:13',20,'','',2),
+ (16,3,'2006-12-08 16:20:13',100,'','',2),
+ (17,4,'2006-12-08 16:20:13',20,'','',2),
+ (18,1,'2006-12-08 16:53:49',90,'','',2),
+ (19,2,'2006-12-08 16:53:49',10,'','',2),
+ (20,3,'2006-12-08 16:53:49',100,'Porker!','',2),
+ (21,4,'2006-12-08 16:53:49',200,'Problem!','',2),
+ (22,5,'2006-12-08 16:53:49',20,'','',2);
+INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user_id`) VALUES 
+ (23,2,'2006-12-08 16:56:44',30,'Too heavy','',2),
+ (24,3,'2006-12-08 16:56:44',34,'','',2),
+ (25,4,'2006-12-08 16:56:44',11,'','',2),
+ (26,5,'2006-12-08 16:56:44',10,'','',2);
 /*!40000 ALTER TABLE `weights` ENABLE KEYS */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+
+
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
@@ -357,5 +421,4 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

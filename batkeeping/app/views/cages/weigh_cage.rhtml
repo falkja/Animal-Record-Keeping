@@ -9,11 +9,8 @@
 <th>Cage</th>
 <th>Cage change reason</th>
 
-<%# for @bat in @bats %>
-
 <%= render_collection_of_partials "bats/weigh_one_bat", @bats %>
 
-<%# end %>
 </table>
 <%= submit_tag 'Submit Weights' %>
 

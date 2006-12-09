@@ -1,7 +1,0 @@
-<% if session[:person] == nil %>
-<p>You are not signed in.</p>
-<% else %>
-<p>You are signed in as <b><%= session[:person].name %></b>.
-<%= link_to 'Logout', :controller => 'main', :action => 'logout' %></p>
-<%= render_partial 'layouts/menubar' %>
-<% end %>

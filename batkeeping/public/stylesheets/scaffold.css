@@ -1,4 +1,10 @@
-body { background-color: #fff; color: #333; }
+body { 
+	background-color: #fff; 
+	color: #333; 
+	padding-top: 1cm;
+	padding-left: 2cm;
+	padding-right: 2cm;
+	}
 
 body, p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
@@ -72,6 +78,41 @@ div.progressBar div.background {
   width: 0%;
 }
 
+/* To hide the deactivate fields e.g. leave date */
 div.hidden {
   display: none;
+}
+
+div.mainmenu {
+	font-size: 80%;
+	color: black;
+	position:fixed;
+	margin: 0cm;
+	top: 0cm;
+	left: 0cm;
+	right: 0cm;
+	padding-bottom: .1cm;
+	background-color: #eee;	
+}
+
+div.mainmenu a {
+	text-decoration: none;
+}
+
+/* the log in name is shown here */
+div.session {
+	position:fixed;
+	top: .5cm;
+	right: 2cm;
+	text-align: right;
+}
+
+div.mainmenutasks {
+	padding-left: 2cm;
+	padding-right: 2cm;
+}	
+
+div.mainmenulinks {
+	padding-left: 2cm;
+	padding-right: 2cm;	
 }

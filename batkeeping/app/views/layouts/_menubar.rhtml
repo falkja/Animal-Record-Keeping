@@ -1,14 +1,15 @@
-<p>
-Tasks: <%= link_to 'Move Bat(s)', :controller => 'bats', :action => 'choose_cage' %> | 
-<%= link_to 'Weigh Bats', :controller => 'cages', :action => 'choose_cage_to_weigh' %> | 
-<%= link_to 'New Bat', :controller => 'bats', :action => 'new' %> | 
-<%= link_to 'New Cage', :controller => 'cages', :action => 'new' %> | 
-</p>
-
-<p>Links: <%= link_to 'List Bats', :controller => 'bats', :action => 'list' %> | 
-<%= link_to 'List Cages', :controller => 'cages', :action => 'list' %> | 
-<%= link_to 'List Protocols', :controller => 'protocols', :action => 'list' %> | 
+<div class="mainmenulinks">
+Links:
+<%= link_to 'List Bats', :controller => 'bats', :action => 'list' %> |
+<%= link_to 'List Cages', :controller => 'cages', :action => 'list' %> |
+<%= link_to 'List Protocols', :controller => 'protocols', :action => 'list' %> |
 <%= link_to 'List Users', :controller => 'users', :action => 'list' %>
-</p>
+</div>
 
-<hr />
+<div class="mainmenutasks">
+Tasks: 
+<%= link_to 'Move Bat(s)', :controller => 'bats', :action => 'choose_cage' %> |
+<%= link_to 'Weigh Bats', :controller => 'cages', :action => 'choose_cage_to_weigh' %> |
+<%= link_to 'New Bat', :controller => 'bats', :action => 'new' %> |
+<%= link_to 'New Cage', :controller => 'cages', :action => 'new' %>
+</div>

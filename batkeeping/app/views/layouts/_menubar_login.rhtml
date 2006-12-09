@@ -1,0 +1,16 @@
+<div class="mainmenu">
+
+<% if session[:person] == nil %>
+<div class="session">
+You are not signed in. 
+[ <%= link_to 'sign in', :controller => 'main', :action => 'index' %> ]
+</div>
+<% else %>
+<div class="session">
+<b><%= session[:person].name %>
+[ <%= link_to 'log out', :controller => 'main', :action => 'logout' %> ]
+</div>
+<%= render_partial 'layouts/menubar' %>
+<% end %>
+
+</div>

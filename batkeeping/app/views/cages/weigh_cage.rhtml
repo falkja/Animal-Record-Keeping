@@ -1,11 +1,10 @@
-<h1> Weigh Bats </h1>
+<h1> Weigh bats in cage <%= @cage.name %></h1>
 
 <%= start_form_tag :action => 'submit_weights', :id => @cage %>
 
-<p>Weighing bats in cage: <%= @cage.name %></p>
 <table>
 <th>Band</th>
-<th>Weight(g)</th>
+<th>Weight</th>
 <th align='left'>Weight Notes</th>
 <th>Cage</th>
 <th>Cage change reason</th>

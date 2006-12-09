@@ -11,7 +11,7 @@ class MainController < ApplicationController
   
   def login
 	session[:person] = User.find(params[:user][:id])
-	redirect_to :action => 'index'
+	redirect_to :action => 'summary_page'
   end
   
   def logout
@@ -25,4 +25,6 @@ class MainController < ApplicationController
 	redirect_to :action => 'index'
   end
 
+  def summary_page
+  end
 end

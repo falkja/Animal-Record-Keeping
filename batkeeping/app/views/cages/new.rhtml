@@ -1,5 +1,7 @@
 <h1>New cage</h1>
 
+<% @disable_cage_name_change = false %>
+
 <%= start_form_tag :action => 'create' %>
   <%= render :partial => 'form' %>
   <%= submit_tag "Create" %>

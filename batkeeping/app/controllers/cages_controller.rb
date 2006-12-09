@@ -52,6 +52,8 @@ class CagesController < ApplicationController
 
   def update
     @cage = Cage.find(params[:id])
+    #we don't want the name change propagated on an edit so we remove that from the hash
+    params[:cage].delete "name"
     if @cage.update_attributes(params[:cage])
       flash[:notice] = 'Cage was successfully updated.'
       if params[:redirectme] == 'list'

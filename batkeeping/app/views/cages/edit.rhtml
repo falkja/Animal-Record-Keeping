@@ -1,4 +1,6 @@
-<h1>Editing cage</h1>
+<h1>Editing cage <%= @cage.name %></h1>
+
+<% @disable_cage_name_change = true %>
 
 <%= start_form_tag :action => 'update', :id => @cage %>
   <%= render :partial => 'form' %>

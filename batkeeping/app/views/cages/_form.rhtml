@@ -12,19 +12,28 @@
 
 <!--[form:cage]-->
 <%= @everything_else %>
+
 <p><label for="cage_name">Name</label><br/>
-<%= text_field 'cage', 'name'  %></p>
+<%= text_field 'cage', 'name', :disabled => @disable_cage_name_change %></p>
 
 <p><label for="cage_date_created">Date created</label><br/>
-<%= date_select 'cage', 'date_created'  %></p>
+<%= date_select 'cage', 'date_created', :disabled => @disable_cage_name_change   %></p>
+
+<p><label for="user">Owner</label><br/>
+<%= collection_select("cage", "user_id" , 
+User.find(:all, :conditions => "end_date is null", :order => "name"), "id", "name",
+{:include_blank => true}) %>
+
+<p><label for="food">Food amount</label><br/>
+<%= text_field 'cage', 'food', :size => 4, :autocomplete => 'off' %>g</p>
+
+<p><label for="fed_by">Fed by</label><br/>
+<%= select_tag("cage[fed_by]", options_for_select([["Investigator","Investigator"],["Animal Care","Animal Care"]],@cage.fed_by)) %></p>
 </div>
 
 <%= @leave_date %>
 <p><label for="cage_date_destroyed">Date destroyed</label><br/>
-<%= date_select 'cage', 'date_destroyed'  %></p>
-
-
-
+<%= date_select 'cage', 'date_destroyed', :disabled => @disable_leave_date  %></p>
 </div>
 <!--[eoform:cage]-->
 

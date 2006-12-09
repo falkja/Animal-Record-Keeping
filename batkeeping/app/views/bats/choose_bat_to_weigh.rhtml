@@ -1,0 +1,5 @@
+<h1>Choose Bat to Weigh</h1>
+
+<% for bat in @bats %>
+  <p><%= link_to bat.band, :action => 'weigh_bat', :id => bat %></p>
+<% end %>

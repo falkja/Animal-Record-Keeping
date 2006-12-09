@@ -1,0 +1,23 @@
+<h1>Weigh <%= @bat.band%> in <%= @bat.cage.name %></h1>
+
+<%= start_form_tag :action => 'submit_weight', :id => @bat %>
+
+<table>
+<th>Band</th>
+<th>Weight</th>
+<th align='left'>Weight Notes</th>
+<th>Cage</th>
+<th>Cage change reason</th>
+<tr>
+<td><%= @bat.band %></td>
+<td><%= text_field 'weight', @bat.id, :size => 4 %> g</td>
+<td><%= text_field 'note', @bat.id %></td>
+<%# See http://www.rubyonrails.org/api/classes/ActionView/Helpers/FormOptionsHelper.html#M000404 %>
+<td><%= select 'bat_cage', @bat.id.to_s , @cages.collect {|c| [c.name , c.id] }, :selected => @bat.cage.id  %></td>
+<td><%= text_field 'cage_change_note', @bat.id %></td>
+</tr>
+</table>
+
+<%= submit_tag 'Submit Weights' %>
+
+<%= end_form_tag %>

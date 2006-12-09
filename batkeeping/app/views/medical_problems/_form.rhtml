@@ -1,13 +1,17 @@
 <%= error_messages_for 'medical_problem' %>
 
 <!--[form:medical_problem]-->
+<p><b>Bat</b><br/>
+<%= select_tag("bat[id]", options_from_collection_for_select(@bats, "id", "band")) %>
+</p>
+
 <p><label for="medical_problem_date_opened">Date opened</label><br/>
-<%= datetime_select 'medical_problem', 'date_opened'  %></p>
+<%= date_select 'medical_problem', 'date_opened'  %></p>
 
 <p><label for="medical_problem_description">Description</label><br/>
 <%= text_area 'medical_problem', 'description'  %></p>
 
 <p><label for="medical_problem_date_closed">Date closed</label><br/>
-<%= datetime_select 'medical_problem', 'date_closed'  %></p>
+<%= date_select 'medical_problem', 'date_closed'  %></p>
 <!--[eoform:medical_problem]-->
 

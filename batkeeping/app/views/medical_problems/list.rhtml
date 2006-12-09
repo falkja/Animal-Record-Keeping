@@ -5,6 +5,7 @@
   <% for column in MedicalProblem.content_columns %>
     <th><%= column.human_name %></th>
   <% end %>
+  <th>Bat</th>
   </tr>
   
 <% for medical_problem in @medical_problems %>
@@ -12,6 +13,7 @@
   <% for column in MedicalProblem.content_columns %>
     <td><%=h medical_problem.send(column.name) %></td>
   <% end %>
+  <td><%= medical_problem.bat.band %>
     <td><%= link_to 'Show', :action => 'show', :id => medical_problem %></td>
     <td><%= link_to 'Edit', :action => 'edit', :id => medical_problem %></td>
     <td><%= link_to 'Destroy', { :action => 'destroy', :id => medical_problem }, :confirm => 'Are you sure?', :post => true %></td>

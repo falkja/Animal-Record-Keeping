@@ -5,9 +5,15 @@
 </head>
 <body>
 
+<%= render_partial 'layouts/menubar_login' %>
+
 <p style="color: green"><%= flash[:notice] %></p>
 
+<% if session[:person] != nil %>
 <%= yield  %>
+<% else %>
+<%= link_to 'Login', :controller => 'main', :action => 'index' %>
+<% end %>
 
 </body>
 </html>

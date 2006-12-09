@@ -1,7 +1,13 @@
 class MedicalProblemsController < ApplicationController
   def index
-    list
-    render :action => 'list'
+    @all_bats = Bat.find(:all, :conditions => "leave_date is null", :order => "band")
+    @bats = Array.new
+    @medical_problems = MedicalProblem.find(:all)
+    for medical_problem in @medical_problems
+      if medical_problem.bat != nil
+        @bats << medical_problem.bat
+      end
+    end
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
@@ -18,10 +24,14 @@ class MedicalProblemsController < ApplicationController
 
   def new
     @medical_problem = MedicalProblem.new
+    @bats = Bat.find(:all, :conditions => "leave_date is null", :order => "band")
   end
 
   def create
+    @bat = Bat.find(params[:bat][:id])
     @medical_problem = MedicalProblem.new(params[:medical_problem])
+    @medical_problem.bat = @bat
+    @medical_problem.user = session[:person]
     if @medical_problem.save
       flash[:notice] = 'MedicalProblem was successfully created.'
       redirect_to :action => 'list'

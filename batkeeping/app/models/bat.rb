@@ -4,6 +4,7 @@ class Bat < ActiveRecord::Base
     has_many :weights, :order => "date desc"
     has_many :cage_in_histories, :order => "date desc"
     has_many :cage_out_histories, :order => "date desc"
+    has_many :medical_problems, :order => "date_opened desc"
     
     @@current_user = nil #needed for the sig
     @@comment = nil #needed if we wanna comment a cage move

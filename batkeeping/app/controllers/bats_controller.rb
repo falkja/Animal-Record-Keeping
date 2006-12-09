@@ -126,4 +126,34 @@ end
 	@cage.bats << @bats
 	@cage.bats = @cage.bats.uniq
   end
+
+  def choose_bat_to_weigh
+    @bats = Bat.find(:all, :conditions => "leave_date is null", :order => "band")
+  end
+  
+  def weigh_bat
+    @bat = Bat.find(params[:id])
+    @cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name" )
+  end
+  
+  def submit_weight
+  @bat = Bat.find(params[:id])
+
+    #enter weights  
+	@cage = @bat.cage
+
+		weight = Weight.new
+		weight.bat = @bat
+		weight.date = Time.now
+		weight.user = session[:person]
+		weight.weight = params[:weight][@bat.id.to_s] #The hash key is actually a string, so we need to convert the id to a string
+    weight.note = params[:note][@bat.id.to_s]
+		weight.save
+
+    #now perform cage changes, if needed
+        Bat::set_user_and_comment(session[:person], params[:cage_change_note][@bat.id.to_s]) #This must come before we mess with the list of bats for a cage. The moment we mess with the list, the cage and bat variables are updated.      
+        @bat.cage = Cage.find(params[:bat_cage][@bat.id.to_s])
+        @bat.save
+
+  end
 end

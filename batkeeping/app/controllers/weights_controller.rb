@@ -49,7 +49,6 @@ class WeightsController < ApplicationController
     redirect_to :action => 'list'
   end
   
-  def
-      
+  def weighing_choice
   end
 end

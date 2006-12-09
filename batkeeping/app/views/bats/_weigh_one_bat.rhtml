@@ -1,0 +1,8 @@
+<tr bgcolor="<%= weigh_one_bat_counter.modulo(2).nonzero? ? "#e0e0e0" : "" %>">
+<td><%= weigh_one_bat.band %></td>
+<td><%= text_field 'weight', weigh_one_bat.id, :size => 4 %> g</td>
+<td><%= text_field 'note', weigh_one_bat.id %></td>
+<%# See http://www.rubyonrails.org/api/classes/ActionView/Helpers/FormOptionsHelper.html#M000404 %>
+<td><%= select 'bat_cage', weigh_one_bat.id.to_s , @cages.collect {|c| [c.name , c.id] }, :selected => weigh_one_bat.cage.id  %></td>
+<td><%= text_field 'cage_change_note', weigh_one_bat.id %></td>
+</tr>

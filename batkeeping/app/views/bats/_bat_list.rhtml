@@ -1,5 +1,26 @@
 <%# Remember this partial also needs a global called @list_all that tells it if it is listing
     all bats or just active ones %>
+    
+<table>
+  <tr>
+    <% if @list_all %>
+      <th><%= link_to 'Band', :action => 'list_all_by_band'%></th>
+      <th><%= link_to 'Cage', :action => 'list_all_by_cage' %></th>
+    <% else %>
+      <th><%= link_to 'Band', :action => 'list_by_band' %></th>
+      <th><%= link_to 'Cage', :action => 'list' %></th>
+    <% end %>
+	<th>Species</th>
+	<th>Gender</th>
+	<th>Collection Age</th>
+	<th>Collection Date</th>
+	<th>Collection Place</th>
+	<% if @list_all %>
+		<th>Leave Date</th>
+		<th>Leave Reason</th>
+	<% end %>
+  </tr>
+    
 <% for bat in bat_list %>
   <tr>
     <td>
@@ -41,3 +62,5 @@
     </td>
   </tr>
 <% end %>
+
+</table>

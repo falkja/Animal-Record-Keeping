@@ -6,30 +6,9 @@ Listing current bats
 <% end %>
 </h1>
 
-<table>
-  <tr>
-    <% if @list_all %>
-      <th><%= link_to 'Band', :action => 'list_all_by_band'%></th>
-      <th><%= link_to 'Cage', :action => 'list_all_by_cage' %></th>
-    <% else %>
-      <th><%= link_to 'Band', :action => 'list_by_band' %></th>
-      <th><%= link_to 'Cage', :action => 'list' %></th>
-    <% end %>
-	<th>Species</th>
-	<th>Gender</th>
-	<th>Collection Age</th>
-	<th>Collection Date</th>
-	<th>Collection Place</th>
-	<% if @list_all %>
-		<th>Leave Date</th>
-		<th>Leave Reason</th>
-	<% end %>
-  </tr>
   
   <%= render_partial 'bat_list', @bats %>
   
-</table>
-
 <%= link_to 'Previous page', { :page => @bat_pages.current.previous } if @bat_pages.current.previous %>
 <%= link_to 'Next page', { :page => @bat_pages.current.next } if @bat_pages.current.next %> 
 

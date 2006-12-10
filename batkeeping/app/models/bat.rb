@@ -9,6 +9,13 @@ class Bat < ActiveRecord::Base
     @@current_user = nil #needed for the sig
     @@comment = nil #needed if we wanna comment a cage move
     
+    
+    #From http://www.therailsway.com/tags/rails
+    #This lets us do Bats.active AS WELL AS cage.bats.active !
+    def self.active
+        find :all, :conditions => 'leave_date is null'
+    end
+    
     def Bat.set_user_and_comment(user, cmt)
         @@current_user = user
         @@comment = cmt

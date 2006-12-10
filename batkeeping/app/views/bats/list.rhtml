@@ -26,47 +26,8 @@ Listing current bats
 	<% end %>
   </tr>
   
-<% for bat in @bats %>
-  <tr>
-    <td>
-      <b><%= link_to bat.band, :action => 'show', :id => bat %></b>
-    </td>
-    <td>
-		<%= link_to bat.cage.name, :controller => 'cages', :action => 'show', :id => bat.cage %>
-	</td>
-	<td>
-		<%=h bat.species %>
-	</td>
-	<td>
-		<%=h bat.gender %>
-	</td>
-	<td>
-		<%=h bat.collection_age %>
-	</td>
-	<td>
-		<%=h nice_date_no_day(bat.collection_date) %>
-	</td>
-	<td>
-		<%=h bat.collection_place %>
-	</td>
-	<% if @list_all %>
-	<td>
-		<%=h nice_date_no_day(bat.leave_date) %>
-	</td>
-	<td>
-		<%=h bat.leave_reason %>
-	</td>
-	<% end %>
-    <td><%= link_to 'Edit', :action => 'edit', :id => bat %></td>
-    <td>
-	<% if bat.leave_date == nil %>
-	<%= link_to 'Deactivate', { :action => 'deactivate', :id => bat }, :confirm => 'Are you sure?', :post => true %>
-	<% else %>
-	<%=  link_to 'Reactivate', { :action => 'reactivate', :id => bat }, :confirm => 'Are you sure?', :post => true %>
-        <% end %>
-    </td>
-  </tr>
-<% end %>
+  <%= render_partial 'bat_list', @bats %>
+  
 </table>
 
 <%= link_to 'Previous page', { :page => @bat_pages.current.previous } if @bat_pages.current.previous %>

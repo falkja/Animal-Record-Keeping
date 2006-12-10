@@ -6,44 +6,7 @@ Listing current cages
 <% end %>
 </h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Bats</th>
-    <th>Food</th>
-    <th>Owner</th>
-    <th>Fed by</th>
-    <th>Created</th>
-    <% if @list_all %>
-      <th>Destroyed</th>
-    <% end %>
-  </tr>
-  
-<% for cage in @cages %>
-  <tr>
-    <td>
-      <b><%= link_to cage.name, :action => 'show', :id => cage %></b>
-    </td>
-	<td><%=h cage.bats.count %></td>
-    <td><%=h cage.food %>g</td>
-    <td><%=h cage.user ? cage.user.name : "NP" %></td>
-    <td><%=h cage.fed_by %></td>
-	<td><%=h nice_date(cage.date_created) %></td>
-  <% if @list_all %>
-  <td><%=h nice_date(cage.date_destroyed) %></td>
-<% end %>
-    <td><%= link_to 'Edit', :action => 'edit', :id => cage %></td>
-    <td>
-	
-	<% if cage.date_destroyed == nil %>
-	<%= link_to 'Deactivate', { :action => 'deactivate', :id => cage }, :confirm => 'Are you sure?', :post => true %>
-	<% else %>
-	<%=  link_to 'Reactivate', { :action => 'reactivate', :id => cage }, :confirm => 'Are you sure?', :post => true %>
-    <% end %>
-	</td>
-  </tr>
-<% end %>
-</table>
+<%= render_partial 'cages/cage_list', @cages %>
 
 <%= link_to 'Previous page', { :page => @cage_pages.current.previous } if @cage_pages.current.previous %>
 <%= link_to 'Next page', { :page => @cage_pages.current.next } if @cage_pages.current.next %> 
@@ -56,4 +19,3 @@ Listing current cages
 <% else %>
 <%= link_to 'List All Cages', :action => 'list_all' %>
 <% end %>
-

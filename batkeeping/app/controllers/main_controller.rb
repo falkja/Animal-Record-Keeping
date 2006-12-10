@@ -25,6 +25,13 @@ class MainController < ApplicationController
 	redirect_to :action => 'index'
   end
 
+  #lists things of relevance to only the user
   def summary_page
+	@mycages = session[:person].cages
   end
+  
+  #lists global things of interest to everyone
+  def notices_page
+  end
+  
 end

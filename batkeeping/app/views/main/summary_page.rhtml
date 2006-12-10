@@ -1,3 +1,4 @@
-<h1>Summary page</h1>
+<h1>Summary page for <%= session[:person].name %></h1>
 
-List of tasks or cages etc for currently signed in user.
+<h3>Your cages</h3>
+<%= @mycages.count > 0 ? render_partial('cages/cage_list', @mycages) : 'No cages' %>

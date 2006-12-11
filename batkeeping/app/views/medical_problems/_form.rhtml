@@ -1,6 +1,18 @@
 <%= error_messages_for 'medical_problem' %>
 
+<% if @deactivating == true %>
+<%   @disable_leave_date = false %>
+<%   @everything_else = '<div class="hidden">' %>
+<%   @leave_date = '<div>' %>
+<% else %>
+<%   @disable_leave_date = true %>
+<%   @everything_else = '<div>' %>
+<%   @leave_date = '<div class="hidden">' %>
+<% end %>
+
 <!--[form:medical_problem]-->
+<%= @everything_else %>
+
 <p><b>Bat</b><br/>
 <%= select_tag("bat[id]", options_from_collection_for_select(@bats, "id", "band")) %>
 </p>
@@ -11,7 +23,14 @@
 <p><label for="medical_problem_description">Description</label><br/>
 <%= text_area 'medical_problem', 'description'  %></p>
 
+<p><label for="proposed_treatment_treatment">Treatment</label><br/>
+<%= text_area 'proposed_treatment', 'treatment'  %></p>
+
+</div>
+
+<%= @leave_date %>
 <p><label for="medical_problem_date_closed">Date closed</label><br/>
 <%= date_select 'medical_problem', 'date_closed'  %></p>
+</div>
 <!--[eoform:medical_problem]-->
 

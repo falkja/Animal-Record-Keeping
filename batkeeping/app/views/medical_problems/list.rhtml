@@ -1,19 +1,25 @@
-<h1>Listing medical_problems</h1>
+<h1>Listing All Medical Problems</h1>
 
 <table>
   <tr>
-  <% for column in MedicalProblem.content_columns %>
-    <th><%= column.human_name %></th>
-  <% end %>
   <th>Bat</th>
+  <th>Description</th>
+  <th>Proposed Treatment</th>
+  <th>Date Opened</th>
+  <th>Date Closed</th>
   </tr>
   
 <% for medical_problem in @medical_problems %>
   <tr>
-  <% for column in MedicalProblem.content_columns %>
-    <td><%=h medical_problem.send(column.name) %></td>
+  <td><%= medical_problem.bat.band %></td>
+  <td><%= medical_problem.description %></td>
+  <td>
+  <% for proposed_treatment in medical_problem.proposed_treatments %>
+      <%= proposed_treatment.treatment %>
   <% end %>
-  <td><%= medical_problem.bat.band %>
+  </td>
+  <td><%= nice_date medical_problem.date_opened %></td>
+  <td><%= nice_date medical_problem.date_closed %></td>
     <td><%= link_to 'Show', :action => 'show', :id => medical_problem %></td>
     <td><%= link_to 'Edit', :action => 'edit', :id => medical_problem %></td>
     <td><%= link_to 'Destroy', { :action => 'destroy', :id => medical_problem }, :confirm => 'Are you sure?', :post => true %></td>
@@ -26,4 +32,4 @@
 
 <br />
 
-<%= link_to 'New medical_problem', :action => 'new' %>
+<%= link_to 'New Medical Problem', :action => 'new' %>

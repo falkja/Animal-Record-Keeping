@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>Bats: <%= controller.action_name %></title>
+  <title>Batkeeping <%= controller.action_name %></title>
   <%= stylesheet_link_tag 'scaffold' %>
 </head>
 <body>
@@ -11,8 +11,6 @@
 
 <% if session[:person] != nil %>
 <%= yield  %>
-<% else %>
-<%= link_to 'Login', :controller => 'main', :action => 'index' %>
 <% end %>
 
 </body>

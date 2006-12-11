@@ -1,7 +1,9 @@
 <p>
-<% if @bats %>
-<%= start_form_tag :action => 'medicate_bat', :id => @bat %>
-Pick a bat with a current medical problem: <%= select_tag("bat[id]", options_from_collection_for_select(@bats, "id", "band")) %>
+<% if @medical_problems[0] != nil %>
+<%= start_form_tag :action => 'medicate_bat', :id => @medical_problem %>
+
+Pick a current medical problem: <%= select_tag "medical_problem[id]", options_from_collection_for_select(@medical_problems, "id", "description") %>
+
 <%= submit_tag 'Go' %>
 <%= end_form_tag %>
 

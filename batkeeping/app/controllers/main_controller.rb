@@ -1,6 +1,7 @@
 class MainController < ApplicationController
+  
   def index
-	@users = User.find(:all, :conditions => "end_date is null", :order => "name")
+    @users = User.find(:all, :conditions => "end_date is null", :order => "name")
   end
   
   #just show all cage changes
@@ -10,8 +11,8 @@ class MainController < ApplicationController
   end
   
   def login
-	session[:person] = User.find(params[:user][:id])
-	redirect_to :action => 'summary_page'
+      session[:person] = User.find(params[:user][:id])
+      redirect_to :action => 'summary_page'
   end
   
   def logout
@@ -27,7 +28,11 @@ class MainController < ApplicationController
 
   #lists things of relevance to only the user
   def summary_page
-	@mycages = session[:person].cages
+		if session[:person] != nil
+      @mycages = session[:person].cages
+    else
+      redirect_to :action => 'index'
+    end
   end
   
   #lists global things of interest to everyone

@@ -1,7 +1,7 @@
 -- MySQL Administrator dump 1.4
 --
 -- ------------------------------------------------------
--- Server version	5.0.17-nt
+-- Server version	5.0.27-community-nt
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -190,8 +190,8 @@ CREATE TABLE `cages` (
 INSERT INTO `cages` (`id`,`name`,`date_created`,`date_destroyed`,`user_id`,`food`,`fed_by`,`species`) VALUES 
  (1,'Cage1','2006-01-05 00:00:00',NULL,1,20,'Animal Care',''),
  (2,'Cage2','2006-02-05 00:00:00','2006-10-05 00:00:00',NULL,0,'',''),
- (3,'Cage3','2006-03-05 00:00:00',NULL,NULL,100,'Animal Care',''),
- (4,'Cage4','2006-04-05 00:00:00',NULL,NULL,0,'','');
+ (3,'Cage3','2006-03-05 00:00:00',NULL,2,100,'Animal Care',''),
+ (4,'Cage4','2006-04-05 00:00:00',NULL,3,0,'Investigator','');
 /*!40000 ALTER TABLE `cages` ENABLE KEYS */;
 
 
@@ -252,7 +252,7 @@ CREATE TABLE `proposed_treatments` (
   `medical_problem_id` int(10) unsigned NOT NULL,
   `date_started` datetime NOT NULL,
   `date_finished` datetime NOT NULL,
-  `date_closed` datetime NOT NULL,
+  `date_closed` datetime default NULL,
   `treatment` text NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
   PRIMARY KEY  (`id`)

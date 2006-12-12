@@ -1,4 +1,8 @@
+<% if @list_all %>
 <h1>Listing All Medical Problems</h1>
+<% else %>
+<h1>Listing Current Medical Problems</h1>
+<% end %>
 
 <table>
   <tr>
@@ -6,24 +10,33 @@
   <th>Description</th>
   <th>Proposed Treatment</th>
   <th>Date Opened</th>
-  <th>Date Closed</th>
+  <% if @list_all %>
+    <th>Date Closed</th>
+  <% end %>
+
   </tr>
   
 <% for medical_problem in @medical_problems %>
+  <% for proposed_treatment in medical_problem.proposed_treatments %>
   <tr>
   <td><%= medical_problem.bat.band %></td>
   <td><%= medical_problem.description %></td>
-  <td>
-  <% for proposed_treatment in medical_problem.proposed_treatments %>
-      <%= proposed_treatment.treatment %>
-  <% end %>
-  </td>
+  <td><%= proposed_treatment.treatment %></td>
   <td><%= nice_date medical_problem.date_opened %></td>
-  <td><%= nice_date medical_problem.date_closed %></td>
+  <% if @list_all %>
+    <td><%= nice_date medical_problem.date_closed %></td>
+  <% end %>
     <td><%= link_to 'Show', :action => 'show', :id => medical_problem %></td>
     <td><%= link_to 'Edit', :action => 'edit', :id => medical_problem %></td>
-    <td><%= link_to 'Destroy', { :action => 'destroy', :id => medical_problem }, :confirm => 'Are you sure?', :post => true %></td>
+    <td>
+      <% if medical_problem.date_closed == nil %>
+        <%= link_to 'Deactivate', { :action => 'deactivate', :id => medical_problem, :id => proposed_treatment }, :confirm => 'Are you sure?', :post => true %>
+      <% else %>
+        <%= link_to 'Reactivate', { :action => 'reactivate', :id => medical_problem }, :confirm => 'Are you sure?', :post => true %>
+      <% end %>
+    </td>
   </tr>
+  <% end %>
 <% end %>
 </table>
 
@@ -32,4 +45,10 @@
 
 <br />
 
-<%= link_to 'New Medical Problem', :action => 'new' %>
+<%= link_to 'New Medical Problem', :action => 'new' %> | 
+
+<% if @list_all %>
+<%= link_to 'List Current Medical Problems', :action => 'list' %>
+<% else %>
+<%= link_to 'List All Medical Problems', :action => 'list_all' %>
+<% end %>

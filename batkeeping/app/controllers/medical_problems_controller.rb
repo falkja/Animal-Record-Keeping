@@ -9,9 +9,16 @@ class MedicalProblemsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @medical_problem_pages, @medical_problems = paginate :medical_problems, :per_page => 10
+    @medical_problem_pages, @medical_problems = paginate :medical_problems,  :order => 'bat_id', :per_page => 10, :conditions => "date_closed is null"
+    @list_all = false
   end
 
+  def list_all
+    @medical_problem_pages, @medical_problems = paginate :medical_problems,  :order => 'bat_id', :per_page => 10
+    @list_all = true
+    render :action => 'list'
+  end
+  
   def show
     @medical_problem = MedicalProblem.find(params[:id])
   end
@@ -31,8 +38,8 @@ class MedicalProblemsController < ApplicationController
     
     proposed_treatment = ProposedTreatment.new
     proposed_treatment.date_started = Time.now
-    proposed_treatment.date_finished = Time.now
-    proposed_treatment.date_closed = Time.now
+    proposed_treatment.date_finished = Time.now + 5.days
+    proposed_treatment.date_closed = nil
     proposed_treatment.treatment = params[:proposed_treatment][:treatment]
     proposed_treatment.user = session[:person]
     proposed_treatment.medical_problem = @medical_problem
@@ -55,7 +62,11 @@ class MedicalProblemsController < ApplicationController
     @medical_problem = MedicalProblem.find(params[:id])
     if @medical_problem.update_attributes(params[:medical_problem])
       flash[:notice] = 'MedicalProblem was successfully updated.'
-      redirect_to :action => 'show', :id => @medical_problem
+	  if params[:redirectme] == 'list'
+		redirect_to :action => 'list'
+	  else
+		redirect_to :action => 'show', :id => @bat
+	  end
     else
       render :action => 'edit'
     end
@@ -67,6 +78,14 @@ class MedicalProblemsController < ApplicationController
   end
   
   def deactivate
-	@deactivating = true
-end
+	@medical_problem = MedicalProblem.find(params[:id])
+  @bats = Bat.find(:all, :conditions => "leave_date is null", :order => "band")
+  @proposed_treatment = ProposedTreatment.find(params[:id])
+  @deactivating = true
+  @proposed_treatment.date_closed = Time.now
+  end
+  
+  def reactivate
+    
+  end
 end

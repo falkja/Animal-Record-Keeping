@@ -1,0 +1,8 @@
+<h1>Deactivating medical problem</h1>
+
+<%= "Bat: " + @medical_problem.bat.band + "<br>Treatment: " + @proposed_treatment.treatment %>
+
+<%= start_form_tag :action => 'update', :id => @medical_problem, :redirectme => 'list' %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag 'Deactivate' %>
+<%= end_form_tag %>

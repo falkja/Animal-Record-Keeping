@@ -86,6 +86,6 @@ class MedicalProblemsController < ApplicationController
   end
   
   def reactivate
-    
+    @proposed_treatment.date_closed = nil
   end
 end

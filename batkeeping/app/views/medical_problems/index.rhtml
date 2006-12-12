@@ -1,14 +1,14 @@
 <p>
-<% if @medical_problems[0] != nil %>
-<%= start_form_tag :action => 'medicate_bat', :id => @medical_problem %>
+<% if @medical_problems[0] != nil  %>
 
-Pick a current medical problem: <%= select_tag "medical_problem[id]", options_from_collection_for_select(@medical_problems, "id", "description") %>
+Pick a current medical problem: 
 
-<%= submit_tag 'Go' %>
-<%= end_form_tag %>
-
+<% for medical_problem in @medical_problems %>
+      <p<%= link_to medical_problem.description, :action => 'show', :id => medical_problem %> 
+      Bat: <%= medical_problem.bat.band%><p/>
+<% end %>
 <% else %>
-There are no current medical bats!
+There are no current medical problems!
 <% end %>
 </p>
 

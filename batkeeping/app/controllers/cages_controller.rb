@@ -73,7 +73,12 @@ class CagesController < ApplicationController
   
   def deactivate
 	@cage = Cage.find(params[:id])
-	@deactivating = true
+  if @cage.bats.count == 0
+    @deactivating = true
+  else
+    flash[:notice] = @cage.name + ' was not empty.  Please move bats before deactivating cage.'
+    redirect_to :controller => 'bats', :action => 'cage_change', :id => @cage
+  end
   end
   
   def reactivate

@@ -5,7 +5,6 @@
     <th>Food</th>
     <th>Owner</th>
     <th>Fed by</th>
-    <th>Created</th>
     <% if @list_all %>
       <th>Destroyed</th>
     <% end %>
@@ -20,7 +19,6 @@
     <td><%=h cage.food %>g</td>
     <td><%=h cage.user ? cage.user.name : "NP" %></td>
     <td><%=h cage.fed_by %></td>
-	<td><%=h nice_date(cage.date_created) %></td>
   <% if @list_all %>
   <td><%=h nice_date(cage.date_destroyed) %></td>
 <% end %>

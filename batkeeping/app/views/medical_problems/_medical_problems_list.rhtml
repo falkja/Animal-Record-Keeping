@@ -1,0 +1,39 @@
+<table>
+  <tr>
+  <th>Bat</th>
+  <th>Description</th>
+  <th>Treatment</th>
+  <th>Date Opened</th>
+  <% if @list_all %>
+    <th>Date Closed</th>
+  <% end %>
+
+  </tr>
+  
+<% for medical_problem in @medical_problems %>
+  <% for proposed_treatment in medical_problem.proposed_treatments %>
+  <tr>
+  <td><%= medical_problem.bat.band %></td>
+  <td><%= medical_problem.description %></td>
+  <td><%= proposed_treatment.treatment %></td>
+  <td><%= nice_date medical_problem.date_opened %></td>
+  <% if @list_all %>
+    <td><%= nice_date medical_problem.date_closed %></td>
+  <% end %>
+    <td>
+    <em><b>Change Treatment</em></b>
+    </td>
+    <td><%= link_to 'Show', :action => 'show', :id => medical_problem %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => medical_problem %></td>
+
+    <td>
+      <% if medical_problem.date_closed == nil %>
+        <%= link_to 'Deactivate', { :action => 'deactivate', :id => medical_problem, :id => proposed_treatment }, :confirm => 'Are you sure?', :post => true %>
+      <% else %>
+        <%= link_to 'Reactivate', { :action => 'reactivate', :id => medical_problem }, :confirm => 'Are you sure?', :post => true %>
+      <% end %>
+    </td>
+  </tr>
+  <% end %>
+<% end %>
+</table>

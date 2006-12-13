@@ -1,7 +1,6 @@
 class MedicalProblemsController < ApplicationController
   def index
-    @bats = Bat.find(:all, :conditions => "leave_date is null", :order => "band")
-    @medical_problems = MedicalProblem.find(:all, :conditions => "date_closed is null")
+    redirect_to :action => 'list'
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)

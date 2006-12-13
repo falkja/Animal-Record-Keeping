@@ -1,52 +1,23 @@
+<% if @medical_problems[0] != nil %>
+
 <% if @list_all %>
 <h1>Listing All Medical Problems</h1>
 <% else %>
 <h1>Listing Current Medical Problems</h1>
 <% end %>
 
-<table>
-  <tr>
-  <th>Bat</th>
-  <th>Description</th>
-  <th>Proposed Treatment</th>
-  <th>Date Opened</th>
-  <% if @list_all %>
-    <th>Date Closed</th>
-  <% end %>
-
-  </tr>
-  
-<% for medical_problem in @medical_problems %>
-  <% for proposed_treatment in medical_problem.proposed_treatments %>
-  <tr>
-  <td><%= medical_problem.bat.band %></td>
-  <td><%= medical_problem.description %></td>
-  <td><%= proposed_treatment.treatment %></td>
-  <td><%= nice_date medical_problem.date_opened %></td>
-  <% if @list_all %>
-    <td><%= nice_date medical_problem.date_closed %></td>
-  <% end %>
-    <td><%= link_to 'Show', :action => 'show', :id => medical_problem %></td>
-    <td><%= link_to 'Edit', :action => 'edit', :id => medical_problem %></td>
-    <td>
-      <% if medical_problem.date_closed == nil %>
-        <%= link_to 'Deactivate', { :action => 'deactivate', :id => medical_problem, :id => proposed_treatment }, :confirm => 'Are you sure?', :post => true %>
-      <% else %>
-        <%= link_to 'Reactivate', { :action => 'reactivate', :id => medical_problem }, :confirm => 'Are you sure?', :post => true %>
-      <% end %>
-    </td>
-  </tr>
-  <% end %>
-<% end %>
-</table>
+<%= render_partial 'medical_problems_list' %>
 
 <%= link_to 'Previous page', { :page => @medical_problem_pages.current.previous } if @medical_problem_pages.current.previous %>
 <%= link_to 'Next page', { :page => @medical_problem_pages.current.next } if @medical_problem_pages.current.next %> 
 
 <br />
 
-<%= link_to 'New Medical Problem', :action => 'new' %> | 
+<% else %>
+<p>There are no current medical problems!</p>
+<% end %>
 
+<%= link_to 'New Medical Problem', :action => 'new' %> | 
 <% if @list_all %>
 <%= link_to 'List Current Medical Problems', :action => 'list' %>
 <% else %>

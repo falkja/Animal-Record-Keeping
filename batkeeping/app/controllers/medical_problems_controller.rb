@@ -53,12 +53,17 @@ class MedicalProblemsController < ApplicationController
   end
 
   def edit
+    @bats = Bat.find(:all, :conditions => "leave_date is null", :order => "band")
     @medical_problem = MedicalProblem.find(params[:id])
     @deactivating = false
   end
 
   def update
     @medical_problem = MedicalProblem.find(params[:id])
+    if @proposed_treatment = ProposedTreatment.find(params[:id])
+      @proposed_treatment.date_closed = Time.now
+      @proposed_treatment.save
+    end
     if @medical_problem.update_attributes(params[:medical_problem])
       flash[:notice] = 'MedicalProblem was successfully updated.'
 	  if params[:redirectme] == 'list'
@@ -81,10 +86,15 @@ class MedicalProblemsController < ApplicationController
   @bats = Bat.find(:all, :conditions => "leave_date is null", :order => "band")
   @proposed_treatment = ProposedTreatment.find(params[:id])
   @deactivating = true
-  @proposed_treatment.date_closed = Time.now
   end
   
   def reactivate
+    @medical_problem = MedicalProblem.find(params[:id])
+    @medical_problem.date_closed = nil
+    @medical_problem.save
+    @proposed_treatment = ProposedTreatment.find(params[:id])
     @proposed_treatment.date_closed = nil
+    @proposed_treatment.save
+    redirect_to :action => 'list'
   end
 end

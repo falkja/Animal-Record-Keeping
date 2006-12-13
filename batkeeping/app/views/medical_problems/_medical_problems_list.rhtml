@@ -30,7 +30,7 @@
       <% if medical_problem.date_closed == nil %>
         <%= link_to 'Deactivate', { :action => 'deactivate', :id => medical_problem, :id => proposed_treatment }, :confirm => 'Are you sure?', :post => true %>
       <% else %>
-        <%= link_to 'Reactivate', { :action => 'reactivate', :id => medical_problem }, :confirm => 'Are you sure?', :post => true %>
+        <%= link_to 'Reactivate', { :action => 'reactivate', :id => medical_problem, :id => proposed_treatment }, :confirm => 'Are you sure?', :post => true %>
       <% end %>
     </td>
   </tr>

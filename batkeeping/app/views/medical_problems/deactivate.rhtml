@@ -2,7 +2,7 @@
 
 <%= "Bat: " + @medical_problem.bat.band + "<br>Treatment: " + @proposed_treatment.treatment %>
 
-<%= start_form_tag :action => 'update', :id => @medical_problem, :redirectme => 'list' %>
+<%= start_form_tag :action => 'update', :id => @medical_problem, :id =>@proposed_treatment , :redirectme => 'list' %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Deactivate' %>
 <%= end_form_tag %>

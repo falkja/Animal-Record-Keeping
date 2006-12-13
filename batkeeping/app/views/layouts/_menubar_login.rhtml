@@ -7,7 +7,7 @@ You are not signed in.
 </div>
 <% else %>
 <div class="session">
-<b><%= session[:person].name %>
+<b><%= session[:person].name %></b>
 [ <%= link_to 'log out', :controller => 'main', :action => 'logout' %> ]
 </div>
 <%= render_partial 'layouts/menubar' %>

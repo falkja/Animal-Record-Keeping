@@ -23,11 +23,11 @@
 <p><label for="medical_problem_description">Description</label><br/>
 <%= text_area 'medical_problem', 'description', 'rows' => "3" %></p>
 
-<!--<p><label for="proposed_treatment_date_finished">Proposed Treatment Finish Date</label><br/>
-<%#= date_select 'proposed_treatment', 'date_finished'  %></p>-->
-
 <p><label for="proposed_treatment_treatment">Treatment</label><br/>
 <%= text_area 'proposed_treatment', 'treatment', 'rows' => "3" %></p>
+
+<p><label for="proposed_treatment_date_finished">Proposed Treatment Finish Date</label><br/>
+<%= date_select 'proposed_treatment', 'date_finished'  %></p>
 
 </div>
 

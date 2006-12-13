@@ -35,11 +35,9 @@ class MedicalProblemsController < ApplicationController
     @medical_problem.bat = @bat
     @medical_problem.user = session[:person]
     
-    proposed_treatment = ProposedTreatment.new
+    proposed_treatment = ProposedTreatment.new(params[:proposed_treatment])
     proposed_treatment.date_started = Time.now
-    proposed_treatment.date_finished = Time.now + 5.days
     proposed_treatment.date_closed = nil
-    proposed_treatment.treatment = params[:proposed_treatment][:treatment]
     proposed_treatment.user = session[:person]
     proposed_treatment.medical_problem = @medical_problem
     proposed_treatment.save

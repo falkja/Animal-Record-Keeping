@@ -34,16 +34,14 @@ class MedicalProblemsController < ApplicationController
     @medical_problem.date_closed = nil
     @medical_problem.bat = @bat
     @medical_problem.user = session[:person]
-    
-    proposed_treatment = ProposedTreatment.new(params[:proposed_treatment])
-    proposed_treatment.date_started = Time.now
-    proposed_treatment.date_closed = nil
-    proposed_treatment.user = session[:person]
-    proposed_treatment.medical_problem = @medical_problem
-    proposed_treatment.save
-    
     if @medical_problem.save
       flash[:notice] = 'MedicalProblem was successfully created.'
+      proposed_treatment = ProposedTreatment.new(params[:proposed_treatment])
+      proposed_treatment.date_started = Time.now
+      proposed_treatment.date_closed = nil
+      proposed_treatment.user = session[:person]
+      proposed_treatment.medical_problem = @medical_problem
+      proposed_treatment.save
       redirect_to :action => 'list'
     else
       render :action => 'new'

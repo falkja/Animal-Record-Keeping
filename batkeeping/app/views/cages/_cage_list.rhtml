@@ -13,7 +13,7 @@
 <% for cage in cage_list %>
   <tr>
     <td>
-      <b><%= link_to cage.name, :action => 'show', :id => cage %></b>
+      <b><%= link_to cage.name, :controller => 'cages', :action => 'show', :id => cage %></b>
     </td>
 	<td><%=h cage.bats.count %></td>
     <td><%=h cage.food %>g</td>

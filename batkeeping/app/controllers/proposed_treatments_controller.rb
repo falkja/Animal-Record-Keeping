@@ -23,8 +23,10 @@ class ProposedTreatmentsController < ApplicationController
   end
 
   def create
+    @medical_problem = MedicalProblem.find(params[:id])
     @proposed_treatment = ProposedTreatment.new(params[:proposed_treatment])
     @proposed_treatment.user = session[:person]
+    @proposed_treatment.medical_problem = @medical_problem
     if @proposed_treatment.save
       flash[:notice] = 'Proposed Treatment was successfully created.'
       redirect_to :controller => 'medical_problems', :action => 'list_current'

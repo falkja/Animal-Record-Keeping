@@ -10,11 +10,11 @@
 <%   @leave_date = '<div class="hidden">' %>
 <% end %>
 
-<p>Medical Problem: 
-<b><%= @medical_problem.title %></b></p>
+<p>Medical Problem<br/>
+<%= @medical_problem.title %></p>
 
-<p>Description:
-<b><%= @medical_problem.description %></b></p>
+<p>Description<br/>
+<%= @medical_problem.description %></p>
 
 <!--[form:proposed_treatment]-->
 <%= @everything_else %>
@@ -22,7 +22,7 @@
 <p><label for="proposed_treatment_date_started">Date started</label><br/>
 <%= date_select 'proposed_treatment', 'date_started'  %></p>
 
-<p><label for="proposed_treatment_treatment">Treatment</label><br/>
+<p><label for="proposed_treatment_treatment">Treatment (include medications and dosages)</label><br/>
 <%= text_area 'proposed_treatment', 'treatment', :rows => 3  %></p>
 
 <p><label for="proposed_treatment_date_finished">Suggested finish date</label><br/>

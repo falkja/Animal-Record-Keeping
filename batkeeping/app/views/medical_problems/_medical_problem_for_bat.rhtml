@@ -34,11 +34,9 @@
     <% end %>
     </td>
 
-    <% for proposed_treatment in medical_problem.proposed_treatments %>
-    <% if proposed_treatment.date_closed == nil %>
+    <% for proposed_treatment in medical_problem.proposed_treatments.current %>
       <td><%= proposed_treatment.treatment %></td>
       <td><%= link_to 'End Treatment', :controller => 'proposed_treatments', :action => 'deactivate', :id => proposed_treatment %></td>
-    <% end %>
     
     </tr><tr><td></td><td></td><td></td><td></td><td></td><td></td>
     <% end %>

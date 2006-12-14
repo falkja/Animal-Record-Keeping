@@ -50,6 +50,7 @@ class ProposedTreatmentsController < ApplicationController
     end
     if params[:redirectme] == 'list_current'
 		redirect_to :controller => 'medical_problems', :action => 'list_current'
+    end
   end
 
   def destroy

@@ -1,6 +1,6 @@
 class MedicalProblemsController < ApplicationController
   def index
-    redirect_to :action => 'list'
+    redirect_to :action => 'list_current'
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
@@ -8,14 +8,23 @@ class MedicalProblemsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @medical_problem_pages, @medical_problems = paginate :medical_problems,  :order => 'bat_id', :per_page => 10, :conditions => "date_closed is null"
+    @medical_problems = MedicalProblem.find(:all)
+    bat_ids = Array.new
+    for medical_problem in @medical_problems
+      bat_ids << medical_problem.bat.id
+    end
+    @bats = Bat.find(bat_ids.uniq, :order => 'band')
+    render :action => 'list'
+  end
+
+  def list_current
     @list_all = false
+    list
   end
 
   def list_all
-    @medical_problem_pages, @medical_problems = paginate :medical_problems,  :order => 'bat_id', :per_page => 10
     @list_all = true
-    render :action => 'list'
+    list
   end
   
   def show
@@ -36,12 +45,6 @@ class MedicalProblemsController < ApplicationController
     @medical_problem.user = session[:person]
     if @medical_problem.save
       flash[:notice] = 'MedicalProblem was successfully created.'
-      proposed_treatment = ProposedTreatment.new(params[:proposed_treatment])
-      proposed_treatment.date_started = Time.now
-      proposed_treatment.date_closed = nil
-      proposed_treatment.user = session[:person]
-      proposed_treatment.medical_problem = @medical_problem
-      proposed_treatment.save
       redirect_to :action => 'list'
     else
       render :action => 'new'
@@ -56,16 +59,12 @@ class MedicalProblemsController < ApplicationController
 
   def update
     @medical_problem = MedicalProblem.find(params[:id])
-    if @proposed_treatment = ProposedTreatment.find(params[:id])
-      @proposed_treatment.date_closed = Time.now
-      @proposed_treatment.save
-    end
     if @medical_problem.update_attributes(params[:medical_problem])
       flash[:notice] = 'MedicalProblem was successfully updated.'
-	  if params[:redirectme] == 'list'
-		redirect_to :action => 'list'
+	  if params[:redirectme] == 'list_current'
+		redirect_to :action => 'list_current'
 	  else
-		redirect_to :action => 'show', :id => @bat
+		redirect_to :action => 'show', :id => @medical_problem
 	  end
     else
       render :action => 'edit'
@@ -80,7 +79,6 @@ class MedicalProblemsController < ApplicationController
   def deactivate
 	@medical_problem = MedicalProblem.find(params[:id])
   @bats = Bat.find(:all, :conditions => "leave_date is null", :order => "band")
-  @proposed_treatment = ProposedTreatment.find(params[:id])
   @deactivating = true
   end
   
@@ -88,9 +86,6 @@ class MedicalProblemsController < ApplicationController
     @medical_problem = MedicalProblem.find(params[:id])
     @medical_problem.date_closed = nil
     @medical_problem.save
-    @proposed_treatment = ProposedTreatment.find(params[:id])
-    @proposed_treatment.date_closed = nil
-    @proposed_treatment.save
     redirect_to :action => 'list'
   end
 end

@@ -1,5 +1,7 @@
 <h1>Showing Medical Problem</h1>
 
+  <p><b>Bat: </b><%=h @medical_problem.bat.band %></p>
+  <p><b>Title: </b><%=h @medical_problem.title %></p>
   <p><b>Description: </b><%=h @medical_problem.description %></p>
   <p><b>Date Opened: </b><%=h nice_date @medical_problem.date_opened %></p>
   <p><b>Date Closed: </b><%=h nice_date @medical_problem.date_closed %></p>

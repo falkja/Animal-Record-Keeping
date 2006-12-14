@@ -13,27 +13,24 @@
 <!--[form:medical_problem]-->
 <%= @everything_else %>
 
-<p><b>Bat</b><br/>
-<%= select_tag("bat[id]", options_from_collection_for_select(@bats, "id", "band")) %>
+<p><label for="medical_problem_bat">Bat</label><br/>
+<%= select_tag("bat[id]", options_from_collection_for_select(@bats, "id", "band"), :disabled => @disable_medical_problem_name_change) %>
 </p>
+
+<p><label for="medical_problem_title">Title (please be brief)</label><br/>
+<%= text_field 'medical_problem', 'title', :disabled => @disable_medical_problem_name_change %></p>
 
 <p><label for="medical_problem_date_opened">Date opened</label><br/>
 <%= date_select 'medical_problem', 'date_opened'  %></p>
 
-<p><label for="medical_problem_description">Description</label><br/>
+<p><label for="medical_problem_description">Detailed Description</label><br/>
 <%= text_area 'medical_problem', 'description', 'rows' => "3" %></p>
-
-<p><label for="proposed_treatment_treatment">Treatment</label><br/>
-<%= text_area 'proposed_treatment', 'treatment', 'rows' => "3" %></p>
-
-<p><label for="proposed_treatment_date_finished">Proposed Treatment Finish Date</label><br/>
-<%= date_select 'proposed_treatment', 'date_finished'  %></p>
 
 </div>
 
 <%= @leave_date %>
 <p><label for="medical_problem_date_closed">Date closed</label><br/>
-<%= date_select 'medical_problem', 'date_closed'  %></p>
+<%= date_select 'medical_problem', 'date_closed', :disabled => @disable_leave_date %></p>
 </div>
 <!--[eoform:medical_problem]-->
 

@@ -18,13 +18,16 @@ class ProposedTreatmentsController < ApplicationController
 
   def new
     @proposed_treatment = ProposedTreatment.new
+    @medical_problem = MedicalProblem.find(params[:id])
+    @deactivating = false
   end
 
   def create
     @proposed_treatment = ProposedTreatment.new(params[:proposed_treatment])
+    @proposed_treatment.user = session[:person]
     if @proposed_treatment.save
-      flash[:notice] = 'ProposedTreatment was successfully created.'
-      redirect_to :action => 'list'
+      flash[:notice] = 'Proposed Treatment was successfully created.'
+      redirect_to :controller => 'medical_problems', :action => 'list_current'
     else
       render :action => 'new'
     end
@@ -32,6 +35,7 @@ class ProposedTreatmentsController < ApplicationController
 
   def edit
     @proposed_treatment = ProposedTreatment.find(params[:id])
+    @deactivating = false
   end
 
   def update
@@ -46,6 +50,18 @@ class ProposedTreatmentsController < ApplicationController
 
   def destroy
     ProposedTreatment.find(params[:id]).destroy
+    redirect_to :action => 'list'
+  end
+  
+  def deactivate
+	@proposed_treatment = ProposedTreatment.find(params[:id])
+  @deactivating = true
+  end
+
+  def reactivate
+    @proposed_treatment = ProposedTreatment.find(params[:id])
+    @proposed_treatment.date_closed = nil
+    @proposed_treatment.save
     redirect_to :action => 'list'
   end
 end

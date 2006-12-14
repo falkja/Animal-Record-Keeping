@@ -1,9 +1,11 @@
-<h1>Editing medical_problem</h1>
+<h1>Editing Medical Problem</h1>
+
+<% @disable_medical_problem_name_change = true %>
 
 <%= start_form_tag :action => 'update', :id => @medical_problem %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Edit' %>
 <%= end_form_tag %>
 
-<%= link_to 'Show', :action => 'show', :id => @medical_problem %> |
+<%= link_to 'Show', :action => 'show', :id => @medical_problem%> |
 <%= link_to 'Back', :action => 'list' %>

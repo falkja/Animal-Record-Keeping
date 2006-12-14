@@ -1,0 +1,40 @@
+<% bat = medical_problem_for_bat %>
+
+<tr>
+<td><b><%= bat.band %></b></td>
+
+  <% @list_all ? medical_problems = bat.medical_problems : medical_problems = bat.medical_problems.current %>
+  
+  <% for medical_problem in medical_problems %>
+    <td><%=h medical_problem.title %></td>
+    <td><%=h nice_date medical_problem.date_opened %></td>
+    
+    <td>
+    <% if medical_problem.date_closed == nil %>
+    <%= link_to 'Close', :action => 'deactivate', :id => medical_problem %>
+    <% else %>
+    <%=h nice_date medical_problem.date_closed %>
+    <% end %>
+    </td>
+    
+    <td>
+    <% if medical_problem.date_closed == nil %>
+        <%= link_to 'Edit', :action => 'edit', :id => medical_problem %>
+    <% end %>
+    </td>
+    
+    <td>
+    <% if medical_problem.date_closed == nil %>
+        <%= link_to 'New Treatment', :controller => 'proposed_treatments', :action => 'new', :id => medical_problem %>
+    <% else %>
+        <%= link_to 'Reactivate', :action => 'reactivate', :id => medical_problem %>
+    <% end %>
+    </td>
+
+    <% for proposed_treatment in medical_problem.proposed_treatments %>
+    <td><%= proposed_treatment.treatment %>
+    </td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td>
+    <% end %>
+    </tr><tr><td></td>
+  <% end %>
+    <tr><td colspan = 7><hr /></td></tr>

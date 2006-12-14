@@ -59,16 +59,23 @@ class MedicalProblemsController < ApplicationController
 
   def update
     @medical_problem = MedicalProblem.find(params[:id])
+    @deactivating = params[:deactivating]
     if @medical_problem.update_attributes(params[:medical_problem])
-      flash[:notice] = 'MedicalProblem was successfully updated.'
+      if @deactivating
+          for proposed_treatment in @medical_problem.proposed_treatments
+            proposed_treatment.date_closed = @medical_problem.date_closed
+            proposed_treatment.save
+          end
+      end
+      flash[:notice] = 'Medical Problem was successfully updated.'
+    else
+      render :action => 'edit'
+    end
 	  if params[:redirectme] == 'list_current'
 		redirect_to :action => 'list_current'
 	  else
 		redirect_to :action => 'show', :id => @medical_problem
 	  end
-    else
-      render :action => 'edit'
-    end
   end
 
   def destroy

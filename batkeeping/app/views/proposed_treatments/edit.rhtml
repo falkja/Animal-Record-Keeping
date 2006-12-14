@@ -1,9 +1,9 @@
-<h1>Editing proposed_treatment</h1>
+<h1>Editing Proposed Treatment</h1>
 
-<%= start_form_tag :action => 'update', :id => @proposed_treatment %>
+<%= start_form_tag :action => 'update', :id => @proposed_treatment, :redirectme => 'list_current' %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Edit' %>
 <%= end_form_tag %>
 
 <%= link_to 'Show', :action => 'show', :id => @proposed_treatment %> |
-<%= link_to 'Back', :action => 'list' %>
+<%= link_to 'List Current Medical Problems', :action => 'list_current' %>

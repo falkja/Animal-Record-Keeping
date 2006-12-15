@@ -59,7 +59,7 @@
   <th>Who</th>
   <% for coh in @cohs %>
     <tr>
-    <td><%=link_to coh.bat.band, :controller => 'bats', :action => 'show', :id => bat %></td>
+    <td><%=link_to coh.bat.band, :controller => 'bats', :action => 'show', :id => coh.bat %></td>
     <td><%=h nice_date coh.cage_in_history.date %></td>
     <td><%=h coh.cage_in_history.user.initials %></td>
     <td><%=h nice_date coh.date %></td>

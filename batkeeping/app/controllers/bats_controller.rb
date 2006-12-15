@@ -69,7 +69,8 @@ end
   def update
 	@bat = Bat.find(params[:id])
     Bat::set_user_and_comment(session[:person], params[:move]['note']) #Do this before saving!
-    if @bat.update_attributes(params[:bat])
+		
+	if @bat.update_attributes(params[:bat])
 	  flash[:notice] = 'Bat was successfully updated.'
 	  if params[:redirectme] == 'list'
 		redirect_to :action => 'list'
@@ -92,12 +93,22 @@ end
 	@deactivating = true
   end
   
+  #the simplest way to handle cage leave event is like this
+  def deactivate_bat
+	@bat = Bat.find(params[:id])
+	params[:move]['note'] = params[:bat]['leave_reason']
+	params[:bat]['cage_id'] = nil
+	
+	update
+  end
+  
   def reactivate
 	@bat = Bat.find(params[:id])
 	@bat.leave_date = nil
 	@bat.leave_reason = nil
 	@bat.save
-	redirect_to :action => 'list'
+	
+	redirect_to :action => 'edit', :id => @bat #because now we need to choose a cage for the zombie bat!
   end
 
   #choose a cage to move bats from

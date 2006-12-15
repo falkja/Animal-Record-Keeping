@@ -53,16 +53,18 @@ class Bat < ActiveRecord::Base
             
         end
 
-        #Make a new entry in the cage in histories
-        cih = CageInHistory.new
-        cih.bat = self
-        cih.cage = new_cage
-        cih.user = @@current_user
-        cih.note = @@comment
-        cih.date = Time.new 
-        cih.note = @note
+        unless new_cage == nil #if it is nill then the bat died or was exported and wasn't moved to a new cage
+            #Make a new entry in the cage in histories
+            cih = CageInHistory.new
+            cih.bat = self
+            cih.cage = new_cage
+            cih.user = @@current_user
+            cih.note = @@comment
+            cih.date = Time.new 
+            cih.note = @note
 
-        cih.save
+            cih.save
+        end        
     end
     
     #called just before creation

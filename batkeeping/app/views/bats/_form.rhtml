@@ -2,10 +2,12 @@
 
 <% if @deactivating == true %>
 <%   @disable_leave_date = false %>
+<%   @disable_cage = true %>
 <%   @everything_else = '<div class="hidden">' %>
 <%   @leave_date = '<div>' %>
 <% else %>
 <%   @disable_leave_date = true %>
+<%   @disable_cage = false %>
 <%   @everything_else = '<div>' %>
 <%   @leave_date = '<div class="hidden">' %>
 <% end %>
@@ -33,7 +35,12 @@
 <p><label for="bat_gender">Gender</label><br/>
 <%= select_tag("bat[gender]", options_for_select([["Male","M"],["Female","F"]],@bat.gender)) %></p>
 
-<p><label for="cage">Cage</label><br/><%= collection_select("bat", "cage_id" , @cages, "id", "name") %>
+<p><label for="cage">Cage</label><br/>
+<% if @bat.leave_date == nil #inactive bat %>
+<%= collection_select("bat", "cage_id" , @cages, "id", "name") %>
+<% else %>
+<%= select_tag("bat[cage_id]", options_for_select([["Inactive",""]]) ) %>
+<% end %>
 Cage change note: <%= text_field "move","note" %> (Only fill in if changing cage or making a note for a new bat entry)
 </p>
 

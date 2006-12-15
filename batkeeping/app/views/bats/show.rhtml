@@ -2,7 +2,11 @@
 
 <p>
 <b>Cage: </b>
+<% if @bat.cage %>
 <%= link_to @bat.cage.name, :controller => 'cages', :action => 'show', :id => @bat.cage %>
+<% else %>
+<%= 'Inactive' %>
+<% end %>
 </p>
 
 <h3>Weight History:</h3>

@@ -1,6 +1,9 @@
 <h1>Deactivating bat : <%= @bat.band %> </h1>
 
-<%= start_form_tag :action => 'update', :id => @bat, :redirectme => 'list' %>
+<% # This lets us pick a deactivate date and then sets that %>
+<% @bat.cage = nil %>
+
+<%= start_form_tag :action => 'deactivate_bat', :id => @bat %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Deactivate' %>
 <%= end_form_tag %>

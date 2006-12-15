@@ -27,7 +27,11 @@
       <b><%= link_to bat.band, :action => 'show', :id => bat %></b>
     </td>
     <td>
-		<%= link_to bat.cage.name, :controller => 'cages', :action => 'show', :id => bat.cage %>
+		<% if bat.cage %>
+        <%= link_to bat.cage.name, :controller => 'cages', :action => 'show', :id => bat.cage %>
+        <% else %>
+        <%= 'Inactive' %>
+        <% end %>
 	</td>
 	<td>
 		<%=h bat.species %>

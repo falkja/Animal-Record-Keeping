@@ -5,7 +5,8 @@ Links:
 <%= link_to 'List Bats', :controller => 'bats', :action => 'list' %> |
 <%= link_to 'List Cages', :controller => 'cages', :action => 'list' %> |
 <%= link_to 'List Protocols', :controller => 'protocols', :action => 'list' %> |
-<%= link_to 'List Users', :controller => 'users', :action => 'list' %>
+<%= link_to 'List Users', :controller => 'users', :action => 'list' %> | 
+<%= link_to 'List Medical Bats', :controller => 'medical_problems', :action => 'list_current' %>
 </div>
 
 <div class="mainmenutasks">
@@ -13,6 +14,5 @@ Tasks:
 <%= link_to 'Move Bat(s)', :controller => 'bats', :action => 'choose_cage' %> |
 <%= link_to 'Weigh Bat(s)', :controller => 'weights', :action => 'weighing_choice' %> |
 <%= link_to 'New Bat', :controller => 'bats', :action => 'new' %> |
-<%= link_to 'New Cage', :controller => 'cages', :action => 'new' %> | 
-<%= link_to 'Medicate Bat', :controller => 'medical_problems', :action => 'index' %>
+<%= link_to 'New Cage', :controller => 'cages', :action => 'new' %>
 </div>

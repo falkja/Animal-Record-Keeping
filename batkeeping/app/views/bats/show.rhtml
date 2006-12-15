@@ -9,6 +9,33 @@
 <% end %>
 </p>
 
+<% if @bat.medical_problems.current.length > 0 %>
+<h3>Current Medical Problems:</h3>
+<table>
+<th>Medical Problem</th>
+<th>Date Opened</th>
+<th></th>
+<th></th><th></th>
+<th>Treatment</th>
+<% @show_bat = false %>
+<%= render_partial 'medical_problems/medical_problem_for_bat', @bat %>
+</table>
+<% end %>
+
+<% if @bat.medical_problems.expired.length > 0 %>
+<% @list_all = true %>
+<h3>Past Medical Problems:</h3>
+<table>
+<th>Medical Problem</th>
+<th>Date Opened</th>
+<th>Date Closed</th>
+<th></th><th></th>
+<th>Treatment</th>
+<% @show_bat = false %>
+<%= render_partial 'medical_problems/medical_problem_for_bat', @bat %>
+</table>
+<% end %>
+
 <h3>Weight History:</h3>
 <table border='1'>
   <th>Date</th>
@@ -25,6 +52,7 @@
   <% end %>
 </table>
 
+<% if @cohs.length >0 %>
 <h3>Cage History:</h3>
   <table border='1'>
   <th>Cage</th>
@@ -46,7 +74,7 @@
     </tr>
   <% end %>
   </table>
-</p>
+<% end %>
 
 <hr />
 

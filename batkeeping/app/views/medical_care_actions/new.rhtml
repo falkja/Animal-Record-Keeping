@@ -1,8 +1,8 @@
-<h1>New medical_care_action</h1>
+<h1>Do Treatment</h1>
 
-<%= start_form_tag :action => 'create' %>
+<%= start_form_tag :action => 'create', :id => @proposed_treatment %>
   <%= render :partial => 'form' %>
-  <%= submit_tag "Create" %>
+  <%= submit_tag "Medical Treatment Done" %>
 <%= end_form_tag %>
 
-<%= link_to 'Back', :action => 'list' %>
+<%= link_to 'List Current Medical Problems', :controller => 'medical_problems', :action => 'list_current' %>

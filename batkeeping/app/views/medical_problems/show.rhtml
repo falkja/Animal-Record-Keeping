@@ -11,7 +11,7 @@
       <b>Proposed Treatment: </b><%=h proposed_treatment.treatment %><br />
       <blockquote>
       <b>Treatment Start Date: </b><%=h nice_date proposed_treatment.date_started %><br />
-      <b>Treatment Finish Date: </b><%=h nice_date proposed_treatment.date_finished %><br />
+      <b>Suggested Treatment Finish Date: </b><%=h nice_date proposed_treatment.date_finished %><br />
       <b>Ended Treatment: </b><%=h nice_date proposed_treatment.date_closed %><br />
       </blockquote>
     </p>
@@ -19,4 +19,4 @@
 
 
 <%= link_to 'Edit', :action => 'edit', :id => @medical_problem %> |
-<%= link_to 'Back', :action => 'list' %>
+<%= link_to 'List Current Medical Problems', :action => 'list_current' %>

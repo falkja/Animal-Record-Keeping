@@ -18,13 +18,17 @@ class MedicalCareActionsController < ApplicationController
 
   def new
     @medical_care_action = MedicalCareAction.new
+    @proposed_treatment = ProposedTreatment.find(params[:id])
   end
 
   def create
     @medical_care_action = MedicalCareAction.new(params[:medical_care_action])
+    @proposed_treatment = ProposedTreatment.find(params[:id])
+    @medical_care_action.proposed_treatment = @proposed_treatment
+    @medical_care_action.user = session[:person]
     if @medical_care_action.save
       flash[:notice] = 'MedicalCareAction was successfully created.'
-      redirect_to :action => 'list'
+      redirect_to :controller => 'medical_problems', :action => 'list_current'
     else
       render :action => 'new'
     end

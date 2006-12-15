@@ -211,8 +211,6 @@ CREATE TABLE `medical_care_actions` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `proposed_treatment_id` int(10) unsigned NOT NULL,
   `date` datetime NOT NULL,
-  `medicine` varchar(45) NOT NULL,
-  `dosage` varchar(45) NOT NULL,
   `remarks` text NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
   PRIMARY KEY  (`id`)
@@ -223,6 +221,14 @@ CREATE TABLE `medical_care_actions` (
 --
 
 /*!40000 ALTER TABLE `medical_care_actions` DISABLE KEYS */;
+INSERT INTO `medical_care_actions` (`id`,`proposed_treatment_id`,`date`,`remarks`,`user_id`) VALUES 
+ (1,3,'2006-12-15 00:00:00','none',2),
+ (2,3,'2006-12-15 00:00:00','None',2),
+ (3,5,'2006-12-15 14:17:00','This bat is bad.',2),
+ (4,3,'2006-12-15 16:12:00','I DID IT!',2),
+ (5,4,'2006-12-14 16:13:00','I DID IT!',2),
+ (6,2,'2006-12-14 16:16:00','none',2),
+ (7,2,'2006-12-15 17:11:00','',2);
 /*!40000 ALTER TABLE `medical_care_actions` ENABLE KEYS */;
 
 
@@ -248,8 +254,10 @@ CREATE TABLE `medical_problems` (
 
 /*!40000 ALTER TABLE `medical_problems` DISABLE KEYS */;
 INSERT INTO `medical_problems` (`id`,`bat_id`,`date_opened`,`description`,`user_id`,`date_closed`,`title`) VALUES 
- (1,1,'2006-12-13 00:00:00','Obese',2,'2006-12-13 00:00:00',''),
- (2,5,'2006-12-13 00:00:00','Large head',2,NULL,'');
+ (1,1,'2006-12-13 00:00:00','Obese',2,'2006-12-15 00:00:00',''),
+ (2,5,'2006-12-13 00:00:00','Large head',2,'2006-12-15 00:00:00',''),
+ (3,6,'2006-12-15 00:00:00','Abscess on right wing.  Swollen.',2,NULL,'Abscess'),
+ (4,6,'2006-12-15 00:00:00','Probably a sore throat.',2,NULL,'Coughing');
 /*!40000 ALTER TABLE `medical_problems` ENABLE KEYS */;
 
 
@@ -275,8 +283,11 @@ CREATE TABLE `proposed_treatments` (
 
 /*!40000 ALTER TABLE `proposed_treatments` DISABLE KEYS */;
 INSERT INTO `proposed_treatments` (`id`,`medical_problem_id`,`date_started`,`date_finished`,`date_closed`,`treatment`,`user_id`) VALUES 
- (1,1,'2006-12-13 12:56:22','2006-12-18 12:56:22','2006-12-13 13:57:06','lots of exercise',2),
- (2,2,'2006-12-13 13:25:49','2006-12-20 00:00:00',NULL,'Let out hot air',2);
+ (1,1,'2006-12-13 12:56:22','2006-12-18 12:56:22','2006-12-15 00:00:00','lots of exercise',2),
+ (2,2,'2006-12-13 13:25:49','2006-12-20 00:00:00','2006-12-15 00:00:00','Let out hot air',2),
+ (3,3,'2006-12-15 00:00:00','2006-12-20 00:00:00',NULL,'Amoxicllin',2),
+ (4,2,'2006-12-15 00:00:00','2006-12-15 00:00:00','2006-12-15 00:00:00','test',2),
+ (5,3,'2006-12-15 00:00:00','2006-12-15 00:00:00',NULL,'Baytril',2);
 /*!40000 ALTER TABLE `proposed_treatments` ENABLE KEYS */;
 
 

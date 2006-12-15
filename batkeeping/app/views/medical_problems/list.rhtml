@@ -21,6 +21,7 @@
 <% end %>
 <th></th><th></th>
 <th>Treatment</th>
+<% @show_bat = true %>
 <% for bat in @bats %>
 <%= render_partial 'medical_problem_for_bat', bat %>
 <% end %>

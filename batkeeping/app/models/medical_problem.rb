@@ -7,4 +7,8 @@ class MedicalProblem < ActiveRecord::Base
       self.find(:all, :conditions => "date_closed is null")
   end
   
+  def self.expired
+      self.find(:all, :conditions => "date_closed is not null")
+  end
+  
 end

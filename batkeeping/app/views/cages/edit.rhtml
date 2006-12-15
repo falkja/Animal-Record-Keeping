@@ -2,10 +2,10 @@
 
 <% @disable_cage_name_change = true %>
 
-<%= start_form_tag :action => 'update', :id => @cage %>
+<%= start_form_tag :action => 'update', :id => @cage, :redirectme => 'list' %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Edit' %>
 <%= end_form_tag %>
 
 <%= link_to 'Show', :action => 'show', :id => @cage %> |
-<%= link_to 'Back', :action => 'list' %>
+<%= link_to 'List Current Cages', :action => 'list' %>

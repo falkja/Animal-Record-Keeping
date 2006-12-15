@@ -1,6 +1,7 @@
 <table>
   <tr>
     <th>Name</th>
+    <th>Room</th>
     <th>Bats</th>
     <th>Food</th>
     <th>Owner</th>
@@ -15,6 +16,7 @@
     <td>
       <b><%= link_to cage.name, :controller => 'cages', :action => 'show', :id => cage %></b>
     </td>
+    <td><%= cage.room %></td>
 	<td><%=h cage.bats.count %></td>
     <td><%=h cage.food %>g</td>
     <td><%=h cage.user ? cage.user.name : "NP" %></td>

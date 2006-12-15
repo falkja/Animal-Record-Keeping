@@ -185,6 +185,7 @@ CREATE TABLE `cages` (
   `food` float NOT NULL COMMENT 'food in grams',
   `fed_by` varchar(45) NOT NULL COMMENT 'fed by "investigator" or "animal care"',
   `species` varchar(45) NOT NULL COMMENT 'species of bat',
+  `room` varchar(45) NOT NULL COMMENT 'room the cage is housed',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -193,11 +194,11 @@ CREATE TABLE `cages` (
 --
 
 /*!40000 ALTER TABLE `cages` DISABLE KEYS */;
-INSERT INTO `cages` (`id`,`name`,`date_created`,`date_destroyed`,`user_id`,`food`,`fed_by`,`species`) VALUES 
- (1,'Cage1','2006-01-05 00:00:00',NULL,1,20,'Animal Care',''),
- (2,'Cage2','2006-02-05 00:00:00','2006-10-05 00:00:00',NULL,0,'',''),
- (3,'Cage3','2006-03-05 00:00:00',NULL,2,100,'Animal Care',''),
- (4,'Cage4','2006-04-05 00:00:00',NULL,3,0,'Investigator','');
+INSERT INTO `cages` (`id`,`name`,`date_created`,`date_destroyed`,`user_id`,`food`,`fed_by`,`species`,`room`) VALUES 
+ (1,'Cage1','2006-01-05 00:00:00',NULL,1,20,'Animal Care','','Colony Room (4100)'),
+ (2,'Cage2','2006-02-05 00:00:00','2006-10-05 00:00:00',NULL,0,'','',''),
+ (3,'Cage3','2006-03-05 00:00:00',NULL,2,100,'Animal Care','','Belfry (4102F)'),
+ (4,'Cage4','2006-04-05 00:00:00',NULL,3,0,'Investigator','','Fruit Bats (4148L)');
 /*!40000 ALTER TABLE `cages` ENABLE KEYS */;
 
 

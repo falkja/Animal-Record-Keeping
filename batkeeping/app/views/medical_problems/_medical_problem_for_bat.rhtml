@@ -10,6 +10,9 @@
     <% end %>
     
     <td><%= link_to medical_problem.title, :action => 'show', :id => medical_problem %></td>
+    
+    <td><%= link_to medical_problem.user.name, :controller => 'users', :action => 'show', :id => medical_problem.user %>
+    
     <td><%=h nice_date medical_problem.date_opened %></td>
     
     <td>
@@ -46,7 +49,10 @@
       <td><%= link_to 'End', :controller => 'proposed_treatments', :action => 'deactivate', :id => proposed_treatment %></td>
     
     </tr><tr><td></td><td></td><td></td><td></td><td></td><td></td>
+    <% if @show_bat %>
+      <td></td>
+    <% end %>
     <% end %>
     </tr><tr><td></td>
-    <tr><td colspan = 9><hr /></td></tr>
+    <tr><td colspan = 10><hr /></td></tr>
   <% end %>

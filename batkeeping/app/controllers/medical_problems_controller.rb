@@ -42,7 +42,6 @@ class MedicalProblemsController < ApplicationController
     @medical_problem = MedicalProblem.new(params[:medical_problem])
     @medical_problem.date_closed = nil
     @medical_problem.bat = @bat
-    @medical_problem.user = session[:person]
     if @medical_problem.save
       flash[:notice] = 'MedicalProblem was successfully created.'
       redirect_to :action => 'list'

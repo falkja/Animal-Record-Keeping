@@ -237,6 +237,7 @@ CREATE TABLE `medical_problems` (
   `description` text NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
   `date_closed` datetime default NULL,
+  `title` varchar(45) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -245,9 +246,9 @@ CREATE TABLE `medical_problems` (
 --
 
 /*!40000 ALTER TABLE `medical_problems` DISABLE KEYS */;
-INSERT INTO `medical_problems` (`id`,`bat_id`,`date_opened`,`description`,`user_id`,`date_closed`) VALUES 
- (1,1,'2006-12-13 00:00:00','Obese',2,'2006-12-13 00:00:00'),
- (2,5,'2006-12-13 00:00:00','Large head',2,NULL);
+INSERT INTO `medical_problems` (`id`,`bat_id`,`date_opened`,`description`,`user_id`,`date_closed`,`title`) VALUES 
+ (1,1,'2006-12-13 00:00:00','Obese',2,'2006-12-13 00:00:00',''),
+ (2,5,'2006-12-13 00:00:00','Large head',2,NULL,'');
 /*!40000 ALTER TABLE `medical_problems` ENABLE KEYS */;
 
 

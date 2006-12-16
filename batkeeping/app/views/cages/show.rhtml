@@ -3,7 +3,7 @@
 </p>
 
 <p>
-<b>Owner: </b><%= @cage.user.name %>
+<b>Owner: </b><%= @cage.user ? @cage.user.name : 'NP' %>
 </p>
 
 <p>
@@ -41,7 +41,7 @@
     <td><%= link_to bat.band, :controller => 'bats', :action => 'show', :id => bat %></td>
     <td><%=h nice_date @date_in %></td>
     <td><%=h @sig %></td>
-    <% if bat.weights %></td>
+    <% if bat.weights.length > 0 %></td>
           <td><%=h bat.weights[0].weight %></td>
           <td><%=h nice_date bat.weights[0].date %></td>
     <% else %>

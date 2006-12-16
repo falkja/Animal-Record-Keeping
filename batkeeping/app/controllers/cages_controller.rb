@@ -37,6 +37,10 @@ class CagesController < ApplicationController
   def create
     @cage = Cage.new(params[:cage])
 	@cage.date_destroyed = nil
+    unless @cage.user
+        @cage.fed_by = "Animal Care"
+    end
+
     if @cage.save
       flash[:notice] = 'Cage was successfully created.'
       redirect_to :action => 'list'
@@ -54,6 +58,10 @@ class CagesController < ApplicationController
     @cage = Cage.find(params[:id])
     #we don't want the name change propagated on an edit so we remove that from the hash
     params[:cage].delete "name"
+    unless @cage.user
+        @cage.fed_by = "Animal Care"
+    end
+    
     if @cage.update_attributes(params[:cage])
       flash[:notice] = 'Cage was successfully updated.'
       if params[:redirectme] == 'list'

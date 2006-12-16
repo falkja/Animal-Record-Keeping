@@ -17,7 +17,7 @@ class BatsController < ApplicationController
 	@bat_pages, @bats = paginate :bats, :order => 'cage_id, band', :per_page => 10
 	@list_all = true
 	render :action => 'list'
-end
+  end
   
   def list_by_band
 	@bat_pages, @bats = paginate :bats, :order => 'band, cage_id', :conditions => "leave_date is null", :per_page => 10

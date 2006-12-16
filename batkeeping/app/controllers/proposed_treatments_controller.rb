@@ -44,12 +44,12 @@ class ProposedTreatmentsController < ApplicationController
     @proposed_treatment = ProposedTreatment.find(params[:id])
     if @proposed_treatment.update_attributes(params[:proposed_treatment])
       flash[:notice] = 'Treatment was successfully updated.'
-      redirect_to :controller => 'medical_problems', :action => 'list_current'
+      redirect_to :controller => 'medical_problems', :action => 'list_current' and return
     else
-      render :action => 'edit'
+      render :action => 'edit' and return
     end
     if params[:redirectme] == 'list_current'
-		redirect_to :controller => 'medical_problems', :action => 'list_current'
+		redirect_to :controller => 'medical_problems', :action => 'list_current' and return
     end
   end
 

@@ -99,6 +99,15 @@ class BatsController < ApplicationController
 	params[:move]['note'] = params[:bat]['leave_reason']
 	params[:bat]['cage_id'] = nil
 	
+  for medical_problem in @bat.medical_problems
+    medical_problem.date_closed = Time.now
+    for proposed_treatment in medical_problem.proposed_treatments
+      proposed_treatment.date_closed = Time.now
+      proposed_treatment.save
+    end
+    medical_problem.save
+  end
+  
 	update
   end
   

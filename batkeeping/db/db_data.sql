@@ -1,4 +1,4 @@
--- MySQL Administrator dump 1.4
+-- MySQL dump 10.10
 --
 -- ------------------------------------------------------
 -- Server version	5.0.17-nt
@@ -169,7 +169,9 @@ CREATE TABLE `cages` (
 INSERT INTO `cages` (`id`,`name`,`date_created`,`date_destroyed`,`user_id`,`food`,`fed_by`,`species`,`room`) VALUES 
  (1,'Cage1','2006-12-15 00:00:00','2006-12-15 00:00:00',NULL,0,'Animal Care','','Belfry (4102F)'),
  (2,'Cage2','2006-12-15 00:00:00',NULL,1,0,'Investigator','','Belfry (4102F)'),
- (3,'Cage3','2006-12-15 00:00:00',NULL,NULL,0,'Animal Care','','Fruit Bats (4148L)');
+ (3,'Cage3','2006-12-15 00:00:00',NULL,NULL,0,'Animal Care','','Fruit Bats (4148L)'),
+ (4,'Cage6','2006-12-15 00:00:00',NULL,2,0,'Investigator','','Belfry (4102F)'),
+ (5,'cage7','2006-12-15 00:00:00',NULL,2,0,'Investigator','','Belfry (4102F)');
 /*!40000 ALTER TABLE `cages` ENABLE KEYS */;
 
 
@@ -192,6 +194,9 @@ CREATE TABLE `medical_care_actions` (
 --
 
 /*!40000 ALTER TABLE `medical_care_actions` DISABLE KEYS */;
+INSERT INTO `medical_care_actions` (`id`,`proposed_treatment_id`,`date`,`remarks`,`user_id`) VALUES 
+ (1,1,'2006-12-15 21:58:00','Robitussin',1),
+ (2,4,'2006-12-15 22:03:00','Gassss',1);
 /*!40000 ALTER TABLE `medical_care_actions` ENABLE KEYS */;
 
 
@@ -217,7 +222,10 @@ CREATE TABLE `medical_problems` (
 
 /*!40000 ALTER TABLE `medical_problems` DISABLE KEYS */;
 INSERT INTO `medical_problems` (`id`,`bat_id`,`date_opened`,`description`,`user_id`,`date_closed`,`title`) VALUES 
- (1,2,'2006-12-15 00:00:00','Bat hobbles, drinks too much and complains when mealworms tread on its foot.',NULL,NULL,'Gout');
+ (1,2,'2006-12-15 00:00:00','Bat hobbles, drinks too much and complains when mealworms tread on its foot.',NULL,NULL,'Gout'),
+ (2,6,'2006-12-15 00:00:00','Bat refuses to fly with other bats. Mocks investigators and finds flaws with the published literature',1,NULL,'Inflated Ego'),
+ (3,4,'2006-12-15 00:00:00','bat sings at a high pitch destroying the glass in other bat\'s cages',NULL,NULL,'High pitched singing'),
+ (4,4,'2006-12-15 00:00:00','Bat heckles other bats, steals food and rushes other bats trying to capture worm',1,'2006-12-15 00:00:00','Over competitiveness');
 /*!40000 ALTER TABLE `medical_problems` ENABLE KEYS */;
 
 
@@ -242,6 +250,11 @@ CREATE TABLE `proposed_treatments` (
 --
 
 /*!40000 ALTER TABLE `proposed_treatments` DISABLE KEYS */;
+INSERT INTO `proposed_treatments` (`id`,`medical_problem_id`,`date_started`,`date_finished`,`date_closed`,`treatment`,`user_id`) VALUES 
+ (1,1,'2006-12-15 00:00:00','2006-12-20 00:00:00',NULL,'Cough syrup',1),
+ (2,2,'2006-12-15 00:00:00','2006-12-15 00:00:00',NULL,'AM - No treatment, this is normal for bats',1),
+ (3,3,'2006-12-15 00:00:00','2006-12-20 00:00:00',NULL,'Helium - AM',1),
+ (4,3,'2006-12-15 00:00:00','2007-12-15 00:00:00','2006-12-15 00:00:00','Helium - PM',1);
 /*!40000 ALTER TABLE `proposed_treatments` ENABLE KEYS */;
 
 
@@ -333,7 +346,8 @@ CREATE TABLE `users` (
 
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`,`name`,`initials`,`email`,`start_date`,`end_date`) VALUES 
- (1,'Conan The Barbarian','CTB','ctb@slash.burn.net','2006-12-15 00:00:00',NULL);
+ (1,'Conan The Barbarian','CTB','ctb@slash.burn.net','2006-12-15 00:00:00',NULL),
+ (2,'Atilla the Hun','HUN','hun@villagepillage.com','2006-12-15 00:00:00',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 

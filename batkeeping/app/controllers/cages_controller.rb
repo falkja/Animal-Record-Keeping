@@ -58,8 +58,9 @@ class CagesController < ApplicationController
     @cage = Cage.find(params[:id])
     #we don't want the name change propagated on an edit so we remove that from the hash
     params[:cage].delete "name"
-    unless @cage.user
-        @cage.fed_by = "Animal Care"
+    
+    if params[:cage]['user_id'] == ''
+        params[:cage]['fed_by'] = "Animal Care"
     end
     
     if @cage.update_attributes(params[:cage])

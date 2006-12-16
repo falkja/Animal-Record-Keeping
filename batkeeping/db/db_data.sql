@@ -1,4 +1,4 @@
--- MySQL dump 10.10
+-- MySQL Administrator dump 1.4
 --
 -- ------------------------------------------------------
 -- Server version	5.0.17-nt
@@ -171,7 +171,8 @@ INSERT INTO `cages` (`id`,`name`,`date_created`,`date_destroyed`,`user_id`,`food
  (2,'Cage2','2006-12-15 00:00:00',NULL,1,0,'Investigator','','Belfry (4102F)'),
  (3,'Cage3','2006-12-15 00:00:00',NULL,NULL,0,'Animal Care','','Fruit Bats (4148L)'),
  (4,'Cage6','2006-12-15 00:00:00',NULL,2,0,'Investigator','','Belfry (4102F)'),
- (5,'cage7','2006-12-15 00:00:00',NULL,2,0,'Investigator','','Belfry (4102F)');
+ (5,'cage7','2006-12-15 00:00:00',NULL,2,0,'Investigator','','Belfry (4102F)'),
+ (6,'Cage99','2006-12-16 00:00:00',NULL,1,0,'Investigator','','Belfry (4102F)');
 /*!40000 ALTER TABLE `cages` ENABLE KEYS */;
 
 
@@ -254,7 +255,8 @@ INSERT INTO `proposed_treatments` (`id`,`medical_problem_id`,`date_started`,`dat
  (1,1,'2006-12-15 00:00:00','2006-12-20 00:00:00',NULL,'Cough syrup',1),
  (2,2,'2006-12-15 00:00:00','2006-12-15 00:00:00',NULL,'AM - No treatment, this is normal for bats',1),
  (3,3,'2006-12-15 00:00:00','2006-12-20 00:00:00',NULL,'Helium - AM',1),
- (4,3,'2006-12-15 00:00:00','2007-12-15 00:00:00','2006-12-15 00:00:00','Helium - PM',1);
+ (4,3,'2006-12-15 00:00:00','2007-12-15 00:00:00','2006-12-15 00:00:00','Helium - PM',1),
+ (5,3,'2006-12-16 00:00:00','2006-12-16 00:00:00',NULL,'Helium PM',1);
 /*!40000 ALTER TABLE `proposed_treatments` ENABLE KEYS */;
 
 

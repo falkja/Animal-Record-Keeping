@@ -61,7 +61,6 @@ class Bat < ActiveRecord::Base
             cih.user = @@current_user
             cih.note = @@comment
             cih.date = Time.new 
-            cih.note = @note
 
             cih.save
         end        

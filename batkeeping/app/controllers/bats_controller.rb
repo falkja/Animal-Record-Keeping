@@ -88,7 +88,7 @@ class BatsController < ApplicationController
   end
   
   def deactivate
-	@cages = Cage.find_all
+	@cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name" )
 	@bat = Bat.find(params[:id])
 	@deactivating = true
   end
@@ -112,12 +112,19 @@ class BatsController < ApplicationController
   end
   
   def reactivate
+    @bat = Bat.find(params[:id])
+    @cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name" )
+    @reactivating = true
+  end
+  
+  #because now we need to choose a cage for the zombie bat!
+  def reactivate_bat
 	@bat = Bat.find(params[:id])
 	@bat.leave_date = nil
 	@bat.leave_reason = nil
 	@bat.save
 	
-	redirect_to :action => 'edit', :id => @bat #because now we need to choose a cage for the zombie bat!
+  update
   end
 
   #choose a cage to move bats from

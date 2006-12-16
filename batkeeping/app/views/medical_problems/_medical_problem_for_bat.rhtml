@@ -9,10 +9,15 @@
     <td><%= link_to bat.band, :controller => 'bats', :action => 'show', :id => bat %></td>
     <% end %>
     
-    <td><%= link_to medical_problem.title, :action => 'show', :id => medical_problem %></td>
-    
-    <td><%= link_to medical_problem.user.initials, :controller => 'users', :action => 'show', :id => medical_problem.user %>
-    
+    <td><%= link_to medical_problem.title, :action => 'show', :id => medical_problem %></td>    
+    <td>
+    <% if medical_problem.user %>
+    <%= link_to medical_problem.user.initials, :controller => 'users', :action => 'show', :id => medical_problem.user %>
+    <% else %>
+    General Medical Care
+    <% end %>
+    </td>
+
     <td><%=h nice_date medical_problem.date_opened %></td>
     
     <td>

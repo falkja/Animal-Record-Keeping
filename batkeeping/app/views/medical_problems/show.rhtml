@@ -4,7 +4,7 @@
   <p><b>Title: </b><%=h @medical_problem.title %></p>
   <p><b>Description: </b><%=h @medical_problem.description %></p>
   <p><b>Date Opened: </b><%=h nice_date @medical_problem.date_opened %></p>
-  <p><b>User Assigned: </b><%=h @medical_problem.user.name %>
+  <p><b>User Assigned: </b><%=h @medical_problem.user ? @medical_problem.user.name : 'General Medical Care' %>
   <p><b>Date Closed: </b><%=h nice_date @medical_problem.date_closed %></p>
 
   <% for proposed_treatment in @medical_problem.proposed_treatments %>

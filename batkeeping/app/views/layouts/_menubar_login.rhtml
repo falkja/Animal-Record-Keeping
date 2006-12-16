@@ -13,6 +13,10 @@ You are not signed in.
 <% else %>
 
 <div class="session">
+<a href="/manual.html">Manual</a> |
+<%= link_to 'Main', :controller => 'main', :action => 'summary_page' %> |
+<%= link_to 'Notices', :controller => 'main', :action => 'notices_page' %>
+<br/>
 <b><%= session[:person].name %></b>
 [ <%= link_to 'log out', :controller => 'main', :action => 'logout' %> ]
 </div>

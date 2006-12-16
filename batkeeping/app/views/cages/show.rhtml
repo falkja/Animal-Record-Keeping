@@ -24,23 +24,24 @@
   <b>Current Bats:</b><br />
   <table>
   <th>Band</th>
-  <th>Date in</th>
-  <th>Who</th>
   <th>Last Weight</th>
   <th>Weigh Date</th>
+  <th>Date in</th>
+  <th>Who</th>
+  <th>Why</th>
   <% for bat in @cage.bats %>
     <% cih = bat.cage_in_histories %>
     <% if cih %>
     <%      @date_in = cih[0].date %>
     <%      @sig = cih[0].user.initials %>
+    <%      @why = cih[0].note %>
     <% else %>
     <%      @date_in ="" %>
     <%      @sig = "" %>  
+    <%      @why = "" %>  
     <% end %>
     <tr>
     <td><%= link_to bat.band, :controller => 'bats', :action => 'show', :id => bat %></td>
-    <td><%=h nice_date @date_in %></td>
-    <td><%=h @sig %></td>
     <% if bat.weights.length > 0 %></td>
           <td><%=h bat.weights[0].weight %></td>
           <td><%=h nice_date bat.weights[0].date %></td>
@@ -48,6 +49,9 @@
           <td>N/A</td>
           <td>N/A</td>
     <% end %>
+    <td><%=h nice_date @date_in %></td>
+    <td><%=h @sig %></td>
+    <td><%=h @why %></td>
     </tr>
   <% end %>
   </table>

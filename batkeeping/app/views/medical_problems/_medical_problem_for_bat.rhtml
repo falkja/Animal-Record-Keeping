@@ -11,7 +11,7 @@
     
     <td><%= link_to medical_problem.title, :action => 'show', :id => medical_problem %></td>
     
-    <td><%= link_to medical_problem.user.name, :controller => 'users', :action => 'show', :id => medical_problem.user %>
+    <td><%= link_to medical_problem.user.initials, :controller => 'users', :action => 'show', :id => medical_problem.user %>
     
     <td><%=h nice_date medical_problem.date_opened %></td>
     

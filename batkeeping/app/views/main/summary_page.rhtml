@@ -1,8 +1,8 @@
 <h1>Summary page for <%= session[:person].name %></h1>
 
-<% if @cages.length > 0 %> 
+<% if @mycages.count > 0 %> 
 <h3>Your cages</h3>
-<%= render_partial 'cages/cage_list', @cages %>
+<%= render_partial 'cages/cage_list', @mycages %>
 <% else %>
-<%= 'No cages' %>
+<h3>You have no cages</h3>
 <% end %>

@@ -9,7 +9,7 @@
 
   <% for proposed_treatment in @medical_problem.proposed_treatments %>
     <p>
-      <b>Proposed Treatment: </b><%=h proposed_treatment.treatment %><br />
+      <b>Proposed Treatment: </b><%= link_to proposed_treatment.treatment , :controller => 'proposed_treatments', :action => 'show', :id => proposed_treatment %><br />
       <blockquote>
       <b>Treatment Start Date: </b><%=h nice_date proposed_treatment.date_started %><br />
       <b>Suggested Treatment Finish Date: </b><%=h nice_date proposed_treatment.date_finished %><br />

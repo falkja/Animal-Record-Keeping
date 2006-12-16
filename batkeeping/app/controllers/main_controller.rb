@@ -28,8 +28,8 @@ class MainController < ApplicationController
 
   #lists things of relevance to only the user
   def summary_page
-		if session[:person] != nil
-      @mycages = session[:person].cages
+    if session[:person] != nil
+      @cages = session[:person].cages
     else
       redirect_to :action => 'index'
     end

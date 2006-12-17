@@ -30,6 +30,7 @@ class MainController < ApplicationController
   def summary_page
     if session[:person] != nil
       @mycages = User.find(session[:person].id).cages
+      @mymedicalproblems = User.find(session[:person].id).medical_problems
     else
       redirect_to :action => 'index'
     end

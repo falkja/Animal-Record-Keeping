@@ -3,11 +3,9 @@
 <% if session[:person] == nil %>
 
 <div class="session">
+<a href="/manual.html">Manual</a><br/>
 You are not signed in. 
 [ <%= link_to 'sign in', :controller => 'main', :action => 'index' %> ]
-</div>
-<div class="mainmenulinks">
-<a href="/manual.html">Manual</a>
 </div>
 
 <% else %>

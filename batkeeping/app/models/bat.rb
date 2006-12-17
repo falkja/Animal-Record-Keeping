@@ -16,6 +16,16 @@ class Bat < ActiveRecord::Base
         find :all, :conditions => 'leave_date is null'
     end
     
+    #returns all the sick bats
+    def self.sick
+        @medical_problems = MedicalProblem.find(:all)
+        bat_ids = Array.new
+        for medical_problem in @medical_problems
+            bat_ids << medical_problem.bat.id
+        end
+        Bat.find(bat_ids.uniq, :order => 'band')
+    end
+    
     def Bat.set_user_and_comment(user, cmt)
         @@current_user = user
         @@comment = cmt

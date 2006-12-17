@@ -12,8 +12,8 @@ You are not signed in.
 
 <div class="session">
 <a href="/manual.html">Manual</a> |
-<%= link_to 'Main', :controller => 'main', :action => 'summary_page' %> |
-<%= link_to 'Notices', :controller => 'main', :action => 'notices_page' %>
+<%= link_to 'My Page', :controller => 'main', :action => 'user_summary_page' %> |
+<%= link_to 'Colony Status', :controller => 'main', :action => 'colony_page' %>
 <br/>
 <b><%= session[:person].name %></b>
 [ <%= link_to 'log out', { :controller => 'main', :action => 'logout' } , :confirm => 'Are you sure you want to log out?', :post => true %> ]

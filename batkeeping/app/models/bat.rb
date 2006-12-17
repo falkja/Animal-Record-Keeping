@@ -15,7 +15,7 @@ class Bat < ActiveRecord::Base
     def self.active
         find :all, :conditions => 'leave_date is null'
     end
-    
+        
     #returns all the sick bats
     def self.sick
         @medical_problems = MedicalProblem.find(:all)
@@ -25,6 +25,19 @@ class Bat < ActiveRecord::Base
         end
         Bat.find(bat_ids.uniq, :order => 'band')
     end
+    
+    #Return all bats that left the colony (leave_date)
+    #on the given month (month is an integer from 1 to 12)
+    def self.left_on_month(month)
+        #from http://dev.mysql.com/doc/refman/5.0/en/date-calculations.html
+        Bat.find(:all, :conditions => 'YEAR(leave_date) = YEAR(CURDATE()) AND MONTH(leave_date) = ' + month.to_s)
+    end
+    
+    def self.arrived_on_month(month)
+        #from http://dev.mysql.com/doc/refman/5.0/en/date-calculations.html
+        Bat.find(:all, :conditions => 'YEAR(collection_date) = YEAR(CURDATE()) AND MONTH(collection_date) = ' + month.to_s)
+    end
+    
     
     def Bat.set_user_and_comment(user, cmt)
         @@current_user = user

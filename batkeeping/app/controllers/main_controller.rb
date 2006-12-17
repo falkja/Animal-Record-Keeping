@@ -12,7 +12,7 @@ class MainController < ApplicationController
   
   def login
       session[:person] = User.find(params[:user][:id])
-      redirect_to :action => 'summary_page'
+      redirect_to :action => 'user_summary_page'
   end
   
   def logout
@@ -27,7 +27,7 @@ class MainController < ApplicationController
   end
 
   #lists things of relevance to only the user
-  def summary_page
+  def user_summary_page
     if session[:person] != nil
       @mycages = User.find(session[:person].id).cages
       @mymedicalproblems = User.find(session[:person].id).medical_problems
@@ -39,5 +39,11 @@ class MainController < ApplicationController
   #lists global things of interest to everyone
   def notices_page
   end
+  
+  #This page displays summary information about the whole colony
+  def colony_page
+
+  end
+  
   
 end

@@ -16,7 +16,7 @@ You are not signed in.
 <%= link_to 'Notices', :controller => 'main', :action => 'notices_page' %>
 <br/>
 <b><%= session[:person].name %></b>
-[ <%= link_to 'log out', :controller => 'main', :action => 'logout' %> ]
+[ <%= link_to 'log out', { :controller => 'main', :action => 'logout' } , :confirm => 'Are you sure you want to log out?', :post => true %> ]
 </div>
 <%= render_partial 'layouts/menubar' %>
 

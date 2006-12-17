@@ -59,9 +59,9 @@
     <td><%= link_to 'Edit', :action => 'edit', :id => bat %></td>
     <td>
 	<% if bat.leave_date == nil %>
-	<%= link_to 'Deactivate', { :action => 'deactivate', :id => bat }, :confirm => 'Are you sure?', :post => true %>
+	<%= link_to 'Deactivate', { :action => 'deactivate', :id => bat } %>
 	<% else %>
-	<%=  link_to 'Reactivate', { :action => 'reactivate', :id => bat }, :confirm => 'Are you sure?', :post => true %>
+	<%=  link_to 'Reactivate', { :action => 'reactivate', :id => bat } %>
         <% end %>
     </td>
   </tr>

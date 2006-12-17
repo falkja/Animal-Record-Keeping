@@ -3,6 +3,8 @@
 <p>Bats in <%= link_to 'colony', :controller => 'bats', :action => 'list' %> : <%= Bat.active.length %> </p>
 <p>Bats in <%= link_to 'medical care', :controller => 'medical_problems', :action => 'list_current' %> : <%= Bat.sick.length %> </p>
 <p><b>Movers and shakers</b></p>
+<% total_left = 0 %>
+<% total_arrived = 0 %>
 <table>
 <tr>
 <td>Month</td>
@@ -11,9 +13,18 @@
 </tr>
 <% for n in 1..Time.now.month %>
 <tr>
+<% total_left = total_left + Bat.left_on_month(n).length %>
+<% total_arrived = total_arrived + Bat.arrived_on_month(n).length %>
 <td><%= Date::MONTHNAMES[n] %></td>
 <td><%= Bat.left_on_month(n).length %></td>
 <td><%= Bat.arrived_on_month(n).length %></td>
 </tr>
 <% end %>
+<tr><td colspan=3><hr/></tr>
+<tr>
+<td>Total</td>
+<td>-<%= total_left %></td>
+<td>+<%= total_arrived %></td>
+<td><%= total_arrived - total_left %></td>
+</tr>
 </table>

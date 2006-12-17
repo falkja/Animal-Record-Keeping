@@ -5,7 +5,7 @@
   <p><b>Description: </b><%=h @proposed_treatment.medical_problem.description %></p>
   <p><b>Date Opened: </b><%=h nice_date @proposed_treatment.medical_problem.date_opened %></p>
   <p><b>Date Closed: </b><%=h nice_date @proposed_treatment.medical_problem.date_closed %></p>
-  <p><b>Owner: </b><%=h @proposed_treatment.medical_problem.user.name %></p>
+  <p><b>Owner: </b><%=h @proposed_treatment.medical_problem.user ? @proposed_treatment.medical_problem.user.name : 'General Medical Care' %></p>
 
   <p>
       <b>Proposed Treatment: </b><%=h @proposed_treatment.treatment %><br />
@@ -22,7 +22,7 @@
       <p>
       <b>Date: </b><%= nice_date_with_time medical_care_action.date %><br/>
       <b>Remarks: </b><%= medical_care_action.remarks %><br/>
-      <b>User: </b><%= medical_care_action.user.name %><br/>
+      <b>User: </b><%=h medical_care_action.user.name %><br/>
       </p>
   <% end %>
 

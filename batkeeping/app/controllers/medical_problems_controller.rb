@@ -8,12 +8,7 @@ class MedicalProblemsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @medical_problems = MedicalProblem.find(:all)
-    bat_ids = Array.new
-    for medical_problem in @medical_problems
-      bat_ids << medical_problem.bat.id
-    end
-    @bats = Bat.find(bat_ids.uniq, :order => 'band')
+    @bats = Bat.sick
     render :action => 'list'
   end
 

@@ -22,7 +22,7 @@
     
     <td>
     <% if medical_problem.date_closed == nil %>
-    <%= link_to 'Close', :action => 'deactivate', :id => medical_problem %>
+    <%= link_to 'Close', :controller => 'medical_problems', :action => 'deactivate', :id => medical_problem %>
     <% else %>
     <%=h nice_date medical_problem.date_closed %>
     <% end %>
@@ -30,7 +30,7 @@
     
     <td>
     <% if medical_problem.date_closed == nil %>
-        <%= link_to 'Edit', :action => 'edit', :id => medical_problem %>
+        <%= link_to 'Edit', :controller => 'medical_problems', :action => 'edit', :id => medical_problem %>
     <% end %>
     </td>
     

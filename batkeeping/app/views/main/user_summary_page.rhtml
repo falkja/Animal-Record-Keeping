@@ -25,10 +25,8 @@
 <th></th><th></th>
 <th>Treatment</th>
 <% @show_bat = true %>
-<% for cage in @mycages %>
-<% for bat in cage.bats %>
-<%= render_partial 'medical_problems/medical_problem_for_bat', bat %>
-<% end %>
+<% for problem in @mymedicalproblems %>
+<%= render_partial 'medical_problems/medical_problem_for_bat', problem.bat %>
 <% end %>
 </table>
 <% else %>

@@ -29,8 +29,9 @@ class MainController < ApplicationController
   #lists things of relevance to only the user
   def user_summary_page
     if session[:person] != nil
-      @mycages = User.find(session[:person].id).cages
-      @mymedicalproblems = User.find(session[:person].id).medical_problems
+      user = User.find(session[:person].id)
+      @mycages = user.cages
+      @mymedicalproblems = user.medical_problems.current
     else
       redirect_to :action => 'index'
     end

@@ -1,29 +1,33 @@
-<h1>Showing Medical Treatment</h1>
+<h1><%=h @proposed_treatment.medical_problem.bat.band %>'s Medical Treatment: "<%=h @proposed_treatment.treatment %>" for <%=h @proposed_treatment.medical_problem.title %></h1>
 
-  <p><b>Bat: </b><%=h @proposed_treatment.medical_problem.bat.band %></p>
-  <p><b>Medical Problem: </b><%=h @proposed_treatment.medical_problem.title %></p>
+  <p><b>Bat: </b><%= link_to @proposed_treatment.medical_problem.bat.band, :controller => 'bats', :action => 'show', :id =>  @proposed_treatment.medical_problem.bat %></p>
+  <p><b>Medical Problem: </b><%= link_to @proposed_treatment.medical_problem.title, :controller => 'medical_problems', :action => 'show', :id => @proposed_treatment.medical_problem %></p>
   <p><b>Description: </b><%=h @proposed_treatment.medical_problem.description %></p>
   <p><b>Date Opened: </b><%=h nice_date @proposed_treatment.medical_problem.date_opened %></p>
   <p><b>Date Closed: </b><%=h nice_date @proposed_treatment.medical_problem.date_closed %></p>
   <p><b>Owner: </b><%=h @proposed_treatment.medical_problem.user ? @proposed_treatment.medical_problem.user.name : 'General Medical Care' %></p>
 
   <p>
-      <b>Proposed Treatment: </b><%=h @proposed_treatment.treatment %><br />
-      <blockquote>
-      <b>Treatment Start Date: </b><%=h nice_date @proposed_treatment.date_started %><br />
-      <b>Suggested Treatment Finish Date: </b><%=h nice_date @proposed_treatment.date_finished %><br />
-      <b>Ended Treatment: </b><%=h nice_date @proposed_treatment.date_closed %><br />
-      </blockquote>
+      <p><b>Proposed Treatment: </b><%=h @proposed_treatment.treatment %><br /></p>
+      <p><b>Treatment Start Date: </b><%=h nice_date @proposed_treatment.date_started %><br /></p>
+      <p><b>Suggested Treatment Finish Date: </b><%=h nice_date @proposed_treatment.date_finished %><br /></p>
+      <p><b>Ended Treatment: </b><%=h nice_date @proposed_treatment.date_closed %><br /></p>
     </p>
-
-  <h3>Medical Care Actions:</h3>
+  <% if @proposed_treatment.medical_care_actions.length == 0 %>
+  <p>No medical care actions have been performed for this treatment.</p>
+  <% else %>
+  <h3><%=h @proposed_treatment.treatment %> Given:</h3>
+  <blockquote>
   <% for medical_care_action in @proposed_treatment.medical_care_actions %>
-      <hr>
+
       <p>
       <b>Date: </b><%= nice_date_with_time medical_care_action.date %><br/>
       <b>Remarks: </b><%= medical_care_action.remarks %><br/>
       <b>User: </b><%=h medical_care_action.user.name %><br/>
       </p>
+      <hr width = "60%" align=LEFT />
+  <% end %>
+  </blockquote>
   <% end %>
 
 <%#= link_to 'Edit', :action => 'edit', :id => @proposed_treatment %>

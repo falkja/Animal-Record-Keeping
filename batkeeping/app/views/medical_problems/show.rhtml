@@ -1,7 +1,6 @@
-<h1>Showing Medical Problem</h1>
+<h1><%=h @medical_problem.bat.band %>'s Medical Problem: <%=@medical_problem.title%> </h1>
 
-  <p><b>Bat: </b><%=h @medical_problem.bat.band %></p>
-  <p><b>Title: </b><%=h @medical_problem.title %></p>
+  <p><b>Bat: </b><%= link_to @medical_problem.bat.band, :controller => 'bats', :action => 'show', :id =>  @medical_problem.bat %></p>
   <p><b>Description: </b><%=h @medical_problem.description %></p>
   <p><b>Date Opened: </b><%=h nice_date @medical_problem.date_opened %></p>
   <p><b>User Assigned: </b><%=h @medical_problem.user ? @medical_problem.user.name : 'General Medical Care' %>
@@ -9,11 +8,26 @@
 
   <% for proposed_treatment in @medical_problem.proposed_treatments %>
     <p>
-      <b>Proposed Treatment: </b><%= link_to proposed_treatment.treatment , :controller => 'proposed_treatments', :action => 'show', :id => proposed_treatment %><br />
+      <b>Proposed Treatment: </b><%= link_to proposed_treatment.treatment , :controller => 'proposed_treatments', :action => 'show', :id => proposed_treatment %>
       <blockquote>
       <b>Treatment Start Date: </b><%=h nice_date proposed_treatment.date_started %><br />
       <b>Suggested Treatment Finish Date: </b><%=h nice_date proposed_treatment.date_finished %><br />
       <b>Ended Treatment: </b><%=h nice_date proposed_treatment.date_closed %><br />
+      <% if proposed_treatment.medical_care_actions.length == 0 %>
+      <p>No medical care actions have been performed for this treatment.</p>
+      <% else %>
+  <h3><%=h proposed_treatment.treatment %> Given:</h3>
+  <blockquote>
+      <% for medical_care_action in proposed_treatment.medical_care_actions %>
+        <p>
+        <b>Date: </b><%= nice_date_with_time medical_care_action.date %><br/>
+        <b>Remarks: </b><%= medical_care_action.remarks %><br/>
+        <b>User: </b><%=h medical_care_action.user.name %><br/>
+        </p>
+        <hr width = "60%" align=LEFT />
+      <% end %>
+      </blockquote>
+      <% end %>
       </blockquote>
     </p>
   <% end %>

@@ -42,7 +42,34 @@ class MainController < ApplicationController
   
   #This page displays summary information about the whole colony
   def colony_page
-
+    @cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => 'room')
+    
+    @colony_cages = Array.new
+    @colony_bats = Array.new
+    for cage in @cages
+      if cage.room == 'Colony Room (4100)'
+        @colony_cages << cage
+        @colony_bats << cage.bats
+      end
+    end
+    
+    @belfry_cages = Array.new
+    @belfry_bats = Array.new
+    for cage in @cages
+      if cage.room == 'Belfry (4102F)'
+        @belfry_cages << cage
+        @belfry_bats << cage.bats
+      end
+    end
+    
+    @fruitbat_cages = Array.new
+    @fruitbat_bats = Array.new
+    for cage in @cages
+      if cage.room == 'Fruit Bats (4148L)'
+        @fruitbat_cages << cage
+        @fruitbat_bats << cage.bats
+      end
+    end
   end
   
   

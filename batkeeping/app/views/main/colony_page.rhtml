@@ -1,8 +1,8 @@
-<h1>Colony status as of <%= Time.now.strftime('%d %B, %Y') %></h1>
+<h1>Colony status as of <%= nice_date_with_time Time.now %></h1>
 
 <p>Bats in <%= link_to 'colony', :controller => 'bats', :action => 'list' %> : <%= Bat.active.length %> </p>
 <p>Bats in <%= link_to 'medical care', :controller => 'medical_problems', :action => 'list_current' %> : <%= Bat.sick.length %> </p>
-<p><b>Movers and shakers</b></p>
+
 <% total_left = 0 %>
 <% total_arrived = 0 %>
 <table width=400 layout='fixed'>
@@ -40,3 +40,15 @@
 <td><b><%= total_arrived - total_left %></b></td>
 </tr>
 </table>
+
+<p><b>Cages in Colony Room (4100)</b></p>
+There are <%= @colony_cages.length %> cages in the colony room,
+with <%= @colony_bats.length %> bats currently inside.
+
+<p><b>Cages in Belfry (4102F)</b></p>
+There are <%= @belfry_cages.length %> cages in the colony room,
+with <%= @belfry_bats.length %> bats currently inside.
+
+<p><b>Cages in Fruit Bats (4148L)</b></p>
+There are <%= @fruitbat_cages.length %> cages in the colony room,
+with <%= @fruitbat_bats.length %> bats currently inside.

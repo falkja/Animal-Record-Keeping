@@ -117,3 +117,26 @@ div.mainmenulinks {
 	padding-left: 2cm;
 	padding-right: 2cm;	
 }
+
+/*The info that can be popped up on hover*/
+a.info{
+    position:relative; /*this is the key*/
+    z-index:24; background-color:#ff0;
+    color:#000;
+    text-decoration:none;
+	font-size: 8pt;
+	line-height: 1.4	
+}
+
+a.info:hover{z-index:25; background-color:#ff0}
+
+a.info span{display: none}
+
+a.info:hover span{ /*the span will display just on :hover state*/
+    display:block;
+    position:absolute;
+	top:2em; left:2em;
+    border:1px solid #0cf;
+    background-color:#ff0; color:#000;
+    text-align: left;
+}

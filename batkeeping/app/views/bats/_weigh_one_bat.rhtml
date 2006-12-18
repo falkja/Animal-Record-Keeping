@@ -3,11 +3,13 @@
 <td><%= text_field 'weight', weigh_one_bat.id, :size => 4, :autocomplete => 'off' %> g</td>
 <td><%= text_field 'note', weigh_one_bat.id %></td>
 <td>
-<% if weigh_one_bat.weights.length == 0 %>
+<% if weigh_one_bat.weights.recent.length == 0 %>
 No previous weights.
 <% else %>
-<% for weight in weigh_one_bat.weights %>
-<%= weight.weight.to_s + 'g ' + nice_date(weight.date) %>
+<% for weight in weigh_one_bat.weights.recent %>
+<a class="info"><%= weight.weight.to_s + 'g' %>
+<span><%=h nice_date(weight.date) %></span>
+</a> 
 <% end %>
 <% end %>
 </td>

@@ -38,7 +38,7 @@ class MedicalProblemsController < ApplicationController
     @medical_problem.date_closed = nil
     @medical_problem.bat = @bat
     if @medical_problem.save
-      flash[:notice] = 'MedicalProblem was successfully created.'
+      flash[:notice] = 'Medical problem was successfully created.'
       redirect_to :action => 'list'
     else
       render :action => 'new'

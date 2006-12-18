@@ -16,6 +16,10 @@ class Bat < ActiveRecord::Base
         find :all, :conditions => 'leave_date is null'
     end
         
+    def self.not_active
+        find :all, :conditions => 'leave_date is not null'
+    end
+    
     #returns all the sick bats
     def self.sick
         @medical_problems = MedicalProblem.find(:all)

@@ -21,6 +21,9 @@
 <% end %>
 
 <p>
+<% if @cage.bats.active.length == 0 %>
+<b>No bats are in this cage.</b>
+<% else %>
   <b>Current Bats:</b><br />
   <table>
   <th>Band</th>
@@ -55,9 +58,13 @@
     </tr>
   <% end %>
   </table>
+<% end %>
 </p>
 
 <p>
+<% if @cage.bats.not_active.length == 0 %>
+<b>No other bats were in this cage.</b>
+<% else %>
   <b>Past Bats:</b><br />
   <table>
   <th>Band</th>
@@ -75,8 +82,8 @@
     </tr>
   <% end %>
   </table>
+<% end %>
 </p>
-
 
 <%= link_to 'Edit', :action => 'edit', :id => @cage %> |
 <%= link_to 'Back', :action => 'list' %>

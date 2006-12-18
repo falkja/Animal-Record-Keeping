@@ -134,9 +134,19 @@ a.info span{display: none}
 
 a.info:hover span{ /*the span will display just on :hover state*/
     display:block;
-    position:absolute;
-	top:2em; left:2em;
+    position:fixed;
+	top:5cm; 
+	left:5cm;
     border:1px solid #0cf;
     background-color:#ff0; color:#000;
     text-align: left;
+}
+
+
+div.scrollingdiv {
+	overflow-y : hidden;
+	height : 40px; 
+	width: 160px;
+	overflow-y: scroll;
+	font-size: 8pt;
 }

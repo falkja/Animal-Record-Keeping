@@ -1,9 +1,7 @@
 <h1>Choose a cage to weigh</h1>
 
-<table>
 <% for cage in @cages %>
-<tr><td><%= link_to cage.name, :action => 'weigh_cage' , :id => cage %></td></tr>
+<p><%= link_to cage.name, :action => 'weigh_cage' , :id => cage %></p>
 <% end %>
-</table>
 
 <p><%= link_to 'Back', :controller => 'weights', :action => 'weighing_choice' %></p>

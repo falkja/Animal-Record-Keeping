@@ -2,6 +2,15 @@
 <td><%= weigh_one_bat.band %></td>
 <td><%= text_field 'weight', weigh_one_bat.id, :size => 4, :autocomplete => 'off' %> g</td>
 <td><%= text_field 'note', weigh_one_bat.id %></td>
+<td>
+<% if weigh_one_bat.weights.length == 0 %>
+No previous weights.
+<% else %>
+<% for weight in weigh_one_bat.weights %>
+<%= weight.weight.to_s + ' ' + nice_date(weight.date) %>
+<% end %>
+<% end %>
+</td>
 <%# See http://www.rubyonrails.org/api/classes/ActionView/Helpers/FormOptionsHelper.html#M000404 %>
 <td><%= select 'bat_cage', weigh_one_bat.id.to_s , @cages.collect {|c| [c.name , c.id] }, :selected => weigh_one_bat.cage.id  %></td>
 <td><%= text_field 'cage_change_note', weigh_one_bat.id %></td>

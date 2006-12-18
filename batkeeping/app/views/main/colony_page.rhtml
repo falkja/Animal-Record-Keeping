@@ -41,14 +41,21 @@
 </tr>
 </table>
 
-<p><b>Cages in Colony Room (4100)</b></p>
-There are <%= @colony_cages.length %> cages in the colony room,
-with <%= @colony_bats.length %> bats currently inside.
+<h3>Cages in Colony Room (4100)</h3>
+There are <b><%= @colony_cages.length %></b> cages in the colony room,
+with <b><%= @colony_bats.length %></b> bats currently inside.
 
-<p><b>Cages in Belfry (4102F)</b></p>
-There are <%= @belfry_cages.length %> cages in the colony room,
-with <%= @belfry_bats.length %> bats currently inside.
+<blockquote><p><%= render_partial 'cages/cage_list', @colony_cages %></p></blockquote>
 
-<p><b>Cages in Fruit Bats (4148L)</b></p>
-There are <%= @fruitbat_cages.length %> cages in the colony room,
-with <%= @fruitbat_bats.length %> bats currently inside.
+
+<h3>Cages in Belfry (4102F)</h3>
+There are <b><%= @belfry_cages.length %></b> cages in the colony room,
+with <b><%= @belfry_bats.length %></b> bats currently inside.
+
+<blockquote><p><%= render_partial 'cages/cage_list', @belfry_cages %></p></blockquote>
+
+<h3>Cages in Fruit Bats Room (4148L)</h3>
+There are <b><%= @fruitbat_cages.length %></b> cages in the colony room,
+with <b><%= @fruitbat_bats.length %></b> bats currently inside.
+
+<blockquote><p><%= render_partial 'cages/cage_list', @fruitbat_cages %></p></blockquote>

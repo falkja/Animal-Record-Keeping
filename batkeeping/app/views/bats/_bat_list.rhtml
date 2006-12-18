@@ -24,7 +24,7 @@
 <% for bat in bat_list %>
   <tr>
     <td>
-      <%= link_to bat.band, :action => 'show', :id => bat %>
+      <%= link_to bat.band, :controller => 'bats', :action => 'show', :id => bat %>
     </td>
     <td>
 		<% if bat.cage %>

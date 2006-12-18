@@ -127,4 +127,5 @@ No weights.
 	<%= link_to 'Deactivate', { :action => 'deactivate', :id => @bat }, :confirm => 'Are you sure?', :post => true %>
 <% else %>
 	<%=  link_to 'Reactivate', { :action => 'reactivate', :id => @bat }, :confirm => 'Are you sure?', :post => true %>
-<% end %>
+<% end %> | 
+<%= link_to 'Weigh Bat', :action => 'weigh_bat', :id => @bat %>

@@ -33,6 +33,7 @@
 	<%=  link_to 'Reactivate', { :controller => 'cages', :action => 'reactivate', :id => cage }, :confirm => 'Are you sure?', :post => true %>
     <% end %>
 	</td>
+  <td><%= link_to 'Weigh Cage', :controller => 'cages', :action => 'weigh_cage', :id => cage %></td>
   </tr>
 <% end %>
 </table>

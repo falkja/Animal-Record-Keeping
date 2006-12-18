@@ -7,7 +7,7 @@
 No previous weights.
 <% else %>
 <% for weight in weigh_one_bat.weights %>
-<%= weight.weight.to_s + ' ' + nice_date(weight.date) %>
+<%= weight.weight.to_s + 'g ' + nice_date(weight.date) %>
 <% end %>
 <% end %>
 </td>

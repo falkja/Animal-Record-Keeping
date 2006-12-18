@@ -86,4 +86,5 @@
 </p>
 
 <%= link_to 'Edit', :action => 'edit', :id => @cage %> |
-<%= link_to 'Back', :action => 'list' %>
+<%= link_to 'List Current Cages', :action => 'list' %> | 
+<%= link_to 'Weigh Cage', :controller => 'cages', :action => 'weigh_cage', :id => @cage %>

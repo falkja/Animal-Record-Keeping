@@ -41,41 +41,36 @@ class MainController < ApplicationController
   def notices_page
   end
   
+  #This page displays what the weekend care person has to do.
+  def weekend_care
+    @sick_bats = Bat.sick
+    
+    @colony_cages = Cage.find(:all, :conditions => 'date_destroyed is null and fed_by = "Animal Care" and room = "Colony Room (4100)"') 
+    @colony_bats = Array.new
+    @colony_cages.each {|cage| @colony_bats << cage.bats}
+    
+    @belfry_cages = Cage.find(:all, :conditions => 'date_destroyed is null and fed_by = "Animal Care" and room = "Belfry (4102F)"') 
+    @belfry_bats = Array.new
+    @belfry_cages.each {|cage| @belfry_bats << cage.bats}
+    
+    @fruitbat_cages = Cage.find(:all, :conditions => 'date_destroyed is null and fed_by = "Animal Care" and room = "Fruit Bats (4148L)"') 
+    @fruitbat_bats = Array.new
+    @fruitbat_cages.each {|cage| @fruitbat_bats << cage.bats}
+    
+  end
+    
   #This page displays summary information about the whole colony
   def colony_page
-    @cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => 'room')
-    
-    @colony_cages = Array.new
+    @colony_cages = Cage.find(:all, :conditions => 'date_destroyed is null and room = "Colony Room (4100)"') 
     @colony_bats = Array.new
-    for cage in @cages
-      if cage.room == 'Colony Room (4100)'
-        @colony_cages << cage
-        for bat in cage.bats.active
-        @colony_bats << bat
-        end
-      end
-    end
+    @colony_cages.each {|cage| @colony_bats << cage.bats}
     
-    @belfry_cages = Array.new
+    @belfry_cages = Cage.find(:all, :conditions => 'date_destroyed is null and room = "Belfry (4102F)"') 
     @belfry_bats = Array.new
-    for cage in @cages
-      if cage.room == 'Belfry (4102F)'
-        @belfry_cages << cage
-        for bat in cage.bats.active
-        @belfry_bats << bat
-        end
-      end
-    end
+    @belfry_cages.each {|cage| @belfry_bats << cage.bats}
     
-    @fruitbat_cages = Array.new
+    @fruitbat_cages = Cage.find(:all, :conditions => 'date_destroyed is null and room = "Fruit Bats (4148L)"') 
     @fruitbat_bats = Array.new
-    for cage in @cages
-      if cage.room == 'Fruit Bats (4148L)'
-        @fruitbat_cages << cage
-        for bat in cage.bats.active
-        @fruitbat_bats << bat
-        end
-      end
-    end
+    @fruitbat_cages.each {|cage| @fruitbat_bats << cage.bats}
   end
 end

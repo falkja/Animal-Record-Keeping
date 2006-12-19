@@ -1,0 +1,87 @@
+<h1>Weekend Care</h1>
+
+<p>*mealworms already weighed out, separate media from worms by filtering the media into trash*</p>
+
+<h2>Things you need to do for weekend care:</h2>
+<ol>
+<li>Remove all dishes from <em>EVERY</em> cage - soak in bleach and dish soap minimum 10 minutes.</li>
+<li>Provide fresh water to <em>EVERY</em> cage.</li>
+<li>Feed bats as directed for each room:</li>
+</ol>
+
+<h3>Colony Room</h3>
+<% if @colony_cages.length == 0 %>
+No Colony bats to feed.
+<% else %>
+<% for cage in @colony_cages %>
+<table>
+<th>Name</th><th>Food</th>
+<tr>
+<td><%= cage.name %>
+<td><%= cage.food %>
+<tr>
+</table>
+<% end %>
+<% end %>
+
+<h3>Belfry</h3>
+<% if @belfry_cages.length == 0 %>
+No Belfry bats to feed.
+<% else %>
+<% for cage in @belfry_cages %>
+<table>
+<th>Name</th><th>Food</th>
+<tr>
+<td><%= cage.name %>
+<td><%= cage.food %>
+<tr>
+</table>
+<% end %>
+<% end %>
+
+<h3>Fruit Bats</h3>
+<% if @fruitbat_cages.length == 0 %>
+No fruit bats to feed.
+<% else %>
+<% for cage in @fruitbat_cages %>
+<table>
+<th>Name</th><th>Food</th>
+<tr>
+<td><%= cage.name %>
+<td><%= cage.food %>
+<tr>
+</table>
+<% end %>
+<% end %>
+
+
+
+
+<p>
+<% if @sick_bats.length > 0 %>
+<h3>Medical Problems For The Weekend</h3>
+<table>
+<th>Bat</th>
+<th>Medical Problem</th>
+<th>User</th>
+<th>Date Opened</th>
+<% if @list_all %>
+<th>Date Closed</th>
+<% else %>
+<th></th>
+<% end %>
+<th></th><th></th>
+<th>Treatment</th>
+<% @show_bat = true %>
+<% for @bat in @sick_bats %>
+  <% @list_all ? medical_problems = @sick_bat.medical_problems : medical_problems = @bat.medical_problems.current %>
+  
+  <% for medical_problem in medical_problems %>
+    <%= render_partial 'medical_problems/medical_problem_for_bat', medical_problem %>
+  <% end %>  
+<% end %>
+</table>
+<% else %>
+You are responsible for no medical problems.
+<% end %>
+</p>

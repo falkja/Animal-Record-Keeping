@@ -198,10 +198,10 @@ class BatsController < ApplicationController
 	n = 0
 	weight_classes.reverse_each {|weight| weights << weight.weight; dates[n] = weight.date.strftime('%m-%d-%y'); n = n + 1;}
     
-    dates.length.modulo(6).zero? ? spacing = (dates.length/6).to_i : spacing = (dates.length/6).to_i + 1
+    spacing = (dates.length/6.0).ceil
     
-    i = 0
-    dates.each_key {|key| (i.modulo(spacing).zero?) ? dates_reduced[i] = dates[i] : ''; i = i + 1;}
+    0.step( dates.length, spacing) {|i|  dates_reduced[i] = dates[i] }
+    
     g = Gruff::Line.new
     
     g.title = "Bat Weights"

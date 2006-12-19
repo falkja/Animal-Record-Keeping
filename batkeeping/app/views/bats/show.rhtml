@@ -19,7 +19,9 @@
 <th></th><th></th>
 <th>Treatment</th>
 <% @show_bat = false %>
-<%= render_partial 'medical_problems/medical_problem_for_bat', @bat %>
+  <% for medical_problem in @bat.medical_problems.current %>
+    <%= render_partial 'medical_problems/medical_problem_for_bat', medical_problem %>
+  <% end %>  
 </table>
 <% end %>
 
@@ -34,7 +36,9 @@
 <th></th><th></th>
 <th>Treatment</th>
 <% @show_bat = false %>
-<%= render_partial 'medical_problems/medical_problem_for_bat', @bat %>
+  <% for medical_problem in @bat.medical_problems.expired %>
+    <%= render_partial 'medical_problems/medical_problem_for_bat', medical_problem %>
+  <% end %>
 </table>
 <% end %>
 

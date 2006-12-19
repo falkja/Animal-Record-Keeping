@@ -1,10 +1,7 @@
-<% bat = medical_problem_for_bat %>
+<% bat = @bat %>
+<% medical_problem = medical_problem_for_bat %>
 
-  <% @list_all ? medical_problems = bat.medical_problems : medical_problems = bat.medical_problems.current %>
-
-  <% for medical_problem in medical_problems %>
-    
-    <tr>
+<tr>
     <% if @show_bat %>
     <td><%= link_to bat.band, :controller => 'bats', :action => 'show', :id => bat %></td>
     <% end %>
@@ -59,5 +56,4 @@
     <% end %>
     <% end %>
     </tr><tr><td></td>
-    <tr><td colspan = 10><hr /></td></tr>
-  <% end %>
+<tr><td colspan = 10><hr /></td></tr>

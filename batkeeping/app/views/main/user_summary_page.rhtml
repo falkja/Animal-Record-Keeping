@@ -26,7 +26,8 @@
 <th>Treatment</th>
 <% @show_bat = true %>
 <% for problem in @mymedicalproblems %>
-<%= render_partial 'medical_problems/medical_problem_for_bat', problem.bat %>
+<% @bat = problem.bat %>
+<%= render_partial 'medical_problems/medical_problem_for_bat',  problem %>
 <% end %>
 </table>
 <% else %>

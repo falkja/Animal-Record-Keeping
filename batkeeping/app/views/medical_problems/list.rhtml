@@ -23,8 +23,12 @@
 <th></th><th></th>
 <th>Treatment</th>
 <% @show_bat = true %>
-<% for bat in @bats %>
-<%= render_partial 'medical_problem_for_bat', bat %>
+<% for @bat in @bats %>
+  <% @list_all ? medical_problems = @bat.medical_problems : medical_problems = @bat.medical_problems.current %>
+  
+  <% for medical_problem in medical_problems %>
+    <%= render_partial 'medical_problem_for_bat', medical_problem %>
+  <% end %>  
 <% end %>
 </table>
 

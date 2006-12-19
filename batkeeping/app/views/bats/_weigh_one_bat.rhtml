@@ -1,5 +1,5 @@
 <tr bgcolor="<%= weigh_one_bat_counter.modulo(2).nonzero? ? "#e0e0e0" : "" %>">
-<td><%= weigh_one_bat.band %></td>
+<td><%= link_to weigh_one_bat.band, :controller => 'bats', :action => 'show', :id => weigh_one_bat %></td>
 <td><%= text_field 'weight', weigh_one_bat.id, :size => 4, :autocomplete => 'off' %> g</td>
 <td><%= text_field 'note', weigh_one_bat.id %></td>
 <td>

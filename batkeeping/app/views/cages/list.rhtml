@@ -8,14 +8,11 @@ Listing current cages
 
 <%= render_partial 'cages/cage_list', @cages %>
 
-<%= link_to 'Previous page', { :page => @cage_pages.current.previous } if @cage_pages.current.previous %>
-<%= link_to 'Next page', { :page => @cage_pages.current.next } if @cage_pages.current.next %> 
-
 <br />
 
 <%= link_to 'New Cage', :action => 'new' %>
 <% if @list_all %>
 <%= link_to 'List Current Cages', :action => 'list' %>
 <% else %>
-<%= link_to 'List All Cages', :action => 'list_all' %>
+<%= link_to 'List All Cages', :action => 'list_all_by_name' %>
 <% end %>

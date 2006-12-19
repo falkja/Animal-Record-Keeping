@@ -9,12 +9,34 @@ class CagesController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @cage_pages, @cages = paginate :cages, :conditions => "date_destroyed is null", :order => 'name', :per_page => 10
+    @cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => 'name')
     @list_all = false
   end
 
-  def list_all
-    @cage_pages, @cages = paginate :cages, :order => 'name', :per_page => 10
+  def list_all_by_name
+    @cages = Cage.find(:all, :order => 'name')
+    @list_all = true
+    render :action => 'list'
+  end
+  
+  def list_by_room
+    @cages = Cage.find(:all, :order => 'room, name', :conditions => "date_destroyed is null")
+    render :action => 'list'
+  end
+  
+  def list_all_by_room
+    @cages = Cage.find(:all, :order => 'room, name')
+    @list_all = true
+    render :action => 'list'
+  end
+  
+  def list_by_owner
+    @cages = Cage.find(:all, :order => 'user_id, name', :conditions => "date_destroyed is null")
+    render :action => 'list'
+  end
+  
+  def list_all_by_owner
+    @cages = Cage.find(:all, :order => 'user_id, name')
     @list_all = true
     render :action => 'list'
   end

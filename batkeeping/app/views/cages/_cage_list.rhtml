@@ -1,10 +1,33 @@
+<% if @list_all %>
+
+<% else %>
+
+<% end %>
+
 <table>
   <tr>
-    <th>Name</th>
-    <th>Room</th>
+    <th><% if @list_all %>
+    <%= link_to 'Name', :controller => 'cages', :action => 'list_all_by_name' %>
+    <% else %>
+    <%= link_to 'Name', :controller => 'cages', :action => 'list' %>
+    <% end %>
+    </th>
+    <th>
+    <% if @list_all %>
+    <%= link_to 'Room', :controller => 'cages', :action => 'list_all_by_room' %>
+    <% else %>
+    <%= link_to 'Room', :controller => 'cages', :action => 'list_by_room' %>
+    <% end %>
+    </th>
     <th>Bats</th>
     <th>Food</th>
-    <th>Owner</th>
+    <th>
+    <% if @list_all %>
+    <%= link_to 'Owner', :controller => 'cages', :action => 'list_all_by_owner' %>
+    <% else %>
+    <%= link_to 'Owner', :controller => 'cages', :action => 'list_by_owner' %>
+    <% end %>
+    </th>
     <th>Fed by</th>
     <% if @list_all %>
       <th>Destroyed</th>

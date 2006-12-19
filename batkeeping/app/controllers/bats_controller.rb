@@ -1,6 +1,5 @@
 class BatsController < ApplicationController
   require "gruff"
-  
   def index
 	list
 	render :action => 'list'
@@ -195,16 +194,19 @@ class BatsController < ApplicationController
     weight_classes = bat.weights
 	weights = Array.new
 	dates = Hash.new
+  dates_reduced = Hash.new
 	n = 0
 	weight_classes.reverse_each {|weight| weights << weight.weight; dates[n] = weight.date.strftime('%m-%d-%y'); n = n + 1;}
-    
+    p = (dates.length/6).to_i + 1
+    i = 0
+    dates.each_key {|key| (i/p == (i + p-1)/p) ? dates_reduced[i] = dates[i] : ''; i = i + 1;}
     g = Gruff::Line.new
     
     g.title = "Bat Weights"
     
     g.data(bat.band, weights)
     
-    g.labels = dates #this is where we will need to put the dates
+    g.labels = dates_reduced #this is where we will need to put the dates
     
     send_data(g.to_blob, :disposition => 'inline', :type => 'image/png', :filename => bat.band + " weights.png")
   

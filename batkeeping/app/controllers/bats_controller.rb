@@ -1,4 +1,6 @@
 class BatsController < ApplicationController
+  require "gruff"
+  
   def index
 	list
 	render :action => 'list'
@@ -186,5 +188,28 @@ class BatsController < ApplicationController
         @bat.cage = Cage.find(params[:bat_cage][@bat.id.to_s])
         @bat.save
 
+  end
+  
+  def graph_weights
+    @bat = Bat.find(params[:id])
+    @weight_objects = Weight.find(:all, :conditions => 'bat_id = ' + @bat.id.to_s, :order => 'date asc')
+    #@dates = Array.new
+    
+    @weights = Array.new
+    for weight in @weight_objects
+      @weights << weight.weight
+      #@dates << weight.date
+    end
+    
+    g = Gruff::Line.new
+    
+    g.title = "Bat: " + @bat.band
+    
+    g.data("Weights", @weights)
+    
+    g.labels = {} #this is where we will need to put the dates
+    
+    send_data(g.to_blob, :disposition => 'inline', :type => 'image/png', :filename => @bat.band + " weights.png")
+  
   end
 end

@@ -200,9 +200,9 @@ class BatsController < ApplicationController
     
     g = Gruff::Line.new
     
-    g.title = "Bat: " + bat.band
+    g.title = "Bat Weights"
     
-    g.data("Weights", weights)
+    g.data(bat.band, weights)
     
     g.labels = dates #this is where we will need to put the dates
     

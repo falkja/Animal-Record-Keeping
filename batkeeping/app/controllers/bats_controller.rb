@@ -196,7 +196,7 @@ class BatsController < ApplicationController
 	weights = Array.new
 	dates = Hash.new
 	n = 0
-	weight_classes.reverse_each {|weight| weights << weight.weight; dates[n] = weight.date.strftime('%m-%d-%Y'); n = n + 1;}
+	weight_classes.reverse_each {|weight| weights << weight.weight; dates[n] = weight.date.strftime('%m-%d-%y'); n = n + 1;}
     
     g = Gruff::Line.new
     

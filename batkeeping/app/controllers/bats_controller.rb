@@ -191,25 +191,22 @@ class BatsController < ApplicationController
   end
   
   def graph_weights
-    @bat = Bat.find(params[:id])
-    @weight_objects = Weight.find(:all, :conditions => 'bat_id = ' + @bat.id.to_s, :order => 'date asc')
-    #@dates = Array.new
-    
-    @weights = Array.new
-    for weight in @weight_objects
-      @weights << weight.weight
-      #@dates << weight.date
-    end
+    bat = Bat.find(params[:id])
+    weight_classes = bat.weights
+	weights = Array.new
+	dates = Hash.new
+	n = 0
+	weight_classes.reverse_each {|weight| weights << weight.weight; dates[n] = weight.date.strftime('%m-%d-%Y'); n = n + 1;}
     
     g = Gruff::Line.new
     
-    g.title = "Bat: " + @bat.band
+    g.title = "Bat: " + bat.band
     
-    g.data("Weights", @weights)
+    g.data("Weights", weights)
     
-    g.labels = {} #this is where we will need to put the dates
+    g.labels = dates #this is where we will need to put the dates
     
-    send_data(g.to_blob, :disposition => 'inline', :type => 'image/png', :filename => @bat.band + " weights.png")
+    send_data(g.to_blob, :disposition => 'inline', :type => 'image/png', :filename => bat.band + " weights.png")
   
   end
 end

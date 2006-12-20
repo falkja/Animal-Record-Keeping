@@ -6,13 +6,15 @@ Listing current cages
 <% end %>
 </h1>
 
+<div id = "cages_div">
 <%= render_partial 'cages/cage_list', @cages %>
-
+</div>
 <br />
 
 <%= link_to 'New Cage', :action => 'new' %>
+
 <% if @list_all %>
-<%= link_to 'List Current Cages', :action => 'list' %>
+<%= link_to "List Current Cages", :controller => 'cages', :action => 'list' %>
 <% else %>
-<%= link_to 'List All Cages', :action => 'list_all_by_name' %>
+<%= link_to "List All Cages", :controller => 'cages', :action => 'list_all' %>
 <% end %>

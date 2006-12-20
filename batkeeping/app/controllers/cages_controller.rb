@@ -1,7 +1,6 @@
 class CagesController < ApplicationController
   def index
-    list
-    render :action => 'list'
+    redirect_to :action => 'list'
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
@@ -9,36 +8,58 @@ class CagesController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => 'name')
+    @cages = Cage.find(:all, :conditions => 'date_destroyed is null', :order => 'name')
     @list_all = false
+    @div_id = 'cages_div'
+  end
+  
+  def list_all
+    @cages = Cage.find(:all, :order => 'name')
+    @list_all = true
+    @div_id = 'cages_div'
+    render :action => 'list'
+  end
+  
+  def list_by_name
+    @cages = Cage.find(params[:ids], :order => 'name')
+    @list_all = false
+    @div_id = params[:div]
+    render_partial 'cage_list', @cages, :div => @div_id
   end
 
   def list_all_by_name
-    @cages = Cage.find(:all, :order => 'name')
+    @cages = Cage.find(params[:ids], :order => 'name')
     @list_all = true
-    render :action => 'list'
+    @div_id = params[:div]
+    render_partial 'cage_list', @cages, :div => @div_id
   end
   
   def list_by_room
-    @cages = Cage.find(:all, :order => 'room, name', :conditions => "date_destroyed is null")
-    render :action => 'list'
+    @cages = Cage.find(params[:ids], :order => 'room, name')
+    @list_all = false
+    @div_id = params[:div]
+    render_partial 'cage_list', @cages, :div => @div_id
   end
   
   def list_all_by_room
-    @cages = Cage.find(:all, :order => 'room, name')
+    @cages = Cage.find(params[:ids], :order => 'room, name')
     @list_all = true
-    render :action => 'list'
+    @div_id = params[:div]
+    render_partial 'cage_list', @cages, :div => @div_id
   end
   
   def list_by_owner
-    @cages = Cage.find(:all, :order => 'user_id, name', :conditions => "date_destroyed is null")
-    render :action => 'list'
+    @cages = Cage.find(params[:ids], :order => 'user_id, name')
+    @list_all = false
+    @div_id = params[:div]
+    render_partial 'cage_list', @cages, :div => @div_id
   end
   
   def list_all_by_owner
-    @cages = Cage.find(:all, :order => 'user_id, name')
+    @cages = Cage.find(params[:ids], :order => 'user_id, name')
     @list_all = true
-    render :action => 'list'
+    @div_id = params[:div]
+    render_partial 'cage_list', @cages, :div => @div_id
   end
   
   def show

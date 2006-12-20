@@ -1,31 +1,37 @@
-<% if @list_all %>
-
-<% else %>
-
-<% end %>
-
 <table>
   <tr>
     <th><% if @list_all %>
-    <%= link_to 'Name', :controller => 'cages', :action => 'list_all_by_name' %>
+    <%= link_to_remote( "Name",
+        :update => @div_id,
+        :url =>{ :controller => 'cages', :action => 'list_all_by_name', :ids => cage_list, :div => @div_id }) %>
     <% else %>
-    <%= link_to 'Name', :controller => 'cages', :action => 'list' %>
+    <%= link_to_remote( "Name",
+        :update => @div_id,
+        :url =>{ :controller => 'cages', :action => 'list_by_name', :ids => cage_list, :div => @div_id }) %>
     <% end %>
     </th>
     <th>
     <% if @list_all %>
-    <%= link_to 'Room', :controller => 'cages', :action => 'list_all_by_room' %>
+    <%= link_to_remote( "Room",
+        :update => @div_id,
+        :url =>{ :controller => 'cages', :action => 'list_all_by_room', :ids => cage_list, :div => @div_id }) %>
     <% else %>
-    <%= link_to 'Room', :controller => 'cages', :action => 'list_by_room' %>
+    <%= link_to_remote( "Room",
+        :update => @div_id,
+        :url =>{ :controller => 'cages', :action => 'list_by_room', :ids => cage_list, :div => @div_id }) %>
     <% end %>
     </th>
     <th>Bats</th>
     <th>Food</th>
     <th>
     <% if @list_all %>
-    <%= link_to 'Owner', :controller => 'cages', :action => 'list_all_by_owner' %>
+    <%= link_to_remote( "Owner",
+        :update => @div_id,
+        :url =>{ :controller => 'cages', :action => 'list_all_by_owner', :ids => cage_list, :div => @div_id }) %>
     <% else %>
-    <%= link_to 'Owner', :controller => 'cages', :action => 'list_by_owner' %>
+    <%= link_to_remote( "Owner",
+        :update => @div_id,
+        :url =>{ :controller => 'cages', :action => 'list_by_owner', :ids => cage_list, :div => @div_id }) %>
     <% end %>
     </th>
     <th>Fed by</th>

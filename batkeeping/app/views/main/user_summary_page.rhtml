@@ -2,7 +2,10 @@
 
 <% if @mycages.count > 0 %> 
 <h3>Your cages</h3>
+<div id= "my_cages">
+<% @div_id = "my_cages" %>
 <%= render_partial 'cages/cage_list', @mycages %>
+</div>
 <% else %>
 <h3>You have no cages</h3>
 <% end %>

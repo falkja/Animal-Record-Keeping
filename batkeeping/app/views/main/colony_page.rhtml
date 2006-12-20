@@ -1,5 +1,6 @@
 <font color=red>Lookup # bats in colony at any particular time in the past.</font>
-
+<% @div = '<div id= "cages_div">' %>
+<% @div_id = "cages_div" %>
 <h1>Colony status as of <%= nice_date_with_time Time.now %></h1>
 
 <p>Bats in <%= link_to 'colony', :controller => 'bats', :action => 'list' %> : <%= Bat.active.length %> </p>
@@ -48,17 +49,33 @@
 There are <b><%= @colony_cages.length %></b> cages in the colony room 
 containing <b><%= @colony_bats.length %></b> bats.
 
-<blockquote><p><%= render_partial 'cages/cage_list', @colony_cages %></p></blockquote>
+<blockquote><p>
+<div id="colony">
+<% @div_id = "colony" %>
+<%= render_partial 'cages/cage_list', @colony_cages %>
+</div>
+</p></blockquote>
 
 
 <h3>Belfry (4102F)</h3>
 There are <b><%= @belfry_cages.length %></b> cages in the belfry
 containing <b><%= @belfry_bats.length %></b> bats.
 
-<blockquote><p><%= render_partial 'cages/cage_list', @belfry_cages %></p></blockquote>
+<blockquote><p>
+<div id="belfry">
+<% @div_id = "belfry" %>
+<%= render_partial 'cages/cage_list', @belfry_cages %>
+</div>
+</p></blockquote>
+
 
 <h3>Fruit Bats Room (4148L)</h3>
 There are <b><%= @fruitbat_cages.length %></b> cages in the fruit bat room
 containing <b><%= @fruitbat_bats.length %></b> bats.
 
-<blockquote><p><%= render_partial 'cages/cage_list', @fruitbat_cages %></p></blockquote>
+<blockquote><p>
+<div id="fruitbat">
+<% @div_id = "fruitbat" %>
+<%= render_partial 'cages/cage_list', @fruitbat_cages %>
+</div>
+</p></blockquote>

@@ -4,11 +4,26 @@
 <table>
   <tr>
     <% if @list_all %>
-      <th><%= link_to 'Band', :action => 'list_all_by_band'%></th>
-      <th><%= link_to 'Cage', :action => 'list_all_by_cage' %></th>
+      <th>
+      <%= link_to_remote( "Band",
+        :update => @div_id,
+        :url =>{ :controller => 'bats', :action => 'list_all_by_band', :ids => bat_list, :div => @div_id }) %>
+    </th>
+      <th>
+      <%= link_to_remote( "Cage",
+        :update => @div_id,
+        :url =>{ :controller => 'bats', :action => 'list_all_by_cage', :ids => bat_list, :div => @div_id }) %>
+    </th>
     <% else %>
-      <th><%= link_to 'Band', :action => 'list_by_band' %></th>
-      <th><%= link_to 'Cage', :action => 'list' %></th>
+      <th>
+      <%= link_to_remote( "Band",
+        :update => @div_id,
+        :url =>{ :controller => 'bats', :action => 'list_by_band', :ids => bat_list, :div => @div_id }) %>
+    </th>
+      <th><%= link_to_remote( "Cage",
+        :update => @div_id,
+        :url =>{ :controller => 'bats', :action => 'list_by_cage', :ids => bat_list, :div => @div_id }) %>
+    </th>
     <% end %>
 	<th>Species</th>
 	<th>Gender</th>

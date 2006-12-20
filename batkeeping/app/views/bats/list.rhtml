@@ -6,17 +6,15 @@ Listing current bats
 <% end %>
 </h1>
 
+<div id="bats_div">
+<%= render_partial 'bat_list', @bats %>
+</div>
   
-  <%= render_partial 'bat_list', @bats %>
-  
-<%= link_to 'Previous page', { :page => @bat_pages.current.previous } if @bat_pages.current.previous %>
-<%= link_to 'Next page', { :page => @bat_pages.current.next } if @bat_pages.current.next %> 
-
 <br />
 
 <%= link_to 'New Bat', :action => 'new' %>
 <% if @list_all %>
-<%= link_to 'List Current Bats', :action => 'list' %>
+<%= link_to 'List Current Bats', :controller => 'bats', :action => 'list' %>
 <% else %>
-<%= link_to 'List All Bats', :action => 'list_all_by_cage' %>
+<%= link_to 'List All Bats', :controller => 'bats', :action => 'list_all' %>
 <% end %>

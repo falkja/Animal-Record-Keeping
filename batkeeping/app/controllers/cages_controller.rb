@@ -24,42 +24,42 @@ class CagesController < ApplicationController
     @cages = Cage.find(params[:ids], :order => 'name')
     @list_all = false
     @div_id = params[:div]
-    render_partial 'cage_list', @cages, :div => @div_id
+    render_partial 'cage_list', @cages
   end
 
   def list_all_by_name
     @cages = Cage.find(params[:ids], :order => 'name')
     @list_all = true
     @div_id = params[:div]
-    render_partial 'cage_list', @cages, :div => @div_id
+    render_partial 'cage_list', @cages
   end
   
   def list_by_room
     @cages = Cage.find(params[:ids], :order => 'room, name')
     @list_all = false
     @div_id = params[:div]
-    render_partial 'cage_list', @cages, :div => @div_id
+    render_partial 'cage_list', @cages
   end
   
   def list_all_by_room
     @cages = Cage.find(params[:ids], :order => 'room, name')
     @list_all = true
     @div_id = params[:div]
-    render_partial 'cage_list', @cages, :div => @div_id
+    render_partial 'cage_list', @cages
   end
   
   def list_by_owner
     @cages = Cage.find(params[:ids], :order => 'user_id, name')
     @list_all = false
     @div_id = params[:div]
-    render_partial 'cage_list', @cages, :div => @div_id
+    render_partial 'cage_list', @cages
   end
   
   def list_all_by_owner
     @cages = Cage.find(params[:ids], :order => 'user_id, name')
     @list_all = true
     @div_id = params[:div]
-    render_partial 'cage_list', @cages, :div => @div_id
+    render_partial 'cage_list', @cages
   end
   
   def show

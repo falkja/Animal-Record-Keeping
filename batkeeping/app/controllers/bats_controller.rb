@@ -1,8 +1,7 @@
 class BatsController < ApplicationController
   require "gruff"
   def index
-	list
-	render :action => 'list'
+redirect_to :action => 'list'
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
@@ -10,26 +9,44 @@ class BatsController < ApplicationController
 		 :redirect_to => { :action => :list }
 
   def list
-	@bat_pages, @bats = paginate :bats, :order => 'cage_id, band', :conditions => "leave_date is null", :per_page => 10
-	@list_all = false
+    @bats = Bat.find(:all, :order => 'band', :conditions => "leave_date is null")
+    @list_all = false
+    @div_id = 'bats_div'
+  end
+  
+  def list_all
+    @bats = Bat.find(:all, :order => 'band')
+    @list_all = true
+    @div_id = 'bats_div'
+    render :action => 'list'
+  end
+  
+  def list_by_cage
+	@bats = Bat.find(params[:ids], :order => 'cage_id, band')
+  @list_all = false
+    @div_id = params[:div]
+	render_partial 'bat_list', @bats
   end
   
   def list_all_by_cage
-	@bat_pages, @bats = paginate :bats, :order => 'cage_id, band', :per_page => 10
-	@list_all = true
-	render :action => 'list'
+	@bats = Bat.find(params[:ids], :order => 'cage_id, band')
+  @list_all = true
+    @div_id = params[:div]
+	render_partial 'bat_list', @bats
   end
   
   def list_by_band
-	@bat_pages, @bats = paginate :bats, :order => 'band, cage_id', :conditions => "leave_date is null", :per_page => 10
-	@list_all = false
-	render :action => 'list'
+	@bats = Bat.find(params[:ids], :order => 'band, cage_id')
+  @list_all = false
+    @div_id = params[:div]
+	render_partial 'bat_list', @bats
   end
   
   def list_all_by_band
-	@bat_pages, @bats = paginate :bats, :order => 'band, cage_id', :per_page => 10
+	@bats = Bat.find(params[:ids], :order => 'band, cage_id')
 	@list_all = true
-	render :action => 'list'
+    @div_id = params[:div]
+	render_partial 'bat_list', @bats
   end
   
   def show

@@ -104,17 +104,17 @@ div.mainmenu a {
 div.session {
 	position:fixed;
 	top: 0cm;
-	right: 2cm;
+	right: 1cm;
 	text-align: right;
 }
 
 div.mainmenutasks {
-	padding-left: 2cm;
+	padding-left: 1cm;
 	padding-right: 2cm;
 }	
 
 div.mainmenulinks {
-	padding-left: 2cm;
+	padding-left: 1cm;
 	padding-right: 2cm;	
 }
 

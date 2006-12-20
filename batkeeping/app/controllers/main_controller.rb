@@ -44,33 +44,30 @@ class MainController < ApplicationController
   #This page displays what the weekend care person has to do.
   def weekend_care
     @sick_bats = Bat.sick
-    
     @colony_cages = Cage.find(:all, :conditions => 'date_destroyed is null and fed_by = "Animal Care" and room = "Colony Room (4100)"') 
-    @colony_bats = Array.new
-    @colony_cages.each {|cage| @colony_bats << cage.bats}
-    
-    @belfry_cages = Cage.find(:all, :conditions => 'date_destroyed is null and fed_by = "Animal Care" and room = "Belfry (4102F)"') 
-    @belfry_bats = Array.new
-    @belfry_cages.each {|cage| @belfry_bats << cage.bats}
-    
+    @belfry_cages = Cage.find(:all, :conditions => 'date_destroyed is null and fed_by = "Animal Care" and room = "Belfry (4102F)"')     
     @fruitbat_cages = Cage.find(:all, :conditions => 'date_destroyed is null and fed_by = "Animal Care" and room = "Fruit Bats (4148L)"') 
-    @fruitbat_bats = Array.new
-    @fruitbat_cages.each {|cage| @fruitbat_bats << cage.bats}
-    
   end
     
   #This page displays summary information about the whole colony
   def colony_page
+    @cages = Cage.active
+    @colony_food = 0
+    @cages.each {|cage| @colony_food = @colony_food + cage.food }
+    
     @colony_cages = Cage.find(:all, :conditions => 'date_destroyed is null and room = "Colony Room (4100)"') 
     @colony_bats = Array.new
     @colony_cages.each {|cage| @colony_bats << cage.bats}
+    @colony_bats.flatten!
     
     @belfry_cages = Cage.find(:all, :conditions => 'date_destroyed is null and room = "Belfry (4102F)"') 
     @belfry_bats = Array.new
     @belfry_cages.each {|cage| @belfry_bats << cage.bats}
+    @belfry_bats.flatten!
     
     @fruitbat_cages = Cage.find(:all, :conditions => 'date_destroyed is null and room = "Fruit Bats (4148L)"') 
     @fruitbat_bats = Array.new
     @fruitbat_cages.each {|cage| @fruitbat_bats << cage.bats}
+    @fruitbat_bats.flatten!
   end
 end

@@ -1,17 +1,26 @@
-<h1>Weekend Care</h1>
+<h1>Weekend Care <font color=red>[list date + person assigned]</font></h1>
 
-<p>*mealworms already weighed out, separate media from worms by filtering the media into trash*</p>
+<font color=red>
+<p>Need a way to specify whether a protocol cage will be fed by animal care person, either both days or just one day, and how much food/day</p>
+<p>Need to turn the weekend care into a form, which the user checks off each task and submits when they have finished the weekend care.</p>
+</font>
 
-<h2>Things you need to do for weekend care:</h2>
+
+
+<h2>Follow these instructions for a successful weekend care experience:</h2>
 <ol>
+<h4>
 <li>Remove all dishes from <em>EVERY</em> cage - soak in bleach and dish soap minimum 10 minutes.</li>
-<li>Provide fresh water to <em>EVERY</em> cage.</li>
-<li>Feed bats as directed for each room:</li>
-</ol>
+<li>Provide fresh water to <em>EVERY</em> cage. Do not reuse old water dishes.</li>
+<li>Mealworms should already be weighed out. Separate mealworms from media by sifting media into trash</em></li>
+<li>Feed cages as directed for each room: <font color=red>add # of dishes, type of dishes to cage table in database</font>
 
-<h3>Colony Room</h3>
+</h4>
+
+<ol type="a">
+<li><h3>Colony Room</h3>
 <% if @colony_cages.length == 0 %>
-No Colony bats to feed.
+No Colony cages to feed.
 <% else %>
 <% for cage in @colony_cages %>
 <table>
@@ -23,10 +32,12 @@ No Colony bats to feed.
 </table>
 <% end %>
 <% end %>
+</li>
 
+<li>
 <h3>Belfry</h3>
 <% if @belfry_cages.length == 0 %>
-No Belfry bats to feed.
+No Belfry cages to feed.
 <% else %>
 <% for cage in @belfry_cages %>
 <table>
@@ -38,10 +49,12 @@ No Belfry bats to feed.
 </table>
 <% end %>
 <% end %>
+</li>
 
+<li>
 <h3>Fruit Bats</h3>
 <% if @fruitbat_cages.length == 0 %>
-No fruit bats to feed.
+No fruit cages to feed.
 <% else %>
 <% for cage in @fruitbat_cages %>
 <table>
@@ -53,13 +66,16 @@ No fruit bats to feed.
 </table>
 <% end %>
 <% end %>
-
+</li>
+</ol>
+</li>
+</ol>
 
 
 
 <p>
 <% if @sick_bats.length > 0 %>
-<h3>Medical Problems For The Weekend</h3>
+<h3>Current Medical Problems</h3>
 <table>
 <th>Bat</th>
 <th>Medical Problem</th>
@@ -85,3 +101,5 @@ No fruit bats to feed.
 You are responsible for no medical problems.
 <% end %>
 </p>
+
+<font color = red><p>Add cleanup + contact info</p></font>

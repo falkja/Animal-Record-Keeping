@@ -1,7 +1,10 @@
+<font color=red>Lookup # bats in colony at any particular time in the past.</font>
+
 <h1>Colony status as of <%= nice_date_with_time Time.now %></h1>
 
 <p>Bats in <%= link_to 'colony', :controller => 'bats', :action => 'list' %> : <%= Bat.active.length %> </p>
 <p>Bats in <%= link_to 'medical care', :controller => 'medical_problems', :action => 'list_current' %> : <%= Bat.sick.length %> </p>
+<p>Mealworms eaten/day: <%= @colony_food %> g</p>
 
 <% total_left = 0 %>
 <% total_arrived = 0 %>
@@ -41,21 +44,21 @@
 </tr>
 </table>
 
-<h3>Cages in Colony Room (4100)</h3>
-There are <b><%= @colony_cages.length %></b> cages in the colony room,
-with <b><%= @colony_bats.length %></b> bats currently inside.
+<h3>Colony Room (4100)</h3>
+There are <b><%= @colony_cages.length %></b> cages in the colony room 
+containing <b><%= @colony_bats.length %></b> bats.
 
 <blockquote><p><%= render_partial 'cages/cage_list', @colony_cages %></p></blockquote>
 
 
-<h3>Cages in Belfry (4102F)</h3>
-There are <b><%= @belfry_cages.length %></b> cages in the belfry,
-with <b><%= @belfry_bats.length %></b> bats currently inside.
+<h3>Belfry (4102F)</h3>
+There are <b><%= @belfry_cages.length %></b> cages in the belfry
+containing <b><%= @belfry_bats.length %></b> bats.
 
 <blockquote><p><%= render_partial 'cages/cage_list', @belfry_cages %></p></blockquote>
 
-<h3>Cages in Fruit Bats Room (4148L)</h3>
-There are <b><%= @fruitbat_cages.length %></b> cages in the fruit bat room,
-with <b><%= @fruitbat_bats.length %></b> bats currently inside.
+<h3>Fruit Bats Room (4148L)</h3>
+There are <b><%= @fruitbat_cages.length %></b> cages in the fruit bat room
+containing <b><%= @fruitbat_bats.length %></b> bats.
 
 <blockquote><p><%= render_partial 'cages/cage_list', @fruitbat_cages %></p></blockquote>

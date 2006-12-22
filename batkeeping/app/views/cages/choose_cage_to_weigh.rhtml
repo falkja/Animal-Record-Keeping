@@ -1,7 +1,9 @@
 <h1>Choose a cage to weigh</h1>
 
-<% for cage in @cages %>
-<p><%= link_to cage.name, :action => 'weigh_cage' , :id => cage %></p>
-<% end %>
+<div id="weigh_cage">
+<% @div_id = "weigh_cage" %>
+<% @weighing = true %>
+<%= render_partial 'cages/cage_list', @cages %>
+</div>
 
 <p><%= link_to 'Back', :controller => 'weights', :action => 'weighing_choice' %></p>

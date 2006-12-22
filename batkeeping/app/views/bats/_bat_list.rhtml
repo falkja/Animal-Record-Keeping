@@ -7,22 +7,22 @@
       <th>
       <%= link_to_remote( "Band",
         :update => @div_id,
-        :url =>{ :controller => 'bats', :action => 'list_all_by_band', :ids => bat_list, :div => @div_id }) %>
+        :url =>{ :controller => 'bats', :action => 'list_all_by_band', :ids => bat_list, :div => @div_id, :weighing => @weighing }) %>
     </th>
       <th>
       <%= link_to_remote( "Cage",
         :update => @div_id,
-        :url =>{ :controller => 'bats', :action => 'list_all_by_cage', :ids => bat_list, :div => @div_id }) %>
+        :url =>{ :controller => 'bats', :action => 'list_all_by_cage', :ids => bat_list, :div => @div_id, :weighing => @weighing }) %>
     </th>
     <% else %>
       <th>
       <%= link_to_remote( "Band",
         :update => @div_id,
-        :url =>{ :controller => 'bats', :action => 'list_by_band', :ids => bat_list, :div => @div_id }) %>
+        :url =>{ :controller => 'bats', :action => 'list_by_band', :ids => bat_list, :div => @div_id,  :weighing => @weighing }) %>
     </th>
       <th><%= link_to_remote( "Cage",
         :update => @div_id,
-        :url =>{ :controller => 'bats', :action => 'list_by_cage', :ids => bat_list, :div => @div_id }) %>
+        :url =>{ :controller => 'bats', :action => 'list_by_cage', :ids => bat_list, :div => @div_id,  :weighing => @weighing }) %>
     </th>
     <% end %>
 	<th>Species</th>
@@ -38,16 +38,25 @@
     
 <% for bat in bat_list %>
   <tr>
-    <td>
-      <%= link_to bat.band, :controller => 'bats', :action => 'show', :id => bat %>
-    </td>
+  <% if @weighing %>
+  <td><%= link_to bat.band, :controller => 'bats', :action => 'weigh_bat', :id => bat %></td>
+  <td>
+    <% if bat.cage %>
+      <%= bat.cage.name %>
+    <% else %>
+      <%= 'Inactive' %>
+    <% end %>
+	</td>
+  <% else %>
+    <td><%= link_to bat.band, :controller => 'bats', :action => 'show', :id => bat %></td>
     <td>
 		<% if bat.cage %>
-        <%= link_to bat.cage.name, :controller => 'cages', :action => 'show', :id => bat.cage %>
-        <% else %>
-        <%= 'Inactive' %>
-        <% end %>
-	</td>
+      <%= link_to bat.cage.name, :controller => 'cages', :action => 'show', :id => bat.cage %>
+    <% else %>
+      <%= 'Inactive' %>
+    <% end %>
+    </td>
+  <% end %>
 	<td>
 		<%=h bat.species %>
 	</td>

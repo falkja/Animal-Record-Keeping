@@ -25,6 +25,7 @@ redirect_to :action => 'list'
 	@bats = Bat.find(params[:ids], :order => 'cage_id, band')
   @list_all = false
     @div_id = params[:div]
+    @weighing = params[:weighing]
 	render_partial 'bat_list', @bats
   end
   
@@ -32,6 +33,7 @@ redirect_to :action => 'list'
 	@bats = Bat.find(params[:ids], :order => 'cage_id, band')
   @list_all = true
     @div_id = params[:div]
+    @weighing = params[:weighing]
 	render_partial 'bat_list', @bats
   end
   
@@ -39,6 +41,7 @@ redirect_to :action => 'list'
 	@bats = Bat.find(params[:ids], :order => 'band, cage_id')
   @list_all = false
     @div_id = params[:div]
+    @weighing = params[:weighing]
 	render_partial 'bat_list', @bats
   end
   
@@ -46,6 +49,7 @@ redirect_to :action => 'list'
 	@bats = Bat.find(params[:ids], :order => 'band, cage_id')
 	@list_all = true
     @div_id = params[:div]
+    @weighing = params[:weighing]
 	render_partial 'bat_list', @bats
   end
   

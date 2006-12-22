@@ -24,6 +24,7 @@ class CagesController < ApplicationController
     @cages = Cage.find(params[:ids], :order => 'name')
     @list_all = false
     @div_id = params[:div]
+    @weighing = params[:weighing]
     render_partial 'cage_list', @cages
   end
 
@@ -31,6 +32,7 @@ class CagesController < ApplicationController
     @cages = Cage.find(params[:ids], :order => 'name')
     @list_all = true
     @div_id = params[:div]
+    @weighing = params[:weighing]
     render_partial 'cage_list', @cages
   end
   
@@ -38,6 +40,7 @@ class CagesController < ApplicationController
     @cages = Cage.find(params[:ids], :order => 'room, name')
     @list_all = false
     @div_id = params[:div]
+    @weighing = params[:weighing]
     render_partial 'cage_list', @cages
   end
   
@@ -45,6 +48,7 @@ class CagesController < ApplicationController
     @cages = Cage.find(params[:ids], :order => 'room, name')
     @list_all = true
     @div_id = params[:div]
+    @weighing = params[:weighing]
     render_partial 'cage_list', @cages
   end
   
@@ -52,6 +56,7 @@ class CagesController < ApplicationController
     @cages = Cage.find(params[:ids], :order => 'user_id, name')
     @list_all = false
     @div_id = params[:div]
+    @weighing = params[:weighing]
     render_partial 'cage_list', @cages
   end
   
@@ -59,6 +64,7 @@ class CagesController < ApplicationController
     @cages = Cage.find(params[:ids], :order => 'user_id, name')
     @list_all = true
     @div_id = params[:div]
+    @weighing = params[:weighing]
     render_partial 'cage_list', @cages
   end
   

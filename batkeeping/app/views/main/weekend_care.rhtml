@@ -13,7 +13,7 @@
 <li>Remove all dishes from <em>EVERY</em> cage - soak in bleach and dish soap minimum 10 minutes.</li>
 <li>Provide fresh water to <em>EVERY</em> cage. Do not reuse old water dishes.</li>
 <li>Mealworms should already be weighed out. Separate mealworms from media by sifting media into trash</em></li>
-<li>Feed cages as directed for each room: <font color=red>add # of dishes, type of dishes to cage table in database</font>
+<li>Feed cages as directed for each room:
 
 </h4>
 
@@ -24,10 +24,13 @@ No Colony cages to feed.
 <% else %>
 <% for cage in @colony_cages %>
 <table>
-<th>Name</th><th>Food</th>
+<th>Name</th>
+<th>Food</th>
+<th>Dishes</th>
 <tr>
-<td><%= cage.name %>
-<td><%= cage.food %>
+  <td><%= cage.name %></td>
+  <td><%= cage.food %>g</td>
+  <td><%=h cage.dish_num %> <%=h cage.dish_type %></td>
 <tr>
 </table>
 <% end %>
@@ -41,10 +44,13 @@ No Belfry cages to feed.
 <% else %>
 <% for cage in @belfry_cages %>
 <table>
-<th>Name</th><th>Food</th>
+<th>Name</th>
+<th>Food</th>
+<th>Dishes</th>
 <tr>
-<td><%= cage.name %>
-<td><%= cage.food %>
+  <td><%= cage.name %></td>
+  <td><%= cage.food %>g</td>
+  <td><%=h cage.dish_num %> <%=h cage.dish_type %></td>
 <tr>
 </table>
 <% end %>
@@ -58,10 +64,13 @@ No fruit cages to feed.
 <% else %>
 <% for cage in @fruitbat_cages %>
 <table>
-<th>Name</th><th>Food</th>
+<th>Name</th>
+<th>Food</th>
+<th>Dishes</th>
 <tr>
-<td><%= cage.name %>
-<td><%= cage.food %>
+  <td><%= cage.name %></td>
+  <td><%= cage.food %>g</td>
+  <td><%=h cage.dish_num %> <%=h cage.dish_type %></td>
 <tr>
 </table>
 <% end %>

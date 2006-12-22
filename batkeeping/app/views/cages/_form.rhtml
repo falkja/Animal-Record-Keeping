@@ -25,13 +25,22 @@ User.find(:all, :conditions => "end_date is null", :order => "name"), "id", "nam
 {:include_blank => true}) %></p>
 
 <p><label for="food">Food amount</label><br/>
-<%= text_field 'cage', 'food', :size => 4, :autocomplete => 'off' %>g</p>
+<%= text_field 'cage', 'food', :size => 1, :autocomplete => 'off' %> grams</p>
+
+<p><label for="dish_num">Number of dishes</label><br/>
+<%= text_field 'cage', 'dish_num', :size => 1, :autocomplete => 'off' %></p>
+
+<p><label for="dish_type">Dish Type</label><br/>
+<%= select_tag("cage[dish_type]", options_for_select([["Metal tray","Metal tray"],["Long","Long"], ["Medium","Medium"],["Small","Small"]],@cage.dish_type)) %></p>
 
 <p><label for="fed_by">Fed by</label><br/>
 <%= select_tag("cage[fed_by]", options_for_select([["Investigator","Investigator"],["Animal Care","Animal Care"]],@cage.fed_by)) %></p>
 
 <p><label for="room">Room</label><br/>
 <%= select_tag("cage[room]", options_for_select([["Belfry (4102F)","Belfry (4102F)"],["Colony Room (4100)","Colony Room (4100)"],["Fruit Bats (4148L)","Fruit Bats (4148L)"]],@cage.room)) %></p>
+
+
+
 </div>
 
 <%= @leave_date %>

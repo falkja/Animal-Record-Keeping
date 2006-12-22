@@ -1,7 +1,7 @@
 -- MySQL Administrator dump 1.4
 --
 -- ------------------------------------------------------
--- Server version	5.0.17-nt
+-- Server version	5.0.27-community-nt
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -71,11 +71,10 @@ CREATE TABLE `bats` (
 INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`species`,`gender`,`leave_date`,`leave_reason`,`band`,`user_id`) VALUES 
  (1,NULL,'2006-12-15 00:00:00','Juvenile','Ben\'s Beard','Eptesicus fuscus','M','2006-12-15 00:00:00','Flew away','A1',NULL),
  (2,2,'2006-12-15 00:00:00','Adult','Murat\'s Hair','Glossophaga soricina','F',NULL,NULL,'A2',NULL),
- (3,3,'2006-12-15 00:00:00','Juvenile','Kaushik\'s Glasses','Carollia perspicillata','F',NULL,NULL,'A3',NULL),
- (4,3,'2006-12-15 00:00:00','Adult','Chen\'s High Heeled Boots','Myotis septentrionalis','M',NULL,NULL,'A4',NULL),
- (5,NULL,'2006-12-15 00:00:00','Juvenile','Wei\'s Dumpling','Eptesicus fuscus','M','2006-12-15 00:00:00','Kidnapped by Ferrets','A5',NULL),
- (6,2,'2006-12-15 00:00:00','Juvenile','Flea Market','Eptesicus fuscus','M',NULL,NULL,'A6',NULL),
- (7,3,'2006-01-17 00:00:00','Juvenile','Hawaii','Eptesicus fuscus','M',NULL,NULL,'B1',NULL);
+ (3,6,'2006-12-15 00:00:00','Juvenile','Kaushik\'s Glasses','Carollia perspicillata','F',NULL,NULL,'A3',NULL),
+ (4,2,'2006-12-15 00:00:00','Adult','Chen\'s High Heeled Boots','Myotis septentrionalis','M',NULL,NULL,'A4',NULL),
+ (5,3,'2006-12-15 00:00:00','Juvenile','Wei\'s Dumpling','Eptesicus fuscus','M',NULL,NULL,'A5',NULL),
+ (6,2,'2006-12-15 00:00:00','Juvenile','Flea Market','Eptesicus fuscus','M',NULL,NULL,'A6',NULL);
 /*!40000 ALTER TABLE `bats` ENABLE KEYS */;
 
 
@@ -110,11 +109,38 @@ INSERT INTO `cage_in_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note`
  (8,2,3,'2006-12-15 21:14:56',1,'teleported'),
  (9,6,2,'2006-12-15 21:15:54',1,'Fresh catch'),
  (10,6,3,'2006-12-15 21:16:53',1,'Too fiesty'),
- (11,7,2,'2006-12-17 14:23:13',2,'Caught in a Tsunami'),
- (12,4,3,'2006-12-18 10:03:13',2,'moving'),
- (13,7,3,'2006-12-18 10:03:13',2,'moving'),
- (14,2,2,'2006-12-18 10:04:44',2,'nana'),
- (15,6,2,'2006-12-18 10:04:44',2,'nana');
+ (11,5,6,'2006-12-16 21:16:54',2,'more bats in cage 99.  SWEET!'),
+ (12,5,3,'2006-12-18 08:55:20',2,''),
+ (13,3,5,'2006-12-18 09:04:51',2,''),
+ (14,5,6,'2006-12-18 09:06:30',2,''),
+ (15,3,3,'2006-12-18 09:08:18',2,''),
+ (16,3,6,'2006-12-18 09:18:53',2,''),
+ (17,2,2,'2006-12-18 09:25:45',2,''),
+ (18,6,2,'2006-12-18 09:25:45',2,''),
+ (19,4,6,'2006-12-18 09:26:01',2,''),
+ (20,2,3,'2006-12-18 09:26:31',2,''),
+ (21,6,3,'2006-12-18 09:26:31',2,''),
+ (22,4,4,'2006-12-18 09:39:23',2,''),
+ (23,5,2,'2006-12-18 09:48:51',2,''),
+ (24,2,2,'2006-12-18 09:49:05',2,'');
+INSERT INTO `cage_in_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note`) VALUES 
+ (25,6,2,'2006-12-18 09:49:05',2,''),
+ (26,4,2,'2006-12-18 09:49:59',2,''),
+ (27,2,3,'2006-12-18 09:50:13',2,''),
+ (28,4,3,'2006-12-18 09:50:13',2,''),
+ (29,2,2,'2006-12-18 09:50:27',2,''),
+ (30,4,2,'2006-12-18 09:50:27',2,''),
+ (31,2,3,'2006-12-18 10:12:38',2,''),
+ (32,4,3,'2006-12-18 10:12:38',2,''),
+ (33,2,2,'2006-12-18 10:13:58',2,''),
+ (34,4,2,'2006-12-18 10:13:58',2,''),
+ (35,2,5,'2006-12-18 10:14:16',2,''),
+ (36,4,5,'2006-12-18 10:14:16',2,''),
+ (37,5,5,'2006-12-18 10:14:16',2,''),
+ (38,2,2,'2006-12-18 10:14:53',2,''),
+ (39,4,2,'2006-12-18 10:16:28',2,''),
+ (40,5,2,'2006-12-18 10:16:28',2,''),
+ (41,5,3,'2006-12-18 15:46:01',1,'');
 /*!40000 ALTER TABLE `cage_in_histories` ENABLE KEYS */;
 
 
@@ -146,10 +172,37 @@ INSERT INTO `cage_out_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note
  (4,5,2,'2006-12-15 21:03:21',1,'Kidnapped by Ferrets',5),
  (5,2,2,'2006-12-15 21:14:56',1,'teleported',2),
  (6,6,2,'2006-12-15 21:16:53',1,'Too fiesty',9),
- (7,4,2,'2006-12-18 10:03:12',2,'moving',7),
- (8,7,2,'2006-12-18 10:03:13',2,'moving',11),
- (9,2,3,'2006-12-18 10:04:44',2,'nana',8),
- (10,6,3,'2006-12-18 10:04:44',2,'nana',10);
+ (7,5,6,'2006-12-18 08:55:20',2,'',11),
+ (8,3,3,'2006-12-18 09:04:51',2,'',3),
+ (9,5,3,'2006-12-18 09:06:30',2,'',12),
+ (10,3,5,'2006-12-18 09:08:18',2,'',13),
+ (11,3,3,'2006-12-18 09:18:53',2,'',15),
+ (12,2,3,'2006-12-18 09:25:45',2,'',8),
+ (13,6,3,'2006-12-18 09:25:45',2,'',10),
+ (14,4,2,'2006-12-18 09:26:01',2,'',7),
+ (15,2,2,'2006-12-18 09:26:31',2,'',17),
+ (16,6,2,'2006-12-18 09:26:31',2,'',18),
+ (17,4,6,'2006-12-18 09:39:23',2,'',19),
+ (18,5,6,'2006-12-18 09:48:51',2,'',14),
+ (19,2,3,'2006-12-18 09:49:05',2,'',20),
+ (20,6,3,'2006-12-18 09:49:05',2,'',21),
+ (21,4,4,'2006-12-18 09:49:59',2,'',22),
+ (22,2,2,'2006-12-18 09:50:13',2,'',24);
+INSERT INTO `cage_out_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note`,`cage_in_history_id`) VALUES 
+ (23,4,2,'2006-12-18 09:50:13',2,'',26),
+ (24,2,3,'2006-12-18 09:50:27',2,'',27),
+ (25,4,3,'2006-12-18 09:50:27',2,'',28),
+ (26,2,2,'2006-12-18 10:12:38',2,'',29),
+ (27,4,2,'2006-12-18 10:12:38',2,'',30),
+ (28,2,3,'2006-12-18 10:13:58',2,'',31),
+ (29,4,3,'2006-12-18 10:13:58',2,'',32),
+ (30,2,2,'2006-12-18 10:14:16',2,'',33),
+ (31,4,2,'2006-12-18 10:14:16',2,'',34),
+ (32,5,2,'2006-12-18 10:14:16',2,'',23),
+ (33,2,5,'2006-12-18 10:14:53',2,'',35),
+ (34,4,5,'2006-12-18 10:16:28',2,'',36),
+ (35,5,5,'2006-12-18 10:16:28',2,'',37),
+ (36,5,2,'2006-12-18 15:46:01',1,'',40);
 /*!40000 ALTER TABLE `cage_out_histories` ENABLE KEYS */;
 
 
@@ -164,10 +217,12 @@ CREATE TABLE `cages` (
   `date_created` datetime NOT NULL,
   `date_destroyed` datetime default NULL,
   `user_id` int(10) unsigned default NULL COMMENT 'investigators user_id, can be nil',
-  `food` float NOT NULL COMMENT 'food in grams',
+  `food` float default NULL COMMENT 'food in grams',
   `fed_by` varchar(45) NOT NULL COMMENT 'fed by "investigator" or "animal care"',
   `species` varchar(45) NOT NULL COMMENT 'species of bat',
   `room` varchar(45) NOT NULL COMMENT 'room the cage is housed',
+  `dish_type` varchar(45) NOT NULL,
+  `dish_num` int(10) unsigned default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -176,13 +231,13 @@ CREATE TABLE `cages` (
 --
 
 /*!40000 ALTER TABLE `cages` DISABLE KEYS */;
-INSERT INTO `cages` (`id`,`name`,`date_created`,`date_destroyed`,`user_id`,`food`,`fed_by`,`species`,`room`) VALUES 
- (1,'Cage1','2006-12-15 00:00:00','2006-12-15 00:00:00',NULL,0,'Animal Care','','Belfry (4102F)'),
- (2,'Cage2','2006-12-15 00:00:00',NULL,1,0,'Investigator','','Belfry (4102F)'),
- (3,'Cage3','2006-12-15 00:00:00',NULL,NULL,0,'Animal Care','','Fruit Bats (4148L)'),
- (4,'Cage6','2006-12-15 00:00:00',NULL,2,0,'Investigator','','Belfry (4102F)'),
- (5,'cage7','2006-12-15 00:00:00',NULL,2,0,'Investigator','','Belfry (4102F)'),
- (6,'Cage99','2006-12-16 00:00:00',NULL,NULL,0,'Animal Care','','Belfry (4102F)');
+INSERT INTO `cages` (`id`,`name`,`date_created`,`date_destroyed`,`user_id`,`food`,`fed_by`,`species`,`room`,`dish_type`,`dish_num`) VALUES 
+ (1,'Cage1','2006-12-15 00:00:00','2006-12-15 00:00:00',NULL,0,'Animal Care','','Belfry (4102F)','',0),
+ (2,'Cage2','2006-12-15 00:00:00',NULL,1,5,'Investigator','','Belfry (4102F)','Long',2),
+ (3,'Cage3','2006-12-15 00:00:00',NULL,NULL,10,'Animal Care','','Fruit Bats (4148L)','Metal tray',1),
+ (4,'Cage6','2006-12-15 00:00:00',NULL,2,6,'Investigator','','Colony Room (4100)','Medium',4),
+ (5,'cage7','2006-12-15 00:00:00',NULL,2,2,'Investigator','','Colony Room (4100)','Medium',1),
+ (6,'Cage99','2006-12-16 00:00:00',NULL,1,4,'Investigator','','Belfry (4102F)','Small',3);
 /*!40000 ALTER TABLE `cages` ENABLE KEYS */;
 
 
@@ -233,11 +288,11 @@ CREATE TABLE `medical_problems` (
 
 /*!40000 ALTER TABLE `medical_problems` DISABLE KEYS */;
 INSERT INTO `medical_problems` (`id`,`bat_id`,`date_opened`,`description`,`user_id`,`date_closed`,`title`) VALUES 
- (1,2,'2006-12-15 00:00:00','Bat hobbles, drinks too much and complains when mealworms tread on its foot.',2,NULL,'Gout'),
+ (1,2,'2006-12-15 00:00:00','Bat hobbles, drinks too much and complains when mealworms tread on its foot.',NULL,NULL,'Gout'),
  (2,6,'2006-12-15 00:00:00','Bat refuses to fly with other bats. Mocks investigators and finds flaws with the published literature',1,NULL,'Inflated Ego'),
- (3,4,'2006-12-15 00:00:00','bat sings at a high pitch destroying the glass in other bat\'s cages',NULL,NULL,'High pitched singing'),
+ (3,4,'2006-12-15 00:00:00','bat sings at a high pitch destroying the glass in other bat\'s cages',NULL,'2006-12-19 00:00:00','High pitched singing'),
  (4,4,'2006-12-15 00:00:00','Bat heckles other bats, steals food and rushes other bats trying to capture worm',1,'2006-12-15 00:00:00','Over competitiveness'),
- (5,4,'2006-12-18 00:00:00','Bat is addicted to mealworm roulette and has run up huge gambling debts and has caused a gang problem in the colony',NULL,NULL,'Gambling');
+ (5,2,'2006-12-18 00:00:00','None',NULL,NULL,'Another problem');
 /*!40000 ALTER TABLE `medical_problems` ENABLE KEYS */;
 
 
@@ -263,11 +318,11 @@ CREATE TABLE `proposed_treatments` (
 
 /*!40000 ALTER TABLE `proposed_treatments` DISABLE KEYS */;
 INSERT INTO `proposed_treatments` (`id`,`medical_problem_id`,`date_started`,`date_finished`,`date_closed`,`treatment`,`user_id`) VALUES 
- (1,1,'2006-12-15 00:00:00','2006-12-20 00:00:00','2006-12-18 00:00:00','Cough syrup',1),
+ (1,1,'2006-12-15 00:00:00','2006-12-20 00:00:00',NULL,'Cough syrup',1),
  (2,2,'2006-12-15 00:00:00','2006-12-15 00:00:00',NULL,'AM - No treatment, this is normal for bats',1),
- (3,3,'2006-12-15 00:00:00','2006-12-20 00:00:00',NULL,'Helium - AM',1),
- (4,3,'2006-12-15 00:00:00','2007-12-15 00:00:00','2006-12-15 00:00:00','Helium - PM',1),
- (5,3,'2006-12-16 00:00:00','2006-12-16 00:00:00',NULL,'Helium PM',1);
+ (3,3,'2006-12-15 00:00:00','2006-12-20 00:00:00','2006-12-19 00:00:00','Helium - AM',1),
+ (4,3,'2006-12-15 00:00:00','2007-12-15 00:00:00','2006-12-19 00:00:00','Helium - PM',1),
+ (5,3,'2006-12-16 00:00:00','2006-12-16 00:00:00','2006-12-19 00:00:00','Helium PM',1);
 /*!40000 ALTER TABLE `proposed_treatments` ENABLE KEYS */;
 
 
@@ -386,24 +441,42 @@ CREATE TABLE `weights` (
 
 /*!40000 ALTER TABLE `weights` DISABLE KEYS */;
 INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user_id`) VALUES 
- (1,3,'2006-11-18 16:01:05',20,'flies','',2),
- (2,4,'2006-10-18 16:01:06',30,'mites','',2),
- (3,7,'2006-09-18 16:01:06',40,'need teeth cleaned','',2),
- (4,3,'2006-08-18 16:11:19',10,'losing','',2),
- (5,4,'2006-07-18 16:11:19',40,'gaining','',2),
- (6,7,'2006-06-18 16:11:20',15,'losing a lot','',2),
- (7,3,'2006-05-18 16:12:35',50,'wow! what did it eat','',2),
- (8,4,'2006-04-18 16:12:36',35,'stabilizing','',2),
- (9,7,'2006-03-18 16:12:36',40,'','',2),
- (10,3,'2006-02-18 16:13:15',40,'','',2),
- (11,4,'2006-01-18 16:13:15',35,'','',2),
- (12,7,'2006-12-18 16:13:15',42,'','',2),
- (13,3,'2006-12-11 16:13:32',34,'','',2),
- (14,4,'2006-12-10 16:13:32',22,'','',2),
- (15,7,'2006-12-09 16:13:32',100,'','',2),
- (16,3,'2006-12-08 16:13:48',23,'','',2),
- (17,4,'2006-12-07 16:13:48',99,'','',2),
- (18,7,'2006-12-06 16:13:48',15,'','',2);
+ (1,2,'2006-12-18 14:48:22',15,'NA','',1),
+ (2,4,'2006-12-18 14:48:22',14.2,'none','',1),
+ (3,5,'2006-12-18 14:48:22',13,'nada','',1),
+ (4,6,'2006-12-18 14:48:22',12,'zilch','',1),
+ (5,2,'2006-12-18 14:50:42',16,'','',1),
+ (6,4,'2006-12-18 14:50:42',17,'','',1),
+ (7,5,'2006-12-18 14:50:42',18,'','',1),
+ (8,6,'2006-12-18 14:50:42',19,'','',1),
+ (9,5,'2006-12-18 14:51:34',14,'','',1),
+ (10,5,'2006-12-18 20:30:16',18,'','',2),
+ (11,5,'2006-12-18 20:30:20',90,'','',2),
+ (12,5,'2006-12-18 20:30:24',40,'','',2),
+ (13,5,'2006-12-18 20:30:28',16,'','',2),
+ (14,5,'2006-12-19 08:37:02',14,'','',1),
+ (15,5,'2006-12-19 08:37:06',16,'','',1),
+ (16,5,'2006-12-19 08:37:10',15.5,'','',1),
+ (17,5,'2006-12-19 08:37:16',19.5,'','',1),
+ (18,5,'2006-12-19 08:37:20',14.7,'','',1),
+ (19,5,'2006-12-19 09:31:41',14,'','',1),
+ (20,5,'2006-12-19 09:31:46',15.5,'','',1),
+ (21,5,'2006-12-19 09:31:49',14,'','',1),
+ (22,5,'2006-12-19 09:31:54',16,'','',1),
+ (23,5,'2006-12-19 09:32:00',35,'','',1);
+INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user_id`) VALUES 
+ (24,5,'2006-12-19 09:32:03',18,'','',1),
+ (25,5,'2006-12-19 09:32:06',25,'','',1),
+ (26,5,'2006-12-19 09:32:10',20,'','',1),
+ (27,5,'2006-12-19 09:32:13',16,'','',1),
+ (28,5,'2006-12-19 09:34:14',30,'','',1),
+ (29,5,'2006-12-19 09:34:17',25,'','',1),
+ (30,5,'2006-12-19 09:34:34',16,'','',1),
+ (31,5,'2006-12-19 09:34:45',14,'','',1),
+ (32,2,'2006-12-19 09:35:42',4,'','',1),
+ (33,2,'2006-12-19 09:35:55',35,'','',1),
+ (34,2,'2006-12-19 09:35:58',15,'','',1),
+ (35,2,'2006-12-19 09:36:00',14,'','',1);
 /*!40000 ALTER TABLE `weights` ENABLE KEYS */;
 
 

@@ -233,11 +233,11 @@ CREATE TABLE `cages` (
 /*!40000 ALTER TABLE `cages` DISABLE KEYS */;
 INSERT INTO `cages` (`id`,`name`,`date_created`,`date_destroyed`,`user_id`,`food`,`fed_by`,`species`,`room`,`dish_type`,`dish_num`) VALUES 
  (1,'Cage1','2006-12-15 00:00:00','2006-12-15 00:00:00',NULL,0,'Animal Care','','Belfry (4102F)','',0),
- (2,'Cage2','2006-12-15 00:00:00',NULL,1,5,'Investigator','','Belfry (4102F)','Long',2),
- (3,'Cage3','2006-12-15 00:00:00',NULL,NULL,10,'Animal Care','','Fruit Bats (4148L)','Metal tray',1),
- (4,'Cage6','2006-12-15 00:00:00',NULL,2,6,'Investigator','','Colony Room (4100)','Medium',4),
- (5,'cage7','2006-12-15 00:00:00',NULL,2,2,'Investigator','','Colony Room (4100)','Medium',1),
- (6,'Cage99','2006-12-16 00:00:00',NULL,1,4,'Investigator','','Belfry (4102F)','Small',3);
+ (2,'Cage2','2006-12-15 00:00:00',NULL,4,5,'Investigator','','Belfry (4102F)','Long',2),
+ (3,'Cage3','2006-12-15 00:00:00',NULL,1,10,'Animal Care','','Fruit Bats (4148L)','Metal tray',1),
+ (4,'Cage6','2006-12-15 00:00:00',NULL,4,6,'Investigator','','Colony Room (4100)','Medium',4),
+ (5,'cage7','2006-12-15 00:00:00',NULL,5,2,'Investigator','','Colony Room (4100)','Medium',1),
+ (6,'Cage99','2006-12-16 00:00:00',NULL,5,4,'Investigator','','Belfry (4102F)','Small',3);
 /*!40000 ALTER TABLE `cages` ENABLE KEYS */;
 
 
@@ -322,7 +322,10 @@ INSERT INTO `proposed_treatments` (`id`,`medical_problem_id`,`date_started`,`dat
  (2,2,'2006-12-15 00:00:00','2006-12-15 00:00:00',NULL,'AM - No treatment, this is normal for bats',1),
  (3,3,'2006-12-15 00:00:00','2006-12-20 00:00:00','2006-12-19 00:00:00','Helium - AM',1),
  (4,3,'2006-12-15 00:00:00','2007-12-15 00:00:00','2006-12-19 00:00:00','Helium - PM',1),
- (5,3,'2006-12-16 00:00:00','2006-12-16 00:00:00','2006-12-19 00:00:00','Helium PM',1);
+ (5,3,'2006-12-16 00:00:00','2006-12-16 00:00:00','2006-12-19 00:00:00','Helium PM',1),
+ (8,5,'2006-12-22 00:00:00','2006-12-22 00:00:00',NULL,'test',2),
+ (9,2,'2006-12-22 00:00:00','2006-12-22 00:00:00',NULL,'test',2),
+ (10,2,'2006-12-22 00:00:00','2006-12-22 00:00:00',NULL,'tes1',2);
 /*!40000 ALTER TABLE `proposed_treatments` ENABLE KEYS */;
 
 
@@ -394,6 +397,33 @@ CREATE TABLE `protocols` (
 
 
 --
+-- Definition of table `tasks`
+--
+
+DROP TABLE IF EXISTS `tasks`;
+CREATE TABLE `tasks` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `last_done_date` datetime default NULL,
+  `repeat` int(10) unsigned NOT NULL,
+  `proposed_treatment_id` int(10) unsigned default NULL,
+  `cage_id` int(10) unsigned default NULL,
+  `title` varchar(45) NOT NULL,
+  `description` varchar(20) NOT NULL,
+  `notes` text NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tasks`
+--
+
+/*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
+INSERT INTO `tasks` (`id`,`last_done_date`,`repeat`,`proposed_treatment_id`,`cage_id`,`title`,`description`,`notes`) VALUES 
+ (1,NULL,0,10,NULL,'tes1','','');
+/*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
+
+
+--
 -- Definition of table `users`
 --
 
@@ -414,9 +444,32 @@ CREATE TABLE `users` (
 
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`,`name`,`initials`,`email`,`start_date`,`end_date`) VALUES 
- (1,'Conan The Barbarian','CTB','ctb@slash.burn.net','2006-12-15 00:00:00',NULL),
- (2,'Atilla the Hun','HUN','hun@villagepillage.com','2006-12-15 00:00:00',NULL);
+ (1,'General Animal Care','GAC','','2006-12-23 00:00:00',NULL),
+ (2,'General Medical Care','GMC','','2006-12-23 00:00:00',NULL),
+ (3,'Weekend/Holiday Care','WC','','2006-12-23 00:00:00',NULL),
+ (4,'Attila the Hun','AtH','hun@villagepillage.com','2006-12-23 00:00:00',NULL),
+ (5,'Conan the Barbarian','CTB','ctb@slash.burn.net','2006-12-23 00:00:00',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
+
+
+--
+-- Definition of table `users_tasks`
+--
+
+DROP TABLE IF EXISTS `users_tasks`;
+CREATE TABLE `users_tasks` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `user_id` int(10) unsigned NOT NULL,
+  `task_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `users_tasks`
+--
+
+/*!40000 ALTER TABLE `users_tasks` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users_tasks` ENABLE KEYS */;
 
 
 --

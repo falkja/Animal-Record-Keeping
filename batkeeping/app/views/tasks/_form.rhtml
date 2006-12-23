@@ -1,0 +1,19 @@
+<%= error_messages_for 'task' %>
+
+<!--[form:task]-->
+<p><label for="task_last_done_date">Last done date</label><br/>
+<%= datetime_select 'task', 'last_done_date'  %></p>
+
+<p><label for="task_repeat">Repeat</label><br/>
+<%= text_field 'task', 'repeat'  %></p>
+
+<p><label for="task_title">Title</label><br/>
+<%= text_field 'task', 'title'  %></p>
+
+<p><label for="task_description">Description</label><br/>
+<%= text_field 'task', 'description'  %></p>
+
+<p><label for="task_notes">Notes</label><br/>
+<%= text_area 'task', 'notes'  %></p>
+<!--[eoform:task]-->
+

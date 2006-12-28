@@ -26,10 +26,10 @@
 <p><label for="medical_problem_description">Detailed Description</label><br/>
 <%= text_area 'medical_problem', 'description', 'rows' => "3" %></p>
 
-<p><label for="user">User responsible for medical problem (leave blank to assign to General Medical Care)</label><br/>
-<%= collection_select("medical_problem", "user_id" , 
-User.find(:all, :conditions => "end_date is null", :order => "name"), "id", "name",
-{:include_blank => true}) %></p>
+<% @users = User.find(:all, :conditions => "end_date is null and id != 1 and id != 3", :order => "name") %>
+
+<p><label for="user">User responsible for medical problem</label><br/>
+<%= collection_select("medical_problem", "user_id" , @users, "id", "name") %></p>
 
 </div>
 

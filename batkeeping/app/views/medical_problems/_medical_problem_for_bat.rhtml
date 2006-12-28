@@ -8,11 +8,7 @@
     
     <td><%= link_to medical_problem.title, :controller => 'medical_problems', :action => 'show', :id => medical_problem %></td>    
     <td>
-    <% if medical_problem.user %>
     <%= link_to medical_problem.user.initials, :controller => 'users', :action => 'show', :id => medical_problem.user %>
-    <% else %>
-    General Medical Care
-    <% end %>
     </td>
 
     <td><%=h nice_date medical_problem.date_opened %></td>

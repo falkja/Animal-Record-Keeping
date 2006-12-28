@@ -27,7 +27,7 @@ class MedicalCareActionsController < ApplicationController
     @medical_care_action.proposed_treatment = @proposed_treatment
     @medical_care_action.user = session[:person]
     if @medical_care_action.save
-      flash[:notice] = 'MedicalCareAction was successfully created.'
+      flash[:notice] = 'Medical treatment done.'
       redirect_to :controller => 'medical_problems', :action => 'list_current'
     else
       render :action => 'new'

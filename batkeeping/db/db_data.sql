@@ -288,11 +288,11 @@ CREATE TABLE `medical_problems` (
 
 /*!40000 ALTER TABLE `medical_problems` DISABLE KEYS */;
 INSERT INTO `medical_problems` (`id`,`bat_id`,`date_opened`,`description`,`user_id`,`date_closed`,`title`) VALUES 
- (1,2,'2006-12-15 00:00:00','Bat hobbles, drinks too much and complains when mealworms tread on its foot.',NULL,NULL,'Gout'),
- (2,6,'2006-12-15 00:00:00','Bat refuses to fly with other bats. Mocks investigators and finds flaws with the published literature',1,NULL,'Inflated Ego'),
- (3,4,'2006-12-15 00:00:00','bat sings at a high pitch destroying the glass in other bat\'s cages',NULL,'2006-12-19 00:00:00','High pitched singing'),
- (4,4,'2006-12-15 00:00:00','Bat heckles other bats, steals food and rushes other bats trying to capture worm',1,'2006-12-15 00:00:00','Over competitiveness'),
- (5,2,'2006-12-18 00:00:00','None',NULL,NULL,'Another problem');
+ (1,2,'2006-12-15 00:00:00','Bat hobbles, drinks too much and complains when mealworms tread on its foot.',2,NULL,'Gout'),
+ (2,6,'2006-12-15 00:00:00','Bat refuses to fly with other bats. Mocks investigators and finds flaws with the published literature',2,NULL,'Inflated Ego'),
+ (3,4,'2006-12-15 00:00:00','bat sings at a high pitch destroying the glass in other bat\'s cages',2,'2006-12-19 00:00:00','High pitched singing'),
+ (4,4,'2006-12-15 00:00:00','Bat heckles other bats, steals food and rushes other bats trying to capture worm',2,'2006-12-15 00:00:00','Over competitiveness'),
+ (5,2,'2006-12-18 00:00:00','None',4,'2007-01-02 00:00:00','Another problem');
 /*!40000 ALTER TABLE `medical_problems` ENABLE KEYS */;
 
 
@@ -318,14 +318,23 @@ CREATE TABLE `proposed_treatments` (
 
 /*!40000 ALTER TABLE `proposed_treatments` DISABLE KEYS */;
 INSERT INTO `proposed_treatments` (`id`,`medical_problem_id`,`date_started`,`date_finished`,`date_closed`,`treatment`,`user_id`) VALUES 
- (1,1,'2006-12-15 00:00:00','2006-12-20 00:00:00',NULL,'Cough syrup',1),
- (2,2,'2006-12-15 00:00:00','2006-12-15 00:00:00',NULL,'AM - No treatment, this is normal for bats',1),
+ (1,1,'2006-12-15 00:00:00','2006-12-20 00:00:00','2007-01-02 00:00:00','Cough syrup',1),
+ (2,2,'2006-12-15 00:00:00','2006-12-15 00:00:00','2007-01-02 00:00:00','AM - No treatment, this is normal for bats',1),
  (3,3,'2006-12-15 00:00:00','2006-12-20 00:00:00','2006-12-19 00:00:00','Helium - AM',1),
  (4,3,'2006-12-15 00:00:00','2007-12-15 00:00:00','2006-12-19 00:00:00','Helium - PM',1),
  (5,3,'2006-12-16 00:00:00','2006-12-16 00:00:00','2006-12-19 00:00:00','Helium PM',1),
- (8,5,'2006-12-22 00:00:00','2006-12-22 00:00:00',NULL,'test',2),
- (9,2,'2006-12-22 00:00:00','2006-12-22 00:00:00',NULL,'test',2),
- (10,2,'2006-12-22 00:00:00','2006-12-22 00:00:00',NULL,'tes1',2);
+ (8,5,'2006-12-22 00:00:00','2006-12-22 00:00:00','2007-01-02 00:00:00','test',2),
+ (9,2,'2006-12-22 00:00:00','2006-12-22 00:00:00','2007-01-02 00:00:00','test',2),
+ (10,2,'2006-12-22 00:00:00','2006-12-22 00:00:00','2007-01-02 00:00:00','tes1',2),
+ (11,1,'2007-01-02 00:00:00','2007-01-02 00:00:00','2007-01-02 00:00:00','Amputation',4),
+ (12,5,'2007-01-02 00:00:00','2007-01-02 00:00:00','2007-01-02 00:00:00','This here is a test treatment',4),
+ (13,5,'2007-01-02 00:00:00','2007-01-02 00:00:00','2007-01-02 00:00:00','I got a nother test',4);
+INSERT INTO `proposed_treatments` (`id`,`medical_problem_id`,`date_started`,`date_finished`,`date_closed`,`treatment`,`user_id`) VALUES 
+ (14,5,'2007-01-02 00:00:00','2007-01-02 00:00:00','2007-01-02 00:00:00','I got a nother test',4),
+ (15,5,'2007-01-02 00:00:00','2007-01-02 00:00:00','2007-01-02 00:00:00','I got a nother test',4),
+ (16,1,'2007-01-02 00:00:00','2007-01-02 00:00:00',NULL,'Cough syrup',4),
+ (17,1,'2007-01-02 00:00:00','2007-01-02 00:00:00',NULL,'Kleenex',4),
+ (18,1,'2007-01-02 00:00:00','2007-01-02 00:00:00',NULL,'Extra food',4);
 /*!40000 ALTER TABLE `proposed_treatments` ENABLE KEYS */;
 
 
@@ -419,7 +428,8 @@ CREATE TABLE `tasks` (
 
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
 INSERT INTO `tasks` (`id`,`last_done_date`,`repeat`,`proposed_treatment_id`,`cage_id`,`title`,`description`,`notes`) VALUES 
- (1,NULL,0,10,NULL,'tes1','','');
+ (2,NULL,0,11,NULL,'Amputation','',''),
+ (3,NULL,0,12,NULL,'This here is a test treatment','','');
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 
 
@@ -440,6 +450,9 @@ CREATE TABLE `tasks_users` (
 --
 
 /*!40000 ALTER TABLE `tasks_users` DISABLE KEYS */;
+INSERT INTO `tasks_users` (`id`,`user_id`,`task_id`) VALUES 
+ (2,2,2),
+ (4,4,3);
 /*!40000 ALTER TABLE `tasks_users` ENABLE KEYS */;
 
 

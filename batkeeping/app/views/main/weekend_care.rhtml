@@ -92,15 +92,12 @@ No fruit cages to feed.
 <th>Date Opened</th>
 <% if @list_all %>
 <th>Date Closed</th>
-<% else %>
-<th></th>
 <% end %>
 <th></th><th></th>
 <th>Treatment</th>
 <% @show_bat = true %>
 <% for @bat in @sick_bats %>
   <% @list_all ? medical_problems = @sick_bat.medical_problems : medical_problems = @bat.medical_problems.current %>
-  
   <% for medical_problem in medical_problems %>
     <%= render_partial 'medical_problems/medical_problem_for_bat', medical_problem %>
   <% end %>  

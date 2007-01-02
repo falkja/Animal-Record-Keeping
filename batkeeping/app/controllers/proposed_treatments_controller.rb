@@ -33,8 +33,10 @@ class ProposedTreatmentsController < ApplicationController
       @task.last_done_date = nil
       @task.repeat = 0
       @task.title = @proposed_treatment.treatment
-      @task.users << @proposed_treatment.medical_problem.user
       @task.save
+      @task.users << @proposed_treatment.medical_problem.user
+      #@tasks = @proposed_treatment.medical_problem.user.tasks
+      #@proposed_treatment.medical_problem.user.tasks = @tasks << @task
       flash[:notice] = 'Proposed Treatment was successfully created.'
       redirect_to :controller => 'medical_problems', :action => 'list_current'
     else
@@ -68,6 +70,7 @@ class ProposedTreatmentsController < ApplicationController
   def deactivate
 	@proposed_treatment = ProposedTreatment.find(params[:id])
   @deactivating = true
+  @proposed_treatment.task = nil
   end
 
   def reactivate

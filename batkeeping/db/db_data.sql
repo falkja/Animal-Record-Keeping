@@ -292,7 +292,8 @@ INSERT INTO `medical_problems` (`id`,`bat_id`,`date_opened`,`description`,`user_
  (2,6,'2006-12-15 00:00:00','Bat refuses to fly with other bats. Mocks investigators and finds flaws with the published literature',2,NULL,'Inflated Ego'),
  (3,4,'2006-12-15 00:00:00','bat sings at a high pitch destroying the glass in other bat\'s cages',2,'2006-12-19 00:00:00','High pitched singing'),
  (4,4,'2006-12-15 00:00:00','Bat heckles other bats, steals food and rushes other bats trying to capture worm',2,'2006-12-15 00:00:00','Over competitiveness'),
- (5,2,'2006-12-18 00:00:00','None',4,'2007-01-02 00:00:00','Another problem');
+ (5,2,'2006-12-18 00:00:00','None',4,'2007-01-02 00:00:00','Another problem'),
+ (6,2,'2007-01-02 00:00:00','new test',5,NULL,'new ');
 /*!40000 ALTER TABLE `medical_problems` ENABLE KEYS */;
 
 
@@ -334,7 +335,16 @@ INSERT INTO `proposed_treatments` (`id`,`medical_problem_id`,`date_started`,`dat
  (15,5,'2007-01-02 00:00:00','2007-01-02 00:00:00','2007-01-02 00:00:00','I got a nother test',4),
  (16,1,'2007-01-02 00:00:00','2007-01-02 00:00:00',NULL,'Cough syrup',4),
  (17,1,'2007-01-02 00:00:00','2007-01-02 00:00:00',NULL,'Kleenex',4),
- (18,1,'2007-01-02 00:00:00','2007-01-02 00:00:00',NULL,'Extra food',4);
+ (18,1,'2007-01-02 00:00:00','2007-01-02 00:00:00',NULL,'Extra food',4),
+ (19,2,'2007-01-02 00:00:00','2007-01-02 00:00:00','2007-01-02 00:00:00','testing',4),
+ (20,1,'2007-01-02 00:00:00','2007-01-02 00:00:00',NULL,'a new treatment',4),
+ (21,6,'2007-01-02 00:00:00','2007-01-02 00:00:00',NULL,'test treatment',4),
+ (22,6,'2007-01-02 00:00:00','2007-01-02 00:00:00',NULL,'second treatment',4),
+ (23,6,'2007-01-02 00:00:00','2007-01-02 00:00:00',NULL,'third treatment',4),
+ (24,2,'2007-01-02 00:00:00','2007-01-02 00:00:00',NULL,'testing again',4),
+ (25,2,'2007-01-02 00:00:00','2007-01-02 00:00:00',NULL,'testing for a nother time',4);
+INSERT INTO `proposed_treatments` (`id`,`medical_problem_id`,`date_started`,`date_finished`,`date_closed`,`treatment`,`user_id`) VALUES 
+ (26,1,'2007-01-02 00:00:00','2007-01-02 00:00:00',NULL,'next treatmetn',4);
 /*!40000 ALTER TABLE `proposed_treatments` ENABLE KEYS */;
 
 
@@ -429,7 +439,12 @@ CREATE TABLE `tasks` (
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
 INSERT INTO `tasks` (`id`,`last_done_date`,`repeat`,`proposed_treatment_id`,`cage_id`,`title`,`description`,`notes`) VALUES 
  (2,NULL,0,11,NULL,'Amputation','',''),
- (3,NULL,0,12,NULL,'This here is a test treatment','','');
+ (3,NULL,0,12,NULL,'This here is a test treatment','',''),
+ (12,NULL,0,21,NULL,'test treatment','',''),
+ (14,NULL,0,23,NULL,'third treatment','',''),
+ (15,NULL,0,24,NULL,'testing again','',''),
+ (16,NULL,0,25,NULL,'testing for a nother time','',''),
+ (17,NULL,0,26,NULL,'next treatmetn','','');
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 
 
@@ -439,10 +454,9 @@ INSERT INTO `tasks` (`id`,`last_done_date`,`repeat`,`proposed_treatment_id`,`cag
 
 DROP TABLE IF EXISTS `tasks_users`;
 CREATE TABLE `tasks_users` (
-  `id` int(10) unsigned NOT NULL auto_increment,
   `user_id` int(10) unsigned NOT NULL,
   `task_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`user_id`,`task_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -450,9 +464,12 @@ CREATE TABLE `tasks_users` (
 --
 
 /*!40000 ALTER TABLE `tasks_users` DISABLE KEYS */;
-INSERT INTO `tasks_users` (`id`,`user_id`,`task_id`) VALUES 
- (2,2,2),
- (4,4,3);
+INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES 
+ (2,2),
+ (2,16),
+ (2,17),
+ (4,3),
+ (5,12);
 /*!40000 ALTER TABLE `tasks_users` ENABLE KEYS */;
 
 

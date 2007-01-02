@@ -4,5 +4,5 @@ class User < ActiveRecord::Base
     has_many :cage_in_histories
     has_many :cage_out_histories
     has_many :medical_problems
-    has_many :tasks
+    has_and_belongs_to_many :tasks
 end

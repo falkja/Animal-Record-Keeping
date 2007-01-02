@@ -424,6 +424,26 @@ INSERT INTO `tasks` (`id`,`last_done_date`,`repeat`,`proposed_treatment_id`,`cag
 
 
 --
+-- Definition of table `tasks_users`
+--
+
+DROP TABLE IF EXISTS `tasks_users`;
+CREATE TABLE `tasks_users` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `user_id` int(10) unsigned NOT NULL,
+  `task_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tasks_users`
+--
+
+/*!40000 ALTER TABLE `tasks_users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tasks_users` ENABLE KEYS */;
+
+
+--
 -- Definition of table `users`
 --
 
@@ -450,26 +470,6 @@ INSERT INTO `users` (`id`,`name`,`initials`,`email`,`start_date`,`end_date`) VAL
  (4,'Attila the Hun','AtH','hun@villagepillage.com','2006-12-23 00:00:00',NULL),
  (5,'Conan the Barbarian','CTB','ctb@slash.burn.net','2006-12-23 00:00:00',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
-
-
---
--- Definition of table `users_tasks`
---
-
-DROP TABLE IF EXISTS `users_tasks`;
-CREATE TABLE `users_tasks` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `user_id` int(10) unsigned NOT NULL,
-  `task_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `users_tasks`
---
-
-/*!40000 ALTER TABLE `users_tasks` DISABLE KEYS */;
-/*!40000 ALTER TABLE `users_tasks` ENABLE KEYS */;
 
 
 --

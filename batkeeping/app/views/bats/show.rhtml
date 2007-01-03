@@ -42,26 +42,7 @@
 </table>
 <% end %>
 
-<% if @bat.weights.length == 0 %>
-No weights.
-<% else %>
-<h3>Weight History:</h3>
-<table border='1'>
-  <th>Date</th>
-  <th>Weight</th>
-  <th>Notes</th>
-  <th>Who</th>
-  <% for weight in @bat.weights %>
-  <tr>
-  <td><%= nice_date weight.date %></td>
-  <td><%= weight.weight %>g</td>
-  <td><%= weight.note %></td>
-  <td><%= weight.user.initials %></td>
-  </tr>
-  <% end %>
-</table>
-<p><%= link_to 'Graph Weights', :action => 'graph_weights', :id => @bat %></p>
-<% end %>
+<%= render_partial 'bats/display_weights', @bat %>
 
 <% if @cohs.length >0 %>
 <h3>Cage History:</h3>

@@ -1,19 +1,21 @@
-<tr bgcolor="<%= weigh_one_bat_counter.modulo(2).nonzero? ? "#e0e0e0" : "" %>">
+<table>
+<th>Band</th>
+<th>Weight</th>
+<th align='left'>Weight Note</th>
+<th>Cage</th>
+<th>Cage change reason</th>
+
+<tr>
 <td><%= link_to weigh_one_bat.band, :controller => 'bats', :action => 'show', :id => weigh_one_bat %></td>
 <td><%= text_field 'weight', weigh_one_bat.id, :size => 4, :autocomplete => 'off' %> g</td>
 <td><%= text_field 'note', weigh_one_bat.id %></td>
-<td>
-<% if weigh_one_bat.weights.length == 0 %>
-No previous weights.
-<% else %>
-<div class="scrollingdiv">
-<% for weight in weigh_one_bat.weights %>
-<%= weight.weight.to_s + 'g ' + weight.date.strftime('%m-%d-%Y') %><br/>
-<% end %>
-</div>
-<% end %>
-</td>
+
 <%# See http://www.rubyonrails.org/api/classes/ActionView/Helpers/FormOptionsHelper.html#M000404 %>
 <td><%= select 'bat_cage', weigh_one_bat.id.to_s , @cages.collect {|c| [c.name , c.id] }, :selected => weigh_one_bat.cage.id  %></td>
 <td><%= text_field 'cage_change_note', weigh_one_bat.id %></td>
+
+<td><%= submit_tag 'Submit Weight' %></td>
+
 </tr>
+
+</table>

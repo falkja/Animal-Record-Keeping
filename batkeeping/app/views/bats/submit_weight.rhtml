@@ -1,11 +1,7 @@
 <h1> Weighed <%= @bat.band %> in <%= @bat.cage.name %></h1>
 
-<%#= params %>
-<table>
-<th>Weight(g)</th>
-<th>Notes</th>
-<tr>
-<td><%= params[:weight][@bat.id.to_s] %></td>
-<td><%= params[:note][@bat.id.to_s] %></td>
-</tr>
-</table>
+<% if @bat.weights.length == 0 %>
+No previous weights.
+<% else %>
+<%= render_partial 'display_weights', @bat %>
+<% end %>

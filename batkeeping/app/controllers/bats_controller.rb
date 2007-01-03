@@ -208,6 +208,9 @@ redirect_to :action => 'list'
         @bat.cage = Cage.find(params[:bat_cage][@bat.id.to_s])
         @bat.save
 
+  if params[:redirectme]
+    redirect_to :controller => 'cages', :action => 'weigh_cage', :id => params[:redirectme]
+  end
   end
   
   def graph_weights

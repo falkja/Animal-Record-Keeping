@@ -1,22 +1,15 @@
 <h1>Weigh <%= @bat.band%> in <%= @bat.cage.name %></h1>
 
-<%= start_form_tag :action => 'submit_weight', :id => @bat %>
+<%= start_form_tag :action => 'submit_weight', :id => @bat, :redirectme => params[:redirectme] %>
 
-<table>
-<th>Band</th>
-<th>Weight</th>
-<th align='left'>Weight Notes</th>
-<th>Previous Weights</th>
-<th>Cage</th>
-<th>Cage change reason</th>
-
-<% @bats = Array.new ; @bats << @bat %>
-<%= render_collection_of_partials "bats/weigh_one_bat", @bats %>
-
-</table>
-
-<%= submit_tag 'Submit Weights' %>
+<%= render_partial "bats/weigh_one_bat", @bat %>
 
 <%= end_form_tag %>
+
+<% if @bat.weights.length == 0 %>
+No previous weights.
+<% else %>
+<%= render_partial 'display_weights', @bat %>
+<% end %>
 
 <p><%= link_to 'Back', :controller => 'bats', :action => 'choose_bat_to_weigh' %></p>

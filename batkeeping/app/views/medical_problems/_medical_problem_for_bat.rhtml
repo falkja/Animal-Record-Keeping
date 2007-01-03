@@ -1,3 +1,5 @@
+<%# @show_bat is needed to show the bat band column %>
+
 <% bat = @bat %>
 <% medical_problem = medical_problem_for_bat %>
 
@@ -36,7 +38,7 @@
       </td>
       <td></td>
       <td>
-        <%= link_to 'Reactivate', :action => 'reactivate', :id => medical_problem %>
+        <%= link_to 'Reactivate', :controller => 'medical_problems', :action => 'reactivate', :id => medical_problem %>
       </td>
     <% end %>
 
@@ -56,8 +58,11 @@
       </td>
       </tr>
       <tr>
-      <td></td><td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td>
       <% if @list_all %>
+        <td></td>
+      <% end %>
+      <% if @show_bat %>
         <td></td>
       <% end %>
     <% end %>

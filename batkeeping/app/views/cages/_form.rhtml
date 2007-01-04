@@ -21,8 +21,7 @@
 
 <p><label for="user">Owner</label><br/>
 <%= collection_select("cage", "user_id" , 
-User.find(:all, :conditions => "end_date is null", :order => "name"), "id", "name",
-{:include_blank => true}) %></p>
+User.find(:all, :conditions => "end_date is null", :order => "name"), "id", "name") %></p>
 
 <p><label for="food">Food amount</label><br/>
 <%= text_field 'cage', 'food', :size => 1, :autocomplete => 'off' %> grams</p>

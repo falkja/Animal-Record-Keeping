@@ -1,11 +1,22 @@
 <%= error_messages_for 'task' %>
 
 <!--[form:task]-->
-<p><label for="task_last_done_date">Last done date</label><br/>
-<%= datetime_select 'task', 'last_done_date'  %></p>
 
-<p><label for="task_repeat">Repeat</label><br/>
-<%= text_field 'task', 'repeat'  %></p>
+<div class="hidden">
+<p><label for="task_last_done_date">Last done date</label><br/>
+<%= datetime_select 'task', 'last_done_date', :disabled => true %></p>
+</div>
+
+<p>
+This page is for creating new tasks which are not one of the following:
+<ol>
+<li>Medical care treatments</li>
+<li>Weighing cages</li>
+</ol>
+The above tasks are taken care of as you 
+<%= link_to 'create a cage', :controller => 'cages', :action => 'new' %> 
+or start a <%= link_to 'new medical treatment', :controller => 'medical_problems', :action => 'new' %>.
+</p>
 
 <p><label for="task_title">Title</label><br/>
 <%= text_field 'task', 'title'  %></p>
@@ -13,7 +24,14 @@
 <p><label for="task_description">Description</label><br/>
 <%= text_field 'task', 'description'  %></p>
 
+<p><label for="task_user">User assigned</label><br/>
+<%= select_tag("users[id][]", options_from_collection_for_select(@users, "id", "name"), :multiple => true) %></p>
+
+<p><label for="task_repeat">Task Repeating</label><br/>
+<%= select_tag("task[repeat]", options_for_select([["Daily","0"],["Every Monday","2"],["Every Tuesday","3"],["Every Wednesday","4"],["Every Thursday","5"],["Every Friday","3"],["Every Saturday","7"],["Every Sunday","1"]],@task.repeat)) %>
+<%#= text_field 'task', 'repeat'  %></p>
+
 <p><label for="task_notes">Notes</label><br/>
-<%= text_area 'task', 'notes'  %></p>
+<%= text_area 'task', 'notes', :rows => 3 %></p>
 <!--[eoform:task]-->
 

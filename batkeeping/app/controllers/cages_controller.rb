@@ -86,9 +86,6 @@ class CagesController < ApplicationController
   def create
     @cage = Cage.new(params[:cage])
 	@cage.date_destroyed = nil
-    unless @cage.user
-        @cage.fed_by = "Animal Care"
-    end
 
     if @cage.save
       flash[:notice] = 'Cage was successfully created.'

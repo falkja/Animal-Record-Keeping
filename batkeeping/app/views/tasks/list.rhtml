@@ -2,20 +2,20 @@
 
 <table>
   <tr>
-    <th>User(s)</th>
     <th>Title</th>
+    <th>User(s)</th>
     <th>Frequency</th>
     <th>Last Done</th>
   </tr>
   
 <% for task in @tasks %>
   <tr>
+    <td><b><%= task.title %></b></td>
     <td>
       <% for user in task.users %>
-      <%= user.name %>
+      <%= user.name %><br/>
       <% end %>
       </td>
-    <td><%= task.title %></td>
     <td>
       <%= task.repeat == 0 ? "Daily" : '' %>
       <%= task.repeat == 1 ? "Every Sunday" : '' %>

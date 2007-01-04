@@ -18,11 +18,13 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    @users = User.current
   end
 
   def create
     @task = Task.new(params[:task])
     if @task.save
+      @task.users = User.find(params[:users][:id])
       flash[:notice] = 'Task was successfully created.'
       redirect_to :action => 'list'
     else

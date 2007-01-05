@@ -24,7 +24,7 @@ or start a <%= link_to 'new medical treatment', :controller => 'medical_problems
 <p><label for="task_description">Description</label><br/>
 <%= text_field 'task', 'description'  %></p>
 
-<p><label for="task_user">User assigned</label><br/>
+<p><label for="task_user">User(s) assigned</label><br/>
 <%= select_tag("users[id][]", options_from_collection_for_select(@users, "id", "name"), :multiple => true) %></p>
 
 <p><label for="task_repeat">Task Repeating</label><br/>

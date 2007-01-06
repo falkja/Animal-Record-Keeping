@@ -1,4 +1,6 @@
-<h1>Listing tasks</h1>
+<h1>Listing general Tasks</h1>
+
+<p><%= link_to 'New General Task', :controller => 'tasks', :action => 'new' %></p>
 
 <table>
   <tr>
@@ -8,32 +10,42 @@
     <th>Last Done</th>
   </tr>
   
-<% for task in @tasks %>
-  <tr>
-    <td><b><%= task.title %></b></td>
-    <td>
-      <% for user in task.users %>
-      <%= user.name %><br/>
-      <% end %>
-      </td>
-    <td>
-      <%= task.repeat == 0 ? "Daily" : '' %>
-      <%= task.repeat == 1 ? "Every Sunday" : '' %>
-      <%= task.repeat == 2 ? "Every Monday" : '' %>
-      <%= task.repeat == 3 ? "Every Tuesday" : '' %>
-      <%= task.repeat == 4 ? "Every Wednesday" : '' %>
-      <%= task.repeat == 5 ? "Every Thursday" : '' %>
-      <%= task.repeat == 6 ? "Every Friday" : '' %>
-      <%= task.repeat == 7 ? "Every Saturday" : '' %>
-    </td>
-    <td><%= nice_date task.last_done_date %></td>
-    <td><%= link_to 'Show', :action => 'show', :id => task %></td>
-    <td><%= link_to 'Edit', :action => 'edit', :id => task %></td>
-    <td><%= link_to 'Destroy', { :action => 'destroy', :id => task }, :confirm => 'Are you sure?', :post => true %></td>
-  </tr>
-<% end %>
+<%= render_collection_of_partials 'task_list', @general_tasks %>
 </table>
+
+
+<h1>Listing Cage Tasks</h1>
+
+<p><%= link_to 'New Cage Task', :controller => 'tasks', :action => 'new_cage_task' %></p>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>User(s)</th>
+    <th>Frequency</th>
+    <th>Last Done</th>
+  </tr>
+  
+<%= render_collection_of_partials 'task_list', @cage_tasks %>
+</table>
+
+
+<h1>Listing Medical Tasks</h1>
+
+<p>[New medical tasks are created from the <%= link_to 'medical page', :controller => 'medical_problems', :action => 'list_current' %>]</p>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>User(s)</th>
+    <th>Frequency</th>
+    <th>Last Done</th>
+  </tr>
+  
+<%= render_collection_of_partials 'task_list', @medical_tasks %>
+</table>
+
 
 <br />
 
-<%= link_to 'New task', :action => 'new' %>
+

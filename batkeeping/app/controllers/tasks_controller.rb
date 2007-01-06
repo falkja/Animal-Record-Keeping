@@ -10,6 +10,9 @@ class TasksController < ApplicationController
 
   def list
     @tasks = Task.find(:all)
+    @medical_tasks = Task.find(:all, :conditions => "proposed_treatment_id is not null")
+    @cage_tasks = Task.find(:all, :conditions => "cage_id is not null")
+    @general_tasks = Task.find(:all, :conditions => "proposed_treatment_id = null and cage_id = null")
   end
 
   def show

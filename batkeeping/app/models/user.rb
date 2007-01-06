@@ -7,11 +7,11 @@ class User < ActiveRecord::Base
     has_and_belongs_to_many :tasks
     
   def self.current
-    find :all, :conditions => 'end_date is null'
+    find :all, :conditions => 'end_date is null', :order => 'name'
   end
 
   def self.find_ordinary_users
-    find :all, :conditions => 'id > 3'  
+    find :all, :conditions => 'id > 3', :order => 'name'
   end
 
 

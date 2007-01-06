@@ -63,6 +63,9 @@ class TasksController < ApplicationController
 
   def edit
     @task = Task.find(params[:id])
+    @users = User.current
+    @user_ids = Array.new 
+    @task.users.each {|user| @user_ids << user.id }
   end
 
   def update

@@ -1,4 +1,8 @@
-<% task = task_list %>
+<% # You need to pass a local variable called 'manage' that is true or false%>
+<% # i.e. like <%= render_collection_of_partials 'task_list', @cage_tasks, 'manage' => false %> %>
+<% # if true, the partial will also display edit and destroy buttons %>
+
+<%# task = task_list %>
   <tr>
     <td><b><%= task.title %></b></td>
     <td>
@@ -16,8 +20,20 @@
       <%= task.repeat == 6 ? "Every Friday" : '' %>
       <%= task.repeat == 7 ? "Every Saturday" : '' %>
     </td>
-    <td><%= nice_date task.last_done_date %></td>
+    <td>
+    <% if task.last_done_date %> 
+       <%=nice_date task.last_done_date %>
+    <% else %>
+       <% if manage == true %>
+         [Just Done] (will be a link later)
+       <% else %>
+         Not Done
+       <% end %>
+    <% end %>   
+    </td>
     <td><%= link_to 'Show', :action => 'show', :id => task %></td>
+    <% if manage == true %>
     <td><%= link_to 'Edit', :action => 'edit', :id => task %></td>
     <td><%= link_to 'Destroy', { :action => 'destroy', :id => task }, :confirm => 'Are you sure?', :post => true %></td>
+    <% end %>
   </tr>

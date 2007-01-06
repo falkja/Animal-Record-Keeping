@@ -9,4 +9,10 @@ class User < ActiveRecord::Base
   def self.current
     find :all, :conditions => 'end_date is null'
   end
+
+  def self.find_ordinary_users
+    find :all, :conditions => 'id > 3'  
+  end
+
+
 end

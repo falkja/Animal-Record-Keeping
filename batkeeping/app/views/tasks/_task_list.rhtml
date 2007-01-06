@@ -1,9 +1,13 @@
-<% # You need to pass a local variable called 'manage' that is true or false%>
+<% # You need to pass a local variable called 'manage' that is true or false %>
+<% # You need to pass a local variable called 'div_id' that is unique for that task. Just use "task#{task.id}" %>
 <% # i.e. like <%= render_partial 'task_list', nil, 'task' => task, 'manage' => true %> %>
+
 <% # if true, the partial will also display edit and destroy buttons %>
 
-<%# task = task_list %>
-  <tr>
+  <tr id = "<%= div_id %>"> 
+  <%# Ok Baby, this was hard learned. A div inside a table won't work for updating %>
+  <%# give the row the id instead even this is buggy! -kg %>
+  
     <td><b><%= task.title %></b></td>
     <td>
       <% for user in task.users %>
@@ -21,19 +25,23 @@
       <%= task.repeat == 7 ? "Every Saturday" : '' %>
     </td>
     <td>
-    <% if task.last_done_date %> 
+    <% if task.done_by_schedule %> 
        <%=nice_date task.last_done_date %>
     <% else %>
        <% if manage == true %>
-         [Just Done] (will be a link later)
+         [<%= link_to_remote( 'Just Done',
+        :update => div_id,
+        :position => 'replace',
+        :url =>{ :controller => 'tasks', :action => 'done', :id => task}) %>]
        <% else %>
-         Not Done
+        Not Done on schedule
        <% end %>
-    <% end %>   
+    <% end %>
     </td>
     <td><%= link_to 'Show', :action => 'show', :id => task %></td>
     <% if manage == true %>
     <td><%= link_to 'Edit', :action => 'edit', :id => task %></td>
     <td><%= link_to 'Destroy', { :action => 'destroy', :id => task }, :confirm => 'Are you sure?', :post => true %></td>
     <% end %>
-  </tr>
+ </tr>
+    

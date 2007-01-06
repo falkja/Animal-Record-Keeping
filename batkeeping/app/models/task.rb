@@ -7,7 +7,7 @@ class Task < ActiveRecord::Base
     find :all, :conditions => 'cage_id is null and proposed_treatment_id is null'
   end
   
-  def self.cage_tasks
+  def self.cage_tasks #weighing
     find :all, :conditions => 'cage_id is not null'
   end
   

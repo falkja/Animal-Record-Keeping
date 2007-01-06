@@ -38,8 +38,6 @@ User.find(:all, :conditions => "end_date is null", :order => "name"), "id", "nam
 <p><label for="room">Room</label><br/>
 <%= select_tag("cage[room]", options_for_select([["Belfry (4102F)","Belfry (4102F)"],["Colony Room (4100)","Colony Room (4100)"],["Fruit Bats (4148L)","Fruit Bats (4148L)"]],@cage.room)) %></p>
 
-
-
 </div>
 
 <%= @leave_date %>

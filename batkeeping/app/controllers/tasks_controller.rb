@@ -9,10 +9,9 @@ class TasksController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @tasks = Task.find(:all)
-    @medical_tasks = Task.find(:all, :conditions => "proposed_treatment_id is not null")
-    @cage_tasks = Task.find(:all, :conditions => "cage_id is not null")
-    @general_tasks = Task.find(:all, :conditions => "proposed_treatment_id = null and cage_id = null")
+    @general_tasks = Task.general_tasks  
+    @cage_tasks = Task.cage_tasks
+    @medical_tasks = Task.medical_tasks    
   end
 
   def show
@@ -22,6 +21,33 @@ class TasksController < ApplicationController
   def new
     @task = Task.new
     @users = User.current
+  end
+
+  def new_weigh_cage_task
+    @cage = Cage.find(params[:id])
+    @users = User.current
+  end
+
+  def create_weigh_cage_task #called from new_weigh_cage_task page
+    @cage = Cage.find(params[:id])    
+    @users = User.find(params[:users])
+    @days = params[:days]    
+            
+    if @days.include?(0)  #only need one daily task
+        @days.clear
+        @days << 0
+    end
+    
+    for day in @days
+        @task = Task.new
+        @task.repeat = day
+        @task.cage = @cage
+        @task.title = "Weigh cage " + @cage.name        
+        @task.save
+        @task.users = @users
+    end    
+    
+    redirect_to :controller => 'cages', :action => 'show', :id => @cage 
   end
 
   def create

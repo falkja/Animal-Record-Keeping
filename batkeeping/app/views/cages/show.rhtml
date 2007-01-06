@@ -1,3 +1,6 @@
+<table>
+<tr>
+<td>
 <p>
 <b>Name: </b><%= @cage.name %>
 </p>
@@ -26,7 +29,31 @@
 <p>
 <b>Date destroyed: </b><%= nice_date @cage.date_destroyed %>
 </p>
+<% else %>
+<td width=50>
+</td>
+<td>
+Weighing tasks
+<p>
+<%= link_to 'Add weighing task', :controller => 'tasks', :action => 'new_weigh_cage_task', :id => @cage %>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>User(s)</th>
+    <th>Frequency</th>
+    <th>Last Done</th>
+  </tr>
+<% for task in @tasks %>
+ <%= render_partial 'tasks/task_list', nil, 'task' => task, 'manage' => true %>
 <% end %>
+</table>
+
+</p>
+</td>
+</tr>
+<% end %>
+</table>
 
 <p>
 <% if @cage.bats.active.length == 0 %>

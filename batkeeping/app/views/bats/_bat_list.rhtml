@@ -27,9 +27,7 @@
     <% end %>
 	<th>Species</th>
 	<th>Gender</th>
-	<th>Collection Age</th>
 	<th>Collection Date</th>
-	<th>Collection Place</th>
 	<% if @list_all %>
 		<th>Leave Date</th>
 		<th>Leave Reason</th>
@@ -64,13 +62,7 @@
 		<%=h bat.gender %>
 	</td>
 	<td>
-		<%=h bat.collection_age %>
-	</td>
-	<td>
 		<%=h nice_date_no_day(bat.collection_date) %>
-	</td>
-	<td>
-		<%=h bat.collection_place %>
 	</td>
 	<% if @list_all %>
 	<td>

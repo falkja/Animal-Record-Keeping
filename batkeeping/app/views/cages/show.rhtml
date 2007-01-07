@@ -1,10 +1,9 @@
+<h2>Dossier on <%= @cage.name%></h2>
+
+<blockquote>
 <table>
 <tr>
 <td>
-<p>
-<b>Name: </b><%= @cage.name %>
-</p>
-
 <p>
 <b>Owner: </b><%= @cage.user ? @cage.user.name : 'NP' %>
 </p>
@@ -76,11 +75,14 @@
 <% end %>
 </table>
 
+</blockquote>
+
 <p>
 <% if @cage.bats.active.length == 0 %>
 <b>No bats are in this cage.</b>
 <% else %>
   <b>Current Bats:</b><br />
+  <blockquote>
   <table>
   <th>Band</th>
   <th>Last Weight</th>
@@ -114,6 +116,7 @@
     </tr>
   <% end %>
   </table>
+  </blockquote>
 <% end %>
 </p>
 
@@ -122,6 +125,7 @@
 <b>No bats were in this cage.</b>
 <% else %>
   <b>Past Bats:</b><br />
+  <blockquote>
   <table>
   <th>Band</th>
   <th>Date in</th>
@@ -138,9 +142,11 @@
     </tr>
   <% end %>
   </table>
+  </blockquote>
 <% end %>
 </p>
 
+<hr />
+
 <%= link_to 'Edit', :action => 'edit', :id => @cage %> |
-<%= link_to 'List Current Cages', :action => 'list' %> | 
-<%= link_to 'Weigh Cage', :controller => 'cages', :action => 'weigh_cage', :id => @cage %>
+<%= link_to 'List Current Cages', :action => 'list' %>

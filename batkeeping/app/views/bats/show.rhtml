@@ -1,5 +1,7 @@
 <h3>Dossier on <%=h @bat.band %></h3>
 
+<blockquote>
+
 <p>
 <b>Cage: </b>
 <% if @bat.cage %>
@@ -8,67 +10,6 @@
 <%= 'Inactive' %>
 <% end %>
 </p>
-
-<% if @bat.medical_problems.current.length > 0 %>
-<h3>Current Medical Problems:</h3>
-<table>
-<th>Medical Problem</th>
-<th>User</th>
-<th>Date Opened</th>
-<th></th>
-<th></th>
-<th>Treatment</th>
-<% @show_bat = false %>
-  <% for medical_problem in @bat.medical_problems.current %>
-    <%= render_partial 'medical_problems/medical_problem_for_bat', medical_problem %>
-  <% end %>  
-</table>
-<% end %>
-
-<% if @bat.medical_problems.expired.length > 0 %>
-<% @list_all = true %>
-<h3>Past Medical Problems:</h3>
-<table>
-<th>Medical Problem</th>
-<th>User</th>
-<th>Date Opened</th>
-<th>Date Closed</th>
-<th></th><th></th>
-<th>Treatment</th>
-<% @show_bat = false %>
-  <% for medical_problem in @bat.medical_problems.expired %>
-    <%= render_partial 'medical_problems/medical_problem_for_bat', medical_problem %>
-  <% end %>
-</table>
-<% end %>
-
-<%= render_partial 'bats/display_weights', @bat %>
-
-<% if @cohs.length >0 %>
-<h3>Cage History:</h3>
-  <table border='1'>
-  <th>Cage</th>
-  <th>Date in</th>
-  <th>Why</th>
-  <th>Who</th>
-  <th>Date out</th>
-  <th>Why</th>
-  <th>Who</th>
-  <% for coh in @cohs %>
-    <tr>
-    <td><%=h coh.cage.name %></td>
-    <td><%=h nice_date coh.cage_in_history.date %></td>
-    <td><%=h coh.cage_in_history.note %></td>
-    <td><%=h coh.cage_in_history.user.initials %></td>
-    <td><%=h nice_date coh.date %></td>
-    <td><%=h coh.note %></td>
-    <td><%=h coh.user.initials %></td>    
-    </tr>
-  <% end %>
-  </table>
-<% end %>
-
-<hr />
 
 <p>
 <b>Species: </b>
@@ -107,11 +48,74 @@
 </p>
 <% end %>
 
+</blockquote>
+
+<% if @bat.medical_problems.current.length > 0 %>
+<h3>Current Medical Problems:</h3>
+<blockquote>
+<table>
+<th>Medical Problem</th>
+<th>User</th>
+<th>Date Opened</th>
+<th></th>
+<th></th>
+<th>Treatment</th>
+<% @show_bat = false %>
+  <% for medical_problem in @bat.medical_problems.current %>
+    <%= render_partial 'medical_problems/medical_problem_for_bat', medical_problem %>
+  <% end %>  
+</table>
+</blockquote>
+<% end %>
+
+<% if @bat.medical_problems.expired.length > 0 %>
+<% @list_all = true %>
+<h3>Past Medical Problems:</h3>
+<blockquote>
+<table>
+<th>Medical Problem</th>
+<th>User</th>
+<th>Date Opened</th>
+<th>Date Closed</th>
+<th></th><th></th>
+<th>Treatment</th>
+<% @show_bat = false %>
+  <% for medical_problem in @bat.medical_problems.expired %>
+    <%= render_partial 'medical_problems/medical_problem_for_bat', medical_problem %>
+  <% end %>
+</table>
+</blockquote>
+<% end %>
+
+<%= render_partial 'bats/display_weights', @bat %>
+
+<% if @cohs.length >0 %>
+<h3>Cage History:</h3>
+<blockquote>
+  <table border='1'>
+  <th>Cage</th>
+  <th>Date in</th>
+  <th>Why</th>
+  <th>Who</th>
+  <th>Date out</th>
+  <th>Why</th>
+  <th>Who</th>
+  <% for coh in @cohs %>
+    <tr>
+    <td><%=h coh.cage.name %></td>
+    <td><%=h nice_date coh.cage_in_history.date %></td>
+    <td><%=h coh.cage_in_history.note %></td>
+    <td><%=h coh.cage_in_history.user.initials %></td>
+    <td><%=h nice_date coh.date %></td>
+    <td><%=h coh.note %></td>
+    <td><%=h coh.user.initials %></td>    
+    </tr>
+  <% end %>
+  </table>
+</blockquote>
+<% end %>
+
+<hr />
+
 <%= link_to 'Edit', :action => 'edit', :id => @bat %> |
-<%= link_to 'List Current Bats', :action => 'list' %> |
-<% if @bat.leave_date == nil %>
-	<%= link_to 'Deactivate', { :action => 'deactivate', :id => @bat }, :confirm => 'Are you sure?', :post => true %>
-<% else %>
-	<%=  link_to 'Reactivate', { :action => 'reactivate', :id => @bat }, :confirm => 'Are you sure?', :post => true %>
-<% end %> | 
-<%= link_to 'Weigh Bat', :action => 'weigh_bat', :id => @bat %>
+<%= link_to 'List Current Bats', :action => 'list' %>

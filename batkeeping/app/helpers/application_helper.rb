@@ -2,6 +2,7 @@
 module ApplicationHelper
 
   # Produces -> May 25, 2006
+  #http://www.ruby-doc.org/core/classes/Time.html#M000304
   def nice_date(date)
     if (date != nil)
 		date.strftime("%B %d, %Y")

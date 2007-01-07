@@ -27,6 +27,16 @@
 </p>
 
 <p>
+<b>Time in the lab: </b>
+<% collection_year = @bat.collection_date.strftime("%Y").to_i %>
+<% collection_month = @bat.collection_date.strftime("%m").to_i %>
+<% collection_day = @bat.collection_date.strftime("%d").to_i %>
+<% collection_date = Date.new(collection_year,collection_month,collection_day) %>
+<%= Date.today - collection_date  %> days.
+</p>
+
+
+<p>
 <b>Collection Age: </b>
 <%= @bat.collection_age %>
 </p>

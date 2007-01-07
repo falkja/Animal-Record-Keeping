@@ -1,0 +1,25 @@
+<% proposed_treatment = show_proposed_treatments %>
+    
+    <p>
+      <b>Proposed Treatment: </b><%= link_to proposed_treatment.treatment , :controller => 'proposed_treatments', :action => 'show', :id => proposed_treatment %>
+      <blockquote>
+        <b>Treatment Start Date: </b><%=h nice_date proposed_treatment.date_started %><br />
+        <b>Suggested Treatment Finish Date: </b><%=h nice_date proposed_treatment.date_finished %><br />
+        <b>Ended Treatment: </b><%=h nice_date proposed_treatment.date_closed %><br />
+        <% if proposed_treatment.medical_care_actions.length == 0 %>
+          <p>No medical care actions have been performed for this treatment.</p>
+        <% else %>
+          <h3><%=h proposed_treatment.treatment %> Given:</h3>
+          <blockquote>
+          <% for medical_care_action in proposed_treatment.medical_care_actions %>
+          <p>
+          <b>Date: </b><%= nice_date_with_time medical_care_action.date %><br/>
+          <b>Remarks: </b><%= medical_care_action.remarks %><br/>
+          <b>User: </b><%=h medical_care_action.user.name %><br/>
+          </p>
+        <% end %>
+        </blockquote>
+      <% end %>
+      </blockquote>
+      <hr width = "60%" align=LEFT />
+    </p>

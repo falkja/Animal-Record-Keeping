@@ -2,19 +2,22 @@
 
 <% if @mycages.count > 0 %> 
 <h3>Your cages</h3>
+<blockquote>
 <div id= "my_cages">
 <% @div_id = "my_cages" %>
 <%= render_partial 'cages/cage_list', @mycages %>
 </div>
+</blockquote>
 <% else %>
 <h3>You have no cages</h3>
 <% end %>
 
-
 <br/><br/>
+
 <p>
 <% if @mymedicalproblems.length > 0 %>
 <h3>Current Medical Problems For Which You Are Responsible</h3>
+<blockquote>
 <table>
 <th>Bat</th>
 <th>Medical Problem</th>
@@ -31,6 +34,7 @@
 <%= render_partial 'medical_problems/medical_problem_for_bat',  problem %>
 <% end %>
 </table>
+</blockquote>
 <% else %>
 You are responsible for no medical problems.
 <% end %>

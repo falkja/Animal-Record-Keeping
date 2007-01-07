@@ -55,17 +55,17 @@ class MainController < ApplicationController
     @colony_food = 0
     @cages.each {|cage| @colony_food = @colony_food + cage.food }
     
-    @colony_cages = Cage.find(:all, :conditions => 'date_destroyed is null and room = "Colony Room (4100)"') 
+    @colony_cages = Cage.find(:all, :conditions => 'date_destroyed is null and room = "Colony Room (4100)"', :order => 'name') 
     @colony_bats = Array.new
     @colony_cages.each {|cage| @colony_bats << cage.bats}
     @colony_bats.flatten!
     
-    @belfry_cages = Cage.find(:all, :conditions => 'date_destroyed is null and room = "Belfry (4102F)"') 
+    @belfry_cages = Cage.find(:all, :conditions => 'date_destroyed is null and room = "Belfry (4102F)"', :order => 'name') 
     @belfry_bats = Array.new
     @belfry_cages.each {|cage| @belfry_bats << cage.bats}
     @belfry_bats.flatten!
     
-    @fruitbat_cages = Cage.find(:all, :conditions => 'date_destroyed is null and room = "Fruit Bats (4148L)"') 
+    @fruitbat_cages = Cage.find(:all, :conditions => 'date_destroyed is null and room = "Fruit Bats (4148L)"', :order => 'name') 
     @fruitbat_bats = Array.new
     @fruitbat_cages.each {|cage| @fruitbat_bats << cage.bats}
     @fruitbat_bats.flatten!

@@ -7,7 +7,7 @@
 
 
 
-<h2>Follow these instructions for a successful weekend care experience:</h2>
+<h2>Please follow these instructions:</h2>
 <ol>
 <h4>
 <li>Remove all dishes from <em>EVERY</em> cage - soak in bleach and dish soap minimum 10 minutes.</li>
@@ -83,8 +83,11 @@ No fruit cages to feed.
 
 
 <p>
-<% if @sick_bats.length > 0 %>
+<% if @sick_bats.length == 0 %>
+You are responsible for no medical problems.
+<% else %>
 <h3>Current Medical Problems</h3>
+<blockquote>
 <table>
 <th>Bat</th>
 <th>Medical Problem</th>
@@ -103,8 +106,7 @@ No fruit cages to feed.
   <% end %>  
 <% end %>
 </table>
-<% else %>
-You are responsible for no medical problems.
+</blockquote>
 <% end %>
 </p>
 

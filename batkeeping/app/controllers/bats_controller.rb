@@ -216,17 +216,17 @@ redirect_to :action => 'list'
   def graph_weights
     bat = Bat.find(params[:id])
     weight_classes = bat.weights
-	weights = Array.new
-	dates = Hash.new
-  dates_reduced = Hash.new
-	n = 0
-	weight_classes.reverse_each {|weight| weights << weight.weight; dates[n] = weight.date.strftime('%m-%d-%y'); n = n + 1;}
+    weights = Array.new
+    dates = Hash.new
+    dates_reduced = Hash.new
+    n = 0
+    weight_classes.reverse_each {|weight| weights << weight.weight; dates[n] = weight.date.strftime('%m-%d-%y'); n = n + 1;}
     
     spacing = (dates.length/6.0).ceil
     
     0.step( dates.length, spacing) {|i|  dates_reduced[i] = dates[i] }
     
-    g = Gruff::Line.new
+    g = Gruff::Line.new(800)
     
     g.title = "Bat Weights"
     

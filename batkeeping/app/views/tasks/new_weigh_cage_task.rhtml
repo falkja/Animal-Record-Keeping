@@ -1,4 +1,4 @@
-<h1>Add a weighing task for cage <%= @cage.name %></h1>
+<h1>Add a weighing task for <%= @cage.name %></h1>
 
 <%= start_form_tag :controller => 'tasks', :action => 'create_weigh_cage_task', :id => @cage %>
 
@@ -13,13 +13,13 @@
 <%= select_tag("days[]", 
 options_for_select([
 ["Daily", 0],
-["Every Sunday", 1],
 ["Every Monday", 2],
 ["Every Tuesday", 3],
 ["Every Wednesday", 4],
 ["Every Thursday", 5],
 ["Every Friday", 6],
-["Every Saturday", 7]
+["Every Saturday", 7],
+["Every Sunday", 1]
 ]), 
 :multiple => true) %>
 </td>

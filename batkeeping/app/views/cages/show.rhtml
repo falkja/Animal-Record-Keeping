@@ -32,50 +32,15 @@
 <td width=50>
 </td>
 <td>
-<b>Weighing tasks</b> [<%= link_to 'Add weighing task', :controller => 'tasks', :action => 'new_weigh_cage_task', :id => @cage %>]
-
-<table>
-    <tr>
-    <td>Who</td>
-    <td>When</td>
-    <td>Last done</td>
-    </tr>
-<% for task in @tasks %>
-    <tr>
-    <td> ::    
-       <% for user in task.users %>
-      <%= user.name %><br/>
-      <% end %>
-    </td><td>
-          <%= task.repeat == 0 ? "Daily" : '' %>
-      <%= task.repeat == 1 ? "Every Sunday" : '' %>
-      <%= task.repeat == 2 ? "Every Monday" : '' %>
-      <%= task.repeat == 3 ? "Every Tuesday" : '' %>
-      <%= task.repeat == 4 ? "Every Wednesday" : '' %>
-      <%= task.repeat == 5 ? "Every Thursday" : '' %>
-      <%= task.repeat == 6 ? "Every Friday" : '' %>
-      <%= task.repeat == 7 ? "Every Saturday" : '' %>
-    </td><td>
-    <% if task.last_done_date %> 
-       <%=nice_date task.last_done_date %>
-    <% else %>
-         [Just Done] (will be a link later)
-    <% end %>   
-    </td>
-    <td><%= link_to 'Show', :action => 'show', :id => task %></td>
-    <td><%= link_to 'Edit', :action => 'edit', :id => task %></td>
-    <td><%= link_to 'Destroy', { :action => 'destroy', :id => task }, :confirm => 'Are you sure?', :post => true %></td>
-    </tr>
-<% end %>
-</table>
-
-</p>
 </td>
 </tr>
 <% end %>
 </table>
 
 </blockquote>
+
+
+<%= render_partial 'weighing_tasks' %>
 
 <p>
 <% if @cage.bats.active.length == 0 %>

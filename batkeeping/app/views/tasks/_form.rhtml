@@ -21,12 +21,8 @@ or start a <%= link_to 'new medical treatment', :controller => 'medical_problems
 <p><label for="task_title">Title</label><br/>
 <%= text_field 'task', 'title'  %></p>
 
-<p><label for="task_description">Description</label><br/>
-<%= text_field 'task', 'description'  %></p>
-
 <p><label for="task_user">User(s) assigned</label><br/>
 <%= select_tag("users[id][]", options_from_collection_for_select(@users, "id", "name", @user_ids), :multiple => true) %></p>
-
 
 <p><label for="task_repeat">Task Repeating</label><br/>
 <%= select_tag("task[repeat]", options_for_select([["Daily","0"],["Every Monday","2"],["Every Tuesday","3"],["Every Wednesday","4"],["Every Thursday","5"],["Every Friday","3"],["Every Saturday","7"],["Every Sunday","1"]], @task.repeat.to_s)) %>

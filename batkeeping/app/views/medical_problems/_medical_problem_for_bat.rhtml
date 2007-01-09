@@ -67,7 +67,7 @@
       <% end %>
     <% end %>
     <% if medical_problem.date_closed == nil %>
-      <td><%= link_to '[New Treatment]', :controller => 'proposed_treatments', :action => 'new', :id => medical_problem %></td>
+      <td>[<%= link_to 'Add New Treatment', :controller => 'proposed_treatments', :action => 'new', :id => medical_problem %>]</td>
     <% end %>
     </tr>
 <tr><td colspan = 10><hr /></td></tr>

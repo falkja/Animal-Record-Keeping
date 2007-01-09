@@ -26,7 +26,7 @@
     </td>
     <td>
     <% if task.done_by_schedule %> 
-       <%=nice_date task.last_done_date %>
+       <%= nice_date task.last_done_date %>
     <% else %>
        <% if manage == true %>
          [<%= link_to_remote( 'Just Done',

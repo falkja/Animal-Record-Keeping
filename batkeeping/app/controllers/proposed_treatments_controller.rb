@@ -70,7 +70,7 @@ class ProposedTreatmentsController < ApplicationController
   def deactivate
 	@proposed_treatment = ProposedTreatment.find(params[:id])
   @deactivating = true
-  @proposed_treatment.task = nil
+  @proposed_treatment.task.destroy
   end
 
   def reactivate

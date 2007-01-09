@@ -1,14 +1,15 @@
 <h1>Listing General Tasks</h1>
 
-<p><%= link_to 'New General Task', :controller => 'tasks', :action => 'new' %></p>
+<% if @general_tasks.length == 0 %>
+No general tasks.
+<% else %>
 
 <table>
-  <tr>
+
     <th>Title</th>
     <th>User(s)</th>
     <th>Frequency</th>
     <th>Last Done</th>
-  </tr>
 
 <%# can't pass local variables this way :( = render_collection_of_partials 'task_list', nil, '@general_tasks, 'manage' => true %>
 <% for task in @general_tasks %>
@@ -19,46 +20,51 @@
 <% end %>
 
 </table>
+<% end %>
 
-
+<p><%= link_to 'New General Task', :controller => 'tasks', :action => 'new' %></p>
 <h1>Listing Cage Weighing Tasks</h1>
 
 <p>[Cage weighing tasks are managed from the <%= link_to 'cage pages', :controller => 'cages', :action => 'list' %>]</p>
 
+<% if @cage_tasks.length == 0 %>
+No cage weighing tasks.
+<% else %>
+
 <table>
-  <tr>
+
     <th>Title</th>
     <th>User(s)</th>
     <th>Frequency</th>
     <th>Last Done</th>
-  </tr>
   
 <% for task in @cage_tasks %>
  <%= render_partial 'task_list', nil, 'task' => task, 'manage' => false %>
 <% end %>
 
 </table>
-
+<% end %>
 
 <h1>Listing Medical Tasks</h1>
 
 <p>[Medical tasks are managed from the <%= link_to 'medical page', :controller => 'medical_problems', :action => 'list_current' %>]</p>
 
+<% if @medical_tasks.length == 0 %>
+No medical tasks.
+<% else %>
+
 <table>
-  <tr>
+
     <th>Title</th>
     <th>User(s)</th>
     <th>Frequency</th>
     <th>Last Done</th>
-  </tr>
   
 <% for task in @medical_tasks %>
  <%= render_partial 'task_list', nil, 'task' => task, 'manage' => false %>
 <% end %>
 
 </table>
-
+<% end %>
 
 <br />
-
-

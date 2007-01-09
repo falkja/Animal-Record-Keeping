@@ -4,7 +4,7 @@
 
 <% # if true, the partial will also display edit and destroy buttons %>
 
-  <tr id = "<%= div_id %>"> 
+  <tr> 
   <%# Ok Baby, this was hard learned. A div inside a table won't work for updating %>
   <%# give the row the id instead even this is buggy! -kg %>
   
@@ -30,7 +30,7 @@
     <% else %>
        <% if manage == true %>
          [<%= link_to_remote( 'Just Done',
-        :update => div_id,
+        :update => "general_tasks_div",
         :position => 'replace',
         :url =>{ :controller => 'tasks', :action => 'done', :id => task}) %>]
        <% else %>

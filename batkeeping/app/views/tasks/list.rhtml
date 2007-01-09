@@ -1,5 +1,5 @@
 <h1>Listing General Tasks</h1>
-
+<blockquote>
 <% if @general_tasks.length == 0 %>
 No general tasks.
 <% else %>
@@ -8,12 +8,11 @@ No general tasks.
 <%= render_partial 'general_tasks_list' %>
 </div>
 <% end %>
-
 <p><%= link_to 'New General Task', :controller => 'tasks', :action => 'new' %></p>
+</blockquote>
+
 <h1>Listing Cage Weighing Tasks</h1>
-
-<p>[Cage weighing tasks are managed from the <%= link_to 'cage pages', :controller => 'cages', :action => 'list' %>]</p>
-
+<blockquote>
 <% if @cage_tasks.length == 0 %>
 No cage weighing tasks.
 <% else %>
@@ -30,12 +29,11 @@ No cage weighing tasks.
 <% end %>
 
 </table>
+<p>[Cage weighing tasks are managed from the <%= link_to 'cage pages', :controller => 'cages', :action => 'list' %>]</p>
 <% end %>
-
+</blockquote>
 <h1>Listing Medical Tasks</h1>
-
-<p>[Medical tasks are managed from the <%= link_to 'medical page', :controller => 'medical_problems', :action => 'list_current' %>]</p>
-
+<blockquote>
 <% if @medical_tasks.length == 0 %>
 No medical tasks.
 <% else %>
@@ -52,6 +50,6 @@ No medical tasks.
 <% end %>
 
 </table>
+<p>[Medical tasks are managed from the <%= link_to 'medical page', :controller => 'medical_problems', :action => 'list_current' %>]</p>
 <% end %>
-
-<br />
+</blockquote>

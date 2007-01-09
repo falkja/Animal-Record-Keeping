@@ -19,20 +19,44 @@ class Task < ActiveRecord::Base
   #if the task was completed on schedule
   #Note this is modulo week. So if we skip a week we won't know
   def done_by_schedule
-    today = Time.now.wday 
-    last_done_day = last_done_date.wday
-    repeat_day = repeat - 1 #brings it in line with Time.wday convention
-    if repeat == 0 #daily        
-        if last_done_day <=> today
+    #if the task has never been completed
+    if last_done_date == nil
+      return false
+    end
+    today = Time.now.yday
+    today_weekday = Time.now.wday
+    last_done_day = last_done_date.yday
+    last_done_weekday = last_done_date.wday
+    repeat_weekday = repeat - 1 #brings it in line with Time.wday convention
+    
+    if repeat == 0 #daily
+        if last_done_day < today
             return false
         else
             return true
         end
     else #a particular day of the week
-        return false #XXX
-    end
-    
-    
+      offset = today_weekday - repeat_weekday
+      jitter1 = 4 
+      jitter2 = jitter1 - 7
+      if offset > jitter1
+         offset = offset - 7
+      else
+        if offset <= jitter2
+          offset = offset + 7
+        end        
+      end
+      
+      repeat_day = today - offset
+      post1 = repeat_day + jitter1
+      post2 = repeat_day + jitter2 + 1
+      
+      if  (last_done_day >= post2) && (last_done_day <= post1)
+          return true
+        else
+          return false
+        end
+      end    
   end
   
   

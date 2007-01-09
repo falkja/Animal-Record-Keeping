@@ -70,11 +70,11 @@ CREATE TABLE `bats` (
 /*!40000 ALTER TABLE `bats` DISABLE KEYS */;
 INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`species`,`gender`,`leave_date`,`leave_reason`,`band`,`user_id`) VALUES 
  (1,NULL,'2006-12-15 00:00:00','Juvenile','Ben\'s Beard','Eptesicus fuscus','M','2006-12-15 00:00:00','Flew away','A1',NULL),
- (2,2,'2006-12-15 00:00:00','Adult','Murat\'s Hair','Glossophaga soricina','F',NULL,NULL,'A2',NULL),
- (3,6,'2006-12-15 00:00:00','Juvenile','Kaushik\'s Glasses','Carollia perspicillata','F',NULL,NULL,'A3',NULL),
- (4,2,'2006-12-15 00:00:00','Adult','Chen\'s High Heeled Boots','Myotis septentrionalis','M',NULL,NULL,'A4',NULL),
+ (2,4,'2006-12-15 00:00:00','Adult','Murat\'s Hair','Glossophaga soricina','F',NULL,NULL,'A2',NULL),
+ (3,2,'2006-12-15 00:00:00','Juvenile','Kaushik\'s Glasses','Carollia perspicillata','F',NULL,NULL,'A3',NULL),
+ (4,3,'2006-12-15 00:00:00','Adult','Chen\'s High Heeled Boots','Myotis septentrionalis','M',NULL,NULL,'A4',NULL),
  (5,3,'2006-12-15 00:00:00','Juvenile','Wei\'s Dumpling','Eptesicus fuscus','M',NULL,NULL,'A5',NULL),
- (6,2,'2006-12-15 00:00:00','Juvenile','Flea Market','Eptesicus fuscus','M',NULL,NULL,'A6',NULL);
+ (6,3,'2006-12-15 00:00:00','Juvenile','Flea Market','Eptesicus fuscus','M',NULL,NULL,'A6',NULL);
 /*!40000 ALTER TABLE `bats` ENABLE KEYS */;
 
 
@@ -140,7 +140,13 @@ INSERT INTO `cage_in_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note`
  (38,2,2,'2006-12-18 10:14:53',2,''),
  (39,4,2,'2006-12-18 10:16:28',2,''),
  (40,5,2,'2006-12-18 10:16:28',2,''),
- (41,5,3,'2006-12-18 15:46:01',1,'');
+ (41,5,3,'2006-12-18 15:46:01',1,''),
+ (42,2,4,'2007-01-03 10:55:20',4,''),
+ (43,3,2,'2007-01-03 14:08:42',4,''),
+ (44,3,3,'2007-01-03 14:18:59',4,''),
+ (45,4,3,'2007-01-03 14:19:13',4,''),
+ (46,6,3,'2007-01-03 14:19:25',4,''),
+ (47,3,2,'2007-01-03 14:20:56',4,'');
 /*!40000 ALTER TABLE `cage_in_histories` ENABLE KEYS */;
 
 
@@ -202,7 +208,13 @@ INSERT INTO `cage_out_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note
  (33,2,5,'2006-12-18 10:14:53',2,'',35),
  (34,4,5,'2006-12-18 10:16:28',2,'',36),
  (35,5,5,'2006-12-18 10:16:28',2,'',37),
- (36,5,2,'2006-12-18 15:46:01',1,'',40);
+ (36,5,2,'2006-12-18 15:46:01',1,'',40),
+ (37,2,2,'2007-01-03 10:55:20',4,'',38),
+ (38,3,6,'2007-01-03 14:08:42',4,'',16),
+ (39,3,2,'2007-01-03 14:18:59',4,'',43),
+ (40,4,2,'2007-01-03 14:19:13',4,'',39),
+ (41,6,2,'2007-01-03 14:19:25',4,'',25),
+ (42,3,3,'2007-01-03 14:20:55',4,'',44);
 /*!40000 ALTER TABLE `cage_out_histories` ENABLE KEYS */;
 
 
@@ -262,7 +274,10 @@ CREATE TABLE `medical_care_actions` (
 /*!40000 ALTER TABLE `medical_care_actions` DISABLE KEYS */;
 INSERT INTO `medical_care_actions` (`id`,`proposed_treatment_id`,`date`,`remarks`,`user_id`) VALUES 
  (1,1,'2006-12-15 21:58:00','Robitussin',1),
- (2,4,'2006-12-15 22:03:00','Gassss',1);
+ (2,4,'2006-12-15 22:03:00','Gassss',1),
+ (3,16,'2007-01-08 14:04:00','Oh man, we missed the last treatments',4),
+ (4,27,'2007-01-08 14:16:00','Doesn\'t like the taste.',4),
+ (5,28,'2007-01-08 14:40:00','',4);
 /*!40000 ALTER TABLE `medical_care_actions` ENABLE KEYS */;
 
 
@@ -293,7 +308,7 @@ INSERT INTO `medical_problems` (`id`,`bat_id`,`date_opened`,`description`,`user_
  (3,4,'2006-12-15 00:00:00','bat sings at a high pitch destroying the glass in other bat\'s cages',2,'2006-12-19 00:00:00','High pitched singing'),
  (4,4,'2006-12-15 00:00:00','Bat heckles other bats, steals food and rushes other bats trying to capture worm',2,'2006-12-15 00:00:00','Over competitiveness'),
  (5,2,'2006-12-18 00:00:00','None',4,'2007-01-02 00:00:00','Another problem'),
- (6,2,'2007-01-02 00:00:00','new test',5,NULL,'new ');
+ (6,2,'2007-01-02 00:00:00','new test',5,'2007-01-08 00:00:00','new ');
 /*!40000 ALTER TABLE `medical_problems` ENABLE KEYS */;
 
 
@@ -333,18 +348,21 @@ INSERT INTO `proposed_treatments` (`id`,`medical_problem_id`,`date_started`,`dat
 INSERT INTO `proposed_treatments` (`id`,`medical_problem_id`,`date_started`,`date_finished`,`date_closed`,`treatment`,`user_id`) VALUES 
  (14,5,'2007-01-02 00:00:00','2007-01-02 00:00:00','2007-01-02 00:00:00','I got a nother test',4),
  (15,5,'2007-01-02 00:00:00','2007-01-02 00:00:00','2007-01-02 00:00:00','I got a nother test',4),
- (16,1,'2007-01-02 00:00:00','2007-01-02 00:00:00',NULL,'Cough syrup',4),
- (17,1,'2007-01-02 00:00:00','2007-01-02 00:00:00',NULL,'Kleenex',4),
- (18,1,'2007-01-02 00:00:00','2007-01-02 00:00:00',NULL,'Extra food',4),
+ (16,1,'2007-01-02 00:00:00','2007-01-02 00:00:00','2007-01-08 00:00:00','Cough syrup',4),
+ (17,1,'2007-01-02 00:00:00','2007-01-02 00:00:00','2007-01-08 00:00:00','Kleenex',4),
+ (18,1,'2007-01-02 00:00:00','2007-01-02 00:00:00','2007-01-08 00:00:00','Extra food',4),
  (19,2,'2007-01-02 00:00:00','2007-01-02 00:00:00','2007-01-02 00:00:00','testing',4),
- (20,1,'2007-01-02 00:00:00','2007-01-02 00:00:00',NULL,'a new treatment',4),
- (21,6,'2007-01-02 00:00:00','2007-01-02 00:00:00',NULL,'test treatment',4),
- (22,6,'2007-01-02 00:00:00','2007-01-02 00:00:00',NULL,'second treatment',4),
- (23,6,'2007-01-02 00:00:00','2007-01-02 00:00:00',NULL,'third treatment',4),
- (24,2,'2007-01-02 00:00:00','2007-01-02 00:00:00',NULL,'testing again',4),
- (25,2,'2007-01-02 00:00:00','2007-01-02 00:00:00',NULL,'testing for a nother time',4);
+ (20,1,'2007-01-02 00:00:00','2007-01-02 00:00:00','2007-01-08 00:00:00','a new treatment',4),
+ (21,6,'2007-01-02 00:00:00','2007-01-02 00:00:00','2007-01-08 00:00:00','test treatment',4),
+ (22,6,'2007-01-02 00:00:00','2007-01-02 00:00:00','2007-01-08 00:00:00','second treatment',4),
+ (23,6,'2007-01-02 00:00:00','2007-01-02 00:00:00','2007-01-08 00:00:00','third treatment',4),
+ (24,2,'2007-01-02 00:00:00','2007-01-02 00:00:00','2007-01-08 00:00:00','testing again',4);
 INSERT INTO `proposed_treatments` (`id`,`medical_problem_id`,`date_started`,`date_finished`,`date_closed`,`treatment`,`user_id`) VALUES 
- (26,1,'2007-01-02 00:00:00','2007-01-02 00:00:00',NULL,'next treatmetn',4);
+ (25,2,'2007-01-02 00:00:00','2007-01-02 00:00:00','2007-01-08 00:00:00','testing for a nother time',4),
+ (26,1,'2007-01-02 00:00:00','2007-01-02 00:00:00','2007-01-08 00:00:00','next treatmetn',4),
+ (27,1,'2007-01-08 00:00:00','2007-01-08 00:00:00',NULL,'Cough syrup',4),
+ (28,2,'2007-01-08 00:00:00','2007-01-11 00:00:00',NULL,'Verbally abuse the bat',4),
+ (29,1,'2007-01-08 00:00:00','2007-01-14 00:00:00','2007-01-08 00:00:00','Amputation',4);
 /*!40000 ALTER TABLE `proposed_treatments` ENABLE KEYS */;
 
 
@@ -427,7 +445,6 @@ CREATE TABLE `tasks` (
   `proposed_treatment_id` int(10) unsigned default NULL,
   `cage_id` int(10) unsigned default NULL,
   `title` varchar(45) NOT NULL,
-  `description` varchar(20) NOT NULL,
   `notes` text NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -437,14 +454,9 @@ CREATE TABLE `tasks` (
 --
 
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
-INSERT INTO `tasks` (`id`,`last_done_date`,`repeat`,`proposed_treatment_id`,`cage_id`,`title`,`description`,`notes`) VALUES 
- (2,NULL,0,11,NULL,'Amputation','',''),
- (3,NULL,0,12,NULL,'This here is a test treatment','',''),
- (12,NULL,0,21,NULL,'test treatment','',''),
- (14,NULL,0,23,NULL,'third treatment','',''),
- (15,NULL,0,24,NULL,'testing again','',''),
- (16,NULL,0,25,NULL,'testing for a nother time','',''),
- (17,NULL,0,26,NULL,'next treatmetn','','');
+INSERT INTO `tasks` (`id`,`last_done_date`,`repeat`,`proposed_treatment_id`,`cage_id`,`title`,`notes`) VALUES 
+ (24,'2007-01-08 14:16:00',0,27,NULL,'Cough syrup',''),
+ (25,'2007-01-08 14:40:00',0,28,NULL,'Verbally abuse the bat','');
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 
 
@@ -466,10 +478,8 @@ CREATE TABLE `tasks_users` (
 /*!40000 ALTER TABLE `tasks_users` DISABLE KEYS */;
 INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES 
  (2,2),
- (2,16),
- (2,17),
- (4,3),
- (5,12);
+ (2,24),
+ (2,25);
 /*!40000 ALTER TABLE `tasks_users` ENABLE KEYS */;
 
 
@@ -559,7 +569,23 @@ INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user
  (32,2,'2006-12-19 09:35:42',4,'','',1),
  (33,2,'2006-12-19 09:35:55',35,'','',1),
  (34,2,'2006-12-19 09:35:58',15,'','',1),
- (35,2,'2006-12-19 09:36:00',14,'','',1);
+ (35,2,'2006-12-19 09:36:00',14,'','',1),
+ (36,2,'2007-01-03 10:55:20',15,'24','',4),
+ (37,4,'2007-01-03 11:01:58',14,'NA','',4),
+ (38,6,'2007-01-03 11:05:22',14,'','',4),
+ (39,6,'2007-01-03 11:05:47',15,'','',4),
+ (40,6,'2007-01-03 11:07:42',15,'','',4),
+ (41,6,'2007-01-03 11:07:51',16,'','',4),
+ (42,6,'2007-01-03 11:08:44',13,'','',4),
+ (43,2,'2007-01-03 11:09:30',19,'','',4),
+ (44,3,'2007-01-03 11:10:53',14,'','',4),
+ (45,3,'2007-01-03 11:17:57',14,'','',4),
+ (46,3,'2007-01-03 14:08:42',5,'12','',4);
+INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user_id`) VALUES 
+ (47,3,'2007-01-03 14:18:51',12,'','',4),
+ (48,3,'2007-01-03 14:18:59',13,'','',4),
+ (49,4,'2007-01-03 14:19:13',14,'','',4),
+ (50,6,'2007-01-03 14:19:19',14,'','',4);
 /*!40000 ALTER TABLE `weights` ENABLE KEYS */;
 
 

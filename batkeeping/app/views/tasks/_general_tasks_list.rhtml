@@ -8,8 +8,7 @@
 <%# can't pass local variables this way :( = render_collection_of_partials 'task_list', nil, '@general_tasks, 'manage' => true %>
 <% for task in @general_tasks %>
     
- <% div_id = "task#{task.id}" %>
- <%= render_partial 'task_list', nil, 'task' => task, 'manage' => true, 'div_id' => div_id %>
+ <%= render_partial 'task_list', nil, 'task' => task, 'manage' => true %>
 
 <% end %>
 

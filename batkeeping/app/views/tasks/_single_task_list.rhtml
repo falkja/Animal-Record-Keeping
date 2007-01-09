@@ -5,9 +5,6 @@
 <% # if true, the partial will also display edit and destroy buttons %>
 
   <tr> 
-  <%# Ok Baby, this was hard learned. A div inside a table won't work for updating %>
-  <%# give the row the id instead even this is buggy! -kg %>
-  
     <td><b><%= task.title %></b></td>
     <td>
       <% for user in task.users %>
@@ -29,12 +26,9 @@
        <%= nice_date task.last_done_date %>
     <% else %>
        <% if manage == true %>
-         [<%= link_to_remote( 'Just Done',
-        :update => "general_tasks_div",
-        :position => 'replace',
-        :url =>{ :controller => 'tasks', :action => 'done', :id => task}) %>]
+        [<%= link_to 'Just Done', :controller => 'tasks', :action => 'done', :id => task %>]
        <% else %>
-        Not Done on schedule
+        Not done on schedule
        <% end %>
     <% end %>
     </td>

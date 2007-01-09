@@ -1,0 +1,22 @@
+<table>
+  <thead>
+    <th>Title</th>
+    <th>User(s)</th>
+    <th>Frequency</th>
+    <th>Last Done</th>
+  </thead>
+ 
+ <tbody>  
+  
+<% for task in tasks %>
+  <% if task.proposed_treatment_id == nil && task.cage_id == nil %>
+    <% manage = true %>
+  <% else %>
+    <% manage = false %>
+  <% end %>
+ <%= render_partial 'tasks/single_task_list', nil, 'task' => task, 'manage' => manage,  'div_id' => "task#{task.id}" %>
+
+<% end %>
+
+ </tbody>
+</table>

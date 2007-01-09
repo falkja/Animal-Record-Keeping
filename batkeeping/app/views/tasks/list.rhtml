@@ -4,9 +4,8 @@
 No general tasks.
 <% else %>
 
-<div id="general_tasks_div">
-<%= render_partial 'general_tasks_list' %>
-</div>
+<%= render_partial 'tasks_list' , nil, 'tasks' => @general_tasks %>
+
 <% end %>
 <p><%= link_to 'New General Task', :controller => 'tasks', :action => 'new' %></p>
 </blockquote>
@@ -17,18 +16,8 @@ No general tasks.
 No cage weighing tasks.
 <% else %>
 
-<table>
+<%= render_partial 'tasks_list' , nil, 'tasks' => @cage_tasks %>
 
-    <th>Title</th>
-    <th>User(s)</th>
-    <th>Frequency</th>
-    <th>Last Done</th>
-  
-<% for task in @cage_tasks %>
- <%= render_partial 'task_list', nil, 'task' => task, 'manage' => false %>
-<% end %>
-
-</table>
 <p>[Cage weighing tasks are managed from the <%= link_to 'cage pages', :controller => 'cages', :action => 'list' %>]</p>
 <% end %>
 </blockquote>
@@ -38,18 +27,8 @@ No cage weighing tasks.
 No medical tasks.
 <% else %>
 
-<table>
+<%= render_partial 'tasks_list' , nil, 'tasks' => @medical_tasks %>
 
-    <th>Title</th>
-    <th>User(s)</th>
-    <th>Frequency</th>
-    <th>Last Done</th>
-  
-<% for task in @medical_tasks %>
- <%= render_partial 'task_list', nil, 'task' => task, 'manage' => false %>
-<% end %>
-
-</table>
 <p>[Medical tasks are managed from the <%= link_to 'medical page', :controller => 'medical_problems', :action => 'list_current' %>]</p>
 <% end %>
 </blockquote>

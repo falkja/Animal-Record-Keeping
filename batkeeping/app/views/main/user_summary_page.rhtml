@@ -45,16 +45,7 @@ You are responsible for no medical problems.
 <% if @mytasks == 0 %>
   You have no tasks.
 <% else %>
-<table>
-    <th>Title</th>
-    <th>User(s)</th>
-    <th>Frequency</th>
-    <th>Last Done</th>
-<%# can't pass local variables this way :( = render_collection_of_partials 'task_list', nil, '@general_tasks, 'manage' => true %>
-<% for task in @mytasks %>
- <%= render_partial 'tasks/task_list', nil, 'task' => task, 'manage' => true %>
-<% end %>
-</table>
+<%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @mytasks %>
 <% end %>
 </blockquote>
 </p>

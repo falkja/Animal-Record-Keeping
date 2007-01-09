@@ -82,8 +82,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @task.last_done_date = Time.now
     @task.save
-    @general_tasks = Task.general_tasks
-    render_partial 'general_tasks_list', nil, 'task' => @task, 'manage' => true, 'div_id' => "task#{@task.id}" #clicking done means this is a managable task
+    redirect_to :back
   end
   
   def destroy

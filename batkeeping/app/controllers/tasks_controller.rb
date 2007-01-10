@@ -71,8 +71,9 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
     if @task.update_attributes(params[:task])
+      @task.users = User.find(params[:users][:id])
       flash[:notice] = 'Task was successfully updated.'
-      redirect_to :action => 'show', :id => @task
+      redirect_to :action => 'list'
     else
       render :action => 'edit'
     end

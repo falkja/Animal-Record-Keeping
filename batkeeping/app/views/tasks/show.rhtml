@@ -1,8 +1,41 @@
-<% for column in Task.content_columns %>
+<h1>Showing Task</h1>
+
 <p>
-  <b><%= column.human_name %>:</b> <%=h @task.send(column.name) %>
+  <b>Title:</b>
+    <% if @task.proposed_treatment_id == nil && @task.cage_id == nil %>
+      <%=h @task.title%>
+    <% else %>
+    <%= @task.proposed_treatment_id ? (link_to @task.title, :controller => 'proposed_treatments', :action => 'show', :id => @task.proposed_treatment_id) : '' %>
+    <%= @task.cage_id ? (link_to @task.title, :controller => 'cages', :action => 'show', :id => @task.cage_id) : '' %>
+    <% end %>
 </p>
-<% end %>
+
+<p>
+  <b>Who:</b>
+    <% for user in @task.users %>
+      <%=h user.name %>, 
+    <% end %>
+</p>
+
+<p>
+  <b>When:</b>
+      <%= @task.repeat == 0 ? "Daily" : '' %>
+      <%= @task.repeat == 1 ? "Every Sunday" : '' %>
+      <%= @task.repeat == 2 ? "Every Monday" : '' %>
+      <%= @task.repeat == 3 ? "Every Tuesday" : '' %>
+      <%= @task.repeat == 4 ? "Every Wednesday" : '' %>
+      <%= @task.repeat == 5 ? "Every Thursday" : '' %>
+      <%= @task.repeat == 6 ? "Every Friday" : '' %>
+      <%= @task.repeat == 7 ? "Every Saturday" : '' %>
+</p>
+
+<p>
+  <b>Notes:</b> <%=h @task.notes %>
+</p>
+
+<p>
+  <b>Last Done:</b> <%=h nice_date @task.last_done_date %>
+</p>
 
 <%= link_to 'Edit', :action => 'edit', :id => @task %> |
-<%= link_to 'Back', :action => 'list' %>
+<%= link_to 'List Tasks', :action => 'list' %>

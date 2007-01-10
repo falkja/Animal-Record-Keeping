@@ -90,7 +90,7 @@ class CagesController < ApplicationController
 
     if @cage.save
       flash[:notice] = 'Cage was successfully created.'
-      redirect_to :action => 'list'
+      redirect_to :controller => 'tasks', :action => 'new_weigh_cage_task', :id => @cage
     else
       render :action => 'new'
     end
@@ -106,17 +106,13 @@ class CagesController < ApplicationController
     #we don't want the name change propagated on an edit so we remove that from the hash
     params[:cage].delete "name"
     
-    if params[:cage]['user_id'] == ''
-        params[:cage]['fed_by'] = "Animal Care"
-    end
-    
     if @cage.update_attributes(params[:cage])
       flash[:notice] = 'Cage was successfully updated.'
       if params[:redirectme] == 'list'
-	    redirect_to :action => 'list'
-	  else
+        redirect_to :action => 'list'
+      else
         redirect_to :action => 'show', :id => @cage
-	  end
+      end
     else
       render :action => 'edit'
     end

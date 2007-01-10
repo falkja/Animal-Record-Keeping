@@ -31,10 +31,10 @@
        <% end %>
     <% end %>
     </td>
-    <td><%= link_to 'Show', :action => 'show', :id => task %></td>
+    <td><%= link_to 'Show', :controller => 'tasks', :action => 'show', :id => task %></td>
     <% if manage == true %>
-    <td><%= link_to 'Edit', :action => 'edit', :id => task %></td>
-    <td><%= link_to 'Destroy', { :action => 'destroy', :id => task }, :confirm => 'Are you sure?', :post => true %></td>
+    <td><%= link_to 'Edit',  :controller => 'tasks', :action => 'edit', :id => task %></td>
+    <td><%= link_to 'Destroy', { :controller => 'tasks', :action => 'destroy', :id => task }, :confirm => 'Are you sure?', :post => true %></td>
     <% end %>
  </tr>
     

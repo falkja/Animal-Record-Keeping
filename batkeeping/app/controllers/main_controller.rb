@@ -32,7 +32,9 @@ class MainController < ApplicationController
       user = User.find(session[:person].id)
       @mycages = user.cages
       @mymedicalproblems = user.medical_problems.current
-      @mytasks = user.tasks
+      @my_general_tasks = user.tasks.general_tasks
+      @my_cage_tasks = user.tasks.cage_tasks
+      @my_medical_tasks = user.tasks.medical_tasks
     else
       redirect_to :action => 'index'
     end

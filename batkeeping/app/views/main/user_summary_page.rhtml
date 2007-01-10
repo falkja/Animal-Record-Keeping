@@ -14,6 +14,17 @@
 
 
 <p>
+<h3>My Cage Weighing Tasks</h3>
+<blockquote>
+<% if @my_cage_tasks.length == 0 %>
+  You have no cage weighing tasks.
+<% else %>
+<%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @my_cage_tasks %>
+<% end %>
+</blockquote>
+</p>
+
+<p>
 <h3>Current Medical Problems For Which You Are Responsible</h3>
 <blockquote>
 <% if @mymedicalproblems.length == 0 %>
@@ -40,12 +51,24 @@ You are responsible for no medical problems.
 </p>
 
 <p>
-<h3>My Tasks</h3>
+<h3>My Medical Tasks</h3>
 <blockquote>
-<% if @mytasks == 0 %>
-  You have no tasks.
+<% if @my_medical_tasks.length == 0 %>
+  You have no medical tasks.
 <% else %>
-<%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @mytasks %>
+<%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @my_medical_tasks %>
 <% end %>
 </blockquote>
 </p>
+
+<p>
+<h3>My General Tasks</h3>
+<blockquote>
+<% if @my_general_tasks.length == 0 %>
+  You have no general tasks.
+<% else %>
+<%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @my_general_tasks %>
+<% end %>
+</blockquote>
+</p>
+

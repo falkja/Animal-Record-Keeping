@@ -12,6 +12,7 @@ class MainController < ApplicationController
   
   def login
       session[:person] = User.find(params[:user][:id])
+      flash[:notice] = "Welcome " + User.find(session[:person].id).name
       redirect_to :action => 'user_summary_page'
   end
   

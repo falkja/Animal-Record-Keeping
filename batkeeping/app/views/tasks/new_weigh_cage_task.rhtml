@@ -1,5 +1,7 @@
 <h1>Add a weighing task for <%= @cage.name %></h1>
 
+<p><b>Cage owner:</b> <%=h @cage.user.name %></p>
+
 <%= start_form_tag :controller => 'tasks', :action => 'create_weigh_cage_task', :id => @cage %>
 
 <table>

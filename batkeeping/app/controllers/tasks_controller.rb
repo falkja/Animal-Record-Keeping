@@ -88,6 +88,6 @@ class TasksController < ApplicationController
   
   def destroy
     Task.find(params[:id]).destroy
-    redirect_to :action => 'list'
+    redirect_to :back
   end
 end

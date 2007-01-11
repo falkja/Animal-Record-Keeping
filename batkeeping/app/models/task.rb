@@ -37,27 +37,19 @@ class Task < ActiveRecord::Base
         end
     else #a particular day of the week
       offset = today_weekday - repeat_weekday
-      jitter1 = 4 
-      jitter2 = jitter1 - 7
-      if offset > jitter1
-         offset = offset - 7
-      else
-        if offset <= jitter2
-          offset = offset + 7
-        end        
+      jitter = -1
+      if offset < 0
+         offset = offset + 7
       end
       
       repeat_day = today - offset
-      post1 = repeat_day + jitter1
-      post2 = repeat_day + jitter2 + 1
+      post = repeat_day + jitter
       
-      if  (last_done_day >= post2) && (last_done_day <= post1)
+      if  (last_done_day >= post)
           return true
         else
           return false
         end
-      end    
+      end
   end
-  
-  
 end

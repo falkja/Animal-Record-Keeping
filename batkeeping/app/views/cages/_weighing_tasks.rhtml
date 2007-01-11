@@ -1,4 +1,4 @@
-<b>Weighing tasks</b>
+<b>Current Weighing Tasks for <%=h @cage.name %></b>
 <blockquote>
 <% if @tasks.length == 0 %>
 No weighing tasks.
@@ -25,12 +25,13 @@ No weighing tasks.
       <%= task.repeat == 7 ? "Every Saturday" : '' %>
     </td>
     <td>
-    <% if task.last_done_date %> 
-       <%=nice_date task.last_done_date %>
+    <% if task.done_by_schedule %> 
+       <%= nice_date task.last_done_date %>
     <% else %>
-         [Just Done] (will be a link later)
-    <% end %>   
+        Not done on schedule
+    <% end %> 
     </td>
+    <td><%= link_to 'Weigh Cage', :controller => 'cages', :action => 'weigh_cage', :id => @cage %></td>
     <td><%= link_to 'Show', :controller => 'tasks', :action => 'show', :id => task %></td>
     <td><%= link_to 'Edit', :controller => 'tasks', :action => 'edit', :id => task %></td>
     <td><%= link_to 'Destroy', {:controller => 'tasks', :action => 'destroy', :id => task }, :confirm => 'Are you sure?', :post => true %></td>

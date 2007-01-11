@@ -14,7 +14,7 @@
   <% else %>
     <% manage = false %>
   <% end %>
- <%= render_partial 'tasks/single_task_list', nil, 'task' => task, 'manage' => manage,  'div_id' => "task#{task.id}" %>
+ <%= render_partial 'tasks/single_task_list', nil, 'task' => task, 'manage' => manage %>
 
 <% end %>
 

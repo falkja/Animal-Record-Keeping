@@ -31,7 +31,7 @@ class MainController < ApplicationController
   def user_summary_page
     if session[:person] != nil
       user = User.find(session[:person].id)
-      @mycages = user.cages
+      @mycages = user.cages.active
       @mymedicalproblems = user.medical_problems.current
       @my_general_tasks = user.tasks.general_tasks
       @my_cage_tasks = user.tasks.cage_tasks

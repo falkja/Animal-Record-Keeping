@@ -28,5 +28,9 @@ options_for_select([
 </tr>
 </table>
 
-   <%= submit_tag 'Add weighing task' %>
+<% @tasks = @cage.tasks %>
+<%= render_partial 'cages/weighing_tasks' %>
+
+<%= submit_tag 'Add weighing task' %>
 <%= end_form_tag %>
+<%= button_to 'Cancel', :controller => 'cages', :action => 'show', :id => @cage %></td>

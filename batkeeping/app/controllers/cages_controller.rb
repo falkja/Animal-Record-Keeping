@@ -105,8 +105,13 @@ class CagesController < ApplicationController
     @cage = Cage.find(params[:id])
     #we don't want the name change propagated on an edit so we remove that from the hash
     params[:cage].delete "name"
-    
+    @deactivating = params[:deactivating]
     if @cage.update_attributes(params[:cage])
+      if @deactivating
+        for task in @cage.tasks
+          task.destroy
+        end
+      end
       flash[:notice] = 'Cage was successfully updated.'
       if params[:redirectme] == 'list'
         redirect_to :action => 'list'
@@ -137,7 +142,7 @@ class CagesController < ApplicationController
 	@cage = Cage.find(params[:id])
 	@cage.date_destroyed = nil
 	@cage.save
-	redirect_to :action => 'list'
+	redirect_to :controller => 'tasks', :action => 'new_weigh_cage_task', :id => @cage
   end
 
   def choose_cage_to_weigh

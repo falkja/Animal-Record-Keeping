@@ -16,6 +16,17 @@
 <b>Bats: </b><%= @cage.bats.count %>
 </p>
 
+<% if @cage.bats.length > 0 %>
+<p>
+<% combined_weights = 0.0 %>
+<% for bat in @cage.bats %>
+  <% combined_weights = combined_weights + bat.weights.recent[0].weight %>
+<% end %>
+<% average = combined_weights/@cage.bats.count %>
+<b>Average weight: </b><%= (("%.0" + 1.to_s + "f") % average).to_f %> g
+</p>
+<% end %>
+
 <p>
 <b>Food: </b><%= @cage.food %> grams in <%= @cage.dish_num %> <%= @cage.dish_type %>
 </p>

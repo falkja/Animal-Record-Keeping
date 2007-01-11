@@ -59,6 +59,9 @@
 
 
 <%= render_partial 'weighing_tasks' %>
+<blockquote>
+<p>[<%= link_to 'Add weighing task', :controller => 'tasks', :action => 'new_weigh_cage_task', :id => @cage %>]</p>
+</blockquote>
 
 <p>
 <% if @cage.bats.active.length == 0 %>

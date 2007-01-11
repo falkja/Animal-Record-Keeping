@@ -48,7 +48,32 @@ class TasksController < ApplicationController
         @task.users = @users
     end    
     
-    redirect_to :controller => 'cages', :action => 'show', :id => @cage 
+    @tasks = @cage.tasks
+    render_partial 'cages/weighing_tasks'
+  end
+
+  def create_feed_cage_task #called from new_weigh_cage_task page
+    @cage = Cage.find(params[:id])    
+    @users = User.find(params[:users])
+    @days = params[:days]    
+            
+    if @days.include?(0)  #only need one daily task
+        @days.clear
+        @days << 0
+    end
+    
+    for day in @days
+        @task = Task.new
+        @task.repeat = day
+        @task.cage = @cage
+        @task.title = "Feed cage " + @cage.name    
+        @task.internal_description = "feed"
+        @task.save
+        @task.users = @users
+    end    
+    
+    @tasks = @cage.tasks
+    render_partial 'cages/weighing_tasks'
   end
 
   def create

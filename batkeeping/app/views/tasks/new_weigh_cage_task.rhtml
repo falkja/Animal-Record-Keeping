@@ -1,9 +1,10 @@
-<h1>Add a weighing task for <%= @cage.name %></h1>
+<h1>Add weighing task for <%= @cage.name %></h1>
 
 <p><b>Cage owner:</b> <%=h @cage.user.name %></p>
 
-<%= start_form_tag :controller => 'tasks', :action => 'create_weigh_cage_task', :id => @cage %>
-
+<%= form_remote_tag(:update => "cage_tasks_list",
+                       :url => { :controller => 'tasks', :action => 'create_weigh_cage_task', :id => @cage },
+                       :position => "replace" ) %>
 <table>
 <tr>
 <td valign="top"><label for="weighed_by">Weighed by</label><br/>
@@ -27,10 +28,12 @@ options_for_select([
 </td>
 </tr>
 </table>
+<%= submit_tag "Add task for " + @cage.name %>
+<%= end_form_tag %>
 
+<div id="cage_tasks_list">
 <% @tasks = @cage.tasks %>
 <%= render_partial 'cages/weighing_tasks' %>
+</div>
 
-<%= submit_tag 'Add weighing task' %>
-<%= end_form_tag %>
-<%= button_to 'Cancel', :controller => 'cages', :action => 'show', :id => @cage %></td>
+<%= button_to 'Done', :controller => 'cages', :action => 'show', :id => @cage %>

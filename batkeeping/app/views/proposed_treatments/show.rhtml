@@ -1,4 +1,4 @@
-<h1><%=h @proposed_treatment.medical_problem.bat.band %>'s Medical Treatment: "<%=h @proposed_treatment.treatment %>" for <%=h @proposed_treatment.medical_problem.title %></h1>
+<h1>Medical Treatment: <%=h @proposed_treatment.treatment %> for <%=h @proposed_treatment.medical_problem.title %></h1>
 
   <p><b>Bat: </b><%= link_to @proposed_treatment.medical_problem.bat.band, :controller => 'bats', :action => 'show', :id =>  @proposed_treatment.medical_problem.bat %></p>
   <p><b>Medical Problem: </b><%= link_to @proposed_treatment.medical_problem.title, :controller => 'medical_problems', :action => 'show', :id => @proposed_treatment.medical_problem %></p>
@@ -9,30 +9,7 @@
   <p><b>Owner: </b><%=h @proposed_treatment.medical_problem.user ? @proposed_treatment.medical_problem.user.name : 'General Medical Care' %></p>
   </blockquote>
   
-  <p>
-      <p><b>Proposed Treatment: </b><%=h @proposed_treatment.treatment %><br /></p>
-      <blockquote>
-      <p><b>Treatment Start Date: </b><%=h nice_date @proposed_treatment.date_started %><br /></p>
-      <p><b>Suggested Treatment Finish Date: </b><%=h nice_date @proposed_treatment.date_finished %><br /></p>
-      <p><b>Ended Treatment: </b><%=h nice_date @proposed_treatment.date_closed %><br /></p>
-    </p>
-  <% if @proposed_treatment.medical_care_actions.length == 0 %>
-  <p><b>This treatment has not yet been given.</b></p>
-  <% else %>
-  <h4>Treatment Given:</h4>
-  <blockquote>
-  <% for medical_care_action in @proposed_treatment.medical_care_actions %>
-      <p>
-      <b>Date: </b><%= nice_date_with_time medical_care_action.date %><br/>
-      <b>Remarks: </b><%= medical_care_action.remarks %><br/>
-      <b>User: </b><%=h medical_care_action.user.name %><br/>
-      </p>
-      <hr width = "60%" align=LEFT />
-  <% end %>
-  </blockquote>
-  <% end %>
-  </blockquote>
-        </blockquote>
+  <%= render_partial 'medical_problems/show_proposed_treatment', @proposed_treatment %>
 
 <%#= link_to 'Edit', :action => 'edit', :id => @proposed_treatment %>
 <%= link_to 'List Current Medical Problems', :controller => 'medical_problems', :action => 'list_current' %>

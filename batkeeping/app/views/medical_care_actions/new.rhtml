@@ -5,4 +5,6 @@
   <%= submit_tag "Medical Treatment Done" %>
 <%= end_form_tag %>
 
+<%= render_partial 'proposed_treatments/show_all_medical_care_actions', @proposed_treatment %>
+
 <%= link_to 'List Current Medical Problems', :controller => 'medical_problems', :action => 'list_current' %>

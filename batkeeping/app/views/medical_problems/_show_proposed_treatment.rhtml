@@ -1,0 +1,11 @@
+<% proposed_treatment = show_proposed_treatment %>
+    
+    <p>
+      <b>Proposed Treatment: </b><%= link_to proposed_treatment.treatment , :controller => 'proposed_treatments', :action => 'show', :id => proposed_treatment %>
+      <blockquote>
+        <b>Treatment Start Date: </b><%=h nice_date proposed_treatment.date_started %><br />
+        <b>Suggested Treatment Finish Date: </b><%=h nice_date proposed_treatment.date_finished %><br />
+        <b>Ended Treatment: </b><%=h nice_date proposed_treatment.date_closed %><br />
+        <%= render_partial 'proposed_treatments/show_all_medical_care_actions', proposed_treatment %>
+      </blockquote>
+    </p>

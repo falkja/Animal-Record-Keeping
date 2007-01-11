@@ -1,4 +1,4 @@
-<h1>New Treatment</h1>
+<h1>Add Treatment To Medical Problem: <%=h @medical_problem.title %></h1>
 
 <%= start_form_tag :action => 'create', :id => @medical_problem %>
   <%= render :partial => 'form' %>
@@ -6,3 +6,5 @@
 <%= end_form_tag %>
 
 <%= link_to 'List Current Medical Problems', :controller => 'medical_problems', :action => 'list_current' %>
+
+<%= render_partial 'medical_problems/show_all_proposed_treatments', @medical_problem %>

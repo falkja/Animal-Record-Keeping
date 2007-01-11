@@ -1,0 +1,21 @@
+<% @medical_problem = show_all_proposed_treatments %>
+
+<% if @medical_problem.proposed_treatments.current.length == 0 %>
+  <p>No current treatments for this medical problem.</p>
+<% else %>
+  <h3>Current Treatments:</h3>
+  <blockquote>
+  <% for proposed_treatment in @medical_problem.proposed_treatments.current %>
+    <%= render_partial 'medical_problems/show_proposed_treatment', proposed_treatment %>
+  <% end %>
+<% end %>
+</blockquote>
+
+<% if @medical_problem.proposed_treatments.expired.length > 0 %>
+  <h3>Expired Treatments:</h3>
+  <blockquote>
+  <% for proposed_treatment in @medical_problem.proposed_treatments.expired %>
+    <%= render_partial 'medical_problems/show_proposed_treatment', proposed_treatment %>
+  <% end %>
+<% end %>
+</blockquote>

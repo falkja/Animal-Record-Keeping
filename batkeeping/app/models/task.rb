@@ -29,20 +29,28 @@ class Task < ActiveRecord::Base
     last_done_weekday = last_done_date.wday
     repeat_weekday = repeat - 1 #brings it in line with Time.wday convention
     
-    if repeat == 0 #daily
-        if last_done_day < today
-            return false
-        else
-            return true
-        end
+    if repeat == 0 #daily tasks
+      if last_done_day < today #we will get problems at the beginning of a new year
+          return false
+      else
+          return true
+      end
     else #a particular day of the week
-      offset = today_weekday - repeat_weekday
-      jitter = -1
-      if offset < 0
+      
+      offset = today_weekday - repeat_weekday #offset is how many days apart today is from our deadline
+      
+      if internal_description == "feed" #feeding tasks can only be done on the deadline day
+        jitter = 0
+      else #everything else can be done one day ahead of schedule
+        jitter = -1
+      end
+      
+      if offset < jitter #because we always want to look back in time, unless you are within you're jitter
          offset = offset + 7
       end
       
-      repeat_day = today - offset
+      repeat_day = today - offset #repeat day is finally set, we will get problems if we are in the first week of a new year
+      
       post = repeat_day + jitter
       
       if  (last_done_day >= post)

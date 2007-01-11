@@ -249,7 +249,9 @@ INSERT INTO `cages` (`id`,`name`,`date_created`,`date_destroyed`,`user_id`,`food
  (3,'Cage3','2006-12-15 00:00:00',NULL,1,10,'Animal Care','','Fruit Bats (4148L)','Metal tray',1),
  (4,'Cage6','2006-12-15 00:00:00',NULL,4,6,'Investigator','','Colony Room (4100)','Medium',4),
  (5,'cage7','2006-12-15 00:00:00',NULL,5,2,'Investigator','','Colony Room (4100)','Medium',1),
- (6,'Cage99','2006-12-16 00:00:00',NULL,5,4,'Investigator','','Belfry (4102F)','Small',3);
+ (6,'Cage99','2006-12-16 00:00:00',NULL,5,4,'Investigator','','Belfry (4102F)','Small',3),
+ (7,'Cage4','2007-01-10 00:00:00',NULL,5,0,'Investigator','','Belfry (4102F)','Medium',0),
+ (8,'Cage5','2007-01-10 00:00:00',NULL,1,NULL,'Animal Care','','Belfry (4102F)','Medium',NULL);
 /*!40000 ALTER TABLE `cages` ENABLE KEYS */;
 
 
@@ -446,6 +448,7 @@ CREATE TABLE `tasks` (
   `cage_id` int(10) unsigned default NULL,
   `title` varchar(45) NOT NULL,
   `notes` text NOT NULL,
+  `internal_description` varchar(45) default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -454,9 +457,12 @@ CREATE TABLE `tasks` (
 --
 
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
-INSERT INTO `tasks` (`id`,`last_done_date`,`repeat`,`proposed_treatment_id`,`cage_id`,`title`,`notes`) VALUES 
- (24,'2007-01-08 14:16:00',0,27,NULL,'Cough syrup',''),
- (25,'2007-01-08 14:40:00',0,28,NULL,'Verbally abuse the bat','');
+INSERT INTO `tasks` (`id`,`last_done_date`,`repeat`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`) VALUES 
+ (24,'2007-01-08 14:16:00',0,27,NULL,'Cough syrup','',NULL),
+ (25,'2007-01-08 14:40:00',0,28,NULL,'Verbally abuse the bat','',NULL),
+ (26,'2007-01-09 23:39:13',0,NULL,NULL,'Check the fruit bats nectar feeders','',NULL),
+ (28,'2007-01-09 23:39:07',2,NULL,NULL,'Check the light in the Belfry','',NULL),
+ (29,NULL,3,NULL,3,'Weigh cage Cage3','',NULL);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 
 
@@ -477,9 +483,12 @@ CREATE TABLE `tasks_users` (
 
 /*!40000 ALTER TABLE `tasks_users` DISABLE KEYS */;
 INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES 
+ (1,28),
+ (1,29),
  (2,2),
  (2,24),
- (2,25);
+ (2,25),
+ (5,26);
 /*!40000 ALTER TABLE `tasks_users` ENABLE KEYS */;
 
 

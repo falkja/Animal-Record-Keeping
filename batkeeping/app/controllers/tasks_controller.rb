@@ -42,7 +42,8 @@ class TasksController < ApplicationController
         @task = Task.new
         @task.repeat = day
         @task.cage = @cage
-        @task.title = "Weigh cage " + @cage.name        
+        @task.title = "Weigh cage " + @cage.name    
+        @task.internal_description = "weigh"    
         @task.save
         @task.users = @users
     end    

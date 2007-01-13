@@ -13,6 +13,8 @@ class TasksController < ApplicationController
     @weighing_tasks = Task.weighing_tasks
     @medical_tasks = Task.medical_tasks    
     @feeding_tasks = Task.feeding_tasks
+    @cages = Cage.has_bats
+    @medical_problems = MedicalProblem.current
   end
 
   def show
@@ -35,7 +37,7 @@ class TasksController < ApplicationController
   end
 
   def create_weigh_cage_task #called from new_weigh_cage_task page
-    @cage = Cage.find(params[:id])    
+    @cage = Cage.find(params[:id])
     @users = User.find(params[:users])
     @days = params[:days]    
             
@@ -61,7 +63,7 @@ class TasksController < ApplicationController
   def create_feed_cage_task #called from new_weigh_cage_task page
     @cage = Cage.find(params[:id])    
     @users = User.find(params[:users])
-    @days = params[:days]    
+    @days = params[:days]
             
     if @days.include?(0)  #only need one daily task
         @days.clear

@@ -9,6 +9,14 @@ class Cage < ActiveRecord::Base
     find :all, :conditions => 'date_destroyed is null'
   end
   
+  def self.has_bats
+    @cages = find :all, :order => "name"
+    for cage in @cages
+      @cages.delete_if{|cage| cage.bats.length == 0}
+    end
+    return @cages
+  end
+  
   def update_weighing_tasks
     most_ancient_recent_weight = Time.now
     bats_have_weights = false

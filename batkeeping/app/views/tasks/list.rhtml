@@ -5,7 +5,13 @@
   <% else %>
   <%= render_partial 'tasks_list' , nil, 'tasks' => @feeding_tasks %>
   <% end %>
-  <p>[PUT IN LINK TO ADD A FEEDING TASK - USE DROP DOWN BOX TO SELECT A CAGE]</p>
+  <p>
+  <%= start_form_tag :action => 'new_feed_cage_task' %>
+  Cage: 
+  <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
+  <%= submit_tag "Add a feeding task" %>
+  <%= end_form_tag %>
+  </p>
 </blockquote>
 
 <h1>Listing Cage Weighing Tasks</h1>
@@ -15,7 +21,13 @@
   <% else %>
   <%= render_partial 'tasks_list' , nil, 'tasks' => @weighing_tasks %>
   <% end %>
-  <p>[PUT IN LINK TO ADD A WEIGHING TASK - USE DROP DOWN BOX TO SELECT A CAGE]</p>
+  <p>
+  <%= start_form_tag :action => 'new_weigh_cage_task' %>
+  Cage: 
+  <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
+  <%= submit_tag "Add a weighing task" %>
+  <%= end_form_tag %>
+  </p>
 </blockquote>
 
 <h1>Listing Medical Tasks</h1>
@@ -25,7 +37,15 @@
   <% else %>
   <%= render_partial 'tasks_list' , nil, 'tasks' => @medical_tasks %>
   <% end %>
-  <p>[PUT IN LINK TO ADD A TREATMENT - USE DROP DOWN BOX TO SELECT A MEDICAL PROBLEM]</p>
+  <p>
+  
+  <%= start_form_tag :controller => 'proposed_treatments', :action => 'new' %>
+  Medical Problem: 
+  <%= select_tag("id", options_from_collection_for_select(@medical_problems, "id", "title")) %>
+  <%= submit_tag "Add a new treatment" %>
+  <%= end_form_tag %>
+  
+  </p>
 </blockquote>
 
 <h1>Listing General Tasks</h1>

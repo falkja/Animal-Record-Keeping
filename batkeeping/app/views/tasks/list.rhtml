@@ -1,19 +1,19 @@
-<h1>Listing General Tasks</h1>
+<h1>Listing Feeding Tasks</h1>
 <blockquote>
-  <% if @general_tasks.length == 0 %>
-  No general tasks.
+  <% if @feeding_tasks.length == 0 %>
+  No feeding tasks.
   <% else %>
-  <%= render_partial 'tasks_list' , nil, 'tasks' => @general_tasks %>
+  <%= render_partial 'tasks_list' , nil, 'tasks' => @feeding_tasks %>
   <% end %>
-  <p><%= link_to 'New General Task', :controller => 'tasks', :action => 'new' %></p>
+  <p>[PUT IN LINK TO ADD A FEEDING TASK - USE DROP DOWN BOX TO SELECT A CAGE]</p>
 </blockquote>
 
 <h1>Listing Cage Weighing Tasks</h1>
 <blockquote>
-  <% if @cage_tasks.length == 0 %>
+  <% if @weighing_tasks.length == 0 %>
   No cage weighing tasks.
   <% else %>
-  <%= render_partial 'tasks_list' , nil, 'tasks' => @cage_tasks %>
+  <%= render_partial 'tasks_list' , nil, 'tasks' => @weighing_tasks %>
   <% end %>
   <p>[PUT IN LINK TO ADD A WEIGHING TASK - USE DROP DOWN BOX TO SELECT A CAGE]</p>
 </blockquote>
@@ -26,4 +26,14 @@
   <%= render_partial 'tasks_list' , nil, 'tasks' => @medical_tasks %>
   <% end %>
   <p>[PUT IN LINK TO ADD A TREATMENT - USE DROP DOWN BOX TO SELECT A MEDICAL PROBLEM]</p>
+</blockquote>
+
+<h1>Listing General Tasks</h1>
+<blockquote>
+  <% if @general_tasks.length == 0 %>
+  No general tasks.
+  <% else %>
+  <%= render_partial 'tasks_list' , nil, 'tasks' => @general_tasks %>
+  <% end %>
+  <p><%= link_to 'New General Task', :controller => 'tasks', :action => 'new' %></p>
 </blockquote>

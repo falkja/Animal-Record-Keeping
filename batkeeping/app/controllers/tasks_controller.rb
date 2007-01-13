@@ -10,8 +10,9 @@ class TasksController < ApplicationController
 
   def list
     @general_tasks = Task.general_tasks  
-    @cage_tasks = Task.cage_tasks
+    @weighing_tasks = Task.weighing_tasks
     @medical_tasks = Task.medical_tasks    
+    @feeding_tasks = Task.feeding_tasks
   end
 
   def show
@@ -24,6 +25,11 @@ class TasksController < ApplicationController
   end
 
   def new_weigh_cage_task
+    @cage = Cage.find(params[:id])
+    @users = User.current
+  end
+
+  def new_feed_cage_task
     @cage = Cage.find(params[:id])
     @users = User.current
   end
@@ -59,7 +65,7 @@ class TasksController < ApplicationController
             
     if @days.include?(0)  #only need one daily task
         @days.clear
-        @days << 0
+        @days = [1 => 1,2 => 2,3 => 3,4 => 4,5 => 5,6 => 6,7 => 7]
     end
     
     for day in @days

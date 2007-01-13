@@ -7,12 +7,16 @@ class Task < ActiveRecord::Base
     find :all, :conditions => 'cage_id is null and proposed_treatment_id is null'
   end
   
-  def self.cage_tasks #weighing
-    find :all, :conditions => 'cage_id is not null'
+  def self.weighing_tasks #weighing
+    find :all, :conditions => 'internal_description = "weigh"'
   end
   
   def self.medical_tasks
     find :all, :conditions => 'proposed_treatment_id is not null'    
+  end
+
+  def self.feeding_tasks #feeding
+    find :all, :conditions => 'internal_description = "feed"'
   end
 
   #returns true or false depending if the last_done_date and current date indicate

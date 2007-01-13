@@ -12,14 +12,24 @@
 <h3>You have no cages</h3>
 <% end %>
 
+<p>
+<h3>My Feeding Tasks</h3>
+<blockquote>
+<% if @my_feeding_tasks.length == 0 %>
+  You have no cage feeding tasks.
+<% else %>
+<%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @my_feeding_tasks %>
+<% end %>
+</blockquote>
+</p>
 
 <p>
-<h3>My Cage Weighing Tasks</h3>
+<h3>My Weighing Tasks</h3>
 <blockquote>
-<% if @my_cage_tasks.length == 0 %>
+<% if @my_weighing_tasks.length == 0 %>
   You have no cage weighing tasks.
 <% else %>
-<%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @my_cage_tasks %>
+<%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @my_weighing_tasks %>
 <% end %>
 </blockquote>
 </p>

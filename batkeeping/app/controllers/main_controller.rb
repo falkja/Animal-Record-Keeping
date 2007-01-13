@@ -34,8 +34,9 @@ class MainController < ApplicationController
       @mycages = user.cages.active
       @mymedicalproblems = user.medical_problems.current
       @my_general_tasks = user.tasks.general_tasks
-      @my_cage_tasks = user.tasks.cage_tasks
+      @my_weighing_tasks = user.tasks.weighing_tasks
       @my_medical_tasks = user.tasks.medical_tasks
+      @my_feeding_tasks = user.tasks.feeding_tasks
     else
       redirect_to :action => 'index'
     end

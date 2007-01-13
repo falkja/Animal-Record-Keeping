@@ -1,0 +1,49 @@
+<h1>Add feeding task for <%= @cage.name %></h1>
+
+<p><b>Cage owner:</b> <%=h @cage.user.name %></p>
+
+<%= form_remote_tag(:update => "cage_tasks_list",
+                       :url => { :controller => 'tasks', :action => 'create_feed_cage_task', :id => @cage },
+                       :position => "replace" ) %>
+<table>
+<tr>
+
+<td valign="top"><label for="fed_by">Fed by</label><br/>
+<%= select_tag("users[]", options_from_collection_for_select(@users, "id", "name"), 
+:multiple => true) %>
+</td>
+
+<td valign="top">
+<label for="on_days">on days</label><br/>
+<%= select_tag("days[]", 
+options_for_select([
+["Daily", 0],
+["Every Monday", 2],
+["Every Tuesday", 3],
+["Every Wednesday", 4],
+["Every Thursday", 5],
+["Every Friday", 6],
+["Every Saturday", 7],
+["Every Sunday", 1]
+]), 
+:multiple => true) %>
+</td>
+
+</tr>
+<label for="food_amount">Food Amount</label><br/>
+<tr>
+<td>
+
+</td>
+</tr>
+
+</table>
+<%= submit_tag "Add task for " + @cage.name %>
+<%= end_form_tag %>
+
+<div id="cage_tasks_list">
+<% @tasks = @cage.tasks %>
+<%= render_partial 'cages/feeding_tasks' %>
+</div>
+
+<%= button_to 'Done', :controller => 'cages', :action => 'show', :id => @cage %>

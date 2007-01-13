@@ -1,41 +1,21 @@
-<h1>Summary page for <%= session[:person].name %></h1>
+<h1>Summary page for <%= @user.name %></h1>
 
-<% if @mycages.length > 0 %> 
-<h3>Your cages</h3>
+<h2>Cages</h2>
+<p>
 <blockquote>
+<% if @mycages.length == 0 %> 
+<h3>You have no cages</h3>
+<% else %>
 <div id= "my_cages">
 <% @div_id = "my_cages" %>
 <%= render_partial 'cages/cage_list', @mycages %>
 </div>
-</blockquote>
-<% else %>
-<h3>You have no cages</h3>
-<% end %>
-
-<p>
-<h3>My Feeding Tasks</h3>
-<blockquote>
-<% if @my_feeding_tasks.length == 0 %>
-  You have no cage feeding tasks.
-<% else %>
-<%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @my_feeding_tasks %>
 <% end %>
 </blockquote>
 </p>
 
+<h2>Current Medical Problems</h2>
 <p>
-<h3>My Weighing Tasks</h3>
-<blockquote>
-<% if @my_weighing_tasks.length == 0 %>
-  You have no cage weighing tasks.
-<% else %>
-<%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @my_weighing_tasks %>
-<% end %>
-</blockquote>
-</p>
-
-<p>
-<h3>Current Medical Problems For Which You Are Responsible</h3>
 <blockquote>
 <% if @mymedicalproblems.length == 0 %>
 You are responsible for no medical problems.
@@ -60,8 +40,32 @@ You are responsible for no medical problems.
 </blockquote>
 </p>
 
+<h2>Tasks</h2>
+<blockquote>
+
+<h3>Feeding Tasks</h3>
 <p>
-<h3>My Medical Tasks</h3>
+<blockquote>
+<% if @my_feeding_tasks.length == 0 %>
+  You have no cage feeding tasks.
+<% else %>
+<%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @my_feeding_tasks %>
+<% end %>
+</blockquote>
+</p>
+
+<h3>Weighing Tasks</h3>
+<p>
+<blockquote>
+<% if @my_weighing_tasks.length == 0 %>
+  You have no cage weighing tasks.
+<% else %>
+<%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @my_weighing_tasks %>
+<% end %>
+</blockquote>
+</p>
+<h3>Medical Tasks</h3>
+<p>
 <blockquote>
 <% if @my_medical_tasks.length == 0 %>
   You have no medical tasks.
@@ -71,8 +75,8 @@ You are responsible for no medical problems.
 </blockquote>
 </p>
 
+<h3>General Tasks</h3>
 <p>
-<h3>My General Tasks</h3>
 <blockquote>
 <% if @my_general_tasks.length == 0 %>
   You have no general tasks.
@@ -81,4 +85,3 @@ You are responsible for no medical problems.
 <% end %>
 </blockquote>
 </p>
-

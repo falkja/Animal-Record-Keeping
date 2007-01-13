@@ -13,7 +13,7 @@ class MainController < ApplicationController
   def login
       session[:person] = User.find(params[:user][:id])
       flash[:notice] = "Welcome " + User.find(session[:person].id).name
-      redirect_to :action => 'user_summary_page'
+      redirect_to :action => 'user_summary_page', :id => params[:user][:id]
   end
   
   def logout
@@ -30,13 +30,13 @@ class MainController < ApplicationController
   #lists things of relevance to only the user
   def user_summary_page
     if session[:person] != nil
-      user = User.find(session[:person].id)
-      @mycages = user.cages.active
-      @mymedicalproblems = user.medical_problems.current
-      @my_general_tasks = user.tasks.general_tasks
-      @my_weighing_tasks = user.tasks.weighing_tasks
-      @my_medical_tasks = user.tasks.medical_tasks
-      @my_feeding_tasks = user.tasks.feeding_tasks
+      @user = User.find(params[:id])
+      @mycages = @user.cages.active
+      @mymedicalproblems = @user.medical_problems.current
+      @my_general_tasks = @user.tasks.general_tasks
+      @my_weighing_tasks = @user.tasks.weighing_tasks
+      @my_medical_tasks = @user.tasks.medical_tasks
+      @my_feeding_tasks = @user.tasks.feeding_tasks
     else
       redirect_to :action => 'index'
     end

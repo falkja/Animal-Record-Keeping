@@ -30,8 +30,11 @@ class Cage < ActiveRecord::Base
     end
     if bats_have_weights
       for task in self.tasks
-        task.last_done_date = most_ancient_recent_weight
-        task.save
+        post = task.find_post
+        if (Date.today.yday > post && Date.today.yday < post + 2) #problems at the beginning of a new year
+          task.last_done_date = most_ancient_recent_weight
+          task.save
+        end
       end
     end
   end

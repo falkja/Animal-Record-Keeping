@@ -23,15 +23,18 @@ class Task < ActiveRecord::Base
   #if the task was completed on schedule
   #Note this is modulo week. So if we skip a week we won't know
   def done_by_schedule
-    #if the task has never been completed
-    if last_done_date == nil
+    if last_done_date == nil #if the task has never been completed
       return false
     end
+    
     today = Time.now.yday
-    today_weekday = Time.now.wday
     last_done_day = last_done_date.yday
-    last_done_weekday = last_done_date.wday
-    repeat_weekday = repeat - 1 #brings it in line with Time.wday convention
+    
+    year_done = last_done_date.year
+    while year_done < Date.today.year
+      last_done_day = last_done_day - 365
+      year_done = year_done + 1
+    end
     
     if repeat == 0 #daily tasks
       if last_done_day < today #we will get problems at the beginning of a new year
@@ -40,6 +43,29 @@ class Task < ActiveRecord::Base
           return true
       end
     else #a particular day of the week
+      post = self.find_post
+      
+      if  (last_done_day >= post)
+          return true
+        else
+          return false
+        end
+      end
+      
+    end
+    
+    def find_post
+      today = Time.now.yday
+      today_weekday = Time.now.wday
+      last_done_day = last_done_date.yday
+      last_done_weekday = last_done_date.wday
+      repeat_weekday = repeat - 1 #brings it in line with Time.wday convention
+      
+      done_year = last_done_date.year
+      while done_year < Date.today.year
+        last_done_day = last_done_day - 365
+        done_year = done_year + 1
+      end
       
       offset = today_weekday - repeat_weekday #offset is how many days apart today is from our deadline
       
@@ -57,11 +83,6 @@ class Task < ActiveRecord::Base
       
       post = repeat_day + jitter
       
-      if  (last_done_day >= post)
-          return true
-        else
-          return false
-        end
-      end
-  end
+      return post
+    end
 end

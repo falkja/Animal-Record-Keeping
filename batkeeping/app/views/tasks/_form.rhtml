@@ -13,8 +13,8 @@
 <p><label for="task_user">User(s) assigned</label><br/>
 <%= select_tag("users[id][]", options_from_collection_for_select(@users, "id", "name", @user_ids), :multiple => true) %></p>
 
-<p><label for="task_repeat">Task Repeating</label><br/>
-<%= select_tag("task[repeat]", options_for_select([["Daily","0"],["Every Monday","2"],["Every Tuesday","3"],["Every Wednesday","4"],["Every Thursday","5"],["Every Friday","6"],["Every Saturday","7"],["Every Sunday","1"]], @task.repeat.to_s)) %>
+<p><label for="task_repeat_code">Task Repeating</label><br/>
+<%= select_tag("task[repeat_code]", options_for_select([["Daily","0"],["Every Monday","2"],["Every Tuesday","3"],["Every Wednesday","4"],["Every Thursday","5"],["Every Friday","6"],["Every Saturday","7"],["Every Sunday","1"]], @task.repeat_code.to_s)) %>
 
 <p><label for="task_notes">Notes</label><br/>
 <%= text_area 'task', 'notes', :rows => 3 %></p>

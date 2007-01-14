@@ -1,0 +1,4 @@
+[<%= link_to_remote 'expand', 
+          :update => 'rooms',
+          :url => {:controller => 'main', :action => 'room_summary'} %>]
+Total bats in <%= link_to 'colony', :controller => 'bats', :action => 'list' %> : <%= Bat.active.length %> 

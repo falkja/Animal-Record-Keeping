@@ -17,6 +17,18 @@ class Cage < ActiveRecord::Base
     return @cages
   end
   
+  def self.active_colony_cages
+    find :all, :conditions => 'date_destroyed is null and room = "Colony Room (4100)"', :order => 'name'
+  end
+  
+  def self.active_belfry_cages
+      find :all, :conditions => 'date_destroyed is null and room = "Belfry (4102F)"', :order => 'name'
+  end
+  
+  def self.active_fruitbat_cages
+      find :all, :conditions => 'date_destroyed is null and room = "Fruit Bats (4148L)"', :order => 'name'
+  end
+  
   def food_today
     food = 0
     self.tasks.feeding_tasks_today.each {|task| task.food ? food = food + task.food : food }

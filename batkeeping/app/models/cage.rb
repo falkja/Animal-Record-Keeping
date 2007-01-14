@@ -17,6 +17,13 @@ class Cage < ActiveRecord::Base
     return @cages
   end
   
+  def self.food_today
+    food = 0 ;  
+    self.tasks.feeding_tasks_today.each {|task| food = food + task.food}
+    return food
+  end
+  
+  
   def update_weighing_tasks
     most_ancient_recent_weight = Time.now
     bats_have_weights = false

@@ -3,7 +3,7 @@ class Cage < ActiveRecord::Base
 	has_many :bats, :order => 'band'
 	has_many :cage_in_histories, :order => "date desc"
 	has_many :cage_out_histories, :order => "date desc"
-    has_many :tasks, :order => "tasks.repeat"
+    has_many :tasks, :order => "repeat_code"
   
   def self.active
     find :all, :conditions => 'date_destroyed is null'
@@ -17,8 +17,8 @@ class Cage < ActiveRecord::Base
     return @cages
   end
   
-  def self.food_today
-    food = 0 ;  
+  def food_today
+    food = 0
     self.tasks.feeding_tasks_today.each {|task| food = food + task.food}
     return food
   end

@@ -15,14 +15,14 @@ No weighing tasks.
       <% end %>
     </td>
     <td>
-      <%= task.repeat == 0 ? "Daily" : '' %>
-      <%= task.repeat == 1 ? "Every Sunday" : '' %>
-      <%= task.repeat == 2 ? "Every Monday" : '' %>
-      <%= task.repeat == 3 ? "Every Tuesday" : '' %>
-      <%= task.repeat == 4 ? "Every Wednesday" : '' %>
-      <%= task.repeat == 5 ? "Every Thursday" : '' %>
-      <%= task.repeat == 6 ? "Every Friday" : '' %>
-      <%= task.repeat == 7 ? "Every Saturday" : '' %>
+      <%= task.repeat_code == 0 ? "Daily" : '' %>
+      <%= task.repeat_code == 1 ? "Every Sunday" : '' %>
+      <%= task.repeat_code == 2 ? "Every Monday" : '' %>
+      <%= task.repeat_code == 3 ? "Every Tuesday" : '' %>
+      <%= task.repeat_code == 4 ? "Every Wednesday" : '' %>
+      <%= task.repeat_code == 5 ? "Every Thursday" : '' %>
+      <%= task.repeat_code == 6 ? "Every Friday" : '' %>
+      <%= task.repeat_code == 7 ? "Every Saturday" : '' %>
     </td>
     <td>
     <% if task.done_by_schedule %> 

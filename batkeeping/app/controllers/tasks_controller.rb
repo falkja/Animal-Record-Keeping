@@ -43,7 +43,7 @@ class TasksController < ApplicationController
     
     for day in @days
         @task = Task.new
-        @task.repeat = day
+        @task.repeat_code = day
         @task.cage = @cage
         @task.title = "Weigh cage " + @cage.name    
         @task.internal_description = "weigh"    
@@ -72,7 +72,7 @@ class TasksController < ApplicationController
     
     for day in @days
         @task = Task.new
-        @task.repeat = day
+        @task.repeat_code = day
         @task.cage = @cage
         @task.title = "Feed cage " + @cage.name    
         @task.internal_description = "feed"

@@ -3,7 +3,9 @@
           :url => {:controller => 'main', :action => 'food_summary'} %>]
 Food needed 
 <blockquote>
+<p>
 today = <%= @colony_food_today %>g <br>
 per week = <%= @colony_food_this_week %>g <br>
 per year (projected) = <%= @colony_food_this_week * 52 %>g <br>
+</p>
 </blockquote>

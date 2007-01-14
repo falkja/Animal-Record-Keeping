@@ -3,8 +3,14 @@
 [<%= link_to_remote '-', 
           :update => 'food',
           :url => {:controller => 'main', :action => 'hide_food_summary'} %>]
-
+Food needed 
 <blockquote>
+<p>
+today = <%= @colony_food_today %>g <br>
+per week = <%= @colony_food_this_week %>g <br>
+per year (projected) = <%= @colony_food_this_week * 52 %>g <br>
+</p>
+
 <div  style='background-color:#eeeeee'>
 <table>
 <th>Cage</th>

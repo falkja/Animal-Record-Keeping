@@ -19,7 +19,7 @@ class Cage < ActiveRecord::Base
   
   def food_today
     food = 0
-    self.tasks.feeding_tasks_today.each {|task| food = food + task.food}
+    self.tasks.feeding_tasks_today.each {|task| task.food ? food = food + task.food : food }
     return food
   end
   

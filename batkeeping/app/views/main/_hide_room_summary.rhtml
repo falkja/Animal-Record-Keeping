@@ -1,4 +1,4 @@
-[<%= link_to_remote 'expand', 
+[<%= link_to_remote '+', 
           :update => 'rooms',
           :url => {:controller => 'main', :action => 'room_summary'} %>]
 Bats in colony: <%= link_to Bat.active.length, :controller => 'bats', :action => 'list' %>

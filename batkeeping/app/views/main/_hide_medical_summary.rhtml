@@ -1,4 +1,4 @@
-[<%= link_to_remote 'expand', 
+[<%= link_to_remote '+', 
           :update => 'medical',
           :url => {:controller => 'main', :action => 'medical_summary'} %>]
 Bats in medical care: <%= link_to Bat.sick.length, :controller => 'medical_problems', :action => 'list_current' %>

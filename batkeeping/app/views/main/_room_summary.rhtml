@@ -1,9 +1,9 @@
 <!-- This partial summarizes the state of each room -->
 
-[<%= link_to_remote 'hide', 
+[<%= link_to_remote '-', 
           :update => 'rooms',
           :url => {:controller => 'main', :action => 'hide_room_summary'} %>]
-Total bats in <%= link_to 'colony', :controller => 'bats', :action => 'list' %> : <%= Bat.active.length %>
+Bats in colony: <%= link_to Bat.active.length, :controller => 'bats', :action => 'list' %>
 
 <blockquote>
 <div  style='background-color:#eeeeee'>

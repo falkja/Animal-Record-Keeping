@@ -1,0 +1,39 @@
+<!-- This partial details the food consumption -->
+
+[<%= link_to_remote 'hide', 
+          :update => 'food',
+          :url => {:controller => 'main', :action => 'hide_food_summary'} %>]
+
+<blockquote>
+<div  style='background-color:#eeeeee'>
+<table>
+<th>Cage</th>
+<th>Bats</th>
+<th>Food today</th>
+<th>Food per week</th>
+<th>Food per year (projected)</th>
+
+<% for cage in @cages %>
+<tr>
+<td><%= cage.name %></td>
+<td><%= cage.bats.count %></td>
+<td><%= cage.food_today %> g</td>
+<td><%= cage.food_this_week %> g</td>
+<td><%= cage.food_this_week * 52 %> g</td>
+</tr>
+<% end %>
+
+<tr>
+<td colspan=5><hr />
+</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><%= @colony_food_today %></td>
+<td><%= @colony_food_this_week %></td>
+<td><%= @colony_food_this_week * 52 %></td>
+</tr>
+</table>
+</div>
+</blockquote>

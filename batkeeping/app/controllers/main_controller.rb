@@ -54,15 +54,22 @@ class MainController < ApplicationController
 	@fruitbat_cages = Cage.find(:all, :conditions => 'date_destroyed is null and fed_by = "Animal Care" and room = "Fruit Bats (4148L)"') 
   end
 	
-  #This page displays summary information about the whole colony
+	#This page displays summary information about the whole colony
 	def colony_page
+		compute_food_summary
+	end
+
+	def compute_food_summary
 		@cages = Cage.active
 	
 		@colony_food_today = 0
-		@cages.each {|cage| @colony_food_today = @colony_food_today + cage.food_today }        
-	
+		@colony_food_this_week = 0
+		for cage in @cages
+			@colony_food_today = @colony_food_today + cage.food_today
+			@colony_food_this_week = @colony_food_this_week + cage.food_this_week
+		end	
 	end
-
+	
 	def room_summary
 		@colony_cages = Cage.active_colony_cages
 		@colony_bats = bats_in_cages(@colony_cages)
@@ -77,6 +84,23 @@ class MainController < ApplicationController
 	
 	def hide_room_summary
 		render_partial 'hide_room_summary'
+	end
+	
+	def food_summary
+		compute_food_summary
+		render_partial 'food_summary'
+	end
+	
+	def hide_food_summary
+		@cages = Cage.active
+		
+		@colony_food_today = 0
+		@colony_food_this_week = 0
+		for cage in @cages
+			@colony_food_today = @colony_food_today + cage.food_today
+			@colony_food_this_week = @colony_food_this_week + cage.food_this_week
+		end				
+		render_partial 'hide_food_summary'
 	end
 	
 	def medical_summary

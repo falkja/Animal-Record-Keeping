@@ -39,6 +39,11 @@ class Cage < ActiveRecord::Base
     return food
   end
   
+  def food_this_week
+    food = 0
+    self.tasks.feeding_tasks.each {|task| task.food ? food = food + task.food : food }
+    return food
+  end
   
   def update_weighing_tasks
     most_ancient_recent_weight = Time.now

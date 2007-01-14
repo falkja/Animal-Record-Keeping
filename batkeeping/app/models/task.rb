@@ -28,7 +28,7 @@ class Task < ActiveRecord::Base
 		tday = Time.now.wday + 1   
 		find :all, :conditions => "(repeat_code = #{tday}) or (repeat_code = 0) and (internal_description = 'feed')" 
 	end
-
+    
   #returns true or false depending if the last_done_date and current date indicate
   #if the task was completed on schedule
   #Note this is modulo week. So if we skip a week we won't know

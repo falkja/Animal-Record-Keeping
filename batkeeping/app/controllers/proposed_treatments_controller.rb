@@ -31,7 +31,7 @@ class ProposedTreatmentsController < ApplicationController
       @task = Task.new
       @task.proposed_treatment = @proposed_treatment
       @task.last_done_date = nil
-      @task.repeat = 0
+      @task.repeat_code = 0
       @task.title = @proposed_treatment.treatment
       @task.internal_description = "medical"
       @task.save

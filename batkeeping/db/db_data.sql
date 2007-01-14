@@ -1,7 +1,7 @@
 -- MySQL Administrator dump 1.4
 --
 -- ------------------------------------------------------
--- Server version	5.0.27-community-nt
+-- Server version	5.0.17-nt
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -445,7 +445,7 @@ DROP TABLE IF EXISTS `tasks`;
 CREATE TABLE `tasks` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `last_done_date` datetime default NULL,
-  `repeat` int(10) unsigned NOT NULL,
+  `repeat_code` int(10) unsigned NOT NULL COMMENT '0 means daily 1 = sunday etc.',
   `proposed_treatment_id` int(10) unsigned default NULL,
   `cage_id` int(10) unsigned default NULL,
   `title` varchar(45) NOT NULL,
@@ -462,7 +462,7 @@ CREATE TABLE `tasks` (
 --
 
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
-INSERT INTO `tasks` (`id`,`last_done_date`,`repeat`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`) VALUES 
+INSERT INTO `tasks` (`id`,`last_done_date`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`) VALUES 
  (24,'2007-01-08 14:16:00',0,27,NULL,'Cough syrup','',NULL,NULL,NULL,NULL),
  (25,'2007-01-08 14:40:00',0,28,NULL,'Verbally abuse the bat','',NULL,NULL,NULL,NULL),
  (26,'2007-01-09 23:39:13',0,NULL,NULL,'Check the fruit bats nectar feeders','',NULL,NULL,NULL,NULL),

@@ -19,6 +19,16 @@ class Task < ActiveRecord::Base
     find :all, :conditions => 'internal_description = "feed"'
   end
 
+	def self.today
+		tday = Time.now.wday + 1   
+		find :all, :conditions => '(repeat_code = #{tday}) or (repeat_code = 0)' 
+	end
+
+	def self.feeding_tasks_today
+		tday = Time.now.wday + 1   
+		find :all, :conditions => "(repeat_code = #{tday}) or (repeat_code = 0) and (internal_description = 'feed')" 
+	end
+
   #returns true or false depending if the last_done_date and current date indicate
   #if the task was completed on schedule
   #Note this is modulo week. So if we skip a week we won't know
@@ -37,7 +47,7 @@ class Task < ActiveRecord::Base
       year_done = year_done + 1
     end
     
-    if repeat == 0 #daily tasks
+    if repeat_code == 0 #daily tasks
       if last_done_day < today
         return false
       else
@@ -59,7 +69,7 @@ class Task < ActiveRecord::Base
     today = Time.now.yday
     today_weekday = Time.now.wday
     
-    repeat_weekday = repeat - 1 #to bring it in line with normal days of the week: 0-6
+    repeat_weekday = repeat_code - 1 #to bring it in line with normal days of the week: 0-6
     
     offset = today_weekday - repeat_weekday #offset is how many days apart today is from our deadline
     

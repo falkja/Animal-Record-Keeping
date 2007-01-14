@@ -5,6 +5,10 @@ class Cage < ActiveRecord::Base
 	has_many :cage_out_histories, :order => "date desc"
     has_many :tasks, :order => "repeat_code"
   
+  @@colony = 'Colony Room (4100)'
+  @@belfry = 'Belfry (4102F)'
+  @@fruitbat = 'Fruit Bats (4148L)'
+  
   def self.active
     find :all, :conditions => 'date_destroyed is null'
   end
@@ -18,15 +22,15 @@ class Cage < ActiveRecord::Base
   end
   
   def self.active_colony_cages
-    find :all, :conditions => 'date_destroyed is null and room = "Colony Room (4100)"', :order => 'name'
+    find :all, :conditions => "date_destroyed is null and room = '#{@@colony}'", :order => 'name'
   end
   
   def self.active_belfry_cages
-      find :all, :conditions => 'date_destroyed is null and room = "Belfry (4102F)"', :order => 'name'
+      find :all, :conditions => "date_destroyed is null and room = '#{@@belfry}'", :order => 'name'
   end
   
   def self.active_fruitbat_cages
-      find :all, :conditions => 'date_destroyed is null and room = "Fruit Bats (4148L)"', :order => 'name'
+      find :all, :conditions => "date_destroyed is null and room = '#{@@fruitbat}'", :order => 'name'
   end
   
   def food_today

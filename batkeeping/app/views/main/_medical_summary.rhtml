@@ -1,0 +1,21 @@
+<!-- This partial summarizes the current bats on meds -->
+
+[<%= link_to_remote 'hide', 
+          :update => 'medical',
+          :url => {:controller => 'main', :action => 'hide_medical_summary'} %>]
+Bats in <%= link_to 'medical care', :controller => 'medical_problems', :action => 'list_current' %> : <%= Bat.sick.length %>
+
+<blockquote>
+<div  style='background-color:#eeeeee'>
+<table>
+<th>Bat</th>
+<th>Problem</th>
+<% for medical_problem in @medical_problems %>
+<tr>
+<td><%= medical_problem.bat.band %></td>
+<td><%= link_to medical_problem.description, :controller => 'medical_problems', :action => 'show', :id => medical_problem %></td>
+</tr>
+<% end %>
+</table>
+</div>
+</blockquote>

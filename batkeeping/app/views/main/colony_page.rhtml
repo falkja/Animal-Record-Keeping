@@ -6,9 +6,10 @@
 <%= render_partial 'hide_room_summary' %>
 </div>
 
+<div id = 'medical'>
+<%= render_partial 'hide_medical_summary' %>
+</div>
 
-<p>Bats in <%= link_to 'medical care', :controller => 'medical_problems', :action => 'list_current' %> : <%= Bat.sick.length %> </p>
-<p>Mealworms eaten/day: <%= @colony_food_today %> g</p>
 
 
 <% @div = '<div id= "cages_div">' %>

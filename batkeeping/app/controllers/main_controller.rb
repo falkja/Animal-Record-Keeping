@@ -79,5 +79,13 @@ class MainController < ApplicationController
 		render_partial 'hide_room_summary'
 	end
 	
+	def medical_summary
+		@medical_problems = MedicalProblem.current		
+		render_partial 'medical_summary'
+	end
+	
+	def hide_medical_summary
+		render_partial 'hide_medical_summary'
+	end
 	
 end

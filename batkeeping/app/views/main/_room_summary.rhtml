@@ -5,6 +5,8 @@
           :url => {:controller => 'main', :action => 'hide_room_summary'} %>]
 Total bats in <%= link_to 'colony', :controller => 'bats', :action => 'list' %> : <%= Bat.active.length %>
 
+<blockquote>
+<div  style='background-color:#eeeeee'>
 <h3>Colony Room (4100)</h3>
 There are <b><%= @colony_cages.length %></b> cages in the colony room 
 containing <b><%= @colony_bats.length %></b> bats.
@@ -39,3 +41,6 @@ containing <b><%= @fruitbat_bats.length %></b> bats.
 <%= render_partial 'cages/cage_list', @fruitbat_cages %>
 </div>
 </p></blockquote>
+
+</div>
+</blockquote>

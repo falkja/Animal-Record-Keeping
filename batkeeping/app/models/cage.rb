@@ -10,7 +10,7 @@ class Cage < ActiveRecord::Base
   @@fruitbat = 'Fruit Bats (4148L)'
   
   def self.active
-    find :all, :conditions => 'date_destroyed is null'
+    find :all, :conditions => 'date_destroyed is null', :order => 'name'
   end
   
   def self.has_bats

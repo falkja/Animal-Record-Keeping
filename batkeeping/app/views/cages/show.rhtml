@@ -28,7 +28,7 @@
 <% end %>
 
 <p>
-<b>Food: </b><%= @cage.food %> grams in <%= @cage.dish_num %> <%= @cage.dish_type %>
+<b>Food: </b><%= @cage.food_today %> grams in <%= @cage.dish_num %> <%= @cage.dish_type %>
 </p>
 
 <% if @cage.bats.length > 0 %>
@@ -56,6 +56,7 @@
 </table>
 
 </blockquote>
+
 <% @tasks = @cage.tasks.feeding_tasks %>
 <%= render_partial 'feeding_tasks' %>
 <blockquote>

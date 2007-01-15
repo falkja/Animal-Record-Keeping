@@ -32,7 +32,7 @@ options_for_select([
 <%= end_form_tag %>
 
 <div id="cage_tasks_list">
-<% @tasks = @cage.tasks %>
+<% @tasks = @cage.tasks.weighing_tasks %>
 <%= render_partial 'cages/weighing_tasks' %>
 </div>
 

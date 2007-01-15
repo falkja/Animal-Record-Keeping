@@ -51,7 +51,7 @@ class TasksController < ApplicationController
         @task.users = @users
     end    
     
-    @tasks = @cage.tasks
+    @tasks = @cage.tasks.weighing_tasks
     render_partial 'cages/weighing_tasks'
   end
 
@@ -60,8 +60,8 @@ class TasksController < ApplicationController
     @users = User.current
   end
 
-  def create_feed_cage_task #called from new_weigh_cage_task page
-    @cage = Cage.find(params[:id])    
+  def create_feed_cage_task #called from new_feed_cage_task page
+    @cage = Cage.find(params[:id])
     @users = User.find(params[:users])
     @days = params[:days]
             
@@ -76,12 +76,15 @@ class TasksController < ApplicationController
         @task.cage = @cage
         @task.title = "Feed cage " + @cage.name    
         @task.internal_description = "feed"
+        @task.food = params[:task][:food]
+        @task.dish_type = params[:task][:dish_type]
+        @task.dish_num = params[:task][:dish_num]
         @task.save
         @task.users = @users
     end    
     
-    @tasks = @cage.tasks
-    render_partial 'cages/weighing_tasks'
+    @tasks = @cage.tasks.feeding_tasks
+    render_partial 'cages/feeding_tasks'
   end
 
   def create

@@ -4,7 +4,7 @@
 
 <%= form_remote_tag(:update => "cage_tasks_list",
                        :url => { :controller => 'tasks', :action => 'create_feed_cage_task', :id => @cage },
-                       :position => "replace" ) %>
+                       :position => "replace") %>
 <table>
 <tr>
 
@@ -28,21 +28,23 @@ options_for_select([
 ]), 
 :multiple => true) %>
 </td>
-
 </tr>
-<label for="food_amount">Food Amount</label><br/>
-<tr>
-<td>
-
-</td>
-</tr>
-
 </table>
+
+<p><label for="food">Food amount</label><br/>
+<%= text_field 'task', 'food', :size => 1, :autocomplete => 'off' %> grams</p>
+
+<p><label for="dish_type">Dish Type</label><br/>
+<%= select_tag("task[dish_type]", options_for_select([["Small","Small"],["Medium","Medium"], ["Long","Long"],["Metal tray","Metal tray"]])) %></p>
+
+<p><label for="dish_num">Number of dishes</label><br/>
+<%= text_field 'task', 'dish_num', :size => 1, :autocomplete => 'off' %></p>
+
 <%= submit_tag "Add task for " + @cage.name %>
 <%= end_form_tag %>
 
 <div id="cage_tasks_list">
-<% @tasks = @cage.tasks %>
+<% @tasks = @cage.tasks.feeding_tasks %>
 <%= render_partial 'cages/feeding_tasks' %>
 </div>
 

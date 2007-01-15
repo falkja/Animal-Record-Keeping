@@ -13,7 +13,7 @@ Bats in medical care: <%= link_to Bat.sick.length, :controller => 'medical_probl
 <% for medical_problem in @medical_problems %>
 <tr>
 <td><%= medical_problem.bat.band %></td>
-<td><%= link_to medical_problem.description, :controller => 'medical_problems', :action => 'show', :id => medical_problem %></td>
+<td><%= link_to medical_problem.title, :controller => 'medical_problems', :action => 'show', :id => medical_problem %></td>
 </tr>
 <% end %>
 </table>

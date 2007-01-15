@@ -22,6 +22,12 @@ If display == 'yes' then we wanna expand it, other vise we hide it
 <td width=100><b>Arrived</b></td>
 </tr>
 
+<% if year == Bat.earliest_addition.year.to_s %>
+<% min_month =  Bat.earliest_addition.month %> 
+<% else %>
+<% min_month = 1 %>
+<% end %>
+
 <% if year == Time.now.year.to_s %>
 <% max_month = Time.now.month %> 
 <% else %>
@@ -31,7 +37,7 @@ If display == 'yes' then we wanna expand it, other vise we hide it
 <% total_left = 0 %>
 <% total_arrived = 0 %>
 
-<% for n in 1..max_month %>
+<% for n in min_month..max_month %>
 <tr valign='top'>
 <% bats_left, n_bats_left = Bat.left_on_month(n, year) %>
 <% bats_arrived, n_bats_arrived = Bat.arrived_on_month(n, year) %>

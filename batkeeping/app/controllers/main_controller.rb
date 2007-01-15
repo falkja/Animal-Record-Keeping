@@ -56,9 +56,15 @@ class MainController < ApplicationController
 	
 	#This page displays summary information about the whole colony
 	def colony_page
+		compute_census_summary
 		compute_food_summary
 	end
 
+	def compute_census_summary
+		bats_left, @n_bats_left_this_month = Bat.left_on_month(Time.now.month, Time.now.year)
+		bats_arrived, @n_bats_arrived_this_month = Bat.arrived_on_month(Time.now.month, Time.now.year)
+	end
+	
 	def compute_food_summary
 		@cages = Cage.active
 	
@@ -85,6 +91,28 @@ class MainController < ApplicationController
 	def hide_room_summary
 		render_partial 'hide_room_summary'
 	end
+
+	def census_summary
+		earliest = Bat.earliest_addition
+		if earliest 
+			@years = earliest.year..Time.now.year
+		else	
+			@years = Array.new
+		end
+		compute_census_summary
+		render_partial 'census_summary'
+	end
+	
+	def hide_census_summary
+		compute_census_summary
+		render_partial 'hide_census_summary'
+	end
+	
+	#need to pass the year in :year and yes or no in :display
+	def show_census_year		
+		render_partial 'census_year_data', nil, :year => params[:year], :display => params[:display]
+	end
+	
 	
 	def food_summary
 		compute_food_summary

@@ -30,19 +30,29 @@ class Bat < ActiveRecord::Base
         Bat.find(bat_ids.uniq, :order => 'band')
     end
     
+    #What was the date that the first bat was added to the colony (acc to database)
+    def self.earliest_addition
+        bats = Bat.find :all, :order => 'collection_date asc'
+        bats ? yoda = bats[0].collection_date : yoda = nil 
+        return yoda
+    end
+    
     #Return all bats that left the colony (leave_date)
     #on the given month (month is an integer from 1 to 12)
-    def self.left_on_month(month)
+    def self.left_on_month(month, year)
         #from http://dev.mysql.com/doc/refman/5.0/en/date-calculations.html
-        Bat.find(:all, :conditions => 'YEAR(leave_date) = YEAR(CURDATE()) AND MONTH(leave_date) = ' + month.to_s)
+        bats = Bat.find(:all, :conditions => "YEAR(leave_date) = #{year} AND MONTH(leave_date) = #{month}")
+        bats ? yoda = bats.length : yoda = 0
+        return bats, yoda
     end
     
-    def self.arrived_on_month(month)
+    def self.arrived_on_month(month, year)
         #from http://dev.mysql.com/doc/refman/5.0/en/date-calculations.html
-        Bat.find(:all, :conditions => 'YEAR(collection_date) = YEAR(CURDATE()) AND MONTH(collection_date) = ' + month.to_s)
+        bats = Bat.find(:all, :conditions => "YEAR(collection_date) = #{year} AND MONTH(collection_date) = #{month}")
+        bats ? yoda = bats.length : yoda = 0
+        return bats, yoda
     end
-    
-    
+        
     def Bat.set_user_and_comment(user, cmt)
         @@current_user = user
         @@comment = cmt

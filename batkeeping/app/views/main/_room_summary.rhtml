@@ -2,8 +2,9 @@
 
 [<%= link_to_remote '-', 
           :update => 'rooms',
-          :url => {:controller => 'main', :action => 'hide_room_summary'} %>]
-Bats in colony: <%= link_to Bat.active.length, :controller => 'bats', :action => 'list' %>
+          :url => {:controller => 'main', :action => 'hide_room_summary'} %>] 
+<%= link_to Bat.active.length, :controller => 'bats', :action => 'list' %> bats in 
+<%= link_to Cage.active.length, :controller => 'cages', :action => 'list' %> cages : 
 
 <blockquote>
 <div  style='background-color:#eeeeee'>

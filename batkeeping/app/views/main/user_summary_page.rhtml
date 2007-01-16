@@ -64,16 +64,6 @@ You are responsible for no medical problems.
 <% end %>
 </blockquote>
 </p>
-<h3>Medical Tasks</h3>
-<p>
-<blockquote>
-<% if @my_medical_tasks.length == 0 %>
-  You have no medical tasks.
-<% else %>
-<%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @my_medical_tasks %>
-<% end %>
-</blockquote>
-</p>
 
 <h3>General Tasks</h3>
 <p>

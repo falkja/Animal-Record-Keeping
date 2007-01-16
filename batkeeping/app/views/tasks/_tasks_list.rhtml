@@ -9,7 +9,7 @@
  <tbody>  
   
 <% for task in tasks %>
-  <% if task.proposed_treatment_id == nil && task.cage_id == nil %>
+  <% if task.internal_description == nil || task.internal_description == "feed" %>
     <% manage = true %>
   <% else %>
     <% manage = false %>

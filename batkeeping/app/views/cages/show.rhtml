@@ -23,28 +23,17 @@
   <% combined_weights = combined_weights + bat.weights.recent[0].weight %>
 <% end %>
 <% average = combined_weights/@cage.bats.length %>
-<b>Average weight: </b><%= (("%.0" + 1.to_s + "f") % average).to_f %> g
+<b>Average Weight: </b><%= (("%.0" + 1.to_s + "f") % average).to_f %> g
 </p>
 <% end %>
 
 <p>
-<b>Food: </b><%= @cage.food_today %> grams in <%= @cage.dish_num %> <%= @cage.dish_type %>
-</p>
-
-<% if @cage.bats.length > 0 %>
-<% average = @cage.food / @cage.bats.length %>
-<p>
-<b>Amount of food/bat: </b><%= (("%.0" + 1.to_s + "f") % average).to_f %> g
-</p>
-<% end %>
-
-<p>
-<b>Date created: </b><%= nice_date @cage.date_created %>
+<b>Date Created: </b><%= nice_date @cage.date_created %>
 </p>
 
 <% if @cage.date_destroyed != nil %>
 <p>
-<b>Date destroyed: </b><%= nice_date @cage.date_destroyed %>
+<b>Date Destroyed: </b><%= nice_date @cage.date_destroyed %>
 </p>
 <% else %>
 <td width=50>

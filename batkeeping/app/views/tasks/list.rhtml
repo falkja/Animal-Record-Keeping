@@ -6,7 +6,7 @@
   <%= render_partial 'tasks_list' , nil, 'tasks' => @feeding_tasks %>
   <% end %>
   <p>
-  <%= start_form_tag :action => 'new_feed_cage_task' %>
+  <%= start_form_tag :action => 'form_to_new_feed_cage_task' %>
   Cage: 
   <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
   <%= submit_tag "Add a feeding task" %>
@@ -22,7 +22,7 @@
   <%= render_partial 'tasks_list' , nil, 'tasks' => @weighing_tasks %>
   <% end %>
   <p>
-  <%= start_form_tag :action => 'new_weigh_cage_task' %>
+  <%= start_form_tag :action => 'form_to_new_weigh_cage_task' %>
   Cage: 
   <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
   <%= submit_tag "Add a weighing task" %>

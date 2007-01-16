@@ -5,13 +5,14 @@
 <%= form_remote_tag(:update => "cage_tasks_list",
                        :url => { :controller => 'tasks', :action => 'create_weigh_cage_task', :id => @cage },
                        :position => "replace" ) %>
-<table>
-<tr>
-<td valign="top"><label for="weighed_by">Weighed by</label><br/>
+
+<p>
+<label for="weighed_by">Weighed by</label><br/>
 <%= select_tag("users[]", options_from_collection_for_select(@users, "id", "name"), 
 :multiple => true) %>
-</td>
-<td valign="top">
+</p>
+
+<p>
 <label for="on_days">on days</label><br/>
 <%= select_tag("days[]", 
 options_for_select([
@@ -25,9 +26,8 @@ options_for_select([
 ["Every Sunday", 1]
 ]), 
 :multiple => true) %>
-</td>
-</tr>
-</table>
+</p>
+
 <%= submit_tag "Add task for " + @cage.name %>
 <%= end_form_tag %>
 

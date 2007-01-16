@@ -1,7 +1,7 @@
 -- MySQL Administrator dump 1.4
 --
 -- ------------------------------------------------------
--- Server version	5.0.17-nt
+-- Server version	5.0.27-community-nt
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -229,12 +229,8 @@ CREATE TABLE `cages` (
   `date_created` datetime NOT NULL,
   `date_destroyed` datetime default NULL,
   `user_id` int(10) unsigned default NULL COMMENT 'investigators user_id, can be nil',
-  `food` float default NULL COMMENT 'food in grams',
-  `fed_by` varchar(45) NOT NULL COMMENT 'fed by "investigator" or "animal care"',
   `species` varchar(45) NOT NULL COMMENT 'species of bat',
   `room` varchar(45) NOT NULL COMMENT 'room the cage is housed',
-  `dish_type` varchar(45) NOT NULL,
-  `dish_num` int(10) unsigned default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -243,15 +239,15 @@ CREATE TABLE `cages` (
 --
 
 /*!40000 ALTER TABLE `cages` DISABLE KEYS */;
-INSERT INTO `cages` (`id`,`name`,`date_created`,`date_destroyed`,`user_id`,`food`,`fed_by`,`species`,`room`,`dish_type`,`dish_num`) VALUES 
- (1,'Cage1','2006-12-15 00:00:00','2006-12-15 00:00:00',NULL,0,'Animal Care','','Belfry (4102F)','',0),
- (2,'Cage2','2006-12-15 00:00:00',NULL,4,5,'Investigator','','Belfry (4102F)','Long',2),
- (3,'Cage3','2006-12-15 00:00:00',NULL,1,10,'Animal Care','','Fruit Bats (4148L)','Metal tray',1),
- (4,'Cage6','2006-12-15 00:00:00',NULL,4,6,'Investigator','','Colony Room (4100)','Medium',4),
- (5,'cage7','2006-12-15 00:00:00',NULL,5,2,'Investigator','','Colony Room (4100)','Medium',1),
- (6,'Cage99','2006-12-16 00:00:00',NULL,5,4,'Investigator','','Belfry (4102F)','Small',3),
- (7,'Cage4','2007-01-10 00:00:00',NULL,5,0,'Investigator','','Belfry (4102F)','Medium',0),
- (8,'Cage5','2007-01-10 00:00:00',NULL,1,NULL,'Animal Care','','Belfry (4102F)','Medium',NULL);
+INSERT INTO `cages` (`id`,`name`,`date_created`,`date_destroyed`,`user_id`,`species`,`room`) VALUES 
+ (1,'Cage1','2006-12-15 00:00:00','2006-12-15 00:00:00',NULL,'','Belfry (4102F)'),
+ (2,'Cage2','2006-12-15 00:00:00',NULL,4,'','Belfry (4102F)'),
+ (3,'Cage3','2006-12-15 00:00:00',NULL,1,'','Fruit Bats (4148L)'),
+ (4,'Cage6','2006-12-15 00:00:00',NULL,4,'','Colony Room (4100)'),
+ (5,'cage7','2006-12-15 00:00:00',NULL,5,'','Colony Room (4100)'),
+ (6,'Cage99','2006-12-16 00:00:00',NULL,5,'','Belfry (4102F)'),
+ (7,'Cage4','2007-01-10 00:00:00',NULL,5,'','Belfry (4102F)'),
+ (8,'Cage5','2007-01-10 00:00:00',NULL,1,'','Belfry (4102F)');
 /*!40000 ALTER TABLE `cages` ENABLE KEYS */;
 
 
@@ -467,10 +463,12 @@ INSERT INTO `tasks` (`id`,`last_done_date`,`repeat_code`,`proposed_treatment_id`
  (25,'2007-01-08 14:40:00',0,28,NULL,'Verbally abuse the bat','',NULL,NULL,NULL,NULL),
  (26,'2007-01-09 23:39:13',0,NULL,NULL,'Check the fruit bats nectar feeders','',NULL,NULL,NULL,NULL),
  (28,'2007-01-09 23:39:07',2,NULL,NULL,'Check the light in the Belfry','',NULL,NULL,NULL,NULL),
- (29,'2006-12-19 09:34:45',3,NULL,3,'Weigh cage Cage3','','weigh',NULL,NULL,NULL),
  (30,NULL,0,30,NULL,'Words of encouragement.','','medical',NULL,NULL,NULL),
  (58,NULL,5,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL),
- (59,NULL,0,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL);
+ (59,NULL,0,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL),
+ (64,'2007-01-16 00:16:48',4,NULL,2,'Feed cage Cage2','','feed',3,'Small',1),
+ (124,NULL,2,NULL,4,'Feed cage Cage6','','feed',2,'Small',2),
+ (125,'2007-01-16 00:36:45',3,NULL,4,'Feed cage Cage6','','feed',3,'Small',3);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 
 
@@ -492,14 +490,17 @@ CREATE TABLE `tasks_users` (
 /*!40000 ALTER TABLE `tasks_users` DISABLE KEYS */;
 INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES 
  (1,28),
- (1,29),
  (1,58),
  (1,59),
+ (1,64),
+ (1,72),
  (2,2),
  (2,24),
  (2,25),
  (4,30),
- (5,26);
+ (5,26),
+ (5,124),
+ (5,125);
 /*!40000 ALTER TABLE `tasks_users` ENABLE KEYS */;
 
 
@@ -606,7 +607,10 @@ INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user
  (48,3,'2007-01-03 14:18:59',13,'','',4),
  (49,4,'2007-01-03 14:19:13',14,'','',4),
  (50,6,'2007-01-03 14:19:19',14,'','',4),
- (51,4,'2007-01-11 14:10:36',15,'','',4);
+ (51,4,'2007-01-11 14:10:36',15,'','',4),
+ (52,4,'2007-01-15 23:45:53',1,'','',4),
+ (53,6,'2007-01-15 23:45:57',3,'','',4),
+ (54,5,'2007-01-15 23:46:00',2,'','',4);
 /*!40000 ALTER TABLE `weights` ENABLE KEYS */;
 
 

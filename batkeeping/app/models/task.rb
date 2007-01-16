@@ -8,7 +8,7 @@ class Task < ActiveRecord::Base
   end
   
   def self.weighing_tasks #weighing
-    find :all, :conditions => 'internal_description = "weigh"'
+    find :all, :conditions => 'internal_description = "weigh"', :order => "repeat_code"
   end
   
   def self.medical_tasks
@@ -16,7 +16,7 @@ class Task < ActiveRecord::Base
   end
 
   def self.feeding_tasks #feeding
-    find :all, :conditions => 'internal_description = "feed"'
+    find :all, :conditions => 'internal_description = "feed"', :order => "repeat_code"
   end
 
 	def self.today
@@ -33,7 +33,7 @@ class Task < ActiveRecord::Base
   #if the task was completed on schedule
   #Note this is modulo week. So if we skip a week we won't know
   def done_by_schedule
-    if last_done_date == nil #if the task has never been completed
+    if last_done_date == nil #if the task has never been completed, then it certainly hasn't been done by schedule
       return false
     end
     
@@ -89,4 +89,6 @@ class Task < ActiveRecord::Base
     
     return post
   end
+  
+  
 end

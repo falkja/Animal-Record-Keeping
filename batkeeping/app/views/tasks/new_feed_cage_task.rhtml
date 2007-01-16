@@ -5,15 +5,14 @@
 <%= form_remote_tag(:update => "cage_tasks_list",
                        :url => { :controller => 'tasks', :action => 'create_feed_cage_task', :id => @cage },
                        :position => "replace") %>
-<table>
-<tr>
 
-<td valign="top"><label for="fed_by">Fed by</label><br/>
+<p>
+<label for="fed_by">Fed by</label><br/>
 <%= select_tag("users[]", options_from_collection_for_select(@users, "id", "name"), 
 :multiple => true) %>
-</td>
+</p>
 
-<td valign="top">
+<p>
 <label for="on_days">on days</label><br/>
 <%= select_tag("days[]", 
 options_for_select([
@@ -27,9 +26,12 @@ options_for_select([
 ["Every Sunday", 1]
 ]), 
 :multiple => true) %>
-</td>
-</tr>
-</table>
+</p>
+
+<p>
+*note: Any feeding task that takes place on Saturday/Sunday and is assigned to General Animal Care will automatically be assigned to Weekend/Holiday Care and will appear on the <%= link_to 'weekend care page', :controller => 'main', :action => 'weekend_care'%>.
+Any feeding task that takes place during Monday-Friday and is assigned to the Weekend/Holiday Care will automatically be assigned to General Animal Care.
+</p>
 
 <p><label for="food">Food amount</label><br/>
 <%= text_field 'task', 'food', :size => 1, :autocomplete => 'off' %> grams</p>

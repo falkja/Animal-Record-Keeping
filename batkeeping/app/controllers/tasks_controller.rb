@@ -26,6 +26,12 @@ class TasksController < ApplicationController
     @users = User.current
   end
 
+  #called from the form on the list tasks page, needed so that the page that is requested has an ID attached to it so that refreshes of the page don't break
+  def form_to_new_weigh_cage_task
+    @cage = Cage.find(params[:id])
+    redirect_to :action => 'new_weigh_cage_task', :id => @cage
+  end
+
   def new_weigh_cage_task
     @cage = Cage.find(params[:id])
     @users = User.current
@@ -36,9 +42,9 @@ class TasksController < ApplicationController
     @users = User.find(params[:users])
     @days = params[:days]    
             
-    if @days.include?(0)  #only need one daily task
+    if @days.include?("0")  #only need one daily task
         @days.clear
-        @days << 0
+        @days << "0"
     end
     
     for day in @days
@@ -55,6 +61,12 @@ class TasksController < ApplicationController
     render_partial 'cages/weighing_tasks'
   end
 
+  #called from the form on the list tasks page, needed so that the page that is requested has an ID attached to it so that refreshes of the page don't break
+  def form_to_new_feed_cage_task
+    @cage = Cage.find(params[:id])
+    redirect_to :action => 'new_feed_cage_task', :id => @cage
+  end
+
   def new_feed_cage_task
     @cage = Cage.find(params[:id])
     @users = User.current
@@ -65,9 +77,9 @@ class TasksController < ApplicationController
     @users = User.find(params[:users])
     @days = params[:days]
             
-    if @days.include?(0)  #only need one daily task
+    if @days.include?("0")  #need to convert to multiple tasks
         @days.clear
-        @days = [1 => 1,2 => 2,3 => 3,4 => 4,5 => 5,6 => 6,7 => 7]
+        @days = ["1","2","3","4","5","6","7"]
     end
     
     for day in @days
@@ -80,7 +92,15 @@ class TasksController < ApplicationController
         @task.dish_type = params[:task][:dish_type]
         @task.dish_num = params[:task][:dish_num]
         @task.save
-        @task.users = @users
+        if (@users.include?(User.find(1)) && ((day == "1") || (day == "7")))  #General Animal Care can't do feeding tasks on weekend - assign to weekend/holiday care
+          @task.users = [User.find(3)]
+        else
+          if @users.include?(User.find(3)) && ((day == "2") || (day == "3") || (day == "4") || (day == "5") || (day == "6"))
+            @task.users = [User.find(1)]
+          else
+            @task.users = @users
+          end
+        end
     end    
     
     @tasks = @cage.tasks.feeding_tasks
@@ -116,10 +136,20 @@ class TasksController < ApplicationController
     end
   end
 
+  #only saves tasks if they are on the due date (feeding) or within 2 days of the deadline (all others)
   def done
     @task = Task.find(params[:id])
-    @task.last_done_date = Time.now
-    @task.save
+    if @task.internal_description == 'feed'
+      if Date.today.yday == @task.find_post
+        @task.last_done_date = Time.now
+        @task.save
+      end
+    else
+      if Date.today.yday >= @task.find_post && Date.today.yday <= @task.find_post + 2
+        @task.last_done_date = Time.now
+        @task.save
+      end
+    end
     redirect_to :back
   end
   

@@ -160,31 +160,4 @@ class CagesController < ApplicationController
     @cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name" )
 	@bats = @cage.bats
   end
-
-  # needs to save the weights from the weigh page and save them for each data row
-  def submit_weights
-      
-    #enter weights  
-	@cage = Cage.find(params[:id])
-	bat_ids = params[:weight].keys #params[:weight] is a hash whose keys are the bat ids
-	@bats = Bat.find(bat_ids)
-	for bat in @bats	        
-		weight = Weight.new
-		weight.bat = bat
-		weight.date = Time.now
-		weight.user = session[:person]
-		weight.weight = params[:weight][bat.id.to_s] #The hash key is actually a string, so we need to convert the id to a string
-        weight.note = params[:note][bat.id.to_s]
-		weight.save
-	end
-    
-    #now perform cage changes, if needed
-	for bat in @bats	        
-        Bat::set_user_and_comment(session[:person], params[:cage_change_note][bat.id.to_s]) #This must come before we mess with the list of bats for a cage. The moment we mess with the list, the cage and bat variables are updated.      
-        bat.cage = Cage.find(params[:bat_cage][bat.id.to_s])
-        bat.save
-    end
-    
-  end
-
 end

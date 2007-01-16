@@ -45,7 +45,7 @@ No feeding tasks.
         Not done on schedule
     <% end %> 
     </td>
-    <td><%= link_to 'Fed Cage', :controller => 'tasks', :action => 'done', :id => task %></td>
+    <td><%= link_to 'Just Fed', :controller => 'tasks', :action => 'done', :id => task %></td>
     <td><%= link_to 'Show', :controller => 'tasks', :action => 'show', :id => task %></td>
     <td><%= link_to 'Edit', :controller => 'tasks', :action => 'edit', :id => task %></td>
     <td><%= link_to 'Destroy', {:controller => 'tasks', :action => 'destroy', :id => task }, :confirm => 'Are you sure?', :post => true %></td>

@@ -4,7 +4,11 @@
 <% # if true, the partial will also display edit and destroy buttons %>
 
   <tr> 
-    <td><b><%= task.title %></b></td>
+    <td>
+    <b>
+      <%= task.title %>
+    </b>
+    </td>
     <td>
       <% for user in task.users %>
       <%= user.name %><br/>
@@ -25,12 +29,26 @@
        <%= nice_date task.last_done_date %>
     <% else %>
        <% if manage == true %>
-        [<%= link_to 'Just Done', :controller => 'tasks', :action => 'done', :id => task %>]
+        <% if task.internal_description == "feed" %>
+          [<%= link_to 'Just Fed', :controller => 'tasks', :action => 'done', :id => task %>]
+        <% else %>
+          [<%= link_to 'Just Done', :controller => 'tasks', :action => 'done', :id => task %>]
+        <% end %>
        <% else %>
         Not done on schedule
        <% end %>
     <% end %>
     </td>
+    <% if task.internal_description == "weigh" %>
+    <td>
+    <%= link_to 'Weigh Cage', :controller => 'cages', :action => 'weigh_cage', :id => task.cage %>
+    </td>
+    <% end %>
+    <% if task.internal_description == "medical" %>
+    <td>
+    <%= link_to 'Do Treatment', :controller => 'medical_care_actions', :action => 'new', :id => task.proposed_treatment %>
+    </td>
+    <% end %>
     <td><%= link_to 'Show', :controller => 'tasks', :action => 'show', :id => task %></td>
     <% if manage == true %>
     <td><%= link_to 'Edit',  :controller => 'tasks', :action => 'edit', :id => task %></td>

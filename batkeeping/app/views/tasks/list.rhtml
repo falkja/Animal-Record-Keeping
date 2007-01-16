@@ -55,5 +55,5 @@
   <% else %>
   <%= render_partial 'tasks_list' , nil, 'tasks' => @general_tasks %>
   <% end %>
-  <p><%= link_to 'New General Task', :controller => 'tasks', :action => 'new' %></p>
+  <p><%= button_to 'Add a general task', :controller => 'tasks', :action => 'new' %></p>
 </blockquote>

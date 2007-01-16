@@ -459,8 +459,8 @@ CREATE TABLE `tasks` (
 
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
 INSERT INTO `tasks` (`id`,`last_done_date`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`) VALUES 
- (24,'2007-01-08 14:16:00',0,27,NULL,'Cough syrup','',NULL,NULL,NULL,NULL),
- (25,'2007-01-08 14:40:00',0,28,NULL,'Verbally abuse the bat','',NULL,NULL,NULL,NULL),
+ (24,'2007-01-08 14:16:00',0,27,NULL,'Cough syrup','','medical',NULL,NULL,NULL),
+ (25,'2007-01-08 14:40:00',0,28,NULL,'Verbally abuse the bat','','medical',NULL,NULL,NULL),
  (26,'2007-01-09 23:39:13',0,NULL,NULL,'Check the fruit bats nectar feeders','',NULL,NULL,NULL,NULL),
  (28,'2007-01-09 23:39:07',2,NULL,NULL,'Check the light in the Belfry','',NULL,NULL,NULL,NULL),
  (30,NULL,0,30,NULL,'Words of encouragement.','','medical',NULL,NULL,NULL),

@@ -34,6 +34,7 @@ class ProposedTreatmentsController < ApplicationController
       @task.repeat_code = 0
       @task.title = @proposed_treatment.treatment
       @task.internal_description = "medical"
+      @task.jitter = 0
       @task.save
       @task.users << @proposed_treatment.medical_problem.user
       #@tasks = @proposed_treatment.medical_problem.user.tasks

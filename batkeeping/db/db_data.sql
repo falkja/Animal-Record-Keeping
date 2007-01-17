@@ -362,7 +362,9 @@ INSERT INTO `proposed_treatments` (`id`,`medical_problem_id`,`date_started`,`dat
  (27,1,'2007-01-08 00:00:00','2007-01-08 00:00:00',NULL,'Cough syrup',4),
  (28,2,'2007-01-08 00:00:00','2007-01-11 00:00:00',NULL,'Verbally abuse the bat',4),
  (29,1,'2007-01-08 00:00:00','2007-01-14 00:00:00','2007-01-08 00:00:00','Amputation',4),
- (30,7,'2007-01-11 00:00:00','2007-01-15 00:00:00',NULL,'Words of encouragement.',4);
+ (30,7,'2007-01-11 00:00:00','2007-01-15 00:00:00',NULL,'Words of encouragement.',4),
+ (31,7,'2007-01-16 00:00:00','2007-01-17 00:00:00',NULL,'Feed worms in front of the other bats',4),
+ (32,7,'2007-01-16 00:00:00','2007-01-16 00:00:00','2007-01-16 00:00:00','',4);
 /*!40000 ALTER TABLE `proposed_treatments` ENABLE KEYS */;
 
 
@@ -447,9 +449,10 @@ CREATE TABLE `tasks` (
   `title` varchar(45) NOT NULL,
   `notes` text NOT NULL,
   `internal_description` varchar(45) default NULL,
-  `food` float default NULL,
+  `food` int(10) unsigned default NULL,
   `dish_type` varchar(45) default NULL,
   `dish_num` int(10) unsigned default NULL,
+  `jitter` int(10) unsigned NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -458,18 +461,29 @@ CREATE TABLE `tasks` (
 --
 
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
-INSERT INTO `tasks` (`id`,`last_done_date`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`) VALUES 
- (24,'2007-01-08 14:16:00',0,27,NULL,'Cough syrup','','medical',NULL,NULL,NULL),
- (25,'2007-01-08 14:40:00',0,28,NULL,'Verbally abuse the bat','','medical',NULL,NULL,NULL),
- (26,'2007-01-09 23:39:13',0,NULL,NULL,'Check the fruit bats nectar feeders','',NULL,NULL,NULL,NULL),
- (28,'2007-01-09 23:39:07',2,NULL,NULL,'Check the light in the Belfry','',NULL,NULL,NULL,NULL),
- (30,NULL,0,30,NULL,'Words of encouragement.','','medical',NULL,NULL,NULL),
- (58,NULL,5,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL),
- (59,NULL,0,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL),
- (64,'2007-01-16 00:16:48',4,NULL,2,'Feed cage Cage2','','feed',3,'Small',1),
- (124,NULL,2,NULL,4,'Feed cage Cage6','','feed',13,'Small',1),
- (125,'2007-01-16 00:36:45',3,NULL,4,'Feed cage Cage6','','feed',13,'Small',1),
- (126,NULL,4,NULL,3,'Feed cage Cage3','','feed',40,'Small',4);
+INSERT INTO `tasks` (`id`,`last_done_date`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`) VALUES 
+ (24,'2007-01-08 14:16:00',0,27,NULL,'Cough syrup','','medical',NULL,NULL,NULL,0),
+ (25,'2007-01-08 14:40:00',0,28,NULL,'Verbally abuse the bat','','medical',NULL,NULL,NULL,0),
+ (26,'2007-01-17 16:45:08',0,NULL,NULL,'Check the fruit bats nectar feeders','',NULL,NULL,NULL,NULL,0),
+ (28,'2007-01-09 23:39:07',2,NULL,NULL,'Check the light in the Belfry','',NULL,NULL,NULL,NULL,0),
+ (30,NULL,0,30,NULL,'Words of encouragement.','','medical',NULL,NULL,NULL,0),
+ (58,NULL,5,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,0),
+ (59,NULL,0,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,0),
+ (64,'2007-01-16 00:16:48',4,NULL,2,'Feed cage Cage2','','feed',3,'Small',1,0),
+ (124,NULL,2,NULL,4,'Feed cage Cage6','','feed',2,'Small',2,0),
+ (125,'2007-01-16 00:36:45',3,NULL,4,'Feed cage Cage6','','feed',3,'Small',3,0),
+ (126,NULL,4,NULL,4,'Weigh cage Cage6','','weigh',NULL,NULL,NULL,0),
+ (127,NULL,0,31,NULL,'Feed worms in front of the other bats','','medical',NULL,NULL,NULL,0);
+INSERT INTO `tasks` (`id`,`last_done_date`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`) VALUES 
+ (129,NULL,1,NULL,3,'Feed cage Cage3','','feed',3,'Medium',1,0),
+ (130,NULL,2,NULL,3,'Feed cage Cage3','','feed',3,'Medium',1,0),
+ (131,NULL,3,NULL,3,'Feed cage Cage3','','feed',3,'Medium',1,0),
+ (132,NULL,4,NULL,3,'Feed cage Cage3','','feed',3,'Medium',1,0),
+ (133,NULL,5,NULL,3,'Feed cage Cage3','','feed',3,'Medium',1,0),
+ (134,NULL,6,NULL,3,'Feed cage Cage3','','feed',3,'Medium',1,0),
+ (135,'2007-01-20 11:42:46',7,NULL,3,'Feed cage Cage3','','feed',3,'Medium',1,0),
+ (136,'2007-01-20 11:42:52',7,NULL,NULL,'Do dishes','Soak in bleach water at least 10 minutes',NULL,NULL,NULL,NULL,0),
+ (140,NULL,0,NULL,NULL,'Fill out census sheet','',NULL,NULL,NULL,NULL,0);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 
 
@@ -492,14 +506,25 @@ CREATE TABLE `tasks_users` (
 INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES 
  (1,28),
  (1,58),
+ (1,59),
  (1,64),
  (1,72),
  (1,126),
+ (1,130),
+ (1,131),
+ (1,132),
+ (1,133),
+ (1,134),
+ (1,140),
  (2,2),
  (2,24),
  (2,25),
+ (3,129),
+ (3,135),
+ (3,136),
+ (3,140),
  (4,30),
- (4,59),
+ (4,127),
  (5,26),
  (5,124),
  (5,125);

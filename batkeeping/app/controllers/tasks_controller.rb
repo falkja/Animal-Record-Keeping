@@ -52,7 +52,8 @@ class TasksController < ApplicationController
         @task.repeat_code = day
         @task.cage = @cage
         @task.title = "Weigh cage " + @cage.name    
-        @task.internal_description = "weigh"    
+        @task.internal_description = "weigh"
+        @task.jitter = -1
         @task.save
         @task.users = @users
     end    
@@ -110,6 +111,7 @@ class TasksController < ApplicationController
         @task.food = params[:task][:food]
         @task.dish_type = params[:task][:dish_type]
         @task.dish_num = params[:task][:dish_num]
+        @task.jitter = 0
         @task.save
         if (@users.include?(User.find(1)) && ((day == "1") || (day == "7")))  #General Animal Care can't do feeding tasks on weekend - assign to weekend/holiday care
           @task.users = [User.find(3)]
@@ -127,14 +129,23 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(params[:task])
-    if @task.save
-      @task.users = User.find(params[:users][:id])
-      flash[:notice] = 'Task was successfully created.'
-      redirect_to :action => 'list'
-    else
-      render :action => 'new'
+    @users = User.find(params[:users][:id])
+    @days = params[:days]
+            
+    if @days.include?("0")  #only need one daily task
+        @days.clear
+        @days << "0"
     end
+    
+    for day in @days
+        @task = Task.new
+        @task.repeat_code = day
+        @task.title = params[:task][:title]
+        @task.internal_description = nil
+        @task.save
+        @task.users = @users
+    end
+    redirect_to :action => 'list'
   end
 
   def edit
@@ -158,16 +169,9 @@ class TasksController < ApplicationController
   #only saves tasks if they are on the due date (feeding) or within 2 days of the deadline (all others)
   def done
     @task = Task.find(params[:id])
-    if @task.internal_description == 'feed'
-      if Date.today.yday == @task.find_post
-        @task.last_done_date = Time.now
-        @task.save
-      end
-    else
-      if Date.today.yday >= @task.find_post && Date.today.yday <= @task.find_post + 2
-        @task.last_done_date = Time.now
-        @task.save
-      end
+    if (Date.today.yday >= @task.find_post) && (Date.today.yday <= (@task.find_post - @task.jitter))
+      @task.last_done_date = Time.now
+      @task.save
     end
     redirect_to :back
   end

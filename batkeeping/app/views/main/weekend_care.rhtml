@@ -27,17 +27,6 @@
   </blockquote>
   </p>
 
-  <h3>Sunday Feeding Tasks</h3>
-  <p>
-  <blockquote>
-  <% if @sunday_feeding_tasks.length == 0 %>
-    No Sunday feeding tasks.
-  <% else %>
-  <%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @sunday_feeding_tasks %>
-  <% end %>
-  </blockquote>
-  </p>
-
   <h3>Saturday General Tasks</h3>
   <p>
   <blockquote>
@@ -45,6 +34,17 @@
     No Saturday general tasks.
   <% else %>
   <%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @saturday_general_tasks %>
+  <% end %>
+  </blockquote>
+  </p>
+
+  <h3>Sunday Feeding Tasks</h3>
+  <p>
+  <blockquote>
+  <% if @sunday_feeding_tasks.length == 0 %>
+    No Sunday feeding tasks.
+  <% else %>
+  <%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @sunday_feeding_tasks %>
   <% end %>
   </blockquote>
   </p>

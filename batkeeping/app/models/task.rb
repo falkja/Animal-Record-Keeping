@@ -68,16 +68,14 @@ class Task < ActiveRecord::Base
   def find_post
     today = Time.now.yday
     today_weekday = Time.now.wday
-    
-    repeat_weekday = repeat_code - 1 #to bring it in line with normal days of the week: 0-6
+    if repeat_code == 0 #our deadline is today for all daily tasks
+      repeat_weekday = today_weekday
+    else
+      repeat_weekday = repeat_code - 1 #to bring it in line with normal days of the week: 0-6
+    end
     
     offset = today_weekday - repeat_weekday #offset is how many days apart today is from our deadline
     
-    if internal_description == "feed" #feeding tasks can only be done on the deadline day
-      jitter = 0
-    else #everything else can be done one day ahead of schedule
-      jitter = -1
-    end
     
     if offset < jitter #because we always want to look back in time, unless you are within your jitter
       offset = offset + 7

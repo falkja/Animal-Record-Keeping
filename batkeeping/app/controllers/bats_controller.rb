@@ -232,6 +232,9 @@ redirect_to :action => 'list'
     
     g.title = "Bat Weights"
     bat.species == "Eptesicus fuscus" ? g.baseline_value = 13 : ''
+    bat.species == "Carollia perspicillata" ? g.baseline_value = 15 : ''
+    bat.species == "Glossophaga soricina" ? g.baseline_value = 11 : ''
+    bat.species == "Myotis septentrionalis" ? g.baseline_value = 7 : ''
     g.data(bat.band, weights)
     
     g.labels = dates_reduced #this is where we will need to put the dates

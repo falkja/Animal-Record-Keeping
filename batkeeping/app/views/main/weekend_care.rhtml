@@ -13,74 +13,52 @@
 <li>Remove all dishes from <em>EVERY</em> cage - soak in bleach and dish soap minimum 10 minutes.</li>
 <li>Provide fresh water to <em>EVERY</em> cage. Do not reuse old water dishes.</li>
 <li>Mealworms should already be weighed out. Separate mealworms from media by sifting media into trash</em></li>
-<li>Feed cages as directed for each room:
-
+<li>Feed cages as directed:
 </h4>
 
-<ol type="a">
-<li><h3>Colony Room</h3>
-<% if @colony_cages.length == 0 %>
-No Colony cages to feed.
-<% else %>
-<% for cage in @colony_cages %>
-<table>
-<th>Name</th>
-<th>Food</th>
-<th>Dishes</th>
-<tr>
-  <td><%= cage.name %></td>
-  <td><b>FOOD</b> g</td>
-  <td><b>DISH # and DISH TYPE</b></td>
-<tr>
-</table>
-<% end %>
-<% end %>
-</li>
+  <h3>Saturday Feeding Tasks</h3>
+  <p>
+  <blockquote>
+  <% if @saturday_feeding_tasks.length == 0 %>
+    No Saturday feeding tasks.
+  <% else %>
+  <%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @saturday_feeding_tasks %>
+  <% end %>
+  </blockquote>
+  </p>
 
-<li>
-<h3>Belfry</h3>
-<% if @belfry_cages.length == 0 %>
-No Belfry cages to feed.
-<% else %>
-<% for cage in @belfry_cages %>
-<table>
-<th>Name</th>
-<th>Food</th>
-<th>Dishes</th>
-<tr>
-  <td><%= cage.name %></td>
-  <td><b>FOOD</b> g</td>
-  <td><b>DISH # and DISH TYPE</b></td>
-<tr>
-</table>
-<% end %>
-<% end %>
-</li>
+  <h3>Sunday Feeding Tasks</h3>
+  <p>
+  <blockquote>
+  <% if @sunday_feeding_tasks.length == 0 %>
+    No Sunday feeding tasks.
+  <% else %>
+  <%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @sunday_feeding_tasks %>
+  <% end %>
+  </blockquote>
+  </p>
 
-<li>
-<h3>Fruit Bats</h3>
-<% if @fruitbat_cages.length == 0 %>
-No fruit cages to feed.
-<% else %>
-<% for cage in @fruitbat_cages %>
-<table>
-<th>Name</th>
-<th>Food</th>
-<th>Dishes</th>
-<tr>
-  <td><%= cage.name %></td>
-  <td><b>FOOD</b> g</td>
-  <td><b>DISH # and DISH TYPE</b></td>
-<tr>
-</table>
-<% end %>
-<% end %>
-</li>
-</ol>
-</li>
-</ol>
+  <h3>Saturday General Tasks</h3>
+  <p>
+  <blockquote>
+  <% if @saturday_general_tasks.length == 0 %>
+    No Saturday general tasks.
+  <% else %>
+  <%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @saturday_general_tasks %>
+  <% end %>
+  </blockquote>
+  </p>
 
-
+  <h3>Sunday General Tasks</h3>
+  <p>
+  <blockquote>
+  <% if @sunday_general_tasks.length == 0 %>
+    No Sunday general tasks.
+  <% else %>
+  <%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @sunday_general_tasks %>
+  <% end %>
+  </blockquote>
+  </p>
 
 <p>
 <% if @sick_bats.length == 0 %>

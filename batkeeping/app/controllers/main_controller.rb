@@ -47,10 +47,23 @@ class MainController < ApplicationController
   
   #This page displays what the weekend care person has to do.
   def weekend_care
-	@sick_bats = Bat.sick
-	@colony_cages = Cage.find(:all, :conditions => 'date_destroyed is null and room = "Colony Room (4100)"') 
-	@belfry_cages = Cage.find(:all, :conditions => 'date_destroyed is null and room = "Belfry (4102F)"')     
-	@fruitbat_cages = Cage.find(:all, :conditions => 'date_destroyed is null and room = "Fruit Bats (4148L)"') 
+  @sick_bats = Bat.sick
+  
+	@user = User.find(3)
+  general_tasks = @user.tasks.general_tasks
+  @saturday_general_tasks = Array.new
+  @sunday_general_tasks = Array.new
+  for task in general_tasks
+    (task.repeat_code == 7 or task.repeat_code == 0) ? @saturday_general_tasks << task : ''
+    (task.repeat_code == 1 or task.repeat_code == 0) ? @sunday_general_tasks << task : ''
+  end
+  feeding_tasks = @user.tasks.feeding_tasks
+  @saturday_feeding_tasks = Array.new
+  @sunday_feeding_tasks = Array.new
+  for task in feeding_tasks
+    (task.repeat_code == 7 or task.repeat_code == 0) ? @saturday_feeding_tasks << task : ''
+    (task.repeat_code == 1 or task.repeat_code == 0) ? @sunday_feeding_tasks << task : ''
+  end
   end
 	
 	#This page displays summary information about the whole colony

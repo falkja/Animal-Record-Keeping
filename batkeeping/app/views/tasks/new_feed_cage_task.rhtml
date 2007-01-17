@@ -42,7 +42,7 @@ Any feeding task that takes place during Monday-Friday and is assigned to the We
 <p><label for="dish_num">Number of dishes</label><br/>
 <%= text_field 'task', 'dish_num', :size => 1, :autocomplete => 'off' %></p>
 
-<%= submit_tag "Add task for " + @cage.name %>
+<%= submit_tag "Add task(s) for " + @cage.name %>
 <%= end_form_tag %>
 
 <div id="cage_tasks_list">

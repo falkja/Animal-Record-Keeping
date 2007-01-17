@@ -447,7 +447,7 @@ CREATE TABLE `tasks` (
   `title` varchar(45) NOT NULL,
   `notes` text NOT NULL,
   `internal_description` varchar(45) default NULL,
-  `food` int(10) unsigned default NULL,
+  `food` float default NULL,
   `dish_type` varchar(45) default NULL,
   `dish_num` int(10) unsigned default NULL,
   PRIMARY KEY  (`id`)
@@ -467,8 +467,9 @@ INSERT INTO `tasks` (`id`,`last_done_date`,`repeat_code`,`proposed_treatment_id`
  (58,NULL,5,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL),
  (59,NULL,0,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL),
  (64,'2007-01-16 00:16:48',4,NULL,2,'Feed cage Cage2','','feed',3,'Small',1),
- (124,NULL,2,NULL,4,'Feed cage Cage6','','feed',2,'Small',2),
- (125,'2007-01-16 00:36:45',3,NULL,4,'Feed cage Cage6','','feed',3,'Small',3);
+ (124,NULL,2,NULL,4,'Feed cage Cage6','','feed',13,'Small',1),
+ (125,'2007-01-16 00:36:45',3,NULL,4,'Feed cage Cage6','','feed',13,'Small',1),
+ (126,NULL,4,NULL,3,'Feed cage Cage3','','feed',40,'Small',4);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 
 
@@ -491,13 +492,14 @@ CREATE TABLE `tasks_users` (
 INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES 
  (1,28),
  (1,58),
- (1,59),
  (1,64),
  (1,72),
+ (1,126),
  (2,2),
  (2,24),
  (2,25),
  (4,30),
+ (4,59),
  (5,26),
  (5,124),
  (5,125);

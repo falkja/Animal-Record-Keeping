@@ -61,6 +61,25 @@ class TasksController < ApplicationController
     render_partial 'cages/weighing_tasks'
   end
 
+  #allows editing the food amount and dishes for multiple feeding tasks
+  def edit_multiple_feeding_tasks
+    @cage = Cage.find(params[:id])
+  end
+  
+  def update_multiple_feeding_tasks
+    @cage = Cage.find(params[:id])
+    
+    for task in @cage.tasks.feeding_tasks
+        task.food = params[:task][:food]
+        task.dish_type = params[:task][:dish_type]
+        task.dish_num = params[:task][:dish_num]
+        task.save
+    end    
+    
+    @tasks = @cage.tasks.feeding_tasks
+    render_partial 'cages/feeding_tasks'
+  end
+  
   #called from the form on the list tasks page, needed so that the page that is requested has an ID attached to it so that refreshes of the page don't break
   def form_to_new_feed_cage_task
     @cage = Cage.find(params[:id])

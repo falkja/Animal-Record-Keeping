@@ -43,35 +43,35 @@ You are responsible for no medical problems.
 <h2>Tasks</h2>
 <blockquote>
 
-<h3>Feeding Tasks</h3>
-<p>
-<blockquote>
-<% if @my_feeding_tasks.length == 0 %>
-  You have no cage feeding tasks.
-<% else %>
-<%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @my_feeding_tasks %>
-<% end %>
-</blockquote>
-</p>
+  <h3>Feeding Tasks</h3>
+  <p>
+  <blockquote>
+  <% if @my_feeding_tasks.length == 0 %>
+    You have no cage feeding tasks.
+  <% else %>
+  <%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @my_feeding_tasks %>
+  <% end %>
+  </blockquote>
+  </p>
 
-<h3>Weighing Tasks</h3>
-<p>
-<blockquote>
-<% if @my_weighing_tasks.length == 0 %>
-  You have no cage weighing tasks.
-<% else %>
-<%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @my_weighing_tasks %>
-<% end %>
-</blockquote>
-</p>
+  <h3>Weighing Tasks</h3>
+  <p>
+  <blockquote>
+  <% if @my_weighing_tasks.length == 0 %>
+    You have no cage weighing tasks.
+  <% else %>
+  <%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @my_weighing_tasks %>
+  <% end %>
+  </blockquote>
+  </p>
 
-<h3>General Tasks</h3>
-<p>
-<blockquote>
-<% if @my_general_tasks.length == 0 %>
-  You have no general tasks.
-<% else %>
-<%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @my_general_tasks %>
-<% end %>
-</blockquote>
-</p>
+  <h3>General Tasks</h3>
+  <p>
+  <blockquote>
+  <% if @my_general_tasks.length == 0 %>
+    You have no general tasks.
+  <% else %>
+  <%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @my_general_tasks %>
+  <% end %>
+  </blockquote>
+  </p>

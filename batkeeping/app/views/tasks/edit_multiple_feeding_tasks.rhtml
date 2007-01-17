@@ -1,0 +1,35 @@
+<h1>Edit Multiple Feeding Tasks for <%= @cage.name %></h1>
+
+<p><b>Cage owner:</b> <%=h @cage.user.name %></p>
+
+<%= form_remote_tag(:update => "cage_tasks_list",
+                       :url => { :controller => 'tasks', :action => 'update_multiple_feeding_tasks', :id => @cage },
+                       :position => "replace") %>
+
+<p>
+</p>
+
+<p>
+</p>
+
+<p>
+</p>
+
+<p><label for="food">Food amount</label><br/>
+<%= text_field 'task', 'food', :size => 1, :autocomplete => 'off' %> grams</p>
+
+<p><label for="dish_type">Dish Type</label><br/>
+<%= select_tag("task[dish_type]", options_for_select([["Small","Small"],["Medium","Medium"], ["Long","Long"],["Metal tray","Metal tray"]])) %></p>
+
+<p><label for="dish_num">Number of dishes</label><br/>
+<%= text_field 'task', 'dish_num', :size => 1, :autocomplete => 'off' %></p>
+
+<%= submit_tag "Edit all feeding tasks for " + @cage.name %>
+<%= end_form_tag %>
+
+<div id="cage_tasks_list">
+<% @tasks = @cage.tasks.feeding_tasks %>
+<%= render_partial 'cages/feeding_tasks' %>
+</div>
+
+<%= button_to 'Done', :controller => 'cages', :action => 'show', :id => @cage %>

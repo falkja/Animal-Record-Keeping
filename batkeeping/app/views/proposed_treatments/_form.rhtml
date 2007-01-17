@@ -38,4 +38,7 @@
 <%= date_select 'proposed_treatment', 'date_closed', :disabled => @disable_leave_date  %></p>
 </div>
 
+
+<%= render_partial 'medical_problems/show_all_proposed_treatments', @medical_problem %>
+
 <!--[eoform:proposed_treatment]-->

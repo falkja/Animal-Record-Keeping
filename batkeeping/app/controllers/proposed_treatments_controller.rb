@@ -39,7 +39,7 @@ class ProposedTreatmentsController < ApplicationController
       #@tasks = @proposed_treatment.medical_problem.user.tasks
       #@proposed_treatment.medical_problem.user.tasks = @tasks << @task
       flash[:notice] = 'Proposed Treatment was successfully created.'
-      redirect_to :controller => 'medical_problems', :action => 'list_current'
+      redirect_to :back
     else
       render :action => 'new'
     end

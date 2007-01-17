@@ -2,9 +2,9 @@
 
 <%= start_form_tag :action => 'create', :id => @medical_problem %>
   <%= render :partial => 'form' %>
-  <%= submit_tag "New Treatment" %>
+  <p><%= submit_tag "New Treatment" %></p>
 <%= end_form_tag %>
 
-<%= link_to 'List Current Medical Problems', :controller => 'medical_problems', :action => 'list_current' %>
+<p><%= button_to 'Done', :controller => 'medical_problems', :action => 'list' %></p>
 
-<%= render_partial 'medical_problems/show_all_proposed_treatments', @medical_problem %>
+<%= link_to 'List Current Medical Problems', :controller => 'medical_problems', :action => 'list_current' %>

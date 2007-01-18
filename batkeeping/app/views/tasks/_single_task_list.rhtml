@@ -54,6 +54,7 @@
     <td><%= link_to 'Edit',  :controller => 'tasks', :action => 'edit', :id => task %></td>
     <td><%= link_to 'Destroy', { :controller => 'tasks', :action => 'destroy', :id => task }, :confirm => 'Are you sure?', :post => true %></td>
     <% end %>
+        <td><%=h task.jitter %></td>
         <td><%=h task.find_post %></td>
  </tr>
     

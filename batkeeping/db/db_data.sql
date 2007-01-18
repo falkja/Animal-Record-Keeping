@@ -452,7 +452,7 @@ CREATE TABLE `tasks` (
   `food` int(10) unsigned default NULL,
   `dish_type` varchar(45) default NULL,
   `dish_num` int(10) unsigned default NULL,
-  `jitter` int(10) unsigned NOT NULL,
+  `jitter` int(11) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -483,7 +483,9 @@ INSERT INTO `tasks` (`id`,`last_done_date`,`repeat_code`,`proposed_treatment_id`
  (134,NULL,6,NULL,3,'Feed cage Cage3','','feed',3,'Medium',1,0),
  (135,'2007-01-20 11:42:46',7,NULL,3,'Feed cage Cage3','','feed',3,'Medium',1,0),
  (136,'2007-01-20 11:42:52',7,NULL,NULL,'Do dishes','Soak in bleach water at least 10 minutes',NULL,NULL,NULL,NULL,0),
- (140,NULL,0,NULL,NULL,'Fill out census sheet','',NULL,NULL,NULL,NULL,0);
+ (140,NULL,0,NULL,NULL,'Fill out census sheet','',NULL,NULL,NULL,NULL,0),
+ (145,NULL,4,NULL,NULL,'Change pads','',NULL,NULL,NULL,NULL,0),
+ (146,NULL,7,NULL,NULL,'Change pads','',NULL,NULL,NULL,NULL,-1);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 
 
@@ -516,6 +518,7 @@ INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES
  (1,133),
  (1,134),
  (1,140),
+ (1,145),
  (2,2),
  (2,24),
  (2,25),
@@ -523,6 +526,7 @@ INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES
  (3,135),
  (3,136),
  (3,140),
+ (3,146),
  (4,30),
  (4,127),
  (5,26),

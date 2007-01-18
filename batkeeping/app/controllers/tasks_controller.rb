@@ -138,9 +138,8 @@ class TasksController < ApplicationController
     end
     
     for day in @days
-        @task = Task.new
+        @task = Task.new(params[:task])
         @task.repeat_code = day
-        @task.title = params[:task][:title]
         @task.internal_description = nil
         @task.save
         @task.users = @users
@@ -153,6 +152,7 @@ class TasksController < ApplicationController
     @users = User.current
     @user_ids = Array.new 
     @task.users.each {|user| @user_ids << user.id }
+    @editing = true
   end
 
   def update

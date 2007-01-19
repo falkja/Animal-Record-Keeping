@@ -2,18 +2,25 @@
 
 <p><b>Cage owner:</b> <%=h @cage.user.name %></p>
 
+<p><b>Bats in cage:</b> <%=h @cage.bats.length %></p>
+
+<% if @cage.bats.length > 0 %>
+<p>
+<% combined_weights = 0.0 %>
+<% for bat in @cage.bats %>
+  <% combined_weights = combined_weights + bat.weights.recent[0].weight %>
+<% end %>
+<% average = combined_weights/@cage.bats.length %>
+<b>Average Weight: </b><%= (("%.0" + 1.to_s + "f") % average).to_f %> g
+</p>
+<% end %>
+
+
+
+
 <%= form_remote_tag(:update => "cage_tasks_list",
                        :url => { :controller => 'tasks', :action => 'update_multiple_feeding_tasks', :id => @cage },
                        :position => "replace") %>
-
-<p>
-</p>
-
-<p>
-</p>
-
-<p>
-</p>
 
 <p><label for="food">Food amount</label><br/>
 <%= text_field 'task', 'food', :size => 1, :autocomplete => 'off' %> grams</p>

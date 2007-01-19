@@ -174,10 +174,7 @@ redirect_to :action => 'list'
 	Bat::set_user_and_comment(session[:person], params[:move]['note']) #This must come before we mess with the list of bats for a cage. The moment we mess with the list, the cage and bat variables are updated. 
 	@cage.bats << @bats
 	@cage.bats = @cage.bats.uniq #no duplicates
-  flash[:notice] = 'Moved bats '
-  @bats.each {|bat| flash[:notice] = flash[:notice] + bat.band + ' ' }
-  flash[:notice] = flash[:notice] + ' to ' + @cage.name
-  redirect_to :controller => 'cages', :action => 'list'
+  @old_cage = @bats[0].cage_in_histories[1].cage
   end
 
   def choose_bat_to_weigh

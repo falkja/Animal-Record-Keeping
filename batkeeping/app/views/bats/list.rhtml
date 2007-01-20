@@ -7,7 +7,7 @@ Listing current bats
 </h1>
 
 <div id="bats_div">
-<%= render_partial 'bat_list', @bats %>
+<%= render :partial => 'bats/bat_list', :locals => {:bat_list => @bats} %>
 </div>
   
 <br />

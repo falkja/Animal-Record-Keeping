@@ -2,14 +2,14 @@
 
 <%= start_form_tag :action => 'submit_weight', :id => @bat, :redirectme => params[:redirectme] %>
 
-<%= render_partial "bats/weigh_one_bat", @bat %>
+<%= render :partial => "bats/weigh_one_bat", :locals => {:weigh_one_bat => @bat} %>
 
 <%= end_form_tag %>
 
 <% if @bat.weights.length == 0 %>
 No previous weights.
 <% else %>
-<%= render_partial 'display_weights', @bat %>
+<%= render :partial => 'display_weights', :locals => {:display_weights => @bat} %>
 <% end %>
 
 <p><%= link_to 'Back', :controller => 'bats', :action => 'choose_bat_to_weigh' %></p>

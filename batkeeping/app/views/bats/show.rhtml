@@ -72,7 +72,7 @@
 <th>Treatment</th>
 <% @show_bat = false %>
   <% for medical_problem in @bat.medical_problems.current %>
-    <%= render_partial 'medical_problems/medical_problem_for_bat', medical_problem %>
+    <%= render :partial => 'medical_problems/medical_problem_for_bat', :locals => {:medical_problem_for_bat => medical_problem} %>
   <% end %>  
 </table>
 </blockquote>
@@ -91,13 +91,13 @@
 <th>Treatment</th>
 <% @show_bat = false %>
   <% for medical_problem in @bat.medical_problems.expired %>
-    <%= render_partial 'medical_problems/medical_problem_for_bat', medical_problem %>
+    <%= render :partial => 'medical_problems/medical_problem_for_bat', :locals => {:medical_problem_for_bat => medical_problem} %>
   <% end %>
 </table>
 </blockquote>
 <% end %>
 
-<%= render_partial 'bats/display_weights', @bat %>
+<%= render :partial => 'bats/display_weights', :locals => {:display_weights => @bat} %>
 
 <% if @cohs.length >0 %>
 <h3>Cage History:</h3>

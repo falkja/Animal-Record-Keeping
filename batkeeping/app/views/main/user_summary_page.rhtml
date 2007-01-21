@@ -71,7 +71,7 @@ You are responsible for no medical problems.
   <% if @my_general_tasks.length == 0 %>
     You have no general tasks.
   <% else %>
-  <%= render :partial => 'tasks/tasks_list', :locals => {:tasks_list => nil, 'tasks' => @my_general_tasks} %>
+  <%= render :partial => 'tasks/tasks_list', :locals => {:tasks_list => nil, :tasks => @my_general_tasks} %>
   <% end %>
   </blockquote>
   </p>

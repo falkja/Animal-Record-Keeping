@@ -16,12 +16,11 @@
 <% end %>
 
 
-
-
 <%= form_remote_tag(:update => "cage_tasks_list",
                        :url => { :controller => 'tasks', :action => 'update_multiple_feeding_tasks', :id => @cage },
                        :position => "replace") %>
 
+<% if @cage.bats.length > 0 %>
 <% if (average < 20) && (average > 14) %>
 <% suggested_amount = 1.5 * @cage.bats.length %>
 <% elseif average > 20 %>
@@ -29,11 +28,14 @@
 <% else %>
 <% suggested_amount = 2.0 * @cage.bats.length %>
 <% end %>
+<% end %>
 
 <p><label for="food">Food amount</label><br/>
 <%= text_field 'task', 'food', :size => 1, :autocomplete => 'off', :value => suggested_amount %> g</p>
 
+<% if @cage.bats.length > 0 %>
 <b>Suggested amount (E. fuscus)</b>: <%=h suggested_amount %> g (<%=h suggested_amount/@cage.bats.length %> g per bat) based on average weight of bats in cage.
+<% end %>
 
 <p><label for="dish_type">Dish Type</label><br/>
 <%= select_tag("task[dish_type]", options_for_select([["Small","Small"],["Medium","Medium"], ["Long","Long"],["Metal tray","Metal tray"]])) %></p>

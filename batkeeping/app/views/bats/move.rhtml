@@ -1,24 +1,29 @@
 <h1>Moved Bat(s)</h1>
 
 <p>
-<b>Bat(s)</b><br/>
+<b>Bat(s)</b>
 <% for bat in @bats %>
 <%= bat.band + ', ' %>
 <% end %>
 </p>
 
-<p>Please adjust/create feeding tasks for the old cage and the new cage.</p>
+<p><b>From</b> <%= @old_cage.name %></p>
 
-<p><b>Old cage</b><br/>
+<p><b>To</b> <%= @cage.name %></p>
+
+<p>Please add/edit feeding tasks for the old and new cages to account for the moved bats.</p>
+<blockquote>
+<p><b>-<%= @bats.length %> to <%= @old_cage.name %></b> (<%= @old_cage.tasks.feeding_tasks.length %> feeding tasks for <%= @old_cage.bats.uniq.length %> bats)<br/>
 <% if @old_cage.tasks.feeding_tasks.length == 0 %>
 <%= link_to @old_cage.name, :controller => 'tasks', :action => 'new_feed_cage_task', :id => @old_cage %></p>
 <% else %>
 <%= link_to @old_cage.name, :controller => 'tasks', :action => 'edit_multiple_feeding_tasks', :id => @old_cage %></p>
 <% end %>
 
-<p><b>New cage</b><br/>
+<p><b>+<%= @bats.length %> to <%= @cage.name %></b> (<%= @cage.tasks.feeding_tasks.length %> feeding tasks for <%= @cage.bats.uniq.length %> bats)<br/>
 <% if @cage.tasks.feeding_tasks.length == 0 %>
 <%= link_to @cage.name, :controller => 'tasks', :action => 'new_feed_cage_task', :id => @cage %></p>
 <% else %>
 <%= link_to @cage.name, :controller => 'tasks', :action => 'edit_multiple_feeding_tasks', :id => @cage %></p>
 <% end %>
+</blockquote>

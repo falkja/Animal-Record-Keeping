@@ -4,9 +4,16 @@
   No feeding tasks.
   <% else %>
   <%= render :partial => 'tasks_list', :locals =>{:tasks_list => nil, :tasks => @feeding_tasks} %>
+  <p>
+  <%= start_form_tag :action => 'form_to_edit_multiple_feeding_tasks', :id => @cage %>
+  Cage: 
+  <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
+  <%= submit_tag "Edit multiple feeding tasks" %>
+  <%= end_form_tag %>
+  </p>
   <% end %>
   <p>
-  <%= start_form_tag :action => 'form_to_new_feed_cage_task' %>
+  <%= start_form_tag :action => 'form_to_new_feed_cage_task', :id => @cage %>
   Cage: 
   <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
   <%= submit_tag "Add a feeding task" %>
@@ -22,7 +29,7 @@
   <%= render :partial => 'tasks_list', :locals =>{:tasks_list => nil, :tasks => @weighing_tasks} %>
   <% end %>
   <p>
-  <%= start_form_tag :action => 'form_to_new_weigh_cage_task' %>
+  <%= form_tag :action => 'form_to_new_weigh_cage_task' %>
   Cage: 
   <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
   <%= submit_tag "Add a weighing task" %>
@@ -36,17 +43,14 @@
   No medical tasks.
   <% else %>
     <%= render :partial => 'tasks_list', :locals =>{:tasks_list => nil, :tasks => @medical_tasks} %>
-
+    <p>
+    <%= form_tag :controller => 'proposed_treatments', :action => 'new' %>
+    Medical Problem: 
+    <%= select_tag("id", options_from_collection_for_select(@medical_problems, "id", "title")) %>
+    <%= submit_tag "Add a new treatment" %>
+    <%= end_form_tag %>
+    </p>
   <% end %>
-  <p>
-  
-  <%= start_form_tag :controller => 'proposed_treatments', :action => 'new' %>
-  Medical Problem: 
-  <%= select_tag("id", options_from_collection_for_select(@medical_problems, "id", "title")) %>
-  <%= submit_tag "Add a new treatment" %>
-  <%= end_form_tag %>
-  
-  </p>
 </blockquote>
 
 <h1>Listing General Tasks</h1>

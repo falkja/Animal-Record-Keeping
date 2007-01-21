@@ -9,7 +9,7 @@ class TasksController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @general_tasks = Task.general_tasks  
+    @general_tasks = Task.general_tasks
     @weighing_tasks = Task.weighing_tasks
     @medical_tasks = Task.medical_tasks    
     @feeding_tasks = Task.feeding_tasks
@@ -19,6 +19,11 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.find(params[:id])
+  end
+
+  def choose_new_task
+    @cages = Cage.has_bats
+    @medical_problems = MedicalProblem.current
   end
 
   def new
@@ -63,6 +68,11 @@ class TasksController < ApplicationController
   end
 
   #allows editing the food amount and dishes for multiple feeding tasks
+  def form_to_edit_multiple_feeding_tasks
+    @cage = Cage.find(params[:id])
+    redirect_to :action => :edit_multiple_feeding_tasks, :id => @cage
+  end
+
   def edit_multiple_feeding_tasks
     @cage = Cage.find(params[:id])
   end

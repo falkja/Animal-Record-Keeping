@@ -1,0 +1,39 @@
+<h1>Choose Type of Task</h1>
+
+<h3>Feeding Task</h3>
+<blockquote>
+  <p>
+  <%= start_form_tag :action => 'form_to_new_feed_cage_task', :id => @cage %>
+  Cage: 
+  <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
+  <%= submit_tag "Add a feeding task" %>
+  <%= end_form_tag %>
+  </p>
+</blockquote>
+
+<h3>Weighing Task</h3>
+<blockquote>
+  <p>
+  <%= form_tag :action => 'form_to_new_weigh_cage_task' %>
+  Cage: 
+  <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
+  <%= submit_tag "Add a weighing task" %>
+  <%= end_form_tag %>
+  </p>
+</blockquote>
+
+<h3>Medical Task</h3>
+<blockquote>
+    <p>
+    <%= form_tag :controller => 'proposed_treatments', :action => 'new' %>
+    Medical Problem: 
+    <%= select_tag("id", options_from_collection_for_select(@medical_problems, "id", "title")) %>
+    <%= submit_tag "Add a new treatment" %>
+    <%= end_form_tag %>
+    </p>
+</blockquote>
+
+<h3>General Task</h3>
+<blockquote>
+<p><%= button_to 'Add a general task', :controller => 'tasks', :action => 'new' %></p>
+  </blockquote>

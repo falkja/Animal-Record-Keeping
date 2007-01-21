@@ -3,7 +3,7 @@
   <% if @feeding_tasks.length == 0 %>
   No feeding tasks.
   <% else %>
-  <%= render_partial 'tasks_list' , nil, 'tasks' => @feeding_tasks %>
+  <%= render :partial => 'tasks_list', :locals =>{:tasks_list => nil, :tasks => @feeding_tasks} %>
   <% end %>
   <p>
   <%= start_form_tag :action => 'form_to_new_feed_cage_task' %>
@@ -19,7 +19,7 @@
   <% if @weighing_tasks.length == 0 %>
   No cage weighing tasks.
   <% else %>
-  <%= render_partial 'tasks_list' , nil, 'tasks' => @weighing_tasks %>
+  <%= render :partial => 'tasks_list', :locals =>{:tasks_list => nil, :tasks => @weighing_tasks} %>
   <% end %>
   <p>
   <%= start_form_tag :action => 'form_to_new_weigh_cage_task' %>
@@ -35,7 +35,8 @@
   <% if @medical_tasks.length == 0 %>
   No medical tasks.
   <% else %>
-  <%= render_partial 'tasks_list' , nil, 'tasks' => @medical_tasks %>
+    <%= render :partial => 'tasks_list', :locals =>{:tasks_list => nil, :tasks => @medical_tasks} %>
+
   <% end %>
   <p>
   
@@ -53,7 +54,7 @@
   <% if @general_tasks.length == 0 %>
   No general tasks.
   <% else %>
-  <%= render_partial 'tasks_list' , nil, 'tasks' => @general_tasks %>
+  <%= render :partial => 'tasks_list', :locals =>{:tasks_list => nil, :tasks => @general_tasks} %>
   <% end %>
   <p><%= button_to 'Add a general task', :controller => 'tasks', :action => 'new' %></p>
 </blockquote>

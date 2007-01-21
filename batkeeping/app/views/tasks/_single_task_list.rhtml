@@ -1,5 +1,5 @@
 <% # You need to pass a local variable called 'manage' that is true or false %>
-<% # i.e. like <%= render_partial 'task_list', nil, 'task' => task, 'manage' => true %> %>
+<% # i.e. like <%= render :partial => 'task_list', :locals => {:task_list => nil, :task => task, 'manage' => true} %> %>
 
 <% # if true, the partial will also display edit and destroy buttons %>
 

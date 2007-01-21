@@ -6,6 +6,6 @@
         <b>Treatment Start Date: </b><%=h nice_date proposed_treatment.date_started %><br />
         <b>Suggested Treatment Finish Date: </b><%=h nice_date proposed_treatment.date_finished %><br />
         <b>Ended Treatment: </b><%=h nice_date proposed_treatment.date_closed %><br />
-        <%= render_partial 'proposed_treatments/show_all_medical_care_actions', proposed_treatment %>
+        <%= render :partial => 'proposed_treatments/show_all_medical_care_actions', :locals => {:show_all_medical_care_actions => proposed_treatment} %>
       </blockquote>
     </p>

@@ -25,7 +25,7 @@ class CagesController < ApplicationController
     @list_all = false
     @div_id = params[:div]
     @weighing = params[:weighing]
-    render_partial 'cage_list', @cages
+    render :partial => 'cage_list', :locals => {:cage_list => @cages}
   end
 
   def list_all_by_name
@@ -33,7 +33,7 @@ class CagesController < ApplicationController
     @list_all = true
     @div_id = params[:div]
     @weighing = params[:weighing]
-    render_partial 'cage_list', @cages
+    render :partial => 'cage_list', :locals => {:cage_list => @cages}
   end
   
   def list_by_room
@@ -41,7 +41,7 @@ class CagesController < ApplicationController
     @list_all = false
     @div_id = params[:div]
     @weighing = params[:weighing]
-    render_partial 'cage_list', @cages
+    render :partial => 'cage_list', :locals => {:cage_list => @cages}
   end
   
   def list_all_by_room
@@ -49,7 +49,7 @@ class CagesController < ApplicationController
     @list_all = true
     @div_id = params[:div]
     @weighing = params[:weighing]
-    render_partial 'cage_list', @cages
+    render :partial => 'cage_list', :locals => {:cage_list => @cages}
   end
   
   def list_by_owner
@@ -57,7 +57,7 @@ class CagesController < ApplicationController
     @list_all = false
     @div_id = params[:div]
     @weighing = params[:weighing]
-    render_partial 'cage_list', @cages
+    render :partial => 'cage_list', :locals => {:cage_list => @cages}
   end
   
   def list_all_by_owner
@@ -65,7 +65,7 @@ class CagesController < ApplicationController
     @list_all = true
     @div_id = params[:div]
     @weighing = params[:weighing]
-    render_partial 'cage_list', @cages
+    render :partial => 'cage_list', :locals => {:cage_list => @cages}
   end
   
   def show

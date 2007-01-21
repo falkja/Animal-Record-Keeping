@@ -26,7 +26,7 @@ redirect_to :action => 'list'
   @list_all = false
     @div_id = params[:div]
     @weighing = params[:weighing]
-	render_partial 'bat_list', @bats
+	render :partial => 'bat_list', :locals => {:bat_list => @bats}
   end
   
   def list_all_by_cage
@@ -34,7 +34,7 @@ redirect_to :action => 'list'
   @list_all = true
     @div_id = params[:div]
     @weighing = params[:weighing]
-	render_partial 'bat_list', @bats
+	render :partial => 'bat_list', :locals => {:bat_list => @bats}
   end
   
   def list_by_band
@@ -42,7 +42,7 @@ redirect_to :action => 'list'
   @list_all = false
     @div_id = params[:div]
     @weighing = params[:weighing]
-	render_partial 'bat_list', @bats
+	render :partial => 'bat_list', :locals => {:bat_list => @bats}
   end
   
   def list_all_by_band
@@ -50,7 +50,7 @@ redirect_to :action => 'list'
 	@list_all = true
     @div_id = params[:div]
     @weighing = params[:weighing]
-	render_partial 'bat_list', @bats
+	render :partial => 'bat_list', :locals => {:bat_list => @bats}
   end
   
   def show

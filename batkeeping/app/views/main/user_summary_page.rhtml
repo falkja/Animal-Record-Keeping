@@ -8,7 +8,7 @@ You have no cages
 <% else %>
 <div id= "my_cages">
 <% @div_id = "my_cages" %>
-<%= render_partial 'cages/cage_list', @mycages %>
+<%= render :partial => 'cages/cage_list', :locals => {:cage_list => @mycages} %>
 </div>
 <% end %>
 </blockquote>
@@ -33,7 +33,7 @@ You are responsible for no medical problems.
 <% @show_bat = true %>
 <% for problem in @mymedicalproblems %>
 <% @bat = problem.bat %>
-<%= render_partial 'medical_problems/medical_problem_for_bat',  problem %>
+<%= render :partial => 'medical_problems/medical_problem_for_bat', :locals => {:medical_problem_for_bat => problem} %>
 <% end %>
 </table>
 <% end %>
@@ -49,7 +49,7 @@ You are responsible for no medical problems.
   <% if @my_feeding_tasks.length == 0 %>
     You have no cage feeding tasks.
   <% else %>
-  <%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @my_feeding_tasks %>
+  <%= render :partial => 'tasks/tasks_list', :locals => {:tasks_list => nil, :tasks => @my_feeding_tasks} %>
   <% end %>
   </blockquote>
   </p>
@@ -60,7 +60,7 @@ You are responsible for no medical problems.
   <% if @my_weighing_tasks.length == 0 %>
     You have no cage weighing tasks.
   <% else %>
-  <%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @my_weighing_tasks %>
+  <%= render :partial => 'tasks/tasks_list', :locals => {:tasks_list => nil, :tasks => @my_weighing_tasks} %>
   <% end %>
   </blockquote>
   </p>
@@ -71,7 +71,7 @@ You are responsible for no medical problems.
   <% if @my_general_tasks.length == 0 %>
     You have no general tasks.
   <% else %>
-  <%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @my_general_tasks %>
+  <%= render :partial => 'tasks/tasks_list', :locals => {:tasks_list => nil, 'tasks' => @my_general_tasks} %>
   <% end %>
   </blockquote>
   </p>

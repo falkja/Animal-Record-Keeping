@@ -14,7 +14,7 @@
   <% else %>
     <% manage = false %>
   <% end %>
- <%= render_partial 'tasks/single_task_list', nil, 'task' => task, 'manage' => manage %>
+ <%= render :partial => 'tasks/single_task_list', :locals => {:single_task_list => nil, :task => task, :manage => manage} %>
 
 <% end %>
 

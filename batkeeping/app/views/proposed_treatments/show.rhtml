@@ -9,7 +9,7 @@
   <p><b>Owner: </b><%=h @proposed_treatment.medical_problem.user ? @proposed_treatment.medical_problem.user.name : 'General Medical Care' %></p>
   </blockquote>
   
-  <%= render_partial 'medical_problems/show_proposed_treatment', @proposed_treatment %>
+  <%= render :partial => 'medical_problems/show_proposed_treatment', :locals => {:show_proposed_treatment => @proposed_treatment} %>
 
 <%#= link_to 'Edit', :action => 'edit', :id => @proposed_treatment %>
 <%= link_to 'List Current Medical Problems', :controller => 'medical_problems', :action => 'list_current' %>

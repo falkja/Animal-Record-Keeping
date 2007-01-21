@@ -24,7 +24,7 @@
 <% for @bat in @bats %>
   <% @list_all ? medical_problems = @bat.medical_problems : medical_problems = @bat.medical_problems.current %>
   <% for medical_problem in medical_problems %>
-    <%= render_partial 'medical_problem_for_bat', medical_problem %>
+    <%= render :partial => 'medical_problem_for_bat', :locals => {:medical_problem_for_bat => medical_problem} %>
   <% end %>  
 <% end %>
 </table>

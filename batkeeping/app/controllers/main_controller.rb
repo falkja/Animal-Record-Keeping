@@ -97,11 +97,11 @@ class MainController < ApplicationController
 	
 		@fruitbat_cages = Cage.active_fruitbat_cages
 		@fruitbat_bats = bats_in_cages(@fruitbat_cages)
-		render_partial 'room_summary'
+		render :partial => 'room_summary'
 	end
 	
 	def hide_room_summary
-		render_partial 'hide_room_summary'
+		render :partial => 'hide_room_summary'
 	end
 
 	def census_summary
@@ -112,23 +112,23 @@ class MainController < ApplicationController
 			@years = Array.new
 		end
 		compute_census_summary
-		render_partial 'census_summary'
+		render :partial => 'census_summary'
 	end
 	
 	def hide_census_summary
 		compute_census_summary
-		render_partial 'hide_census_summary'
+		render :partial => 'hide_census_summary'
 	end
 	
 	#need to pass the year in :year and yes or no in :display
 	def show_census_year		
-		render_partial 'census_year_data', nil, :year => params[:year], :display => params[:display]
+		render :partial => 'census_year_data', :locals => {:census_year_data => nil, :year => params[:year], :display => params[:display]}
 	end
 	
 	
 	def food_summary
 		compute_food_summary
-		render_partial 'food_summary'
+		render :partial => 'food_summary'
 	end
 	
 	def hide_food_summary
@@ -140,16 +140,16 @@ class MainController < ApplicationController
 			@colony_food_today = @colony_food_today + cage.food_today
 			@colony_food_this_week = @colony_food_this_week + cage.food_this_week
 		end				
-		render_partial 'hide_food_summary'
+		render :partial => 'hide_food_summary'
 	end
 	
 	def medical_summary
 		@medical_problems = MedicalProblem.current		
-		render_partial 'medical_summary'
+		render :partial => 'medical_summary'
 	end
 	
 	def hide_medical_summary
-		render_partial 'hide_medical_summary'
+		render :partial => 'hide_medical_summary'
 	end
 	
 end

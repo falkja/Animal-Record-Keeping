@@ -36,7 +36,7 @@
 
 <div id="cage_tasks_list">
 <% @tasks = @cage.tasks.feeding_tasks %>
-<%= render_partial 'cages/feeding_tasks' %>
+<%= render :partial => 'cages/feeding_tasks' %>
 </div>
 
 <%= button_to 'Done', :controller => 'cages', :action => 'show', :id => @cage %>

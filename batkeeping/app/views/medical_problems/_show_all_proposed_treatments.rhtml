@@ -6,7 +6,7 @@
   <h3>Current Treatments:</h3>
   <blockquote>
   <% for proposed_treatment in @medical_problem.proposed_treatments.current %>
-    <%= render_partial 'medical_problems/show_proposed_treatment', proposed_treatment %>
+    <%= render :partial => 'medical_problems/show_proposed_treatment', :locals => {:show_proposed_treatment => proposed_treatment} %>
   <% end %>
 <% end %>
 </blockquote>
@@ -15,7 +15,7 @@
   <h3>Expired Treatments:</h3>
   <blockquote>
   <% for proposed_treatment in @medical_problem.proposed_treatments.expired %>
-    <%= render_partial 'medical_problems/show_proposed_treatment', proposed_treatment %>
+    <%= render :partial => 'medical_problems/show_proposed_treatment', :locals => {:show_proposed_treatment => proposed_treatment} %>
   <% end %>
 <% end %>
 </blockquote>

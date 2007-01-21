@@ -7,7 +7,7 @@ Listing current cages
 </h1>
 
 <div id = "cages_div">
-<%= render_partial 'cages/cage_list', @cages %>
+<%= render :partial => 'cages/cage_list', :locals => {:cage_list => @cages} %>
 </div>
 <br />
 

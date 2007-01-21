@@ -22,7 +22,7 @@
   <% if @saturday_feeding_tasks.length == 0 %>
     No Saturday feeding tasks.
   <% else %>
-  <%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @saturday_feeding_tasks %>
+  <%= render :partial => 'tasks/tasks_list', :locals => {:tasks_list => nil, :tasks => @saturday_feeding_tasks} %>
   <% end %>
   </blockquote>
   </p>
@@ -33,7 +33,7 @@
   <% if @saturday_general_tasks.length == 0 %>
     No Saturday general tasks.
   <% else %>
-  <%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @saturday_general_tasks %>
+  <%= render :partial => 'tasks/tasks_list', :locals => {:tasks_list => nil, :tasks => @saturday_general_tasks} %>
   <% end %>
   </blockquote>
   </p>
@@ -44,7 +44,7 @@
   <% if @sunday_feeding_tasks.length == 0 %>
     No Sunday feeding tasks.
   <% else %>
-  <%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @sunday_feeding_tasks %>
+  <%= render :partial => 'tasks/tasks_list', :locals => {:tasks_list => nil, :tasks => @sunday_feeding_tasks} %>
   <% end %>
   </blockquote>
   </p>
@@ -55,7 +55,7 @@
   <% if @sunday_general_tasks.length == 0 %>
     No Sunday general tasks.
   <% else %>
-  <%= render_partial 'tasks/tasks_list' , nil, 'tasks' => @sunday_general_tasks %>
+  <%= render :partial => 'tasks/tasks_list', :locals => {:tasks_list => nil, :tasks => @sunday_general_tasks} %>
   <% end %>
   </blockquote>
   </p>
@@ -80,7 +80,7 @@ You are responsible for no medical problems.
 <% for @bat in @sick_bats %>
   <% @list_all ? medical_problems = @sick_bat.medical_problems : medical_problems = @bat.medical_problems.current %>
   <% for medical_problem in medical_problems %>
-    <%= render_partial 'medical_problems/medical_problem_for_bat', medical_problem %>
+    <%= render :partial => 'medical_problems/medical_problem_for_bat', :locals => {:medical_problem_for_bat => medical_problem} %>
   <% end %>  
 <% end %>
 </table>

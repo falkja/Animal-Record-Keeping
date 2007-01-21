@@ -39,6 +39,6 @@
 </div>
 
 
-<%= render_partial 'medical_problems/show_all_proposed_treatments', @medical_problem %>
+<%= render :partial => 'medical_problems/show_all_proposed_treatments', :locals => {:show_all_proposed_treatments => @medical_problem} %>
 
 <!--[eoform:proposed_treatment]-->

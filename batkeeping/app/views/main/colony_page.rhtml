@@ -1,17 +1,17 @@
 <h1>Colony status as of <%= nice_date_with_time Time.now %></h1>
 
 <div id = 'rooms'>
-<%= render_partial 'hide_room_summary' %>
+<%= render :partial => 'hide_room_summary' %>
 </div>
 
 <div id = 'census'>
-<%= render_partial 'hide_census_summary' %>
+<%= render :partial => 'hide_census_summary' %>
 </div>
 
 <div id = 'food'>
-<%= render_partial 'hide_food_summary' %>
+<%= render :partial => 'hide_food_summary' %>
 </div>
 
 <div id = 'medical'>
-<%= render_partial 'hide_medical_summary' %>
+<%= render :partial => 'hide_medical_summary' %>
 </div>

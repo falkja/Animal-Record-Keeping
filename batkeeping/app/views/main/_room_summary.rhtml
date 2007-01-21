@@ -15,7 +15,7 @@ containing <b><%= @colony_bats.length %></b> bats.
 <blockquote><p>
 <div id="colony">
 <% @div_id = "colony" %>
-<%= render_partial 'cages/cage_list', @colony_cages %>
+<%= render :partial => 'cages/cage_list', :locals => {:cage_list => @colony_cages} %>
 </div>
 </p></blockquote>
 
@@ -27,7 +27,7 @@ containing <b><%= @belfry_bats.length %></b> bats.
 <blockquote><p>
 <div id="belfry">
 <% @div_id = "belfry" %>
-<%= render_partial 'cages/cage_list', @belfry_cages %>
+<%= render :partial => 'cages/cage_list', :locals => {:cage_list => @belfry_cages} %>
 </div>
 </p></blockquote>
 
@@ -39,7 +39,7 @@ containing <b><%= @fruitbat_bats.length %></b> bats.
 <blockquote><p>
 <div id="fruitbat">
 <% @div_id = "fruitbat" %>
-<%= render_partial 'cages/cage_list', @fruitbat_cages %>
+<%= render :partial => 'cages/cage_list', :locals => {:cage_list => @fruitbat_cages} %>
 </div>
 </p></blockquote>
 

@@ -3,7 +3,7 @@
 <div id="weigh_cage">
 <% @div_id = "weigh_cage" %>
 <% @weighing = true %>
-<%= render_partial 'cages/cage_list', @cages %>
+<%= render :partial => 'cages/cage_list', :locals => {:cage_list => @cages} %>
 </div>
 
 <p><%= link_to 'Back', :controller => 'weights', :action => 'weighing_choice' %></p>

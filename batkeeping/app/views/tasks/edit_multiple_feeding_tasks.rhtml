@@ -15,7 +15,13 @@
 </p>
 <% end %>
 
-
+<div id="cage_tasks_list">
+<% @tasks = @cage.tasks.feeding_tasks %>
+<%= render :partial => 'cages/feeding_tasks' %>
+</div>
+<b>Edit Feeding Tasks:</b><br/>
+<em>This will change all feeding tasks to match the parameters below</em>
+<blockquote>
 <%= form_remote_tag(:update => "cage_tasks_list",
                        :url => { :controller => 'tasks', :action => 'update_multiple_feeding_tasks', :id => @cage },
                        :position => "replace") %>
@@ -34,7 +40,7 @@
 <%= text_field 'task', 'food', :size => 1, :autocomplete => 'off', :value => suggested_amount %> g</p>
 
 <% if @cage.bats.length > 0 %>
-<b>Suggested amount (E. fuscus)</b>: <%=h suggested_amount %> g (<%=h suggested_amount/@cage.bats.length %> g per bat) based on average weight of bats in cage.
+<em>Suggested amount (E. fuscus): <%=h suggested_amount %> g (<%=h suggested_amount/@cage.bats.length %> g per bat) based on average weight of bats in cage.</em>
 <% end %>
 
 <p><label for="dish_type">Dish Type</label><br/>
@@ -45,10 +51,5 @@
 
 <%= submit_tag "Edit all feeding tasks for " + @cage.name %>
 <%= end_form_tag %>
-
-<div id="cage_tasks_list">
-<% @tasks = @cage.tasks.feeding_tasks %>
-<%= render :partial => 'cages/feeding_tasks' %>
-</div>
-
+</blockquote>
 <%= button_to 'Done', :controller => 'cages', :action => 'show', :id => @cage %>

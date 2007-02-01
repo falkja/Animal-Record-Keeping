@@ -1,5 +1,7 @@
 <h1>Moved Bat(s)</h1>
 
+<font color = red>Send email to alert owner of cage that bat has been moved into their cage</font>
+
 <p>
 <b>Bat(s)</b>
 <% for bat in @bats %>
@@ -11,19 +13,6 @@
 
 <p><b>To</b> <%= @cage.name %></p>
 
-<p>Please add/edit feeding tasks for the old and new cages to account for the moved bats.</p>
-<blockquote>
-<p><b>-<%= @bats.length %> to <%= @old_cage.name %></b> (<%= @old_cage.tasks.feeding_tasks.length %> feeding tasks for <%= @old_cage.bats.uniq.length %> bats)<br/>
-<% if @old_cage.tasks.feeding_tasks.length == 0 %>
-<%= link_to @old_cage.name, :controller => 'tasks', :action => 'new_feed_cage_task', :id => @old_cage %></p>
-<% else %>
-<%= link_to @old_cage.name, :controller => 'tasks', :action => 'edit_multiple_feeding_tasks', :id => @old_cage %></p>
-<% end %>
-
-<p><b>+<%= @bats.length %> to <%= @cage.name %></b> (<%= @cage.tasks.feeding_tasks.length %> feeding tasks for <%= @cage.bats.uniq.length %> bats)<br/>
-<% if @cage.tasks.feeding_tasks.length == 0 %>
-<%= link_to @cage.name, :controller => 'tasks', :action => 'new_feed_cage_task', :id => @cage %></p>
-<% else %>
-<%= link_to @cage.name, :controller => 'tasks', :action => 'edit_multiple_feeding_tasks', :id => @cage %></p>
-<% end %>
-</blockquote>
+<div id="div_id">
+<%= render :partial => 'feeding_task_actions_after_move', :locals => {:cage => @cage, :old_cage => @old_cage, :bats => @bats} %>
+</div>

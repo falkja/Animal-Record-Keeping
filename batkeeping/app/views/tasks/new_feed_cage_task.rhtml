@@ -15,6 +15,13 @@
 </p>
 <% end %>
 
+<div id="cage_tasks_list">
+<% @tasks = @cage.tasks.feeding_tasks %>
+<%= render :partial => 'cages/feeding_tasks' %>
+</div>
+
+<b>Add Feeding Tasks:</b>
+<blockquote>
 <%= form_remote_tag(:update => "cage_tasks_list",
                        :url => { :controller => 'tasks', :action => 'create_feed_cage_task', :id => @cage },
                        :position => "replace") %>
@@ -71,10 +78,5 @@ Any feeding task that takes place during Monday-Friday and is assigned to the We
 
 <%= submit_tag "Add task(s) for " + @cage.name %>
 <%= end_form_tag %>
-
-<div id="cage_tasks_list">
-<% @tasks = @cage.tasks.feeding_tasks %>
-<%= render :partial => 'cages/feeding_tasks' %>
-</div>
-
+</blockquote>
 <%= button_to 'Done', :controller => 'cages', :action => 'show', :id => @cage %>

@@ -87,8 +87,7 @@ class TasksController < ApplicationController
         task.save
     end    
     
-    @tasks = @cage.tasks.feeding_tasks
-    render :partial => 'cages/feeding_tasks'
+    render :partial => 'cages/feeding_tasks', :locals => {:cage => @cage}
   end
   
   #called from the form on the list tasks page, needed so that the page that is requested has an ID attached to it so that refreshes of the page don't break
@@ -134,8 +133,7 @@ class TasksController < ApplicationController
         end
     end    
     
-    @tasks = @cage.tasks.feeding_tasks
-    render :partial => 'cages/feeding_tasks'
+    render :partial => 'cages/feeding_tasks', :locals => {:cage => @cage}
   end
 
   def create
@@ -186,8 +184,20 @@ class TasksController < ApplicationController
     redirect_to :back
   end
   
-  def destroy
-    Task.find(params[:id]).destroy
-    redirect_to :back
+  def fed
+    @task = Task.find(params[:id])
+    if (Date.today.yday >= @task.find_post) && (Date.today.yday <= (@task.find_post - @task.jitter))
+      @task.last_done_date = Time.now
+      @task.save
+    end
+    render :partial => 'cages/feeding_tasks', :locals => {:cage => @task.cage}
   end
+  
+  def destroy
+    task = Task.find(params[:id])
+    cage = task.cage
+    task.destroy
+    render :partial=> 'cages/feeding_tasks', :locals => {:cage => cage}
+  end
+  
 end

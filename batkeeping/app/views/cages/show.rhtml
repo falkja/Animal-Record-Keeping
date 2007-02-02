@@ -46,8 +46,7 @@
 
 </blockquote>
 
-<% @tasks = @cage.tasks.feeding_tasks %>
-<%= render :partial => 'feeding_tasks' %>
+<%= render :partial => 'feeding_tasks', :locals=>{:cage => @cage} %>
 <blockquote>
 <p>
 [<%= link_to 'Add feeding task', :controller => 'tasks', :action => 'new_feed_cage_task', :id => @cage %>]

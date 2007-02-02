@@ -16,8 +16,7 @@
 <% end %>
 
 <div id="cage_tasks_list">
-<% @tasks = @cage.tasks.feeding_tasks %>
-<%= render :partial => 'cages/feeding_tasks' %>
+<%= render :partial => 'cages/feeding_tasks', :locals => {:cage => @cage} %>
 </div>
 
 <b>Add Feeding Tasks:</b>

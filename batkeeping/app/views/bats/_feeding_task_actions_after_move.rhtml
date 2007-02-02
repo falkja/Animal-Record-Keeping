@@ -4,13 +4,13 @@
 <p><b>Old Cage: -<%= bats.length %> bats from <%= old_cage.name %></b> (<%= old_cage.tasks.feeding_tasks.length %> feeding tasks for <%= old_cage.bats.uniq.length %> bats)<br/>
 <blockquote>
 
-<%= render :partial => 'bats/feeding_tasks_actions_after_move_by_cage', :locals => {:specified_cage => old_cage, :old_cage => old_cage, :cage => cage, :bats => bats} %>
+<%= render :partial => 'bats/feeding_task_actions_after_move_by_cage', :locals => {:specified_cage => old_cage, :old_cage => old_cage, :cage => cage, :bats => bats} %>
 
 </blockquote>
 <p><b>New Cage: +<%= bats.length %> bats to <%= cage.name %></b> (<%= cage.tasks.feeding_tasks.length %> feeding tasks for <%= cage.bats.uniq.length %> bats)<br/>
 <blockquote>
 
-<%= render :partial => 'bats/feeding_tasks_actions_after_move_by_cage', :locals => {:specified_cage => cage, :old_cage => old_cage, :cage => cage, :bats => bats} %>
+<%= render :partial => 'bats/feeding_task_actions_after_move_by_cage', :locals => {:specified_cage => cage, :old_cage => old_cage, :cage => cage, :bats => bats} %>
 
 </blockquote>
 </blockquote>

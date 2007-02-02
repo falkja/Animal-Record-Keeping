@@ -1,0 +1,28 @@
+<% if specified_cage.bats.length == 0 %>
+
+  <% if specified_cage.tasks.feeding_tasks.length > 0 %>
+
+    No bats in cage.
+    <%= link_to_remote "Remove existing feeding tasks?",
+      :url => {:controller => "cages", :action => "clear_feeding_tasks", :old_cage => old_cage, :cage=> cage, :bats => bats },
+      :update => "div_id"
+    %>
+
+  <% elsif specified_cage.tasks.feeding_tasks.length == 0 %>
+
+    No bats in cage and no feeding tasks.
+
+  <% end %>
+
+<% elsif specified_cage.bats.length > 0 %>
+
+  <% if specified_cage.tasks.feeding_tasks.length > 0 %>
+    <%= render :partial => 'cages/feeding_tasks' , :locals => {:cage => specified_cage} %>
+  <% elsif specified_cage.tasks.feeding_tasks.length == 0 %>
+    No feeding tasks.
+  <% end %>
+<p>
+[<%= link_to "Add Feeding Tasks", :controller => 'tasks', :action => 'new_feed_cage_task', :id => specified_cage %>]
+[<%= link_to 'Edit Multiple Feeding Tasks', :controller => 'tasks', :action => 'edit_multiple_feeding_tasks', :id => specified_cage %>]
+</p>
+<% end %>

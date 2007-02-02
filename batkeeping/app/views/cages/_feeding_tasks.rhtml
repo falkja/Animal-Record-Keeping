@@ -1,7 +1,9 @@
-<b>Current Feeding Tasks for <%=h @cage.name %></b>
+<div id = "div_feeding_tasks">
+<% tasks = cage.tasks.feeding_tasks %>
+<b>Current Feeding Tasks for <%=h cage.name %></b>
 <blockquote>
-<% if @tasks.length == 0 %>
-No feeding tasks.
+<% if tasks.length == 0 %>
+<p>No feeding tasks.</p>
 <% else %>
 <table>
     <th>Who</th>
@@ -10,7 +12,7 @@ No feeding tasks.
     <th>Dishes</th>
     <th>Food/Bat</th>
     <th>Last done</th>
-<% for task in @tasks %>
+<% for task in tasks %>
     <tr>
     <td>
        <% for user in task.users %>
@@ -31,8 +33,8 @@ No feeding tasks.
     <td><%=h task.food %>g</td>
     <td><%=h task.dish_num.to_s + " " + task.dish_type.to_s %></td>
     
-<% if @cage.bats.length > 0 %>
-<% average = task.food / @cage.bats.length %>
+<% if cage.bats.length > 0 %>
+<% average = task.food / cage.bats.length %>
 <td>
 <%= (("%.0" + 1.to_s + "f") % average).to_f %> g
 </td>
@@ -45,10 +47,10 @@ No feeding tasks.
         Not done on schedule
     <% end %> 
     </td>
-    <td><%= link_to 'Just Fed', :controller => 'tasks', :action => 'done', :id => task %></td>
+    <td><%= link_to_remote 'Just Fed', :url => {:controller => 'tasks', :action => 'fed', :id => task}, :update => "div_feeding_tasks" %></td>
     <td><%= link_to 'Show', :controller => 'tasks', :action => 'show', :id => task %></td>
     <td><%= link_to 'Edit', :controller => 'tasks', :action => 'edit', :id => task %></td>
-    <td><%= link_to 'Destroy', {:controller => 'tasks', :action => 'destroy', :id => task }, :confirm => 'Are you sure?', :post => true %></td>
+    <td><%= link_to_remote 'Destroy', :url => {:controller => 'tasks', :action => 'destroy', :id => task }, :confirm => 'Are you sure?', :post => true, :update => "div_feeding_tasks" %></td>
     </tr>
 <% end %>
 <% end %>
@@ -57,4 +59,9 @@ No feeding tasks.
  </td>
 </tr>
 </table>
+<% if cage.fed_every_day? == false %>
+<p><b>Warning: this cage is not fed every day of the week.</b></p>
+<% end %>
 </blockquote>
+
+</div>

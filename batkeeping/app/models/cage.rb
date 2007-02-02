@@ -45,6 +45,23 @@ class Cage < ActiveRecord::Base
     return food
   end
   
+  def fed_every_day?
+    if self.tasks.feeding_tasks.length < 7
+      return false
+    end
+    
+    day = 0
+    task_exists = false
+    7.times do
+      day = day + 1
+      self.tasks.feeding_tasks.each{|task| (task.repeat_code + 1 == day) ? task_exists = true : '' }
+      if task_exists == false 
+        return false
+      end
+    end
+    return true
+  end
+  
   def update_weighing_tasks
     most_ancient_recent_weight = Time.now
     bats_have_weights = false

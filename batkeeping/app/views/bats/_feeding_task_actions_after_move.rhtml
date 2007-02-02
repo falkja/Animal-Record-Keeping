@@ -4,33 +4,13 @@
 <p><b>Old Cage: -<%= bats.length %> bats from <%= old_cage.name %></b> (<%= old_cage.tasks.feeding_tasks.length %> feeding tasks for <%= old_cage.bats.uniq.length %> bats)<br/>
 <blockquote>
 
-<% if old_cage.bats.length == 0 && old_cage.tasks.feeding_tasks.length > 0 %>
-All bats removed from cage.
-<%= link_to_remote "Remove feeding tasks?",
-  :url => {:controller => "cages", :action => "clear_feeding_tasks", :old_cage => old_cage, :cage=> cage, :bats => bats },
-  :update => "div_id"
-%>
-
-<% elsif old_cage.bats.length == 0 && old_cage.tasks.feeding_tasks.length == 0 %>
-Zero bats in cage and no feeding tasks to change.
-
-<% elsif old_cage.tasks.feeding_tasks.length == 0 %>
-<%= link_to "Add Feeding Tasks", :controller => 'tasks', :action => 'new_feed_cage_task', :id => old_cage %></p>
-<% elsif old_cage.tasks.feeding_tasks.length < 7 %>
-
-<%= link_to "Edit Existing Feeding Tasks", :controller => 'tasks', :action => 'edit_multiple_feeding_tasks', :id => old_cage %><br/>
-Warning: this cage is not being fed every day of the week: <%= link_to "Add Feeding Tasks?", :controller => 'tasks', :action => 'new_feed_cage_task', :id => old_cage %></p>
-<% else %>
-<%= link_to "Edit Existing Feeding Tasks", :controller => 'tasks', :action => 'edit_multiple_feeding_tasks', :id => old_cage %></p>
-<% end %>
+<%= render :partial => 'bats/feeding_tasks_actions_after_move_by_cage', :locals => {:specified_cage => old_cage, :old_cage => old_cage, :cage => cage, :bats => bats} %>
 
 </blockquote>
 <p><b>New Cage: +<%= bats.length %> bats to <%= cage.name %></b> (<%= cage.tasks.feeding_tasks.length %> feeding tasks for <%= cage.bats.uniq.length %> bats)<br/>
 <blockquote>
-<% if cage.tasks.feeding_tasks.length == 0 %>
-<%= link_to "Add Feeding Tasks", :controller => 'tasks', :action => 'new_feed_cage_task', :id => cage %></p>
-<% else %>
-<%= link_to "Edit Existing Feeding Tasks", :controller => 'tasks', :action => 'edit_multiple_feeding_tasks', :id => cage %></p>
-<% end %>
+
+<%= render :partial => 'bats/feeding_tasks_actions_after_move_by_cage', :locals => {:specified_cage => cage, :old_cage => old_cage, :cage => cage, :bats => bats} %>
+
 </blockquote>
 </blockquote>

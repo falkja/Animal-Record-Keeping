@@ -51,10 +51,10 @@ class Cage < ActiveRecord::Base
     end
     
     day = 0
-    task_exists = false
     7.times do
+      task_exists = false
       day = day + 1
-      self.tasks.feeding_tasks.each{|task| (task.repeat_code + 1 == day) ? task_exists = true : '' }
+      self.tasks.feeding_tasks.each{|task| (task.repeat_code == day) ? task_exists = true : '' }
       if task_exists == false 
         return false
       end

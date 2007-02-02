@@ -18,10 +18,11 @@
 
   <% if specified_cage.tasks.feeding_tasks.length > 0 %>
 
-    <%= link_to "Add Feeding Tasks", :controller => 'tasks', :action => 'new_feed_cage_task', :id => specified_cage %></p>
     <% if specified_cage.fed_every_day? == false %>
-    <p><%= link_to "Edit Existing Feeding Tasks", :controller => 'tasks', :action => 'edit_multiple_feeding_tasks', :id => specified_cage %><br/>
-    Warning: this cage is not being fed every day of the week: <%= link_to "Add Feeding Tasks?", :controller => 'tasks', :action => 'new_feed_cage_task', :id => specified_cage %></p>
+      Warning: this cage is not being fed every day of the week: <%= link_to "Add Feeding Tasks?", :controller => 'tasks', :action => 'new_feed_cage_task', :id => specified_cage %></p>
+      <p><%= link_to "Edit Existing Feeding Tasks", :controller => 'tasks', :action => 'edit_multiple_feeding_tasks', :id => specified_cage %></p>
+    <% else %>
+      <%= link_to "Edit Existing Feeding Tasks", :controller => 'tasks', :action => 'edit_multiple_feeding_tasks', :id => specified_cage %></p>
     <% end %>
 
   <% elsif specified_cage.tasks.feeding_tasks.length == 0 %>

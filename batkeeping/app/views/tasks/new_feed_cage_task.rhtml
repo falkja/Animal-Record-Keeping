@@ -51,7 +51,7 @@ Any feeding task that takes place during Monday-Friday and is assigned to the We
 <% if @cage.bats.length > 0 %>
 <% if (average < 20) && (average > 14) %>
 <% suggested_amount = 1.5 * @cage.bats.length %>
-<% elseif average > 20 %>
+<% elsif average > 20 %>
 <% suggested_amount = 2.0 * @cage.bats.length %>
 <% else %>
 <% suggested_amount = 2.0 * @cage.bats.length %>

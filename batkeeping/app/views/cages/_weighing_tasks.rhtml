@@ -43,4 +43,10 @@ No weighing tasks.
  </td>
 </tr>
 </table>
+
+
+<% if @cage.bats.length > 0 && @cage.weighed_enough? == false %>
+<p><b><em>Warning: this cage is not weighed at least twice per week.</em></b></p>
+<% end %>
+
 </blockquote>

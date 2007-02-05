@@ -18,12 +18,7 @@
 
 <% if @cage.bats.length > 0 %>
 <p>
-<% combined_weights = 0.0 %>
-<% for bat in @cage.bats %>
-  <% combined_weights = combined_weights + bat.weights.recent[0].weight %>
-<% end %>
-<% average = combined_weights/@cage.bats.length %>
-<b>Average Weight: </b><%= (("%.0" + 1.to_s + "f") % average).to_f %> g
+<b>Average Weight: </b><%= @cage.average_bat_weight %> g
 </p>
 <% end %>
 

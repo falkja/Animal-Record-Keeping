@@ -33,6 +33,17 @@ class Cage < ActiveRecord::Base
       find :all, :conditions => "date_destroyed is null and room = '#{@@fruitbat}'", :order => 'name'
   end
   
+  def average_bat_weight
+    if self.bats.length > 0
+      combined_weights = 0.0
+      for bat in self.bats
+        combined_weights = combined_weights + bat.weights.recent[0].weight
+      end
+      average = combined_weights/self.bats.length
+      return (("%.0" + 1.to_s + "f") %average).to_f
+    end
+  end
+  
   def food_today
     food = 0
     self.tasks.feeding_tasks_today.each {|task| task.food ? food = food + task.food : food }
@@ -43,6 +54,14 @@ class Cage < ActiveRecord::Base
     food = 0
     self.tasks.feeding_tasks.each {|task| task.food ? food = food + task.food : food }
     return food
+  end
+  
+  def weighed_enough?
+    if self.tasks.weighing_tasks.length < 2
+      return false
+    else
+      return true
+    end
   end
   
   def fed_every_day?

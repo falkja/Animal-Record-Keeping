@@ -59,8 +59,8 @@
  </td>
 </tr>
 </table>
-<% if cage.fed_every_day? == false %>
-<p><b>Warning: this cage is not fed every day of the week.</b></p>
+<% if cage.fed_every_day? == false && cage.bats.length > 0 %>
+<p><b><em>Warning: this cage is not fed every day of the week.</em></b></p>
 <% end %>
 </blockquote>
 

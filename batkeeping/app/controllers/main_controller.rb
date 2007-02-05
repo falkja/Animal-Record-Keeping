@@ -41,10 +41,6 @@ class MainController < ApplicationController
 	end
   end
   
-  #lists global things of interest to everyone
-  def notices_page
-  end
-  
   #This page displays what the weekend care person has to do.
   def weekend_care
   @sick_bats = Bat.sick

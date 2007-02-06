@@ -1,0 +1,32 @@
+  <h4>Feeding Tasks</h4>
+  <p>
+  <blockquote>
+  <% if feeding_tasks.length == 0 %>
+    You have no cage feeding tasks.
+  <% else %>
+  <%= render :partial => 'tasks/tasks_list', :locals => {:tasks_list => nil, :tasks => feeding_tasks, :div_id => "feeding_tasks_" + count} %>
+  <% end %>
+  </blockquote>
+  </p>
+
+  <h4>Weighing Tasks</h4>
+  <p>
+  <blockquote>
+  <% if weighing_tasks.length == 0 %>
+    You have no cage weighing tasks.
+  <% else %>
+  <%= render :partial => 'tasks/tasks_list', :locals => {:tasks_list => nil, :tasks => weighing_tasks, :div_id => "weighing_tasks_"+count} %>
+  <% end %>
+  </blockquote>
+  </p>
+
+  <h4>General Tasks</h4>
+  <p>
+  <blockquote>
+  <% if general_tasks.length == 0 %>
+    You have no general tasks.
+  <% else %>
+  <%= render :partial => 'tasks/tasks_list', :locals => {:tasks_list => nil, :tasks => general_tasks, :div_id => "general_tasks_"+count} %>
+  <% end %>
+  </blockquote>
+  </p>

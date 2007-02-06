@@ -1,3 +1,17 @@
+<% if !div_id %>
+<% if tasks[0].internal_description == "feed" %>
+<% div_id = "feed" %>
+<% elsif tasks[0].internal_description == "medical" %>
+<% div_id = "medical" %>
+<% elsif tasks[0].internal_description == "weigh" %>
+<% div_id = "weigh" %>
+<% else %>
+<% div_id = "general" %>
+<% end %>
+
+<% end %>
+
+<div id = "<%= div_id %>">
 <table>
   <thead>
     <th>Title</th>
@@ -14,9 +28,10 @@
   <% else %>
     <% manage = false %>
   <% end %>
- <%= render :partial => 'tasks/single_task_list', :locals => {:single_task_list => nil, :task => task, :manage => manage} %>
+ <%= render :partial => 'tasks/single_task_list', :locals => {:single_task_list => nil, :task => task, :manage => manage, :tasks => tasks, :div_id => div_id} %>
 
 <% end %>
 
  </tbody>
 </table>
+</div>

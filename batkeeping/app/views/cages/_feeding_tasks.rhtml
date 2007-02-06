@@ -50,7 +50,7 @@
     <td><%= link_to_remote 'Just Fed', :url => {:controller => 'tasks', :action => 'fed', :id => task}, :update => "div_feeding_tasks" %></td>
     <td><%= link_to 'Show', :controller => 'tasks', :action => 'show', :id => task %></td>
     <td><%= link_to 'Edit', :controller => 'tasks', :action => 'edit', :id => task %></td>
-    <td><%= link_to_remote 'Destroy', :url => {:controller => 'tasks', :action => 'destroy', :id => task }, :confirm => 'Are you sure?', :post => true, :update => "div_feeding_tasks" %></td>
+    <td><%= link_to_remote 'Destroy', :url => {:controller => 'tasks', :action => 'destroy_feeding_task', :id => task }, :confirm => 'Are you sure?', :post => true, :update => "div_feeding_tasks" %></td>
     </tr>
 <% end %>
 <% end %>

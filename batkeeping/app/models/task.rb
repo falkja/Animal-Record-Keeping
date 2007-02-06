@@ -4,12 +4,32 @@ class Task < ActiveRecord::Base
   belongs_to :proposed_treatment
 
   def self.general_tasks
-    find :all, :conditions => 'cage_id is null and proposed_treatment_id is null'
+    find :all, :conditions => 'internal_description is null'
   end
+  
+  def self.general_tasks_today
+		tday = Time.now.wday + 1   
+		find :all, :conditions => "((repeat_code = #{tday}) or (repeat_code = 0)) and (internal_description is null)" 
+	end
+  
+  def self.general_tasks_not_today
+		tday = Time.now.wday + 1   
+		find :all, :conditions => "((repeat_code != #{tday}) and (repeat_code != 0)) and (internal_description is null)" 
+	end
   
   def self.weighing_tasks #weighing
     find :all, :conditions => 'internal_description = "weigh"', :order => "repeat_code"
   end
+  
+  def self.weighing_tasks_today
+		tday = Time.now.wday + 1   
+		find :all, :conditions => "((repeat_code = #{tday}) or (repeat_code = 0)) and (internal_description = 'weigh')" 
+	end
+  
+  def self.weighing_tasks_not_today
+		tday = Time.now.wday + 1   
+		find :all, :conditions => "((repeat_code != #{tday}) and (repeat_code != 0)) and (internal_description = 'weigh')" 
+	end
   
   def self.medical_tasks
     find :all, :conditions => 'proposed_treatment_id is not null'    
@@ -19,14 +39,19 @@ class Task < ActiveRecord::Base
     find :all, :conditions => 'internal_description = "feed"', :order => "repeat_code"
   end
 
+	def self.feeding_tasks_today
+		tday = Time.now.wday + 1   
+		find :all, :conditions => "((repeat_code = #{tday}) or (repeat_code = 0)) and (internal_description = 'feed')" 
+	end
+
+	def self.feeding_tasks_not_today
+		tday = Time.now.wday + 1   
+		find :all, :conditions => "((repeat_code != #{tday}) and (repeat_code != 0)) and (internal_description = 'feed')" 
+	end
+
 	def self.today
 		tday = Time.now.wday + 1   
 		find :all, :conditions => '(repeat_code = #{tday}) or (repeat_code = 0)' 
-	end
-
-	def self.feeding_tasks_today
-		tday = Time.now.wday + 1   
-		find :all, :conditions => "(repeat_code = #{tday}) or (repeat_code = 0) and (internal_description = 'feed')" 
 	end
     
   #returns true or false depending if the last_done_date and current date indicate

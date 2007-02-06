@@ -42,36 +42,13 @@ You are responsible for no medical problems.
 
 <h2>Tasks</h2>
 <blockquote>
-
-  <h3>Feeding Tasks</h3>
-  <p>
+  <h3>Today's Tasks</h3>
   <blockquote>
-  <% if @my_feeding_tasks.length == 0 %>
-    You have no cage feeding tasks.
-  <% else %>
-  <%= render :partial => 'tasks/tasks_list', :locals => {:tasks_list => nil, :tasks => @my_feeding_tasks} %>
-  <% end %>
+    <%= render :partial => 'users_tasks', :locals => {:feeding_tasks => @my_feeding_tasks_today, :weighing_tasks => @my_weighing_tasks_today, :general_tasks => @my_general_tasks_today, :count => '1'} %>
   </blockquote>
-  </p>
-
-  <h3>Weighing Tasks</h3>
-  <p>
+  
+  <h3>Tasks Not Due Today</h3>
+  
   <blockquote>
-  <% if @my_weighing_tasks.length == 0 %>
-    You have no cage weighing tasks.
-  <% else %>
-  <%= render :partial => 'tasks/tasks_list', :locals => {:tasks_list => nil, :tasks => @my_weighing_tasks} %>
-  <% end %>
+    <%= render :partial => 'users_tasks', :locals => {:feeding_tasks => @my_feeding_tasks_not_today, :weighing_tasks => @my_weighing_tasks_not_today, :general_tasks => @my_general_tasks_not_today, :count => '2'} %>
   </blockquote>
-  </p>
-
-  <h3>General Tasks</h3>
-  <p>
-  <blockquote>
-  <% if @my_general_tasks.length == 0 %>
-    You have no general tasks.
-  <% else %>
-  <%= render :partial => 'tasks/tasks_list', :locals => {:tasks_list => nil, :tasks => @my_general_tasks} %>
-  <% end %>
-  </blockquote>
-  </p>

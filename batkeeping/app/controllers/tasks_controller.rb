@@ -193,11 +193,18 @@ class TasksController < ApplicationController
     render :partial => 'cages/feeding_tasks', :locals => {:cage => @task.cage}
   end
   
-  def destroy
+  def destroy_feeding_task
     task = Task.find(params[:id])
     cage = task.cage
     task.destroy
     render :partial=> 'cages/feeding_tasks', :locals => {:cage => cage}
+  end
+  
+  def destroy
+    tasks = Task.find(params[:ids])
+    tasks.delete(Task.find(params[:id]))
+    Task.find(params[:id]).destroy
+    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => tasks}
   end
   
 end

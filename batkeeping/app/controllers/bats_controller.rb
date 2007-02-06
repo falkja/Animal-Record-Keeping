@@ -198,7 +198,7 @@ redirect_to :action => 'list'
 		weight.user = session[:person]
 		weight.weight = params[:weight][@bat.id.to_s] #The hash key is actually a string, so we need to convert the id to a string
     weight.note = params[:note][@bat.id.to_s]
-    if params[:checkbox_after_eating] == '1'
+    if params[:checkbox][:after_eating] == '1'
       weight.after_eating = 'y'
     else
       weight.after_eating =  'n'

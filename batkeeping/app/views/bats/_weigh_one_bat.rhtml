@@ -1,6 +1,7 @@
 <table>
 <th>Band</th>
 <th>Weight</th>
+<th>Already Fed</th>
 <th align='left'>Weight Note</th>
 <th>Cage</th>
 <th>Cage change reason</th>
@@ -8,6 +9,15 @@
 <tr>
 <td><%= link_to weigh_one_bat.band, :controller => 'bats', :action => 'show', :id => weigh_one_bat %></td>
 <td><%= text_field 'weight', weigh_one_bat.id, :size => 4, :autocomplete => 'off' %> g</td>
+
+<td><label for='checkbox_after_eating'>After Eating?</label>
+<% if weigh_one_bat.cage.fed_today? == true %>
+<%= check_box 'checkbox', 'after_eating', :checked=> 'checked' %>
+<%else%>
+<%= check_box 'checkbox', 'after_eating' %>
+<% end %>
+</td>
+
 <td><%= text_field 'note', weigh_one_bat.id %></td>
 
 <%# See http://www.rubyonrails.org/api/classes/ActionView/Helpers/FormOptionsHelper.html#M000404 %>

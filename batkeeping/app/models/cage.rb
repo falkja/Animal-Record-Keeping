@@ -64,6 +64,16 @@ class Cage < ActiveRecord::Base
     end
   end
   
+  def fed_today?
+    today = Date.today.wday + 1 #to bring in line with repeat_codes
+    for task in self.tasks.feeding_tasks
+      if (task.repeat_code == today && task.done_by_schedule == true)
+        return true
+      end
+    end
+    return false
+  end
+    
   def fed_every_day?
     if self.tasks.feeding_tasks.length < 7
       return false

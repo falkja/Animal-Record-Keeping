@@ -8,12 +8,14 @@ No weights.
 <table border='1'>
   <th>Date</th>
   <th>Weight</th>
+  <th>Fed</th>
   <th>Notes</th>
   <th>Who</th>
   <% for weight in @bat.weights %>
   <tr>
   <td><%= nice_date weight.date %></td>
   <td><%= weight.weight %>g</td>
+  <td><%= weight.after_eating == 'y' ? 'After Eating' : 'Before Eating' %></td>
   <td><%= weight.note %></td>
   <td><%= weight.user.initials %></td>
   </tr>

@@ -38,38 +38,7 @@ redirect_to :action => 'list'
 						:show_leave_date_and_reason => params[:show_leave_date_and_reason],
 						:show_weigh_link => params[:show_weigh_link]}
 	end
-  
-  def list_by_cage
-	@bats = Bat.find(params[:ids], :order => 'cage_id, band')
-  @list_all = false
-    @div_id = params[:div]
-    @weighing = params[:weighing]
-	render :partial => 'bat_list', :locals => {:bat_list => @bats}
-  end
-  
-  def list_all_by_cage
-	@bats = Bat.find(params[:ids], :order => 'cage_id, band')
-  @list_all = true
-    @div_id = params[:div]
-    @weighing = params[:weighing]
-	render :partial => 'bat_list', :locals => {:bat_list => @bats}
-  end
-  
-  def list_by_band
-	@bats = Bat.find(params[:ids], :order => 'band, cage_id')
-  @list_all = false
-    @div_id = params[:div]
-    @weighing = params[:weighing]
-	render :partial => 'bat_list', :locals => {:bat_list => @bats}
-  end
-  
-  def list_all_by_band
-	@bats = Bat.find(params[:ids], :order => 'band, cage_id')
-	@list_all = true
-    @div_id = params[:div]
-    @weighing = params[:weighing]
-	render :partial => 'bat_list', :locals => {:bat_list => @bats}
-  end
+	
   
   def show
 	@bat = Bat.find(params[:id])

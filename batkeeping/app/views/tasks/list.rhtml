@@ -5,7 +5,7 @@
   <% else %>
   <%= render :partial => 'tasks_list', :locals =>{:tasks_list => nil, :tasks => @feeding_tasks} %>
   <p>
-  <%= start_form_tag :action => 'form_to_edit_multiple_feeding_tasks', :id => @cage %>
+  <%= form_tag :action => 'form_to_edit_multiple_feeding_tasks', :id => @cage %>
   Cage: 
   <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
   <%= submit_tag "Edit multiple feeding tasks" %>
@@ -13,7 +13,7 @@
   </p>
   <% end %>
   <p>
-  <%= start_form_tag :action => 'form_to_new_feed_cage_task', :id => @cage %>
+  <%= form_tag :action => 'form_to_new_feed_cage_task', :id => @cage %>
   Cage: 
   <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
   <%= submit_tag "Add a feeding task" %>

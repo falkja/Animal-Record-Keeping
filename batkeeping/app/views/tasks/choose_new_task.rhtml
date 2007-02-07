@@ -3,7 +3,7 @@
 <h3>Feeding Task</h3>
 <blockquote>
   <p>
-  <%= start_form_tag :action => 'form_to_new_feed_cage_task', :id => @cage %>
+  <%= form_tag :action => 'form_to_new_feed_cage_task', :id => @cage %>
   Cage: 
   <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
   <%= submit_tag "Add a feeding task" %>

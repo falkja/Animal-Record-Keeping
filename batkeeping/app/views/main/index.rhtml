@@ -1,4 +1,4 @@
-<%= start_form_tag :action => 'login', :id => @user %>
+<%= form_tag :action => 'login', :id => @user %>
 
 <p>User: <%= select_tag("user[id]", options_from_collection_for_select(@users, "id", "name")) %>
 

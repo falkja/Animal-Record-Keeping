@@ -1,6 +1,6 @@
 <h1>Do Treatment</h1>
 
-<%= start_form_tag :action => 'create', :id => @proposed_treatment %>
+<%= form_tag :action => 'create', :id => @proposed_treatment %>
   <%= render :partial => 'form' %>
   <%= submit_tag "Medical Treatment Done" %>
 <%= end_form_tag %>

@@ -1,6 +1,6 @@
 <h1>Editing Proposed Treatment</h1>
 
-<%= start_form_tag :action => 'update', :id => @proposed_treatment, :redirectme => 'list_current' %>
+<%= form_tag :action => 'update', :id => @proposed_treatment, :redirectme => 'list_current' %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Edit' %>
 <%= end_form_tag %>

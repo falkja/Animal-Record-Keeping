@@ -14,7 +14,7 @@
   <% end %>
     <td><%= link_to 'Show', :action => 'show', :id => protocol_start_history %></td>
     <td><%= link_to 'Edit', :action => 'edit', :id => protocol_start_history %></td>
-    <td><%= link_to 'Destroy', { :action => 'destroy', :id => protocol_start_history }, :confirm => 'Are you sure?', :post => true %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => protocol_start_history }, :confirm => 'Are you sure?', :method => :post %></td>
   </tr>
 <% end %>
 </table>

@@ -31,9 +31,9 @@ Listing current users
 		<td><%= link_to 'Edit', :action => 'edit', :id => user %></td>
 		<td>
 		<% if user.end_date == nil %>
-		<%=  link_to 'Deactivate', { :action => 'deactivate', :id => user }, :confirm => 'Are you sure?', :post => true %>
+		<%=  link_to 'Deactivate', { :action => 'deactivate', :id => user }, :confirm => 'Are you sure?', :method => :post %>
 		<% else %>
-		<%=  link_to 'Reactivate', { :action => 'reactivate', :id => user }, :confirm => 'Are you sure?', :post => true %>
+		<%=  link_to 'Reactivate', { :action => 'reactivate', :id => user }, :confirm => 'Are you sure?', :method => :post %>
 		<% end %>
 		</td>
 	</tr>

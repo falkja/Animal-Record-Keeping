@@ -14,7 +14,7 @@
   <% end %>
     <td><%= link_to 'Show', :action => 'show', :id => cage_history %></td>
     <td><%= link_to 'Edit', :action => 'edit', :id => cage_history %></td>
-    <td><%= link_to 'Destroy', { :action => 'destroy', :id => cage_history }, :confirm => 'Are you sure?', :post => true %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => cage_history }, :confirm => 'Are you sure?', :method => :post %></td>
   </tr>
 <% end %>
 </table>

@@ -14,7 +14,7 @@
   <% end %>
     <td><%= link_to 'Show', :action => 'show', :id => medical_care_action %></td>
     <td><%= link_to 'Edit', :action => 'edit', :id => medical_care_action %></td>
-    <td><%= link_to 'Destroy', { :action => 'destroy', :id => medical_care_action }, :confirm => 'Are you sure?', :post => true %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => medical_care_action }, :confirm => 'Are you sure?', :method => :post %></td>
   </tr>
 <% end %>
 </table>

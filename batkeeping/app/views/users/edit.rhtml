@@ -7,4 +7,4 @@
 
 <%= link_to 'Show', :action => 'show', :id => @user %> |
 <%= link_to 'List Current Users', :action => 'list' %> |
-<%= link_to 'Deactivate User', { :action => 'deactivate', :id => @user }, :confirm => 'Are you sure?', :post => true %>
+<%= link_to 'Deactivate User', { :action => 'deactivate', :id => @user }, :confirm => 'Are you sure?', :method => :post %>

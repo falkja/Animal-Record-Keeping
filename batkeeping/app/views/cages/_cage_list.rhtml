@@ -51,9 +51,9 @@
     <td>
 	
 	<% if cage.date_destroyed == nil %>
-	<%= link_to 'Deactivate', { :controller => 'cages', :action => 'deactivate', :id => cage }, :confirm => 'Are you sure?', :post => true %>
+	<%= link_to 'Deactivate', { :controller => 'cages', :action => 'deactivate', :id => cage }, :confirm => 'Are you sure?', :method => :post %>
     <% else %>
-	<%=  link_to 'Reactivate', { :controller => 'cages', :action => 'reactivate', :id => cage }, :confirm => 'Are you sure?', :post => true %>
+	<%=  link_to 'Reactivate', { :controller => 'cages', :action => 'reactivate', :id => cage }, :confirm => 'Are you sure?', :method => :post %>
     <% end %>
 	</td>
   <td><%= link_to 'Weigh Cage', :controller => 'cages', :action => 'weigh_cage', :id => cage %></td>

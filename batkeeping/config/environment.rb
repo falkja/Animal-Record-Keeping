@@ -5,7 +5,7 @@
 # ENV['RAILS_ENV'] ||= 'production'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '1.1.6'
+#RAILS_GEM_VERSION = '1.1.6'
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -51,3 +51,11 @@ end
 # end
 
 # Include your application configuration below
+
+#From http://dev.rubyonrails.org/ticket/7047, this claims to resolve
+#this issue
+class Array
+  def to_param
+    self
+  end
+end

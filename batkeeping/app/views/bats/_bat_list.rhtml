@@ -7,14 +7,13 @@
 		:show_weigh_link - boolean, should we supply a link to weigh the bat
 -->
 
-<%# bat_id_list = Array.new %>
-<%# bat_list.each {|bat| bat_id_list << bat.id } %>
+<% if bat_list %>
 
 <table>
 	<th>
 	<%= link_to_remote( "Band",
-        :update => div_id,
-        :url =>{ :controller => 'bats', :action => 'sort_by_band', 
+		:update => div_id,
+		:url =>{ :controller => 'bats', :action => 'sort_by_band', 
 					:ids => bat_list, 
 					:div_id => div_id,
 					:show_leave_date_and_reason => show_leave_date_and_reason,
@@ -22,13 +21,13 @@
 	</th>
 	<th>
 	<%= link_to_remote( "Cage",
-        :update => div_id,
-        :url =>{ :controller => 'bats', :action => 'sort_by_cage', 
+		:update => div_id,
+		:url =>{ :controller => 'bats', :action => 'sort_by_cage', 
 					:ids => bat_list, 
-					:div => div_id, 
+					:div_id => div_id, 
 					:show_leave_date_and_reason => show_leave_date_and_reason,
 					:show_weigh_link => show_weigh_link}) %>
-    </th>
+	</th>
 	<th>Species</th>
 	<th>Gender</th>
 	<th>Collection Date</th>
@@ -37,27 +36,27 @@
 		<th>Leave Reason</th>
 	<% end %>
   </tr>
-    
+	
 <% for bat in bat_list %>
   <tr>
   <% if show_weigh_link %>
   <td><%= link_to bat.band, :controller => 'bats', :action => 'weigh_bat', :id => bat %></td>
   <td>
-    <% if bat.cage %>
-      <%= bat.cage.name %>
-    <% else %>
-      <%= 'Inactive' %>
-    <% end %>
+	<% if bat.cage %>
+	  <%= bat.cage.name %>
+	<% else %>
+	  <%= 'Inactive' %>
+	<% end %>
 	</td>
   <% else %>
-    <td><%= link_to bat.band, :controller => 'bats', :action => 'show', :id => bat %></td>
-    <td>
+	<td><%= link_to bat.band, :controller => 'bats', :action => 'show', :id => bat %></td>
+	<td>
 		<% if bat.cage %>
-      <%= link_to bat.cage.name, :controller => 'cages', :action => 'show', :id => bat.cage %>
-    <% else %>
-      <%= 'Inactive' %>
-    <% end %>
-    </td>
+	  <%= link_to bat.cage.name, :controller => 'cages', :action => 'show', :id => bat.cage %>
+	<% else %>
+	  <%= 'Inactive' %>
+	<% end %>
+	</td>
   <% end %>
 	<td>
 		<%=h bat.species %>
@@ -76,16 +75,20 @@
 		<%=h bat.leave_reason %>
 	</td>
 	<% end %>
-    <td><%= link_to 'Edit', :action => 'edit', :id => bat %></td>
-    <td>
+	<td><%= link_to 'Edit', :action => 'edit', :id => bat %></td>
+	<td>
 	<% if bat.leave_date == nil %>
 	<%= link_to 'Deactivate', { :action => 'deactivate', :id => bat } %>
 	<% else %>
 	<%=  link_to 'Reactivate', { :action => 'reactivate', :id => bat } %>
-        <% end %>
-    </td>
+		<% end %>
+	</td>
   <td><%= link_to 'Weigh Bat', :action => 'weigh_bat', :id => bat %></td>
   </tr>
 <% end %>
 
 </table>
+
+<% else %>
+No bats
+<% end %>

@@ -13,11 +13,11 @@ class Bat < ActiveRecord::Base
     #From http://www.therailsway.com/tags/rails
     #This lets us do Bats.active AS WELL AS cage.bats.active !
     def self.active
-        find :all, :conditions => 'leave_date is null'
+        find :all, :conditions => 'leave_date is null', :order => 'band'
     end
         
     def self.not_active
-        find :all, :conditions => 'leave_date is not null'
+        find :all, :conditions => 'leave_date is not null', :order => 'band'
     end
     
     #returns all the sick bats

@@ -8,18 +8,36 @@ redirect_to :action => 'list'
   verify :method => :post, :only => [ :destroy, :create, :update ],
 		 :redirect_to => { :action => :list }
 
+	#Only list the active bats
   def list
-    @bats = Bat.find(:all, :order => 'band', :conditions => "leave_date is null")
+    @bats = Bat.active
     @list_all = false
-    @div_id = 'bats_div'
   end
   
   def list_all
     @bats = Bat.find(:all, :order => 'band')
     @list_all = true
-    @div_id = 'bats_div'
     render :action => 'list'
   end
+  
+	
+	def sort_by_band
+		bat_list = Bat.find(params[:ids], :order => 'band, cage_id')
+		render :partial => 'bat_list', :locals => {
+						:bat_list => bat_list, 
+						:div_id => params[:div_id],
+						:show_leave_date_and_reason => params[:show_leave_date_and_reason],
+						:show_weigh_link => params[:show_weigh_link]}
+	end
+  
+	def sort_by_cage
+		bat_list = Bat.find(params[:ids], :order => 'cage_id, band')
+		render :partial => 'bat_list', :locals => {
+						:bat_list => bat_list, 
+						:div_id => params[:div_id],
+						:show_leave_date_and_reason => params[:show_leave_date_and_reason],
+						:show_weigh_link => params[:show_weigh_link]}
+	end
   
   def list_by_cage
 	@bats = Bat.find(params[:ids], :order => 'cage_id, band')

@@ -1,34 +1,38 @@
-<%# Remember this partial also needs a global called @list_all that tells it if it is listing
-    all bats or just active ones %>
-    
+<!-- 
+
+	This partial displays the summary for a list of bats
+		:bat_list - the list of bats
+		:div_id - a string indicating which div it is in for AJAX updating
+		:show_leave_date_and_reason - boolean, should we show the column leave date
+		:show_weigh_link - boolean, should we supply a link to weigh the bat
+-->
+
+<%# bat_id_list = Array.new %>
+<%# bat_list.each {|bat| bat_id_list << bat.id } %>
+
 <table>
-  <tr>
-    <% if @list_all %>
-      <th>
-      <%= link_to_remote( "Band",
-        :update => @div_id,
-        :url =>{ :controller => 'bats', :action => 'list_all_by_band', :ids => bat_list, :div => @div_id, :weighing => @weighing }) %>
+	<th>
+	<%= link_to_remote( "Band",
+        :update => div_id,
+        :url =>{ :controller => 'bats', :action => 'sort_by_band', 
+					:ids => bat_list, 
+					:div_id => div_id,
+					:show_leave_date_and_reason => show_leave_date_and_reason,
+					:show_weigh_link => show_weigh_link}) %>
+	</th>
+	<th>
+	<%= link_to_remote( "Cage",
+        :update => div_id,
+        :url =>{ :controller => 'bats', :action => 'sort_by_cage', 
+					:ids => bat_list, 
+					:div => div_id, 
+					:show_leave_date_and_reason => show_leave_date_and_reason,
+					:show_weigh_link => show_weigh_link}) %>
     </th>
-      <th>
-      <%= link_to_remote( "Cage",
-        :update => @div_id,
-        :url =>{ :controller => 'bats', :action => 'list_all_by_cage', :ids => bat_list, :div => @div_id, :weighing => @weighing }) %>
-    </th>
-    <% else %>
-      <th>
-      <%= link_to_remote( "Band",
-        :update => @div_id,
-        :url =>{ :controller => 'bats', :action => 'list_by_band', :ids => bat_list, :div => @div_id,  :weighing => @weighing }) %>
-    </th>
-      <th><%= link_to_remote( "Cage",
-        :update => @div_id,
-        :url =>{ :controller => 'bats', :action => 'list_by_cage', :ids => bat_list, :div => @div_id,  :weighing => @weighing }) %>
-    </th>
-    <% end %>
 	<th>Species</th>
 	<th>Gender</th>
 	<th>Collection Date</th>
-	<% if @list_all %>
+	<% if show_leave_date_and_reason %>
 		<th>Leave Date</th>
 		<th>Leave Reason</th>
 	<% end %>
@@ -36,7 +40,7 @@
     
 <% for bat in bat_list %>
   <tr>
-  <% if @weighing %>
+  <% if show_weigh_link %>
   <td><%= link_to bat.band, :controller => 'bats', :action => 'weigh_bat', :id => bat %></td>
   <td>
     <% if bat.cage %>

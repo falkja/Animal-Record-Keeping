@@ -1,4 +1,4 @@
-<% if !div_id %>
+
 <% if tasks[0].internal_description == "feed" %>
 <% div_id = "feed" %>
 <% elsif tasks[0].internal_description == "medical" %>
@@ -9,7 +9,6 @@
 <% div_id = "general" %>
 <% end %>
 
-<% end %>
 
 <div id = "<%= div_id %>">
 <table>

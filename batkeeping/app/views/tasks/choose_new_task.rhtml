@@ -1,39 +1,41 @@
 <h1>Choose Type of Task</h1>
 
-<h3>Feeding Task</h3>
-<blockquote>
-  <p>
+<table>
+<tr>
+<td valign='top'><b>Feeding Task</b></td>
+<td>
   <%= form_tag :action => 'form_to_new_feed_cage_task', :id => @cage %>
-  Cage: 
   <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
   <%= submit_tag "Add a feeding task" %>
   <%= end_form_tag %>
-  </p>
-</blockquote>
+</td>
+</tr>
 
-<h3>Weighing Task</h3>
-<blockquote>
-  <p>
-  <%= form_tag :action => 'form_to_new_weigh_cage_task' %>
-  Cage: 
+<tr>
+<td valign='top'><b>Weighing Task</b></td>
+<td>
+<%= form_tag :action => 'form_to_new_weigh_cage_task' %>
   <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
   <%= submit_tag "Add a weighing task" %>
   <%= end_form_tag %>
-  </p>
-</blockquote>
+</td>
+</tr>
 
-<h3>Medical Task</h3>
-<blockquote>
-    <p>
-    <%= form_tag :controller => 'proposed_treatments', :action => 'new' %>
+<tr>
+<td valign='top'><b>Medical Task</b></td>
+<td>
+<%= form_tag :controller => 'proposed_treatments', :action => 'new' %>
     Medical Problem: 
     <%= select_tag("id", options_from_collection_for_select(@medical_problems, "id", "title")) %>
     <%= submit_tag "Add a new treatment" %>
     <%= end_form_tag %>
-    </p>
-</blockquote>
+</td>
+</tr>
 
-<h3>General Task</h3>
-<blockquote>
-<p><%= button_to 'Add a general task', :controller => 'tasks', :action => 'new' %></p>
-  </blockquote>
+<tr>
+<td valign='top'><b>General Task</b></td>
+<td>
+  <%= button_to 'Add a general task', :controller => 'tasks', :action => 'new' %>
+</td>
+</tr>
+</table>

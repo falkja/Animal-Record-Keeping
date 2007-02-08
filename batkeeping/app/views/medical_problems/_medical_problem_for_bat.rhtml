@@ -16,14 +16,14 @@
     </td>
 
     <td>
-      <%=h nice_date medical_problem.date_opened %>
+      <%=h nice_date(medical_problem.date_opened) %>
     </td>
     
 
     <% if medical_problem.date_closed == nil %>
       <% if @list_all %>
         <td>
-          <%=h nice_date medical_problem.date_closed %>
+          <%=h nice_date(medical_problem.date_closed) %>
         </td>
       <% end %>
       <td>
@@ -34,7 +34,7 @@
       </td>
     <% else %>
       <td>
-        <%=h nice_date medical_problem.date_closed %>
+        <%=h nice_date(medical_problem.date_closed) %>
       </td>
       <td></td>
       <td>

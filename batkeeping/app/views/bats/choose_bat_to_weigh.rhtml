@@ -1,9 +1,8 @@
 <h1>Choose Bat to Weigh</h1>
 
-<div id="weigh_bat">
-<% @div_id = "weigh_bat" %>
-<% @weighing = true %>
-<%= render :partial => 'bats/bat_list', :locals => {:bat_list => @bats} %>
-</div>
+<%= render :partial => 'bats/bat_list', :locals => {
+		:bat_list => @bats,
+		:show_leave_date_and_reason => @list_all,
+		:show_weigh_link => true }  %>
 
 <p><%= link_to 'Back', :controller => 'weights', :action => 'weighing_choice' %></p>

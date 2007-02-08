@@ -165,7 +165,8 @@ redirect_to :action => 'list'
   end
 
   def choose_bat_to_weigh
-    @bats = Bat.find(:all, :conditions => "leave_date is null", :order => "band")
+    @bats = Bat.active
+	@list_all = false
   end
   
   def weigh_bat

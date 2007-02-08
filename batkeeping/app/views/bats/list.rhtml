@@ -6,13 +6,11 @@ Listing current bats
 <% end %>
 </h1>
 
-<div id="bats_div">
+
 <%= render :partial => 'bats/bat_list', :locals => { 
 		:bat_list => @bats,
-		:div_id => 'bats_div',
 		:show_leave_date_and_reason => @list_all,
 		:show_weigh_link => false } %>
-</div>
   
 <br />
 

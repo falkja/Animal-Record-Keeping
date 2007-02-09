@@ -1,7 +1,7 @@
 -- MySQL Administrator dump 1.4
 --
 -- ------------------------------------------------------
--- Server version	5.0.27-community-nt
+-- Server version	5.0.17-nt
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -533,13 +533,34 @@ CREATE TABLE `protocols` (
 
 
 --
+-- Definition of table `task_histories`
+--
+
+DROP TABLE IF EXISTS `task_histories`;
+CREATE TABLE `task_histories` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `task_id` int(10) unsigned NOT NULL,
+  `date_done` datetime NOT NULL,
+  `sig` varchar(45) NOT NULL COMMENT 'signature of person',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `task_histories`
+--
+
+/*!40000 ALTER TABLE `task_histories` DISABLE KEYS */;
+/*!40000 ALTER TABLE `task_histories` ENABLE KEYS */;
+
+
+--
 -- Definition of table `tasks`
 --
 
 DROP TABLE IF EXISTS `tasks`;
 CREATE TABLE `tasks` (
   `id` int(10) unsigned NOT NULL auto_increment,
-  `last_done_date` datetime default NULL,
+  `last_done_date` datetime default NULL COMMENT 'we should drop this column',
   `repeat_code` int(10) unsigned NOT NULL COMMENT '0 means daily 1 = sunday etc.',
   `proposed_treatment_id` int(10) unsigned default NULL,
   `cage_id` int(10) unsigned default NULL,
@@ -550,6 +571,8 @@ CREATE TABLE `tasks` (
   `dish_type` varchar(45) default NULL,
   `dish_num` int(10) unsigned default NULL,
   `jitter` int(11) NOT NULL,
+  `date_started` datetime NOT NULL,
+  `date_ended` datetime default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -558,28 +581,29 @@ CREATE TABLE `tasks` (
 --
 
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
-INSERT INTO `tasks` (`id`,`last_done_date`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`) VALUES 
- (24,'2007-01-08 14:16:00',0,27,NULL,'Cough syrup','','medical',NULL,NULL,NULL,0),
- (25,'2007-01-08 14:40:00',0,28,NULL,'Verbally abuse the bat','','medical',NULL,NULL,NULL,0),
- (26,'2007-01-17 16:45:08',0,NULL,NULL,'Check the fruit bats nectar feeders','',NULL,NULL,NULL,NULL,0),
- (28,'2007-01-09 23:39:07',2,NULL,NULL,'Check the light in the Belfry','',NULL,NULL,NULL,NULL,0),
- (30,NULL,0,30,NULL,'Words of encouragement.','','medical',NULL,NULL,NULL,0),
- (58,'2007-02-06 15:17:40',5,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,0),
- (59,'2007-02-06 15:17:40',0,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,0),
- (126,NULL,4,NULL,4,'Weigh cage Cage6','','weigh',NULL,NULL,NULL,0),
- (127,NULL,0,31,NULL,'Feed worms in front of the other bats','','medical',NULL,NULL,NULL,0),
- (136,'2007-01-20 11:42:52',7,NULL,NULL,'Do dishes','Soak in bleach water at least 10 minutes',NULL,NULL,NULL,NULL,0),
- (145,'2007-02-02 14:47:18',6,NULL,NULL,'Change pads','',NULL,NULL,NULL,NULL,-1);
-INSERT INTO `tasks` (`id`,`last_done_date`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`) VALUES 
- (156,'2007-02-06 15:17:40',4,NULL,2,'Feed cage Cage2','','feed',4,'Small',3,0),
- (164,'2007-02-05 16:32:50',7,NULL,2,'Feed cage Cage2','','feed',8,'Small',1,0),
- (168,'2007-02-06 18:26:33',0,NULL,NULL,'Fill out temperature and humidity','',NULL,NULL,NULL,NULL,0),
- (198,NULL,1,NULL,2,'Feed cage Cage2','','feed',4,'Small',1,0),
- (199,NULL,2,NULL,2,'Feed cage Cage2','','feed',4,'Small',1,0),
- (200,'2007-02-06 15:17:40',3,NULL,2,'Feed cage Cage2','','feed',4,'Small',1,0),
- (202,'2007-02-06 15:17:40',5,NULL,2,'Feed cage Cage2','','feed',4,'Small',1,0),
- (203,NULL,6,NULL,2,'Feed cage Cage2','','feed',4,'Small',1,0),
- (204,NULL,7,NULL,2,'Feed cage Cage2','','feed',4,'Small',1,0);
+INSERT INTO `tasks` (`id`,`last_done_date`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+ (24,'2007-01-08 14:16:00',0,27,NULL,'Cough syrup','','medical',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
+ (25,'2007-01-08 14:40:00',0,28,NULL,'Verbally abuse the bat','','medical',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
+ (26,'2007-01-17 16:45:08',0,NULL,NULL,'Check the fruit bats nectar feeders','',NULL,NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
+ (28,'2007-01-09 23:39:07',2,NULL,NULL,'Check the light in the Belfry','',NULL,NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
+ (30,NULL,0,30,NULL,'Words of encouragement.','','medical',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
+ (58,'2007-02-06 15:17:40',5,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
+ (59,'2007-02-06 15:17:40',0,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
+ (126,NULL,4,NULL,4,'Weigh cage Cage6','','weigh',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL);
+INSERT INTO `tasks` (`id`,`last_done_date`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+ (127,NULL,0,31,NULL,'Feed worms in front of the other bats','','medical',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
+ (136,'2007-01-20 11:42:52',7,NULL,NULL,'Do dishes','Soak in bleach water at least 10 minutes',NULL,NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
+ (145,'2007-02-02 14:47:18',6,NULL,NULL,'Change pads','',NULL,NULL,NULL,NULL,-1,'0000-00-00 00:00:00',NULL),
+ (156,'2007-02-06 15:17:40',4,NULL,2,'Feed cage Cage2','','feed',4,'Small',3,0,'0000-00-00 00:00:00',NULL),
+ (164,'2007-02-05 16:32:50',7,NULL,2,'Feed cage Cage2','','feed',8,'Small',1,0,'0000-00-00 00:00:00',NULL),
+ (168,'2007-02-06 18:26:33',0,NULL,NULL,'Fill out temperature and humidity','',NULL,NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
+ (198,NULL,1,NULL,2,'Feed cage Cage2','','feed',4,'Small',1,0,'0000-00-00 00:00:00',NULL),
+ (199,NULL,2,NULL,2,'Feed cage Cage2','','feed',4,'Small',1,0,'0000-00-00 00:00:00',NULL);
+INSERT INTO `tasks` (`id`,`last_done_date`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+ (200,'2007-02-06 15:17:40',3,NULL,2,'Feed cage Cage2','','feed',4,'Small',1,0,'0000-00-00 00:00:00',NULL),
+ (202,'2007-02-06 15:17:40',5,NULL,2,'Feed cage Cage2','','feed',4,'Small',1,0,'0000-00-00 00:00:00',NULL),
+ (203,NULL,6,NULL,2,'Feed cage Cage2','','feed',4,'Small',1,0,'0000-00-00 00:00:00',NULL),
+ (204,NULL,7,NULL,2,'Feed cage Cage2','','feed',4,'Small',1,0,'0000-00-00 00:00:00',NULL);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 
 
@@ -652,6 +676,29 @@ INSERT INTO `users` (`id`,`name`,`initials`,`email`,`start_date`,`end_date`) VAL
  (4,'Attila the Hun','AtH','hun@villagepillage.com','2006-12-23 00:00:00',NULL),
  (5,'Conan the Barbarian','CTB','ctb@slash.burn.net','2006-12-23 00:00:00',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
+
+
+--
+-- Definition of table `weathers`
+--
+
+DROP TABLE IF EXISTS `weathers`;
+CREATE TABLE `weathers` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `log_date` datetime NOT NULL,
+  `temperature` float NOT NULL,
+  `humidity` float NOT NULL,
+  `room` varchar(45) NOT NULL,
+  `sig` varchar(45) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `weathers`
+--
+
+/*!40000 ALTER TABLE `weathers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `weathers` ENABLE KEYS */;
 
 
 --

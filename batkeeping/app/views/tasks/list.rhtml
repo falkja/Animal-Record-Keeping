@@ -6,19 +6,19 @@
   <%= render :partial => 'tasks_list', :locals =>{:tasks_list => nil, :tasks => @feeding_tasks, :div_id => 'feeding_tasks', 
                                                                 :single_cage_task_list => @single_cage_task_list, :manage => true} %>
   <p>
-  <%= form_tag :action => 'form_to_edit_multiple_feeding_tasks', :id => @cage %>
+  <% form_tag :action => 'form_to_edit_multiple_feeding_tasks', :id => @cage do %>
   Cage: 
   <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
   <%= submit_tag "Edit multiple feeding tasks" %>
-  </form>
+  <% end %>
   </p>
   <% end %>
   <p>
-  <%= form_tag :action => 'form_to_new_feed_cage_task', :id => @cage %>
+  <% form_tag :action => 'form_to_new_feed_cage_task', :id => @cage do %>
   Cage: 
   <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
   <%= submit_tag "Add a feeding task" %>
-  </form>
+  <% end %>
   </p>
 </blockquote>
 
@@ -31,11 +31,11 @@
                                                                 :single_cage_task_list => @single_cage_task_list, :manage => false} %>
   <% end %>
   <p>
-  <%= form_tag :action => 'form_to_new_weigh_cage_task' %>
+  <% form_tag :action => 'form_to_new_weigh_cage_task' do %>
   Cage: 
   <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
   <%= submit_tag "Add a weighing task" %>
-  </form>
+  <% end %>
   </p>
 </blockquote>
 
@@ -47,11 +47,11 @@
     <%= render :partial => 'tasks_list', :locals =>{:tasks_list => nil, :tasks => @medical_tasks, :div_id => 'medical_tasks', 
                                                                   :single_cage_task_list => @single_cage_task_list, :manage => false} %>
     <p>
-    <%= form_tag :controller => 'proposed_treatments', :action => 'new' %>
+    <% form_tag :controller => 'proposed_treatments', :action => 'new' do %>
     Medical Problem: 
     <%= select_tag("id", options_from_collection_for_select(@medical_problems, "id", "title")) %>
     <%= submit_tag "Add a new treatment" %>
-    </form>
+    <% end %>
     </p>
   <% end %>
 </blockquote>

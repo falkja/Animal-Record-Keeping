@@ -13,7 +13,7 @@
 <%= proposed_treatment.treatment %> - Expired: <%= nice_date proposed_treatment.date_closed %><br/>
 <% end %></p>
 
-<%= form_tag :action => 'update', :id => @medical_problem , :redirectme => 'list_current', :deactivating => @deactivating %>
+<% form_tag :action => 'update', :id => @medical_problem , :redirectme => 'list_current', :deactivating => @deactivating do %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Close Medical Problem' %>
-</form>
+<% end %>

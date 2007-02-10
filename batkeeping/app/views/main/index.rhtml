@@ -1,8 +1,10 @@
-<%= form_tag :action => 'login', :id => @user %>
+<% form_tag :action => 'login', :id => @user do %>
 
 <p>User: <%= select_tag("user[id]", options_from_collection_for_select(@users, "id", "name")) %>
 
 <%#= collection_select("User", "user_id" , @users, "id", "name") %>
-<%= submit_tag 'sign in' %></form></p>
+<%= submit_tag 'sign in' %>
+<% end %>
+</p>
 
 <p><%= link_to 'Add User', :controller => 'users', :action => 'new' %></p>

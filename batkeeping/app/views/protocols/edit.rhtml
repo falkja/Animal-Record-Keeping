@@ -1,9 +1,9 @@
 <h1>Editing protocol</h1>
 
-<%= form_tag :action => 'update', :id => @protocol %>
+<% form_tag :action => 'update', :id => @protocol do %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Edit' %>
-</form>
+<% end %>
 
 <%= link_to 'Show', :action => 'show', :id => @protocol %> |
 <%= link_to 'Back', :action => 'list' %>

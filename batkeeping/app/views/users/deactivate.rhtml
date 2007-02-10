@@ -1,6 +1,6 @@
 <h1>Deactivating user : <%= @user.name %> </h1>
 
-<%= form_tag :action => 'update', :id => @user, :redirectme => 'list' %>
+<% form_tag :action => 'update', :id => @user, :redirectme => 'list' do %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Deactivate' %>
-</form>
+<% end %>

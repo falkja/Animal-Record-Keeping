@@ -1,6 +1,6 @@
 <h1>Deactivating cage : <%= @cage.name %> </h1>
 
-<%= form_tag :action => 'update', :id => @cage, :redirectme => 'list', :deactivating =>@deactivating %>
+<% form_tag :action => 'update', :id => @cage, :redirectme => 'list', :deactivating =>@deactivating do %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Deactivate' %>
-</form>
+<% end %>

@@ -1,9 +1,9 @@
 <h1>Editing cage_in_history</h1>
 
-<%= form_tag :action => 'update', :id => @cage_in_history %>
+<% form_tag :action => 'update', :id => @cage_in_history do %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Edit' %>
-</form>
+<% end %>
 
 <%= link_to 'Show', :action => 'show', :id => @cage_in_history %> |
 <%= link_to 'Back', :action => 'list' %>

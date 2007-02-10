@@ -1,6 +1,6 @@
 <h1>Reactivate bat : <%= @bat.band %> </h1>
 
-<%= form_tag :action => 'reactivate_bat', :id => @bat, :redirectme => 'list' %>
+<% form_tag :action => 'reactivate_bat', :id => @bat, :redirectme => 'list' do %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Reactivate' %>
-</form>
+<% end %>

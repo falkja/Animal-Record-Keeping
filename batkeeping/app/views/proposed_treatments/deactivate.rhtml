@@ -5,7 +5,7 @@
   <p>Treatment:<br/>
   <%= @proposed_treatment.treatment %></p>
 
-<%= form_tag :action => 'update', :id => @proposed_treatment , :redirectme => 'list_current' %>
+<% form_tag :action => 'update', :id => @proposed_treatment , :redirectme => 'list_current' do %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'End Treatment' %>
-</form>
+<% end %>

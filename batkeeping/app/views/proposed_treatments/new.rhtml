@@ -1,9 +1,9 @@
 <h1>Add Treatment To Medical Problem: <%=h @medical_problem.title %></h1>
 
-<%= form_tag :action => 'create', :id => @medical_problem %>
+<% form_tag :action => 'create', :id => @medical_problem do %>
   <%= render :partial => 'form' %>
   <p><%= submit_tag "New Treatment" %></p>
-</form>
+<% end %>
 
 <p><%= button_to 'Done', :controller => 'medical_problems', :action => 'list' %></p>
 

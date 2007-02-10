@@ -4,31 +4,31 @@
 <tr>
 <td valign='top'><b>Feeding Task</b></td>
 <td>
-  <%= form_tag :action => 'form_to_new_feed_cage_task', :id => @cage %>
+  <% form_tag :action => 'form_to_new_feed_cage_task', :id => @cage do %>
   <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
   <%= submit_tag "Add a feeding task" %>
-  </form>
+  <% end %>
 </td>
 </tr>
 
 <tr>
 <td valign='top'><b>Weighing Task</b></td>
 <td>
-<%= form_tag :action => 'form_to_new_weigh_cage_task' %>
+<% form_tag :action => 'form_to_new_weigh_cage_task' do %>
   <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
   <%= submit_tag "Add a weighing task" %>
-  </form>
+  <% end %>
 </td>
 </tr>
 
 <tr>
 <td valign='top'><b>Medical Task</b></td>
 <td>
-<%= form_tag :controller => 'proposed_treatments', :action => 'new' %>
+<% form_tag :controller => 'proposed_treatments', :action => 'new' do %>
     Medical Problem: 
     <%= select_tag("id", options_from_collection_for_select(@medical_problems, "id", "title")) %>
     <%= submit_tag "Add a new treatment" %>
-    </form>
+    <% end %>
 </td>
 </tr>
 

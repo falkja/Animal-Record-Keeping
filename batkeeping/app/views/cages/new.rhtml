@@ -2,9 +2,9 @@
 
 <% @disable_cage_name_change = false %>
 
-<%= form_tag :action => 'create' %>
+<% form_tag :action => 'create' do %>
   <%= render :partial => 'form' %>
   <%= submit_tag "Create New Cage" %>
-</form>
+<% end %>
 
 <%= link_to 'List Current Cages', :action => 'list' %>

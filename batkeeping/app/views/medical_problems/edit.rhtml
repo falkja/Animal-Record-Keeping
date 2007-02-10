@@ -2,10 +2,10 @@
 
 <% @disable_medical_problem_name_change = true %>
 
-<%= form_tag :action => 'update', :id => @medical_problem, :redirectme => 'list_current' %>
+<% form_tag :action => 'update', :id => @medical_problem, :redirectme => 'list_current' do %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Edit' %>
-</form>
+<% end %>
 
 <%= link_to 'Show', :action => 'show', :id => @medical_problem%> |
 <%= link_to 'List Current Medical Problems', :action => 'list_current' %>

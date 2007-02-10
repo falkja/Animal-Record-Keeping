@@ -1,6 +1,6 @@
 <h1>Moving bats from <%= @cage.name %></h1>
 
-<%= form_tag :action => 'move' %>
+<% form_tag :action => 'move' do %>
 
 <table>
 <th>Select bat(s)</th>
@@ -26,6 +26,6 @@
 
 <p><%= submit_tag 'Move' %></p>
 
-</form>
+<% end %>
 
 <%= link_to 'Back', :action => 'choose_cage' %>

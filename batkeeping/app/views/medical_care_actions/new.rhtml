@@ -1,9 +1,9 @@
 <h1>Do Treatment</h1>
 
-<%= form_tag :action => 'create', :id => @proposed_treatment %>
+<% form_tag :action => 'create', :id => @proposed_treatment do %>
   <%= render :partial => 'form' %>
   <%= submit_tag "Medical Treatment Done" %>
-</form>
+<% end %>
 
 <%= render :partial => 'proposed_treatments/show_all_medical_care_actions', :locals => {:show_all_medical_care_actions => @proposed_treatment} %>
 

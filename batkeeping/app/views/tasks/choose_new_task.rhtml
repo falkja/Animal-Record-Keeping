@@ -7,7 +7,7 @@
   <%= form_tag :action => 'form_to_new_feed_cage_task', :id => @cage %>
   <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
   <%= submit_tag "Add a feeding task" %>
-  <%= end_form_tag %>
+  </form>
 </td>
 </tr>
 
@@ -17,7 +17,7 @@
 <%= form_tag :action => 'form_to_new_weigh_cage_task' %>
   <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
   <%= submit_tag "Add a weighing task" %>
-  <%= end_form_tag %>
+  </form>
 </td>
 </tr>
 
@@ -28,7 +28,7 @@
     Medical Problem: 
     <%= select_tag("id", options_from_collection_for_select(@medical_problems, "id", "title")) %>
     <%= submit_tag "Add a new treatment" %>
-    <%= end_form_tag %>
+    </form>
 </td>
 </tr>
 

@@ -5,7 +5,7 @@
 <%= form_tag :action => 'update', :id => @medical_problem, :redirectme => 'list_current' %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Edit' %>
-<%= end_form_tag %>
+</form>
 
 <%= link_to 'Show', :action => 'show', :id => @medical_problem%> |
 <%= link_to 'List Current Medical Problems', :action => 'list_current' %>

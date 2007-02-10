@@ -85,12 +85,12 @@
     <td><%= link_to bat.band, :controller => 'bats', :action => 'show', :id => bat %></td>
     <% if bat.weights.length > 0 %></td>
           <td><%=h bat.weights[0].weight %></td>
-          <td><%=h nice_date bat.weights[0].date %></td>
+          <td><%=h nice_date(bat.weights[0].date) %></td>
     <% else %>
           <td>N/A</td>
           <td>N/A</td>
     <% end %>
-    <td><%=h nice_date @date_in %></td>
+    <td><%=h nice_date(@date_in) %></td>
     <td><%=h @sig %></td>
     <td><%=h @why %></td>
     </tr>
@@ -115,9 +115,9 @@
   <% for coh in @cohs %>
     <tr>
     <td><%=link_to coh.bat.band, :controller => 'bats', :action => 'show', :id => coh.bat %></td>
-    <td><%=h nice_date coh.cage_in_history.date %></td>
+    <td><%=h nice_date(coh.cage_in_history.date) %></td>
     <td><%=h coh.cage_in_history.user.initials %></td>
-    <td><%=h nice_date coh.date %></td>
+    <td><%=h nice_date(coh.date) %></td>
     <td><%=h coh.user.initials %></td>
     </tr>
   <% end %>

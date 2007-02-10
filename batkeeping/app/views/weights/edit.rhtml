@@ -3,7 +3,7 @@
 <%= form_tag :action => 'update', :id => @weight %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Edit' %>
-<%= end_form_tag %>
+</form>
 
 <%= link_to 'Show', :action => 'show', :id => @weight %> |
 <%= link_to 'Back', :action => 'list' %>

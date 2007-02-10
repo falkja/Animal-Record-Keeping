@@ -3,7 +3,7 @@
 <%= form_tag :action => 'create', :id => @medical_problem %>
   <%= render :partial => 'form' %>
   <p><%= submit_tag "New Treatment" %></p>
-<%= end_form_tag %>
+</form>
 
 <p><%= button_to 'Done', :controller => 'medical_problems', :action => 'list' %></p>
 

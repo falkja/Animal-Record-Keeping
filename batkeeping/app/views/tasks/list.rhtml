@@ -10,7 +10,7 @@
   Cage: 
   <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
   <%= submit_tag "Edit multiple feeding tasks" %>
-  <%= end_form_tag %>
+  </form>
   </p>
   <% end %>
   <p>
@@ -18,7 +18,7 @@
   Cage: 
   <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
   <%= submit_tag "Add a feeding task" %>
-  <%= end_form_tag %>
+  </form>
   </p>
 </blockquote>
 
@@ -35,7 +35,7 @@
   Cage: 
   <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
   <%= submit_tag "Add a weighing task" %>
-  <%= end_form_tag %>
+  </form>
   </p>
 </blockquote>
 
@@ -51,7 +51,7 @@
     Medical Problem: 
     <%= select_tag("id", options_from_collection_for_select(@medical_problems, "id", "title")) %>
     <%= submit_tag "Add a new treatment" %>
-    <%= end_form_tag %>
+    </form>
     </p>
   <% end %>
 </blockquote>

@@ -31,6 +31,6 @@ options_for_select([
 </p>
 
 <%= submit_tag "Add task(s) for " + @cage.name %>
-<%= end_form_tag %>
+</form>
 </blockquote>
 <%= button_to 'Done', :controller => 'cages', :action => 'show', :id => @cage %>

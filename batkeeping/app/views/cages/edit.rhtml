@@ -5,7 +5,7 @@
 <%= form_tag :action => 'update', :id => @cage, :redirectme => 'list' %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Edit' %>
-<%= end_form_tag %>
+</form>
 
 <%= link_to 'Show', :action => 'show', :id => @cage %> |
 <%= link_to 'List Current Cages', :action => 'list' %>

@@ -3,7 +3,7 @@
 <%= form_tag :action => 'create', :id => @proposed_treatment %>
   <%= render :partial => 'form' %>
   <%= submit_tag "Medical Treatment Done" %>
-<%= end_form_tag %>
+</form>
 
 <%= render :partial => 'proposed_treatments/show_all_medical_care_actions', :locals => {:show_all_medical_care_actions => @proposed_treatment} %>
 

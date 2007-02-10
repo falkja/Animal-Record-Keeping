@@ -28,9 +28,13 @@ No tasks.
  </tbody>
 </table>
 <% if single_cage_task_list %>
-<% if task.cage.fed_every_day? == false && task.cage.bats.length > 0 && tasks[0].internal_description == 'feed' %>
-<p><b><em>Warning: this cage is not fed every day of the week</em></b></p>
-<% end %>
+	<% if tasks.length > 0 %>
+		<% if tasks[0].internal_description == 'feed' %>
+			<% if task.cage.fed_every_day? == false && task.cage.bats.length > 0 %>
+				<p><b><em>Warning: this cage is not fed every day of the week</em></b></p>
+			<% end %>
+		<% end %>
+	<% end %>
 <% end %>
 <% end %>
 </div>

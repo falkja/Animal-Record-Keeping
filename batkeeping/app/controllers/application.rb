@@ -3,7 +3,7 @@
 class ApplicationController < ActionController::Base
 	layout 'standard'
 
-  session_times_out_in 15.minutes, :after_timeout => :send_to_login
+	session_times_out_in 15.minutes, :after_timeout => :send_to_login
     
 	def send_to_login
     redirect_to :controller => 'main', :action => 'timeout'
@@ -15,4 +15,6 @@ class ApplicationController < ActionController::Base
     	cages.each {|cage| bats << cage.bats}
     	bats.flatten!
     end
+	
+	
 end

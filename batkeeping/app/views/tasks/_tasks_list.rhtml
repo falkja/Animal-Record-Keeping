@@ -4,7 +4,9 @@ No tasks.
 <% else %>
 <table>
   <thead>
+  <% if !single_cage_task_list %>
     <th>Title</th>
+  <% end %>
     <th>User(s)</th>
 	<% if tasks[0].internal_description == 'feed' %>
 		<th>Food</th>
@@ -18,19 +20,15 @@ No tasks.
  <tbody>  
   
 <% for task in tasks %>
-  <% if task.internal_description == nil || task.internal_description == "feed" %>
-    <% manage = true %>
-  <% else %>
-    <% manage = false %>
-  <% end %>
- <%= render :partial => 'tasks/single_task_list', :locals => {:single_task_list => nil, :task => task, :manage => manage, :tasks => tasks, :div_id => div_id, :single_cage_feeding_list => single_cage_feeding_list} %>
-
+ <%= render :partial => 'tasks/single_task_list', 
+                  :locals => {:single_task_list => nil, :task => task, :manage => manage, :tasks => tasks, 
+                  :div_id => div_id, :single_cage_task_list => single_cage_task_list} %>
 <% end %>
 
  </tbody>
 </table>
-<% if single_cage_feeding_list %>
-<% if task.cage.fed_every_day? == false && task.cage.bats.length > 0 %>
+<% if single_cage_task_list %>
+<% if task.cage.fed_every_day? == false && task.cage.bats.length > 0 && tasks[0].internal_description == 'feed' %>
 <p><b><em>Warning: this cage is not fed every day of the week.</em></b></p>
 <% end %>
 <% end %>

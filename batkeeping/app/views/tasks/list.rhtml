@@ -3,7 +3,8 @@
   <% if @feeding_tasks.length == 0 %>
   No feeding tasks.
   <% else %>
-  <%= render :partial => 'tasks_list', :locals =>{:tasks_list => nil, :tasks => @feeding_tasks, :div_id => 'feeding_tasks'} %>
+  <%= render :partial => 'tasks_list', :locals =>{:tasks_list => nil, :tasks => @feeding_tasks, :div_id => 'feeding_tasks', 
+                                                                :single_cage_task_list => @single_cage_task_list, :manage => true} %>
   <p>
   <%= form_tag :action => 'form_to_edit_multiple_feeding_tasks', :id => @cage %>
   Cage: 
@@ -26,7 +27,8 @@
   <% if @weighing_tasks.length == 0 %>
   No cage weighing tasks.
   <% else %>
-  <%= render :partial => 'tasks_list', :locals =>{:tasks_list => nil, :tasks => @weighing_tasks, :div_id => 'weighing_tasks'} %>
+  <%= render :partial => 'tasks_list', :locals =>{:tasks_list => nil, :tasks => @weighing_tasks, :div_id => 'weighing_tasks', 
+                                                                :single_cage_task_list => @single_cage_task_list, :manage => false} %>
   <% end %>
   <p>
   <%= form_tag :action => 'form_to_new_weigh_cage_task' %>
@@ -42,7 +44,8 @@
   <% if @medical_tasks.length == 0 %>
   No medical tasks.
   <% else %>
-    <%= render :partial => 'tasks_list', :locals =>{:tasks_list => nil, :tasks => @medical_tasks, :div_id => 'medical_tasks'} %>
+    <%= render :partial => 'tasks_list', :locals =>{:tasks_list => nil, :tasks => @medical_tasks, :div_id => 'medical_tasks', 
+                                                                  :single_cage_task_list => @single_cage_task_list, :manage => false} %>
     <p>
     <%= form_tag :controller => 'proposed_treatments', :action => 'new' %>
     Medical Problem: 
@@ -58,7 +61,8 @@
   <% if @general_tasks.length == 0 %>
   No general tasks.
   <% else %>
-  <%= render :partial => 'tasks_list', :locals =>{:tasks_list => nil, :tasks => @general_tasks, :div_id => 'general_tasks'} %>
+  <%= render :partial => 'tasks_list', :locals =>{:tasks_list => nil, :tasks => @general_tasks, :div_id => 'general_tasks', 
+                                                                :single_cage_task_list => @single_cage_task_list, :manage => true} %>
   <% end %>
   <p><%= button_to 'Add a general task', :controller => 'tasks', :action => 'new' %></p>
 </blockquote>

@@ -1,0 +1,22 @@
+<p><b>Cage owner:</b> <%=h @cage.user.name %></p>
+
+<p><b>Bats in cage:</b> <%=h @cage.bats.length %></p>
+
+<% if @cage.bats.length > 0 %>
+<% @average = @cage.average_bat_weight %>
+<p>
+<b>Average Weight: </b><%= @average %> g
+</p>
+<% end %>
+
+<% if task_type == 'feeding' %>
+<b>Current Feeding Tasks for <%= @cage.name %>:</b>
+<blockquote>
+<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', :single_cage_task_list => true, :manage => true} %>
+</blockquote>
+<% elsif task_type == 'weighing' %>
+<b>Current Weighing Tasks for <%= @cage.name %>:</b>
+<blockquote>
+<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => @cage.tasks.weighing_tasks, :div_id => 'weighing_tasks', :single_cage_task_list => true, :manage => true} %>
+</blockquote>
+<% end %>

@@ -35,6 +35,7 @@ class ProposedTreatmentsController < ApplicationController
       @task.title = @proposed_treatment.treatment
       @task.internal_description = "medical"
       @task.jitter = 0
+	  @task.date_started = @proposed_treatment.date_started
       @task.save
       @task.users << @proposed_treatment.medical_problem.user
       #@tasks = @proposed_treatment.medical_problem.user.tasks

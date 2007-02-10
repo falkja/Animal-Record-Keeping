@@ -43,8 +43,7 @@
 
 <b>Current Feeding Tasks:</b>
 <blockquote>
-<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', :single_cage_feeding_list => true} %>
-
+<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', :single_cage_task_list => true, :manage => true} %>
 <p>
 [<%= link_to 'Add feeding task', :controller => 'tasks', :action => 'new_feed_cage_task', :id => @cage %>]
 [<%= link_to 'Edit multiple feeding tasks', :controller => 'tasks', :action => 'edit_multiple_feeding_tasks', :id => @cage %>]
@@ -52,8 +51,9 @@
 </blockquote>
 
 <% @tasks = @cage.tasks.weighing_tasks %>
-<%= render :partial => 'weighing_tasks', :locals => {:weighing_tasks => @cage.tasks.weighing_tasks} %>
+<b>Current Weighing Tasks:</b>
 <blockquote>
+<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => @cage.tasks.weighing_tasks, :div_id => 'weighing_tasks', :single_cage_task_list => true, :manage => true} %>
 <p>[<%= link_to 'Add weighing task', :controller => 'tasks', :action => 'new_weigh_cage_task', :id => @cage %>]</p>
 </blockquote>
 

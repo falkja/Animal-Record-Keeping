@@ -15,6 +15,7 @@ class TasksController < ApplicationController
     @feeding_tasks = Task.feeding_tasks
     @cages = Cage.has_bats
     @medical_problems = MedicalProblem.current
+    @single_cage_task_list = false
   end
 
   def show
@@ -53,18 +54,19 @@ class TasksController < ApplicationController
     end
     
     for day in @days
-        @task = Task.new
-        @task.repeat_code = day
-        @task.cage = @cage
-        @task.title = "Weigh cage " + @cage.name    
-        @task.internal_description = "weigh"
-        @task.jitter = -1
-        @task.save
-        @task.users = @users
+      @task = Task.new
+      @task.repeat_code = day
+      @task.cage = @cage
+      @task.title = "Weigh cage " + @cage.name    
+      @task.internal_description = "weigh"
+      @task.jitter = -1
+      @task.date_started = Time.now
+      @task.save
+      @task.users = @users
     end    
-    
-    @tasks = @cage.tasks.weighing_tasks
-    render :partial => 'cages/weighing_tasks'
+      
+    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => @cage.tasks.weighing_tasks, :div_id => 'weighing_tasks', 
+                                      :single_cage_task_list => true, :manage => true}
   end
 
   #allows editing the food amount and dishes for multiple feeding tasks
@@ -87,7 +89,8 @@ class TasksController < ApplicationController
         task.save
     end    
     
-    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', :single_cage_feeding_list => true}
+    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', 
+                            :single_cage_task_list => true, :manage => true}
   end
   
   #called from the form on the list tasks page, needed so that the page that is requested has an ID attached to it so that refreshes of the page don't break
@@ -112,28 +115,30 @@ class TasksController < ApplicationController
     end
     
     for day in @days
-        @task = Task.new
-        @task.repeat_code = day
-        @task.cage = @cage
-        @task.title = "Feed cage " + @cage.name    
-        @task.internal_description = "feed"
-        @task.food = params[:task][:food]
-        @task.dish_type = params[:task][:dish_type]
-        @task.dish_num = params[:task][:dish_num]
-        @task.jitter = 0
-        @task.save
-        if (@users.include?(User.find(1)) && ((day == "1") || (day == "7")))  #General Animal Care can't do feeding tasks on weekend - assign to weekend/holiday care
-          @task.users = [User.find(3)]
+      @task = Task.new
+      @task.repeat_code = day
+      @task.cage = @cage
+      @task.title = "Feed cage " + @cage.name    
+      @task.internal_description = "feed"
+      @task.food = params[:task][:food]
+      @task.dish_type = params[:task][:dish_type]
+      @task.dish_num = params[:task][:dish_num]
+      @task.jitter = 0
+      @task.date_started = Time.now
+      @task.save
+      if (@users.include?(User.find(1)) && ((day == "1") || (day == "7")))  #General Animal Care can't do feeding tasks on weekend - assign to weekend/holiday care
+        @task.users = [User.find(3)]
+      else
+        if @users.include?(User.find(3)) && ((day == "2") || (day == "3") || (day == "4") || (day == "5") || (day == "6"))
+          @task.users = [User.find(1)]
         else
-          if @users.include?(User.find(3)) && ((day == "2") || (day == "3") || (day == "4") || (day == "5") || (day == "6"))
-            @task.users = [User.find(1)]
-          else
-            @task.users = @users
-          end
+          @task.users = @users
         end
+      end
     end    
     
-    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', :single_cage_feeding_list => true}
+    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => @cage.tasks.feeding_tasks, 
+                                      :div_id => 'feeding_tasks', :single_cage_task_list => true, :manage => true}
   end
 
   def create
@@ -149,6 +154,7 @@ class TasksController < ApplicationController
         @task = Task.new(params[:task])
         @task.repeat_code = day
         @task.internal_description = nil
+		@task.date_started = Time.now
         @task.save
         @task.users = @users
     end
@@ -181,14 +187,14 @@ class TasksController < ApplicationController
       task.last_done_date = Time.now
       task.save
     end
-	render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => Task.find(params[:ids]), :div_id => params[:div_id], :single_cage_feeding_list => params[:single_cage_feeding_list]}
+	render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => Task.find(params[:ids]), :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
   end
   
   def destroy
     tasks = Task.find(params[:ids])
     tasks.delete(Task.find(params[:id]))
     Task.find(params[:id]).destroy
-    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => tasks, :div_id => params[:div_id], :single_cage_feeding_list => params[:single_cage_feeding_list]}
+    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => tasks, :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
   end
   
 end

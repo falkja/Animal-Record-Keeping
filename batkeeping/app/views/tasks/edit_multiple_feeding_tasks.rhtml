@@ -1,21 +1,6 @@
 <h1>Edit Multiple Feeding Tasks for <%= @cage.name %></h1>
 
-<p><b>Cage owner:</b> <%=h @cage.user.name %></p>
-
-<p><b>Bats in cage:</b> <%=h @cage.bats.length %></p>
-
-<% if @cage.bats.length > 0 %>
-<% average = @cage.average_bat_weight %>
-<p>
-<b>Average Weight: </b><%= average %> g
-</p>
-<% end %>
-
-<b>Current Feeding Tasks:</b>
-<blockquote>
-<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', :single_cage_feeding_list => true} %>
-</blockquote>
-
+<%= render :partial => 'tasks_common_info', :locals => {:task_type => 'feeding'} %>
 
 <b>Edit Feeding Tasks:</b><br/>
 <em>This will change all feeding tasks to match the parameters below</em>
@@ -25,9 +10,9 @@
                        :position => "replace") %>
 
 <% if @cage.bats.length > 0 %>
-<% if (average < 20) && (average > 14) %>
+<% if (@average < 20) && (@average > 14) %>
 <% suggested_amount = 1.5 * @cage.bats.length %>
-<% elseif average > 20 %>
+<% elseif @average > 20 %>
 <% suggested_amount = 2.0 * @cage.bats.length %>
 <% else %>
 <% suggested_amount = 2.0 * @cage.bats.length %>

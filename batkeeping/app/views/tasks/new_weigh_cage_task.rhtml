@@ -1,8 +1,10 @@
 <h1>Add weighing task for <%= @cage.name %></h1>
 
-<p><b>Cage owner:</b> <%=h @cage.user.name %></p>
+<%= render :partial => 'tasks_common_info', :locals => {:task_type => 'weighing'} %>
 
-<%= form_remote_tag(:update => "cage_tasks_list",
+<b>Add Feeding Tasks:</b>
+<blockquote>
+<%= form_remote_tag(:update => "weighing_tasks",
                        :url => { :controller => 'tasks', :action => 'create_weigh_cage_task', :id => @cage },
                        :position => "replace" ) %>
 
@@ -30,10 +32,5 @@ options_for_select([
 
 <%= submit_tag "Add task(s) for " + @cage.name %>
 <%= end_form_tag %>
-
-<div id="cage_tasks_list">
-<% @tasks = @cage.tasks.weighing_tasks %>
-<%= render :partial => 'cages/weighing_tasks' %>
-</div>
-
+</blockquote>
 <%= button_to 'Done', :controller => 'cages', :action => 'show', :id => @cage %>

@@ -3,12 +3,14 @@
 
 <% # if true, the partial will also display edit and destroy buttons %>
 
-  <tr> 
+  <tr>
+  <% if !single_cage_task_list %>
     <td>
     <b>
       <%= task.title %>
     </b>
     </td>
+  <% end %>
     <td>
       <% for user in task.users %>
       <%= user.name %><br/>
@@ -46,7 +48,7 @@
 		<% end %>
           [<%= link_to_remote label, :url => {
 			:controller => 'tasks', :action => 'done', :id => task, 
-			:ids => tasks, :div_id => div_id,  :single_cage_feeding_list => single_cage_feeding_list},
+			:ids => tasks, :div_id => div_id,  :single_cage_task_list => single_cage_task_list},
 			:update => div_id%>]
        <% else %>
         Not done on schedule
@@ -66,7 +68,7 @@
     <td><%= link_to 'Show', :controller => 'tasks', :action => 'show', :id => task %></td>
     <% if manage == true %>
     <td><%= link_to 'Edit',  :controller => 'tasks', :action => 'edit', :id => task %></td>
-    <td><%= link_to_remote 'Destroy', :url => { :controller => 'tasks', :action => 'destroy', :id => task, :ids => tasks, :div_id => div_id,  :single_cage_feeding_list => single_cage_feeding_list}, :confirm => 'Are you sure?', :method => :post, :update => div_id %></td>
+    <td><%= link_to_remote 'Destroy', :url => { :controller => 'tasks', :action => 'destroy', :id => task, :ids => tasks, :div_id => div_id,  :single_cage_task_list => single_cage_task_list}, :confirm => 'Are you sure?', :method => :post, :update => div_id %></td>
     <% end %>
  </tr>
     

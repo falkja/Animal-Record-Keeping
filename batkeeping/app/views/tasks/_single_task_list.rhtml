@@ -13,7 +13,17 @@
       <% for user in task.users %>
       <%= user.name %><br/>
       <% end %>
-      </td>
+    </td>
+	
+	<% if task.internal_description == 'feed' %>
+		<td><%=h task.food %>g</td>
+		<td><%=h task.dish_num.to_s + " " + task.dish_type.to_s %></td>
+		<% cage = Cage.find(task.cage_id) %>
+		<% if cage.bats.length > 0 %>
+			<% average = task.food / cage.bats.length %>
+			<td><%= (("%.0" + 1.to_s + "f") % average).to_f %> g</td>
+		<% end %>
+	<% end %>
     <td>
       <%= task.repeat_code == 0 ? "Daily" : '' %>
       <%= task.repeat_code == 1 ? "Every Sunday" : '' %>
@@ -30,10 +40,14 @@
     <% else %>
        <% if manage == true %>
         <% if task.internal_description == "feed" %>
-          [<%= link_to 'Just Fed', :controller => 'tasks', :action => 'done', :id => task %>]
-        <% else %>
-          [<%= link_to 'Just Done', :controller => 'tasks', :action => 'done', :id => task %>]
-        <% end %>
+			<% label = 'Just Fed' %>
+		<% else %>
+			<% label = 'Just Done' %>
+		<% end %>
+          [<%= link_to_remote label, :url => {
+			:controller => 'tasks', :action => 'done', :id => task, 
+			:ids => tasks, :div_id => div_id,  :single_cage_feeding_list => single_cage_feeding_list},
+			:update => div_id%>]
        <% else %>
         Not done on schedule
        <% end %>
@@ -52,7 +66,7 @@
     <td><%= link_to 'Show', :controller => 'tasks', :action => 'show', :id => task %></td>
     <% if manage == true %>
     <td><%= link_to 'Edit',  :controller => 'tasks', :action => 'edit', :id => task %></td>
-    <td><%= link_to_remote 'Destroy', :url => { :controller => 'tasks', :action => 'destroy', :id => task, :ids => tasks }, :confirm => 'Are you sure?', :method => :post, :update => div_id %></td>
+    <td><%= link_to_remote 'Destroy', :url => { :controller => 'tasks', :action => 'destroy', :id => task, :ids => tasks, :div_id => div_id,  :single_cage_feeding_list => single_cage_feeding_list}, :confirm => 'Are you sure?', :method => :post, :update => div_id %></td>
     <% end %>
  </tr>
     

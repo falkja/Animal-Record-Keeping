@@ -41,8 +41,10 @@
 
 </blockquote>
 
-<%= render :partial => 'feeding_tasks', :locals=>{:cage => @cage} %>
+<b>Current Feeding Tasks:</b>
 <blockquote>
+<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', :single_cage_feeding_list => true} %>
+
 <p>
 [<%= link_to 'Add feeding task', :controller => 'tasks', :action => 'new_feed_cage_task', :id => @cage %>]
 [<%= link_to 'Edit multiple feeding tasks', :controller => 'tasks', :action => 'edit_multiple_feeding_tasks', :id => @cage %>]

@@ -11,7 +11,7 @@ class TasksController < ApplicationController
   def list
     @general_tasks = Task.general_tasks
     @weighing_tasks = Task.weighing_tasks
-    @medical_tasks = Task.medical_tasks    
+    @medical_tasks = Task.medical_tasks
     @feeding_tasks = Task.feeding_tasks
     @cages = Cage.has_bats
     @medical_problems = MedicalProblem.current
@@ -87,7 +87,7 @@ class TasksController < ApplicationController
         task.save
     end    
     
-    render :partial => 'cages/feeding_tasks', :locals => {:cage => @cage}
+    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', :single_cage_feeding_list => true}
   end
   
   #called from the form on the list tasks page, needed so that the page that is requested has an ID attached to it so that refreshes of the page don't break
@@ -133,7 +133,7 @@ class TasksController < ApplicationController
         end
     end    
     
-    render :partial => 'cages/feeding_tasks', :locals => {:cage => @cage}
+    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', :single_cage_feeding_list => true}
   end
 
   def create
@@ -176,35 +176,19 @@ class TasksController < ApplicationController
 
   #only saves tasks if they are on the due date (feeding) or within 2 days of the deadline (all others)
   def done
-    @task = Task.find(params[:id])
-    if (Date.today.yday >= @task.find_post) && (Date.today.yday <= (@task.find_post - @task.jitter))
-      @task.last_done_date = Time.now
-      @task.save
-    end
-    redirect_to :back
-  end
-  
-  def fed
-    @task = Task.find(params[:id])
-    if (Date.today.yday >= @task.find_post) && (Date.today.yday <= (@task.find_post - @task.jitter))
-      @task.last_done_date = Time.now
-      @task.save
-    end
-    render :partial => 'cages/feeding_tasks', :locals => {:cage => @task.cage}
-  end
-  
-  def destroy_feeding_task
     task = Task.find(params[:id])
-    cage = task.cage
-    task.destroy
-    render :partial=> 'cages/feeding_tasks', :locals => {:cage => cage}
+    if (Date.today.yday >= task.find_post) && (Date.today.yday <= (task.find_post - task.jitter))
+      task.last_done_date = Time.now
+      task.save
+    end
+	render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => Task.find(params[:ids]), :div_id => params[:div_id], :single_cage_feeding_list => params[:single_cage_feeding_list]}
   end
   
   def destroy
     tasks = Task.find(params[:ids])
     tasks.delete(Task.find(params[:id]))
     Task.find(params[:id]).destroy
-    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => tasks}
+    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => tasks, :div_id => params[:div_id], :single_cage_feeding_list => params[:single_cage_feeding_list]}
   end
   
 end

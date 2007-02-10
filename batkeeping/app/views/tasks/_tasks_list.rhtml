@@ -1,20 +1,16 @@
-
-<% if tasks[0].internal_description == "feed" %>
-<% div_id = "feed" %>
-<% elsif tasks[0].internal_description == "medical" %>
-<% div_id = "medical" %>
-<% elsif tasks[0].internal_description == "weigh" %>
-<% div_id = "weigh" %>
-<% else %>
-<% div_id = "general" %>
-<% end %>
-
-
 <div id = "<%= div_id %>">
+<% if tasks.length == 0 %>
+No tasks.
+<% else %>
 <table>
   <thead>
     <th>Title</th>
     <th>User(s)</th>
+	<% if tasks[0].internal_description == 'feed' %>
+		<th>Food</th>
+		<th>Dishes</th>
+		<th>Food/Bat</th>
+	<% end %>
     <th>Frequency</th>
     <th>Last Done</th>
   </thead>
@@ -27,10 +23,16 @@
   <% else %>
     <% manage = false %>
   <% end %>
- <%= render :partial => 'tasks/single_task_list', :locals => {:single_task_list => nil, :task => task, :manage => manage, :tasks => tasks, :div_id => div_id} %>
+ <%= render :partial => 'tasks/single_task_list', :locals => {:single_task_list => nil, :task => task, :manage => manage, :tasks => tasks, :div_id => div_id, :single_cage_feeding_list => single_cage_feeding_list} %>
 
 <% end %>
 
  </tbody>
 </table>
+<% if single_cage_feeding_list %>
+<% if task.cage.fed_every_day? == false && task.cage.bats.length > 0 %>
+<p><b><em>Warning: this cage is not fed every day of the week.</em></b></p>
+<% end %>
+<% end %>
+<% end %>
 </div>

@@ -11,15 +11,16 @@
 </p>
 <% end %>
 
-<div id="cage_tasks_list">
-<%= render :partial => 'cages/feeding_tasks', :locals => {:cage => @cage} %>
-</div>
+<b>Current Feeding Tasks:</b>
+<blockquote>
+<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', :single_cage_feeding_list => true} %>
+</blockquote>
 
 <b>Add Feeding Tasks:</b>
 <blockquote>
-<%= form_remote_tag(:update => "cage_tasks_list",
-                       :url => { :controller => 'tasks', :action => 'create_feed_cage_task', :id => @cage },
-                       :position => "replace") %>
+<%= form_remote_tag(:update => "feeding_tasks",
+                       :url => { :controller => 'tasks', :action => 'create_feed_cage_task', 
+					   :id => @cage }) %>
 
 <p>
 <label for="fed_by">Fed by</label><br/>
@@ -62,7 +63,7 @@ Any feeding task that takes place during Monday-Friday and is assigned to the We
 <%= text_field 'task', 'food', :size => 1, :autocomplete => 'off', :value => suggested_amount %> g</p>
 
 <% if @cage.bats.length > 0 %>
-<b>Suggested amount (E. fuscus)</b>: <%=h suggested_amount %> g (<%=h suggested_amount/@cage.bats.length %> g per bat) based on average weight of bats in cage.
+<em>Suggested amount (E. fuscus): <%=h suggested_amount %> g (<%=h suggested_amount/@cage.bats.length %> g per bat) based on average weight of bats in cage.</em>
 <% end %>
 
 <p><label for="dish_type">Dish Type</label><br/>

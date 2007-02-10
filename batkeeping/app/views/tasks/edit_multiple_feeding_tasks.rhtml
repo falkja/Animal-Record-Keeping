@@ -11,9 +11,12 @@
 </p>
 <% end %>
 
-<div id="cage_tasks_list">
-<%= render :partial => 'cages/feeding_tasks', :locals => {:cage => @cage} %>
-</div>
+<b>Current Feeding Tasks:</b>
+<blockquote>
+<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', :single_cage_feeding_list => true} %>
+</blockquote>
+
+
 <b>Edit Feeding Tasks:</b><br/>
 <em>This will change all feeding tasks to match the parameters below</em>
 <blockquote>

@@ -1,0 +1,20 @@
+<h2><%= "Summary for #{Date::MONTHNAMES[@month]} #{@year}" %></h2>
+
+<table border =1>
+	<th>Day</th>
+	<th>Temp</th>
+	<th>Humid</th>
+<% for day in @days_this_month %>
+	<tr>
+	
+	<td><%= day %></td>
+	<% if @tempandhumidity_list[day-1] %>
+		<td><%= @tempandhumidity_list[day-1].temperature %></td>
+		<td><%= @tempandhumidity_list[day-1].humidity %></td>
+	<% else %>
+		<td>-</td>
+		<td>-</td>
+	<% end %>
+	</tr>
+<% end %>
+</table>

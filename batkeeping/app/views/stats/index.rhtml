@@ -1,0 +1,9 @@
+
+<h2>Show table for</h2>
+
+<%= form_tag :controller => 'stats', :action => 'monthly_sheet' %>
+<%= select_year(Date.today, :start_year => @start_year, :end_year => @end_year) %>
+
+<%= select_month(Date.today) %>
+  <%= submit_tag 'Go' %>
+<%= end_form_tag %>

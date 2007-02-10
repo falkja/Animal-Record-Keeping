@@ -17,7 +17,8 @@
 <% elsif specified_cage.bats.length > 0 %>
 
   <% if specified_cage.tasks.feeding_tasks.length > 0 %>
-    <%= render :partial => 'cages/feeding_tasks' , :locals => {:cage => specified_cage} %>
+    <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => specified_cage.tasks.feeding_tasks, :div_id => div_id, 
+           :single_cage_task_list => true, :manage => true} %>
   <% elsif specified_cage.tasks.feeding_tasks.length == 0 %>
     No feeding tasks.
   <% end %>

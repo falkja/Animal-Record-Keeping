@@ -43,7 +43,7 @@
       </td>
     <td><%= cage.room %></td>
 	<td><%=h cage.bats.count %></td>
-    <td><%=h cage.user.name %></td>
+    <td><%=h cage.user ? cage.user.name : 'None' %></td>
   <% if @list_all %>
   <td><%=h nice_date(cage.date_destroyed) %></td>
 <% end %>

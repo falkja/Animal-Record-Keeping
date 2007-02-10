@@ -212,9 +212,9 @@ class MainController < ApplicationController
 		end
 		
 		#create random temp and humidity entries
-		for n in 1..400
+		for n in 1..1600
 			tandh = Weather.new
-			tandh.log_date = Date.new(2006,rand(12)+1,rand(27)+1)
+			tandh.log_date = Date.new(2003 + rand(5),rand(12)+1,rand(27)+1)
 			tandh.temperature = rand(30) + 10
 			tandh.humidity = rand(100)
 			tandh.room = rooms[rand(3)]
@@ -227,10 +227,10 @@ class MainController < ApplicationController
 	end
 	
 	def erase_testing_data
-		Cage.find(:all, :conditions => "name like 'random%'").each {|x| x.destroy}
-		Bat.find(:all, :conditions => "collection_place = 'erewhon'").each {|x| x.destroy}
-		Task.find(:all, :conditions => "title = 'random'").each {|x| x.destroy}
-		Weather.find(:all, :conditions => "sig = 'random'").each {|x| x.destroy}
+		Cage.destroy_all "name like 'random%'"
+		Bat.destroy_all "collection_place = 'erewhon'"
+		Task.destroy_all "title = 'random'"
+		Weather.destroy_all "sig = 'random'"
 		redirect_to :controller => 'bats', :action => 'list'		
 	end
 		

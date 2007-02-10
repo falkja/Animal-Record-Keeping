@@ -20,8 +20,9 @@ class StatsController < ApplicationController
 	def monthly_sheet
 		@year = params[:date][:year].to_i
 		@month = params[:date][:month].to_i
+		@room = params[:room][:number]
 		@days_this_month = 1...Date::civil(@year, @month, -1).day		
-		@tempandhumidity_list = Weather.for_date(@year, @month, @days_this_month)
+		@tempandhumidity_list = Weather.for_date(@year, @month, @days_this_month, @room)
 	end
 	
   #just show all cage changes

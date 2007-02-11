@@ -160,14 +160,4 @@ class CagesController < ApplicationController
     @cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name" )
 	@bats = @cage.bats
 end
-
-  def clear_feeding_tasks
-    @cage = Cage.find(params[:cage])
-    @old_cage = Cage.find(params[:old_cage])
-    @bats = Bat.find(params[:bats])
-    for task in @old_cage.tasks.feeding_tasks
-      task.destroy
-    end
-    render :partial => 'bats/feeding_task_actions_after_move', :locals => {:cage => @cage, :old_cage => @old_cage, :bats => @bats}
-  end
 end

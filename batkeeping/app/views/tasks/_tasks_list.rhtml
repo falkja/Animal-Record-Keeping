@@ -29,6 +29,12 @@ No tasks.
 </table>
 <% if single_cage_task_list %>
 	<% if tasks.length > 0 %>
+		<p>
+		[<%= link_to_remote "Remove existing tasks",
+			:url => {:controller => "tasks", :action => "clear_tasks", :tasks_list => nil, :tasks => tasks, :div_id => div_id, 
+			:single_cage_task_list => true, :manage => true}, :update => div_id
+		%>]
+		</p>
 		<% if tasks[0].internal_description == 'feed' %>
 			<% if task.cage.fed_every_day? == false && task.cage.bats.length > 0 %>
 				<p><b><em>Warning: this cage is not fed every day of the week</em></b></p>
@@ -36,5 +42,6 @@ No tasks.
 		<% end %>
 	<% end %>
 <% end %>
+
 <% end %>
 </div>

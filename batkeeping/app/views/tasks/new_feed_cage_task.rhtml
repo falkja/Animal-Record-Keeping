@@ -1,17 +1,22 @@
 <h1>Add feeding task(s) for <%= @cage.name %></h1>
 
-<%= render :partial => 'tasks_common_info', :locals => {:task_type => 'feeding'} %>
+<%= render :partial => 'tasks_common_info', :locals => {:task_type => 'Feeding', :tasks => @cage.tasks.feeding_tasks} %>
 
 <b>Add Feeding Tasks:</b>
 <blockquote>
-<%= form_remote_tag(:update => "feeding_tasks",
+<%= form_remote_tag(:update => "tasks_div",
                        :url => { :controller => 'tasks', :action => 'create_feed_cage_task', 
 					   :id => @cage }) %>
 
 <p>
-<label for="fed_by">Fed by</label><br/>
+<label for="fed_by">Fed by*</label><br/>
 <%= select_tag("users[]", options_from_collection_for_select(@users, "id", "name"), 
 :multiple => true) %>
+</p>
+
+<p>
+*note: Any task that takes place on Saturday/Sunday and is assigned to General Animal Care will automatically be added to Weekend/Holiday Care and will appear on the <%= link_to 'weekend care page', :controller => 'main', :action => 'weekend_care'%>.
+Any task that takes place during Monday-Friday and is assigned to the Weekend/Holiday Care will automatically be added to General Animal Care.
 </p>
 
 <p>
@@ -28,11 +33,6 @@ options_for_select([
 ["Every Sunday", 1]
 ]), 
 :multiple => true) %>
-</p>
-
-<p>
-*note: Any feeding task that takes place on Saturday/Sunday and is assigned to General Animal Care will automatically be assigned to Weekend/Holiday Care and will appear on the <%= link_to 'weekend care page', :controller => 'main', :action => 'weekend_care'%>.
-Any feeding task that takes place during Monday-Friday and is assigned to the Weekend/Holiday Care will automatically be assigned to General Animal Care.
 </p>
 
 <% if @cage.bats.length > 0 %>

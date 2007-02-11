@@ -62,7 +62,17 @@ class TasksController < ApplicationController
       @task.jitter = -1
       @task.date_started = Time.now
       @task.save
-      @task.users = @users
+	if @users.include?(User.find(1)) && ((day == "1") || (day == "7") || (day == "0"))  #General Animal Care can't do tasks on weekend - add to weekend/holiday care
+		@task.users << User.find(3)
+		@task.users << @users
+		@task.users.uniq
+	elsif @users.include?(User.find(3)) && ((day == "2") || (day == "3") || (day == "4") || (day == "5") || (day == "6") || (day == "0")) #Weekend Care can't do tasks on weekdays - add to general animal care
+		@task.users << User.find(1)
+		@task.users << @users
+		@task.users.uniq
+	else
+		@task.users = @users
+	end
     end    
       
     render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => @cage.tasks.weighing_tasks, :div_id => 'weighing_tasks', 
@@ -126,16 +136,18 @@ class TasksController < ApplicationController
       @task.jitter = 0
       @task.date_started = Time.now
       @task.save
-      if (@users.include?(User.find(1)) && ((day == "1") || (day == "7")))  #General Animal Care can't do feeding tasks on weekend - assign to weekend/holiday care
-        @task.users = [User.find(3)]
-      else
-        if @users.include?(User.find(3)) && ((day == "2") || (day == "3") || (day == "4") || (day == "5") || (day == "6"))
-          @task.users = [User.find(1)]
-        else
-          @task.users = @users
-        end
-      end
-    end    
+	if (@users.include?(User.find(1)) && ((day == "1") || (day == "7")))  #General Animal Care can't do tasks on weekend - add to weekend/holiday care
+		@task.users << User.find(3)
+		@task.users << @users
+		@task.users.uniq
+	elsif @users.include?(User.find(3)) && ((day == "2") || (day == "3") || (day == "4") || (day == "5") || (day == "6")) #Weekend Care can't do tasks on weekdays - add to general animal care
+		@task.users << User.find(1)
+		@task.users << @users
+		@task.users.uniq
+	else
+		@task.users = @users
+	end
+    end
     
     render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => @cage.tasks.feeding_tasks, 
                                       :div_id => 'feeding_tasks', :single_cage_task_list => true, :manage => true}
@@ -195,6 +207,14 @@ class TasksController < ApplicationController
     tasks.delete(Task.find(params[:id]))
     Task.find(params[:id]).destroy
     render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => tasks, :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
+  end
+  
+  def clear_tasks
+    tasks = Task.find(params[:tasks])
+    for task in tasks
+	    task.destroy
+    end
+    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => [], :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => params[:manage]}
   end
   
 end

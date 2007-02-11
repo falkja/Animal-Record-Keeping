@@ -9,14 +9,7 @@
 </p>
 <% end %>
 
-<% if task_type == 'feeding' %>
-<b>Current Feeding Tasks for <%= @cage.name %>:</b>
+<b>Current <%= task_type %> Tasks for <%= @cage.name %>:</b>
 <blockquote>
-<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', :single_cage_task_list => true, :manage => true} %>
+<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => tasks, :div_id => 'tasks_div', :single_cage_task_list => true, :manage => true} %>
 </blockquote>
-<% elsif task_type == 'weighing' %>
-<b>Current Weighing Tasks for <%= @cage.name %>:</b>
-<blockquote>
-<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => @cage.tasks.weighing_tasks, :div_id => 'weighing_tasks', :single_cage_task_list => true, :manage => true} %>
-</blockquote>
-<% end %>

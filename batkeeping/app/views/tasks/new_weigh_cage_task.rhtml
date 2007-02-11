@@ -1,10 +1,10 @@
 <h1>Add weighing task for <%= @cage.name %></h1>
 
-<%= render :partial => 'tasks_common_info', :locals => {:task_type => 'weighing'} %>
+<%= render :partial => 'tasks_common_info', :locals => {:task_type => 'Weighing', :tasks => @cage.tasks.weighing_tasks} %>
 
-<b>Add Feeding Tasks:</b>
+<b>Add Weighing Tasks:</b>
 <blockquote>
-<%= form_remote_tag(:update => "weighing_tasks",
+<%= form_remote_tag(:update => "tasks_div",
                        :url => { :controller => 'tasks', :action => 'create_weigh_cage_task', :id => @cage },
                        :position => "replace" ) %>
 
@@ -12,6 +12,11 @@
 <label for="weighed_by">Weighed by</label><br/>
 <%= select_tag("users[]", options_from_collection_for_select(@users, "id", "name"), 
 :multiple => true) %>
+</p>
+
+<p>
+*note: Any task that takes place on Saturday/Sunday and is assigned to General Animal Care will automatically be added to Weekend/Holiday Care and will appear on the <%= link_to 'weekend care page', :controller => 'main', :action => 'weekend_care'%>.
+Any task that takes place during Monday-Friday and is assigned to the Weekend/Holiday Care will automatically be added to General Animal Care.
 </p>
 
 <p>

@@ -4,54 +4,54 @@ class Task < ActiveRecord::Base
   belongs_to :proposed_treatment
 
   def self.general_tasks
-    find :all, :conditions => 'internal_description is null'
+    find :all, :conditions => 'internal_description is null', :order => 'repeat_code'
   end
   
   def self.general_tasks_today
 		tday = Time.now.wday + 1   
-		find :all, :conditions => "((repeat_code = #{tday}) or (repeat_code = 0)) and (internal_description is null)" 
+		find :all, :conditions => "((repeat_code = #{tday}) or (repeat_code = 0)) and (internal_description is null)", :order => 'repeat_code'
 	end
   
   def self.general_tasks_not_today
 		tday = Time.now.wday + 1   
-		find :all, :conditions => "((repeat_code != #{tday}) and (repeat_code != 0)) and (internal_description is null)" 
+		find :all, :conditions => "((repeat_code != #{tday}) and (repeat_code != 0)) and (internal_description is null)", :order => 'repeat_code'
 	end
   
   def self.weighing_tasks #weighing
-    find :all, :conditions => 'internal_description = "weigh"', :order => "repeat_code"
+    find :all, :conditions => 'internal_description = "weigh"', :order => 'repeat_code'
   end
   
   def self.weighing_tasks_today
 		tday = Time.now.wday + 1   
-		find :all, :conditions => "((repeat_code = #{tday}) or (repeat_code = 0)) and (internal_description = 'weigh')" 
+		find :all, :conditions => "((repeat_code = #{tday}) or (repeat_code = 0)) and (internal_description = 'weigh')", :order => 'repeat_code'
 	end
   
   def self.weighing_tasks_not_today
 		tday = Time.now.wday + 1   
-		find :all, :conditions => "((repeat_code != #{tday}) and (repeat_code != 0)) and (internal_description = 'weigh')" 
+		find :all, :conditions => "((repeat_code != #{tday}) and (repeat_code != 0)) and (internal_description = 'weigh')", :order => 'repeat_code'
 	end
   
   def self.medical_tasks
-    find :all, :conditions => 'proposed_treatment_id is not null'    
+    find :all, :conditions => 'proposed_treatment_id is not null', :order => 'repeat_code'
   end
 
   def self.feeding_tasks #feeding
-    find :all, :conditions => 'internal_description = "feed"', :order => "repeat_code"
+    find :all, :conditions => 'internal_description = "feed"', :order => 'repeat_code'
   end
 
 	def self.feeding_tasks_today
 		tday = Time.now.wday + 1   
-		find :all, :conditions => "((repeat_code = #{tday}) or (repeat_code = 0)) and (internal_description = 'feed')" 
+		find :all, :conditions => "((repeat_code = #{tday}) or (repeat_code = 0)) and (internal_description = 'feed')", :order => 'repeat_code'
 	end
 
 	def self.feeding_tasks_not_today
 		tday = Time.now.wday + 1   
-		find :all, :conditions => "((repeat_code != #{tday}) and (repeat_code != 0)) and (internal_description = 'feed')" 
+		find :all, :conditions => "((repeat_code != #{tday}) and (repeat_code != 0)) and (internal_description = 'feed')", :order => 'repeat_code'
 	end
 
 	def self.today
 		tday = Time.now.wday + 1   
-		find :all, :conditions => '(repeat_code = #{tday}) or (repeat_code = 0)' 
+		find :all, :conditions => '(repeat_code = #{tday}) or (repeat_code = 0)', :order => 'repeat_code'
 	end
     
   #returns true or false depending if the last_done_date and current date indicate

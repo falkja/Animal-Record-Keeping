@@ -187,11 +187,11 @@ class TasksController < ApplicationController
       task.last_done_date = Time.now
       task.save
     end
-	render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => Task.find(params[:ids]), :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
+	render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => Task.find(params[:ids], :order => 'repeat_code'), :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
   end
   
   def destroy
-    tasks = Task.find(params[:ids])
+    tasks = Task.find(params[:ids], :order => 'repeat_code')
     tasks.delete(Task.find(params[:id]))
     Task.find(params[:id]).destroy
     render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => tasks, :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}

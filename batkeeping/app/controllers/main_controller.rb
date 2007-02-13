@@ -162,7 +162,7 @@ class MainController < ApplicationController
 		#create random cages
 		rooms = ['Belfry (4102F)', 'Colony Room (4100)', 'Fruit Bats (4148L)']
 		users = User.current
-		for n in 1..10
+		for n in 1..5
 			cage = Cage.new
 			cage.name = "random#{n}"
 			cage.room = rooms[rand(3)]
@@ -178,7 +178,7 @@ class MainController < ApplicationController
 		#create random bats and assign them to random cages
 		col_band = ("a".."z").to_a
 		cages = Cage.active
-		for n in 1..80
+		for n in 1..20
 			bat = Bat.new
 			bat.band = "#{col_band[rand(col_band.size-1)]}#{rand(20)}"
 			bat.species = 'Eptesicus fuscus'
@@ -186,13 +186,26 @@ class MainController < ApplicationController
 			bat.collection_age = 'Adult'
 			bat.collection_date = Date.new(2000+rand(6),rand(12)+1,rand(27)+1)
 			bat.collection_place = 'erewhon'
-			if rand(10) > 8
-				bat.leave_date = bat.collection_date + rand(365)
-			end			
-			bat.cage = cages[rand(cages.length)]
+            bat.cage = cages[rand(cages.length)]
 			bat.save
-		end
-		
+            
+            #Move the bats around randomly
+            for m in 1..rand(5)
+                bat.cage = cages[rand(cages.length)]
+                Bat::set_user_and_comment(users[0], 'random') #Do this before saving!
+                bat.save
+            end
+            
+            #Deactivate a random number of bats
+            if rand(10) > 8
+                bat.leave_date = bat.collection_date + rand(365)
+            end
+            bat.save
+            
+		end        
+        
+        
+        
 		#create random feeding tasks with random food
 		for n in 1..20
 			task = Task.new
@@ -212,9 +225,9 @@ class MainController < ApplicationController
 		end
 		
 		#create random temp and humidity entries
-		for n in 1..1600
+		for n in 1..200
 			tandh = Weather.new
-			tandh.log_date = Date.new(2003 + rand(5),rand(12)+1,rand(27)+1)
+			tandh.log_date = Date.new(2006,rand(12)+1,rand(27)+1)
 			tandh.temperature = rand(30) + 10
 			tandh.humidity = rand(100)
 			tandh.room = rooms[rand(3)]
@@ -231,6 +244,8 @@ class MainController < ApplicationController
 		Bat.destroy_all "collection_place = 'erewhon'"
 		Task.destroy_all "title = 'random'"
 		Weather.destroy_all "sig = 'random'"
+        Cage_In_Histories.destroy_all "note = 'random'"
+        Cage_Out_Histories.destroy_all "note = 'random'"
 		redirect_to :controller => 'bats', :action => 'list'		
 	end
 		

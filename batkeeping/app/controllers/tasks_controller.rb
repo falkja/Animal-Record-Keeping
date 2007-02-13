@@ -13,6 +13,7 @@ class TasksController < ApplicationController
     @weighing_tasks = Task.weighing_tasks
     @medical_tasks = Task.medical_tasks
     @feeding_tasks = Task.feeding_tasks
+    @feeding_cages = Cage.has_feeding_tasks
     @cages = Cage.has_bats
     @medical_problems = MedicalProblem.current
     @single_cage_task_list = false

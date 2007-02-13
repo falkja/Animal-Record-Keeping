@@ -21,6 +21,14 @@ class Cage < ActiveRecord::Base
     return @cages
   end
   
+  def self.has_feeding_tasks
+	@cages = find :all, :order => "name"
+		for cage in @cages
+			@cages.delete_if{|cage| cage.tasks.feeding_tasks.length == 0}
+		end
+	return @cages
+  end
+  
   def self.active_colony_cages
     find :all, :conditions => "date_destroyed is null and room = '#{@@colony}'", :order => 'name'
   end

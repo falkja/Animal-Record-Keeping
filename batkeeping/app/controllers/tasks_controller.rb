@@ -213,7 +213,7 @@ class TasksController < ApplicationController
   def clear_tasks
     tasks = Task.find(params[:tasks])
     for task in tasks
-	    task.destroy
+	    task.date_ended = Time.now
     end
     render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => [], :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => params[:manage]}
   end

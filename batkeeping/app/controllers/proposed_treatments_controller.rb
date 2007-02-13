@@ -55,6 +55,9 @@ class ProposedTreatmentsController < ApplicationController
   def update
     @proposed_treatment = ProposedTreatment.find(params[:id])
     if @proposed_treatment.update_attributes(params[:proposed_treatment])
+      if params[:deactivating]
+        @proposed_treatment.task.deactivate
+      end
       flash[:notice] = 'Treatment was successfully updated.'
       redirect_to :controller => 'medical_problems', :action => 'list_current' and return
     else
@@ -73,7 +76,6 @@ class ProposedTreatmentsController < ApplicationController
   def deactivate
 	@proposed_treatment = ProposedTreatment.find(params[:id])
   @deactivating = true
-  @proposed_treatment.task.destroy
   end
 
   def reactivate

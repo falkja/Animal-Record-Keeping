@@ -206,7 +206,7 @@ class TasksController < ApplicationController
   def destroy
     tasks = Task.find(params[:ids], :order => 'repeat_code')
     tasks.delete(Task.find(params[:id]))
-    Task.find(params[:id]).destroy
+    Task.find(params[:id]).deactivate
     render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => tasks, :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
   end
   
@@ -214,6 +214,7 @@ class TasksController < ApplicationController
     tasks = Task.find(params[:tasks])
     for task in tasks
 	    task.date_ended = Time.now
+      task.save
     end
     render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => [], :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => params[:manage]}
   end

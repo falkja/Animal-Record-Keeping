@@ -113,5 +113,9 @@ class Task < ActiveRecord::Base
     return post
   end
   
+  def deactivate
+    self.date_ended = Time.now
+    self.save
+  end
   
 end

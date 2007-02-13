@@ -1,3 +1,9 @@
+<% if task_type == 'Weighing' %>
+<% manage = false %>
+<% else %>
+<% manage = true %>
+<% end %>
+
 <p><b>Cage owner:</b> <%=h @cage.user.name %></p>
 
 <p><b>Bats in cage:</b> <%=h @cage.bats.length %></p>
@@ -11,5 +17,5 @@
 
 <b>Current <%= task_type %> Tasks for <%= @cage.name %>:</b>
 <blockquote>
-<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => tasks, :div_id => 'tasks_div', :single_cage_task_list => true, :manage => true} %>
+<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => tasks, :div_id => 'tasks_div', :single_cage_task_list => true, :manage => manage} %>
 </blockquote>

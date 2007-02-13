@@ -77,7 +77,7 @@ class TasksController < ApplicationController
     end    
       
     render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => @cage.tasks.weighing_tasks, :div_id => 'weighing_tasks', 
-                                      :single_cage_task_list => true, :manage => true}
+                                      :single_cage_task_list => true, :manage => false}
   end
 
   #allows editing the food amount and dishes for multiple feeding tasks

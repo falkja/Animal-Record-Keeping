@@ -1,7 +1,7 @@
 -- MySQL Administrator dump 1.4
 --
 -- ------------------------------------------------------
--- Server version	5.0.17-nt
+-- Server version	5.0.27-community-nt
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -72,8 +72,8 @@ INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collectio
  (1,NULL,'2006-12-15 00:00:00','Juvenile','Ben\'s Beard','Eptesicus fuscus','M','2006-12-15 00:00:00','Flew away','A1',NULL),
  (2,3,'2006-12-15 00:00:00','Adult','Murat\'s Hair','Glossophaga soricina','F',NULL,NULL,'A2',NULL),
  (3,8,'2006-12-15 00:00:00','Juvenile','Kaushik\'s Glasses','Carollia perspicillata','F',NULL,NULL,'A3',NULL),
- (4,2,'2006-12-15 00:00:00','Adult','Chen\'s High Heeled Boots','Myotis septentrionalis','M',NULL,NULL,'A4',NULL),
- (5,2,'2006-12-15 00:00:00','Juvenile','Wei\'s Dumpling','Eptesicus fuscus','M',NULL,NULL,'A5',NULL),
+ (4,8,'2006-12-15 00:00:00','Adult','Chen\'s High Heeled Boots','Myotis septentrionalis','M',NULL,NULL,'A4',NULL),
+ (5,3,'2006-12-15 00:00:00','Juvenile','Wei\'s Dumpling','Eptesicus fuscus','M',NULL,NULL,'A5',NULL),
  (6,2,'2006-12-15 00:00:00','Juvenile','Flea Market','Eptesicus fuscus','M',NULL,NULL,'A6',NULL);
 /*!40000 ALTER TABLE `bats` ENABLE KEYS */;
 
@@ -195,7 +195,120 @@ INSERT INTO `cage_in_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note`
  (91,6,2,'2007-02-05 16:34:30',4,''),
  (92,2,3,'2007-02-06 16:23:44',4,''),
  (93,6,3,'2007-02-06 16:23:51',4,''),
- (94,6,2,'2007-02-06 18:27:37',4,'');
+ (94,6,2,'2007-02-06 18:27:37',4,''),
+ (95,4,3,'2007-02-10 00:35:01',4,''),
+ (96,7,18,'2007-02-10 10:14:39',NULL,NULL),
+ (97,8,7,'2007-02-10 10:14:39',NULL,NULL),
+ (98,9,4,'2007-02-10 10:14:39',NULL,NULL),
+ (99,10,2,'2007-02-10 10:14:39',NULL,NULL);
+INSERT INTO `cage_in_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note`) VALUES 
+ (100,11,5,'2007-02-10 10:14:39',NULL,NULL),
+ (101,12,10,'2007-02-10 10:14:39',NULL,NULL),
+ (102,13,2,'2007-02-10 10:14:39',NULL,NULL),
+ (103,14,7,'2007-02-10 10:14:39',NULL,NULL),
+ (104,15,17,'2007-02-10 10:14:39',NULL,NULL),
+ (105,16,2,'2007-02-10 10:14:39',NULL,NULL),
+ (106,17,3,'2007-02-10 10:14:39',NULL,NULL),
+ (107,18,10,'2007-02-10 10:14:39',NULL,NULL),
+ (108,19,3,'2007-02-10 10:14:39',NULL,NULL),
+ (109,20,3,'2007-02-10 10:14:39',NULL,NULL),
+ (110,21,9,'2007-02-10 10:14:39',NULL,NULL),
+ (111,22,2,'2007-02-10 10:14:39',NULL,NULL),
+ (112,23,9,'2007-02-10 10:14:39',NULL,NULL),
+ (113,24,7,'2007-02-10 10:14:39',NULL,NULL),
+ (114,25,3,'2007-02-10 10:14:39',NULL,NULL),
+ (115,26,6,'2007-02-10 10:14:39',NULL,NULL),
+ (116,27,7,'2007-02-10 10:14:40',NULL,NULL),
+ (117,28,6,'2007-02-10 10:14:40',NULL,NULL),
+ (118,29,15,'2007-02-10 10:14:40',NULL,NULL),
+ (119,30,17,'2007-02-10 10:14:40',NULL,NULL),
+ (120,31,3,'2007-02-10 10:14:40',NULL,NULL),
+ (121,32,6,'2007-02-10 10:14:40',NULL,NULL);
+INSERT INTO `cage_in_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note`) VALUES 
+ (122,33,9,'2007-02-10 10:14:40',NULL,NULL),
+ (123,34,16,'2007-02-10 10:14:40',NULL,NULL),
+ (124,35,15,'2007-02-10 10:14:40',NULL,NULL),
+ (125,36,9,'2007-02-10 10:14:40',NULL,NULL),
+ (126,37,15,'2007-02-10 10:14:40',NULL,NULL),
+ (127,38,5,'2007-02-10 10:14:40',NULL,NULL),
+ (128,39,9,'2007-02-10 10:14:40',NULL,NULL),
+ (129,40,5,'2007-02-10 10:14:40',NULL,NULL),
+ (130,41,3,'2007-02-10 10:14:40',NULL,NULL),
+ (131,42,5,'2007-02-10 10:14:41',NULL,NULL),
+ (132,43,13,'2007-02-10 10:14:41',NULL,NULL),
+ (133,44,7,'2007-02-10 10:14:41',NULL,NULL),
+ (134,45,2,'2007-02-10 10:14:41',NULL,NULL),
+ (135,46,16,'2007-02-10 10:14:41',NULL,NULL),
+ (136,47,7,'2007-02-10 10:14:41',NULL,NULL),
+ (137,48,17,'2007-02-10 10:14:41',NULL,NULL),
+ (138,49,17,'2007-02-10 10:14:41',NULL,NULL),
+ (139,50,18,'2007-02-10 10:14:41',NULL,NULL),
+ (140,51,5,'2007-02-10 10:14:41',NULL,NULL),
+ (141,52,15,'2007-02-10 10:14:41',NULL,NULL),
+ (142,53,13,'2007-02-10 10:14:41',NULL,NULL),
+ (143,54,8,'2007-02-10 10:14:41',NULL,NULL);
+INSERT INTO `cage_in_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note`) VALUES 
+ (144,55,5,'2007-02-10 10:14:41',NULL,NULL),
+ (145,56,8,'2007-02-10 10:14:41',NULL,NULL),
+ (146,57,2,'2007-02-10 10:14:41',NULL,NULL),
+ (147,58,9,'2007-02-10 10:14:41',NULL,NULL),
+ (148,59,10,'2007-02-10 10:14:41',NULL,NULL),
+ (149,60,9,'2007-02-10 10:14:41',NULL,NULL),
+ (150,61,3,'2007-02-10 10:14:42',NULL,NULL),
+ (151,62,12,'2007-02-10 10:14:42',NULL,NULL),
+ (152,63,15,'2007-02-10 10:14:42',NULL,NULL),
+ (153,64,12,'2007-02-10 10:14:42',NULL,NULL),
+ (154,65,17,'2007-02-10 10:14:42',NULL,NULL),
+ (155,66,6,'2007-02-10 10:14:42',NULL,NULL),
+ (156,67,16,'2007-02-10 10:14:42',NULL,NULL),
+ (157,68,17,'2007-02-10 10:14:42',NULL,NULL),
+ (158,69,9,'2007-02-10 10:14:42',NULL,NULL),
+ (159,70,10,'2007-02-10 10:14:42',NULL,NULL),
+ (160,71,13,'2007-02-10 10:14:42',NULL,NULL),
+ (161,72,12,'2007-02-10 10:14:42',NULL,NULL),
+ (162,73,9,'2007-02-10 10:14:42',NULL,NULL),
+ (163,74,10,'2007-02-10 10:14:42',NULL,NULL),
+ (164,75,18,'2007-02-10 10:14:42',NULL,NULL);
+INSERT INTO `cage_in_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note`) VALUES 
+ (165,76,3,'2007-02-10 10:14:42',NULL,NULL),
+ (166,77,7,'2007-02-10 10:14:42',NULL,NULL),
+ (167,78,10,'2007-02-10 10:14:42',NULL,NULL),
+ (168,79,5,'2007-02-10 10:14:42',NULL,NULL),
+ (169,80,8,'2007-02-10 10:14:42',NULL,NULL),
+ (170,81,17,'2007-02-10 10:14:42',NULL,NULL),
+ (171,82,9,'2007-02-10 10:14:42',NULL,NULL),
+ (172,83,18,'2007-02-10 10:14:42',NULL,NULL),
+ (173,84,5,'2007-02-10 10:14:42',NULL,NULL),
+ (174,85,5,'2007-02-10 10:14:42',NULL,NULL),
+ (175,86,5,'2007-02-10 10:14:42',NULL,NULL),
+ (176,2,2,'2007-02-10 10:21:27',1,''),
+ (177,5,3,'2007-02-10 15:00:03',4,''),
+ (178,2,3,'2007-02-11 12:32:22',1,''),
+ (179,6,3,'2007-02-11 12:32:22',1,''),
+ (180,2,2,'2007-02-11 12:40:04',1,''),
+ (181,4,2,'2007-02-11 12:40:04',1,''),
+ (182,5,2,'2007-02-11 12:40:04',1,''),
+ (183,6,2,'2007-02-11 12:40:04',1,''),
+ (184,2,3,'2007-02-11 12:40:50',1,''),
+ (185,4,3,'2007-02-11 12:40:50',1,''),
+ (186,5,3,'2007-02-11 12:40:50',1,''),
+ (187,6,3,'2007-02-11 12:40:50',1,'');
+INSERT INTO `cage_in_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note`) VALUES 
+ (188,2,2,'2007-02-11 12:41:55',1,''),
+ (189,4,2,'2007-02-11 12:41:55',1,''),
+ (190,5,2,'2007-02-11 12:41:55',1,''),
+ (191,6,2,'2007-02-11 12:41:55',1,''),
+ (192,2,3,'2007-02-11 12:44:16',1,''),
+ (193,4,3,'2007-02-11 12:44:16',1,''),
+ (194,5,3,'2007-02-11 12:44:16',1,''),
+ (195,6,3,'2007-02-11 12:44:16',1,''),
+ (196,2,2,'2007-02-11 13:05:41',1,''),
+ (197,4,2,'2007-02-11 13:05:41',1,''),
+ (198,5,2,'2007-02-11 13:05:41',1,''),
+ (199,6,2,'2007-02-11 13:05:41',1,''),
+ (200,4,8,'2007-02-13 17:01:18',4,''),
+ (201,2,3,'2007-02-13 17:04:03',4,''),
+ (202,5,3,'2007-02-13 17:18:08',4,'');
 /*!40000 ALTER TABLE `cage_in_histories` ENABLE KEYS */;
 
 
@@ -312,7 +425,37 @@ INSERT INTO `cage_out_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note
  (86,6,6,'2007-02-05 16:34:30',4,'',90),
  (87,2,8,'2007-02-06 16:23:44',4,'',86),
  (88,6,2,'2007-02-06 16:23:51',4,'',91),
- (89,6,3,'2007-02-06 18:27:37',4,'',93);
+ (89,6,3,'2007-02-06 18:27:37',4,'',93),
+ (90,4,2,'2007-02-10 00:35:01',4,'',89),
+ (91,2,3,'2007-02-10 10:21:27',1,'',92);
+INSERT INTO `cage_out_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note`,`cage_in_history_id`) VALUES 
+ (92,5,2,'2007-02-10 15:00:03',4,'',75),
+ (93,2,2,'2007-02-11 12:32:22',1,'',176),
+ (94,6,2,'2007-02-11 12:32:22',1,'',94),
+ (95,2,3,'2007-02-11 12:40:04',1,'',178),
+ (96,4,3,'2007-02-11 12:40:04',1,'',95),
+ (97,5,3,'2007-02-11 12:40:04',1,'',177),
+ (98,6,3,'2007-02-11 12:40:04',1,'',179),
+ (99,2,2,'2007-02-11 12:40:50',1,'',180),
+ (100,4,2,'2007-02-11 12:40:50',1,'',181),
+ (101,5,2,'2007-02-11 12:40:50',1,'',182),
+ (102,6,2,'2007-02-11 12:40:50',1,'',183),
+ (103,2,3,'2007-02-11 12:41:55',1,'',184),
+ (104,4,3,'2007-02-11 12:41:55',1,'',185),
+ (105,5,3,'2007-02-11 12:41:55',1,'',186),
+ (106,6,3,'2007-02-11 12:41:55',1,'',187),
+ (107,2,2,'2007-02-11 12:44:16',1,'',188),
+ (108,4,2,'2007-02-11 12:44:16',1,'',189),
+ (109,5,2,'2007-02-11 12:44:16',1,'',190),
+ (110,6,2,'2007-02-11 12:44:16',1,'',191),
+ (111,2,3,'2007-02-11 13:05:41',1,'',192),
+ (112,4,3,'2007-02-11 13:05:41',1,'',193),
+ (113,5,3,'2007-02-11 13:05:41',1,'',194);
+INSERT INTO `cage_out_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note`,`cage_in_history_id`) VALUES 
+ (114,6,3,'2007-02-11 13:05:41',1,'',195),
+ (115,4,2,'2007-02-13 17:01:18',4,'',197),
+ (116,2,2,'2007-02-13 17:04:03',4,'',196),
+ (117,5,2,'2007-02-13 17:18:08',4,'',198);
 /*!40000 ALTER TABLE `cage_out_histories` ENABLE KEYS */;
 
 
@@ -550,6 +693,11 @@ CREATE TABLE `task_histories` (
 --
 
 /*!40000 ALTER TABLE `task_histories` DISABLE KEYS */;
+INSERT INTO `task_histories` (`id`,`task_id`,`date_done`,`sig`) VALUES 
+ (1,424,'2007-02-13 16:57:36',''),
+ (2,425,'2007-02-13 17:01:00',''),
+ (3,399,'2007-02-08 18:41:46',''),
+ (4,400,'2007-02-08 18:41:46','');
 /*!40000 ALTER TABLE `task_histories` ENABLE KEYS */;
 
 
@@ -560,7 +708,6 @@ CREATE TABLE `task_histories` (
 DROP TABLE IF EXISTS `tasks`;
 CREATE TABLE `tasks` (
   `id` int(10) unsigned NOT NULL auto_increment,
-  `last_done_date` datetime default NULL COMMENT 'we should drop this column',
   `repeat_code` int(10) unsigned NOT NULL COMMENT '0 means daily 1 = sunday etc.',
   `proposed_treatment_id` int(10) unsigned default NULL,
   `cage_id` int(10) unsigned default NULL,
@@ -581,29 +728,50 @@ CREATE TABLE `tasks` (
 --
 
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
-INSERT INTO `tasks` (`id`,`last_done_date`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
- (24,'2007-01-08 14:16:00',0,27,NULL,'Cough syrup','','medical',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
- (25,'2007-01-08 14:40:00',0,28,NULL,'Verbally abuse the bat','','medical',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
- (26,'2007-01-17 16:45:08',0,NULL,NULL,'Check the fruit bats nectar feeders','',NULL,NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
- (28,'2007-01-09 23:39:07',2,NULL,NULL,'Check the light in the Belfry','',NULL,NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
- (30,NULL,0,30,NULL,'Words of encouragement.','','medical',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
- (58,'2007-02-06 15:17:40',5,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
- (59,'2007-02-06 15:17:40',0,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
- (126,NULL,4,NULL,4,'Weigh cage Cage6','','weigh',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL);
-INSERT INTO `tasks` (`id`,`last_done_date`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
- (127,NULL,0,31,NULL,'Feed worms in front of the other bats','','medical',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
- (136,'2007-01-20 11:42:52',7,NULL,NULL,'Do dishes','Soak in bleach water at least 10 minutes',NULL,NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
- (145,'2007-02-02 14:47:18',6,NULL,NULL,'Change pads','',NULL,NULL,NULL,NULL,-1,'0000-00-00 00:00:00',NULL),
- (156,'2007-02-06 15:17:40',4,NULL,2,'Feed cage Cage2','','feed',4,'Small',3,0,'0000-00-00 00:00:00',NULL),
- (164,'2007-02-05 16:32:50',7,NULL,2,'Feed cage Cage2','','feed',8,'Small',1,0,'0000-00-00 00:00:00',NULL),
- (168,'2007-02-06 18:26:33',0,NULL,NULL,'Fill out temperature and humidity','',NULL,NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
- (198,NULL,1,NULL,2,'Feed cage Cage2','','feed',4,'Small',1,0,'0000-00-00 00:00:00',NULL),
- (199,NULL,2,NULL,2,'Feed cage Cage2','','feed',4,'Small',1,0,'0000-00-00 00:00:00',NULL);
-INSERT INTO `tasks` (`id`,`last_done_date`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
- (200,'2007-02-06 15:17:40',3,NULL,2,'Feed cage Cage2','','feed',4,'Small',1,0,'0000-00-00 00:00:00',NULL),
- (202,'2007-02-06 15:17:40',5,NULL,2,'Feed cage Cage2','','feed',4,'Small',1,0,'0000-00-00 00:00:00',NULL),
- (203,NULL,6,NULL,2,'Feed cage Cage2','','feed',4,'Small',1,0,'0000-00-00 00:00:00',NULL),
- (204,NULL,7,NULL,2,'Feed cage Cage2','','feed',4,'Small',1,0,'0000-00-00 00:00:00',NULL);
+INSERT INTO `tasks` (`id`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+ (24,0,27,NULL,'Cough syrup','','medical',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
+ (25,0,28,NULL,'Verbally abuse the bat','','medical',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
+ (26,0,NULL,NULL,'Check the fruit bats nectar feeders','',NULL,NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
+ (28,2,NULL,NULL,'Check the light in the Belfry','',NULL,NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
+ (30,0,30,NULL,'Words of encouragement.','','medical',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
+ (126,4,NULL,4,'Weigh cage Cage6','','weigh',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
+ (127,0,31,NULL,'Feed worms in front of the other bats','','medical',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
+ (136,7,NULL,NULL,'Do dishes','Soak in bleach water at least 10 minutes',NULL,NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
+ (145,6,NULL,NULL,'Change pads','',NULL,NULL,NULL,NULL,-1,'0000-00-00 00:00:00',NULL);
+INSERT INTO `tasks` (`id`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+ (168,0,NULL,NULL,'Fill out temperature and humidity','',NULL,NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
+ (396,2,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,-1,'2007-02-11 13:55:11',NULL),
+ (397,3,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,-1,'2007-02-11 13:55:11',NULL),
+ (398,4,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,-1,'2007-02-11 13:55:12',NULL),
+ (399,5,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,-1,'2007-02-11 13:55:12',NULL),
+ (400,6,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,-1,'2007-02-11 13:55:12',NULL),
+ (401,7,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,-1,'2007-02-11 13:55:12',NULL),
+ (402,1,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,-1,'2007-02-11 13:55:12',NULL),
+ (410,5,NULL,2,'Feed cage Cage2','','feed',6,'Small',1,0,'2007-02-13 08:12:02',NULL),
+ (411,2,NULL,2,'Feed cage Cage2','','feed',7,'Small',1,0,'2007-02-13 08:12:11',NULL);
+INSERT INTO `tasks` (`id`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+ (412,3,NULL,2,'Feed cage Cage2','','feed',7,'Small',1,0,'2007-02-13 08:12:11',NULL),
+ (413,4,NULL,2,'Feed cage Cage2','','feed',7,'Small',1,0,'2007-02-13 08:12:11',NULL),
+ (414,6,NULL,2,'Feed cage Cage2','','feed',7,'Small',1,0,'2007-02-13 08:12:26',NULL),
+ (415,7,NULL,2,'Feed cage Cage2','','feed',7,'Small',1,0,'2007-02-13 08:12:27',NULL),
+ (416,1,NULL,2,'Feed cage Cage2','','feed',7,'Small',1,0,'2007-02-13 08:12:27',NULL),
+ (417,2,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:57:17','2007-02-13 16:57:23'),
+ (418,3,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:57:17','2007-02-13 16:57:23'),
+ (419,4,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:57:17','2007-02-13 16:57:23'),
+ (420,5,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:57:17','2007-02-13 16:57:23'),
+ (421,6,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:57:17','2007-02-13 16:57:23');
+INSERT INTO `tasks` (`id`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+ (422,7,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:57:18','2007-02-13 16:57:23'),
+ (423,1,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:57:18','2007-02-13 16:57:23'),
+ (424,0,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:57:25','2007-02-13 16:57:39'),
+ (425,0,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:59:56',NULL),
+ (426,0,NULL,3,'Weigh cage Cage3','','weigh',NULL,NULL,NULL,-1,'2007-02-13 17:13:25','2007-02-13 17:16:33'),
+ (427,0,NULL,3,'Weigh cage Cage3','','weigh',NULL,NULL,NULL,-1,'2007-02-13 17:15:51','2007-02-13 17:16:33'),
+ (428,2,NULL,3,'Weigh cage Cage3','','weigh',NULL,NULL,NULL,-1,'2007-02-13 17:16:25','2007-02-13 17:16:33'),
+ (429,2,NULL,3,'Weigh cage Cage3','','weigh',NULL,NULL,NULL,-1,'2007-02-13 17:16:39',NULL),
+ (430,3,NULL,3,'Weigh cage Cage3','','weigh',NULL,NULL,NULL,-1,'2007-02-13 17:16:39',NULL);
+INSERT INTO `tasks` (`id`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+ (431,4,NULL,3,'Weigh cage Cage3','','weigh',NULL,NULL,NULL,-1,'2007-02-13 17:16:39',NULL);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 
 
@@ -625,27 +793,55 @@ CREATE TABLE `tasks_users` (
 /*!40000 ALTER TABLE `tasks_users` DISABLE KEYS */;
 INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES 
  (1,28),
- (1,58),
- (1,59),
  (1,72),
  (1,126),
  (1,145),
- (1,156),
  (1,168),
- (1,199),
- (1,200),
- (1,202),
- (1,203),
+ (1,396),
+ (1,397),
+ (1,398),
+ (1,399),
+ (1,400),
+ (1,401),
+ (1,402),
+ (1,410),
+ (1,411),
+ (1,412),
+ (1,413),
+ (1,414),
+ (1,415),
+ (1,416),
+ (1,417),
+ (1,418),
+ (1,419),
+ (1,420),
+ (1,421),
+ (1,422),
+ (1,423),
+ (1,424),
+ (1,425),
+ (1,427),
+ (1,428),
+ (1,429),
+ (1,430),
+ (1,431),
  (2,2),
  (2,24),
  (2,25),
  (3,136),
- (3,164),
- (3,198),
- (3,204),
+ (3,401),
+ (3,402),
+ (3,415),
+ (3,416),
+ (3,422),
+ (3,423),
+ (3,424),
+ (3,425),
+ (3,427),
  (4,30),
  (4,127),
- (5,26);
+ (5,26),
+ (5,426);
 /*!40000 ALTER TABLE `tasks_users` ENABLE KEYS */;
 
 
@@ -800,7 +996,8 @@ INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user
  (72,4,'2007-02-06 15:22:37',13,'','y',4),
  (73,4,'2007-02-06 15:22:42',14,'','n',4),
  (74,4,'2007-02-06 15:51:42',14,'','n',4),
- (75,6,'2007-02-08 18:41:46',14,'','n',4);
+ (75,6,'2007-02-08 18:41:46',14,'','n',4),
+ (76,3,'2007-02-13 17:01:00',15,'','n',4);
 /*!40000 ALTER TABLE `weights` ENABLE KEYS */;
 
 

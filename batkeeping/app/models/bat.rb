@@ -58,7 +58,7 @@ class Bat < ActiveRecord::Base
 	def self.left_on_day(day, month, year, room)
 		#from http://dev.mysql.com/doc/refman/5.0/en/date-calculations.html
 		bats = Bat.find(:all, :conditions => "YEAR(leave_date) = #{year} AND MONTH(leave_date) = #{month} AND DAY(leave_date) = #{day}")
-		bats.delete_if {|bat| bat.cage.room != room } #this will crash if you have a bat with nil cage, which you shouldn't
+		bats.delete_if {|bat| bat.cage_out_histories[0].cage.room != room } #this will crash if you have a coh with nil cage, which you shouldn't
 		bats ? yoda = bats.length : yoda = 0
 		return bats, yoda
 	end

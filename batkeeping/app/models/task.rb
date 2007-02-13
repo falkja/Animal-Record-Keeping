@@ -2,6 +2,7 @@ class Task < ActiveRecord::Base
   has_and_belongs_to_many :users
   belongs_to :cage
   belongs_to :proposed_treatment
+  has_many :task_histories, :order => 'date_done'
 
   def self.general_tasks
     find :all, :conditions => 'internal_description is null and date_ended is null', :order => 'repeat_code'
@@ -58,15 +59,15 @@ class Task < ActiveRecord::Base
   #if the task was completed on schedule
   #Note this is modulo week. So if we skip a week we won't know
   def done_by_schedule
-    if last_done_date == nil #if the task has never been completed, then it certainly hasn't been done by schedule
+    if self.last_done_date == nil #if the task has never been completed, then it certainly hasn't been done by schedule
       return false
     end
     
     today = Time.now.yday
-    last_done_day = last_done_date.yday
+    last_done_day = self.last_done_date.yday
     
     #to fix for the last done date being in the last year
-    year_done = last_done_date.year
+    year_done = self.last_done_date.year
     while year_done < Date.today.year
       Date.leap?(year_done) ? last_done_day = last_done_day - 366 : last_done_day = last_done_day - 365
       year_done = year_done + 1
@@ -118,4 +119,24 @@ class Task < ActiveRecord::Base
     self.save
   end
   
+  def done
+    self.done_with_date(Time.now)
+  end
+  
+  def done_with_date(date_done)
+    if (date_done.yday >= self.find_post) && (date_done.yday <= (self.find_post - self.jitter))
+      task_history = TaskHistory.new
+      task_history.task = self
+      task_history.date_done = date_done
+      task_history.save
+    end
+  end
+  
+  def last_done_date
+    if self.task_histories.length == 0
+      return nil
+    else
+      return self.task_histories[0].date_done
+    end
+  end
 end

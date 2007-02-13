@@ -196,11 +196,8 @@ class TasksController < ApplicationController
   #only saves tasks if they are on the due date (feeding) or within 2 days of the deadline (all others)
   def done
     task = Task.find(params[:id])
-    if (Date.today.yday >= task.find_post) && (Date.today.yday <= (task.find_post - task.jitter))
-      task.last_done_date = Time.now
-      task.save
-    end
-	render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => Task.find(params[:ids], :order => 'repeat_code'), :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
+    task.done
+    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => Task.find(params[:ids], :order => 'repeat_code'), :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
   end
   
   def destroy

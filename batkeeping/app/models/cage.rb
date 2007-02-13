@@ -63,15 +63,7 @@ class Cage < ActiveRecord::Base
     self.tasks.feeding_tasks.each {|task| task.food ? food = food + task.food : food }
     return food
   end
-  
-  def weighed_enough?
-    if self.tasks.weighing_tasks.length < 2
-      return false
-    else
-      return true
-    end
-  end
-  
+    
   def fed_today?
     today = Date.today.wday + 1 #to bring in line with repeat_codes
     for task in self.tasks.feeding_tasks
@@ -99,24 +91,23 @@ class Cage < ActiveRecord::Base
     return true
   end
   
-  def update_weighing_tasks
+  def update_weighing_tasks#this function returns the oldest of the dates of all the bats recent weights
+    
+    #initializing
     most_ancient_recent_weight = Time.now
     bats_have_weights = false
+    
     for bat in self.bats
-      if bat.weights.length > 0
+      if bat.weights.length > 0 #this bat has weights
         bats_have_weights = true
-        if most_ancient_recent_weight > bat.weights.recent[0].date.to_time
-          most_ancient_recent_weight = bat.weights.recent[0].date.to_time
+        if most_ancient_recent_weight > bat.weights.recent.date.to_time
+          most_ancient_recent_weight = bat.weights.recent.date.to_time
         end
       end
     end
     if bats_have_weights
-      for task in self.tasks
-        post = task.find_post
-        if (Date.today.yday >= post && Date.today.yday <= post + 2)
-          task.last_done_date = most_ancient_recent_weight
-          task.save
-        end
+      for task in self.tasks.weighing_tasks
+        task.done_with_date(most_ancient_recent_weight)
       end
     end
   end

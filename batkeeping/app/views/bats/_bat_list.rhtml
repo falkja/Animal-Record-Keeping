@@ -27,7 +27,8 @@
 	</th>
 	<th>Species</th>
 	<th>Gender</th>
-	<th>Collection Date</th>
+	<th>Last Weight</th>
+	<th>Collected</th>
 	<% if show_leave_date_and_reason %>
 		<th>Leave Date</th>
 		<th>Leave Reason</th>
@@ -61,8 +62,13 @@
 	<td>
 		<%=h bat.gender %>
 	</td>
-	<td>
-		<%=h nice_date_no_day(bat.collection_date) %>
+    <% if bat.weights.length > 0 %></td>
+          <td><%=h bat.weights[0].weight %></td>
+    <% else %>
+          <td>N/A</td>
+    <% end %>
+    <td>
+		<%=h bat.collection_date.strftime("%Y") %>
 	</td>
 	<% if @list_all %>
 	<td>

@@ -7,10 +7,10 @@
 <% for day in @days_this_month %>
 	<tr>
 	
-	<td><%= day %></td>
-	<% if @tempandhumidity_list[day-1] %>
-		<td><%= @tempandhumidity_list[day-1].temperature %></td>
-		<td><%= @tempandhumidity_list[day-1].humidity %></td>
+	<td><%= day + 1 %></td>
+	<% if @tempandhumidity_list[day] %>
+		<td><%= @tempandhumidity_list[day].temperature %></td>
+		<td><%= @tempandhumidity_list[day].humidity %></td>
 	<% else %>
 		<td>-</td>
 		<td>-</td>

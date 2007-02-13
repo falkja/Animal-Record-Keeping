@@ -2,12 +2,20 @@
 
 <table border =1>
 	<th>Day</th>
+	<th>Bats -</th>
+	<th>Bats +</th>
 	<th>Temp</th>
 	<th>Humid</th>
 <% for day in @days_this_month %>
 	<tr>
 	
 	<td><%= day + 1 %></td>
+	
+	<% bats_left, n_bats_left = Bat.left_on_day(day+1, @month, @year, @room) %>
+	<td><%= n_bats_left > 0 ? -n_bats_left : '' %></td>
+	<% bats_arrived, n_bats_arrived = Bat.arrived_on_day(day+1, @month, @year, @room) %>	
+	<td><%= n_bats_arrived > 0 ? +n_bats_arrived : '' %></td>
+	
 	<% if @tempandhumidity_list[day] %>
 		<td><%= @tempandhumidity_list[day].temperature %></td>
 		<td><%= @tempandhumidity_list[day].humidity %></td>
@@ -15,6 +23,7 @@
 		<td>-</td>
 		<td>-</td>
 	<% end %>
+	
 	</tr>
 <% end %>
 </table>

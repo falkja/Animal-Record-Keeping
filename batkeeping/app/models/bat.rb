@@ -30,6 +30,20 @@ class Bat < ActiveRecord::Base
 		Bat.find(bat_ids.uniq, :order => 'band')
 	end
 	
+	#returns the room of the bat at a particular time, assumes cages dont move between rooms - probably a bad assumption
+	def in_what_cage(day,month,year)
+		cih = CageInHistories.find(:all, :conditions => "bat_id = '" + self.id.to_s + "' AND date < '" + year.to_s + "-"+ month.to_s + "-" + day.to_s + "'", :order => 'date')
+		return cih[0].room
+	end
+	
+	#returns the number of bats at any day for a given room
+	def self.num_bats_when(day, month, year, room)
+		bats = Bat.find(:all, :conditions => "(leave_date > '" + year.to_s + "-"+ month.to_s + "-" + day.to_s + "' OR leave_date is null) AND collection_date <= '" + year.to_s + "-"+ month.to_s + "-" + day.to_s + "'")
+		bats.delete_if {|bat| bat.in_what_cage(day,month,year) != room }	 #this will crash if you have a bat with nil cage, which you shouldn't
+		bats ? num_bats = bats.length : num_bats = 0
+		return num_bats
+	end
+	
 	#What was the date that the first bat was added to the colony (acc to database)
 	def self.earliest_addition
 		bats = Bat.find :all, :order => 'collection_date asc'

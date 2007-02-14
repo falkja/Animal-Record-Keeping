@@ -16,9 +16,10 @@
 <b>Bats: </b><%= @cage.bats.count %>
 </p>
 
-<% if @cage.bats.length > 0 %>
+<% average_bat_weight = @cage.average_bat_weight %>
+<% if average_bat_weight != nil %>
 <p>
-<b>Average Weight: </b><%= @cage.average_bat_weight %> g
+<b>Average Weight: </b><%= average_bat_weight %> g
 </p>
 <% end %>
 

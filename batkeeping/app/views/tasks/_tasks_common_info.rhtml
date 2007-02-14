@@ -8,8 +8,8 @@
 
 <p><b>Bats in cage:</b> <%=h @cage.bats.length %></p>
 
-<% if @cage.bats.length > 0 %>
 <% @average = @cage.average_bat_weight %>
+<% if @average != nil %>
 <p>
 <b>Average Weight: </b><%= @average %> g
 </p>

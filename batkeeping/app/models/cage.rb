@@ -43,12 +43,22 @@ class Cage < ActiveRecord::Base
   
   def average_bat_weight
     if self.bats.length > 0
-      combined_weights = 0.0
-      for bat in self.bats
-        combined_weights = combined_weights + bat.weights.recent.weight
-      end
-      average = combined_weights/self.bats.length
-      return (("%.0" + 1.to_s + "f") %average).to_f
+	combined_weights = 0.0
+	num_bats = 0
+	for bat in self.bats
+		if bat.weights.length > 0 
+			combined_weights = combined_weights + bat.weights.recent.weight
+			num_bats = num_bats + 1
+		end
+	end
+	if num_bats > 0 
+		average = combined_weights/num_bats
+		return (("%.0" + 1.to_s + "f") %average).to_f
+	else
+		return nil
+	end
+    else 
+	return nil
     end
   end
   

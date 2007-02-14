@@ -3,7 +3,7 @@ class Weight < ActiveRecord::Base
 	belongs_to :user;
 	
 	def self.recent
-		find(:first, :order => "date DESC")
+		self.find(:first, :order => "date DESC")
 	end
   
   def self.today

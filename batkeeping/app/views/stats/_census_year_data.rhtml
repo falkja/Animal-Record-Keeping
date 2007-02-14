@@ -7,11 +7,11 @@ If display == 'yes' then we wanna expand it, other vise we hide it
 <% if display == 'no' %>
 [<%= link_to_remote '+', 
           :update => "year#{year}",
-          :url => {:controller => 'main', :action => 'show_census_year', :year => year, :display => 'yes' } %>] <%= year %><br>
+          :url => {:controller => 'stats', :action => 'show_census_year', :year => year, :display => 'yes' } %>] <%= year %><br>
 <% else %>
 [<%= link_to_remote '-', 
           :update => "year#{year}",
-          :url => {:controller => 'main', :action => 'show_census_year', :year => year, :display => 'no'} %>] <%= year %><br>
+          :url => {:controller => 'stats', :action => 'show_census_year', :year => year, :display => 'no'} %>] <%= year %><br>
 
 <blockquote>
 

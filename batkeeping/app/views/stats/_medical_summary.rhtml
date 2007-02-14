@@ -2,7 +2,7 @@
 
 [<%= link_to_remote '-', 
           :update => 'medical',
-          :url => {:controller => 'main', :action => 'hide_medical_summary'} %>]
+          :url => {:controller => 'stats', :action => 'hide_medical_summary'} %>]
 Bats in medical care: <%= link_to Bat.sick.length, :controller => 'medical_problems', :action => 'list_current' %>
 
 <blockquote>

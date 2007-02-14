@@ -2,7 +2,7 @@
 
 [<%= link_to_remote '-', 
           :update => 'census',
-          :url => {:controller => 'main', :action => 'hide_census_summary'} %>]
+          :url => {:controller => 'stats', :action => 'hide_census_summary'} %>]
 <%= @n_bats_arrived_this_month %> bats added this month, <%= @n_bats_left_this_month %> bats lost this month.
 
 <blockquote>

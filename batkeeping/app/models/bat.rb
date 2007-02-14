@@ -46,8 +46,8 @@ class Bat < ActiveRecord::Base
 	
 	#What was the date that the first bat was added to the colony (acc to database)
 	def self.earliest_addition
-		bats = Bat.find :all, :order => 'collection_date asc'
-		bats ? yoda = bats[0].collection_date : yoda = nil 
+		bat = Bat.find :first, :order => 'collection_date asc'
+		bat ? yoda = bat.collection_date : yoda = nil 
 		return yoda
 	end
 	
@@ -78,9 +78,9 @@ class Bat < ActiveRecord::Base
 	end
 	
 	def self.arrived_on_day(day, month, year, room)
-		#from http://dev.mysql.com/doc/refman/5.0/en/date-calculations.html
+		#from http://dev.mysql.com/doc/refman/5.0/en/date-calculations.html		
 		bats = Bat.find(:all, :conditions => "YEAR(collection_date) = #{year} AND MONTH(collection_date) = #{month} AND DAY(collection_date) = #{day}")
-		bats.delete_if {|bat| bat.cage.room != room }	 #this will crash if you have a bat with nil cage, which you shouldn't
+		bats.delete_if {|bat| bat.cage_in_histories[0].cage.room != room }	 #this will crash if you have a cih with nil cage, which you shouldn't
 		bats ? yoda = bats.length : yoda = 0
 		return bats, yoda
 	end

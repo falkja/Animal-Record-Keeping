@@ -1,4 +1,5 @@
 <h1>Colony status as of <%= nice_date_with_time Time.now %></h1>
+<%= @start_year %>
 
 <% form_tag :controller => 'stats', :action => 'monthly_sheet' do %>
 	Show summary table for

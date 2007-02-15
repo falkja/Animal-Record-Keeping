@@ -32,8 +32,13 @@ class Bat < ActiveRecord::Base
 	
 	#returns the room of the bat at a particular time, assumes cages dont move between rooms - probably a bad assumption
 	def in_what_cage(day,month,year)
-		cih = CageInHistories.find(:all, :conditions => "bat_id = '" + self.id.to_s + "' AND date < '" + year.to_s + "-"+ month.to_s + "-" + day.to_s + "'", :order => 'date')
-		return cih[0].room
+		cihs = self.cage_in_histories
+		today = Time.gm(year,month,day,23,59,59)
+		for cih in cihs
+			if cih.date < today
+				return cih.cage.room
+			end
+		end
 	end
 	
 	#returns the number of bats at any day for a given room

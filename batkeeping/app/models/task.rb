@@ -128,6 +128,7 @@ class Task < ActiveRecord::Base
       task_history = TaskHistory.new
       task_history.task = self
       task_history.date_done = date_done
+      task_history.user_id = session[:person].user
       task_history.save
     end
   end

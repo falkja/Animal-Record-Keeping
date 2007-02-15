@@ -22,28 +22,6 @@ CREATE DATABASE IF NOT EXISTS batkeeping;
 USE batkeeping;
 
 --
--- Definition of table `bat_notes`
---
-
-DROP TABLE IF EXISTS `bat_notes`;
-CREATE TABLE `bat_notes` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `bat_id` int(10) unsigned NOT NULL,
-  `date` datetime NOT NULL,
-  `text` text NOT NULL,
-  `user_id` int(10) unsigned NOT NULL COMMENT 'signature',
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `bat_notes`
---
-
-/*!40000 ALTER TABLE `bat_notes` DISABLE KEYS */;
-/*!40000 ALTER TABLE `bat_notes` ENABLE KEYS */;
-
-
---
 -- Definition of table `bats`
 --
 
@@ -60,6 +38,7 @@ CREATE TABLE `bats` (
   `leave_reason` text COMMENT 'death/exported',
   `band` varchar(10) default NULL,
   `user_id` int(10) unsigned default NULL,
+  `note` text,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -68,13 +47,13 @@ CREATE TABLE `bats` (
 --
 
 /*!40000 ALTER TABLE `bats` DISABLE KEYS */;
-INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`species`,`gender`,`leave_date`,`leave_reason`,`band`,`user_id`) VALUES 
- (1,NULL,'2006-12-15 00:00:00','Juvenile','Ben\'s Beard','Eptesicus fuscus','M','2006-12-15 00:00:00','Flew away','A1',NULL),
- (2,3,'2006-12-15 00:00:00','Adult','Murat\'s Hair','Glossophaga soricina','F',NULL,NULL,'A2',NULL),
- (3,8,'2006-12-15 00:00:00','Juvenile','Kaushik\'s Glasses','Carollia perspicillata','F',NULL,NULL,'A3',NULL),
- (4,8,'2006-12-15 00:00:00','Adult','Chen\'s High Heeled Boots','Myotis septentrionalis','M',NULL,NULL,'A4',NULL),
- (5,3,'2006-12-15 00:00:00','Juvenile','Wei\'s Dumpling','Eptesicus fuscus','M',NULL,NULL,'A5',NULL),
- (6,2,'2006-12-15 00:00:00','Juvenile','Flea Market','Eptesicus fuscus','M',NULL,NULL,'A6',NULL);
+INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`species`,`gender`,`leave_date`,`leave_reason`,`band`,`user_id`,`note`) VALUES 
+ (1,NULL,'2006-12-15 00:00:00','Juvenile','Ben\'s Beard','Eptesicus fuscus','M','2006-12-15 00:00:00','Flew away','A1',NULL,NULL),
+ (2,3,'2006-12-15 00:00:00','Adult','Murat\'s Hair','Glossophaga soricina','F',NULL,NULL,'A2',NULL,NULL),
+ (3,8,'2006-12-15 00:00:00','Juvenile','Kaushik\'s Glasses','Carollia perspicillata','F',NULL,NULL,'A3',NULL,NULL),
+ (4,8,'2006-12-15 00:00:00','Adult','Chen\'s High Heeled Boots','Myotis septentrionalis','M',NULL,NULL,'A4',NULL,NULL),
+ (5,3,'2006-12-15 00:00:00','Juvenile','Wei\'s Dumpling','Eptesicus fuscus','M',NULL,NULL,'A5',NULL,NULL),
+ (6,2,'2006-12-15 00:00:00','Juvenile','Flea Market','Eptesicus fuscus','M',NULL,NULL,'A6',NULL,NULL);
 /*!40000 ALTER TABLE `bats` ENABLE KEYS */;
 
 
@@ -684,7 +663,8 @@ CREATE TABLE `task_histories` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `task_id` int(10) unsigned NOT NULL,
   `date_done` datetime NOT NULL,
-  `sig` varchar(45) NOT NULL COMMENT 'signature of person',
+  `remarks` text NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -693,11 +673,11 @@ CREATE TABLE `task_histories` (
 --
 
 /*!40000 ALTER TABLE `task_histories` DISABLE KEYS */;
-INSERT INTO `task_histories` (`id`,`task_id`,`date_done`,`sig`) VALUES 
- (1,424,'2007-02-13 16:57:36',''),
- (2,425,'2007-02-13 17:01:00',''),
- (3,399,'2007-02-08 18:41:46',''),
- (4,400,'2007-02-08 18:41:46','');
+INSERT INTO `task_histories` (`id`,`task_id`,`date_done`,`remarks`,`user_id`) VALUES 
+ (1,424,'2007-02-13 16:57:36','',0),
+ (2,425,'2007-02-13 17:01:00','',0),
+ (3,399,'2007-02-08 18:41:46','',0),
+ (4,400,'2007-02-08 18:41:46','',0);
 /*!40000 ALTER TABLE `task_histories` ENABLE KEYS */;
 
 

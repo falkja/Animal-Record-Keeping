@@ -15,7 +15,7 @@
   <% if weighing_tasks.length == 0 %>
     You have no cage weighing tasks.
   <% else %>
-  <%= render :partial => 'tasks/tasks_list', :locals => {:tasks_list => nil, :tasks => weighing_tasks, :div_id => "weighing_tasks_"+count, :single_cage_task_list => false, :manage => true} %>
+  <%= render :partial => 'tasks/tasks_list', :locals => {:tasks_list => nil, :tasks => weighing_tasks, :div_id => "weighing_tasks_"+count, :single_cage_task_list => false, :manage => false} %>
   <% end %>
   </blockquote>
   </p>

@@ -4,6 +4,8 @@ class Task < ActiveRecord::Base
   belongs_to :proposed_treatment
   has_many :task_histories, :order => 'date_done'
 
+	@@current_user = nil
+
   def self.general_tasks
     find :all, :conditions => 'internal_description is null and date_ended is null', :order => 'repeat_code'
   end
@@ -128,11 +130,15 @@ class Task < ActiveRecord::Base
       task_history = TaskHistory.new
       task_history.task = self
       task_history.date_done = date_done
-      task_history.user_id = session[:person].user
+      task_history.user_id = @@current_user
       task_history.save
     end
   end
   
+  def Task.set_current_user(user)
+	  @@current_user = user
+  end
+    
   def last_done_date
     if self.task_histories.length == 0
       return nil

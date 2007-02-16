@@ -73,7 +73,7 @@ You are responsible for no medical problems.
 <% for @bat in @sick_bats %>
   <% @list_all ? medical_problems = @sick_bat.medical_problems : medical_problems = @bat.medical_problems.current %>
   <% for medical_problem in medical_problems %>
-    <%= render :partial => 'medical_problems/medical_problem_for_bat', :locals => {:medical_problem_for_bat => medical_problem} %>
+    <%= render :partial => 'medical_problems/medical_problem_for_bat', :locals => {:medical_problem => medical_problem} %>
   <% end %>  
 <% end %>
 </table>

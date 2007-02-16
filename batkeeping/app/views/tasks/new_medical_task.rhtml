@@ -1,0 +1,45 @@
+<h1>Add Treatment To Medical Problem: <%=h @medical_problem.title %></h1>
+
+<% form_tag :action => 'create_medical_task', :id => @medical_problem do %>
+
+<% if @deactivating == true %>
+<%   @disable_leave_date = false %>
+<%   @everything_else = '<div class="hidden">' %>
+<%   @leave_date = '<div>' %>
+<% else %>
+<%   @disable_leave_date = true %>
+<%   @everything_else = '<div>' %>
+<%   @leave_date = '<div class="hidden">' %>
+<% end %>
+
+<p>Bat<br/>
+<%= @medical_problem.bat.band %></p>
+
+<p>Medical Problem<br/>
+<%= @medical_problem.title %></p>
+
+<p>Description<br/>
+<%= @medical_problem.description %></p>
+
+<%= @everything_else %>
+
+<p><label for="task_date_started">Date started</label><br/>
+<%= date_select 'task', 'date_started'  %></p>
+
+<p><label for="task_title">Treatment (include medications and dosages, suggested end date, etc.)</label><br/>
+<%= text_area 'task', 'title', :rows => 2  %></p>
+
+</div>
+
+<%= @leave_date %>
+<p><label for="task_date_ended">Date closed</label><br/>
+<%= date_select 'task', 'date_ended', :disabled => @disable_leave_date  %></p>
+</div>
+
+<p><%= submit_tag "New Treatment" %></p>
+
+<%#= render :partial => 'medical_problems/show_all_proposed_treatments', :locals => {:show_all_proposed_treatments => @medical_problem} %>
+
+<% end %>
+
+<p><%= button_to 'Done', :controller => 'medical_problems', :action => 'list' %></p>

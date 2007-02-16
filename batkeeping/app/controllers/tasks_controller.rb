@@ -154,6 +154,28 @@ class TasksController < ApplicationController
                                       :div_id => 'feeding_tasks', :single_cage_task_list => true, :manage => true}
   end
 
+  def new_medical_task
+    @medical_problem = MedicalProblem.find(params[:id])
+    @deactivating = false
+  end
+
+  def create_medical_task
+    medical_problem = MedicalProblem.find(params[:id])
+    task = Task.new(params[:task])
+    task.medical_problem = medical_problem
+    task.repeat_code = 0
+    task.internal_description = "medical"
+    task.jitter = 0
+    task.date_started = Time.now
+    if task.save
+      task.users << medical_problem.user
+      flash[:notice] = 'Medical Treatment successfully created.'
+      redirect_to :controller => 'medical_problems', :action => 'list'
+    else
+      render :action => 'new'
+    end
+  end
+
   def create
     @users = User.find(params[:users][:id])
     @days = params[:days]
@@ -199,6 +221,13 @@ class TasksController < ApplicationController
     Task::set_current_user(session[:person])
     task.done
     render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => Task.find(params[:ids], :order => 'repeat_code'), :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
+  end
+  
+  def medical_task_done
+    task = Task.find(params[:id])
+    Task::set_current_user(session[:person])
+    task.done
+    render :controller => 'medical_problems', :action => 'list'
   end
   
   def destroy

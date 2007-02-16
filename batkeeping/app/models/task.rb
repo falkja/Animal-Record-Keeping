@@ -1,7 +1,7 @@
 class Task < ActiveRecord::Base
   has_and_belongs_to_many :users
   belongs_to :cage
-  belongs_to :proposed_treatment
+  belongs_to :medical_problem
   has_many :task_histories, :order => 'date_done'
 
 	@@current_user = nil
@@ -20,7 +20,7 @@ class Task < ActiveRecord::Base
 		find :all, :conditions => "((repeat_code != #{tday}) and (repeat_code != 0)) and (internal_description is null) and date_ended is null", :order => 'repeat_code'
 	end
   
-  def self.weighing_tasks #weighing
+  def self.weighing_tasks
     find :all, :conditions => 'internal_description = "weigh" and date_ended is null', :order => 'repeat_code'
   end
   
@@ -35,10 +35,18 @@ class Task < ActiveRecord::Base
 	end
   
   def self.medical_tasks
-    find :all, :conditions => 'proposed_treatment_id is not null and date_ended is null', :order => 'repeat_code'
+    find :all, :conditions => 'medical_problem_id is not null and date_ended is null', :order => 'repeat_code'
   end
 
-  def self.feeding_tasks #feeding
+  def self.current
+      self.find(:all, :conditions => "date_ended is null")
+  end
+  
+  def self.expired
+      self.find(:all, :conditions => "date_ended is not null")
+  end
+
+  def self.feeding_tasks
     find :all, :conditions => 'internal_description = "feed" and date_ended is null', :order => 'repeat_code'
   end
 

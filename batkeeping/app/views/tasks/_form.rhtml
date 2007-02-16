@@ -2,14 +2,8 @@
 
 <!--[form:task]-->
 
-<div class="hidden">
-<p><label for="task_last_done_date">Last done date</label><br/>
-<%= datetime_select 'task', 'last_done_date', :disabled => true %></p>
-</div>
-
 <p><label for="task_title">Title</label><br/>
 <%= text_field 'task', 'title'  %></p>
-
 
 <p><label for="task_user">User(s) assigned</label><br/>
 <%= select_tag("users[id][]", options_from_collection_for_select(@users, "id", "name", @user_ids), :multiple => true) %></p>

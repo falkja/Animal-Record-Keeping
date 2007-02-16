@@ -139,6 +139,7 @@ class Task < ActiveRecord::Base
 	  @@current_user = user
   end
     
+	#this function returns the last done date for a particular task.  if converted into a mysql query it might be faster
   def last_done_date
     if self.task_histories.length == 0
       return nil

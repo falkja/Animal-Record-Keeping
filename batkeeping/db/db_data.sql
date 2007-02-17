@@ -22,6 +22,28 @@ CREATE DATABASE IF NOT EXISTS batkeeping;
 USE batkeeping;
 
 --
+-- Definition of table `bat_notes`
+--
+
+DROP TABLE IF EXISTS `bat_notes`;
+CREATE TABLE `bat_notes` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `bat_id` int(10) unsigned NOT NULL,
+  `date` datetime NOT NULL,
+  `text` text NOT NULL,
+  `user_id` int(10) unsigned NOT NULL COMMENT 'signature',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `bat_notes`
+--
+
+/*!40000 ALTER TABLE `bat_notes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bat_notes` ENABLE KEYS */;
+
+
+--
 -- Definition of table `bats`
 --
 
@@ -677,7 +699,10 @@ INSERT INTO `task_histories` (`id`,`task_id`,`date_done`,`remarks`,`user_id`) VA
  (1,424,'2007-02-13 16:57:36','',0),
  (2,425,'2007-02-13 17:01:00','',0),
  (3,399,'2007-02-08 18:41:46','',0),
- (4,400,'2007-02-08 18:41:46','',0);
+ (4,400,'2007-02-08 18:41:46','',0),
+ (5,145,'2007-02-15 23:39:09','',1),
+ (6,168,'2007-02-15 23:40:00','',1),
+ (7,410,'2007-02-15 23:40:05','',1);
 /*!40000 ALTER TABLE `task_histories` ENABLE KEYS */;
 
 
@@ -689,9 +714,9 @@ DROP TABLE IF EXISTS `tasks`;
 CREATE TABLE `tasks` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `repeat_code` int(10) unsigned NOT NULL COMMENT '0 means daily 1 = sunday etc.',
-  `proposed_treatment_id` int(10) unsigned default NULL,
+  `medical_problem_id` int(10) unsigned default NULL,
   `cage_id` int(10) unsigned default NULL,
-  `title` varchar(45) NOT NULL,
+  `title` text NOT NULL,
   `notes` text NOT NULL,
   `internal_description` varchar(45) default NULL,
   `food` double default NULL,
@@ -708,7 +733,7 @@ CREATE TABLE `tasks` (
 --
 
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
-INSERT INTO `tasks` (`id`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (24,0,27,NULL,'Cough syrup','','medical',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
  (25,0,28,NULL,'Verbally abuse the bat','','medical',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
  (26,0,NULL,NULL,'Check the fruit bats nectar feeders','',NULL,NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
@@ -718,7 +743,7 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title
  (127,0,31,NULL,'Feed worms in front of the other bats','','medical',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
  (136,7,NULL,NULL,'Do dishes','Soak in bleach water at least 10 minutes',NULL,NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
  (145,6,NULL,NULL,'Change pads','',NULL,NULL,NULL,NULL,-1,'0000-00-00 00:00:00',NULL);
-INSERT INTO `tasks` (`id`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (168,0,NULL,NULL,'Fill out temperature and humidity','',NULL,NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
  (396,2,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,-1,'2007-02-11 13:55:11',NULL),
  (397,3,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,-1,'2007-02-11 13:55:11',NULL),
@@ -729,7 +754,7 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title
  (402,1,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,-1,'2007-02-11 13:55:12',NULL),
  (410,5,NULL,2,'Feed cage Cage2','','feed',6,'Small',1,0,'2007-02-13 08:12:02',NULL),
  (411,2,NULL,2,'Feed cage Cage2','','feed',7,'Small',1,0,'2007-02-13 08:12:11',NULL);
-INSERT INTO `tasks` (`id`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (412,3,NULL,2,'Feed cage Cage2','','feed',7,'Small',1,0,'2007-02-13 08:12:11',NULL),
  (413,4,NULL,2,'Feed cage Cage2','','feed',7,'Small',1,0,'2007-02-13 08:12:11',NULL),
  (414,6,NULL,2,'Feed cage Cage2','','feed',7,'Small',1,0,'2007-02-13 08:12:26',NULL),
@@ -740,7 +765,7 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title
  (419,4,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:57:17','2007-02-13 16:57:23'),
  (420,5,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:57:17','2007-02-13 16:57:23'),
  (421,6,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:57:17','2007-02-13 16:57:23');
-INSERT INTO `tasks` (`id`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (422,7,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:57:18','2007-02-13 16:57:23'),
  (423,1,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:57:18','2007-02-13 16:57:23'),
  (424,0,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:57:25','2007-02-13 16:57:39'),
@@ -750,7 +775,7 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title
  (428,2,NULL,3,'Weigh cage Cage3','','weigh',NULL,NULL,NULL,-1,'2007-02-13 17:16:25','2007-02-13 17:16:33'),
  (429,2,NULL,3,'Weigh cage Cage3','','weigh',NULL,NULL,NULL,-1,'2007-02-13 17:16:39',NULL),
  (430,3,NULL,3,'Weigh cage Cage3','','weigh',NULL,NULL,NULL,-1,'2007-02-13 17:16:39',NULL);
-INSERT INTO `tasks` (`id`,`repeat_code`,`proposed_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (431,4,NULL,3,'Weigh cage Cage3','','weigh',NULL,NULL,NULL,-1,'2007-02-13 17:16:39',NULL);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 

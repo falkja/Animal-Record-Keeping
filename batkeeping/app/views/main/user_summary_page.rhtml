@@ -33,7 +33,7 @@ You are responsible for no medical problems.
 <% @show_bat = true %>
 <% for problem in @mymedicalproblems %>
 <% @bat = problem.bat %>
-<%= render :partial => 'medical_problems/medical_problem_for_bat', :locals => {:medical_problem_for_bat => problem} %>
+<%= render :partial => 'medical_problems/medical_problem_for_bat', :locals => {:medical_problem => problem} %>
 <% end %>
 </table>
 <% end %>

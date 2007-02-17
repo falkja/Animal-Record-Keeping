@@ -72,7 +72,7 @@
 <th>Treatment</th>
 <% @show_bat = false %>
   <% for medical_problem in @bat.medical_problems.current %>
-    <%= render :partial => 'medical_problems/medical_problem_for_bat', :locals => {:medical_problem_for_bat => medical_problem} %>
+    <%= render :partial => 'medical_problems/medical_problem_for_bat', :locals => {:medical_problem => medical_problem} %>
   <% end %>  
 </table>
 </blockquote>
@@ -91,7 +91,7 @@
 <th>Treatment</th>
 <% @show_bat = false %>
   <% for medical_problem in @bat.medical_problems.expired %>
-    <%= render :partial => 'medical_problems/medical_problem_for_bat', :locals => {:medical_problem_for_bat => medical_problem} %>
+    <%= render :partial => 'medical_problems/medical_problem_for_bat', :locals => {:medical_problem => medical_problem} %>
   <% end %>
 </table>
 </blockquote>

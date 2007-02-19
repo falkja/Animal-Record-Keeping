@@ -143,15 +143,6 @@ class Task < ActiveRecord::Base
     end
   end
   
-  def medical_task_done(date, remarks)
-      task_history = TaskHistory.new
-      task_history.task = self
-      task_history.date_done = date
-      task_history.remarks = remarks
-      task_history.user_id = @@current_user
-      task_history.save
-  end
-  
   def Task.set_current_user(user)
 	  @@current_user = user
   end

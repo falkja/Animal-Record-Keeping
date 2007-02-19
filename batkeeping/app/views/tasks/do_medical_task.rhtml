@@ -1,0 +1,26 @@
+<h1>Do Treatment</h1>
+
+<% form_tag :action => 'medical_task_done', :id => @task do %>
+
+<p>Bat<br />
+<%= @task.medical_problem.bat.band %></p>
+
+<p>Medical Problem<br />
+<%= @task.medical_problem.title %></p>
+
+<p>Description<br />
+<%= @task.medical_problem.description %></p>
+
+<p>Treatment<br />
+<%= @task.title %></p>
+
+<p><label for="task_history_date_done">Date Treatment Given</label><br />
+<%= datetime_select 'task_history', 'date_done' %></p>
+
+<p><label for="task_history_remarks">Remarks</label><br />
+<%= text_area 'task_history', 'remarks', :rows => 2  %></p>
+
+<%= submit_tag "Medical Treatment Done" %>
+<% end %>
+
+<%= render :partial => 'proposed_treatments/show_all_medical_care_actions', :locals => {:task => @task} %>

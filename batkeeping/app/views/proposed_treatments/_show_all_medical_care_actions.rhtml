@@ -1,15 +1,13 @@
-<% @proposed_treatment = show_all_medical_care_actions %>
-
-<% if @proposed_treatment.medical_care_actions.length == 0 %>
+<% if task.task_histories.length == 0 %>
   <p><b>This treatment has not yet been given.</b></p>
   <% else %>
-  <h4><%=h @proposed_treatment.treatment %> Given:</h4>
+  <h4><%=h task.title %> Given:</h4>
   <blockquote>
-  <% for medical_care_action in @proposed_treatment.medical_care_actions %>
+  <% for task_history in task.task_histories %>
       <p>
-      <b>Date: </b><%= nice_date_with_time medical_care_action.date %><br/>
-      <b>Remarks: </b><%= medical_care_action.remarks %><br/>
-      <b>User: </b><%=h medical_care_action.user.name %><br/>
+      <b>Date: </b><%= nice_date_with_time(task_history.date_done) %><br/>
+      <b>Remarks: </b><%= task_history.remarks %><br/>
+      <b>User: </b><%=h task_history.user.name %><br/>
       </p>
       <hr width = "60%" align=LEFT />
   <% end %>

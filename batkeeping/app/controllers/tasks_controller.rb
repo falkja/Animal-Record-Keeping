@@ -176,6 +176,10 @@ class TasksController < ApplicationController
     end
   end
 
+	def do_medical_task
+		@task = Task.find(params[:id])
+	end
+	
   def create
     @users = User.find(params[:users][:id])
     @days = params[:days]
@@ -225,9 +229,12 @@ class TasksController < ApplicationController
   
   def medical_task_done
     task = Task.find(params[:id])
-    Task::set_current_user(session[:person])
-    task.done
-    render :controller => 'medical_problems', :action => 'list'
+		
+		task_history = TaskHistory.new(params[:task_history])
+		task_history.user = session[:person]
+		task_history.task = task
+		task_history.save
+    redirect_to :controller => 'medical_problems', :action => 'list'
   end
   
   def destroy

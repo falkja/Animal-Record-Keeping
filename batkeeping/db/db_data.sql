@@ -696,19 +696,10 @@ CREATE TABLE `task_histories` (
 
 /*!40000 ALTER TABLE `task_histories` DISABLE KEYS */;
 INSERT INTO `task_histories` (`id`,`task_id`,`date_done`,`remarks`,`user_id`) VALUES 
- (1,424,'2007-02-13 16:57:36','',0),
- (2,425,'2007-02-13 17:01:00','',0),
- (3,399,'2007-02-08 18:41:46','',0),
-<<<<<<< db_data.sql
- (4,400,'2007-02-08 18:41:46','',0),
- (5,145,'2007-02-16 10:29:37','',1),
- (6,437,'2007-02-16 18:39:20','',1);
-=======
- (4,400,'2007-02-08 18:41:46','',0),
- (5,145,'2007-02-15 23:39:09','',1),
- (6,168,'2007-02-15 23:40:00','',1),
- (7,410,'2007-02-15 23:40:05','',1);
->>>>>>> 1.34
+ (1,432,'2007-02-18 20:46:21','',1),
+ (2,433,'2006-06-18 21:21:00','72 hugs given',4),
+ (3,433,'2006-06-18 21:21:00','14 hugs given',4),
+ (4,433,'2007-02-18 21:26:00','12 hugs given',4);
 /*!40000 ALTER TABLE `task_histories` ENABLE KEYS */;
 
 
@@ -781,14 +772,10 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`
  (428,2,NULL,3,'Weigh cage Cage3','','weigh',NULL,NULL,NULL,-1,'2007-02-13 17:16:25','2007-02-13 17:16:33'),
  (429,2,NULL,3,'Weigh cage Cage3','','weigh',NULL,NULL,NULL,-1,'2007-02-13 17:16:39',NULL),
  (430,3,NULL,3,'Weigh cage Cage3','','weigh',NULL,NULL,NULL,-1,'2007-02-13 17:16:39',NULL);
-<<<<<<< db_data.sql
 INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (431,4,NULL,3,'Weigh cage Cage3','','weigh',NULL,NULL,NULL,-1,'2007-02-13 17:16:39',NULL),
- (437,0,1,NULL,'Cough Syrup','','medical',NULL,NULL,NULL,0,'2007-02-16 18:39:15',NULL);
-=======
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
- (431,4,NULL,3,'Weigh cage Cage3','','weigh',NULL,NULL,NULL,-1,'2007-02-13 17:16:39',NULL);
->>>>>>> 1.34
+ (432,0,1,NULL,'Cough syrup','','medical',NULL,NULL,NULL,0,'2007-02-18 20:28:40',NULL),
+ (433,0,1,NULL,'Give lots of hugs','','medical',NULL,NULL,NULL,0,'2007-02-18 21:08:45',NULL);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 
 
@@ -847,9 +834,6 @@ INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES
  (2,25),
  (2,432),
  (2,433),
- (2,434),
- (2,436),
- (2,437),
  (3,136),
  (3,401),
  (3,402),

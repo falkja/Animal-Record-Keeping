@@ -53,7 +53,7 @@
         <% end %>
       </td>
       <td>
-        <%= link_to 'End', :controller => 'tasks', :action => 'destroy', :id => task %>
+        <%= link_to 'End', {:controller => 'tasks', :action => 'destroy_medical_task', :id => task}, :confirm => 'Are you sure?', :method => :post %>
       </td>
       </tr>
       <tr>

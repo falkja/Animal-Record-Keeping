@@ -1,9 +1,0 @@
-<h1>Editing Proposed Treatment</h1>
-
-<% form_tag :action => 'update', :id => @proposed_treatment, :redirectme => 'list_current' do %>
-  <%= render :partial => 'form' %>
-  <%= submit_tag 'Edit' %>
-<% end %>
-
-<%= link_to 'Show', :action => 'show', :id => @proposed_treatment %> |
-<%= link_to 'List Current Medical Problems', :action => 'list_current' %>

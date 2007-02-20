@@ -57,7 +57,7 @@
 
 <% if @task.date_ended != nil %>
 <p>
-  <b>Date Ended:</b> <%=h nice_Date(@task.date_ended) %>
+  <b>Date Ended:</b> <%=h nice_date(@task.date_ended) %>
 </p>
 <% end %>
 
@@ -67,7 +67,7 @@
 </p>
 <% else %>
 <p>
-<b>Leniency:</b> This task must be done on time
+<b>Leniency:</b> This task needs to be done on its due date
 </p>
 <% end %>
 

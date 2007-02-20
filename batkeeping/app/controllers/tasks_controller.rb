@@ -244,6 +244,11 @@ class TasksController < ApplicationController
     render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => tasks, :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
   end
   
+  def destroy_medical_task
+    Task.find(params[:id]).deactivate
+    redirect_to :controller => 'medical_problems', :action => 'list'
+  end
+  
   def clear_tasks
     tasks = Task.find(params[:tasks])
     for task in tasks

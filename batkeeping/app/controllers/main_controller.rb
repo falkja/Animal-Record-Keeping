@@ -163,6 +163,8 @@ class MainController < ApplicationController
 		Cage_Out_Histories.destroy_all "note = 'random'"
 		redirect_to :controller => 'bats', :action => 'list'		
 	end
-		
-	
+  
+  def menubar_task_display
+    render :partial => 'menubar_task_display', :locals => {:selected_menu => params[:selected_menu]}
+  end
 end

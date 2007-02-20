@@ -1,19 +1,14 @@
 <div class="mainmenulinks">
-Links:
-<%= link_to 'List Bats', :controller => 'bats', :action => :list %> |
-<%= link_to 'List Cages', :controller => 'cages', :action => :list %> |
-<%= link_to 'List Protocols', :controller => 'protocols', :action => :list %> |
-<%= link_to 'List Users', :controller => 'users', :action => :list %> | 
-<%= link_to 'List Medical Bats', :controller => 'medical_problems', :action => :list_current %> | 
-<%= link_to 'List Tasks', :controller => 'tasks', :action => :list %>
+<%= link_to_remote 'Bats', :url => {:controller => 'main', :action => :menubar_task_display, :selected_menu => 'bats'}, :update => 'mainmenutasks' %> |
+<%= link_to_remote 'Cages', :url => {:controller => 'main', :action => :menubar_task_display, :selected_menu => 'cages'}, :update => 'mainmenutasks' %> |
+<%= link_to_remote 'Protocols', :url => {:controller => 'main', :action => :menubar_task_display, :selected_menu => 'protocols'}, :update => 'mainmenutasks' %> |
+<%= link_to_remote 'Users', :url => {:controller => 'main', :action => :menubar_task_display, :selected_menu => 'users'}, :update => 'mainmenutasks' %> | 
+<%= link_to_remote 'Medical Problems', :url => {:controller => 'main', :action => :menubar_task_display, :selected_menu => 'medical_problems'}, :update => 'mainmenutasks' %> | 
+<%= link_to_remote 'Tasks', :url => {:controller => 'main', :action => :menubar_task_display, :selected_menu => 'tasks'}, :update => 'mainmenutasks' %>
 </div>
 
 <div class="mainmenutasks">
-Tasks: 
-<%= link_to 'Move Bat(s)', :controller => 'bats', :action => :choose_cage %> |
-<%= link_to 'Weigh Bat(s)', :controller => 'weights', :action => :weighing_choice %> |
-<%= link_to 'New Bat', :controller => 'bats', :action => :new %> |
-<%= link_to 'New Cage', :controller => 'cages', :action => :new %> | 
-<%= link_to 'New Medical Problem', :controller => 'medical_problems', :action => :new %> | 
-<%= link_to 'New Task', :controller => 'tasks', :action => :choose_new_task %>
+  <div id="mainmenutasks">
+  -
+  </div>
 </div>

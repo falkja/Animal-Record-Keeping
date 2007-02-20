@@ -1,0 +1,46 @@
+<% if selected_menu == 'bats' %>
+
+|
+<%= link_to 'List Bats', :controller => 'bats', :action => :list %> | 
+<%= link_to 'New Bat', :controller => 'bats', :action => :new %> | 
+<%= link_to 'Move Bat', :controller => 'bats', :action => :choose_cage %> | 
+<%= link_to 'Weigh Bat', :controller => 'bats', :action => :choose_bat_to_weigh %>
+|
+
+<% elsif selected_menu == 'cages' %>
+
+|
+<%= link_to 'List Cages', :controller => 'cages', :action => :list %> | 
+<%= link_to 'New Cage', :controller => 'cages', :action => :new %> | 
+<%= link_to 'Weigh Cage', :controller => 'cages', :action => :choose_cage_to_weigh %>
+|
+
+<% elsif selected_menu == 'protocols' %>
+
+|
+<%= link_to 'List Protocols', :controller => 'protocols', :action => 'list' %> | 
+<%= link_to 'New Protocol', :controller => 'protocols', :action => 'new' %>
+|
+
+<% elsif selected_menu == 'users' %>
+
+|
+<%= link_to 'List Users', :controller => 'users', :action => 'list' %> | 
+<%= link_to 'New User', :controller => 'users', :action => 'new' %>
+|
+
+<% elsif selected_menu == 'medical_problems' %>
+
+|
+<%= link_to 'List Medical Problems', :controller => 'medical_problems', :action => 'list' %> | 
+<%= link_to 'New Medical Problem', :controller => 'medical_problems', :action => 'new' %>
+|
+
+<% elsif selected_menu == 'tasks' %>
+
+|
+<%= link_to 'List Tasks', :controller => 'tasks', :action => 'list' %> | 
+<%= link_to 'New Task', :controller => 'tasks', :action => 'choose_new_task' %>
+|
+
+<% end %>

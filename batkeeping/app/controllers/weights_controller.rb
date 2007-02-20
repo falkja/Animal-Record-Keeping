@@ -48,7 +48,4 @@ class WeightsController < ApplicationController
     Weight.find(params[:id]).destroy
     redirect_to :action => 'list'
   end
-  
-  def weighing_choice
-  end
 end

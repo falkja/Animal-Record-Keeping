@@ -1,19 +1,21 @@
 
+<h3>Current Treatments:</h3>
+<blockquote>
 <% if medical_problem.tasks.current.length == 0 %>
   <p>No current treatments for this medical problem.</p>
 <% else %>
-  <h3>Current Treatments:</h3>
-  <blockquote>
   <% for task in medical_problem.tasks.current %>
     <%= render :partial => 'medical_problems/show_proposed_treatment', :locals => {:task => task} %>
   <% end %>
 <% end %>
 </blockquote>
 
-<% if medical_problem.tasks.expired.length > 0 %>
   <h3>Expired Treatments:</h3>
   <blockquote>
-  <% for proposed_treatment in medical_problem.tasks.expired %>
+<% if medical_problem.tasks.expired.length == 0 %>
+  <p>No expired treatments for this medical problem.</p>
+  <% else %>
+  <% for task in medical_problem.tasks.expired %>
     <%= render :partial => 'medical_problems/show_proposed_treatment', :locals => {:task => task} %>
   <% end %>
 <% end %>

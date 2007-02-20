@@ -1,17 +1,15 @@
-<h1>Deactivating medical problem</h1>
+<h1>Deactivating medical problem: <%=h @medical_problem.title %></h1>
 
-<p>Bat<br>
+<p>Bat<br />
 <%= @medical_problem.bat.band %></p>
 
-<p>Current Treatment(s)<br />
-<% for proposed_treatment in @medical_problem.proposed_treatments.current %>
-<%= proposed_treatment.treatment %><br/>
-<% end %></p>
+<p>Medical Problem<br />
+<%= @medical_problem.title %></p>
 
-<p>Past Treatment(s)<br />
-<% for proposed_treatment in @medical_problem.proposed_treatments.expired %>
-<%= proposed_treatment.treatment %> - Expired: <%= nice_date proposed_treatment.date_closed %><br/>
-<% end %></p>
+<p>Description<br />
+<%= @medical_problem.description %></p>
+
+<%= render :partial => 'medical_problems/show_all_proposed_treatments', :locals => {:medical_problem => @medical_problem} %>
 
 <% form_tag :action => 'update', :id => @medical_problem , :redirectme => 'list_current', :deactivating => @deactivating do %>
   <%= render :partial => 'form' %>

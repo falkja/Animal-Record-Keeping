@@ -56,9 +56,9 @@ class MedicalProblemsController < ApplicationController
     @deactivating = params[:deactivating]
     if @medical_problem.update_attributes(params[:medical_problem])
       if @deactivating
-          for proposed_treatment in @medical_problem.proposed_treatments
-            proposed_treatment.date_closed = @medical_problem.date_closed
-            proposed_treatment.save
+          for task in @medical_problem.tasks.current
+            task.date_ended = @medical_problem.date_closed
+            task.save
           end
       end
       flash[:notice] = 'Medical Problem was successfully updated.'

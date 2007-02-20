@@ -2,11 +2,11 @@
 
 <p>
   <b>Title:</b>
-    <% if @task.medical_problem_id == nil && @task.cage_id == nil %>
+    <% if @task.internal_description == nil %>
       <%=h @task.title%>
     <% else %>
     <%= @task.medical_problem_id ? (link_to @task.title, :controller => 'tasks', :action => 'show', :id => @task.medical_problem_id) : '' %>
-    <%= @task.cage_id ? (link_to @task.title, :controller => 'cages', :action => 'show', :id => @task.cage_id) : '' %>
+    <%= @task.cage_id ? (link_to @task.title, :controller => 'cages', :action => 'show', :id => @task.cage) : '' %>
     <% end %>
 </p>
 
@@ -29,13 +29,47 @@
       <%= @task.repeat_code == 7 ? "Every Saturday" : '' %>
 </p>
 
+<% if @task.notes != '' %>
 <p>
   <b>Notes:</b> <%=h @task.notes %>
 </p>
+<% end %>
+
+<% if @task.internal_description == 'feed' %>
+
+  <p>
+    <b>Food:</b> <%=h @task.food %> g
+  </p>
+
+  <p>
+    <b>Dishes:</b> <%=h @task.dish_num.to_s + ' ' + @task.dish_type %>
+  </p>
+
+<% end %>
 
 <p>
   <b>Last Done:</b> <%=h nice_date(@task.last_done_date) %>
 </p>
+
+<p>
+  <b>Date Started:</b> <%=h nice_date(@task.date_started) %>
+</p>
+
+<% if @task.date_ended != nil %>
+<p>
+  <b>Date Ended:</b> <%=h nice_Date(@task.date_ended) %>
+</p>
+<% end %>
+
+<% if @task.jitter == -1 %>
+<p>
+<b>Leniency:</b> This task can be done one day ahead of schedule
+</p>
+<% else %>
+<p>
+<b>Leniency:</b> This task must be done on time
+</p>
+<% end %>
 
 <%= link_to 'Edit', :action => 'edit', :id => @task %> |
 <%= link_to 'List Tasks', :action => 'list' %>

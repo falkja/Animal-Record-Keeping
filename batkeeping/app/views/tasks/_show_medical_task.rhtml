@@ -3,6 +3,6 @@
       <blockquote>
         <b>Start Date: </b><%=h nice_date(task.date_started) %><br />
         <b>End Date: </b><%=h nice_date(task.date_ended) %><br />
-        <%= render :partial => 'proposed_treatments/show_all_medical_care_actions', :locals => {:task => task} %>
+        <%= render :partial => 'tasks/show_all_task_histories', :locals => {:task => task} %>
       </blockquote>
     </p>

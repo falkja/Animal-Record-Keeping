@@ -5,7 +5,7 @@
   <p>No current treatments for this medical problem.</p>
 <% else %>
   <% for task in medical_problem.tasks.current %>
-    <%= render :partial => 'medical_problems/show_proposed_treatment', :locals => {:task => task} %>
+    <%= render :partial => 'tasks/show_medical_problem', :locals => {:task => task} %>
   <% end %>
 <% end %>
 </blockquote>
@@ -16,7 +16,7 @@
   <p>No expired treatments for this medical problem.</p>
   <% else %>
   <% for task in medical_problem.tasks.expired %>
-    <%= render :partial => 'medical_problems/show_proposed_treatment', :locals => {:task => task} %>
+    <%= render :partial => 'tasks/show_medical_problem', :locals => {:task => task} %>
   <% end %>
 <% end %>
 </blockquote>

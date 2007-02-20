@@ -54,7 +54,7 @@
 <% @tasks = @cage.tasks.weighing_tasks %>
 <b>Current Weighing Tasks:</b>
 <blockquote>
-<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => @cage.tasks.weighing_tasks, :div_id => 'weighing_tasks', :single_cage_task_list => true, :manage => true} %>
+<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => @cage.tasks.weighing_tasks, :div_id => 'weighing_tasks', :single_cage_task_list => true, :manage => false} %>
 <p>[<%= link_to 'Add weighing task', :controller => 'tasks', :action => 'new_weigh_cage_task', :id => @cage %>]</p>
 </blockquote>
 

@@ -2,10 +2,10 @@
 
 <p>
   <b>Title:</b>
-    <% if @task.proposed_treatment_id == nil && @task.cage_id == nil %>
+    <% if @task.medical_problem_id == nil && @task.cage_id == nil %>
       <%=h @task.title%>
     <% else %>
-    <%= @task.proposed_treatment_id ? (link_to @task.title, :controller => 'proposed_treatments', :action => 'show', :id => @task.proposed_treatment_id) : '' %>
+    <%= @task.medical_problem_id ? (link_to @task.title, :controller => 'tasks', :action => 'show', :id => @task.medical_problem_id) : '' %>
     <%= @task.cage_id ? (link_to @task.title, :controller => 'cages', :action => 'show', :id => @task.cage_id) : '' %>
     <% end %>
 </p>
@@ -34,7 +34,7 @@
 </p>
 
 <p>
-  <b>Last Done:</b> <%=h nice_date @task.last_done_date %>
+  <b>Last Done:</b> <%=h nice_date(@task.last_done_date) %>
 </p>
 
 <%= link_to 'Edit', :action => 'edit', :id => @task %> |

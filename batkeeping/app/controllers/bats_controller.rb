@@ -80,6 +80,16 @@ redirect_to :action => 'list'
     Bat::set_user_and_comment(session[:person], params[:move]['note']) #Do this before saving!
 		
 	if @bat.update_attributes(params[:bat])
+	  if @deactivating
+	    for medical_problem in @bat.medical_problems
+		  medical_problem.date_closed = @bat.leave_date
+		  medical_problem.save
+		  for task in medical_problem.tasks.current
+		    task.date_ended = @bat.leave_date
+		    task.save
+		  end
+		end
+	  end
 	  flash[:notice] = 'Bat was successfully updated.'
 	  if params[:redirectme] == 'list'
 		redirect_to :action => 'list'
@@ -107,16 +117,7 @@ redirect_to :action => 'list'
 	@bat = Bat.find(params[:id])
 	params[:move]['note'] = params[:bat]['leave_reason']
 	params[:bat]['cage_id'] = nil
-	
-  for medical_problem in @bat.medical_problems
-    medical_problem.date_closed = Time.now
-    for proposed_treatment in medical_problem.proposed_treatments
-      proposed_treatment.date_closed = Time.now
-      proposed_treatment.save
-    end
-    medical_problem.save
-  end
-  
+	@deactivating = true
 	update
   end
   

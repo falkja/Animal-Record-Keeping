@@ -39,7 +39,7 @@ class MedicalProblemsController < ApplicationController
     @medical_problem.bat = @bat
     if @medical_problem.save
       flash[:notice] = 'Medical problem was successfully created.'
-      redirect_to :controller => 'proposed_treatments', :action => 'new', :id => @medical_problem
+      redirect_to :controller => 'tasks', :action => 'new_medical_task', :id => @medical_problem
     else
       render :action => 'new'
     end

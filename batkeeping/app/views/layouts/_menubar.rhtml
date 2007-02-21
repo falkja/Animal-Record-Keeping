@@ -1,4 +1,6 @@
 <div class="mainmenulinks">
+Categories - 
+
 <%= link_to_remote 'Main', :url => {:controller => 'main', :action => :menubar_task_display, :selected_menu => 'main'}, :update => 'mainmenutasks' %> | 
 <%= link_to_remote 'Bats', :url => {:controller => 'main', :action => :menubar_task_display, :selected_menu => 'bats'}, :update => 'mainmenutasks' %> |
 <%= link_to_remote 'Cages', :url => {:controller => 'main', :action => :menubar_task_display, :selected_menu => 'cages'}, :update => 'mainmenutasks' %> |

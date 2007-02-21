@@ -165,6 +165,6 @@ class MainController < ApplicationController
 	end
   
   def menubar_task_display
-    render :partial => 'menubar_task_display', :locals => {:selected_menu => params[:selected_menu]}
+    render :partial => 'layouts/menubar_task_display', :locals => {:selected_menu => params[:selected_menu]}
   end
 end

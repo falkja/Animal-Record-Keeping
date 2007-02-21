@@ -2,22 +2,4 @@
 	This is the default layout everyone will use, unless overridden
 -->
 
-<html>
-<head>
-  <META HTTP-EQUIV="Refresh" CONTENT="901">
-  <title>Batkeeping <%= controller.action_name %></title>
-  <%= stylesheet_link_tag 'scaffold' %>
-  <%= javascript_include_tag "prototype" %>
-</head>
-<body>
-
-<%= render :partial => 'layouts/menubar_login' %>
-
-<p style="color: green"><%= flash[:notice] %></p>
-
-<% if session[:person] != nil %>
-<%= yield  %>
-<% end %>
-
-</body>
-</html>
+<%= render :partial => 'layouts/standard_layout' %>

@@ -1,4 +1,5 @@
 <div class="mainmenulinks">
+<%= link_to_remote 'Main', :url => {:controller => 'main', :action => :menubar_task_display, :selected_menu => 'main'}, :update => 'mainmenutasks' %> | 
 <%= link_to_remote 'Bats', :url => {:controller => 'main', :action => :menubar_task_display, :selected_menu => 'bats'}, :update => 'mainmenutasks' %> |
 <%= link_to_remote 'Cages', :url => {:controller => 'main', :action => :menubar_task_display, :selected_menu => 'cages'}, :update => 'mainmenutasks' %> |
 <%= link_to_remote 'Protocols', :url => {:controller => 'main', :action => :menubar_task_display, :selected_menu => 'protocols'}, :update => 'mainmenutasks' %> |
@@ -9,6 +10,10 @@
 
 <div class="mainmenutasks">
   <div id="mainmenutasks">
+  <% if @type_selected %>
+  <%= render :partial => 'layouts/menubar_task_display', :locals => {:selected_menu => @type_selected} %>
+  <% else %>
   -
+  <% end %>
   </div>
 </div>

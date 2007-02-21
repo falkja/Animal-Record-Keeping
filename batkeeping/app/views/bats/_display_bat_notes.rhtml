@@ -1,0 +1,20 @@
+<div id='bat_notes'>
+<% if @bat.note != nil %>
+<p>
+<b>Notes on bat: </b>
+<blockquote>
+<%= @bat.note %>
+</blockquote>
+<% end %>
+</p>
+
+<p>
+<%= form_remote_tag(:update => "bat_notes",
+                       :url => { :controller => 'bats', :action => 'add_bat_note', 
+					   :id => @bat }) %>
+	<b><label for="bat_note">Add note:</label></b>
+	<%= text_field 'bat', 'note', :value => '' %>
+	<%= submit_tag "Submit permanent note on bat" %>
+</form>
+</p>
+</div>

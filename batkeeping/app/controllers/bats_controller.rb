@@ -233,4 +233,15 @@ redirect_to :action => 'list'
     send_data(g.to_blob, :disposition => 'inline', :type => 'image/png', :filename => bat.band + " weights.png")
   
   end
+  
+  def add_bat_note
+	@bat = Bat.find(params[:id])
+	if @bat.note != nil
+	  @bat.note = @bat.note + '<b>Note: </b>' + params[:bat][:note] + ' <b>User: </b>' + session[:person].initials + ' <b>Date: </b>' + Date.today.to_s + '<br />'
+	else
+	  @bat.note = '<b>Note: </b>' + params[:bat][:note] + ' <b>User: </b>' + session[:person].initials + ' <b>Date: </b>' + Date.today.to_s + '<br />'
+	end
+	@bat.save
+	render :partial => 'bats/display_bat_notes'
+  end
 end

@@ -4,6 +4,9 @@ No tasks.
 <% else %>
 <table>
   <thead>
+  <% if tasks[0].internal_description == 'medical' %>
+    <th>Medical Problem</th>
+  <% end %>
   <% if !single_cage_task_list %>
     <th>Title</th>
   <% end %>
@@ -15,6 +18,7 @@ No tasks.
 	<% end %>
     <th>Frequency</th>
     <th>Last Done</th>
+    <th>Notes</th>
   </thead>
  
  <tbody>  

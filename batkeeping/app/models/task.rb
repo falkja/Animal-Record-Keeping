@@ -155,4 +155,13 @@ class Task < ActiveRecord::Base
       return self.task_histories[0].date_done
     end
   end
+  
+  def doable
+    if (Date.today.yday >= self.find_post) && (Date.today.yday <= (self.find_post - self.jitter))
+      return true
+    else
+      return false
+    end
+  end
+  
 end

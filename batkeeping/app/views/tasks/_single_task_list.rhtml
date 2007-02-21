@@ -4,6 +4,11 @@
 <% # if true, the partial will also display edit and destroy buttons %>
 
   <tr>
+  
+  <% if task.internal_description == 'medical' %>
+    <td><%= task.medical_problem.title %></td>
+  <% end %>
+  
   <% if !single_cage_task_list %>
     <td>
     <b>
@@ -16,7 +21,7 @@
       <%= user.name %><br/>
       <% end %>
     </td>
-	
+  
 	<% if task.internal_description == 'feed' %>
 		<td><%=h task.food %>g</td>
 		<td><%=h task.dish_num.to_s + " " + task.dish_type.to_s %></td>
@@ -40,21 +45,28 @@
     <% if task.done_by_schedule %> 
        <%= nice_date(task.last_done_date) %>
     <% else %>
-       <% if manage == true %>
-        <% if task.internal_description == "feed" %>
-			<% label = 'Just Fed' %>
-		<% else %>
-			<% label = 'Just Done' %>
-		<% end %>
+      <% if manage == true %>
+        <% if task.doable %>
+          <% if task.internal_description == "feed" %>
+            <% label = 'Just Fed' %>
+          <% else %>
+            <% label = 'Just Done' %>
+          <% end %>
           [<%= link_to_remote label, :url => {
-			:controller => 'tasks', :action => 'done', :id => task, 
-			:ids => tasks, :div_id => div_id,  :single_cage_task_list => single_cage_task_list},
-			:update => div_id%>]
-       <% else %>
+            :controller => 'tasks', :action => 'done', :id => task, 
+            :ids => tasks, :div_id => div_id,  :single_cage_task_list => single_cage_task_list},
+            :update => div_id%>]
+        <% else %>
+          Not done on schedule
+        <% end %>
+      <% else %>
         Not done on schedule
-       <% end %>
+      <% end %>
     <% end %>
     </td>
+    
+    <td><%= task.notes %></td>
+    
     <% if task.internal_description == "weigh" %>
     <td>
     <%= link_to 'Weigh Cage', :controller => 'cages', :action => 'weigh_cage', :id => task.cage %>

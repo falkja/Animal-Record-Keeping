@@ -22,6 +22,28 @@ CREATE DATABASE IF NOT EXISTS batkeeping;
 USE batkeeping;
 
 --
+-- Definition of table `bat_notes`
+--
+
+DROP TABLE IF EXISTS `bat_notes`;
+CREATE TABLE `bat_notes` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `bat_id` int(10) unsigned NOT NULL,
+  `date` datetime NOT NULL,
+  `text` text NOT NULL,
+  `user_id` int(10) unsigned NOT NULL COMMENT 'signature',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `bat_notes`
+--
+
+/*!40000 ALTER TABLE `bat_notes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bat_notes` ENABLE KEYS */;
+
+
+--
 -- Definition of table `bats`
 --
 
@@ -49,9 +71,9 @@ CREATE TABLE `bats` (
 /*!40000 ALTER TABLE `bats` DISABLE KEYS */;
 INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`species`,`gender`,`leave_date`,`leave_reason`,`band`,`user_id`,`note`) VALUES 
  (1,NULL,'2006-12-15 00:00:00','Juvenile','Ben\'s Beard','Eptesicus fuscus','M','2006-12-15 00:00:00','Flew away','A1',NULL,NULL),
- (2,2,'2006-12-15 00:00:00','Adult','Murat\'s Hair','Glossophaga soricina','F',NULL,NULL,'A2',NULL,NULL),
+ (2,3,'2006-12-15 00:00:00','Adult','Murat\'s Hair','Eptesicus fuscus','F',NULL,NULL,'A2',NULL,'<b>Note: </b>Bat catches mealworms <b>User: </b>GAC <b>Date: </b>2007-02-21<br /><b>Note: </b>Bat now non-protocol, you can use for anything <b>User: </b>GAC <b>Date: </b>2007-02-21<br />'),
  (3,8,'2006-12-15 00:00:00','Juvenile','Kaushik\'s Glasses','Carollia perspicillata','F',NULL,NULL,'A3',NULL,NULL),
- (4,2,'2006-12-15 00:00:00','Adult','Chen\'s High Heeled Boots','Myotis septentrionalis','M',NULL,NULL,'A4',NULL,NULL),
+ (4,8,'2006-12-15 00:00:00','Adult','Chen\'s High Heeled Boots','Myotis septentrionalis','M',NULL,NULL,'A4',NULL,NULL),
  (5,3,'2006-12-15 00:00:00','Juvenile','Wei\'s Dumpling','Eptesicus fuscus','M',NULL,NULL,'A5',NULL,NULL),
  (6,2,'2006-12-15 00:00:00','Juvenile','Flea Market','Eptesicus fuscus','M',NULL,NULL,'A6',NULL,NULL);
 /*!40000 ALTER TABLE `bats` ENABLE KEYS */;
@@ -287,9 +309,7 @@ INSERT INTO `cage_in_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note`
  (199,6,2,'2007-02-11 13:05:41',1,''),
  (200,4,8,'2007-02-13 17:01:18',4,''),
  (201,2,3,'2007-02-13 17:04:03',4,''),
- (202,5,3,'2007-02-13 17:18:08',4,''),
- (203,2,2,'2007-02-20 08:34:08',4,''),
- (204,4,2,'2007-02-20 08:34:19',4,'');
+ (202,5,3,'2007-02-13 17:18:08',4,'');
 /*!40000 ALTER TABLE `cage_in_histories` ENABLE KEYS */;
 
 
@@ -436,9 +456,7 @@ INSERT INTO `cage_out_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note
  (114,6,3,'2007-02-11 13:05:41',1,'',195),
  (115,4,2,'2007-02-13 17:01:18',4,'',197),
  (116,2,2,'2007-02-13 17:04:03',4,'',196),
- (117,5,2,'2007-02-13 17:18:08',4,'',198),
- (118,4,8,'2007-02-20 08:33:39',4,'',200),
- (119,2,3,'2007-02-20 08:33:52',4,'',201);
+ (117,5,2,'2007-02-13 17:18:08',4,'',198);
 /*!40000 ALTER TABLE `cage_out_histories` ENABLE KEYS */;
 
 
@@ -453,7 +471,7 @@ CREATE TABLE `cages` (
   `date_created` datetime NOT NULL,
   `date_destroyed` datetime default NULL,
   `user_id` int(10) unsigned default NULL COMMENT 'investigators user_id, can be nil',
-  `room` varchar(45) NOT NULL COMMENT 'room the cage is housed',
+  `room_id` int(10) unsigned NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -462,15 +480,15 @@ CREATE TABLE `cages` (
 --
 
 /*!40000 ALTER TABLE `cages` DISABLE KEYS */;
-INSERT INTO `cages` (`id`,`name`,`date_created`,`date_destroyed`,`user_id`,`room`) VALUES 
- (1,'Cage1','2006-12-15 00:00:00','2006-12-15 00:00:00',1,'Belfry (4102F)'),
- (2,'Cage2','2006-12-15 00:00:00',NULL,4,'Belfry (4102F)'),
- (3,'Cage3','2006-12-15 00:00:00',NULL,1,'Fruit Bats (4148L)'),
- (4,'Cage6','2006-12-15 00:00:00',NULL,4,'Colony Room (4100)'),
- (5,'cage7','2006-12-15 00:00:00',NULL,5,'Colony Room (4100)'),
- (6,'Cage99','2006-12-16 00:00:00',NULL,5,'Belfry (4102F)'),
- (7,'Cage4','2007-01-10 00:00:00',NULL,5,'Belfry (4102F)'),
- (8,'Cage5','2007-01-10 00:00:00',NULL,1,'Belfry (4102F)');
+INSERT INTO `cages` (`id`,`name`,`date_created`,`date_destroyed`,`user_id`,`room_id`) VALUES 
+ (1,'Cage1','2006-12-15 00:00:00','2006-12-15 00:00:00',1,0),
+ (2,'Cage2','2006-12-15 00:00:00',NULL,4,0),
+ (3,'Cage3','2006-12-15 00:00:00',NULL,1,0),
+ (4,'Cage6','2006-12-15 00:00:00',NULL,4,0),
+ (5,'cage7','2006-12-15 00:00:00',NULL,5,0),
+ (6,'Cage99','2006-12-16 00:00:00',NULL,5,0),
+ (7,'Cage4','2007-01-10 00:00:00',NULL,5,0),
+ (8,'Cage5','2007-01-10 00:00:00',NULL,1,0);
 /*!40000 ALTER TABLE `cages` ENABLE KEYS */;
 
 
@@ -526,11 +544,12 @@ CREATE TABLE `medical_problems` (
 INSERT INTO `medical_problems` (`id`,`bat_id`,`date_opened`,`description`,`user_id`,`date_closed`,`title`) VALUES 
  (1,2,'2006-12-15 00:00:00','Bat hobbles, drinks too much and complains when mealworms tread on its foot.',2,NULL,'Gout'),
  (2,6,'2006-12-15 00:00:00','Bat refuses to fly with other bats. Mocks investigators and finds flaws with the published literature',2,NULL,'Inflated Ego'),
- (3,4,'2006-12-15 00:00:00','bat sings at a high pitch destroying the glass in other bat\'s cages',2,'2007-02-20 00:00:00','High pitched singing'),
- (4,4,'2006-12-15 00:00:00','Bat heckles other bats, steals food and rushes other bats trying to capture worm',2,'2007-02-20 00:00:00','Over competitiveness'),
- (5,2,'2006-12-18 00:00:00','None',4,'2007-02-20 00:00:00','Another problem'),
- (6,2,'2007-01-02 00:00:00','new test',5,'2007-02-20 00:00:00','new '),
- (7,2,'2007-01-11 00:00:00','Might be depressed.',4,NULL,'Low Self Esteem');
+ (3,4,'2006-12-15 00:00:00','bat sings at a high pitch destroying the glass in other bat\'s cages',2,NULL,'High pitched singing'),
+ (4,4,'2006-12-15 00:00:00','Bat heckles other bats, steals food and rushes other bats trying to capture worm',2,NULL,'Over competitiveness'),
+ (5,2,'2006-12-18 00:00:00','None',4,'2007-01-02 00:00:00','Another problem'),
+ (6,2,'2007-01-02 00:00:00','new test',5,'2007-01-08 00:00:00','new '),
+ (7,2,'2007-01-11 00:00:00','Might be depressed.',4,NULL,'Low Self Esteem'),
+ (8,2,'2007-02-21 00:00:00','Bat can\'t stay awake.  Could be narcoleptic.',5,NULL,'Very sleepy');
 /*!40000 ALTER TABLE `medical_problems` ENABLE KEYS */;
 
 
@@ -659,6 +678,26 @@ CREATE TABLE `protocols` (
 
 
 --
+-- Definition of table `rooms`
+--
+
+DROP TABLE IF EXISTS `rooms`;
+CREATE TABLE `rooms` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `name` varchar(45) NOT NULL,
+  `room_number` varchar(10) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `rooms`
+--
+
+/*!40000 ALTER TABLE `rooms` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rooms` ENABLE KEYS */;
+
+
+--
 -- Definition of table `task_histories`
 --
 
@@ -682,7 +721,9 @@ INSERT INTO `task_histories` (`id`,`task_id`,`date_done`,`remarks`,`user_id`) VA
  (2,433,'2006-06-18 21:21:00','72 hugs given',4),
  (3,433,'2006-06-18 21:21:00','14 hugs given',4),
  (4,433,'2007-02-18 21:26:00','12 hugs given',4),
- (5,26,'2007-02-19 08:34:09','',5);
+ (5,434,'2007-02-20 15:14:00','I said please and thank you',4),
+ (6,413,'2007-02-21 13:52:36','',1),
+ (7,410,'2007-02-22 15:08:04','',4);
 /*!40000 ALTER TABLE `task_histories` ENABLE KEYS */;
 
 
@@ -714,51 +755,48 @@ CREATE TABLE `tasks` (
 
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
 INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
- (24,0,27,NULL,'Cough syrup','','medical',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
- (25,0,28,NULL,'Verbally abuse the bat','','medical',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
  (26,0,NULL,NULL,'Check the fruit bats nectar feeders','',NULL,NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
  (28,2,NULL,NULL,'Check the light in the Belfry','',NULL,NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
- (30,0,30,NULL,'Words of encouragement.','','medical',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
  (126,4,NULL,4,'Weigh cage Cage6','','weigh',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
- (127,0,31,NULL,'Feed worms in front of the other bats','','medical',NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
  (136,7,NULL,NULL,'Do dishes','Soak in bleach water at least 10 minutes',NULL,NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
- (145,6,NULL,NULL,'Change pads','',NULL,NULL,NULL,NULL,-1,'0000-00-00 00:00:00',NULL);
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+ (145,6,NULL,NULL,'Change pads','',NULL,NULL,NULL,NULL,-1,'0000-00-00 00:00:00',NULL),
  (168,0,NULL,NULL,'Fill out temperature and humidity','',NULL,NULL,NULL,NULL,0,'0000-00-00 00:00:00',NULL),
  (396,2,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,-1,'2007-02-11 13:55:11',NULL),
  (397,3,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,-1,'2007-02-11 13:55:11',NULL),
  (398,4,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,-1,'2007-02-11 13:55:12',NULL),
- (399,5,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,-1,'2007-02-11 13:55:12',NULL),
+ (399,5,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,-1,'2007-02-11 13:55:12',NULL);
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (400,6,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,-1,'2007-02-11 13:55:12',NULL),
  (401,7,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,-1,'2007-02-11 13:55:12',NULL),
  (402,1,NULL,2,'Weigh cage Cage2','','weigh',NULL,NULL,NULL,-1,'2007-02-11 13:55:12',NULL),
  (410,5,NULL,2,'Feed cage Cage2','','feed',6,'Small',1,0,'2007-02-13 08:12:02',NULL),
- (411,2,NULL,2,'Feed cage Cage2','','feed',7,'Small',1,0,'2007-02-13 08:12:11',NULL);
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+ (411,2,NULL,2,'Feed cage Cage2','','feed',7,'Small',1,0,'2007-02-13 08:12:11',NULL),
  (412,3,NULL,2,'Feed cage Cage2','','feed',7,'Small',1,0,'2007-02-13 08:12:11',NULL),
  (413,4,NULL,2,'Feed cage Cage2','','feed',7,'Small',1,0,'2007-02-13 08:12:11',NULL),
  (414,6,NULL,2,'Feed cage Cage2','','feed',7,'Small',1,0,'2007-02-13 08:12:26',NULL),
  (415,7,NULL,2,'Feed cage Cage2','','feed',7,'Small',1,0,'2007-02-13 08:12:27',NULL),
  (416,1,NULL,2,'Feed cage Cage2','','feed',7,'Small',1,0,'2007-02-13 08:12:27',NULL),
- (417,2,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:57:17','2007-02-13 16:57:23'),
+ (417,2,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:57:17','2007-02-13 16:57:23');
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (418,3,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:57:17','2007-02-13 16:57:23'),
  (419,4,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:57:17','2007-02-13 16:57:23'),
  (420,5,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:57:17','2007-02-13 16:57:23'),
- (421,6,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:57:17','2007-02-13 16:57:23');
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+ (421,6,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:57:17','2007-02-13 16:57:23'),
  (422,7,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:57:18','2007-02-13 16:57:23'),
  (423,1,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:57:18','2007-02-13 16:57:23'),
  (424,0,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:57:25','2007-02-13 16:57:39'),
  (425,0,NULL,8,'Weigh cage Cage5','','weigh',NULL,NULL,NULL,-1,'2007-02-13 16:59:56',NULL),
- (426,0,NULL,3,'Weigh cage Cage3','','weigh',NULL,NULL,NULL,-1,'2007-02-13 17:13:25','2007-02-13 17:16:33'),
+ (426,0,NULL,3,'Weigh cage Cage3','','weigh',NULL,NULL,NULL,-1,'2007-02-13 17:13:25','2007-02-13 17:16:33');
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (427,0,NULL,3,'Weigh cage Cage3','','weigh',NULL,NULL,NULL,-1,'2007-02-13 17:15:51','2007-02-13 17:16:33'),
  (428,2,NULL,3,'Weigh cage Cage3','','weigh',NULL,NULL,NULL,-1,'2007-02-13 17:16:25','2007-02-13 17:16:33'),
  (429,2,NULL,3,'Weigh cage Cage3','','weigh',NULL,NULL,NULL,-1,'2007-02-13 17:16:39',NULL),
- (430,3,NULL,3,'Weigh cage Cage3','','weigh',NULL,NULL,NULL,-1,'2007-02-13 17:16:39',NULL);
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+ (430,3,NULL,3,'Weigh cage Cage3','','weigh',NULL,NULL,NULL,-1,'2007-02-13 17:16:39',NULL),
  (431,4,NULL,3,'Weigh cage Cage3','','weigh',NULL,NULL,NULL,-1,'2007-02-13 17:16:39',NULL),
- (432,0,1,NULL,'Cough syrup','','medical',NULL,NULL,NULL,0,'2007-02-18 20:28:40','2007-02-20 00:00:00'),
- (433,0,1,NULL,'Give lots of hugs','','medical',NULL,NULL,NULL,0,'2007-02-18 21:08:45','2007-02-20 00:00:00');
+ (432,0,1,NULL,'Cough syrup','','medical',NULL,NULL,NULL,0,'2007-02-18 20:28:40',NULL),
+ (433,0,1,NULL,'Give lots of hugs','','medical',NULL,NULL,NULL,0,'2007-02-18 21:08:45',NULL),
+ (434,0,7,NULL,'Be polite to the bat','','medical',NULL,NULL,NULL,0,'2007-02-20 15:12:40',NULL),
+ (435,0,8,NULL,'200mg Caffeine!\r\n0.04 cc Amoxicillin','','medical',NULL,NULL,NULL,0,'2007-02-21 14:04:25',NULL);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 
 
@@ -829,8 +867,10 @@ INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES
  (3,427),
  (4,30),
  (4,127),
+ (4,434),
  (5,26),
- (5,426);
+ (5,426),
+ (5,435);
 /*!40000 ALTER TABLE `tasks_users` ENABLE KEYS */;
 
 

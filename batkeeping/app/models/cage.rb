@@ -4,6 +4,7 @@ class Cage < ActiveRecord::Base
 	has_many :cage_in_histories, :order => "date desc"
 	has_many :cage_out_histories, :order => "date desc"
     has_many :tasks, :order => "repeat_code"
+    belongs_to :room
   
   @@colony = 'Colony Room (4100)'
   @@belfry = 'Belfry (4102F)'

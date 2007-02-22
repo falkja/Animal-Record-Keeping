@@ -1,7 +1,7 @@
 <% if task.task_histories.length == 0 %>
-  <p><b>This treatment has not yet been given.</b></p>
-  <% else %>
-  <h4><%=h task.title %> Given:</h4>
+  <p><b>This task has never been done</b></p>
+<% else %>
+  <h4><%=h task.title %> Done:</h4>
   <blockquote>
   <% for task_history in task.task_histories %>
       <p>
@@ -12,4 +12,4 @@
       <hr width = "60%" align=LEFT />
   <% end %>
   </blockquote>
-  <% end %>
+<% end %>

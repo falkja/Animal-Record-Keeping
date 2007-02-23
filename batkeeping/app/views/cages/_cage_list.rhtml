@@ -1,31 +1,18 @@
 <table>
   <tr>
-    <% if @list_all %>
-    <th><%= link_to_remote"Name",
-        :update => @div_id,
-        :url =>{ :controller => 'cages', :action => 'list_all_by_name', :ids => cage_list, :div => @div_id, :weighing => @weighing } %></th>
-    <th><%= link_to_remote "Room",
-        :update => @div_id,
-        :url =>{ :controller => 'cages', :action => 'list_all_by_room', :ids => cage_list, :div => @div_id, :weighing => @weighing } %></th>
-    <% else %>
     <th><%= link_to_remote "Name",
         :update => @div_id,
-        :url =>{ :controller => 'cages', :action => 'list_by_name', :ids => cage_list, :div => @div_id, :weighing => @weighing } %></th>
+        :url =>{ :controller => 'cages', :action => 'list_by_name', :ids => cage_list, :div => @div_id, :weighing => @weighing, :list_all => @list_all } %></th>
     <th><%= link_to_remote "Room",
         :update => @div_id,
-        :url =>{ :controller => 'cages', :action => 'list_by_room', :ids => cage_list, :div => @div_id, :weighing => @weighing } %></th>
-    <% end %>
-    <th>Bats</th>
+        :url =>{ :controller => 'cages', :action => 'list_by_room', :ids => cage_list, :div => @div_id, :weighing => @weighing, :list_all => @list_all } %></th>
+    <th><%= link_to_remote "Bats",
+        :update => @div_id,
+        :url =>{ :controller => 'cages', :action => 'list_by_bats', :ids => cage_list, :div => @div_id, :weighing => @weighing, :list_all => @list_all } %></th>
     <th>
-    <% if @list_all %>
     <%= link_to_remote "Owner",
         :update => @div_id,
-        :url =>{ :controller => 'cages', :action => 'list_all_by_owner', :ids => cage_list, :div => @div_id, :weighing => @weighing } %>
-    <% else %>
-    <%= link_to_remote "Owner",
-        :update => @div_id,
-        :url =>{ :controller => 'cages', :action => 'list_by_owner', :ids => cage_list, :div => @div_id, :weighing => @weighing } %>
-    <% end %>
+        :url =>{ :controller => 'cages', :action => 'list_by_owner', :ids => cage_list, :div => @div_id, :weighing => @weighing, :list_all => @list_all } %>
     </th>
     <% if @list_all %>
       <th>Destroyed</th>
@@ -41,7 +28,7 @@
     <b><%= link_to cage.name, :controller => 'cages', :action => 'show', :id => cage %></b>
     <% end %>
       </td>
-    <td><%= cage.room %></td>
+    <td><%= cage.room.name %></td>
 	<td><%=h cage.bats.count %></td>
     <td><%=h cage.user ? cage.user.name : 'None' %></td>
   <% if @list_all %>

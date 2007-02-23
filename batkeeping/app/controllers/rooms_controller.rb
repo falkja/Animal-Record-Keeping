@@ -9,7 +9,7 @@ class RoomsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @room_pages, @room = paginate :rooms, :per_page => 10
+    @rooms_pages, @rooms = paginate :rooms, :per_page => 10
   end
 
   def show
@@ -21,7 +21,7 @@ class RoomsController < ApplicationController
   end
 
   def create
-    @room = Room.new(params[:rooms])
+    @room = Room.new(params[:room])
     if @room.save
       flash[:notice] = 'Rooms was successfully created.'
       redirect_to :action => 'list'
@@ -36,7 +36,7 @@ class RoomsController < ApplicationController
 
   def update
     @room = Room.find(params[:id])
-    if @room.update_attributes(params[:rooms])
+    if @room.update_attributes(params[:room])
       flash[:notice] = 'Room was successfully updated.'
       redirect_to :action => 'show', :id => @room
     else

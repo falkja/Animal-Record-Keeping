@@ -7,7 +7,7 @@
   <% end %>
   </tr>
   
-<% for room in @room %>
+<% for room in @rooms %>
   <tr>
   <% for column in Room.content_columns %>
     <td><%=h room.send(column.name) %></td>

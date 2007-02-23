@@ -22,52 +22,39 @@ class CagesController < ApplicationController
   
   def list_by_name
     @cages = Cage.find(params[:ids], :order => 'name')
-    @list_all = false
     @div_id = params[:div]
     @weighing = params[:weighing]
-    render :partial => 'cage_list', :locals => {:cage_list => @cages}
-  end
-
-  def list_all_by_name
-    @cages = Cage.find(params[:ids], :order => 'name')
-    @list_all = true
-    @div_id = params[:div]
-    @weighing = params[:weighing]
+    @list_all = params[:list_all]
     render :partial => 'cage_list', :locals => {:cage_list => @cages}
   end
   
   def list_by_room
-    @cages = Cage.find(params[:ids], :order => 'room, name')
-    @list_all = false
+    @cages = Cage.find(params[:ids])
+    @cages = @cages.sort_by{|cage| [cage.room.name, cage.name]}
     @div_id = params[:div]
     @weighing = params[:weighing]
-    render :partial => 'cage_list', :locals => {:cage_list => @cages}
-  end
-  
-  def list_all_by_room
-    @cages = Cage.find(params[:ids], :order => 'room, name')
-    @list_all = true
-    @div_id = params[:div]
-    @weighing = params[:weighing]
+    @list_all = params[:list_all]
     render :partial => 'cage_list', :locals => {:cage_list => @cages}
   end
   
   def list_by_owner
-    @cages = Cage.find(params[:ids], :order => 'user_id, name')
-    @list_all = false
+    @cages = Cage.find(params[:ids])
+    @cages = @cages.sort_by{|cage| [cage.user.name, cage.name]}
     @div_id = params[:div]
     @weighing = params[:weighing]
+    @list_all = params[:list_all]
     render :partial => 'cage_list', :locals => {:cage_list => @cages}
   end
   
-  def list_all_by_owner
+  def list_by_bats
     @cages = Cage.find(params[:ids], :order => 'user_id, name')
-    @list_all = true
+    @cages = @cages.sort_by{|cage| [-cage.bats.count, cage.name]}
     @div_id = params[:div]
     @weighing = params[:weighing]
+    @list_all = params[:list_all]
     render :partial => 'cage_list', :locals => {:cage_list => @cages}
   end
-  
+    
   def show
     @cage = Cage.find(params[:id])
     @tasks = @cage.tasks #should be the list of weighing tasks
@@ -81,7 +68,8 @@ class CagesController < ApplicationController
 
   def new
     @cage = Cage.new
-	@deactivating = false
+    @deactivating = false
+    @rooms = Room.find(:all, :order => 'name')
   end
 
   def create
@@ -98,7 +86,8 @@ class CagesController < ApplicationController
 
   def edit
     @cage = Cage.find(params[:id])
-	@deactivating = false
+    @deactivating = false
+    @rooms = Room.find(:all, :order => 'name')
   end
 
   def update

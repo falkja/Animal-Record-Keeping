@@ -481,14 +481,14 @@ CREATE TABLE `cages` (
 
 /*!40000 ALTER TABLE `cages` DISABLE KEYS */;
 INSERT INTO `cages` (`id`,`name`,`date_created`,`date_destroyed`,`user_id`,`room_id`) VALUES 
- (1,'Cage1','2006-12-15 00:00:00','2006-12-15 00:00:00',1,0),
- (2,'Cage2','2006-12-15 00:00:00',NULL,4,0),
- (3,'Cage3','2006-12-15 00:00:00',NULL,1,0),
- (4,'Cage6','2006-12-15 00:00:00',NULL,4,0),
- (5,'cage7','2006-12-15 00:00:00',NULL,5,0),
- (6,'Cage99','2006-12-16 00:00:00',NULL,5,0),
- (7,'Cage4','2007-01-10 00:00:00',NULL,5,0),
- (8,'Cage5','2007-01-10 00:00:00',NULL,1,0);
+ (1,'Cage1','2006-12-15 00:00:00','2006-12-15 00:00:00',1,11),
+ (2,'Cage2','2006-12-15 00:00:00',NULL,4,9),
+ (3,'Cage3','2006-12-15 00:00:00',NULL,1,10),
+ (4,'Cage6','2006-12-15 00:00:00',NULL,4,9),
+ (5,'Cage7','2006-12-15 00:00:00',NULL,5,9),
+ (6,'Cage9','2006-12-16 00:00:00',NULL,5,9),
+ (7,'Cage4','2007-01-10 00:00:00',NULL,5,9),
+ (8,'Cage5','2007-01-10 00:00:00',NULL,1,9);
 /*!40000 ALTER TABLE `cages` ENABLE KEYS */;
 
 
@@ -685,7 +685,6 @@ DROP TABLE IF EXISTS `rooms`;
 CREATE TABLE `rooms` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `name` varchar(45) NOT NULL,
-  `room_number` varchar(10) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -694,6 +693,10 @@ CREATE TABLE `rooms` (
 --
 
 /*!40000 ALTER TABLE `rooms` DISABLE KEYS */;
+INSERT INTO `rooms` (`id`,`name`) VALUES 
+ (9,'Fruit Bats (4148L)'),
+ (10,'Belfry (4102D)'),
+ (11,'Colony Room (4100)');
 /*!40000 ALTER TABLE `rooms` ENABLE KEYS */;
 
 

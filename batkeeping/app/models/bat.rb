@@ -9,6 +9,17 @@ class Bat < ActiveRecord::Base
 	@@current_user = nil #needed for the sig
 	@@comment = nil #needed if we wanna comment a cage move
 	
+	#returns an empty string for the cage.name instead of a nil for sorting
+	def cage_never_nil
+		batcage = self.cage
+		if batcage != nil
+			return batcage
+		else
+			batcage = Cage.new
+			batcage.name = ''
+			return batcage
+		end
+	end
 	
 	#From http://www.therailsway.com/tags/rails
 	#This lets us do Bats.active AS WELL AS cage.bats.active !

@@ -25,10 +25,39 @@
 					:show_leave_date_and_reason => show_leave_date_and_reason,
 					:show_weigh_link => show_weigh_link}) %>
 	</th>
-	<th>Species</th>
-	<th>Gender</th>
-	<th>Last Weight</th>
-	<th>Collected</th>
+	<th>
+	<%= link_to_remote( "Species",
+		:update => 'bats_div',
+		:url =>{ :controller => 'bats', :action => 'sort_by_species', 
+					:ids => bat_list, 
+					:show_leave_date_and_reason => show_leave_date_and_reason,
+					:show_weigh_link => show_weigh_link}) %>
+	</th>
+	</th>
+	<th>
+	<%= link_to_remote( "Gender",
+		:update => 'bats_div',
+		:url =>{ :controller => 'bats', :action => 'sort_by_gender', 
+					:ids => bat_list, 
+					:show_leave_date_and_reason => show_leave_date_and_reason,
+					:show_weigh_link => show_weigh_link}) %>
+	</th>
+	<th>
+	<%= link_to_remote( "Last Weight",
+		:update => 'bats_div',
+		:url =>{ :controller => 'bats', :action => 'sort_by_weight', 
+					:ids => bat_list, 
+					:show_leave_date_and_reason => show_leave_date_and_reason,
+					:show_weigh_link => show_weigh_link}) %>
+	</th>
+	<th>
+	<%= link_to_remote( "Collected",
+		:update => 'bats_div',
+		:url =>{ :controller => 'bats', :action => 'sort_by_collected', 
+					:ids => bat_list, 
+					:show_leave_date_and_reason => show_leave_date_and_reason,
+					:show_weigh_link => show_weigh_link}) %>
+	</th>
 	<% if show_leave_date_and_reason %>
 		<th>Leave Date</th>
 		<th>Leave Reason</th>
@@ -70,13 +99,13 @@
     <td>
 		<%=h bat.collection_date.strftime("%Y") %>
 	</td>
-	<% if @list_all %>
-	<td>
+	<% if show_leave_date_and_reason %>
+	  <td>
 		<%=h nice_date_no_day(bat.leave_date) %>
-	</td>
-	<td>
+	  </td>
+	  <td>
 		<%=h bat.leave_reason %>
-	</td>
+	  </td>
 	<% end %>
 	<td><%= link_to 'Edit', :action => 'edit', :id => bat %></td>
 	<td>

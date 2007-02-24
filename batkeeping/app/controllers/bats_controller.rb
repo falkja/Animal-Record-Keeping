@@ -19,26 +19,56 @@ redirect_to :action => 'list'
     @list_all = true
     render :action => 'list'
   end
-  
-	
-	def sort_by_band
-		bat_list = Bat.find(params[:ids], :order => 'band, cage_id')
-		render :partial => 'bat_list', :locals => {
-						:bat_list => bat_list, 
-						:div_id => params[:div_id],
-						:show_leave_date_and_reason => params[:show_leave_date_and_reason],
-						:show_weigh_link => params[:show_weigh_link]}
-	end
-  
-	def sort_by_cage
-		bat_list = Bat.find(params[:ids], :order => 'cage_id, band')
-		render :partial => 'bat_list', :locals => {
-						:bat_list => bat_list, 
-						:div_id => params[:div_id],
-						:show_leave_date_and_reason => params[:show_leave_date_and_reason],
-						:show_weigh_link => params[:show_weigh_link]}
+
+	def sort_by_species
+		bat_list = Bat.find(params[:ids], :order => 'species, band')
+    render :partial => 'bat_list', :locals => {
+					:bat_list => bat_list, :div_id => params[:div_id],
+					:show_leave_date_and_reason => params[:show_leave_date_and_reason],
+					:show_weigh_link => params[:show_weigh_link]}
 	end
 	
+	def sort_by_gender
+		bat_list = Bat.find(params[:ids], :order => 'gender, band')
+    render :partial => 'bat_list', :locals => {
+					:bat_list => bat_list, :div_id => params[:div_id],
+					:show_leave_date_and_reason => params[:show_leave_date_and_reason],
+					:show_weigh_link => params[:show_weigh_link]}
+	end
+	
+	def sort_by_weight
+		bat_list = Bat.find(params[:ids])
+		bat_list = bat_list.sort_by{|bat| [bat.weights.recent_never_nil.weight, bat.band]}
+    render :partial => 'bat_list', :locals => {
+					:bat_list => bat_list, :div_id => params[:div_id],
+					:show_leave_date_and_reason => params[:show_leave_date_and_reason],
+					:show_weigh_link => params[:show_weigh_link]}
+	end
+
+  def sort_by_band
+    bat_list = Bat.find(params[:ids], :order => 'band')
+    render :partial => 'bat_list', :locals => {
+					:bat_list => bat_list, :div_id => params[:div_id], 
+					:show_leave_date_and_reason => params[:show_leave_date_and_reason],
+					:show_weigh_link => params[:show_weigh_link]}
+  end
+  
+  def sort_by_cage
+    bat_list = Bat.find(params[:ids])
+		bat_list = bat_list.sort_by{|bat| [bat.cage_never_nil.name, bat.band]}
+    render :partial => 'bat_list', :locals => {
+					:bat_list => bat_list, :div_id => params[:div_id],
+					:show_leave_date_and_reason => params[:show_leave_date_and_reason],
+					:show_weigh_link => params[:show_weigh_link]}
+  end
+	
+	def sort_by_collected
+    bat_list = Bat.find(params[:ids], :order => 'collection_date, band')
+    render :partial => 'bat_list', :locals => {
+					:bat_list => bat_list, :div_id => params[:div_id],
+					:show_leave_date_and_reason => params[:show_leave_date_and_reason],
+					:show_weigh_link => params[:show_weigh_link]}
+	end
   
   def show
 	@bat = Bat.find(params[:id])

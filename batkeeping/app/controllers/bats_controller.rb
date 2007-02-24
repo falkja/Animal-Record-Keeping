@@ -267,9 +267,9 @@ redirect_to :action => 'list'
   def add_bat_note
 	@bat = Bat.find(params[:id])
 	if @bat.note != nil
-	  @bat.note = @bat.note + '<b>Note: </b>' + params[:bat][:note] + ' <b>User: </b>' + session[:person].initials + ' <b>Date: </b>' + Date.today.to_s + '<br />'
+	  @bat.note = @bat.note + '<tr><td>' + params[:bat][:note] + '</td><td>' + session[:person].initials + '</td><td>' + Time.now.strftime('%b %d, %Y') + '</td></tr>'
 	else
-	  @bat.note = '<b>Note: </b>' + params[:bat][:note] + ' <b>User: </b>' + session[:person].initials + ' <b>Date: </b>' + Date.today.to_s + '<br />'
+	  @bat.note = '<tr><td>' + params[:bat][:note] + '</td><td>' + session[:person].initials + '</td><td>' + Time.now.strftime('%b %d, %Y') + '</td></tr>'
 	end
 	@bat.save
 	render :partial => 'bats/display_bat_notes'

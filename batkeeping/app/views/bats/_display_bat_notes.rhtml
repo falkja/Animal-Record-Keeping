@@ -3,7 +3,12 @@
 <p>
 <b>Notes on bat: </b>
 <blockquote>
+<table>
+<th>Note</th>
+<th>User</th>
+<th>Date</th>
 <%= @bat.note %>
+</table>
 </blockquote>
 <% end %>
 </p>
@@ -13,7 +18,7 @@
                        :url => { :controller => 'bats', :action => 'add_bat_note', 
 					   :id => @bat }) %>
 	<b><label for="bat_note">Add note:</label></b>
-	<%= text_field 'bat', 'note', :value => '' %>
+	<%= text_field 'bat', 'note', :value => '', :autocomplete => 'off' %>
 	<%= submit_tag "Submit permanent note on bat" %>
 </form>
 </p>

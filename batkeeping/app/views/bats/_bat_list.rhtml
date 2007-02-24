@@ -67,7 +67,7 @@
 <% for bat in bat_list %>
   <tr>
   <% if show_weigh_link %>
-  <td><%= link_to bat.band, :controller => 'bats', :action => 'weigh_bat', :id => bat %></td>
+  <td><b><%= link_to bat.band, :controller => 'bats', :action => 'weigh_bat', :id => bat %></b></td>
   <td>
 	<% if bat.cage %>
 	  <%= bat.cage.name %>
@@ -76,29 +76,26 @@
 	<% end %>
 	</td>
   <% else %>
-	<td><%= link_to bat.band, :controller => 'bats', :action => 'show', :id => bat %></td>
+	<td><b><%= link_to bat.band, :controller => 'bats', :action => 'show', :id => bat %></b></td>
 	<td>
-		<% if bat.cage %>
+	<% if bat.cage %>
 	  <%= link_to bat.cage.name, :controller => 'cages', :action => 'show', :id => bat.cage %>
 	<% else %>
 	  <%= 'Inactive' %>
 	<% end %>
 	</td>
   <% end %>
-	<td>
-		<%=h bat.species %>
-	</td>
-	<td>
-		<%=h bat.gender %>
-	</td>
+  
+  <td><%=h bat.species %></td>
+  <td><%=h bat.gender %></td>
+    
     <% if bat.weights.length > 0 %></td>
           <td><%=h bat.weights.recent.weight %> g</td>
     <% else %>
           <td>N/A</td>
     <% end %>
-    <td>
-		<%=h bat.collection_date.strftime("%Y") %>
-	</td>
+    
+    <td><%=h bat.collection_date.strftime("%Y") %></td>
 	<% if show_leave_date_and_reason %>
 	  <td>
 		<%=h nice_date_no_day(bat.leave_date) %>
@@ -107,14 +104,16 @@
 		<%=h bat.leave_reason %>
 	  </td>
 	<% end %>
-	<td><%= link_to 'Edit', :action => 'edit', :id => bat %></td>
-	<td>
-	<% if bat.leave_date == nil %>
-	<%= link_to 'Deactivate', { :action => 'deactivate', :id => bat } %>
-	<% else %>
-	<%=  link_to 'Reactivate', { :action => 'reactivate', :id => bat } %>
-		<% end %>
-	</td>
+	<% if !show_weigh_link %>
+		<td><%= link_to 'Edit', :action => 'edit', :id => bat %></td>
+		<td>
+			<% if bat.leave_date == nil %>
+				<%= link_to 'Deactivate', { :action => 'deactivate', :id => bat } %>
+			<% else %>
+				<%=  link_to 'Reactivate', { :action => 'reactivate', :id => bat } %>
+			<% end %>
+		</td>
+	<% end %>
   <td><%= link_to 'Weigh Bat', :action => 'weigh_bat', :id => bat %></td>
   </tr>
 <% end %>

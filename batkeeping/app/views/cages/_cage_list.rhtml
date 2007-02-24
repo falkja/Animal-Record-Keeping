@@ -21,29 +21,30 @@
   
 <% for cage in cage_list %>
   <tr>
-    <td>
-    <% if @weighing %>
-    <b><%= link_to cage.name, :controller => 'cages', :action => 'weigh_cage', :id => cage %></b>
-    <% else %>
-    <b><%= link_to cage.name, :controller => 'cages', :action => 'show', :id => cage %></b>
-    <% end %>
-      </td>
-    <td><%= cage.room.name %></td>
-	<td><%=h cage.bats.count %></td>
-    <td><%=h cage.user ? cage.user.name : 'None' %></td>
-  <% if @list_all %>
-  <td><%=h nice_date(cage.date_destroyed) %></td>
-<% end %>
-    <td><%= link_to 'Edit', :controller => 'cages', :action => 'edit', :id => cage %></td>
-    <td>
-	
-	<% if cage.date_destroyed == nil %>
-	<%= link_to 'Deactivate', { :controller => 'cages', :action => 'deactivate', :id => cage }, :confirm => 'Are you sure?', :method => :post %>
-    <% else %>
-	<%=  link_to 'Reactivate', { :controller => 'cages', :action => 'reactivate', :id => cage }, :confirm => 'Are you sure?', :method => :post %>
-    <% end %>
+	<td>
+	<% if @weighing %>
+		<b><%= link_to cage.name, :controller => 'cages', :action => 'weigh_cage', :id => cage %></b>
+	<% else %>
+		<b><%= link_to cage.name, :controller => 'cages', :action => 'show', :id => cage %></b>
+	<% end %>
 	</td>
-  <td><%= link_to 'Weigh Cage', :controller => 'cages', :action => 'weigh_cage', :id => cage %></td>
+	<td><%= cage.room.name %></td>
+	<td><%=h cage.bats.count %></td>
+	<td><%=h cage.user ? cage.user.name : 'None' %></td>
+	<% if @list_all %>
+		<td><%=h nice_date(cage.date_destroyed) %></td>
+	<% end %>
+	<% if !@weighing %>
+		<td><%= link_to 'Edit', :controller => 'cages', :action => 'edit', :id => cage %></td>
+		<td>
+		  <% if cage.date_destroyed == nil %>
+			<%= link_to 'Deactivate', { :controller => 'cages', :action => 'deactivate', :id => cage }, :confirm => 'Are you sure?', :method => :post %>
+		  <% else %>
+			<%=  link_to 'Reactivate', { :controller => 'cages', :action => 'reactivate', :id => cage }, :confirm => 'Are you sure?', :method => :post %>
+		  <% end %>
+		</td>
+	<% end %>
+	<td><%= link_to 'Weigh Cage', :controller => 'cages', :action => 'weigh_cage', :id => cage %></td>
   </tr>
 <% end %>
 </table>

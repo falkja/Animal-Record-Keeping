@@ -1,4 +1,4 @@
-<h1>Choose a cage to weigh</h1>
+<h1>Choose Cage to Weigh</h1>
 
 <div id="weigh_cage">
 <% @div_id = "weigh_cage" %>
@@ -6,4 +6,4 @@
 <%= render :partial => 'cages/cage_list', :locals => {:cage_list => @cages} %>
 </div>
 
-<p><%= link_to 'Back', :controller => 'weights', :action => 'weighing_choice' %></p>
+<p><%= link_to 'Weigh By Bat Instead', :controller => 'bats', :action => 'choose_bat_to_weigh' %></p>

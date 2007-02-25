@@ -145,8 +145,16 @@ class CagesController < ApplicationController
   end
 
   def weigh_cage
-	@cage = Cage.find(params[:id])
-    @cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name" )
-	@bats = @cage.bats
-end
+		@cage = Cage.find(params[:id])
+		@cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name" )
+		@bats = @cage.bats
+		
+		weighing_tasks = @cage.tasks.weighing_tasks
+		@updateable_tasks = Array.new
+		for task in weighing_tasks
+			if task.doable
+				@updateable_tasks << task
+			end
+		end
+	end
 end

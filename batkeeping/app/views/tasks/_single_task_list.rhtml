@@ -57,10 +57,10 @@
             :ids => tasks, :div_id => div_id,  :single_cage_task_list => single_cage_task_list},
             :update => div_id%>]
         <% else %>
-          Not done on schedule
+          <warning>Not done on schedule</warning>
         <% end %>
       <% else %>
-        Not done on schedule
+        <warning>Not done on schedule</warning>
       <% end %>
     <% end %>
     </td>

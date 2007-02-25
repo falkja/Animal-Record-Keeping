@@ -21,4 +21,15 @@
 There are no bats in this cage.
 <% end %>
 
+<% if @updateable_tasks != nil %>
+<p>The following weighing tasks will be updated after weighing all bats in this cage:
+<blockquote>
+<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => @updateable_tasks, :div_id => 'weighing_tasks', 
+							:single_cage_task_list => false, :manage => false} %>
+</blockquote>
+</p>
+<% else %>
+<p>No weighing tasks for this cage will be updated after all bats are weighed</p>
+<% end %>
+
 <p><%= link_to 'Back', :controller => 'cages', :action => 'choose_cage_to_weigh' %></p>

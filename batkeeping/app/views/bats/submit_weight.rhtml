@@ -1,5 +1,16 @@
 <h1> Weighed <%= @bat.band %> in <%= @bat.cage.name %></h1>
 
+<% if @updated_tasks != nil %>
+<p>Updated the following weighing tasks:
+<blockquote>
+<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => @updated_tasks, :div_id => 'weighing_tasks', 
+							:single_cage_task_list => false, :manage => false} %>
+</blockquote>
+</p>
+<% else %>
+<p>No weighing tasks updated</p>
+<% end %>
+
 <% if @bat.weights.length == 0 %>
 No previous weights.
 <% else %>

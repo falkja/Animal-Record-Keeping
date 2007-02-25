@@ -102,25 +102,41 @@ class Cage < ActiveRecord::Base
     return true
   end
   
-  def update_weighing_tasks#this function returns the oldest of the dates of all the bats recent weights
-    
-    #initializing
-    most_ancient_recent_weight = Time.now
-    bats_have_weights = false
+  def oldest_recent_weight #this function returns the oldest of the dates of all the bats recent weights
+		#initializing
+    oldest_recent_weight = Time.now
     
     for bat in self.bats
-      if bat.weights.length > 0 #this bat has weights
-        bats_have_weights = true
-        if most_ancient_recent_weight > bat.weights.recent.date.to_time
-          most_ancient_recent_weight = bat.weights.recent.date.to_time
+      bats_have_weights = false
+			if bat.weights.length > 0 #this bat has weights
+        all_bats_have_weights = true
+        if oldest_recent_weight > bat.weights.recent.date.to_time
+          oldest_recent_weight = bat.weights.recent.date.to_time
         end
       end
     end
-    if bats_have_weights
+		
+		if all_bats_have_weights
+			return oldest_recent_weight
+		else
+			return nil
+		end
+  end
+  
+  def update_weighing_tasks #marks the cage's weighing tasks as being done with the appropriate date and returns the list of tasks it updates
+    tasks = Array.new
+		
+		oldest_recent_weight = self.oldest_recent_weight
+		if oldest_recent_weight != nil
       for task in self.tasks.weighing_tasks
-        task.done_with_date(most_ancient_recent_weight)
+        task.done_with_date(oldest_recent_weight)
+				if (task.last_done_date == oldest_recent_weight)
+					tasks << task
+				end
       end
     end
+		
+		return tasks
   end
   
 end

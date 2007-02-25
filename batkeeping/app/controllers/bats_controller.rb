@@ -206,11 +206,9 @@ redirect_to :action => 'list'
   end
   
   def submit_weight
-  @bat = Bat.find(params[:id])
-
-    #enter weights  
-	@cage = @bat.cage
-
+		@bat = Bat.find(params[:id])
+    #enter weights
+		@cage = @bat.cage
 		weight = Weight.new
 		weight.bat = @bat
 		weight.date = Time.now
@@ -224,16 +222,17 @@ redirect_to :action => 'list'
     end
 		weight.save
     
-    @cage.update_weighing_tasks
+    Task::set_current_user(session[:person])
+    @updated_tasks = @cage.update_weighing_tasks
     
     #now perform cage changes, if needed
-        Bat::set_user_and_comment(session[:person], params[:cage_change_note][@bat.id.to_s]) #This must come before we mess with the list of bats for a cage. The moment we mess with the list, the cage and bat variables are updated.      
-        @bat.cage = Cage.find(params[:bat_cage][@bat.id.to_s])
-        @bat.save
+		Bat::set_user_and_comment(session[:person], params[:cage_change_note][@bat.id.to_s]) #This must come before we mess with the list of bats for a cage. The moment we mess with the list, the cage and bat variables are updated.      
+		@bat.cage = Cage.find(params[:bat_cage][@bat.id.to_s])
+		@bat.save
 
-  if params[:redirectme]
-    redirect_to :controller => 'cages', :action => 'weigh_cage', :id => params[:redirectme]
-  end
+		if params[:redirectme]
+			redirect_to :controller => 'cages', :action => 'weigh_cage', :id => params[:redirectme]
+		end
   end
   
   def graph_weights

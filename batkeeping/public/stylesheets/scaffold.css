@@ -149,3 +149,9 @@ div.scrollingdiv {
 	overflow-y: scroll;
 	font-size: 8pt;
 }
+
+warning {
+	color: green;
+	font-weight: bold;
+	font-style: italic;
+}

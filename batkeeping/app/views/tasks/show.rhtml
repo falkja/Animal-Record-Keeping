@@ -5,10 +5,14 @@
     <% if @task.internal_description == nil %>
       <%=h @task.title%>
     <% else %>
-    <%= @task.medical_problem_id ? (link_to @task.title, :controller => 'tasks', :action => 'show', :id => @task.medical_problem_id) : '' %>
+    <%= @task.medical_problem_id ? (link_to @task.title, :controller => 'medical_problems', :action => 'show', :id => @task.medical_problem_id) : '' %>
     <%= @task.cage_id ? (link_to @task.title, :controller => 'cages', :action => 'show', :id => @task.cage) : '' %>
     <% end %>
 </p>
+
+<% if @task.internal_description == 'medical' %>
+<b>Medical Problem:</b> <%=h @task.medical_problem.title %>
+<% end %>
 
 <p>
   <b>Who:</b>

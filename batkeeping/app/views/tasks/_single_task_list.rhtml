@@ -74,7 +74,7 @@
     <% end %>
     <% if task.internal_description == "medical" %>
     <td>
-    <%= link_to 'Do Treatment', :controller => 'medical_care_actions', :action => 'new', :id => task.medical_problem %>
+    <%= link_to 'Do Treatment', :controller => 'tasks', :action => 'do_medical_task', :id => task %>
     </td>
     <% end %>
     <td><%= link_to 'Show', :controller => 'tasks', :action => 'show', :id => task %></td>

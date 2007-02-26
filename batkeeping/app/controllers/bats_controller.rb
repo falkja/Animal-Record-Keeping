@@ -193,6 +193,10 @@ redirect_to :action => 'list'
 	@cage.bats << @bats
 	@cage.bats = @cage.bats.uniq #no duplicates
 	@old_cage = @bats[0].cage_out_histories[0].cage
+  
+  #when we finally get emails working uncomment the following
+  #MyMailer::deliver_mail(@cage.user.email)
+  
   end
 
   def choose_bat_to_weigh

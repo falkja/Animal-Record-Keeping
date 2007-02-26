@@ -52,8 +52,14 @@ end
 
 # Include your application configuration below
 
+ActionMailer::Base.delivery_method = :smtp
+ActionMailer::Base.smtp_settings = {
+  :address => "129.2.37.63"
+}
+
 #From http://dev.rubyonrails.org/ticket/7047, this claims to resolve
 #this issue
+
 class Array
   def to_param
     self

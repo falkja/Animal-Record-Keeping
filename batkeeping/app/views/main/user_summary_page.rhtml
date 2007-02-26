@@ -42,13 +42,11 @@ You are responsible for no medical problems.
 
 <h2>Tasks</h2>
 <blockquote>
-  <h3>Today's Tasks</h3>
-  <blockquote>
-    <%= render :partial => 'users_tasks', :locals => {:feeding_tasks => @my_feeding_tasks_today, :weighing_tasks => @my_weighing_tasks_today, :general_tasks => @my_general_tasks_today, :count => '1'} %>
-  </blockquote>
+<div id='todays_tasks'>
+  <%= render :partial => 'main/todays_tasks' %>
+</div>
   
-  <h3>Tasks Not Due Today</h3>
-  
-  <blockquote>
-    <%= render :partial => 'users_tasks', :locals => {:feeding_tasks => @my_feeding_tasks_not_today, :weighing_tasks => @my_weighing_tasks_not_today, :general_tasks => @my_general_tasks_not_today, :count => '2'} %>
-  </blockquote>
+<div id='other_tasks'>
+  <%= render :partial => 'main/hide_other_tasks' %>
+</div>
+</blockquote>

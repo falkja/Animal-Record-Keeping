@@ -37,6 +37,16 @@ class Task < ActiveRecord::Base
   def self.medical_tasks
     find :all, :conditions => 'medical_problem_id is not null and date_ended is null', :order => 'repeat_code'
   end
+  
+  def self.medical_tasks_today
+	  tday = Time.now.wday + 1
+	  find :all, :conditions => "((repeat_code = #{tday}) or (repeat_code = 0)) and (internal_description = 'medical') and date_ended is null", :order => 'repeat_code'
+  end
+
+  def self.medical_tasks_not_today
+	  tday = Time.now.wday + 1
+	  find :all, :conditions => "((repeat_code != #{tday}) and (repeat_code != 0)) and (internal_description = 'medical') and date_ended is null", :order => 'repeat_code'
+  end
 
   def self.current
       self.find(:all, :conditions => "date_ended is null")

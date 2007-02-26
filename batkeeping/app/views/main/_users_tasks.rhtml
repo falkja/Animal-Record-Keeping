@@ -30,3 +30,14 @@
   <% end %>
   </blockquote>
   </p>
+  
+  <h4>Medical Tasks</h4>
+  <p>
+  <blockquote>
+  <% if medical_tasks.length == 0 %>
+    You have no medical tasks.
+  <% else %>
+  <%= render :partial => 'tasks/tasks_list', :locals => {:tasks_list => nil, :tasks => medical_tasks, :div_id => "medical_tasks_"+count, :single_cage_task_list => false, :manage => false} %>
+  <% end %>
+  </blockquote>
+  </p>

@@ -1,0 +1,4 @@
+<h3>[<%= link_to_remote '-', :url => {:controller => 'main', :action => :hide_todays_tasks, :id => @user}, :update => 'todays_tasks' %>]Today's Tasks</h3>
+  <blockquote>
+    <%= render :partial => 'users_tasks', :locals => {:feeding_tasks => @my_feeding_tasks_today, :weighing_tasks => @my_weighing_tasks_today, :general_tasks => @my_general_tasks_today, :medical_tasks => @my_medical_tasks_today, :count => '1'} %>
+  </blockquote>

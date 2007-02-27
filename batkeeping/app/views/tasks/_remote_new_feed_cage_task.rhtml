@@ -1,4 +1,4 @@
-<%= form_remote_tag(:update => "tasks_div",
+<%= form_remote_tag(:update => div_id,
                        :url => { :controller => 'tasks', :action => 'create_feed_cage_task', 
 					   :id => cage }) %>
 
@@ -10,7 +10,7 @@
 <tr>
 <td>
 <%= select_tag("users[]", options_from_collection_for_select(@users, "id", "name"), 
-:multiple => true) %>
+:multiple => false) %>
 </td>
 
 
@@ -27,7 +27,7 @@ options_for_select([
 ["Every Saturday", 7],
 ["Every Sunday", 1]
 ]), 
-:multiple => true) %>
+:multiple => false) %>
 </td>
 
 
@@ -65,7 +65,7 @@ options_for_select([
 </table>
 
 <p>
-*note: Any task that takes place on Saturday/Sunday and is assigned to General Animal Care will automatically be added to Weekend/Holiday Care and will appear on the <%= link_to 'weekend care page', :controller => 'main', :action => 'weekend_care'%>.
+*note: Any task that takes place on Saturday/Sunday and is assigned to General Animal Care will automatically be added to Weekend/Holiday Care and will appear on the <%= link_to 'weekend care page', :controller => 'main', :action => :user_summary_page, :id => 3 %>.
 Any task that takes place during Monday-Friday and is assigned to the Weekend/Holiday Care will automatically be added to General Animal Care.
 </p>
 </form>

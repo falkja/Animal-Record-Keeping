@@ -169,13 +169,7 @@ redirect_to :action => 'list'
 
   #choose a cage to move bats from
   def choose_cage
-	@all_cages = Cage.find(:all)
-	@cages = Array.new
-	for cage in @all_cages
-	  if cage.bats.count > 0
-		@cages << cage
-	  end
-	end
+	@cages = Cage.has_bats
   end
 
   #choose bats to move from cage

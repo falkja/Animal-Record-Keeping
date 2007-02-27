@@ -92,7 +92,7 @@ class TasksController < ApplicationController
   
   def remote_edit_multiple_feeding_tasks
     @cage = Cage.find(params[:id])
-    render :partial => 'remote_edit_feed_cage_task', :locals => {:cage => @cage}
+    render :partial => 'remote_edit_feed_cage_task', :locals => {:cage => @cage, :div_id => params[:div_id]}
   end
   
   def update_multiple_feeding_tasks
@@ -123,7 +123,7 @@ class TasksController < ApplicationController
   def remote_new_feed_cage_task
     @cage = Cage.find(params[:id])
     @users = User.current
-    render :partial => 'remote_new_feed_cage_task', :locals => {:cage => @cage}
+    render :partial => 'remote_new_feed_cage_task', :locals => {:cage => @cage, :div_id => params[:div_id]}
   end
 
   def create_feed_cage_task #called from new_feed_cage_task page

@@ -1,0 +1,71 @@
+<%= form_remote_tag(:update => "tasks_div",
+                       :url => { :controller => 'tasks', :action => 'create_feed_cage_task', 
+					   :id => cage }) %>
+
+<table>
+<th>Fed by*</th>
+<th>On days</th>
+<th COLSPAN=3>Food</th>
+
+<tr>
+<td>
+<%= select_tag("users[]", options_from_collection_for_select(@users, "id", "name"), 
+:multiple => true) %>
+</td>
+
+
+
+<td>
+<%= select_tag("days[]", 
+options_for_select([
+["Daily", 0],
+["Every Monday", 2],
+["Every Tuesday", 3],
+["Every Wednesday", 4],
+["Every Thursday", 5],
+["Every Friday", 6],
+["Every Saturday", 7],
+["Every Sunday", 1]
+]), 
+:multiple => true) %>
+</td>
+
+
+<% if @average != nil %>
+	<% if (@average < 20) && (@average > 14) %>
+		<% suggested_amount = 1.5 * @cage.bats.length %>
+	<% elsif @average > 20 %>
+		<% suggested_amount = 1.0 * @cage.bats.length %>
+	<% else %>
+		<% suggested_amount = 2.0 * @cage.bats.length %>
+	<% end %>
+<% end %>
+
+<td><label for="task_food">Amount</label><br/>
+<%= text_field 'task', 'food', :size => 1, :autocomplete => 'off', :value => suggested_amount %> g
+
+<% if @average != nil %>
+<em>Suggested amount (E. fuscus): <%=h suggested_amount %> g (<%=h suggested_amount/@cage.bats.length %> g per bat) based on average weight of bats in cage.</em>
+<% end %>
+</td>
+
+<td><label for="dish_type">Dish Type</label><br/>
+<%= select_tag("task[dish_type]", options_for_select([["Small","Small"],["Medium","Medium"], ["Long","Long"],["Metal tray","Metal tray"]])) %>
+</td>
+
+<td><label for="dish_num">Number of dishes</label><br/>
+<%= text_field 'task', 'dish_num', :size => 1, :autocomplete => 'off' %>
+</td>
+
+<td>
+<%= submit_tag "Add task(s) for " + cage.name %>
+</td>
+
+</tr>
+</table>
+
+<p>
+*note: Any task that takes place on Saturday/Sunday and is assigned to General Animal Care will automatically be added to Weekend/Holiday Care and will appear on the <%= link_to 'weekend care page', :controller => 'main', :action => 'weekend_care'%>.
+Any task that takes place during Monday-Friday and is assigned to the Weekend/Holiday Care will automatically be added to General Animal Care.
+</p>
+</form>

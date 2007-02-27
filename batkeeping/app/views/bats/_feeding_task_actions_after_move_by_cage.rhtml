@@ -20,7 +20,13 @@
     <p>No feeding tasks.</p>
   <% end %>
 <p>
-[<%= link_to "Add Feeding Tasks", :controller => 'tasks', :action => 'new_feed_cage_task', :id => specified_cage %>]
-[<%= link_to 'Edit Multiple Feeding Tasks', :controller => 'tasks', :action => 'edit_multiple_feeding_tasks', :id => specified_cage %>]
+[<%= link_to_remote "Add Feeding Tasks", :url => {:controller => 'tasks', :action => 'remote_new_feed_cage_task', :id => specified_cage},
+                                                          :update => 'add_feeding_task' + div_id %>]
+<div id = "add_feeding_task<%= div_id %>">
+</div>
+[<%= link_to_remote 'Edit Multiple Feeding Tasks', :url => {:controller => 'tasks', :action => 'remote_edit_multiple_feeding_tasks', :id => specified_cage},
+                                                          :update => 'edit_feeding_tasks' + div_id %>]
+<div id = "edit_feeding_tasks<%= div_id %>">
+</div>
 </p>
 <% end %>

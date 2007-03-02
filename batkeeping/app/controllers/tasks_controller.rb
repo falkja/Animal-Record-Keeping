@@ -162,7 +162,7 @@ class TasksController < ApplicationController
     end
     
     render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => @cage.tasks.feeding_tasks, 
-                                      :div_id => 'feeding_tasks', :single_cage_task_list => true, :manage => true}
+                                      :div_id => params[:div_id], :single_cage_task_list => true, :manage => true}
   end
 
   def new_medical_task

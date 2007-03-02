@@ -14,6 +14,8 @@
         :update => @div_id,
         :url =>{ :controller => 'cages', :action => 'list_by_owner', :ids => cage_list, :div => @div_id, :weighing => @weighing, :list_all => @list_all } %>
     </th>
+    <th>Feeding Tasks</th>
+    <th>Weighing Tasks</th>
     <% if @list_all %>
       <th>Destroyed</th>
     <% end %>
@@ -31,6 +33,22 @@
 	<td><%= cage.room.name %></td>
 	<td><%=h cage.bats.count %></td>
 	<td><%=h cage.user ? cage.user.name : 'None' %></td>
+	<% feeding = cage.tasks.feeding_tasks.length %>
+	<td>
+		<% if cage.fed_every_day? %>
+			<%= feeding %>
+		<% else %>
+			<warning><%= feeding %></warning>
+		<% end %>
+	</td>
+	<% weighing = cage.tasks.weighing_tasks.length %>
+	<td>
+		<% if weighing < 2 %>
+			<warning><%= weighing %></warning>
+		<% else %>
+			<%= weighing %>
+		<% end %>
+	</td>
 	<% if @list_all %>
 		<td><%=h nice_date(cage.date_destroyed) %></td>
 	<% end %>

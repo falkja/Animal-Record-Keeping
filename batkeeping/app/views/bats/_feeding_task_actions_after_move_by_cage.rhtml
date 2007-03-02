@@ -13,12 +13,9 @@
 
 <% elsif specified_cage.bats.length > 0 %>
 
-  <% if specified_cage.tasks.feeding_tasks.length > 0 %>
     <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => specified_cage.tasks.feeding_tasks, :div_id => div_id, 
            :single_cage_task_list => true, :manage => true} %>
-  <% elsif specified_cage.tasks.feeding_tasks.length == 0 %>
-    <p>No feeding tasks.</p>
-  <% end %>
+
 <p>
 [<%= link_to_remote "Add Feeding Tasks", :url => {:controller => 'tasks', :action => 'remote_new_feed_cage_task', :id => specified_cage, :div_id => div_id},
                                                           :update => 'add_feeding_task' + div_id %>]

@@ -29,7 +29,8 @@ class MainController < ApplicationController
 
   #lists things of relevance to only the user
   def user_summary_page
-	if session[:person] != nil
+  
+  if session[:person] != nil
 	  @user = User.find(params[:id])
 	  @mycages = @user.cages.active
 	  @mymedicalproblems = @user.medical_problems.current

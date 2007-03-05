@@ -189,8 +189,7 @@ redirect_to :action => 'list'
 	@old_cage = @bats[0].cage_out_histories[0].cage
   
   #when we finally get emails working uncomment the following
-  #MyMailer::deliver_mail(@cage.user.email)
-  
+  #email = MyMailer.deliver_mail("falk.ben@gmail.com")
   end
 
   def choose_bat_to_weigh

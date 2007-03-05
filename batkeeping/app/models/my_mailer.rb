@@ -1,10 +1,10 @@
 class MyMailer < ActionMailer::Base
 
   def mail(recipient)
-    from "sender.address@example.com"
+    from "ben@pushkin.umd.edu"
     recipients recipient
-    subject "Hi #{recipient}"
-    body :recipient => recipient
+    subject "Example message"
+    body :account => recipient
   end
 
 end

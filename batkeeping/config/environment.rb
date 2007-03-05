@@ -54,7 +54,11 @@ end
 
 ActionMailer::Base.delivery_method = :smtp
 ActionMailer::Base.smtp_settings = {
-  :address => "129.2.37.63"
+  :address => "129.2.37.63",
+  :user_name => "ben",
+  :password => "echolocator",
+  :port => 25,
+  :domain => "pushkin.umd.edu"
 }
 
 #From http://dev.rubyonrails.org/ticket/7047, this claims to resolve

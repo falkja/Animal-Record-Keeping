@@ -32,7 +32,7 @@
 <% collection_month = @bat.collection_date.strftime("%m").to_i %>
 <% collection_day = @bat.collection_date.strftime("%d").to_i %>
 <% collection_date = Date.new(collection_year,collection_month,collection_day) %>
-<%= Date.today - collection_date  %> days.
+<%= Date.today - collection_date  %> days
 </p>
 
 <p>

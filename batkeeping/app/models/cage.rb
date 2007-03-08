@@ -56,10 +56,10 @@ class Cage < ActiveRecord::Base
 		average = combined_weights/num_bats_with_weights
 		return (("%.0" + 1.to_s + "f") %average).to_f
 	else
-		return nil
+		return 0
 	end
     else 
-	return nil
+	return 0
     end
   end
   

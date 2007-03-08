@@ -17,11 +17,9 @@
 </p>
 
 <% average_bat_weight = @cage.average_bat_weight %>
-<% if average_bat_weight != nil %>
 <p>
 <b>Average Weight: </b><%= average_bat_weight %> g
 </p>
-<% end %>
 
 <p>
 <b>Date Created: </b><%= nice_date @cage.date_created %>

@@ -9,13 +9,17 @@
     <th><%= link_to_remote "Bats",
         :update => @div_id,
         :url =>{ :controller => 'cages', :action => 'list_by_bats', :ids => cage_list, :div => @div_id, :weighing => @weighing, :list_all => @list_all } %></th>
+    <th><%= link_to_remote "Average Weight",
+        :update => @div_id,
+        :url =>{ :controller => 'cages', :action => 'list_by_bat_weight', :ids => cage_list, :div => @div_id, :weighing => @weighing, :list_all => @list_all } %></th>
+    </th>
     <th>
     <%= link_to_remote "Owner",
         :update => @div_id,
         :url =>{ :controller => 'cages', :action => 'list_by_owner', :ids => cage_list, :div => @div_id, :weighing => @weighing, :list_all => @list_all } %>
     </th>
-    <th>Feeding Tasks</th>
-    <th>Weighing Tasks</th>
+    <th>Feed Tasks</th>
+    <th>Weigh Tasks</th>
     <% if @list_all %>
       <th>Destroyed</th>
     <% end %>
@@ -32,6 +36,7 @@
 	</td>
 	<td><%= cage.room.name %></td>
 	<td><%=h cage.bats.count %></td>
+  <td><%=h cage.average_bat_weight %></td>
 	<td><%=h cage.user ? cage.user.name : 'None' %></td>
 	<% feeding = cage.tasks.feeding_tasks.length %>
 	<td>

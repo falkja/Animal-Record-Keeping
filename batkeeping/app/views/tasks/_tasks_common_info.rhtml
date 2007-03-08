@@ -9,11 +9,9 @@
 <p><b>Bats in cage:</b> <%=h @cage.bats.length %></p>
 
 <% @average = @cage.average_bat_weight %>
-<% if @average != nil %>
 <p>
 <b>Average Weight: </b><%= @average %> g
 </p>
-<% end %>
 
 <b>Current <%= task_type %> Tasks for <%= @cage.name %>:</b>
 <blockquote>

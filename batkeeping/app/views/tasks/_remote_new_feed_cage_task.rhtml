@@ -32,7 +32,6 @@ options_for_select([
 
 <% @average = @cage.average_bat_weight %>
 
-<% if @average != nil %>
 	<% if (@average < 20) && (@average > 14) %>
 		<% suggested_amount = 1.5 * @cage.bats.length %>
 	<% elsif @average > 20 %>
@@ -40,7 +39,6 @@ options_for_select([
 	<% else %>
 		<% suggested_amount = 2.0 * @cage.bats.length %>
 	<% end %>
-<% end %>
 
 <td><label for="task_food"><b>Amount</b></label><br/>
 <%= text_field 'task', 'food', :size => 1, :autocomplete => 'off', :value => suggested_amount %> g

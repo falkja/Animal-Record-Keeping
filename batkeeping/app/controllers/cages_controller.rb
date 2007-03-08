@@ -54,7 +54,16 @@ class CagesController < ApplicationController
     @list_all = params[:list_all]
     render :partial => 'cage_list', :locals => {:cage_list => @cages}
   end
-    
+
+  def list_by_bat_weight
+    @cages = Cage.find(params[:ids], :order => 'user_id, name')
+    @cages = @cages.sort_by{|cage| [cage.average_bat_weight, cage.name]}
+    @div_id = params[:div]
+    @weighing = params[:weighing]
+    @list_all = params[:list_all]
+    render :partial => 'cage_list', :locals => {:cage_list => @cages}
+  end
+
   def show
     @cage = Cage.find(params[:id])
     @tasks = @cage.tasks #should be the list of weighing tasks

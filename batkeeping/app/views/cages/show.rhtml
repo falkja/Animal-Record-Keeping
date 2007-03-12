@@ -1,9 +1,6 @@
 <h1>Dossier on <%= @cage.name%></h1>
 
 <blockquote>
-<table>
-<tr>
-<td>
 <p>
 <b>Owner: </b><%= @cage.user ? @cage.user.name : 'NP' %>
 </p>
@@ -29,14 +26,7 @@
 <p>
 <b>Date Destroyed: </b><%= nice_date @cage.date_destroyed %>
 </p>
-<% else %>
-<td width=50>
-</td>
-<td>
-</td>
-</tr>
 <% end %>
-</table>
 
 </blockquote>
 

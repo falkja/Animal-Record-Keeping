@@ -6,7 +6,7 @@
   <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => feeding_tasks, :div_id => 'feeding_tasks' + count, 
                                                                 :single_cage_task_list => @single_cage_task_list, :manage => true} %>
   <p>
-  <% form_tag :action => 'form_to_edit_multiple_feeding_tasks', :id => @cage do %>
+  <% form_tag :controller => 'tasks', :action => 'form_to_edit_multiple_feeding_tasks', :id => @cage do %>
   Cage: 
   <%= select_tag("id", options_from_collection_for_select(@feeding_cages, "id", "name")) %>
   <%= submit_tag "Edit multiple feeding tasks" %>
@@ -14,11 +14,17 @@
   </p>
   <% end %>
   <p>
-  <% form_tag :action => 'form_to_new_feed_cage_task', :id => @cage do %>
-  Cage: 
-  <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
+  
+  <%= form_remote_tag :url => {:controller => 'tasks', :action => 'remote_new_feed_cage_task', :id => @cage, :div_id => 'feeding_tasks' + count, :feeding_tasks => feeding_tasks},
+                                                          :update => 'add_feeding_task' %>
+  Cage: <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
   <%= submit_tag "Add a feeding task" %>
-  <% end %>
+</form>
+<div id = "add_feeding_task">
+</div>
+  
+  
+  
   </p>
 </blockquote>
 
@@ -31,7 +37,7 @@
                                                                 :single_cage_task_list => @single_cage_task_list, :manage => false} %>
   <% end %>
   <p>
-  <% form_tag :action => 'form_to_new_weigh_cage_task' do %>
+  <% form_tag :controller => 'tasks', :action => 'form_to_new_weigh_cage_task' do %>
   Cage: 
   <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
   <%= submit_tag "Add a weighing task" %>

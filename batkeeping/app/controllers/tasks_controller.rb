@@ -166,7 +166,7 @@ class TasksController < ApplicationController
   def remote_new_feed_cage_task
     @cage = Cage.find(params[:id])
     @users = User.current
-    render :partial => 'remote_new_feed_cage_task', :locals => {:cage => @cage, :div_id => params[:div_id]}
+    render :partial => 'remote_new_feed_cage_task', :locals => {:cage => @cage, :div_id => params[:div_id], :feeding_tasks => params[:feeding_tasks]}
   end
 
   def create_feed_cage_task #called from new_feed_cage_task page
@@ -178,6 +178,8 @@ class TasksController < ApplicationController
         @days.clear
         @days = ["1","2","3","4","5","6","7"]
     end
+    
+    feeding_tasks = Task.find(params[:feeding_tasks])
     
     for day in @days
       @task = Task.new
@@ -191,20 +193,20 @@ class TasksController < ApplicationController
       @task.jitter = 0
       @task.date_started = Time.now
       @task.save
-	if (@users.include?(User.find(1)) && ((day == "1") || (day == "7")))  #General Animal Care can't do tasks on weekend - add to weekend/holiday care
-		@task.users << User.find(3)
-		@task.users << @users
-		@task.users.uniq
-	elsif @users.include?(User.find(3)) && ((day == "2") || (day == "3") || (day == "4") || (day == "5") || (day == "6")) #Weekend Care can't do tasks on weekdays - add to general animal care
-		@task.users << User.find(1)
-		@task.users << @users
-		@task.users.uniq
-	else
-		@task.users = @users
+      if (@users.include?(User.find(1)) && ((day == "1") || (day == "7")))  #General Animal Care can't do tasks on weekend - add to weekend/holiday care
+        @task.users << User.find(3)
+        @task.users << @users
+        @task.users.uniq
+      elsif @users.include?(User.find(3)) && ((day == "2") || (day == "3") || (day == "4") || (day == "5") || (day == "6")) #Weekend Care can't do tasks on weekdays - add to general animal care
+        @task.users << User.find(1)
+        @task.users << @users
+        @task.users.uniq
+      else
+      @task.users = @users
+      feeding_tasks << @task
 	end
     end
-    
-    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => @cage.tasks.feeding_tasks, 
+    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => feeding_tasks, 
                                       :div_id => params[:div_id], :single_cage_task_list => true, :manage => true}
   end
 

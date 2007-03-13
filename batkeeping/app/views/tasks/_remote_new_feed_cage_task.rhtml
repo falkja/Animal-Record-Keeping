@@ -1,19 +1,19 @@
 <%= form_remote_tag(:update => div_id,
                        :url => { :controller => 'tasks', :action => 'create_feed_cage_task', 
-					   :id => cage, :div_id => div_id }) %>
-
+					   :id => cage, :div_id => div_id, :feeding_tasks => feeding_tasks }) %>
 <table>
+<th>Cage</th>
 <th>Fed by*</th>
 <th>On days</th>
 <th COLSPAN=3>Food</th>
 
 <tr>
+<td VALIGN=bottom><b><%=@cage.name%></b></td>
+
 <td VALIGN=bottom>
 <%= select_tag("users[]", options_from_collection_for_select(@users, "id", "name"), 
 :multiple => false) %>
 </td>
-
-
 
 <td VALIGN=bottom>
 <%= select_tag("days[]", 
@@ -40,20 +40,20 @@ options_for_select([
 		<% suggested_amount = 2.0 * @cage.bats.length %>
 	<% end %>
 
-<td><label for="task_food"><b>Amount</b></label><br/>
+<td VALIGN=bottom><label for="task_food"><b>Amount</b></label><br/>
 <%= text_field 'task', 'food', :size => 1, :autocomplete => 'off', :value => suggested_amount %> g
 </td>
 
-<td><label for="dish_type"><b>Dish Type</b></label><br/>
+<td VALIGN=bottom><label for="dish_type"><b>Dish Type</b></label><br/>
 <%= select_tag("task[dish_type]", options_for_select([["Small","Small"],["Medium","Medium"], ["Long","Long"],["Metal tray","Metal tray"]])) %>
 </td>
 
-<td><label for="dish_num"><b>Number of dishes</b></label><br/>
+<td VALIGN=bottom><label for="dish_num"><b>Number of dishes</b></label><br/>
 <%= text_field 'task', 'dish_num', :size => 1, :autocomplete => 'off' %>
 </td>
 
-<td>
-<%= submit_tag "Add task(s) for " + cage.name %>
+<td VALIGN=bottom>
+<%= submit_tag "Add task" %>
 </td>
 
 </tr>

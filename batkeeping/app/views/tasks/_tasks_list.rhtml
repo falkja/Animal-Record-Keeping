@@ -24,9 +24,11 @@ No tasks.
  <tbody>  
   
 <% for task in tasks %>
+ <% if task.current? %>
  <%= render :partial => 'tasks/single_task_list', 
                   :locals => {:single_task_list => nil, :task => task, :manage => manage, :tasks => tasks, 
                   :div_id => div_id, :single_cage_task_list => single_cage_task_list} %>
+ <% end %>
 <% end %>
 
  </tbody>

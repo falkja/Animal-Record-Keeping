@@ -1,68 +1,9 @@
-<h1>Listing Feeding Tasks</h1>
-<blockquote>
-  <% if @feeding_tasks.length == 0 %>
-  No feeding tasks.
-  <% else %>
-  <%= render :partial => 'tasks_list', :locals =>{:tasks_list => nil, :tasks => @feeding_tasks, :div_id => 'feeding_tasks', 
-                                                                :single_cage_task_list => @single_cage_task_list, :manage => true} %>
-  <p>
-  <% form_tag :action => 'form_to_edit_multiple_feeding_tasks', :id => @cage do %>
-  Cage: 
-  <%= select_tag("id", options_from_collection_for_select(@feeding_cages, "id", "name")) %>
-  <%= submit_tag "Edit multiple feeding tasks" %>
-  <% end %>
-  </p>
-  <% end %>
-  <p>
-  <% form_tag :action => 'form_to_new_feed_cage_task', :id => @cage do %>
-  Cage: 
-  <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
-  <%= submit_tag "Add a feeding task" %>
-  <% end %>
-  </p>
-</blockquote>
-
-<h1>Listing Cage Weighing Tasks</h1>
-<blockquote>
-  <% if @weighing_tasks.length == 0 %>
-  No cage weighing tasks.
-  <% else %>
-  <%= render :partial => 'tasks_list', :locals =>{:tasks_list => nil, :tasks => @weighing_tasks, :div_id => 'weighing_tasks', 
-                                                                :single_cage_task_list => @single_cage_task_list, :manage => false} %>
-  <% end %>
-  <p>
-  <% form_tag :action => 'form_to_new_weigh_cage_task' do %>
-  Cage: 
-  <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
-  <%= submit_tag "Add a weighing task" %>
-  <% end %>
-  </p>
-</blockquote>
-
-<h1>Listing Medical Tasks</h1>
-<blockquote>
-  <% if @medical_tasks.length == 0 %>
-  No medical tasks.
-  <% else %>
-    <%= render :partial => 'tasks_list', :locals =>{:tasks_list => nil, :tasks => @medical_tasks, :div_id => 'medical_tasks', 
-                                                                  :single_cage_task_list => @single_cage_task_list, :manage => false} %>
-    <p>
-    <% form_tag :controller => 'tasks', :action => 'new_medical_task' do %>
-    Medical Problem: 
-    <%= select_tag("id", options_from_collection_for_select(@medical_problems, "id", "title")) %>
-    <%= submit_tag "Add a new treatment" %>
-    <% end %>
-    </p>
-  <% end %>
-</blockquote>
-
-<h1>Listing General Tasks</h1>
-<blockquote>
-  <% if @general_tasks.length == 0 %>
-  No general tasks.
-  <% else %>
-  <%= render :partial => 'tasks_list', :locals =>{:tasks_list => nil, :tasks => @general_tasks, :div_id => 'general_tasks', 
-                                                                :single_cage_task_list => @single_cage_task_list, :manage => true} %>
-  <% end %>
-  <p><%= button_to 'Add a general task', :controller => 'tasks', :action => 'new' %></p>
-</blockquote>
+<div id='todays_tasks'>
+  <%= render :partial => 'tasks/show_tasks', :locals => {:general_tasks => @general_tasks_today, :weighing_tasks => @weighing_tasks_today,
+                                                         :feeding_tasks => @feeding_tasks_today, :medical_tasks => @medical_tasks_today, :div_id => 'todays_tasks'} %>
+</div>
+  
+<div id='other_tasks'>
+  <%= render :partial => 'tasks/hide_tasks', :locals => {:general_tasks => @general_tasks_not_today, :weighing_tasks => @weighing_tasks_not_today,
+                                                        :feeding_tasks => @feeding_tasks_not_today, :medical_tasks => @medical_tasks_not_today, :div_id => 'other_tasks'} %>
+</div>

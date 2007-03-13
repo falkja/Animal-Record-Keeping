@@ -9,14 +9,57 @@ class TasksController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @general_tasks = Task.general_tasks
-    @weighing_tasks = Task.weighing_tasks
-    @medical_tasks = Task.medical_tasks
-    @feeding_tasks = Task.feeding_tasks
+    @general_tasks_today = Task.general_tasks_today
+	  @weighing_tasks_today = Task.weighing_tasks_today
+	  @feeding_tasks_today = Task.feeding_tasks_today
+	  @medical_tasks_today = Task.medical_tasks_today
+	  @general_tasks_not_today = Task.general_tasks_not_today
+	  @weighing_tasks_not_today = Task.weighing_tasks_not_today
+	  @feeding_tasks_not_today = Task.feeding_tasks_not_today
+	  @medical_tasks_not_today = Task.medical_tasks_not_today
+    
     @feeding_cages = Cage.has_feeding_tasks
     @cages = Cage.has_bats
     @medical_problems = MedicalProblem.current
     @single_cage_task_list = false
+  end
+  
+  def hide_tasks
+    @feeding_cages = Cage.has_feeding_tasks
+    @cages = Cage.has_bats
+    @medical_problems = MedicalProblem.current
+    @single_cage_task_list = false
+    
+    medical_task_ids = params[:medical_tasks]
+    medical_task_ids ? medical_tasks = Task.find(medical_task_ids) : medical_tasks = Array.new
+    weighing_task_ids = params[:weighing_tasks]
+    weighing_task_ids ? weighing_tasks = Task.find(weighing_task_ids) : weighing_tasks = Array.new
+    general_task_ids = params[:general_tasks]
+    general_task_ids ? general_tasks = Task.find(general_task_ids) : general_tasks = Array.new
+    feeding_task_ids = params[:feeding_tasks]
+    feeding_task_ids ? feeding_tasks = Task.find(feeding_task_ids) : feeding_tasks = Array.new
+    
+	  render :partial => 'hide_tasks', :locals => {:general_tasks => general_tasks, :weighing_tasks => weighing_tasks,
+                                                         :feeding_tasks => feeding_tasks, :medical_tasks => medical_tasks, :div_id => params[:div_id]}
+  end
+  
+  def show_tasks
+    @feeding_cages = Cage.has_feeding_tasks
+    @cages = Cage.has_bats
+    @medical_problems = MedicalProblem.current
+    @single_cage_task_list = false
+    
+    medical_task_ids = params[:medical_tasks]
+    medical_task_ids ? medical_tasks = Task.find(medical_task_ids) : medical_tasks = Array.new
+    weighing_task_ids = params[:weighing_tasks]
+    weighing_task_ids ? weighing_tasks = Task.find(weighing_task_ids) : weighing_tasks = Array.new
+    general_task_ids = params[:general_tasks]
+    general_task_ids ? general_tasks = Task.find(general_task_ids) : general_tasks = Array.new
+    feeding_task_ids = params[:feeding_tasks]
+    feeding_task_ids ? feeding_tasks = Task.find(feeding_task_ids) : feeding_tasks = Array.new
+    
+	  render :partial => 'show_tasks', :locals => {:general_tasks => general_tasks, :weighing_tasks => weighing_tasks,
+                                                         :feeding_tasks => feeding_tasks, :medical_tasks => medical_tasks, :div_id => params[:div_id]}
   end
 
   def show

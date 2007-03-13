@@ -6,6 +6,9 @@
   <% for task_history in task.task_histories %>
       <p>
       <b>Date: </b><%= nice_date_with_time(task_history.date_done) %><br/>
+      <% if task_history.fed != nil %>
+      <b>Fed: </b><%= task_history.fed %> grams<br/>
+      <% end %>
       <b>Remarks: </b><%= task_history.remarks %><br/>
       <b>User: </b><%=h task_history.user.name %><br/>
       </p>

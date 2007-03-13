@@ -44,6 +44,11 @@ class MainController < ApplicationController
 	  @my_weighing_tasks_not_today = @user.tasks.weighing_tasks_not_today
 	  @my_feeding_tasks_not_today = @user.tasks.feeding_tasks_not_today
 	  @my_medical_tasks_not_today = @user.tasks.medical_tasks_not_today
+    
+    @feeding_cages = Cage.has_feeding_tasks
+    @cages = Cage.has_bats
+    @medical_problems = MedicalProblem.current
+    @single_cage_task_list = false
 	else
 	  redirect_to :action => 'index'
 	end

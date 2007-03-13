@@ -149,6 +149,9 @@ class Task < ActiveRecord::Base
       task_history.task = self
       task_history.date_done = date_done
       task_history.user = @@current_user
+      if self.internal_description == 'feed'
+        task_history.fed = self.food
+      end
       task_history.save
     end
   end
@@ -168,6 +171,14 @@ class Task < ActiveRecord::Base
   
   def doable
     if (Date.today.yday >= self.find_post) && (Date.today.yday <= (self.find_post - self.jitter))
+      return true
+    else
+      return false
+    end
+  end
+  
+  def current?
+    if self.date_ended == nil
       return true
     else
       return false

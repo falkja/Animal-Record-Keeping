@@ -1,0 +1,12 @@
+<h2>[<%= link_to_remote '-', :url => {:controller => 'tasks', :action => :hide_tasks, :feeding_tasks => feeding_tasks, :weighing_tasks => weighing_tasks, :general_tasks => general_tasks, :medical_tasks => medical_tasks, :div_id => div_id},
+        :update => div_id %>]
+<% if div_id == 'todays_tasks' %>
+Today's Tasks
+<% else %>
+Tasks Not Due Today
+<% end %>
+</h2>
+
+  <blockquote>
+    <%= render :partial => 'tasks/all_tasks', :locals => {:feeding_tasks => feeding_tasks, :weighing_tasks => weighing_tasks, :general_tasks => general_tasks, :medical_tasks => medical_tasks, :count => div_id} %>
+  </blockquote>

@@ -34,7 +34,7 @@
 <blockquote>
 <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', :single_cage_task_list => true, :manage => true} %>
 <p>
-[<%= link_to_remote "Add Feeding Tasks", :url => {:controller => 'tasks', :action => 'remote_new_feed_cage_task', :id => @cage, :div_id => "feeding_tasks", :feeding_tasks => @cage.tasks.feeding_tasks},
+[<%= link_to_remote "Add Feeding Tasks", :url => {:controller => 'tasks', :action => 'remote_new_feed_cage_task', :id => @cage, :div_id => "feeding_tasks", :source => 'show_cage', :single_cage_task_list => 'true'},
                                                           :update => 'add_feeding_task' %>]
 <div id = "add_feeding_task">
 </div>

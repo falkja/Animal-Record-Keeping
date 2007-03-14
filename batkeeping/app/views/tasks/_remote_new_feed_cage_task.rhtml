@@ -1,6 +1,6 @@
 <%= form_remote_tag(:update => div_id,
                        :url => { :controller => 'tasks', :action => 'create_feed_cage_task', 
-					   :id => cage, :div_id => div_id, :feeding_tasks => feeding_tasks }) %>
+					   :id => cage, :div_id => div_id, :feeding_tasks => feeding_tasks, :source => source, :single_cage_task_list => single_cage_task_list}) %>
 <table>
 <th>Cage</th>
 <th>Fed by*</th>

@@ -166,7 +166,13 @@ class TasksController < ApplicationController
   def remote_new_feed_cage_task
     @cage = Cage.find(params[:id])
     @users = User.current
-    render :partial => 'remote_new_feed_cage_task', :locals => {:cage => @cage, :div_id => params[:div_id], :feeding_tasks => params[:feeding_tasks]}
+    if params[:source] == 'user_summary'
+      feeding_tasks = @cage.user.tasks.feeding_tasks_today
+    elsif params[:source] == 'show_cage'
+      feeding_tasks = @cage.tasks.feeding_tasks
+    end
+    
+    render :partial => 'remote_new_feed_cage_task', :locals => {:cage => @cage, :div_id => params[:div_id], :source => params[:source], :feeding_tasks => feeding_tasks, :single_cage_task_list => params[:single_cage_task_list]}
   end
 
   def create_feed_cage_task #called from new_feed_cage_task page
@@ -178,9 +184,6 @@ class TasksController < ApplicationController
         @days.clear
         @days = ["1","2","3","4","5","6","7"]
     end
-    
-    feeding_task_ids = params[:feeding_tasks]
-    feeding_task_ids ? feeding_tasks = Task.find(feeding_task_ids) : feeding_tasks = Array.new
     
     for day in @days
       @task = Task.new
@@ -204,13 +207,17 @@ class TasksController < ApplicationController
         @task.users.uniq
       else
       @task.users = @users
-      feeding_tasks << @task
 	end
     end
 
-	feeding_tasks.sort_by{|task| [task.repeat_code]}
+    if params[:source] == 'user_summary'
+      feeding_tasks = @cage.user.tasks.feeding_tasks_today
+    elsif params[:source] == 'show_cage'
+      feeding_tasks = @cage.tasks.feeding_tasks
+    end
+	#feeding_tasks.sort_by{|task| [task.repeat_code]}
 
-    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => @cage.tasks.feeding_tasks, 
+    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => feeding_tasks, 
                                       :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
   end
 

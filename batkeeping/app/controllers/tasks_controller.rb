@@ -179,7 +179,8 @@ class TasksController < ApplicationController
         @days = ["1","2","3","4","5","6","7"]
     end
     
-    feeding_tasks = Task.find(params[:feeding_tasks])
+    feeding_task_ids = params[:feeding_tasks]
+    feeding_task_ids ? feeding_tasks = Task.find(feeding_task_ids) : feeding_tasks = Array.new
     
     for day in @days
       @task = Task.new
@@ -206,8 +207,11 @@ class TasksController < ApplicationController
       feeding_tasks << @task
 	end
     end
-    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => feeding_tasks, 
-                                      :div_id => params[:div_id], :single_cage_task_list => true, :manage => true}
+
+	feeding_tasks.sort_by{|task| [task.repeat_code]}
+
+    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => @cage.tasks.feeding_tasks, 
+                                      :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
   end
 
   def new_medical_task

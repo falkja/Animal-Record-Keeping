@@ -15,7 +15,7 @@
   <% end %>
   <p>
   
-  <%= form_remote_tag :url => {:controller => 'tasks', :action => 'remote_new_feed_cage_task', :id => @cage, :div_id => 'feeding_tasks' + count, :feeding_tasks => feeding_tasks},
+  <%= form_remote_tag :url => {:controller => 'tasks', :action => 'remote_new_feed_cage_task', :id => @cage, :div_id => 'feeding_tasks' + count, :feeding_tasks => feeding_tasks, :single_cage_task_list => @single_cage_task_list},
                                                           :update => 'add_feeding_task' %>
   Cage: <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
   <%= submit_tag "Add a feeding task" %>

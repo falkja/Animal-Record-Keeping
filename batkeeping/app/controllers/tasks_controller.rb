@@ -25,11 +25,6 @@ class TasksController < ApplicationController
   end
   
   def hide_tasks
-    @feeding_cages = Cage.has_feeding_tasks
-    @cages = Cage.has_bats
-    @medical_problems = MedicalProblem.current
-    @single_cage_task_list = false
-    
     medical_task_ids = params[:medical_tasks]
     medical_task_ids ? medical_tasks = Task.find(medical_task_ids) : medical_tasks = Array.new
     weighing_task_ids = params[:weighing_tasks]
@@ -39,16 +34,12 @@ class TasksController < ApplicationController
     feeding_task_ids = params[:feeding_tasks]
     feeding_task_ids ? feeding_tasks = Task.find(feeding_task_ids) : feeding_tasks = Array.new
     
-	  render :partial => 'hide_tasks', :locals => {:general_tasks => general_tasks, :weighing_tasks => weighing_tasks,
-                                                         :feeding_tasks => feeding_tasks, :medical_tasks => medical_tasks, :div_id => params[:div_id]}
+	  render :partial => 'hide_tasks', :locals => {:general_tasks => general_tasks, :weighing_tasks => weighing_tasks, :feeding_tasks => feeding_tasks,
+                              :medical_tasks => medical_tasks, :div_id => params[:div_id], :feeding_cages => Cage.find(params[:feeding_cages]),
+                              :cages => Cage.find(params[:cages]), :medical_problems => MedicalProblem.find(params[:medical_problems]), :single_cage_task_list => params[:single_cage_task_list]}
   end
   
   def show_tasks
-    @feeding_cages = Cage.has_feeding_tasks
-    @cages = Cage.has_bats
-    @medical_problems = MedicalProblem.current
-    @single_cage_task_list = false
-    
     medical_task_ids = params[:medical_tasks]
     medical_task_ids ? medical_tasks = Task.find(medical_task_ids) : medical_tasks = Array.new
     weighing_task_ids = params[:weighing_tasks]
@@ -58,8 +49,9 @@ class TasksController < ApplicationController
     feeding_task_ids = params[:feeding_tasks]
     feeding_task_ids ? feeding_tasks = Task.find(feeding_task_ids) : feeding_tasks = Array.new
     
-	  render :partial => 'show_tasks', :locals => {:general_tasks => general_tasks, :weighing_tasks => weighing_tasks,
-                                                         :feeding_tasks => feeding_tasks, :medical_tasks => medical_tasks, :div_id => params[:div_id]}
+	  render :partial => 'show_tasks', :locals => {:general_tasks => general_tasks, :weighing_tasks => weighing_tasks, :feeding_tasks => feeding_tasks,
+                            :medical_tasks => medical_tasks, :div_id => params[:div_id], :feeding_cages => Cage.find(params[:feeding_cages]),
+                            :cages => Cage.find(params[:cages]), :medical_problems => MedicalProblem.find(params[:medical_problems]), :single_cage_task_list => params[:single_cage_task_list]}
   end
 
   def show
@@ -210,10 +202,16 @@ class TasksController < ApplicationController
 	end
     end
 
-    if params[:source] == 'user_summary'
+    if params[:source] == 'user_summary' && (params[:div_id].include? 'todays_tasks')
       feeding_tasks = @cage.user.tasks.feeding_tasks_today
+    elsif params[:source] == 'user_summary' && (params[:div_id].include? 'other_tasks')
+      feeding_tasks = @cage.user.tasks.feeding_tasks_not_today
     elsif params[:source] == 'show_cage'
       feeding_tasks = @cage.tasks.feeding_tasks
+    elsif params[:source] == 'task_list' && (params[:div_id].include? 'todays_tasks')
+      feeding_tasks = Task.feeding_tasks_today
+    elsif params[:source] == 'task_list' && (params[:div_id].include? 'other_tasks')
+      feeding_tasks = Task.feeding_tasks_not_today
     end
 	#feeding_tasks.sort_by{|task| [task.repeat_code]}
 

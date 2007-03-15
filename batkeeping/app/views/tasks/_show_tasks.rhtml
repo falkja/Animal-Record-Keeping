@@ -1,4 +1,7 @@
-<h2>[<%= link_to_remote '-', :url => {:controller => 'tasks', :action => :hide_tasks, :feeding_tasks => feeding_tasks, :weighing_tasks => weighing_tasks, :general_tasks => general_tasks, :medical_tasks => medical_tasks, :div_id => div_id},
+<h2>[<%= link_to_remote '-', :url => {:controller => 'tasks', :action => :hide_tasks, :feeding_tasks => feeding_tasks, 
+        :weighing_tasks => weighing_tasks, :general_tasks => general_tasks, :medical_tasks => medical_tasks, 
+        :div_id => div_id, :feeding_cages => feeding_cages, :cages => cages, :medical_problems => medical_problems, 
+        :single_cage_task_list => single_cage_task_list},
         :update => div_id %>]
 <% if div_id == 'todays_tasks' %>
 Today's Tasks
@@ -8,5 +11,8 @@ Tasks Not Due Today
 </h2>
 
   <blockquote>
-    <%= render :partial => 'tasks/all_tasks', :locals => {:feeding_tasks => feeding_tasks, :weighing_tasks => weighing_tasks, :general_tasks => general_tasks, :medical_tasks => medical_tasks, :count => div_id, :source => source} %>
+    <%= render :partial => 'tasks/all_tasks', :locals => {:feeding_tasks => feeding_tasks, :weighing_tasks => weighing_tasks, 
+            :general_tasks => general_tasks, :medical_tasks => medical_tasks, :count => div_id, :source => source, 
+            :feeding_cages => feeding_cages, :cages => cages, :medical_problems => medical_problems, 
+            :single_cage_task_list => single_cage_task_list} %>
   </blockquote>

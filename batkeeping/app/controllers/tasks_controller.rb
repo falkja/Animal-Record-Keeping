@@ -25,33 +25,33 @@ class TasksController < ApplicationController
   end
   
   def hide_tasks
-    medical_task_ids = params[:medical_tasks]
-    medical_task_ids ? medical_tasks = Task.find(medical_task_ids) : medical_tasks = Array.new
-    weighing_task_ids = params[:weighing_tasks]
-    weighing_task_ids ? weighing_tasks = Task.find(weighing_task_ids) : weighing_tasks = Array.new
-    general_task_ids = params[:general_tasks]
-    general_task_ids ? general_tasks = Task.find(general_task_ids) : general_tasks = Array.new
-    feeding_task_ids = params[:feeding_tasks]
-    feeding_task_ids ? feeding_tasks = Task.find(feeding_task_ids) : feeding_tasks = Array.new
+    params[:medical_tasks] ? medical_tasks = Task.find(params[:medical_tasks]) : medical_tasks = Array.new
+    params[:weighing_tasks] ? weighing_tasks = Task.find(params[:weighing_tasks]) : weighing_tasks = Array.new
+    params[:general_tasks] ? general_tasks = Task.find(params[:general_tasks]) : general_tasks = Array.new
+    params[:feeding_tasks] ? feeding_tasks = Task.find(params[:feeding_tasks]) : feeding_tasks = Array.new
     
+		params[:feeding_cages] ? feeding_cages = Cage.find(params[:feeding_cages]) : feeding_cages = Array.new
+		params[:medical_problems] ? medical_problems = MedicalProblem.find(params[:medical_problems]) : medical_problems = Array.new
+		params[:cages] ? cages = Cage.find(params[:cages]) : cages = Array.new
+		
 	  render :partial => 'hide_tasks', :locals => {:general_tasks => general_tasks, :weighing_tasks => weighing_tasks, :feeding_tasks => feeding_tasks,
-                              :medical_tasks => medical_tasks, :div_id => params[:div_id], :feeding_cages => Cage.find(params[:feeding_cages]),
-                              :cages => Cage.find(params[:cages]), :medical_problems => MedicalProblem.find(params[:medical_problems]), :single_cage_task_list => params[:single_cage_task_list]}
+									:medical_tasks => medical_tasks, :div_id => params[:div_id], :feeding_cages => feeding_cages,
+									:cages => cages, :medical_problems => medical_problems, :single_cage_task_list => params[:single_cage_task_list]}
   end
   
   def show_tasks
-    medical_task_ids = params[:medical_tasks]
-    medical_task_ids ? medical_tasks = Task.find(medical_task_ids) : medical_tasks = Array.new
-    weighing_task_ids = params[:weighing_tasks]
-    weighing_task_ids ? weighing_tasks = Task.find(weighing_task_ids) : weighing_tasks = Array.new
-    general_task_ids = params[:general_tasks]
-    general_task_ids ? general_tasks = Task.find(general_task_ids) : general_tasks = Array.new
-    feeding_task_ids = params[:feeding_tasks]
-    feeding_task_ids ? feeding_tasks = Task.find(feeding_task_ids) : feeding_tasks = Array.new
+    params[:medical_tasks] ? medical_tasks = Task.find(params[:medical_tasks]) : medical_tasks = Array.new
+    params[:weighing_tasks] ? weighing_tasks = Task.find(params[:weighing_tasks]) : weighing_tasks = Array.new
+    params[:general_tasks] ? general_tasks = Task.find(params[:general_tasks]) : general_tasks = Array.new
+    params[:feeding_tasks] ? feeding_tasks = Task.find(params[:feeding_tasks]) : feeding_tasks = Array.new
     
+		params[:feeding_cages] ? feeding_cages = Cage.find(params[:feeding_cages]) : feeding_cages = Array.new
+		params[:medical_problems] ? medical_problems = MedicalProblem.find(params[:medical_problems]) : medical_problems = Array.new
+		params[:cages] ? cages = Cage.find(params[:cages]) : cages = Array.new
+		
 	  render :partial => 'show_tasks', :locals => {:general_tasks => general_tasks, :weighing_tasks => weighing_tasks, :feeding_tasks => feeding_tasks,
-                            :medical_tasks => medical_tasks, :div_id => params[:div_id], :feeding_cages => Cage.find(params[:feeding_cages]),
-                            :cages => Cage.find(params[:cages]), :medical_problems => MedicalProblem.find(params[:medical_problems]), :single_cage_task_list => params[:single_cage_task_list]}
+									:medical_tasks => medical_tasks, :div_id => params[:div_id], :feeding_cages => feeding_cages,
+									:cages => cages, :medical_problems => medical_problems, :single_cage_task_list => params[:single_cage_task_list]}
   end
 
   def show

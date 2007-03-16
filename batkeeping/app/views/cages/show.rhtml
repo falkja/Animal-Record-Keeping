@@ -1,6 +1,6 @@
 <h1>Dossier on <%= @cage.name%></h1>
 
-<blockquote>
+<div class="left_indent">
 <p>
 <b>Owner: </b><%= @cage.user ? @cage.user.name : 'NP' %>
 </p>
@@ -28,10 +28,10 @@
 </p>
 <% end %>
 
-</blockquote>
+</div>
 
 <b>Current Feeding Tasks:</b>
-<blockquote>
+<div class="left_indent">
 <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', :single_cage_task_list => true, :manage => true} %>
 <p>
 [<%= link_to_remote "Add Feeding Tasks", :url => {:controller => 'tasks', :action => 'remote_new_feed_cage_task', :id => @cage, :div_id => "feeding_tasks", :source => 'show_cage', :single_cage_task_list => 'true'},
@@ -40,21 +40,21 @@
 </div>
 [<%= link_to 'Edit multiple feeding tasks', :controller => 'tasks', :action => 'edit_multiple_feeding_tasks', :id => @cage %>]
 </p>
-</blockquote>
+</div>
 
 <% @tasks = @cage.tasks.weighing_tasks %>
 <b>Current Weighing Tasks:</b>
-<blockquote>
+<div class="left_indent">
 <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => @cage.tasks.weighing_tasks, :div_id => 'weighing_tasks', :single_cage_task_list => true, :manage => true} %>
 <p>[<%= link_to 'Add weighing task', :controller => 'tasks', :action => 'new_weigh_cage_task', :id => @cage %>]</p>
-</blockquote>
+</div>
 
 <p>
 <% if @cage.bats.active.length == 0 %>
 <b>No bats are in this cage.</b>
 <% else %>
   <b>Current Bats:</b><br />
-  <blockquote>
+  <div class="left_indent">
   <table>
   <th>Band</th>
   <th>Last Weight</th>
@@ -88,7 +88,7 @@
     </tr>
   <% end %>
   </table>
-  </blockquote>
+  </div>
 <% end %>
 </p>
 
@@ -97,7 +97,7 @@
 <b>No bats were in this cage.</b>
 <% else %>
   <b>Past Bats:</b><br />
-  <blockquote>
+  <div class="left_indent">
   <table>
   <th>Band</th>
   <th>Date in</th>
@@ -114,7 +114,7 @@
     </tr>
   <% end %>
   </table>
-  </blockquote>
+  </div>
 <% end %>
 </p>
 

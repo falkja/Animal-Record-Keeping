@@ -4,7 +4,7 @@
 No weights.
 <% else %>
 <h3>Weight History:</h3>
-<blockquote>
+<div class="left_indent">
 <table border='1'>
   <th>Date</th>
   <th>Weight</th>
@@ -23,4 +23,4 @@ No weights.
 </table>
 <p><%= link_to 'Graph Weights', :action => 'graph_weights', :id => @bat %></p>
 <% end %>
-</blockquote>
+</div>

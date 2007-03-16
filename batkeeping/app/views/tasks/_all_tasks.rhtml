@@ -1,5 +1,5 @@
 <h3>Feeding Tasks</h3>
-<blockquote>
+<div class="left_indent">
   <% if feeding_tasks.length == 0 %>
   No feeding tasks.
   <% else %>
@@ -27,10 +27,10 @@
   
   
   </p>
-</blockquote>
+</div>
 
 <h3>Cage Weighing Tasks</h3>
-<blockquote>
+<div class="left_indent">
   <% if weighing_tasks.length == 0 %>
   No cage weighing tasks.
   <% else %>
@@ -44,10 +44,10 @@
   <%= submit_tag "Add a weighing task" %>
   <% end %>
   </p>
-</blockquote>
+</div>
 
 <h3>Medical Tasks</h3>
-<blockquote>
+<div class="left_indent">
   <% if medical_tasks.length == 0 %>
   No medical tasks.
   <% else %>
@@ -61,10 +61,10 @@
     <% end %>
     </p>
   <% end %>
-</blockquote>
+</div>
 
 <h3>General Tasks</h3>
-<blockquote>
+<div class="left_indent">
   <% if general_tasks.length == 0 %>
   No general tasks.
   <% else %>
@@ -72,4 +72,4 @@
                                                                 :single_cage_task_list => single_cage_task_list, :manage => true} %>
   <% end %>
   <p><%= button_to 'Add a general task', :controller => 'tasks', :action => 'new' %></p>
-</blockquote>
+</div>

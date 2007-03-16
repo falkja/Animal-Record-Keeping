@@ -2,7 +2,7 @@
   <p><b>This task has never been done</b></p>
 <% else %>
   <h4><%=h task.title %> Done:</h4>
-  <blockquote>
+  <div class="left_indent">
   <% for task_history in task.task_histories %>
       <p>
       <b>Date: </b><%= nice_date_with_time(task_history.date_done) %><br/>
@@ -14,5 +14,5 @@
       </p>
       <hr width = "60%" align=LEFT />
   <% end %>
-  </blockquote>
+  </div>
 <% end %>

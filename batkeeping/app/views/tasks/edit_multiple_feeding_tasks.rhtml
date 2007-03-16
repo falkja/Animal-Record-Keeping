@@ -4,7 +4,7 @@
 
 <b>Edit Feeding Tasks:</b><br/>
 <em>This will change all feeding tasks to match the parameters below</em>
-<blockquote>
+<div class="left_indent">
 <%= form_remote_tag(:update => "tasks_div",
                        :url => { :controller => 'tasks', :action => 'update_multiple_feeding_tasks', :id => @cage },
                        :position => "replace") %>
@@ -13,5 +13,5 @@
 
 <%= submit_tag "Edit all feeding tasks for " + @cage.name %>
 </form>
-</blockquote>
+</div>
 <%= button_to 'Done', :controller => 'cages', :action => 'show', :id => @cage %>

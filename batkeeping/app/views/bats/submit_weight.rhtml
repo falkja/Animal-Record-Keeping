@@ -2,10 +2,10 @@
 
 <% if @updated_tasks != nil %>
 <p>Updated the following weighing tasks:
-<blockquote>
+<div class="left_indent">
 <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => @updated_tasks, :div_id => 'weighing_tasks', 
 							:single_cage_task_list => false, :manage => false} %>
-</blockquote>
+</div>
 </p>
 <% else %>
 <p>No weighing tasks updated</p>

@@ -6,42 +6,42 @@
 <%= link_to Bat.active.length, :controller => 'bats', :action => 'list' %> bats in 
 <%= link_to Cage.active.length, :controller => 'cages', :action => 'list' %> cages : 
 
-<blockquote>
+<div class="left_indent">
 <div  style='background-color:#eeeeee'>
 <h3>Colony Room (4100)</h3>
 There are <b><%= @colony_cages.length %></b> cages in the colony room 
 containing <b><%= @colony_bats.length %></b> bats.
 
-<blockquote><p>
+<div class="left_indent"><p>
 <div id="colony">
 <% @div_id = "colony" %>
 <%= render :partial => 'cages/cage_list', :locals => {:cage_list => @colony_cages} %>
 </div>
-</p></blockquote>
+</p></div>
 
 
 <h3>Belfry (4102F)</h3>
 There are <b><%= @belfry_cages.length %></b> cages in the belfry
 containing <b><%= @belfry_bats.length %></b> bats.
 
-<blockquote><p>
+<div class="left_indent"><p>
 <div id="belfry">
 <% @div_id = "belfry" %>
 <%= render :partial => 'cages/cage_list', :locals => {:cage_list => @belfry_cages} %>
 </div>
-</p></blockquote>
+</p></div>
 
 
 <h3>Fruit Bats Room (4148L)</h3>
 There are <b><%= @fruitbat_cages.length %></b> cages in the fruit bat room
 containing <b><%= @fruitbat_bats.length %></b> bats.
 
-<blockquote><p>
+<div class="left_indent"><p>
 <div id="fruitbat">
 <% @div_id = "fruitbat" %>
 <%= render :partial => 'cages/cage_list', :locals => {:cage_list => @fruitbat_cages} %>
 </div>
-</p></blockquote>
+</p></div>
 
 </div>
-</blockquote>
+</div>

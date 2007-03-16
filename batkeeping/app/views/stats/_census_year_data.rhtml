@@ -13,7 +13,7 @@ If display == 'yes' then we wanna expand it, other vise we hide it
           :update => "year#{year}",
           :url => {:controller => 'stats', :action => 'show_census_year', :year => year, :display => 'no'} %>] <%= year %><br>
 
-<blockquote>
+<div class="left_indent">
 
 <table width=400 layout='fixed'>
 <tr valign='top'>
@@ -69,5 +69,5 @@ If display == 'yes' then we wanna expand it, other vise we hide it
 <td><b><%= total_arrived - total_left %></b></td>
 </tr>
 </table>
-</blockquote>
+</div>
 <% end %>

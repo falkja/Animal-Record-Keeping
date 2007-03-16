@@ -5,7 +5,7 @@
           :url => {:controller => 'stats', :action => 'hide_medical_summary'} %>]
 Bats in medical care: <%= link_to Bat.sick.length, :controller => 'medical_problems', :action => 'list_current' %>
 
-<blockquote>
+<div class="left_indent">
 <div  style='background-color:#eeeeee'>
 <table>
 <th>Bat</th>
@@ -18,4 +18,4 @@ Bats in medical care: <%= link_to Bat.sick.length, :controller => 'medical_probl
 <% end %>
 </table>
 </div>
-</blockquote>
+</div>

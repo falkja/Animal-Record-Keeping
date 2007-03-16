@@ -3,7 +3,7 @@
 <%= render :partial => 'tasks_common_info', :locals => {:task_type => 'Feeding', :tasks => @cage.tasks.feeding_tasks} %>
 
 <b>Add Feeding Tasks:</b>
-<blockquote>
+<div class="left_indent">
 <%= form_remote_tag(:update => "tasks_div",
                        :url => { :controller => 'tasks', :action => 'create_feed_cage_task', 
 					   :id => @cage }) %>
@@ -39,5 +39,5 @@ options_for_select([
 
 <%= submit_tag "Add task(s) for " + @cage.name %>
 </form>
-</blockquote>
+</div>
 <%= button_to 'Done', :controller => 'cages', :action => 'show', :id => @cage %>

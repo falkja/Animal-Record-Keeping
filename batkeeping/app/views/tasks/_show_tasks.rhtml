@@ -10,9 +10,9 @@ Tasks Not Due Today
 <% end %>
 </h2>
 
-  <blockquote>
+  <div class="left_indent">
     <%= render :partial => 'tasks/all_tasks', :locals => {:feeding_tasks => feeding_tasks, :weighing_tasks => weighing_tasks, 
             :general_tasks => general_tasks, :medical_tasks => medical_tasks, :count => div_id, :source => source, 
             :feeding_cages => feeding_cages, :cages => cages, :medical_problems => medical_problems, 
             :single_cage_task_list => single_cage_task_list} %>
-  </blockquote>
+  </div>

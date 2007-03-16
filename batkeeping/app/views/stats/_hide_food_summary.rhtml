@@ -2,10 +2,10 @@
           :update => 'food',
           :url => {:controller => 'stats', :action => 'food_summary'} %>]
 Food needed 
-<blockquote>
+<div class="left_indent">
 <p>
 today = <%= @colony_food_today %>g <br>
 per week = <%= @colony_food_this_week %>g <br>
 per year (projected) = <%= @colony_food_this_week * 52 %>g <br>
 </p>
-</blockquote>
+</div>

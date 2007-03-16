@@ -2,8 +2,8 @@ body {
 	background-color: #fff; 
 	color: #333; 
 	padding-top: 1cm;
-	padding-left: 2cm;
-	padding-right: 2cm;
+	padding-left: .5cm;
+	padding-right: .5cm;
 	}
 
 body, p, ol, ul, td {
@@ -154,4 +154,8 @@ warning {
 	color: green;
 	font-weight: bold;
 	font-style: italic;
+}
+
+div.left_indent {
+	margin-left: 1cm;
 }

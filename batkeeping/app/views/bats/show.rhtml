@@ -1,6 +1,6 @@
 <h1>Dossier on <%=h @bat.band %></h1>
 
-<blockquote>
+<div class="left_indent">
 
 <p>
 <b>Cage: </b>
@@ -59,11 +59,11 @@
 
 <%= render :partial => 'bats/display_bat_notes' %>
 
-</blockquote>
+</div>
 
 <% if @bat.medical_problems.current.length > 0 %>
 <h3>Current Medical Problems:</h3>
-<blockquote>
+<div class="left_indent">
 <table>
 <th>Medical Problem</th>
 <th>User</th>
@@ -76,13 +76,13 @@
     <%= render :partial => 'medical_problems/medical_problem_for_bat', :locals => {:medical_problem => medical_problem} %>
   <% end %>  
 </table>
-</blockquote>
+</div>
 <% end %>
 
 <% if @bat.medical_problems.expired.length > 0 %>
 <% @list_all = true %>
 <h3>Past Medical Problems:</h3>
-<blockquote>
+<div class="left_indent">
 <table>
 <th>Medical Problem</th>
 <th>User</th>
@@ -95,14 +95,14 @@
     <%= render :partial => 'medical_problems/medical_problem_for_bat', :locals => {:medical_problem => medical_problem} %>
   <% end %>
 </table>
-</blockquote>
+</div>
 <% end %>
 
 <%= render :partial => 'bats/display_weights', :locals => {:display_weights => @bat} %>
 
 <% if @cohs.length >0 %>
 <h3>Cage History:</h3>
-<blockquote>
+<div class="left_indent">
   <table border='1'>
   <th>Cage</th>
   <th>Date in</th>
@@ -123,7 +123,7 @@
     </tr>
   <% end %>
   </table>
-</blockquote>
+</div>
 <% end %>
 
 <hr />

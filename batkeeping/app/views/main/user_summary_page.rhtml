@@ -2,7 +2,7 @@
 
 <h2>Cages</h2>
 <p>
-<blockquote>
+<div class= "left_indent">
 <% if @mycages.length == 0 %> 
 You have no cages
 <% else %>
@@ -11,12 +11,12 @@ You have no cages
 <%= render :partial => 'cages/cage_list', :locals => {:cage_list => @mycages} %>
 </div>
 <% end %>
-</blockquote>
+</div>
 </p>
 
 <h2>Current Medical Problems</h2>
 <p>
-<blockquote>
+<div class="left_indent">
 <% if @mymedicalproblems.length == 0 %>
 You are responsible for no medical problems.
 <% else %>
@@ -37,7 +37,7 @@ You are responsible for no medical problems.
 <% end %>
 </table>
 <% end %>
-</blockquote>
+</div>
 </p>
 
 <div id='todays_tasks'>

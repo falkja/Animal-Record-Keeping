@@ -1,14 +1,16 @@
-<% if @bats.length == 0 %>
-
-<p>There are no current medical problems!</p>
-
-<% else %>
-
 <% if @list_all %>
 <h1>Listing All Medical Problems</h1>
 <% else %>
 <h1>Listing Current Medical Problems</h1>
 <% end %>
+
+<div class="left_indent">
+
+<% if @bats.length == 0 %>
+
+<p>There are no medical problems!</p>
+
+<% else %>
 
 <table>
 <th>Bat</th>
@@ -30,7 +32,7 @@
 </table>
 
 <% end %>
-
+</div>
 
 <%= link_to 'New Medical Problem', :action => 'new' %> | 
 <% if @list_all %>

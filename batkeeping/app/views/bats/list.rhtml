@@ -6,12 +6,12 @@ Listing current bats
 <% end %>
 </h1>
 
-
+<div class="left_indent">
 <%= render :partial => 'bats/bat_list', :locals => { 
 		:bat_list => @bats,
 		:show_leave_date_and_reason => @list_all,
 		:show_weigh_link => false } %>
-  
+</div>
 <br />
 
 <%= link_to 'New Bat', :action => 'new' %>

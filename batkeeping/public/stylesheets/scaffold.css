@@ -92,7 +92,7 @@ div.mainmenu {
 	left: 0cm;
 	right: 0cm;
 	padding-bottom: .1cm;
-	background-color: #eee;
+	/*background-color: #eee;*/
 	font-weight: bold;
 }
 
@@ -106,15 +106,6 @@ div.session {
 	top: 0cm;
 	right: 1cm;
 	text-align: right;
-}
-
-div.mainmenutasks {
-	padding-left: 1cm;
-}	
-
-div.mainmenulinks {
-	padding-left: 1cm;
-	padding-right: 2cm;	
 }
 
 /*The info that can be popped up on hover*/
@@ -140,7 +131,6 @@ a.info:hover span{ /*the span will display just on :hover state*/
     background-color:#ff0; color:#000;
     text-align: left;
 }
-
 
 div.scrollingdiv {
 	overflow-y : hidden;

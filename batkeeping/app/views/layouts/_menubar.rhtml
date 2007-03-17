@@ -1,22 +1,49 @@
-<div class="mainmenulinks">
-Categories - 
-
-<%= link_to_remote 'Main', :url => {:controller => 'main', :action => :menubar_task_display, :selected_menu => 'main'}, :update => 'mainmenutasks' %> | 
-<%= link_to_remote 'Bats', :url => {:controller => 'main', :action => :menubar_task_display, :selected_menu => 'bats'}, :update => 'mainmenutasks' %> |
-<%= link_to_remote 'Cages', :url => {:controller => 'main', :action => :menubar_task_display, :selected_menu => 'cages'}, :update => 'mainmenutasks' %> |
-<%#= link_to_remote 'Protocols', :url => {:controller => 'main', :action => :menubar_task_display, :selected_menu => 'protocols'}, :update => 'mainmenutasks' %>
-<%= link_to_remote 'Users', :url => {:controller => 'main', :action => :menubar_task_display, :selected_menu => 'users'}, :update => 'mainmenutasks' %> | 
-<%= link_to_remote 'Medical Problems', :url => {:controller => 'main', :action => :menubar_task_display, :selected_menu => 'medical_problems'}, :update => 'mainmenutasks' %> | 
-<%= link_to_remote 'Tasks', :url => {:controller => 'main', :action => :menubar_task_display, :selected_menu => 'tasks'}, :update => 'mainmenutasks' %> | 
-<%= link_to_remote 'Admin', :url => {:controller => 'main', :action => :menubar_task_display, :selected_menu => 'admin'}, :update => 'mainmenutasks' %>
-</div>
-
-<div class="mainmenutasks">
-  <div id="mainmenutasks">
-  <% if @type_selected %>
-  <%= render :partial => 'layouts/menubar_task_display', :locals => {:selected_menu => @type_selected} %>
-  <% else %>
-  -
-  <% end %>
-  </div>
-</div>
+<ul id="nav">
+<li><a href="">Main</a>
+	<ul>
+	<li><%= link_to 'My Page', :controller => 'main', :action => :user_summary_page, :id => User.find(session[:person].id) %></li>
+	<li><%= link_to 'Colony Status', :controller => :stats %></li>
+	<li><%= link_to 'Weekend Care', :controller => 'main', :action => :user_summary_page, :id => 3 %></li>
+  <li><b><a href="">Admin</a></b>
+	<ul>
+    <li><%= link_to 'Create Fake Data', :controller => 'admin', :action => :create_fake_data %></li>
+    <li><%= link_to 'List Rooms', :controller => 'rooms', :action => :list %></li>
+    <li><%= link_to 'New Room', :controller => 'rooms', :action => :new %></li>
+	</ul>
+  </li>
+	</ul>
+</li>
+<li><a href="">Bats</a>
+	<ul>
+	<li><%= link_to 'List Bats', :controller => 'bats', :action => :list %></li>
+	<li><%= link_to 'New Bat', :controller => 'bats', :action => :new %></li>
+	<li><%= link_to 'Move Bat', :controller => 'bats', :action => :choose_cage %></li>
+  <li><%= link_to 'Weigh Bat', :controller => 'bats', :action => :choose_bat_to_weigh %></li>
+	</ul>
+</li>
+<li><a href="">Cages</a>
+	<ul>
+	<li><%= link_to 'List Cages', :controller => 'cages', :action => :list %></li>
+	<li><%= link_to 'New Cage', :controller => 'cages', :action => :new %></li>
+	<li><%= link_to 'Weigh Cage', :controller => 'cages', :action => :choose_cage_to_weigh %></li>
+	</ul>
+</li>
+<li><a href="">Users</a>
+	<ul>
+	<li><%= link_to 'List Users', :controller => 'users', :action => :list %></li>
+	<li><%= link_to 'New User', :controller => 'users', :action => :new %></li>
+	</ul>
+</li>
+<li><a href="">Medical Problems</a>
+	<ul>
+	<li><%= link_to 'List Medical Problems', :controller => 'medical_problems', :action => :list %></li>
+	<li><%= link_to 'New Medical Problem', :controller => 'medical_problems', :action => :new %></li>
+	</ul>
+</li>
+<li><a href="">Tasks</a>
+	<ul>
+	<li><%= link_to 'List Tasks', :controller => 'tasks', :action => :list %></li>
+	<li><%= link_to 'New Task', :controller => 'tasks', :action => :choose_new_task %></li>
+	</ul>
+</li>
+</ul>

@@ -89,8 +89,4 @@ class MainController < ApplicationController
 	  @my_medical_tasks_not_today = @user.tasks.medical_tasks_not_today
 	  render :partial => 'other_tasks'
   end
-  
-  def menubar_task_display
-    render :partial => 'layouts/menubar_task_display', :locals => {:selected_menu => params[:selected_menu]}
-  end
 end

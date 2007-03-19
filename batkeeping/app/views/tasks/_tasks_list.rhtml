@@ -42,10 +42,17 @@ No tasks.
 		%>]
 		</p>
 		<% if tasks[0].internal_description == 'feed' %>
-			<% if task.cage.fed_every_day? == false && task.cage.bats.length > 0 %>
+			<% if tasks[0].cage.fed_every_day? == false && task.cage.bats.length > 0 %>
 				<p><warning>Warning: this cage is not fed every day of the week</warning></p>
 			<% end %>
 		<% end %>
+		
+		<% if tasks[0].internal_description == 'weigh' %>
+			<% if tasks[0].cage.weighed_enough? == false && task.cage.bats.length > 0 %>
+				<p><warning>Warning: this cage is not weighed enough</warning></p>
+			<% end %>
+		<% end %>
+		
 	<% end %>
 <% end %>
 

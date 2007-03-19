@@ -3,7 +3,7 @@
 #nav {
 	list-style: none;
 	margin: 0;
-	padding: 0;
+	padding: 8;
 }
 
 #nav + *{
@@ -24,7 +24,7 @@
 }
 #nav li { /* Appearance settings (eye candy) */
 	position: relative;
-	background: #E7E7E7;
+	background: #e1e1e1;
 /*	background: url(trans/white80.png);*/
 	color: #00F;
 	border: solid 1px #AAA;
@@ -48,7 +48,7 @@
 	padding: 0 0.5em;
 	line-height: 1.6em;
 	background: transparent;
-	color: inherit;
+	color: black;
 	overflow: hidden;
 }
 #nav li li a {
@@ -82,7 +82,7 @@
 #nav li:hover {
 /*	border-style: outset;*/
 /*	background: #D7D7D7;*/
-	background: #1AD;
+	background: #eca;
 	color: white;
 }
 #nav > li ul {

@@ -84,8 +84,20 @@ class Cage < ActiveRecord::Base
     end
     return false
   end
-    
-  def fed_every_day?    
+	
+	def weighed_enough?
+		if self.tasks.weighing_tasks.length >= 2
+      return true
+    elsif self.tasks.weighing_tasks.length == 0
+			return false
+		elsif self.tasks.weighing_tasks[0].repeat_code == 0
+			return true
+		else
+			return false
+		end
+	end
+	
+	def fed_every_day?    
     if self.tasks.feeding_tasks.length < 7
       return false
     end

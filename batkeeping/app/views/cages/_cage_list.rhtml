@@ -48,10 +48,10 @@
 	</td>
 	<% weighing = cage.tasks.weighing_tasks.length %>
 	<td>
-		<% if weighing < 2 %>
-			<warning><%= weighing %></warning>
-		<% else %>
+		<% if cage.weighed_enough? %>
 			<%= weighing %>
+		<% else %>
+			<warning><%= weighing %></warning>
 		<% end %>
 	</td>
 	<% if @list_all %>

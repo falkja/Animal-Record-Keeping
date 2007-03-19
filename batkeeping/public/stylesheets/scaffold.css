@@ -102,9 +102,9 @@ div.mainmenu a {
 
 /* the log in name is shown here */
 div.session {
-	position:fixed;
+	#position:fixed;
 	top: 0cm;
-	right: 1cm;
+	padding-right: 1cm;
 	text-align: right;
 }
 

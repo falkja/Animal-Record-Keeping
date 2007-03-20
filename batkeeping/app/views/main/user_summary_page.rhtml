@@ -42,18 +42,18 @@ You are responsible for no medical problems.
 
 <div id='todays_tasks'>
   <%= render :partial => 'tasks/show_tasks', :locals => {:general_tasks => @my_general_tasks_today, :weighing_tasks => @my_weighing_tasks_today,
-                :feeding_tasks => @my_feeding_tasks_today, :medical_tasks => @my_medical_tasks_today, :div_id => 'todays_tasks', :source => 'user_summary',
+                :feeding_tasks => @my_feeding_tasks_today, :medical_tasks => @my_medical_tasks_today, :div_id => 'todays_tasks', :source => 'user_summary' + @weekend,
                 :feeding_cages => @feeding_cages, :cages => @cages, :medical_problems => @medical_problems, :single_cage_task_list => false} %>
 </div>
   
 <div id='other_tasks'>
   <%= render :partial => 'tasks/hide_tasks', :locals => {:general_tasks => @my_general_tasks_not_today, :weighing_tasks => @my_weighing_tasks_not_today,
-                :feeding_tasks => @my_feeding_tasks_not_today, :medical_tasks => @my_medical_tasks_not_today, :div_id => 'other_tasks', :source => 'user_summary',
+                :feeding_tasks => @my_feeding_tasks_not_today, :medical_tasks => @my_medical_tasks_not_today, :div_id => 'other_tasks', :source => 'user_summary' + @weekend,
                 :feeding_cages => @feeding_cages, :cages => @cages, :medical_problems => @medical_problems, :single_cage_task_list => false} %>
 </div>
 
 <div id='all_tasks'>
   <%= render :partial => 'tasks/hide_tasks', :locals => {:general_tasks => @my_general_tasks, :weighing_tasks => @my_weighing_tasks,
-                :feeding_tasks => @my_feeding_tasks, :medical_tasks => @my_medical_tasks, :div_id => 'all_tasks', :source => 'user_summary',
+                :feeding_tasks => @my_feeding_tasks, :medical_tasks => @my_medical_tasks, :div_id => 'all_tasks', :source => 'user_summary' + @weekend,
                 :feeding_cages => @feeding_cages, :cages => @cages, :medical_problems => @medical_problems, :single_cage_task_list => false} %>
 </div>

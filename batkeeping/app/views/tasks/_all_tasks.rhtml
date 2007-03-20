@@ -1,8 +1,5 @@
 <h3>Feeding Tasks</h3>
 <div class="left_indent">
-  <% if feeding_tasks.length == 0 %>
-  No feeding tasks.
-  <% else %>
   <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => feeding_tasks, :div_id => 'feeding_tasks' + count, 
                                                                 :single_cage_task_list => single_cage_task_list, :manage => true} %>
   <% if feeding_cages.length > 0 %>
@@ -14,7 +11,6 @@
   <% end %>
   </p>
   <% end %>
-  <% end %>
   
   <% if cages.length > 0 %>
   <p>
@@ -22,7 +18,7 @@
                   :feeding_tasks => feeding_tasks, :single_cage_task_list => single_cage_task_list, :source => source},
                   :update => 'add_feeding_task' + count %>
   Cage: <%= select_tag("id", options_from_collection_for_select(cages, "id", "name")) %>
-  <%= submit_tag "Add a feeding task" %>
+  <%= submit_tag "Add feeding task" %>
 </form>
 <div id = "add_feeding_task<%= count %>">
 </div>
@@ -32,28 +28,24 @@
 
 <h3>Cage Weighing Tasks</h3>
 <div class="left_indent">
-  <% if weighing_tasks.length == 0 %>
-  No cage weighing tasks.
-  <% else %>
   <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => weighing_tasks, :div_id => 'weighing_tasks' + count, 
                                                                 :single_cage_task_list => single_cage_task_list, :manage => true} %>
-  <% end %>
   <% if cages.length > 0 %>
   <p>
-  <% form_tag :controller => 'tasks', :action => 'form_to_new_weigh_cage_task' do %>
-  Cage: 
-  <%= select_tag("id", options_from_collection_for_select(cages, "id", "name")) %>
-  <%= submit_tag "Add a weighing task" %>
-  <% end %>
+  <%= form_remote_tag :url => {:controller => 'tasks', :action => 'remote_new_weigh_cage_task', :id => @cage, :div_id => 'weighing_tasks' + count, 
+                  :weighing_tasks => weighing_tasks, :single_cage_task_list => single_cage_task_list, :source => source},
+                  :update => 'add_weighing_task' + count %>
+  Cage: <%= select_tag("id", options_from_collection_for_select(cages, "id", "name")) %>
+  <%= submit_tag "Add weighing task" %>
+  </form>
+  <div id = "add_weighing_task<%= count %>">
+  </div>
   </p>
   <% end %>
 </div>
 
 <h3>Medical Tasks</h3>
 <div class="left_indent">
-  <% if medical_tasks.length == 0 %>
-  No medical tasks.
-  <% else %>
     <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => medical_tasks, :div_id => 'medical_tasks' + count, 
                                                                   :single_cage_task_list => single_cage_task_list, :manage => true} %>
     
@@ -62,20 +54,15 @@
     <% form_tag :controller => 'tasks', :action => 'new_medical_task' do %>
     Medical Problem: 
     <%= select_tag("id", options_from_collection_for_select(medical_problems, "id", "title")) %>
-    <%= submit_tag "Add a new treatment" %>
+    <%= submit_tag "Add new treatment" %>
     <% end %>
     </p>
     <% end %>
-  <% end %>
 </div>
 
 <h3>General Tasks</h3>
 <div class="left_indent">
-  <% if general_tasks.length == 0 %>
-  No general tasks.
-  <% else %>
   <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => general_tasks, :div_id => 'general_tasks' + count, 
                                                                 :single_cage_task_list => single_cage_task_list, :manage => true} %>
-  <% end %>
-  <p><%= button_to 'Add a general task', :controller => 'tasks', :action => 'new' %></p>
+  <p><%= button_to 'Add general task', :controller => 'tasks', :action => 'new' %></p>
 </div>

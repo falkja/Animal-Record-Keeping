@@ -28,10 +28,34 @@ class TasksController < ApplicationController
   end
   
   def hide_tasks
+    if params[:source].include? 'weekend'
+      @user = User.find('3')
+    else
+      @user = User.find(session[:person].id)
+    end
+    
     params[:medical_tasks] ? medical_tasks = Task.find(params[:medical_tasks]) : medical_tasks = Array.new
-    params[:weighing_tasks] ? weighing_tasks = Task.find(params[:weighing_tasks]) : weighing_tasks = Array.new
     params[:general_tasks] ? general_tasks = Task.find(params[:general_tasks]) : general_tasks = Array.new
-    params[:feeding_tasks] ? feeding_tasks = Task.find(params[:feeding_tasks]) : feeding_tasks = Array.new
+    
+    if (params[:source].include? 'user_summary') && (params[:div_id].include? 'todays_tasks')
+      weighing_tasks = @user.tasks.weighing_tasks_today
+      feeding_tasks = @user.tasks.feeding_tasks_today
+    elsif (params[:source].include? 'user_summary') && (params[:div_id].include? 'other_tasks')
+      weighing_tasks = @user.tasks.weighing_tasks_not_today
+      feeding_tasks = @user.tasks.feeding_tasks_not_today
+    elsif (params[:source].include? 'user_summary') && (params[:div_id].include? 'all_tasks')
+      weighing_tasks = @user.tasks.weighing_tasks
+      feeding_tasks = @user.tasks.feeding_tasks
+    elsif params[:source] == 'task_list' && (params[:div_id].include? 'todays_tasks')
+      weighing_tasks = Task.weighing_tasks_today
+      feeding_tasks = Task.feeding_tasks_today
+    elsif params[:source] == 'task_list' && (params[:div_id].include? 'other_tasks')
+      weighing_tasks = Task.weighing_tasks_not_today
+      feeding_tasks = Task.feeding_tasks_not_today
+    elsif params[:source] == 'task_list' && (params[:div_id].include? 'all_tasks')
+      weighing_tasks = Task.weighing_tasks
+      feeding_tasks = Task.feeding_tasks
+    end
     
 		params[:feeding_cages] ? feeding_cages = Cage.find(params[:feeding_cages]) : feeding_cages = Array.new
 		params[:medical_problems] ? medical_problems = MedicalProblem.find(params[:medical_problems]) : medical_problems = Array.new
@@ -39,14 +63,38 @@ class TasksController < ApplicationController
 		
 	  render :partial => 'hide_tasks', :locals => {:general_tasks => general_tasks, :weighing_tasks => weighing_tasks, :feeding_tasks => feeding_tasks,
 									:medical_tasks => medical_tasks, :div_id => params[:div_id], :feeding_cages => feeding_cages,
-									:cages => cages, :medical_problems => medical_problems, :single_cage_task_list => params[:single_cage_task_list]}
+									:cages => cages, :medical_problems => medical_problems, :single_cage_task_list => params[:single_cage_task_list], :source => params[:source]}
   end
   
   def show_tasks
+    if params[:source].include? 'weekend'
+      @user = User.find('3')
+    else
+      @user = User.find(session[:person].id)
+    end
+    
     params[:medical_tasks] ? medical_tasks = Task.find(params[:medical_tasks]) : medical_tasks = Array.new
-    params[:weighing_tasks] ? weighing_tasks = Task.find(params[:weighing_tasks]) : weighing_tasks = Array.new
     params[:general_tasks] ? general_tasks = Task.find(params[:general_tasks]) : general_tasks = Array.new
-    params[:feeding_tasks] ? feeding_tasks = Task.find(params[:feeding_tasks]) : feeding_tasks = Array.new
+    
+    if (params[:source].include? 'user_summary') && (params[:div_id].include? 'todays_tasks')
+      weighing_tasks = @user.tasks.weighing_tasks_today
+      feeding_tasks = @user.tasks.feeding_tasks_today
+    elsif (params[:source].include? 'user_summary') && (params[:div_id].include? 'other_tasks')
+      weighing_tasks = @user.tasks.weighing_tasks_not_today
+      feeding_tasks = @user.tasks.feeding_tasks_not_today
+    elsif (params[:source].include? 'user_summary') && (params[:div_id].include? 'all_tasks')
+      weighing_tasks = @user.tasks.weighing_tasks
+      feeding_tasks = @user.tasks.feeding_tasks
+    elsif params[:source] == 'task_list' && (params[:div_id].include? 'todays_tasks')
+      weighing_tasks = Task.weighing_tasks_today
+      feeding_tasks = Task.feeding_tasks_today
+    elsif params[:source] == 'task_list' && (params[:div_id].include? 'other_tasks')
+      weighing_tasks = Task.weighing_tasks_not_today
+      feeding_tasks = Task.feeding_tasks_not_today
+    elsif params[:source] == 'task_list' && (params[:div_id].include? 'all_tasks')
+      weighing_tasks = Task.weighing_tasks
+      feeding_tasks = Task.feeding_tasks
+    end
     
 		params[:feeding_cages] ? feeding_cages = Cage.find(params[:feeding_cages]) : feeding_cages = Array.new
 		params[:medical_problems] ? medical_problems = MedicalProblem.find(params[:medical_problems]) : medical_problems = Array.new
@@ -54,7 +102,7 @@ class TasksController < ApplicationController
 		
 	  render :partial => 'show_tasks', :locals => {:general_tasks => general_tasks, :weighing_tasks => weighing_tasks, :feeding_tasks => feeding_tasks,
 									:medical_tasks => medical_tasks, :div_id => params[:div_id], :feeding_cages => feeding_cages,
-									:cages => cages, :medical_problems => medical_problems, :single_cage_task_list => params[:single_cage_task_list]}
+									:cages => cages, :medical_problems => medical_problems, :single_cage_task_list => params[:single_cage_task_list], :source => params[:source]}
   end
 
   def show
@@ -75,6 +123,14 @@ class TasksController < ApplicationController
   def form_to_new_weigh_cage_task
     @cage = Cage.find(params[:id])
     redirect_to :action => 'new_weigh_cage_task', :id => @cage
+  end
+
+  def remote_new_weigh_cage_task
+    @cage = Cage.find(params[:id])
+    @users = User.current
+    
+    render :partial => 'remote_new_weigh_cage_task', :locals => {:cage => @cage, :div_id => params[:div_id], :source => params[:source], 
+                                                                                            :single_cage_task_list => params[:single_cage_task_list]}
   end
 
   def new_weigh_cage_task
@@ -101,22 +157,45 @@ class TasksController < ApplicationController
       @task.jitter = -1
       @task.date_started = Time.now
       @task.save
-	if @users.include?(User.find(1)) && ((day == "1") || (day == "7") || (day == "0"))  #General Animal Care can't do tasks on weekend - add to weekend/holiday care
-		@task.users << User.find(3)
-		@task.users << @users
-		@task.users.uniq
-	elsif @users.include?(User.find(3)) && ((day == "2") || (day == "3") || (day == "4") || (day == "5") || (day == "6") || (day == "0")) #Weekend Care can't do tasks on weekdays - add to general animal care
-		@task.users << User.find(1)
-		@task.users << @users
-		@task.users.uniq
-	else
-		@task.users = @users
-	end
-    end    
-      
-    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => @cage.tasks.weighing_tasks, :div_id => 'weighing_tasks', 
-                                      :single_cage_task_list => true, :manage => false}
+      if @users.include?(User.find(1)) && ((day == "1") || (day == "7") || (day == "0"))  #General Animal Care can't do tasks on weekend - add to weekend/holiday care
+        @task.users << User.find(3)
+        @task.users << @users
+        @task.users.uniq
+      elsif @users.include?(User.find(3)) && ((day == "2") || (day == "3") || (day == "4") || (day == "5") || (day == "6") || (day == "0")) #Weekend Care can't do tasks on weekdays - add to general animal care
+        @task.users << User.find(1)
+        @task.users << @users
+        @task.users.uniq
+      else
+        @task.users = @users
+      end
+    end
+    
+    if params[:source].include? 'weekend'
+      @user = User.find('3')
+    else
+      @user = User.find(session[:person].id)
+    end
+    
+    if (params[:source].include? 'user_summary') && (params[:div_id].include? 'todays_tasks')
+      weighing_tasks = @user.tasks.weighing_tasks_today
+    elsif (params[:source].include? 'user_summary') && (params[:div_id].include? 'other_tasks')
+      weighing_tasks = @user.tasks.weighing_tasks_not_today
+    elsif (params[:source].include? 'user_summary') && (params[:div_id].include? 'all_tasks')
+      weighing_tasks = @user.tasks.weighing_tasks
+    elsif params[:source] == 'show_cage'
+      weighing_tasks = @cage.tasks.weighing_tasks
+    elsif params[:source] == 'task_list' && (params[:div_id].include? 'todays_tasks')
+      weighing_tasks = Task.weighing_tasks_today
+    elsif params[:source] == 'task_list' && (params[:div_id].include? 'other_tasks')
+      weighing_tasks = Task.weighing_tasks_not_today
+    elsif params[:source] == 'task_list' && (params[:div_id].include? 'all_tasks')
+      weighing_tasks = Task.weighing_tasks
+    end
+    
+    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => weighing_tasks, 
+                                      :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
   end
+
 
   #allows editing the food amount and dishes for multiple feeding tasks
   def form_to_edit_multiple_feeding_tasks
@@ -161,13 +240,8 @@ class TasksController < ApplicationController
   def remote_new_feed_cage_task
     @cage = Cage.find(params[:id])
     @users = User.current
-    if params[:source] == 'user_summary'
-      feeding_tasks = @cage.user.tasks.feeding_tasks_today
-    elsif params[:source] == 'show_cage'
-      feeding_tasks = @cage.tasks.feeding_tasks
-    end
     
-    render :partial => 'remote_new_feed_cage_task', :locals => {:cage => @cage, :div_id => params[:div_id], :source => params[:source], :feeding_tasks => feeding_tasks, :single_cage_task_list => params[:single_cage_task_list]}
+    render :partial => 'remote_new_feed_cage_task', :locals => {:cage => @cage, :div_id => params[:div_id], :source => params[:source], :single_cage_task_list => params[:single_cage_task_list]}
   end
 
   def create_feed_cage_task #called from new_feed_cage_task page
@@ -202,19 +276,29 @@ class TasksController < ApplicationController
         @task.users.uniq
       else
       @task.users = @users
-	end
+      end
     end
 
-    if params[:source] == 'user_summary' && (params[:div_id].include? 'todays_tasks')
-      feeding_tasks = @cage.user.tasks.feeding_tasks_today
-    elsif params[:source] == 'user_summary' && (params[:div_id].include? 'other_tasks')
-      feeding_tasks = @cage.user.tasks.feeding_tasks_not_today
+    if params[:source].include? 'weekend'
+      @user = User.find('3')
+    else
+      @user = User.find(session[:person].id)
+    end
+
+    if (params[:source].include? 'user_summary') && (params[:div_id].include? 'todays_tasks')
+      feeding_tasks = @user.tasks.feeding_tasks_today
+    elsif (params[:source].include? 'user_summary') && (params[:div_id].include? 'other_tasks')
+      feeding_tasks = @user.tasks.feeding_tasks_not_today
+    elsif (params[:source].include? 'user_summary') && (params[:div_id].include? 'all_tasks')
+      feeding_tasks = @user.tasks.feeding_tasks
     elsif params[:source] == 'show_cage'
       feeding_tasks = @cage.tasks.feeding_tasks
     elsif params[:source] == 'task_list' && (params[:div_id].include? 'todays_tasks')
       feeding_tasks = Task.feeding_tasks_today
     elsif params[:source] == 'task_list' && (params[:div_id].include? 'other_tasks')
       feeding_tasks = Task.feeding_tasks_not_today
+    elsif params[:source] == 'task_list' && (params[:div_id].include? 'all_tasks')
+      feeding_tasks = Task.feeding_tasks
     end
 	#feeding_tasks.sort_by{|task| [task.repeat_code]}
 

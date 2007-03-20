@@ -17,11 +17,14 @@ class TasksController < ApplicationController
 	  @weighing_tasks_not_today = Task.weighing_tasks_not_today
 	  @feeding_tasks_not_today = Task.feeding_tasks_not_today
 	  @medical_tasks_not_today = Task.medical_tasks_not_today
+    @general_tasks = Task.general_tasks
+    @weighing_tasks = Task.weighing_tasks
+    @feeding_tasks = Task.feeding_tasks
+    @medical_tasks = Task.medical_tasks
     
     @feeding_cages = Cage.has_feeding_tasks
     @cages = Cage.has_bats
     @medical_problems = MedicalProblem.current
-    @single_cage_task_list = false
   end
   
   def hide_tasks

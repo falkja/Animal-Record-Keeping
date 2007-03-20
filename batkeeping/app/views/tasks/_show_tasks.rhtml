@@ -5,8 +5,10 @@
         :update => div_id %>]
 <% if div_id == 'todays_tasks' %>
 Today's Tasks
-<% else %>
+<% elsif div_id == 'other_tasks' %>
 Tasks Not Due Today
+<% elsif div_id == 'all_tasks' %>
+All Tasks
 <% end %>
 </h2>
 

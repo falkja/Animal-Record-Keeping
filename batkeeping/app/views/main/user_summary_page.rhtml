@@ -17,7 +17,7 @@ You have no cages
 <h2>Current Medical Problems</h2>
 <p>
 <div class="left_indent">
-<% if @mymedicalproblems.length == 0 %>
+<% if @medical_problems.length == 0 %>
 You are responsible for no medical problems.
 <% else %>
 <table>
@@ -31,7 +31,7 @@ You are responsible for no medical problems.
 <th></th><th></th>
 <th>Treatment</th>
 <% @show_bat = true %>
-<% for problem in @mymedicalproblems %>
+<% for problem in @medical_problems %>
 <% @bat = problem.bat %>
 <%= render :partial => 'medical_problems/medical_problem_for_bat', :locals => {:medical_problem => problem} %>
 <% end %>

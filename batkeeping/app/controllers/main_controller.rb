@@ -33,64 +33,34 @@ class MainController < ApplicationController
   if session[:person] != nil
 	  @user = User.find(params[:id])
 	  @mycages = @user.cages.active
-	  @mymedicalproblems = @user.medical_problems.current
-	  
+    if params[:id] == '3' #weekend care gets all the medical problems and medical tasks
+      @medical_problems = MedicalProblem.current
+      @my_medical_tasks_today = Task.medical_tasks_today
+      @my_medical_tasks_not_today = Task.medical_tasks_not_today
+      @my_medical_tasks = Task.medical_tasks
+    else
+      @medical_problems = @user.medical_problems.current
+      @my_medical_tasks_today = @user.tasks.medical_tasks_today
+      @my_medical_tasks_not_today = @user.tasks.medical_tasks_not_today
+      @my_medical_tasks = @user.tasks.medical_tasks
+	  end
+
 	  @my_general_tasks_today = @user.tasks.general_tasks_today
 	  @my_weighing_tasks_today = @user.tasks.weighing_tasks_today
 	  @my_feeding_tasks_today = @user.tasks.feeding_tasks_today
-	  @my_medical_tasks_today = @user.tasks.medical_tasks_today
 	
 	  @my_general_tasks_not_today = @user.tasks.general_tasks_not_today
 	  @my_weighing_tasks_not_today = @user.tasks.weighing_tasks_not_today
 	  @my_feeding_tasks_not_today = @user.tasks.feeding_tasks_not_today
-	  @my_medical_tasks_not_today = @user.tasks.medical_tasks_not_today
     
     @my_general_tasks = @user.tasks.general_tasks
 	  @my_weighing_tasks = @user.tasks.weighing_tasks
 	  @my_feeding_tasks = @user.tasks.feeding_tasks
-	  @my_medical_tasks = @user.tasks.medical_tasks
     
     @feeding_cages = @user.cages.has_feeding_tasks
     @cages = @mycages
-    @medical_problems = @mymedicalproblems
 	else
 	  redirect_to :action => 'index'
 	end
-  end
-  
-  def hide_todays_tasks
-	  @user = User.find(params[:id])
-	  @my_general_tasks_today = @user.tasks.general_tasks_today
-	  @my_weighing_tasks_today = @user.tasks.weighing_tasks_today
-	  @my_feeding_tasks_today = @user.tasks.feeding_tasks_today
-	  @my_medical_tasks_today = @user.tasks.medical_tasks_today
-	  render :partial => 'hide_todays_tasks'
-  end
-  
-  def todays_tasks
-	  @user = User.find(params[:id])
-	  @my_general_tasks_today = @user.tasks.general_tasks_today
-	  @my_weighing_tasks_today = @user.tasks.weighing_tasks_today
-	  @my_feeding_tasks_today = @user.tasks.feeding_tasks_today
-	  @my_medical_tasks_today = @user.tasks.medical_tasks_today
-	  render :partial => 'todays_tasks'
-  end
-  
-  def hide_other_tasks
-	  @user = User.find(params[:id])
-	  @my_general_tasks_not_today = @user.tasks.general_tasks_not_today
-	  @my_weighing_tasks_not_today = @user.tasks.weighing_tasks_not_today
-	  @my_feeding_tasks_not_today = @user.tasks.feeding_tasks_not_today
-	  @my_medical_tasks_not_today = @user.tasks.medical_tasks_not_today
-	  render :partial => 'hide_other_tasks'
-  end
-  
-  def other_tasks
-	  @user = User.find(params[:id])
-	  @my_general_tasks_not_today = @user.tasks.general_tasks_not_today
-	  @my_weighing_tasks_not_today = @user.tasks.weighing_tasks_not_today
-	  @my_feeding_tasks_not_today = @user.tasks.feeding_tasks_not_today
-	  @my_medical_tasks_not_today = @user.tasks.medical_tasks_not_today
-	  render :partial => 'other_tasks'
   end
 end

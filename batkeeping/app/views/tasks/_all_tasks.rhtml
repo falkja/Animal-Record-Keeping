@@ -5,6 +5,7 @@
   <% else %>
   <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => feeding_tasks, :div_id => 'feeding_tasks' + count, 
                                                                 :single_cage_task_list => single_cage_task_list, :manage => true} %>
+  <% if feeding_cages.length > 0 %>
   <p>
   <% form_tag :controller => 'tasks', :action => 'form_to_edit_multiple_feeding_tasks', :id => @cage do %>
   Cage: 
@@ -13,8 +14,10 @@
   <% end %>
   </p>
   <% end %>
-  <p>
+  <% end %>
   
+  <% if cages.length > 0 %>
+  <p>
   <%= form_remote_tag :url => {:controller => 'tasks', :action => 'remote_new_feed_cage_task', :id => @cage, :div_id => 'feeding_tasks' + count, 
                   :feeding_tasks => feeding_tasks, :single_cage_task_list => single_cage_task_list, :source => source},
                   :update => 'add_feeding_task' + count %>
@@ -23,10 +26,8 @@
 </form>
 <div id = "add_feeding_task<%= count %>">
 </div>
-  
-  
-  
   </p>
+  <% end %>
 </div>
 
 <h3>Cage Weighing Tasks</h3>
@@ -37,6 +38,7 @@
   <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => weighing_tasks, :div_id => 'weighing_tasks' + count, 
                                                                 :single_cage_task_list => single_cage_task_list, :manage => true} %>
   <% end %>
+  <% if cages.length > 0 %>
   <p>
   <% form_tag :controller => 'tasks', :action => 'form_to_new_weigh_cage_task' do %>
   Cage: 
@@ -44,6 +46,7 @@
   <%= submit_tag "Add a weighing task" %>
   <% end %>
   </p>
+  <% end %>
 </div>
 
 <h3>Medical Tasks</h3>
@@ -53,6 +56,8 @@
   <% else %>
     <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => medical_tasks, :div_id => 'medical_tasks' + count, 
                                                                   :single_cage_task_list => single_cage_task_list, :manage => true} %>
+    
+    <% if medical_problems.length > 0 %>
     <p>
     <% form_tag :controller => 'tasks', :action => 'new_medical_task' do %>
     Medical Problem: 
@@ -60,6 +65,7 @@
     <%= submit_tag "Add a new treatment" %>
     <% end %>
     </p>
+    <% end %>
   <% end %>
 </div>
 

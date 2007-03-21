@@ -1,7 +1,7 @@
 -- MySQL Administrator dump 1.4
 --
 -- ------------------------------------------------------
--- Server version	5.2.3-falcon-alpha-community-nt
+-- Server version	5.0.27-community-nt
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -27,12 +27,12 @@ USE batkeeping;
 
 DROP TABLE IF EXISTS `bat_notes`;
 CREATE TABLE `bat_notes` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `bat_id` int(10) unsigned NOT NULL,
   `date` datetime NOT NULL,
   `text` text NOT NULL,
   `user_id` int(10) unsigned NOT NULL COMMENT 'signature',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -49,19 +49,19 @@ CREATE TABLE `bat_notes` (
 
 DROP TABLE IF EXISTS `bats`;
 CREATE TABLE `bats` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `cage_id` int(10) unsigned DEFAULT NULL,
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `cage_id` int(10) unsigned default NULL,
   `collection_date` datetime NOT NULL,
   `collection_age` varchar(45) NOT NULL COMMENT 'juvenile/adult',
   `collection_place` varchar(100) NOT NULL,
   `species` varchar(45) NOT NULL,
   `gender` varchar(1) NOT NULL COMMENT 'm/f',
-  `leave_date` datetime DEFAULT NULL COMMENT 'y/n - in lab or not',
+  `leave_date` datetime default NULL COMMENT 'y/n - in lab or not',
   `leave_reason` text COMMENT 'death/exported',
-  `band` varchar(10) DEFAULT NULL,
-  `user_id` int(10) unsigned DEFAULT NULL,
+  `band` varchar(10) default NULL,
+  `user_id` int(10) unsigned default NULL,
   `note` text,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -85,13 +85,13 @@ INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collectio
 
 DROP TABLE IF EXISTS `cage_in_histories`;
 CREATE TABLE `cage_in_histories` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `bat_id` int(10) unsigned NOT NULL,
   `cage_id` int(10) unsigned NOT NULL,
-  `date` datetime DEFAULT NULL,
-  `user_id` int(10) unsigned DEFAULT NULL COMMENT 'signature of user who did the change',
+  `date` datetime default NULL,
+  `user_id` int(10) unsigned default NULL COMMENT 'signature of user who did the change',
   `note` text,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -321,14 +321,14 @@ INSERT INTO `cage_in_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note`
 
 DROP TABLE IF EXISTS `cage_out_histories`;
 CREATE TABLE `cage_out_histories` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `bat_id` int(10) unsigned NOT NULL,
   `cage_id` int(10) unsigned NOT NULL,
-  `date` datetime DEFAULT NULL,
-  `user_id` int(10) unsigned DEFAULT NULL COMMENT 'sig of user who did the change',
-  `note` text CHARACTER SET utf8,
+  `date` datetime default NULL,
+  `user_id` int(10) unsigned default NULL COMMENT 'sig of user who did the change',
+  `note` text character set utf8,
   `cage_in_history_id` int(10) unsigned NOT NULL COMMENT 'each cage_out belongs to a cage in event',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -470,13 +470,13 @@ INSERT INTO `cage_out_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note
 
 DROP TABLE IF EXISTS `cages`;
 CREATE TABLE `cages` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `name` varchar(45) NOT NULL,
   `date_created` datetime NOT NULL,
-  `date_destroyed` datetime DEFAULT NULL,
-  `user_id` int(10) unsigned DEFAULT NULL COMMENT 'investigators user_id, can be nil',
+  `date_destroyed` datetime default NULL,
+  `user_id` int(10) unsigned default NULL COMMENT 'investigators user_id, can be nil',
   `room_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -502,12 +502,12 @@ INSERT INTO `cages` (`id`,`name`,`date_created`,`date_destroyed`,`user_id`,`room
 
 DROP TABLE IF EXISTS `medical_care_actions`;
 CREATE TABLE `medical_care_actions` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `proposed_treatment_id` int(10) unsigned NOT NULL,
   `date` datetime NOT NULL,
   `remarks` text NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -530,14 +530,14 @@ INSERT INTO `medical_care_actions` (`id`,`proposed_treatment_id`,`date`,`remarks
 
 DROP TABLE IF EXISTS `medical_problems`;
 CREATE TABLE `medical_problems` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `bat_id` int(10) unsigned NOT NULL,
   `date_opened` datetime NOT NULL,
   `description` text NOT NULL,
-  `user_id` int(10) unsigned DEFAULT NULL,
-  `date_closed` datetime DEFAULT NULL,
+  `user_id` int(10) unsigned default NULL,
+  `date_closed` datetime default NULL,
   `title` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -563,14 +563,14 @@ INSERT INTO `medical_problems` (`id`,`bat_id`,`date_opened`,`description`,`user_
 
 DROP TABLE IF EXISTS `proposed_treatments`;
 CREATE TABLE `proposed_treatments` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `medical_problem_id` int(10) unsigned NOT NULL,
   `date_started` datetime NOT NULL,
   `date_finished` datetime NOT NULL,
-  `date_closed` datetime DEFAULT NULL,
+  `date_closed` datetime default NULL,
   `treatment` text NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -620,12 +620,12 @@ INSERT INTO `proposed_treatments` (`id`,`medical_problem_id`,`date_started`,`dat
 
 DROP TABLE IF EXISTS `protocol_end_histories`;
 CREATE TABLE `protocol_end_histories` (
-  `id` int(10) unsigned NOT NULL DEFAULT '0',
+  `id` int(10) unsigned NOT NULL default '0',
   `bat_id` int(10) unsigned NOT NULL,
   `protocol_id` int(10) unsigned NOT NULL,
-  `date` datetime DEFAULT NULL,
-  `user_id` int(10) unsigned DEFAULT NULL,
-  `protocol_start_history_id` int(10) unsigned DEFAULT NULL
+  `date` datetime default NULL,
+  `user_id` int(10) unsigned default NULL,
+  `protocol_start_history_id` int(10) unsigned default NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -642,12 +642,12 @@ CREATE TABLE `protocol_end_histories` (
 
 DROP TABLE IF EXISTS `protocol_start_histories`;
 CREATE TABLE `protocol_start_histories` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `bat_id` int(10) unsigned NOT NULL,
   `protocol_id` int(10) unsigned NOT NULL,
-  `date` datetime DEFAULT NULL,
-  `user_id` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `date` datetime default NULL,
+  `user_id` int(10) unsigned default NULL,
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -664,13 +664,13 @@ CREATE TABLE `protocol_start_histories` (
 
 DROP TABLE IF EXISTS `protocols`;
 CREATE TABLE `protocols` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `number` varchar(45) NOT NULL,
   `text` text NOT NULL,
   `start_date` datetime NOT NULL,
-  `renewal_A_date` datetime DEFAULT NULL,
-  `renewal_B_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `renewal_A_date` datetime default NULL,
+  `renewal_B_date` datetime default NULL,
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -687,9 +687,9 @@ CREATE TABLE `protocols` (
 
 DROP TABLE IF EXISTS `rooms`;
 CREATE TABLE `rooms` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `name` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -710,13 +710,13 @@ INSERT INTO `rooms` (`id`,`name`) VALUES
 
 DROP TABLE IF EXISTS `task_histories`;
 CREATE TABLE `task_histories` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `task_id` int(10) unsigned NOT NULL,
   `date_done` datetime NOT NULL,
   `remarks` text NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
-  `fed` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `fed` int(10) unsigned default NULL,
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -736,7 +736,10 @@ INSERT INTO `task_histories` (`id`,`task_id`,`date_done`,`remarks`,`user_id`,`fe
  (9,411,'2007-03-12 18:15:40','',4,NULL),
  (10,411,'2007-03-12 18:21:50','',4,NULL),
  (11,412,'2007-03-13 11:54:39','',4,NULL),
- (12,449,'2007-03-13 12:01:17','',4,2);
+ (12,449,'2007-03-13 12:01:17','',4,2),
+ (13,432,'2007-03-20 23:11:00','',4,NULL),
+ (14,432,'2007-03-20 23:13:00','',4,NULL),
+ (15,433,'2007-03-20 23:32:00','',4,NULL);
 /*!40000 ALTER TABLE `task_histories` ENABLE KEYS */;
 
 
@@ -746,20 +749,20 @@ INSERT INTO `task_histories` (`id`,`task_id`,`date_done`,`remarks`,`user_id`,`fe
 
 DROP TABLE IF EXISTS `tasks`;
 CREATE TABLE `tasks` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `repeat_code` int(10) unsigned NOT NULL COMMENT '0 means daily 1 = sunday etc.',
-  `medical_problem_id` int(10) unsigned DEFAULT NULL,
-  `cage_id` int(10) unsigned DEFAULT NULL,
+  `medical_problem_id` int(10) unsigned default NULL,
+  `cage_id` int(10) unsigned default NULL,
   `title` text NOT NULL,
   `notes` text NOT NULL,
-  `internal_description` varchar(45) DEFAULT NULL,
-  `food` double DEFAULT NULL,
-  `dish_type` varchar(45) DEFAULT NULL,
-  `dish_num` int(10) unsigned DEFAULT NULL,
+  `internal_description` varchar(45) default NULL,
+  `food` double default NULL,
+  `dish_type` varchar(45) default NULL,
+  `dish_num` int(10) unsigned default NULL,
   `jitter` int(11) NOT NULL,
   `date_started` datetime NOT NULL,
-  `date_ended` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `date_ended` datetime default NULL,
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -841,7 +844,7 @@ DROP TABLE IF EXISTS `tasks_users`;
 CREATE TABLE `tasks_users` (
   `user_id` int(10) unsigned NOT NULL,
   `task_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`user_id`,`task_id`)
+  PRIMARY KEY  (`user_id`,`task_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -931,13 +934,13 @@ INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `name` varchar(100) NOT NULL,
   `initials` varchar(45) NOT NULL,
   `email` varchar(100) NOT NULL,
   `start_date` datetime NOT NULL,
-  `end_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `end_date` datetime default NULL,
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -960,13 +963,13 @@ INSERT INTO `users` (`id`,`name`,`initials`,`email`,`start_date`,`end_date`) VAL
 
 DROP TABLE IF EXISTS `weathers`;
 CREATE TABLE `weathers` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `log_date` datetime NOT NULL,
   `temperature` float NOT NULL,
   `humidity` float NOT NULL,
   `room` varchar(45) NOT NULL,
   `sig` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -983,14 +986,15 @@ CREATE TABLE `weathers` (
 
 DROP TABLE IF EXISTS `weights`;
 CREATE TABLE `weights` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `bat_id` int(10) unsigned NOT NULL,
   `date` datetime NOT NULL,
   `weight` float NOT NULL,
   `note` text NOT NULL,
   `after_eating` varchar(1) NOT NULL COMMENT 'y/n',
   `user_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  `task_history_id` int(10) unsigned default NULL,
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -998,86 +1002,89 @@ CREATE TABLE `weights` (
 --
 
 /*!40000 ALTER TABLE `weights` DISABLE KEYS */;
-INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user_id`) VALUES 
- (1,2,'2006-12-18 14:48:22',15,'NA','',1),
- (2,4,'2006-12-18 14:48:22',14.2,'none','',1),
- (3,5,'2006-12-18 14:48:22',13,'nada','',1),
- (4,6,'2006-12-18 14:48:22',12,'zilch','',1),
- (5,2,'2006-12-18 14:50:42',16,'','',1),
- (6,4,'2006-12-18 14:50:42',17,'','',1),
- (7,5,'2006-12-18 14:50:42',18,'','',1),
- (8,6,'2006-12-18 14:50:42',19,'','',1),
- (9,5,'2006-12-18 14:51:34',14,'','',1),
- (10,5,'2006-12-18 20:30:16',18,'','',2),
- (11,5,'2006-12-18 20:30:20',90,'','',2),
- (12,5,'2006-12-18 20:30:24',40,'','',2),
- (13,5,'2006-12-18 20:30:28',16,'','',2),
- (14,5,'2006-12-19 08:37:02',14,'','',1),
- (15,5,'2006-12-19 08:37:06',16,'','',1),
- (16,5,'2006-12-19 08:37:10',15.5,'','',1),
- (17,5,'2006-12-19 08:37:16',19.5,'','',1),
- (18,5,'2006-12-19 08:37:20',14.7,'','',1),
- (19,5,'2006-12-19 09:31:41',14,'','',1),
- (20,5,'2006-12-19 09:31:46',15.5,'','',1),
- (21,5,'2006-12-19 09:31:49',14,'','',1),
- (22,5,'2006-12-19 09:31:54',16,'','',1),
- (23,5,'2006-12-19 09:32:00',35,'','',1);
-INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user_id`) VALUES 
- (24,5,'2006-12-19 09:32:03',18,'','',1),
- (25,5,'2006-12-19 09:32:06',25,'','',1),
- (26,5,'2006-12-19 09:32:10',20,'','',1),
- (27,5,'2006-12-19 09:32:13',16,'','',1),
- (28,5,'2006-12-19 09:34:14',30,'','',1),
- (29,5,'2006-12-19 09:34:17',25,'','',1),
- (30,5,'2006-12-19 09:34:34',16,'','',1),
- (31,5,'2006-12-19 09:34:45',14,'','',1),
- (32,2,'2006-12-19 09:35:42',4,'','',1),
- (33,2,'2006-12-19 09:35:55',35,'','',1),
- (34,2,'2006-12-19 09:35:58',15,'','',1),
- (35,2,'2006-12-19 09:36:00',14,'','',1),
- (36,2,'2007-01-03 10:55:20',15,'24','',4),
- (37,4,'2007-01-03 11:01:58',14,'NA','',4),
- (38,6,'2007-01-03 11:05:22',14,'','',4),
- (39,6,'2007-01-03 11:05:47',15,'','',4),
- (40,6,'2007-01-03 11:07:42',15,'','',4),
- (41,6,'2007-01-03 11:07:51',16,'','',4),
- (42,6,'2007-01-03 11:08:44',13,'','',4),
- (43,2,'2007-01-03 11:09:30',19,'','',4),
- (44,3,'2007-01-03 11:10:53',14,'','',4),
- (45,3,'2007-01-03 11:17:57',14,'','',4),
- (46,3,'2007-01-03 14:08:42',5,'12','',4);
-INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user_id`) VALUES 
- (47,3,'2007-01-03 14:18:51',12,'','',4),
- (48,3,'2007-01-03 14:18:59',13,'','',4),
- (49,4,'2007-01-03 14:19:13',14,'','',4),
- (50,6,'2007-01-03 14:19:19',14,'','',4),
- (51,4,'2007-01-11 14:10:36',15,'','',4),
- (52,4,'2007-01-15 23:45:53',1,'','',4),
- (53,6,'2007-01-15 23:45:57',3,'','',4),
- (54,5,'2007-01-15 23:46:00',2,'','',4),
- (55,2,'2007-01-20 18:20:05',14,'','',4),
- (56,4,'2007-02-05 16:32:50',15,'','',4),
- (57,5,'2007-02-05 16:37:55',15,'','',4),
- (58,6,'2007-02-05 16:38:01',16,'','',4),
- (59,4,'2007-02-06 14:57:17',14,'','y',4),
- (60,2,'2007-02-06 14:57:49',12,'','y',4),
- (61,2,'2007-02-06 14:59:24',16,'','n',4),
- (62,5,'2007-02-06 15:16:01',17,'','n',4),
- (63,5,'2007-02-06 15:16:52',17,'','n',4),
- (64,5,'2007-02-06 15:17:12',18,'','n',4),
- (65,5,'2007-02-06 15:17:40',14,'','n',4),
- (66,3,'2007-02-06 15:19:06',12,'','n',4),
- (67,3,'2007-02-06 15:19:11',13,'','n',4),
- (68,3,'2007-02-06 15:20:00',14,'','n',4),
- (69,3,'2007-02-06 15:20:16',15,'','n',4);
-INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user_id`) VALUES 
- (70,3,'2007-02-06 15:21:00',12,'','n',4),
- (71,3,'2007-02-06 15:21:51',14,'','y',4),
- (72,4,'2007-02-06 15:22:37',13,'','y',4),
- (73,4,'2007-02-06 15:22:42',14,'','n',4),
- (74,4,'2007-02-06 15:51:42',14,'','n',4),
- (75,6,'2007-02-08 18:41:46',14,'','n',4),
- (76,3,'2007-02-13 17:01:00',15,'','n',4);
+INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user_id`,`task_history_id`) VALUES 
+ (1,2,'2006-12-18 14:48:22',15,'NA','',1,NULL),
+ (2,4,'2006-12-18 14:48:22',14.2,'none','',1,NULL),
+ (3,5,'2006-12-18 14:48:22',13,'nada','',1,NULL),
+ (4,6,'2006-12-18 14:48:22',12,'zilch','',1,NULL),
+ (5,2,'2006-12-18 14:50:42',16,'','',1,NULL),
+ (6,4,'2006-12-18 14:50:42',17,'','',1,NULL),
+ (7,5,'2006-12-18 14:50:42',18,'','',1,NULL),
+ (8,6,'2006-12-18 14:50:42',19,'','',1,NULL),
+ (9,5,'2006-12-18 14:51:34',14,'','',1,NULL),
+ (10,5,'2006-12-18 20:30:16',18,'','',2,NULL),
+ (11,5,'2006-12-18 20:30:20',90,'','',2,NULL),
+ (12,5,'2006-12-18 20:30:24',40,'','',2,NULL),
+ (13,5,'2006-12-18 20:30:28',16,'','',2,NULL),
+ (14,5,'2006-12-19 08:37:02',14,'','',1,NULL),
+ (15,5,'2006-12-19 08:37:06',16,'','',1,NULL),
+ (16,5,'2006-12-19 08:37:10',15.5,'','',1,NULL),
+ (17,5,'2006-12-19 08:37:16',19.5,'','',1,NULL),
+ (18,5,'2006-12-19 08:37:20',14.7,'','',1,NULL),
+ (19,5,'2006-12-19 09:31:41',14,'','',1,NULL),
+ (20,5,'2006-12-19 09:31:46',15.5,'','',1,NULL);
+INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user_id`,`task_history_id`) VALUES 
+ (21,5,'2006-12-19 09:31:49',14,'','',1,NULL),
+ (22,5,'2006-12-19 09:31:54',16,'','',1,NULL),
+ (23,5,'2006-12-19 09:32:00',35,'','',1,NULL),
+ (24,5,'2006-12-19 09:32:03',18,'','',1,NULL),
+ (25,5,'2006-12-19 09:32:06',25,'','',1,NULL),
+ (26,5,'2006-12-19 09:32:10',20,'','',1,NULL),
+ (27,5,'2006-12-19 09:32:13',16,'','',1,NULL),
+ (28,5,'2006-12-19 09:34:14',30,'','',1,NULL),
+ (29,5,'2006-12-19 09:34:17',25,'','',1,NULL),
+ (30,5,'2006-12-19 09:34:34',16,'','',1,NULL),
+ (31,5,'2006-12-19 09:34:45',14,'','',1,NULL),
+ (32,2,'2006-12-19 09:35:42',4,'','',1,NULL),
+ (33,2,'2006-12-19 09:35:55',35,'','',1,NULL),
+ (34,2,'2006-12-19 09:35:58',15,'','',1,NULL),
+ (35,2,'2006-12-19 09:36:00',14,'','',1,NULL),
+ (36,2,'2007-01-03 10:55:20',15,'24','',4,NULL),
+ (37,4,'2007-01-03 11:01:58',14,'NA','',4,NULL),
+ (38,6,'2007-01-03 11:05:22',14,'','',4,NULL),
+ (39,6,'2007-01-03 11:05:47',15,'','',4,NULL),
+ (40,6,'2007-01-03 11:07:42',15,'','',4,NULL);
+INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user_id`,`task_history_id`) VALUES 
+ (41,6,'2007-01-03 11:07:51',16,'','',4,NULL),
+ (42,6,'2007-01-03 11:08:44',13,'','',4,NULL),
+ (43,2,'2007-01-03 11:09:30',19,'','',4,NULL),
+ (44,3,'2007-01-03 11:10:53',14,'','',4,NULL),
+ (45,3,'2007-01-03 11:17:57',14,'','',4,NULL),
+ (46,3,'2007-01-03 14:08:42',5,'12','',4,NULL),
+ (47,3,'2007-01-03 14:18:51',12,'','',4,NULL),
+ (48,3,'2007-01-03 14:18:59',13,'','',4,NULL),
+ (49,4,'2007-01-03 14:19:13',14,'','',4,NULL),
+ (50,6,'2007-01-03 14:19:19',14,'','',4,NULL),
+ (51,4,'2007-01-11 14:10:36',15,'','',4,NULL),
+ (52,4,'2007-01-15 23:45:53',1,'','',4,NULL),
+ (53,6,'2007-01-15 23:45:57',3,'','',4,NULL),
+ (54,5,'2007-01-15 23:46:00',2,'','',4,NULL),
+ (55,2,'2007-01-20 18:20:05',14,'','',4,NULL),
+ (56,4,'2007-02-05 16:32:50',15,'','',4,NULL),
+ (57,5,'2007-02-05 16:37:55',15,'','',4,NULL),
+ (58,6,'2007-02-05 16:38:01',16,'','',4,NULL),
+ (59,4,'2007-02-06 14:57:17',14,'','y',4,NULL),
+ (60,2,'2007-02-06 14:57:49',12,'','y',4,NULL);
+INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user_id`,`task_history_id`) VALUES 
+ (61,2,'2007-02-06 14:59:24',16,'','n',4,NULL),
+ (62,5,'2007-02-06 15:16:01',17,'','n',4,NULL),
+ (63,5,'2007-02-06 15:16:52',17,'','n',4,NULL),
+ (64,5,'2007-02-06 15:17:12',18,'','n',4,NULL),
+ (65,5,'2007-02-06 15:17:40',14,'','n',4,NULL),
+ (66,3,'2007-02-06 15:19:06',12,'','n',4,NULL),
+ (67,3,'2007-02-06 15:19:11',13,'','n',4,NULL),
+ (68,3,'2007-02-06 15:20:00',14,'','n',4,NULL),
+ (69,3,'2007-02-06 15:20:16',15,'','n',4,NULL),
+ (70,3,'2007-02-06 15:21:00',12,'','n',4,NULL),
+ (71,3,'2007-02-06 15:21:51',14,'','y',4,NULL),
+ (72,4,'2007-02-06 15:22:37',13,'','y',4,NULL),
+ (73,4,'2007-02-06 15:22:42',14,'','n',4,NULL),
+ (74,4,'2007-02-06 15:51:42',14,'','n',4,NULL),
+ (75,6,'2007-02-08 18:41:46',14,'','n',4,NULL),
+ (76,3,'2007-02-13 17:01:00',15,'','n',4,NULL),
+ (77,2,'2007-03-20 23:13:13',13,'','n',4,NULL),
+ (78,2,'2007-03-20 23:13:51',16,'','y',4,NULL),
+ (79,2,'2007-03-20 23:32:00',14,'','n',4,15);
 /*!40000 ALTER TABLE `weights` ENABLE KEYS */;
 
 

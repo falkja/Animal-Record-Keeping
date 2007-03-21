@@ -14,6 +14,19 @@
 <p>Treatment<br />
 <%= @task.title %></p>
 
+<p><label for="bat_weight">Weight</label><br />
+<%= text_field 'bat', 'weight', :size=>2, :autocomplete => 'off' %> g
+</p>
+
+<p>
+<label for='checkbox_after_eating'>After Eating?</label><br />
+<% if @task.medical_problem.bat.cage.fed_today? == true %>
+<%= check_box 'checkbox', 'after_eating', :checked=> 'checked' %>
+<%else%>
+<%= check_box 'checkbox', 'after_eating' %>
+<% end %>
+</p>
+
 <p><label for="task_history_date_done">Date Treatment Given</label><br />
 <%= datetime_select 'task_history', 'date_done' %></p>
 

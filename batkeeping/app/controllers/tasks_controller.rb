@@ -202,10 +202,6 @@ class TasksController < ApplicationController
     @cage = Cage.find(params[:id])
     redirect_to :action => :edit_multiple_feeding_tasks, :id => @cage
   end
-
-  def edit_multiple_feeding_tasks
-    @cage = Cage.find(params[:id])
-  end
   
   def remote_edit_multiple_feeding_tasks
     @cage = Cage.find(params[:id])
@@ -386,6 +382,20 @@ class TasksController < ApplicationController
 		task_history.user = session[:person]
 		task_history.task = task
 		task_history.save
+		
+		weight = Weight.new
+		weight.bat = task.medical_problem.bat
+		weight.date = task_history.date_done
+		weight.user = session[:person]
+		weight.weight = params[:bat][:weight]
+    if params[:checkbox][:after_eating] == '1'
+      weight.after_eating = 'y'
+    else
+      weight.after_eating =  'n'
+    end
+		weight.save
+		task_history.weight = weight
+		
     redirect_to :controller => 'medical_problems', :action => 'list'
   end
   

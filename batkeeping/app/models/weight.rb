@@ -1,6 +1,7 @@
 class Weight < ActiveRecord::Base
-	belongs_to :bat;
-	belongs_to :user;
+	belongs_to :bat
+	belongs_to :user
+	belongs_to :task_history
 	
 	def self.recent
 		self.find(:first, :order => "date DESC")

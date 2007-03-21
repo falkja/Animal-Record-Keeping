@@ -49,11 +49,11 @@
         <% if task.done_by_schedule %>
           Done
         <% else %>
-          <%= link_to 'Do', :controller => 'tasks', :action => 'do_medical_task', :id => task %>
+          [<%= link_to 'Do', :controller => 'tasks', :action => 'do_medical_task', :id => task %>]
         <% end %>
       </td>
       <td>
-        <%= link_to 'End', {:controller => 'tasks', :action => 'destroy_medical_task', :id => task}, :confirm => 'Are you sure?', :method => :post %>
+        [<%= link_to 'End', {:controller => 'tasks', :action => 'destroy_medical_task', :id => task}, :confirm => 'Are you sure?', :method => :post %>]
       </td>
       </tr>
       <tr>

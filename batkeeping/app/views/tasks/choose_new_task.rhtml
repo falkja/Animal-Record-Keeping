@@ -4,7 +4,7 @@
 <tr>
 <td valign='top'><b>Feeding Task</b></td>
 <td>
-  <% form_tag :action => 'form_to_new_feed_cage_task', :id => @cage do %>
+  <% form_tag :action => 'manage_feeding_tasks', :id => @cage do %>
   <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
   <%= submit_tag "Add a feeding task" %>
   <% end %>

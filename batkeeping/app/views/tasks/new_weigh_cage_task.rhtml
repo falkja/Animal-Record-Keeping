@@ -1,26 +1,27 @@
-<h1>Add weighing task for <%= @cage.name %></h1>
+<h1>Manage weighing tasks for <%= @cage.name %></h1>
 
 <%= render :partial => 'tasks_common_info', :locals => {:task_type => 'Weighing', :tasks => @cage.tasks.weighing_tasks} %>
 
 <b>Add Weighing Tasks:</b>
 <div class="left_indent">
 <%= form_remote_tag(:update => "tasks_div",
-                       :url => { :controller => 'tasks', :action => 'create_weigh_cage_task', :id => @cage },
+                       :url => {:controller => 'tasks', :action => 'create_weigh_cage_task', :id => @cage, :source => 'show_cage',
+                       :single_cage_task_list => true, :div_id => 'tasks_div'},
                        :position => "replace" ) %>
 
-<p>
-<label for="weighed_by">Weighed by</label><br/>
+<table>
+<tr>
+<td><b>Weighed by</b></td>
+<td><b>On days</b></td>
+</tr>
+
+<tr>
+<td valign=top>
 <%= select_tag("users[]", options_from_collection_for_select(@users, "id", "name"), 
 :multiple => true) %>
-</p>
+</td>
 
-<p>
-*note: Any task that takes place on Saturday/Sunday and is assigned to General Animal Care will automatically be added to Weekend/Holiday Care and will appear on the <%= link_to 'weekend care page', :controller => 'main', :action => :user_summary_page, :id => 3 %>.
-Any task that takes place during Monday-Friday and is assigned to the Weekend/Holiday Care will automatically be added to General Animal Care.
-</p>
-
-<p>
-<label for="on_days">On days</label><br/>
+<td valign=top>
 <%= select_tag("days[]", 
 options_for_select([
 ["Daily", 0],
@@ -33,9 +34,21 @@ options_for_select([
 ["Every Sunday", 1]
 ]), 
 :multiple => true) %>
+</td>
+
+<td valign=top><%= submit_tag "Add task(s) for " + @cage.name %></td>
+
+</tr>
+</table>
+
+<p>
+<em>* Note:</em><br />
+<ol>
+<li>Weekend tasks assigned to <b>General Animal Care</b> are automatically added to <b>Weekend/Holiday Care</b>.</li>
+<li>Weekday tasks assigned to <b>Weekend/Holiday Care</b> are automatically added to <b>General Animal Care.</b></li>
+</ol>
 </p>
 
-<%= submit_tag "Add task(s) for " + @cage.name %>
 </form>
 </div>
 <%= button_to 'Done', :controller => 'cages', :action => 'show', :id => @cage %>

@@ -8,15 +8,30 @@
 	<% end %>
 <% end %>
 
-<p><label for="food">Food amount</label><br/>
-<%= text_field 'task', 'food', :size => 1, :autocomplete => 'off', :value => suggested_amount %> g</p>
+<table>
+
+<tr>
+<td><b>Food</b></td>
+<td><b>Dish Type</b></td>
+<td><b>Number of dishes</b></td>
+</tr>
+
+<tr>
+
+<td><%= text_field 'task', 'food', :size => 1, :autocomplete => 'off', :value => suggested_amount %> g</td>
+
+<td><%= select_tag("task[dish_type]", options_for_select([["Small","Small"],["Medium","Medium"], ["Long","Long"],["Metal tray","Metal tray"]])) %></td>
+
+<td><%= text_field 'task', 'dish_num', :size => 1, :autocomplete => 'off' %></td>
+
+<td><%= submit_tag "Edit all feeding tasks for " + @cage.name %></td>
+
+</tr>
+
+</table>
 
 <% if @average != nil %>
+<p>
 <em>Suggested amount (E. fuscus): <%=h suggested_amount %> g (<%=h suggested_amount/@cage.bats.length %> g per bat) based on average weight of bats in cage.</em>
+</p>
 <% end %>
-
-<p><label for="dish_type">Dish Type</label><br/>
-<%= select_tag("task[dish_type]", options_for_select([["Small","Small"],["Medium","Medium"], ["Long","Long"],["Metal tray","Metal tray"]])) %></p>
-
-<p><label for="dish_num">Number of dishes</label><br/>
-<%= text_field 'task', 'dish_num', :size => 1, :autocomplete => 'off' %></p>

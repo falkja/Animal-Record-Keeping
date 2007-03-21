@@ -2,20 +2,24 @@
                        :url => { :controller => 'tasks', :action => 'create_feed_cage_task', 
 					   :id => cage, :div_id => div_id, :source => source, :single_cage_task_list => single_cage_task_list}) %>
 <table>
+<% if !single_cage_task_list %>
 <th>Cage</th>
+<% end %>
 <th>Fed by*</th>
 <th>On days</th>
 <th COLSPAN=3>Food</th>
 
 <tr>
-<td VALIGN=bottom><b><%=@cage.name%></b></td>
+<% if !single_cage_task_list %>
+<td VALIGN=top><b><%=@cage.name%></b></td>
+<% end %>
 
-<td VALIGN=bottom>
+<td VALIGN=top>
 <%= select_tag("users[]", options_from_collection_for_select(@users, "id", "name"), 
-:multiple => false) %>
+:multiple => true) %>
 </td>
 
-<td VALIGN=bottom>
+<td VALIGN=top>
 <%= select_tag("days[]", 
 options_for_select([
 ["Daily", 0],
@@ -27,7 +31,7 @@ options_for_select([
 ["Every Saturday", 7],
 ["Every Sunday", 1]
 ]), 
-:multiple => false) %>
+:multiple => true) %>
 </td>
 
 <% @average = @cage.average_bat_weight %>
@@ -40,19 +44,19 @@ options_for_select([
 		<% suggested_amount = 2.0 * @cage.bats.length %>
 	<% end %>
 
-<td VALIGN=bottom><label for="task_food"><b>Amount</b></label><br/>
+<td VALIGN=top><label for="task_food"><b>Amount</b></label><br/>
 <%= text_field 'task', 'food', :size => 1, :autocomplete => 'off', :value => suggested_amount %> g
 </td>
 
-<td VALIGN=bottom><label for="dish_type"><b>Dish Type</b></label><br/>
+<td VALIGN=top><label for="dish_type"><b>Dish Type</b></label><br/>
 <%= select_tag("task[dish_type]", options_for_select([["Small","Small"],["Medium","Medium"], ["Long","Long"],["Metal tray","Metal tray"]])) %>
 </td>
 
-<td VALIGN=bottom><label for="dish_num"><b>Number of dishes</b></label><br/>
+<td VALIGN=top><label for="dish_num"><b>Number of dishes</b></label><br/>
 <%= text_field 'task', 'dish_num', :size => 1, :autocomplete => 'off' %>
 </td>
 
-<td VALIGN=bottom>
+<td VALIGN=top>
 <%= submit_tag "Add task" %>
 </td>
 

@@ -197,14 +197,9 @@ class TasksController < ApplicationController
   end
 
 
-  #allows editing the food amount and dishes for multiple feeding tasks
-  def form_to_edit_multiple_feeding_tasks
+  def manage_feeding_tasks
     @cage = Cage.find(params[:id])
-    redirect_to :action => :edit_multiple_feeding_tasks, :id => @cage
-  end
-  
-  def edit_multiple_feeding_tasks
-    @cage = Cage.find(params[:id])
+    @users = User.current
   end
 	  
   def update_multiple_feeding_tasks
@@ -221,17 +216,6 @@ class TasksController < ApplicationController
                             :single_cage_task_list => true, :manage => true}
   end
   
-  #called from the form on the list tasks page, needed so that the page that is requested has an ID attached to it so that refreshes of the page don't break
-  def form_to_new_feed_cage_task
-    @cage = Cage.find(params[:id])
-    redirect_to :action => 'new_feed_cage_task', :id => @cage
-  end
-
-  def new_feed_cage_task
-    @cage = Cage.find(params[:id])
-    @users = User.current
-  end
-
   def remote_new_feed_cage_task
     @cage = Cage.find(params[:id])
     @users = User.current

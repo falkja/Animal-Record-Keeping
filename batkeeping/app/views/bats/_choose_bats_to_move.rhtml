@@ -1,0 +1,29 @@
+<h2>Select bat(s) to move from <%= cage.name %></h2>
+
+<%= form_remote_tag :url => {:controller => 'bats', :action => :choose_destination, :id => cage}, 
+                              :update => 'destination_cage' %>
+
+<div class='left_indent'>
+
+<table>
+<th>Bat</th>
+<th>Last Weight</th>
+
+<tr><td rowspan=<%=bats.length + 1 %>><%= select_tag("bat[id][]", options_from_collection_for_select(bats, "id", "band"), :multiple => true) %></td></tr>
+
+<% for bat in bats %>
+<tr>
+<td><%= bat.weights.recent.weight %>g</td>
+</tr>
+<% end %>
+
+</table>
+
+<p><%= submit_tag 'Select Bats' %></p>
+
+</div>
+
+</form>
+
+<div id='destination_cage'>
+</div>

@@ -1,7 +1,22 @@
-<h1>What cage is the bat coming from?</h1>
+<h2>What cage is the bat coming from?</h2>
 
+<div class='left_indent'>
 <table>
+<th>Cage</th>
+<th>Number of bats</th>
+<th>Average weight</th>
+
 <% for cage in @cages %>
-<tr><td><%= link_to cage.name, :action => 'cage_change' , :id => cage %></td></tr>
+<tr>
+<td><%= link_to_remote cage.name, :url => {:controller => 'bats', :action => :choose_bats, :id => cage},
+                  :update => 'bat_list' %></td>
+<td><%= cage.bats.length %></td>
+<td><%= cage.average_bat_weight %></td>
+</tr>
 <% end %>
+
 </table>
+</div>
+
+<div id='bat_list'>
+</div>

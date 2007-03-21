@@ -1,0 +1,30 @@
+<h2>Select destination cage for bats:
+
+<% for bat in bats %>
+<%= bat.band %>
+<% end %>
+
+</h2>
+
+<div class='left_indent'>
+
+<table>
+<th>Cage</th>
+<th>Number of bats</th>
+<th>Average weight</th>
+
+<% for cage in cages %>
+<tr>
+<td><%= link_to_remote cage.name, :url => {:controller => 'bats', :action => :display_move, :new_cage => cage, :old_cage => old_cage, :bats => bats}, 
+                            :update => 'move' %></td>
+<td><%= cage.bats.length %></td>
+<td><%= cage.average_bat_weight %></td>
+</tr>
+<% end %>
+
+</table>
+
+</div>
+
+<div id='move'>
+</div>

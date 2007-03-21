@@ -1,6 +1,6 @@
 <h1>Moved Bat(s)</h1>
 
-<warning>Send email alert to owner of <%=h @cage.name %> that bat(s) have been moved and are now under his/her care</warning>
+<warning>Send email alert to owner of <%=h @new_cage.name %> that bat(s) have been moved and are now under his/her care</warning>
 
 <p>
 <b>Bat(s)</b>
@@ -11,6 +11,6 @@
 
 <p><b>From</b> <%= @old_cage.name %></p>
 
-<p><b>To</b> <%= @cage.name %></p>
+<p><b>To</b> <%= @new_cage.name %></p>
 
-<%= render :partial => 'feeding_task_actions_after_move', :locals => {:cage => @cage, :old_cage => @old_cage, :bats => @bats} %>
+<%= render :partial => 'feeding_task_actions_after_move', :locals => {:cage => @new_cage, :old_cage => @old_cage, :bats => @bats} %>

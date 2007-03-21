@@ -1,0 +1,36 @@
+<h2>Ready to move</h2>
+
+<div class='left_indent'>
+
+<% form_tag :controller => 'bats', :action => :move, :old_cage => old_cage, :bats => bats,
+                            :new_cage => new_cage do %>
+
+<table>
+
+<th>Bats</th>
+<th>Old Cage</th>
+<th>New Cage</th>
+<th>Note</th>
+
+<tr>
+
+<td>
+<% for bat in bats %>
+<%= bat.band %><br />
+<% end %>
+</td>
+
+<td><%= old_cage.name %></td>
+
+<td><%= new_cage.name %></td>
+
+<td valign=bottom><%= text_field 'move', 'note' %></td>
+
+<td valign=bottom><%= submit_tag 'Click to Move Bats' %></td>
+
+</tr>
+</table>
+
+<% end %>
+
+</div>

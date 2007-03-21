@@ -169,27 +169,43 @@ redirect_to :action => 'list'
 
   #choose a cage to move bats from
   def choose_cage
-	@cages = Cage.has_bats
+    @cages = Cage.has_bats
   end
 
   #choose bats to move from cage
-  def cage_change
-	@cage = Cage.find(params[:id])
-	@bats = @cage.bats
-  	@cages = Cage.find(:all, :conditions => "date_destroyed is null and id != " + @cage.id.to_s, :order => "name")
+  def choose_bats
+    cage = Cage.find(params[:id])
+    bats = cage.bats
+    render :partial => 'choose_bats_to_move', :locals => {:cage => cage, :bats => bats}
+  end
+
+  def choose_destination
+    bats = Bat.find(params[:bat][:id], :order => 'band')
+    cage = Cage.find(params[:id])
+    cages = Cage.find(:all, :conditions => "date_destroyed is null and id != " + cage.id.to_s, :order => "name")
+    render :partial => 'choose_destination_cage', :locals => {:old_cage => cage, :bats => bats, :cages => cages}
   end
 
   #move a set of bats from one cage to another
+  def display_move
+    bats = Bat.find(params[:bats])
+    new_cage = Cage.find(params[:new_cage])
+    old_cage = Cage.find(params[:old_cage])
+    render :partial => 'display_move_parameters', :locals => {:bats => bats, :new_cage => new_cage, :old_cage => old_cage}
+  end
+
   def move
-	@bats = Bat.find(params[:bat][:id], :order => 'band')
-	@cage = Cage.find(params[:cage][:id])
-	Bat::set_user_and_comment(session[:person], params[:move]['note']) #This must come before we mess with the list of bats for a cage. The moment we mess with the list, the cage and bat variables are updated. 
-	@cage.bats << @bats
-	@cage.bats = @cage.bats.uniq #no duplicates
-	@old_cage = @bats[0].cage_out_histories[0].cage
+    @bats = Bat.find(params[:bats])
+    @new_cage = Cage.find(params[:new_cage])
+    @old_cage = Cage.find(params[:old_cage])
+    @note = params[:move][:note]
+    
+    Bat::set_user_and_comment(session[:person], params[:move]['note']) #This must come before we mess with the list of bats for a cage. The moment we mess with the list, the cage and bat variables are updated. 
+    @new_cage.bats << @bats
+    @new_cage.bats = @new_cage.bats.uniq #no duplicates
   
-  #when we finally get emails working uncomment the following
-  #email = MyMailer.deliver_mail("falk.ben@gmail.com")
+    #when we finally get emails working uncomment the following
+    #email = MyMailer.deliver_mail("falk.ben@gmail.com")
   end
 
   def choose_bat_to_weigh

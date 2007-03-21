@@ -203,11 +203,10 @@ class TasksController < ApplicationController
     redirect_to :action => :edit_multiple_feeding_tasks, :id => @cage
   end
   
-  def remote_edit_multiple_feeding_tasks
+  def edit_multiple_feeding_tasks
     @cage = Cage.find(params[:id])
-    render :partial => 'remote_edit_feed_cage_task', :locals => {:cage => @cage, :div_id => params[:div_id]}
   end
-  
+	  
   def update_multiple_feeding_tasks
     @cage = Cage.find(params[:id])
     

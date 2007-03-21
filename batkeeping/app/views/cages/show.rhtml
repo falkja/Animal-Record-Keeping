@@ -33,13 +33,13 @@
 <b>Current Feeding Tasks:</b>
 <div class="left_indent">
 <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', :single_cage_task_list => true, :manage => true} %>
+[<%= link_to 'Edit multiple feeding tasks', :controller => 'tasks', :action => 'edit_multiple_feeding_tasks', :id => @cage %>]
 <p>
 [<%= link_to_remote "Add Feeding Tasks", :url => {:controller => 'tasks', :action => 'remote_new_feed_cage_task', :id => @cage, :div_id => "feeding_tasks", 
                                                           :source => 'show_cage', :single_cage_task_list => true},
                                                           :update => 'add_feeding_task' %>]
 <div id = "add_feeding_task">
 </div>
-[<%= link_to 'Edit multiple feeding tasks', :controller => 'tasks', :action => 'edit_multiple_feeding_tasks', :id => @cage %>]
 </p>
 </div>
 

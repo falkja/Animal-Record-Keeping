@@ -127,7 +127,7 @@ class TasksController < ApplicationController
 
   def remote_new_weigh_cage_task
     render :partial => 'remote_new_weigh_cage_task', :locals => {:cage => Cage.find(params[:id]), :div_id => params[:div_id], :source => params[:source], 
-                          :single_cage_task_list => params[:single_cage_task_list], :users=>User.current}
+                          :single_cage_task_list => params[:single_cage_task_list], :users=>User.current, :quick_add => params[:quick_add]}
   end
 
   def new_weigh_cage_task
@@ -215,7 +215,7 @@ class TasksController < ApplicationController
   
   def remote_new_feed_cage_task
     render :partial => 'remote_new_feed_cage_task', :locals => {:cage => Cage.find(params[:id]), :div_id => params[:div_id], :source => params[:source], 
-															:single_cage_task_list => params[:single_cage_task_list], :users => User.current}
+															:single_cage_task_list => params[:single_cage_task_list], :users => User.current, :quick_add => params[:quick_add]}
   end
 
   def create_feed_cage_task #called from new_feed_cage_task page

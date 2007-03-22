@@ -1,3 +1,6 @@
+<% quick_add ? valign = 'bottom' : valign = 'top' %>
+
+
 <%= form_remote_tag(:update => div_id,
                        :url => { :controller => 'tasks', :action => 'create_feed_cage_task', 
 					   :id => cage, :div_id => div_id, :source => source, :single_cage_task_list => single_cage_task_list}) %>
@@ -11,15 +14,15 @@
 
 <tr>
 <% if !single_cage_task_list %>
-<td VALIGN=top><b><%=cage.name%></b></td>
+<td VALIGN=<%=valign %>><b><%=cage.name%></b></td>
 <% end %>
 
-<td VALIGN=top>
+<td VALIGN=<%=valign %>>
 <%= select_tag("users[]", options_from_collection_for_select(users, "id", "name"), 
-:multiple => true) %>
+:multiple => !quick_add) %>
 </td>
 
-<td VALIGN=top>
+<td VALIGN=<%=valign %>>
 <%= select_tag("days[]", 
 options_for_select([
 ["Daily", 0],
@@ -31,7 +34,7 @@ options_for_select([
 ["Every Saturday", 7],
 ["Every Sunday", 1]
 ]), 
-:multiple => true) %>
+:multiple => !quick_add) %>
 </td>
 
 <% @average = cage.average_bat_weight %>

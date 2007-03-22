@@ -1,11 +1,11 @@
 <%= render :partial => 'tasks/tasks_common_info', :locals => {:task_type => 'Feeding', :tasks => cage.tasks.feeding_tasks, :cage=>cage} %>
 
-<b>Quick-Add Feeding Tasks:</b><br/>
+<b>Add Feeding Tasks:</b><br/>
 <em>This will add a feeding task to the list above</em>
 <div class="left_indent">
 <p>
 <%= render :partial => 'tasks/remote_new_feed_cage_task', :locals => {:cage => cage, :div_id => 'tasks_div', :users => User.current,
-                                :source => 'show_cage', :single_cage_task_list => true} %>
+                                :source => 'show_cage', :single_cage_task_list => true, :quick_add => false} %>
 </p>
 </div>
 

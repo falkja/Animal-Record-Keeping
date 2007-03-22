@@ -15,7 +15,7 @@
 
 <td VALIGN=top>
 <%= select_tag("users[]", options_from_collection_for_select(users, "id", "name"), 
-:multiple => true) %>
+:multiple => !quick_add) %>
 </td>
 
 <td VALIGN=top>
@@ -30,7 +30,7 @@ options_for_select([
 ["Every Saturday", 7],
 ["Every Sunday", 1]
 ]), 
-:multiple => true) %>
+:multiple => !quick_add) %>
 </td>
 
 <td VALIGN=top>

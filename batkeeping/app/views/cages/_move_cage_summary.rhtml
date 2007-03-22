@@ -1,0 +1,23 @@
+<h2>Summary</h2>
+
+<div class='left_indent'>
+
+<% form_tag :action => 'submit_move_cage', :cage => cage, :room=>new_room do %>
+
+<table>
+<th>Cage</th>
+<th>Old Room</th>
+<th>New Room</th>
+
+<tr>
+<td><%=cage.name%></td>
+<td><%=cage.room.name %></td>
+<td><%=new_room.name %></td>
+<td><%= submit_tag 'Move Cage' %></td>
+</tr>
+
+</table>
+
+<% end %>
+
+</div>

@@ -166,4 +166,29 @@ class CagesController < ApplicationController
 			end
 		end
 	end
+  
+  def move_cage
+    @cages = Cage.active
+  end
+  
+  def choose_room
+    cage = Cage.find(params[:cage])
+    rooms = Room.find(:all, :conditions => "id != " + cage.room.id.to_s)
+    render :partial=>'choose_room', :locals => {:cage=>cage, :rooms=>rooms}
+  end
+  
+  def move_cage_summary
+    cage = Cage.find(params[:cage])
+    new_room = Room.find(params[:room])
+    render :partial => 'move_cage_summary', :locals=>{:cage=>cage, :new_room=>new_room}
+  end
+  
+  def submit_move_cage
+    cage = Cage.find(params[:cage])
+    old_room = cage.room.name
+    cage.room = Room.find(params[:room])
+    cage.save
+    flash[:notice] = 'Cage ' + cage.name + ' was moved from ' + old_room + ' to ' + cage.room.name
+    redirect_to :action => 'move_cage'
+  end
 end

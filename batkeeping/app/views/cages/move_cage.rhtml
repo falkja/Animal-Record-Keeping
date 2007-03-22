@@ -1,0 +1,18 @@
+<h1>Move Cage</h1>
+
+<h2>What Cage?</h2>
+<div class='left_indent'>
+<table>
+<th>Cage</th>
+<th>Room</th>
+<% for cage in @cages %>
+<tr>
+<td><%= link_to_remote cage.name, :url => {:controller=>'cages', :action =>'choose_room', :cage => cage}, :update=>'choose_room' %></td>
+<td><%= cage.room.name %></td>
+</tr>
+<% end %>
+</table>
+</div>
+
+<div id='choose_room'>
+</div>

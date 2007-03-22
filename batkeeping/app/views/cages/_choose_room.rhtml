@@ -1,0 +1,18 @@
+<h2>What Room?</h2>
+
+<div class='left_indent'>
+<table>
+<th>Room</th>
+<% for room in rooms %>
+<tr>
+  <td>
+  <%= link_to_remote room.name, :url => {:controller=>'cages', :action => 'move_cage_summary', 
+        :cage => cage, :room => room}, :update=> 'move_cage_summary' %>
+  </td>
+</tr>
+<% end %>
+</table>
+</div>
+
+<div id='move_cage_summary'>
+</div>

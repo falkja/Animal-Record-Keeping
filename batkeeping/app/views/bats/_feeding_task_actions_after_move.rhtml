@@ -1,0 +1,10 @@
+<div class='left_indent'>
+
+<h3>Manage Feeding Tasks for <%= cage.name %></h3>
+
+
+<%= render :partial=>'tasks/manage_feeding_tasks', :locals=>{:cage=>cage} %>
+
+<%= button_to 'Next', :controller => 'cages', :action => 'show', :id => cage %>
+
+</div>

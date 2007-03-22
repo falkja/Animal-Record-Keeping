@@ -1,0 +1,12 @@
+<%= render :partial => 'tasks/tasks_common_info', :locals => {:task_type => 'Weighing', :tasks => cage.tasks.weighing_tasks, :cage => cage} %>
+
+<b>Quick-Add Weighing Tasks:</b><br />
+<em>This will add a weighing task to the list above</em>
+<div class="left_indent">
+
+<p>
+<%= render :partial => 'tasks/remote_new_weigh_cage_task', :locals => {:cage => cage, :div_id => 'tasks_div', :users => User.current,
+                                :source => 'show_cage', :single_cage_task_list => true} %>
+</p>
+
+</div>

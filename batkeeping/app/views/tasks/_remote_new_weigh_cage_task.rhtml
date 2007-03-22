@@ -2,21 +2,23 @@
                        :url => { :controller => 'tasks', :action => 'create_weigh_cage_task', 
 					   :id => cage, :div_id => div_id, :source => source, :single_cage_task_list => single_cage_task_list}) %>
 <table>
+<% if !single_cage_task_list %>
 <th>Cage</th>
+<% end %>
 <th>Weighed by*</th>
 <th>On days</th>
 
 <tr>
 <% if !single_cage_task_list %>
-<td VALIGN=bottom><b><%=@cage.name%></b></td>
+<td VALIGN=top><b><%=cage.name%></b></td>
 <% end %>
 
-<td VALIGN=bottom>
-<%= select_tag("users[]", options_from_collection_for_select(@users, "id", "name"), 
-:multiple => false) %>
+<td VALIGN=top>
+<%= select_tag("users[]", options_from_collection_for_select(users, "id", "name"), 
+:multiple => true) %>
 </td>
 
-<td VALIGN=bottom>
+<td VALIGN=top>
 <%= select_tag("days[]", 
 options_for_select([
 ["Daily", 0],
@@ -28,10 +30,10 @@ options_for_select([
 ["Every Saturday", 7],
 ["Every Sunday", 1]
 ]), 
-:multiple => false) %>
+:multiple => true) %>
 </td>
 
-<td VALIGN=bottom>
+<td VALIGN=top>
 <%= submit_tag "Add task" %>
 </td>
 

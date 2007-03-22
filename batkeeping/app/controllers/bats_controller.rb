@@ -207,6 +207,10 @@ redirect_to :action => 'list'
     #when we finally get emails working uncomment the following
     #email = MyMailer.deliver_mail("falk.ben@gmail.com")
   end
+	
+	def manage_cage_tasks_after_move		
+		render :partial=> 'manage_cage_tasks_after_move', :locals=>{:step=>params[:step].to_i,:old_cage=>Cage.find(params[:old_cage]), :new_cage => Cage.find(params[:new_cage])}
+	end
 
   def choose_bat_to_weigh
     @bats = Bat.active

@@ -6,7 +6,7 @@
   <% if cages.length > 0 %>
   <p>
   <%= form_remote_tag :url => {:controller => 'tasks', :action => 'remote_new_feed_cage_task', :id => @cage, :div_id => 'feeding_tasks' + count, 
-                  :feeding_tasks => feeding_tasks, :single_cage_task_list => single_cage_task_list, :source => source},
+                  :single_cage_task_list => single_cage_task_list, :source => source},
                   :update => 'add_feeding_task' + count %>
   Cage: <%= select_tag("id", options_from_collection_for_select(cages, "id", "name")) %>
   <%= submit_tag "Quick-add feeding task" %>
@@ -33,7 +33,7 @@
   <% if cages.length > 0 %>
   <p>
   <%= form_remote_tag :url => {:controller => 'tasks', :action => 'remote_new_weigh_cage_task', :id => @cage, :div_id => 'weighing_tasks' + count, 
-                  :weighing_tasks => weighing_tasks, :single_cage_task_list => single_cage_task_list, :source => source},
+                  :single_cage_task_list => single_cage_task_list, :source => source},
                   :update => 'add_weighing_task' + count %>
   Cage: <%= select_tag("id", options_from_collection_for_select(cages, "id", "name")) %>
   <%= submit_tag "Quick-add weighing task" %>

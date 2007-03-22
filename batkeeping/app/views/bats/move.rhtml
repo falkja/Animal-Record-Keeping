@@ -28,13 +28,6 @@
 have been moved and are now under his/her care</warning></p>
 
 <div id='cage_tasks'>
-<h2>Step 1 of 4: Manage Feeding Tasks of Old Cage</h2>
-<%= render :partial=>'bats/feeding_task_actions_after_move', :locals=>{:cage=>@old_cage} %>
+<%= render :partial => 'bats/manage_cage_tasks_after_move', :locals => {:step=>1, :old_cage=>@old_cage,
+										:new_cage=>@new_cage} %>
 </div>
-
-	
-	<ol>
-	<li>Feeding tasks
-	<li>Weighing tasks
-	<li>Done button - takes you to the next page
-	</ol>

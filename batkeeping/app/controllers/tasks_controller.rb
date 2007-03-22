@@ -217,10 +217,8 @@ class TasksController < ApplicationController
   end
   
   def remote_new_feed_cage_task
-    @cage = Cage.find(params[:id])
-    @users = User.current
-    
-    render :partial => 'remote_new_feed_cage_task', :locals => {:cage => @cage, :div_id => params[:div_id], :source => params[:source], :single_cage_task_list => params[:single_cage_task_list]}
+    render :partial => 'remote_new_feed_cage_task', :locals => {:cage => Cage.find(params[:id]), :div_id => params[:div_id], :source => params[:source], 
+															:single_cage_task_list => params[:single_cage_task_list], :users => User.current}
   end
 
   def create_feed_cage_task #called from new_feed_cage_task page

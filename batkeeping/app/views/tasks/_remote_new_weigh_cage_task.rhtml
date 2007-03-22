@@ -7,7 +7,9 @@
 <th>On days</th>
 
 <tr>
+<% if !single_cage_task_list %>
 <td VALIGN=bottom><b><%=@cage.name%></b></td>
+<% end %>
 
 <td VALIGN=bottom>
 <%= select_tag("users[]", options_from_collection_for_select(@users, "id", "name"), 

@@ -11,11 +11,11 @@
 
 <tr>
 <% if !single_cage_task_list %>
-<td VALIGN=top><b><%=@cage.name%></b></td>
+<td VALIGN=top><b><%=cage.name%></b></td>
 <% end %>
 
 <td VALIGN=top>
-<%= select_tag("users[]", options_from_collection_for_select(@users, "id", "name"), 
+<%= select_tag("users[]", options_from_collection_for_select(users, "id", "name"), 
 :multiple => true) %>
 </td>
 
@@ -34,14 +34,14 @@ options_for_select([
 :multiple => true) %>
 </td>
 
-<% @average = @cage.average_bat_weight %>
+<% @average = cage.average_bat_weight %>
 
 	<% if (@average < 20) && (@average > 14) %>
-		<% suggested_amount = 1.5 * @cage.bats.length %>
+		<% suggested_amount = 1.5 * cage.bats.length %>
 	<% elsif @average > 20 %>
-		<% suggested_amount = 1.0 * @cage.bats.length %>
+		<% suggested_amount = 1.0 * cage.bats.length %>
 	<% else %>
-		<% suggested_amount = 2.0 * @cage.bats.length %>
+		<% suggested_amount = 2.0 * cage.bats.length %>
 	<% end %>
 
 <td VALIGN=top><label for="task_food"><b>Amount</b></label><br/>

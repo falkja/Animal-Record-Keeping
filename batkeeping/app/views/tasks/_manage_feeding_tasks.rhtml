@@ -1,0 +1,22 @@
+<%= render :partial => 'tasks/tasks_common_info', :locals => {:task_type => 'Feeding', :tasks => cage.tasks.feeding_tasks, :cage=>cage} %>
+
+<b>Quick-add Feeding Tasks:</b><br/>
+<em>This will add a feeding task to the list above</em>
+<div class="left_indent">
+<p>
+<%= render :partial => 'tasks/remote_new_feed_cage_task', :locals => {:cage => cage, :div_id => 'tasks_div', :users => User.current,
+                                :source => 'show_cage', :single_cage_task_list => true} %>
+</p>
+</div>
+
+<b>Edit Feeding Tasks:</b><br/>
+<em>This will change all feeding tasks to match the parameters below</em>
+<div class="left_indent">
+<%= form_remote_tag(:update => "tasks_div",
+                       :url => { :controller => 'tasks', :action => 'update_multiple_feeding_tasks', :id => cage },
+                       :position => "replace") %>
+
+<%= render :partial => 'tasks/tasks_common_feeding_form', :locals=>{:cage=>cage} %>
+
+</form>
+</div>

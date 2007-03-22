@@ -1,4 +1,4 @@
-<h2>Ready to move</h2>
+<h2>Summary</h2>
 
 <div class='left_indent'>
 
@@ -20,13 +20,13 @@
 <% end %>
 </td>
 
-<td><%= old_cage.name %></td>
+<td valign=top><%= old_cage.name %></td>
 
-<td><%= new_cage.name %></td>
+<td valign=top><%= new_cage.name %></td>
 
-<td valign=bottom><%= text_field 'move', 'note' %></td>
+<td valign=top><%= text_field 'move', 'note' %></td>
 
-<td valign=bottom><%= submit_tag 'Click to Move Bats' %></td>
+<td valign=top><%= submit_tag 'Click to Move Bats' %></td>
 
 </tr>
 </table>

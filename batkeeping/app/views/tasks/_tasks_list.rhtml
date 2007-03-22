@@ -43,7 +43,9 @@ No tasks.
 		</p>
 		<% if tasks[0].internal_description == 'feed' %>
 			<% if tasks[0].cage.fed_every_day? == false && task.cage.bats.length > 0 %>
-				<p><warning>Warning: this cage is not fed every day of the week</warning></p>
+				<p><warning>Warning: this occupied cage is not fed every day of the week</warning></p>
+			<% elsif tasks[0].cage.tasks.feeding_tasks.length > 0 && task.cage.bats.length == 0 %>
+				<p><warning>Warning: this empty cage still has feeding tasks</warning></p>
 			<% end %>
 		<% end %>
 		

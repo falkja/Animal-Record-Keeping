@@ -1,6 +1,6 @@
 <h1>Manage weighing tasks for <%= @cage.name %></h1>
 
-<%= render :partial => 'tasks_common_info', :locals => {:task_type => 'Weighing', :tasks => @cage.tasks.weighing_tasks} %>
+<%= render :partial => 'tasks_common_info', :locals => {:task_type => 'Weighing', :tasks => @cage.tasks.weighing_tasks, :cage => @cage} %>
 
 <b>Add Weighing Tasks:</b>
 <div class="left_indent">

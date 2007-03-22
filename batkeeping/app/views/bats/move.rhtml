@@ -1,16 +1,40 @@
-<h1>Moved Bat(s)</h1>
+<h1>Move Summary</h1>
 
-<warning>Send email alert to owner of <%=h @new_cage.name %> that bat(s) have been moved and are now under his/her care</warning>
+<table>
 
-<p>
-<b>Bat(s)</b>
+<th>Bats</th>
+<th>Old Cage</th>
+<th>New Cage</th>
+<th>Note</th>
+
+<tr>
+
+<td>
 <% for bat in @bats %>
-<%= bat.band + ', ' %>
+<%= bat.band %><br />
 <% end %>
-</p>
+</td>
 
-<p><b>From</b> <%= @old_cage.name %></p>
+<td valign=top><%= @old_cage.name %></td>
 
-<p><b>To</b> <%= @new_cage.name %></p>
+<td valign=top><%= @new_cage.name %></td>
 
-<%= render :partial => 'feeding_task_actions_after_move', :locals => {:cage => @new_cage, :old_cage => @old_cage, :bats => @bats} %>
+<td valign=top><%= @note %></td>
+
+</tr>
+</table>
+
+<p><warning>Send email alert to owner of <%=h @new_cage.name %> that bat(s)
+have been moved and are now under his/her care</warning></p>
+
+<div id='cage_tasks'>
+<h2>Step 1 of 4: Manage Feeding Tasks of Old Cage</h2>
+<%= render :partial=>'bats/feeding_task_actions_after_move', :locals=>{:cage=>@old_cage} %>
+</div>
+
+	
+	<ol>
+	<li>Feeding tasks
+	<li>Weighing tasks
+	<li>Done button - takes you to the next page
+	</ol>

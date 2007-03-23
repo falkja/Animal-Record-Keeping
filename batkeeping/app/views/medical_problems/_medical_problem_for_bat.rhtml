@@ -1,9 +1,5 @@
-<%# @show_bat is needed to show the bat band column %>
-
-<% bat = @bat %>
-
 <tr>
-    <% if @show_bat %>
+    <% if show_bat %>
     <td><%= link_to bat.band, :controller => 'bats', :action => 'show', :id => bat %></td>
     <% end %>
     
@@ -61,7 +57,7 @@
       <% if @list_all %>
         <td></td>
       <% end %>
-      <% if @show_bat %>
+      <% if show_bat %>
         <td></td>
       <% end %>
     <% end %>

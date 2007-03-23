@@ -9,7 +9,7 @@
 <p>Description<br />
 <%= @medical_problem.description %></p>
 
-<%= render :partial => 'medical_problems/show_all_medical_tasks', :locals => {:medical_problem => @medical_problem} %>
+<%= render :partial => 'tasks/show_all_medical_tasks', :locals => {:medical_problem => @medical_problem} %>
 
 <% form_tag :action => 'update', :id => @medical_problem , :redirectme => 'list_current', :deactivating => @deactivating do %>
   <%= render :partial => 'form' %>

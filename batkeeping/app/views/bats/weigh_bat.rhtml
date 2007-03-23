@@ -10,22 +10,26 @@
 
 <div class='left_indent'>
 
+<% bats = Array.new %>
+<% bats << @bat %>
+
+<div id='medical_problems'>
+<% if @bat.medical_problems.current.length > 0 %>
 <p>
-<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => @medical_tasks, 
-					:div_id => 'medical_tasks', :single_cage_task_list => false, :manage => true} %>
-					
-		<% if @bat.medical_problems.length > 0 %>
-		<p>
-		<% form_tag :controller => 'tasks', :action => 'new_medical_task' do %>
-    Medical Problem: 
-    <%= select_tag("id", options_from_collection_for_select(@bat.medical_problems, "id", "title")) %>
-    <%= submit_tag "Add new treatment" %>
-    <% end %>
-    </p>
-		<% end %>
+<%= render :partial=>'medical_problems/show_medical_problems', :locals=>{:bats => bats, :show_bat => false} %>
+</p>
+<% else %>
+No medical problems.
+<% end %>
+</div>
+
+<p>
+<%= link_to_remote 'Quick-Add New Medical Problem', :url=>{:controller => 'medical_problems', :action => :remote_new_medical_problem, :bats => bats},
+  :update=>'add_medical_problem'%>
 </p>
 
-<p><%= link_to 'New Medical Problem', :controller => 'medical_problems', :action => :new %></p>
+<div id='add_medical_problem'>
+</div>
 
 </div>
 

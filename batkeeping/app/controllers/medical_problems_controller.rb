@@ -32,6 +32,22 @@ class MedicalProblemsController < ApplicationController
     @deactivating = false
   end
 
+  def remote_new_medical_problem
+    bats = Bat.find(params[:bats])
+    @users = User.find(:all, :conditions => "end_date is null and id != 1 and id != 3", :order => "name")
+    render :partial=>'remote_new_medical_problem', :locals=>{:bats=>bats}
+  end
+
+  def remote_create
+    bats = Bat.find(params[:bats])
+    @medical_problem = MedicalProblem.new(params[:medical_problem])
+    @medical_problem.date_closed = nil
+    @medical_problem.date_opened = Time.now
+    @medical_problem.bat = bats[0]
+    @medical_problem.save
+    render :partial=>'medical_problems/show_medical_problems', :locals=>{:bats => bats, :show_bat => false}
+  end
+  
   def create
     @bat = Bat.find(params[:bat][:id])
     @medical_problem = MedicalProblem.new(params[:medical_problem])

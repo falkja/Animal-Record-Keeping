@@ -6,6 +6,29 @@
 
 <% end %>
 
+<h4>Current Medical Problems for <%= @bat.band%></h4>
+
+<div class='left_indent'>
+
+<p>
+<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => @medical_tasks, 
+					:div_id => 'medical_tasks', :single_cage_task_list => false, :manage => true} %>
+					
+		<% if @bat.medical_problems.length > 0 %>
+		<p>
+		<% form_tag :controller => 'tasks', :action => 'new_medical_task' do %>
+    Medical Problem: 
+    <%= select_tag("id", options_from_collection_for_select(@bat.medical_problems, "id", "title")) %>
+    <%= submit_tag "Add new treatment" %>
+    <% end %>
+    </p>
+		<% end %>
+</p>
+
+<p><%= link_to 'New Medical Problem', :controller => 'medical_problems', :action => :new %></p>
+
+</div>
+
 <% if @bat.weights.length == 0 %>
 No previous weights.
 <% else %>

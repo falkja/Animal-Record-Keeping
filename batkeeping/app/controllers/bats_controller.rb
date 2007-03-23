@@ -220,6 +220,12 @@ redirect_to :action => 'list'
   def weigh_bat
     @bat = Bat.find(params[:id])
     @cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name" )
+		@medical_tasks = Array.new
+		for medical_problem in @bat.medical_problems
+			for task in medical_problem.tasks
+				@medical_tasks << task
+			end
+		end
   end
   
   def submit_weight

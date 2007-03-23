@@ -1,0 +1,19 @@
+<%= form_remote_tag :url=>{:controller=>'medical_problems', :action=>'remote_create', :bats => bats},
+            :update=>'medical_problems' %>
+
+<table>
+
+<th>Title</th>
+<th>Detailed Description</th>
+<th>User Assigned</th>
+
+<tr>
+<td valign='top'><%= text_field 'medical_problem', 'title' %></td>
+<td valign='top'><%= text_area 'medical_problem', 'description', 'rows' => "3" %></td>
+<td valign='top'><%= collection_select("medical_problem", "user_id" , @users, "id", "name") %></td>
+<td valign='top'><%= submit_tag 'Add Medical Problem' %></td>
+</tr>
+
+</table>
+
+</form>

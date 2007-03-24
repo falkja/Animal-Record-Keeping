@@ -1,7 +1,7 @@
 <h2>Select bat(s) to move from <%= cage.name %></h2>
 
-<%= form_remote_tag :url => {:controller => 'bats', :action => :choose_destination, :id => cage}, 
-                              :update => 'destination_cage' %>
+<% form_remote_tag :url => {:controller => 'bats', :action => :choose_destination, :id => cage}, 
+                              :update => 'destination_cage' do %>
 
 <div class='left_indent'>
 
@@ -23,7 +23,7 @@
 
 </div>
 
-</form>
+<% end %>
 
 <div id='destination_cage'>
 </div>

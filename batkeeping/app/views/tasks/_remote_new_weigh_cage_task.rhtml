@@ -1,6 +1,6 @@
-<%= form_remote_tag(:update => div_id,
+<% form_remote_tag(:update => div_id,
                        :url => { :controller => 'tasks', :action => 'create_weigh_cage_task', 
-					   :id => cage, :div_id => div_id, :source => source, :single_cage_task_list => single_cage_task_list}) %>
+					   :id => cage, :div_id => div_id, :source => source, :single_cage_task_list => single_cage_task_list}) do %>
 <table>
 <% if !single_cage_task_list %>
 <th>Cage</th>
@@ -47,4 +47,4 @@ options_for_select([
 <li>Weekday tasks assigned to <b>Weekend/Holiday Care</b> are automatically added to <b>General Animal Care.</b></li>
 </ol>
 </p>
-</form>
+<% end %>

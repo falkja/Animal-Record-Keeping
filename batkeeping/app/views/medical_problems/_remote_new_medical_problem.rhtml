@@ -1,5 +1,5 @@
-<%= form_remote_tag :url=>{:controller=>'medical_problems', :action=>'remote_create', :bats => bats},
-            :update=>'medical_problems' %>
+<% form_remote_tag :url=>{:controller=>'medical_problems', :action=>'remote_create', :bats => bats},
+            :update=>'medical_problems' do %>
 
 <table>
 
@@ -16,4 +16,4 @@
 
 </table>
 
-</form>
+<% end %>

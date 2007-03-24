@@ -14,12 +14,12 @@
 </p>
 
 <p>
-<%= form_remote_tag(:update => "bat_notes",
+<% form_remote_tag(:update => "bat_notes",
                        :url => { :controller => 'bats', :action => 'add_bat_note', 
-					   :id => @bat }) %>
+					   :id => @bat }) do %>
 	<b><label for="bat_note">Add note:</label></b>
 	<%= text_field 'bat', 'note', :value => '', :autocomplete => 'off' %>
 	<%= submit_tag "Submit permanent note on bat" %>
-</form>
+<% end %>
 </p>
 </div>

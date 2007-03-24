@@ -155,13 +155,13 @@ class TasksController < ApplicationController
       @task.date_started = Time.now
       @task.save
       if @users.include?(User.find(1)) && ((day == "1") || (day == "7") || (day == "0"))  #General Animal Care can't do tasks on weekend - add to weekend/holiday care
-        @task.users << User.find(3)
-        @task.users << @users
-        @task.users.uniq
+        @users << User.find(3)
+        @users = @users.uniq
+        @task.users << @users.uniq
       elsif @users.include?(User.find(3)) && ((day == "2") || (day == "3") || (day == "4") || (day == "5") || (day == "6") || (day == "0")) #Weekend Care can't do tasks on weekdays - add to general animal care
-        @task.users << User.find(1)
-        @task.users << @users
-        @task.users.uniq
+        @users << User.find(1)
+        @users = @users.uniq
+        @task.users << @users.uniq
       else
         @task.users = @users
       end
@@ -241,13 +241,13 @@ class TasksController < ApplicationController
       @task.date_started = Time.now
       @task.save
       if (@users.include?(User.find(1)) && ((day == "1") || (day == "7")))  #General Animal Care can't do tasks on weekend - add to weekend/holiday care
-        @task.users << User.find(3)
-        @task.users << @users
-        @task.users.uniq
+        @users << User.find(3)
+        @users = @users.uniq
+        @task.users << @users.uniq
       elsif @users.include?(User.find(3)) && ((day == "2") || (day == "3") || (day == "4") || (day == "5") || (day == "6")) #Weekend Care can't do tasks on weekdays - add to general animal care
-        @task.users << User.find(1)
-        @task.users << @users
-        @task.users.uniq
+        @users << User.find(1)
+        @users = @users.uniq
+        @task.users << @users.uniq
       else
       @task.users = @users
       end
@@ -274,7 +274,8 @@ class TasksController < ApplicationController
     elsif params[:source] == 'task_list' && (params[:div_id].include? 'all_tasks')
       feeding_tasks = Task.feeding_tasks
     end
-	#feeding_tasks.sort_by{|task| [task.repeat_code]}
+	
+		feeding_tasks = feeding_tasks.sort_by{|task| [task.repeat_code]}
 
     render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => feeding_tasks, 
                                       :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}

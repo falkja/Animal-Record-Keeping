@@ -21,6 +21,13 @@ class Bat < ActiveRecord::Base
 		end
 	end
 	
+	def self.average_weight
+		weights = self.weights
+		sum = 0
+		weights.each{|weight| sum=weight.weight + sum}
+		return (sum/weights.length)
+	end
+	
 	#From http://www.therailsway.com/tags/rails
 	#This lets us do Bats.active AS WELL AS cage.bats.active !
 	def self.active

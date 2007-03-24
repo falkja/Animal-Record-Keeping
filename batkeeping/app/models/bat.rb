@@ -21,11 +21,11 @@ class Bat < ActiveRecord::Base
 		end
 	end
 	
-	def self.average_weight
+	def average_weight
 		weights = self.weights
 		sum = 0
 		weights.each{|weight| sum=weight.weight + sum}
-		return (sum/weights.length)
+		return (("%.0" + 1.to_s + "f")%(sum/weights.length)).to_f
 	end
 	
 	#From http://www.therailsway.com/tags/rails

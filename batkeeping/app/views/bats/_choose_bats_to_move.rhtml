@@ -2,32 +2,65 @@
 
 <div class='left_indent'>
 
-<% form_remote_tag :url => {:controller => 'bats', :action => :choose_destination, :id => cage}, 
-                              :update => 'destination_cage' do %>
-
-<table>
-<th>Bat</th>
-<th>Last Weight</th>
-<th>Average Weight</th>
-
+<table border=1>
 <tr>
+<td valign='top'>
+<h4>Unselected Bats</h4>
+<% if bats.length > 0 %>
+	<table>
+	<th>Bat</th>
+	<th>Last Weight</th>
+	<th>Average Weight</th>
 
-<td rowspan=<%=bats.length + 1 %>><%= select_tag("bat[id][]", options_from_collection_for_select(bats, "id", "band"), :multiple => true) %></td></tr>
+	<% for bat in bats %>
+		<tr>
+		<td><%= link_to_remote bat.band, :url => {:controller=>'bats', :action=>:add_bat_to_move_list, 
+					:bat_to_add => bat, :id=>cage, :selected_bats=> selected_bats}, 
+					:update=>'bat_list' %></td>
+		<td><%=h bat.weights.recent.weight %>g</td>
+		<td><%=h bat.average_weight %>g</td>
+		</tr>
+	<% end %>
 
-<% for bat in bats %>
-<tr>
-<td><%=h bat.weights.recent.weight %>g</td>
-<td><%=h bat.average_weight %>g</td>
-</tr>
+	</table>
 <% end %>
+</td>
 
+<td valign='top'>
+<h4>Bats to Move</h4>
+
+<% if selected_bats.length > 0 %>
+	<% form_remote_tag :url => {:controller => 'bats', :action => :choose_destination, :id => cage, 
+							:bats=>selected_bats}, 
+							:update => 'destination_cage' do %>
+		<table>
+		<th>Bat</th>
+		<th>Last Weight</th>
+		<th>Average Weight</th>
+			
+		<% for bat in selected_bats %>
+			<tr>
+			<td><%= link_to_remote bat.band, :url => {:controller=>'bats', :action=>'remove_bat_from_move_list', 
+				:bat_to_remove => bat, :id=>cage, :selected_bats=> selected_bats}, 
+				:update=>'bat_list' %></td>
+			<td><%=h bat.weights.recent.weight %>g</td>
+			<td><%=h bat.average_weight %>g</td>
+			</tr>
+		<% end %>
+		<tr>
+		<td><%= submit_tag 'Select Bats' %></td>
+		</tr>
+		</table>
+	<% end %>
+<% else %>
+	No bats selected.
+<% end %>
+</td>
+</tr>
 </table>
 
-<p><%= submit_tag 'Select Bats' %></p>
 
 </div>
-
-<% end %>
 
 <div id='destination_cage'>
 </div>

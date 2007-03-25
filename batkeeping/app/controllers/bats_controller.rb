@@ -175,12 +175,59 @@ redirect_to :action => 'list'
   #choose bats to move from cage
   def choose_bats
     cage = Cage.find(params[:id])
-    bats = cage.bats
-    render :partial => 'choose_bats_to_move', :locals => {:cage => cage, :bats => bats}
+		bats = Array.new
+		for bat in cage.bats
+			bats << bat
+		end
+		if params[:selected_bats] != nil
+			selected_bats = Bat.find(params[:selected_bats])
+			for bat in selected_bats
+				bats.delete(bat)
+			end
+		else
+			selected_bats = Array.new
+		end
+    render :partial => 'choose_bats_to_move', :locals => {:cage => cage, :bats => bats, :selected_bats => selected_bats}
   end
 
+	def add_bat_to_move_list
+    cage = Cage.find(params[:id])
+		bats = Array.new
+		for bat in cage.bats
+			bats << bat
+		end
+		bat_to_add = Bat.find(params[:bat_to_add])
+		if params[:selected_bats] != nil
+			selected_bats = Bat.find(params[:selected_bats])
+			selected_bats << bat_to_add
+			for bat in selected_bats
+				bats.delete(bat)
+			end
+		else
+			selected_bats = Array.new
+			selected_bats << bat_to_add
+			bats.delete(bat_to_add)
+		end
+		render :partial => 'choose_bats_to_move', :locals => {:cage => cage, :bats => bats, :selected_bats => selected_bats}
+	end
+
+	def remove_bat_from_move_list
+    cage = Cage.find(params[:id])
+		bats = Array.new
+		for bat in cage.bats
+			bats << bat
+		end
+		bat_to_remove = Bat.find(params[:bat_to_remove])
+		selected_bats = Bat.find(params[:selected_bats])
+		selected_bats.delete(bat_to_remove)
+		for bat in selected_bats
+			bats.delete(bat)
+		end
+		render :partial => 'choose_bats_to_move', :locals => {:cage => cage, :bats => bats, :selected_bats => selected_bats}
+	end
+
   def choose_destination
-    bats = Bat.find(params[:bat][:id], :order => 'band')
+    bats = Bat.find(params[:bats], :order => 'band')
     cage = Cage.find(params[:id])
     cages = Cage.find(:all, :conditions => "date_destroyed is null and id != " + cage.id.to_s, :order => "name")
     render :partial => 'choose_destination_cage', :locals => {:old_cage => cage, :bats => bats, :cages => cages}

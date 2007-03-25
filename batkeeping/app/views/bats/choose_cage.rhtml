@@ -1,6 +1,6 @@
 <h1>Move Bats</h1>
 
-<h2>What cage is the bat coming from?</h2>
+<h2>From what cage is the bat coming?</h2>
 
 <div class='left_indent'>
 <table>
@@ -10,7 +10,7 @@
 
 <% for cage in @cages %>
 <tr>
-<td><%= link_to_remote cage.name, :url => {:controller => 'bats', :action => :choose_bats, :id => cage},
+<td><%= link_to_remote cage.name, :url => {:controller => 'bats', :action => :choose_bats, :id => cage, :selected_bats=>Array.new},
                   :update => 'bat_list' %></td>
 <td><%= cage.bats.length %></td>
 <td><%= cage.average_bat_weight %></td>

@@ -5,8 +5,9 @@
 <table border=1>
 <tr>
 <td valign='top'>
-<h4>Unselected Bats</h4>
+<p><b>Unselected Bats</b><br />
 <% if bats.length > 0 %>
+<em>Click to Select Bats</em></p>
 	<table>
 	<th>Bat</th>
 	<th>Last Weight</th>
@@ -23,13 +24,15 @@
 	<% end %>
 
 	</table>
+<% else %>
+	<em>No more bats to select.</em>
 <% end %>
 </td>
 
 <td valign='top'>
-<h4>Bats to Move</h4>
-
+<p><b>Bats to Move</b><br />
 <% if selected_bats.length > 0 %>
+<em>Click to De-select Bats</em></p>
 	<% form_remote_tag :url => {:controller => 'bats', :action => :choose_destination, :id => cage, 
 							:bats=>selected_bats}, 
 							:update => 'destination_cage' do %>
@@ -47,13 +50,14 @@
 			<td><%=h bat.average_weight %>g</td>
 			</tr>
 		<% end %>
-		<tr>
-		<td><%= submit_tag 'Select Bats' %></td>
-		</tr>
 		</table>
+		
+		
+		<p align=center><%= submit_tag 'Select Bats' %></p>
+		
 	<% end %>
 <% else %>
-	No bats selected.
+	<p><em>No bats selected.</em></p>
 <% end %>
 </td>
 </tr>

@@ -208,6 +208,7 @@ redirect_to :action => 'list'
 			selected_bats << bat_to_add
 			bats.delete(bat_to_add)
 		end
+		selected_bats = selected_bats.sort_by{|bat| [bat.band]}
 		render :partial => 'choose_bats_to_move', :locals => {:cage => cage, :bats => bats, :selected_bats => selected_bats}
 	end
 

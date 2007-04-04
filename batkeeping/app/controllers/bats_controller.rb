@@ -91,7 +91,14 @@ redirect_to :action => 'list'
 	@bat.leave_date = nil
     Bat::set_user_and_comment(session[:person], params[:move]['note']) #Do this before saving!
 	if @bat.save
-	  flash[:notice] = 'Bat was successfully created.'
+	  census = Census.find_or_create_by_date_and_room_id(Date.today, @bat.cage.room)
+		if census.animals != nil
+			census.animals = census.animals + 1
+		else
+			
+		end
+				
+		flash[:notice] = 'Bat was successfully created.'
 	  redirect_to :action => 'list'
 	else
 	  render :action => 'new'
@@ -251,7 +258,22 @@ redirect_to :action => 'list'
     Bat::set_user_and_comment(session[:person], params[:move]['note']) #This must come before we mess with the list of bats for a cage. The moment we mess with the list, the cage and bat variables are updated. 
     @new_cage.bats << @bats
     @new_cage.bats = @new_cage.bats.uniq #no duplicates
-  
+		
+		if @old_cage.room != @new_cage.room
+			old_census = Census.find_or_create_by_date_and_room_id(Date.today, @old_cage.room)
+			old_census.room = @old_cage.room
+			if old_census.animals != nil
+				old_census.animals = old_census.animals - @bats.length
+			else
+				last_census = Census.find(:first, :order => 'date', :conditions => 'room_id = ' + @old_cage.room.id.to_s)
+				old_census.animals = last_census.animals - @bats.length
+			end
+			old_census.save
+			
+			new_census = Census.find_or_create_by_date_and_room_id(Date.today, @new_cage.room)
+			new_census.tally(@bats.length, @new_cage.room, Date.today)
+		end
+		
     #when we finally get emails working uncomment the following
     #email = MyMailer.deliver_mail("falk.ben@gmail.com")
   end

@@ -185,10 +185,17 @@ class CagesController < ApplicationController
   
   def submit_move_cage
     cage = Cage.find(params[:cage])
-    old_room = cage.room.name
+    old_room = Room.find(cage.room)
     cage.room = Room.find(params[:room])
     cage.save
-    flash[:notice] = 'Cage ' + cage.name + ' was moved from ' + old_room + ' to ' + cage.room.name
+    
+    old_census = Census.find_or_create_by_date_and_room_id(Date.today, old_room)
+    old_census.tally(-cage.bats.length, old_room)
+			
+    new_census = Census.find_or_create_by_date_and_room_id(Date.today, cage.room)
+    new_census.tally(cage.bats.length, cage.room)
+    
+    flash[:notice] = 'Cage ' + cage.name + ' was moved from ' + old_room.name + ' to ' + cage.room.name
     redirect_to :action => 'move_cage'
   end
 end

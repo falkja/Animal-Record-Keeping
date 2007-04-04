@@ -5,10 +5,12 @@
 <table>
 <th>Cage</th>
 <th>Room</th>
+<th>Bats</th>
 <% for cage in @cages %>
 <tr>
 <td><%= link_to_remote cage.name, :url => {:controller=>'cages', :action =>'choose_room', :cage => cage}, :update=>'choose_room' %></td>
 <td><%= cage.room.name %></td>
+<td><%= cage.bats.length %></td>
 </tr>
 <% end %>
 </table>

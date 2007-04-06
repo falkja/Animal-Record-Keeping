@@ -87,18 +87,17 @@ redirect_to :action => 'list'
   end
 
   def create
-	@bat = Bat.new(params[:bat])
-	@bat.leave_date = nil
+    @bat = Bat.new(params[:bat])
+    @bat.leave_date = nil
     Bat::set_user_and_comment(session[:person], params[:move]['note']) #Do this before saving!
-	if @bat.save
-	  census = Census.find_or_create_by_date_and_room_id(Date.today, @bat.cage.room)
-		census.tally(1, @bat.cage.room)
-    
-		flash[:notice] = 'Bat was successfully created.'
-	  redirect_to :action => 'list'
-	else
-	  render :action => 'new'
-	end
+    if @bat.save
+      census = Census.find_or_create_by_date_and_room_id(Date.today, @bat.cage.room)
+      census.tally(1, @bat.cage.room)
+      flash[:notice] = 'Bat was successfully created.'
+      redirect_to :action => 'list'
+    else
+      render :action => 'new'
+    end
   end
 
   def edit
@@ -115,13 +114,15 @@ redirect_to :action => 'list'
 	if @bat.update_attributes(params[:bat])
 	  if @deactivating
 	    for medical_problem in @bat.medical_problems
-		  medical_problem.date_closed = @bat.leave_date
-		  medical_problem.save
-		  for task in medical_problem.tasks.current
-		    task.date_ended = @bat.leave_date
-		    task.save
-		  end
-		end
+        medical_problem.date_closed = @bat.leave_date
+        medical_problem.save
+        for task in medical_problem.tasks.current
+          task.date_ended = @bat.leave_date
+          task.save
+        end
+      end
+      census = Census.find_or_create_by_date_and_room_id(Date.today, @bat.cage.room) #census page always displays today's date for when the bat is deactivated
+      census.tally(-1, @bat.cage.room)
 	  end
 	  flash[:notice] = 'Bat was successfully updated.'
 	  if params[:redirectme] == 'list'

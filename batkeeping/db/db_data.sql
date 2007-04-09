@@ -609,7 +609,7 @@ INSERT INTO `cages` (`id`,`name`,`date_created`,`date_destroyed`,`user_id`,`room
 DROP TABLE IF EXISTS `census`;
 CREATE TABLE `census` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `animals` int(10) unsigned zerofill DEFAULT NULL,
+  `animals` int(10) unsigned DEFAULT NULL,
   `date` date NOT NULL,
   `room_id` int(10) unsigned NOT NULL,
   `bats_added` varchar(2000) DEFAULT NULL,
@@ -623,12 +623,12 @@ CREATE TABLE `census` (
 
 /*!40000 ALTER TABLE `census` DISABLE KEYS */;
 INSERT INTO `census` (`id`,`animals`,`date`,`room_id`,`bats_added`,`bats_removed`) VALUES 
- (6,0000000002,'2007-04-04',9,NULL,NULL),
- (7,0000000000,'2007-04-04',11,NULL,NULL),
- (22,0000000003,'2007-04-04',10,NULL,NULL),
- (23,0000000006,'2007-04-09',10,'A2 A3 A1 A1 A1 A1 A1 A1 ','A1 A1 A1 A1 A1 '),
- (24,0000000003,'2007-04-09',9,'A1 A1 A1 A1 A1 A1 A1 A1 A1 A1 ','A5 A1 A1 A1 A1 A1 A1 A1 A1 '),
- (25,0000000000,'2007-04-09',11,'A5 ','A2 A3 ');
+ (6,2,'2007-04-04',9,NULL,NULL),
+ (7,0,'2007-04-04',11,NULL,NULL),
+ (22,3,'2007-04-04',10,NULL,NULL),
+ (23,4,'2007-04-09',10,'A2 A3 A1 A1 A1 A1 A1 A1 ','A1 A1 A1 A1 A1 '),
+ (24,1,'2007-04-09',9,'A1 A1 A1 A1 A1 A1 A1 A1 A1 A1 ','A5 A1 A1 A1 A1 A1 A1 A1 A1 '),
+ (25,1,'2007-04-09',11,'A5 ','A2 A3 ');
 /*!40000 ALTER TABLE `census` ENABLE KEYS */;
 
 

@@ -93,6 +93,8 @@ redirect_to :action => 'list'
     if @bat.save
       census = Census.find_or_create_by_date_and_room_id(Date.today, @bat.cage.room)
       census.tally(1, @bat.cage.room)
+      census.bats_added ? census.bats_added = census.bats_added + @bat.band + ' ' : census.bats_added = @bat.band + ' '
+      census.save
       flash[:notice] = 'Bat was successfully created.'
       redirect_to :action => 'list'
     else
@@ -121,12 +123,26 @@ redirect_to :action => 'list'
           task.save
         end
       end
-      census = Census.find_or_create_by_date_and_room_id(Date.today, @bat.cage.room) #census page always displays today's date for when the bat is deactivated
-      census.tally(-1, @bat.cage.room)
+      census = Census.find_or_create_by_date_and_room_id(Date.today, @cage.room) #census page always displays today's date for when the bat is deactivated
+      census.tally(-1, @cage.room)
+      census.bats_removed ? census.bats_removed = census.bats_removed + @bat.band + ' ' : census.bats_removed = @bat.band + ' '
+      census.save
+      params[:redirectme] = 'move'
 	  end
+    if @reactivating
+      census = Census.find_or_create_by_date_and_room_id(Date.today, @bat.cage.room)
+      census.tally(1, @bat.cage.room)
+      census.bats_added ? census.bats_added = census.bats_added + @bat.band + ' ' : census.bats_added = @bat.band + ' '
+      census.save
+      params[:redirectme] = 'move'
+    end
 	  flash[:notice] = 'Bat was successfully updated.'
 	  if params[:redirectme] == 'list'
 		redirect_to :action => 'list'
+    elsif params[:redirectme] == 'move'
+      @bats = Array.new
+      @bats << @bat
+      redirect_to :action => 'move', :bats => @bats, :new_cage => @bat.cage, :old_cage => @cage, :note => params[:move]['note']
 	  else
 		redirect_to :action => 'show', :id => @bat
 	  end
@@ -149,7 +165,8 @@ redirect_to :action => 'list'
   #the simplest way to handle cage leave event is like this
   def deactivate_bat
 	@bat = Bat.find(params[:id])
-	params[:move]['note'] = params[:bat]['leave_reason']
+  @cage = Cage.find(@bat.cage)
+	params[:move]['note'] = params[:move]['note']
 	params[:bat]['cage_id'] = nil
 	@deactivating = true
 	update
@@ -167,7 +184,10 @@ redirect_to :action => 'list'
 	@bat.leave_date = nil
 	@bat.leave_reason = nil
 	@bat.save
-	
+  @cage = nil
+  
+  @bat.cage = Cage.find(params[:bat]['cage_id'])
+  @reactivating = true
   update
   end
 
@@ -248,21 +268,33 @@ redirect_to :action => 'list'
 
   def move
     @bats = Bat.find(params[:bats])
-    @new_cage = Cage.find(params[:new_cage])
-    @old_cage = Cage.find(params[:old_cage])
-    @note = params[:move][:note]
-    
-    Bat::set_user_and_comment(session[:person], params[:move]['note']) #This must come before we mess with the list of bats for a cage. The moment we mess with the list, the cage and bat variables are updated. 
+    params[:new_cage] ? @new_cage = Cage.find(params[:new_cage]) : ''
+    params[:old_cage] ? @old_cage = Cage.find(params[:old_cage]) : ''
+    params[:move] ? @note = params[:move][:note] : @note = params[:note]
+
+    if (@reactivating == false) && (@deactivating == false)
+
+    Bat::set_user_and_comment(session[:person],@note) #This must come before we mess with the list of bats for a cage. The moment we mess with the list, the cage and bat variables are updated. 
     @new_cage.bats << @bats
     @new_cage.bats = @new_cage.bats.uniq #no duplicates
 		
+
 		if @old_cage.room != @new_cage.room
 			old_census = Census.find_or_create_by_date_and_room_id(Date.today, @old_cage.room)
 			old_census.tally(-@bats.length, @old_cage.room)
-			
+			for bat in @bats
+        old_census.bats_removed ? old_census.bats_removed = old_census.bats_removed + bat.band + ' ' : old_census.bats_removed = bat.band + ' '
+      end
+      old_census.save
+      
 			new_census = Census.find_or_create_by_date_and_room_id(Date.today, @new_cage.room)
 			new_census.tally(@bats.length, @new_cage.room)
+      for bat in @bats
+        new_census.bats_added ? new_census.bats_added = new_census.bats_added + bat.band + ' ' : new_census.bats_added = bat.band + ' '
+      end
+      new_census.save
 		end
+    end
 		
     #when we finally get emails working uncomment the following
     #email = MyMailer.deliver_mail("falk.ben@gmail.com")
@@ -270,6 +302,10 @@ redirect_to :action => 'list'
 	
 	def manage_cage_tasks_after_move		
 		render :partial=> 'manage_cage_tasks_after_move', :locals=>{:step=>params[:step].to_i,:old_cage=>Cage.find(params[:old_cage]), :new_cage => Cage.find(params[:new_cage])}
+	end
+
+	def manage_cage_tasks_after_deactivate_or_reactivate
+		render :partial=> 'manage_cage_tasks_after_deactivate_or_reactivate', :locals=>{:step=>params[:step].to_i,:cage=>Cage.find(params[:cage]), :deactivating => params[:deactivating]}
 	end
 
   def choose_bat_to_weigh

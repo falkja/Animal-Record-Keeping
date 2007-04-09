@@ -1,11 +1,11 @@
 <h1>Colony status as of <%= nice_date_with_time Time.now %></h1>
 
 <% form_tag :controller => 'stats', :action => 'monthly_sheet' do %>
-	Show summary table for
+	Show census page for
 	
 	<%= select_year(Date.today, :start_year => @start_year, :end_year => @end_year) %>
 	<%= select_month(Date.today) %>
-	<%= select('room', 'number', ['Belfry (4102F)', 'Colony Room (4100)', 'Fruit Bats (4148L)']) %>
+	<%= collection_select('room', 'id', @rooms, 'id', 'name') %>
 
 	<%= submit_tag 'Go' %>
 <% end %>

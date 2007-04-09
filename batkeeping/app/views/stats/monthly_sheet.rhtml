@@ -1,23 +1,25 @@
-<h2><%= "Summary of #{@room} for #{Date::MONTHNAMES[@month]} #{@year}" %></h2>
+<h2><%= "Summary of " + @room.name + " for #{Date::MONTHNAMES[@month]} #{@year}" %></h2>
 
 <table border =1>
 	<th>Day</th>
 	<th>Bats</th>
-	<th>Bats -</th>
 	<th>Bats +</th>
+	<th>Bats -</th>
 	<th>Temp</th>
 	<th>Humid</th>
 <% for day in @days_this_month %>
-	<tr>
+	
+  <% if Date.new(@year, @month, day+1) <= Date.today %>
+
+  <tr>
 	
 	<td><%= day + 1 %></td>
 	
-	<% num_bats_today = Bat.num_bats_when(day+1, @month, @year, @room) %>
-	<td><%= num_bats_today %>
-	<% bats_left, n_bats_left = Bat.left_on_day(day+1, @month, @year, @room) %>
-	<td><%= n_bats_left > 0 ? -n_bats_left : '' %></td>
-	<% bats_arrived, n_bats_arrived = Bat.arrived_on_day(day+1, @month, @year, @room) %>	
-	<td><%= n_bats_arrived > 0 ? +n_bats_arrived : '' %></td>
+	<td><%= @room.num_bats_when(day+1, @month, @year) %></td>
+  
+  <td><%= @room.bats_added_when(day+1, @month, @year)%></td>
+	
+  <td><%= @room.bats_removed_when(day+1, @month, @year)%></td>
 	
 	<% if @tempandhumidity_list[day] %>
 		<td><%= @tempandhumidity_list[day].temperature %></td>
@@ -28,5 +30,7 @@
 	<% end %>
 	
 	</tr>
+  
+  <% end %>
 <% end %>
 </table>

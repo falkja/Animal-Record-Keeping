@@ -44,17 +44,12 @@
 <%= select_tag("bat[gender]", options_for_select([["Male","M"],["Female","F"]],@bat.gender), :disabled => @reactivating) %>
 </p>
 
+
+<% if @reactivating == true #inactive bat %>
 <p><label for="cage">Cage</label><br/>
-<% if @bat.leave_date == nil or @reactivating == true #inactive bat %>
 <%= collection_select("bat", "cage_id" , @cages, "id", "name") %>
-<% else %>
-<%= select_tag("bat[cage_id]", options_for_select([["Inactive",""]]) ) %>
-<% end %>
 Cage change note: <%= text_field "move","note" %> 
-<% if @reactivating == true %>
 Choose a cage for this reactivated bat.
-<% else %>
-(Only fill in if changing cage or making a note for a new bat entry)
 <% end %>
 </p>
 
@@ -65,7 +60,7 @@ Choose a cage for this reactivated bat.
 <%= date_select 'bat', 'leave_date',  :disabled => @disable_leave_date%></p>
 
 <p><label for="bat_leave_reason">Leave reason</label><br/>
-<%= text_field 'bat', 'leave_reason',  :disabled => @disable_leave_date%></p>
+<%= text_field 'move', 'note',  :disabled => @disable_leave_date%></p>
 </div>
 
 <!--[eoform:bat]-->

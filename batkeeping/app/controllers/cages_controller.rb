@@ -190,10 +190,18 @@ class CagesController < ApplicationController
     cage.save
     
     old_census = Census.find_or_create_by_date_and_room_id(Date.today, old_room)
-    old_census.tally(-cage.bats.length, old_room)
-			
+    old_census.tally(-cage.bats.length, old_room)			
+    for bat in cage.bats
+      old_census.bats_removed ? old_census.bats_removed = old_census.bats_removed + bat.band + ' ' : old_census.bats_removed = bat.band + ' '
+    end
+    old_census.save
+      
     new_census = Census.find_or_create_by_date_and_room_id(Date.today, cage.room)
     new_census.tally(cage.bats.length, cage.room)
+    for bat in cage.bats
+      new_census.bats_added ? new_census.bats_added = new_census.bats_added + bat.band + ' ' : new_census.bats_added = bat.band + ' '
+    end
+    new_census.save
     
     flash[:notice] = 'Cage ' + cage.name + ' was moved from ' + old_room.name + ' to ' + cage.room.name
     redirect_to :action => 'move_cage'

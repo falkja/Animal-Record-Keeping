@@ -11,7 +11,8 @@ class StatsController < ApplicationController
 		else	
 			@start_year = @end_year
 		end
-
+    
+    @rooms = Room.find(:all, :order=> 'name')
 		compute_census_summary
 		compute_food_summary
 	end
@@ -22,7 +23,7 @@ class StatsController < ApplicationController
 	def monthly_sheet
 		@year = params[:date][:year].to_i
 		@month = params[:date][:month].to_i
-		@room = params[:room][:number]
+		@room = Room.find(params[:room][:id])
 		@days_this_month = 0...Date::civil(@year, @month, -1).day
 		@tempandhumidity_list = Weather.for_date(@year, @month, @days_this_month, @room)
 	end

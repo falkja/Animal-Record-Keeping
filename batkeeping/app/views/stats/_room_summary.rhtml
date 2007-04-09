@@ -4,7 +4,7 @@
           :update => 'rooms',
           :url => {:controller => 'stats', :action => 'hide_room_summary'} %>] 
 <%= link_to Bat.active.length, :controller => 'bats', :action => 'list' %> bats in 
-<%= link_to Cage.active.length, :controller => 'cages', :action => 'list' %> cages : 
+<%= link_to Cage.has_bats.length, :controller => 'cages', :action => 'list' %> cages : 
 
 <div class="left_indent">
 <div  style='background-color:#eeeeee'>

@@ -58,15 +58,7 @@ class Bat < ActiveRecord::Base
 			end
 		end
 	end
-	
-	#returns the number of bats at any day for a given room
-	def self.num_bats_when(day, month, year, room)
-		bats = Bat.find(:all, :conditions => "(leave_date > '" + year.to_s + "-"+ month.to_s + "-" + day.to_s + "' OR leave_date is null) AND collection_date <= '" + year.to_s + "-"+ month.to_s + "-" + day.to_s + "'")
-		bats.delete_if {|bat| bat.in_what_cage(day,month,year) != room }	 #this will crash if you have a bat with nil cage, which you shouldn't
-		bats ? num_bats = bats.length : num_bats = 0
-		return num_bats
-	end
-	
+		
 	#What was the date that the first bat was added to the colony (acc to database)
 	def self.earliest_addition
 		bat = Bat.find :first, :order => 'collection_date asc'
@@ -86,24 +78,6 @@ class Bat < ActiveRecord::Base
 	def self.arrived_on_month(month, year)
 		#from http://dev.mysql.com/doc/refman/5.0/en/date-calculations.html
 		bats = Bat.find(:all, :conditions => "YEAR(collection_date) = #{year} AND MONTH(collection_date) = #{month}")
-		bats ? yoda = bats.length : yoda = 0
-		return bats, yoda
-	end
-	
-	#Return all bats that left the colony (leave_date)
-	#on the given month (month is an integer from 1 to 12)
-	def self.left_on_day(day, month, year, room)
-		#from http://dev.mysql.com/doc/refman/5.0/en/date-calculations.html
-		bats = Bat.find(:all, :conditions => "YEAR(leave_date) = #{year} AND MONTH(leave_date) = #{month} AND DAY(leave_date) = #{day}")
-		bats.delete_if {|bat| bat.cage_out_histories[0].cage.room != room } #this will crash if you have a coh with nil cage, which you shouldn't
-		bats ? yoda = bats.length : yoda = 0
-		return bats, yoda
-	end
-	
-	def self.arrived_on_day(day, month, year, room)
-		#from http://dev.mysql.com/doc/refman/5.0/en/date-calculations.html		
-		bats = Bat.find(:all, :conditions => "YEAR(collection_date) = #{year} AND MONTH(collection_date) = #{month} AND DAY(collection_date) = #{day}")
-		bats.delete_if {|bat| bat.cage_in_histories[0].cage.room != room }	 #this will crash if you have a cih with nil cage, which you shouldn't
 		bats ? yoda = bats.length : yoda = 0
 		return bats, yoda
 	end

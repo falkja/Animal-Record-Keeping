@@ -7,6 +7,7 @@
 <th>Cage</th>
 <th>Number of bats</th>
 <th>Average current weight</th>
+<th>Room</th>
 
 <% for cage in @cages %>
 <tr>
@@ -14,6 +15,7 @@
                   :update => 'bat_list' %></td>
 <td><%= cage.bats.length %></td>
 <td><%= cage.average_bat_weight %></td>
+<td><%= cage.room.name %></td>
 </tr>
 <% end %>
 

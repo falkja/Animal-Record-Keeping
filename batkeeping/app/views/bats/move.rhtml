@@ -15,19 +15,29 @@
 <% end %>
 </td>
 
-<td valign=top><%= @old_cage.name %></td>
+<td valign=top><%= @old_cage ? @old_cage.name : 'Inactive' %></td>
 
-<td valign=top><%= @new_cage.name %></td>
+<td valign=top><%= @new_cage ? @new_cage.name : 'Inactive' %></td>
 
 <td valign=top><%= @note %></td>
 
 </tr>
 </table>
 
+<% if @new_cage != nil %>
 <p><warning>Send email alert to owner of <%=h @new_cage.name %> that bat(s)
 have been moved and are now under his/her care</warning></p>
+<% end %>
 
 <div id='cage_tasks'>
+<% if (@old_cage != nil) && (@new_cage != nil) %>
 <%= render :partial => 'bats/manage_cage_tasks_after_move', :locals => {:step=>1, :old_cage=>@old_cage,
 										:new_cage=>@new_cage} %>
+<% else %>
+<% if @old_cage != nil %>
+<%= render :partial => 'bats/manage_cage_tasks_after_deactivate_or_reactivate', :locals => {:step=>1, :cage=>@old_cage, :deactivating => true} %>
+<% elsif @new_cage != nil %>
+<%= render :partial => 'bats/manage_cage_tasks_after_deactivate_or_reactivate', :locals => {:step=>1, :cage=>@new_cage, :deactivating => false} %>
+<% end %>
+<% end %>
 </div>

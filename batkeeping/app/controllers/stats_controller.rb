@@ -44,14 +44,7 @@ class StatsController < ApplicationController
 	end
 	
 	def room_summary
-		@colony_cages = Cage.active_colony_cages
-		@colony_bats = bats_in_cages(@colony_cages)
-	
-		@belfry_cages = Cage.active_belfry_cages
-		@belfry_bats = bats_in_cages(@belfry_cages)
-	
-		@fruitbat_cages = Cage.active_fruitbat_cages
-		@fruitbat_bats = bats_in_cages(@fruitbat_cages)
+		@rooms = Room.find(:all, :order=> 'name')
 		render :partial => 'room_summary'
 	end
 	

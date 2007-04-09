@@ -8,13 +8,5 @@ class ApplicationController < ActionController::Base
 	def send_to_login
     redirect_to :controller => 'main', :action => 'timeout'
     end
-
-    #given an array of cages, returns number of bats in them
-    def bats_in_cages(cages)
-		bats = Array.new
-    	cages.each {|cage| bats << cage.bats}
-    	bats.flatten!
-    end
-	
 	
 end

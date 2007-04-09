@@ -8,40 +8,26 @@
 
 <div class="left_indent">
 <div  style='background-color:#eeeeee'>
-<h3>Colony Room (4100)</h3>
-There are <b><%= @colony_cages.length %></b> cages in the colony room 
-containing <b><%= @colony_bats.length %></b> bats.
 
-<div class="left_indent"><p>
-<div id="colony">
-<% @div_id = "colony" %>
-<%= render :partial => 'cages/cage_list', :locals => {:cage_list => @colony_cages} %>
+<% for room in @rooms %>
+
+<h3><%=h room.name %></h3>
+
+There are <b><%= room.cages.length %></b> cages in the colony room
+containing <b><%= bats_in_cages(room.cages).length %></b> bats.
+
+<div class="left_indent">
+
+<p>
+<div id="<%=h room.name %>">
+<% @div_id = room.name %>
+<%= render :partial => 'cages/cage_list', :locals => {:cage_list => room.cages} %>
 </div>
-</p></div>
+</p>
 
-
-<h3>Belfry (4102F)</h3>
-There are <b><%= @belfry_cages.length %></b> cages in the belfry
-containing <b><%= @belfry_bats.length %></b> bats.
-
-<div class="left_indent"><p>
-<div id="belfry">
-<% @div_id = "belfry" %>
-<%= render :partial => 'cages/cage_list', :locals => {:cage_list => @belfry_cages} %>
 </div>
-</p></div>
 
-
-<h3>Fruit Bats Room (4148L)</h3>
-There are <b><%= @fruitbat_cages.length %></b> cages in the fruit bat room
-containing <b><%= @fruitbat_bats.length %></b> bats.
-
-<div class="left_indent"><p>
-<div id="fruitbat">
-<% @div_id = "fruitbat" %>
-<%= render :partial => 'cages/cage_list', :locals => {:cage_list => @fruitbat_cages} %>
-</div>
-</p></div>
+<% end %>
 
 </div>
 </div>

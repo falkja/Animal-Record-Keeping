@@ -6,10 +6,6 @@ class Cage < ActiveRecord::Base
     has_many :tasks, :order => "repeat_code"
     belongs_to :room
   
-  @@colony = 'Colony Room (4100)'
-  @@belfry = 'Belfry (4102F)'
-  @@fruitbat = 'Fruit Bats (4148L)'
-  
   def self.active
     find :all, :conditions => 'date_destroyed is null', :order => 'name'
   end
@@ -28,18 +24,6 @@ class Cage < ActiveRecord::Base
 			@cages.delete_if{|cage| cage.tasks.feeding_tasks.length == 0}
 		end
 	return @cages
-  end
-  
-  def self.active_colony_cages
-    find :all, :conditions => "date_destroyed is null and room = '#{@@colony}'", :order => 'name'
-  end
-  
-  def self.active_belfry_cages
-      find :all, :conditions => "date_destroyed is null and room = '#{@@belfry}'", :order => 'name'
-  end
-  
-  def self.active_fruitbat_cages
-      find :all, :conditions => "date_destroyed is null and room = '#{@@fruitbat}'", :order => 'name'
   end
   
   def average_bat_weight

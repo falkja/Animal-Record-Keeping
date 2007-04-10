@@ -123,7 +123,7 @@ redirect_to :action => 'list'
           task.save
         end
       end
-      census = Census.find_or_create_by_date_and_room_id(Date.today, @cage.room) #census page always displays today's date for when the bat is deactivated
+      census = Census.find_or_create_by_date_and_room_id(Date.today, @cage.room) #census page only changes the census entry for Date.today instead of when the bat is actually deactivated
       census.tally(-1, @cage.room)
       census.bats_removed ? census.bats_removed = census.bats_removed + @bat.band + ' ' : census.bats_removed = @bat.band + ' '
       census.save

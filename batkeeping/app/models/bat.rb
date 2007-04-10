@@ -40,7 +40,7 @@ class Bat < ActiveRecord::Base
 	
 	#returns all the sick bats
 	def self.sick
-		@medical_problems = MedicalProblem.find(:all)
+		@medical_problems = MedicalProblem.current
 		bat_ids = Array.new
 		for medical_problem in @medical_problems
 			bat_ids << medical_problem.bat.id

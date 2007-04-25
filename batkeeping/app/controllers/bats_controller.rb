@@ -282,28 +282,48 @@ redirect_to :action => 'list'
     params[:old_cage] ? @old_cage = Cage.find(params[:old_cage]) : ''
     params[:move] ? @note = params[:move][:note] : @note = params[:note]
 
-    if (@reactivating == false) && (@deactivating == false)
-
     Bat::set_user_and_comment(session[:person],@note) #This must come before we mess with the list of bats for a cage. The moment we mess with the list, the cage and bat variables are updated. 
-    @new_cage.bats << @bats
-    @new_cage.bats = @new_cage.bats.uniq #no duplicates
-		
-
-		if @old_cage.room != @new_cage.room
-			old_census = Census.find_or_create_by_date_and_room_id(Date.today, @old_cage.room)
-			old_census.tally(-@bats.length, @old_cage.room)
-			for bat in @bats
-        old_census.bats_removed ? old_census.bats_removed = old_census.bats_removed + bat.band + ' ' : old_census.bats_removed = bat.band + ' '
-      end
-      old_census.save
+    if (@new_cage) && (@old_cage)
+      @new_cage.bats << @bats
+      @new_cage.bats = @new_cage.bats.uniq #no duplicates
       
-			new_census = Census.find_or_create_by_date_and_room_id(Date.today, @new_cage.room)
-			new_census.tally(@bats.length, @new_cage.room)
+      if @old_cage.room != @new_cage.room
+        old_census = Census.find_or_create_by_date_and_room_id(Date.today, @old_cage.room)
+        old_census.tally(-@bats.length, @old_cage.room)
+        for bat in @bats
+          old_census.bats_removed ? old_census.bats_removed = old_census.bats_removed + bat.band + ' ' : old_census.bats_removed = bat.band + ' '
+        end
+        old_census.save
+        
+        new_census = Census.find_or_create_by_date_and_room_id(Date.today, @new_cage.room)
+        new_census.tally(@bats.length, @new_cage.room)
+        for bat in @bats
+          new_census.bats_added ? new_census.bats_added = new_census.bats_added + bat.band + ' ' : new_census.bats_added = bat.band + ' '
+        end
+        new_census.save
+      end
+    elsif @new_cage #reactivating
+      @new_cage.bats << @bats
+      @new_cage.bats = @new_cage.bats.uniq #no duplicates
+      
+      new_census = Census.find_or_create_by_date_and_room_id(Date.today, @new_cage.room)
+      new_census.tally(@bats.length, @new_cage.room)
       for bat in @bats
         new_census.bats_added ? new_census.bats_added = new_census.bats_added + bat.band + ' ' : new_census.bats_added = bat.band + ' '
       end
       new_census.save
-		end
+    else #deactivating
+      for bat in @bats
+        bat.cage = nil
+        bat.save
+      end
+            
+      old_census = Census.find_or_create_by_date_and_room_id(Date.today, @old_cage.room)
+      old_census.tally(-@bats.length, @old_cage.room)
+      for bat in @bats
+        old_census.bats_removed ? old_census.bats_removed = old_census.bats_removed + bat.band + ' ' : old_census.bats_removed = bat.band + ' '
+      end
+      old_census.save
     end
 		
     #when we finally get emails working uncomment the following

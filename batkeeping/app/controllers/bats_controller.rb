@@ -108,7 +108,7 @@ redirect_to :action => 'list'
 
   def edit
 	@current_user = session[:person]  
-	@cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name" )
+	@cages = Cage.active
 	@bat = Bat.find(params[:id])
 	@deactivating = false
   end
@@ -117,8 +117,10 @@ redirect_to :action => 'list'
 	@bat = Bat.find(params[:id])
 	if @reactivating
 		note = 'reactivated'
-	else
+	elsif (params[:move] != nil)
 		note = params[:move][:note]
+  else
+    note = ''
 	end
 		
 	Bat::set_user_and_comment(session[:person], note) #Do this before saving!

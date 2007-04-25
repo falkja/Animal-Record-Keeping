@@ -91,7 +91,7 @@ redirect_to :action => 'list'
   def create
     @bat = Bat.new(params[:bat])
     @bat.leave_date = nil
-		Bat::set_user_and_comment(session[:person], params[:move]['note']) #Do this before saving!
+		Bat::set_user_and_comment(session[:person], 'new bat') #Do this before saving!
     if @bat.save
       census = Census.find_or_create_by_date_and_room_id(Date.today, @bat.cage.room)
       census.tally(1, @bat.cage.room)
@@ -100,7 +100,7 @@ redirect_to :action => 'list'
       flash[:notice] = 'Bat was successfully created.'
       @bats = Array.new
       @bats << @bat
-      redirect_to :action => 'move', :bats => @bats, :new_cage => Cage.find(params[:bat][:cage_id]), :old_cage => nil, :note => params[:move][:note]
+      redirect_to :action => 'move', :bats => @bats, :new_cage => Cage.find(params[:bat][:cage_id]), :old_cage => nil, :note => 'new bat'
     else
       render :action => 'new'
     end

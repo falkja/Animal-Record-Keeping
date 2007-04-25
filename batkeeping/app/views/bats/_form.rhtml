@@ -46,21 +46,19 @@
 
 
 <% if (@reactivating == true) || (@creating == true) %>
-<p><label for="cage">Cage</label><br/>
-<%= collection_select("bat", "cage_id" , @cages, "id", "name") %>
-Cage change note: <%= text_field "move","note" %> 
-</p>
 
 <p>
-<div class='left_indent'>
-Cage summary:
+
+Choose cage
 <table>
+<th></th>
 <th>Cage</th>
 <th>Number of bats</th>
 <th>Average current weight</th>
 
 <% for cage in Cage.active %>
 <tr>
+<td><%=radio_button :bat, :cage_id, cage.id %></td>
 <td><%= cage.name %></td>
 <td><%= cage.bats.length %></td>
 <td><%= cage.average_bat_weight %></td>
@@ -69,7 +67,7 @@ Cage summary:
 
 </table>
 
-</div>
+
 </p>
 <% end %>
 

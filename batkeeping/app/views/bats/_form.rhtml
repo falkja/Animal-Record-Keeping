@@ -45,13 +45,33 @@
 </p>
 
 
-<% if @reactivating == true #inactive bat %>
+<% if (@reactivating == true) || (@creating == true) %>
 <p><label for="cage">Cage</label><br/>
 <%= collection_select("bat", "cage_id" , @cages, "id", "name") %>
 Cage change note: <%= text_field "move","note" %> 
-Choose a cage for this reactivated bat.
-<% end %>
 </p>
+
+<p>
+<div class='left_indent'>
+Cage summary:
+<table>
+<th>Cage</th>
+<th>Number of bats</th>
+<th>Average current weight</th>
+
+<% for cage in Cage.active %>
+<tr>
+<td><%= cage.name %></td>
+<td><%= cage.bats.length %></td>
+<td><%= cage.average_bat_weight %></td>
+</tr>
+<% end %>
+
+</table>
+
+</div>
+</p>
+<% end %>
 
 </div>
 

@@ -83,20 +83,24 @@ redirect_to :action => 'list'
   def new
 	@cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name")
 	@bat = Bat.new
+	@reactivating = false
 	@deactivating = false
-  end
+	@creating = true
+	end
 
   def create
     @bat = Bat.new(params[:bat])
     @bat.leave_date = nil
-    Bat::set_user_and_comment(session[:person], params[:move]['note']) #Do this before saving!
+		Bat::set_user_and_comment(session[:person], params[:move]['note']) #Do this before saving!
     if @bat.save
       census = Census.find_or_create_by_date_and_room_id(Date.today, @bat.cage.room)
       census.tally(1, @bat.cage.room)
       census.bats_added ? census.bats_added = census.bats_added + @bat.band + ' ' : census.bats_added = @bat.band + ' '
       census.save
       flash[:notice] = 'Bat was successfully created.'
-      redirect_to :action => 'list'
+      @bats = Array.new
+      @bats << @bat
+      redirect_to :action => 'move', :bats => @bats, :new_cage => Cage.find(params[:bat][:cage_id]), :old_cage => nil, :note => params[:move][:note]
     else
       render :action => 'new'
     end

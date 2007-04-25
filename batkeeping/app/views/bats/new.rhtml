@@ -1,3 +1,13 @@
+<% if Cage.active.length == 0 %>
+
+<p>
+Please <%= link_to 'create', :controller => 'cages',:action => 'new' %> or 
+<%= link_to 'activate', :controller => 'cages', :action => 'list' %> a cage for the bats
+before adding bats to the database.
+</p>
+
+<% else %>
+
 <h1>New bat</h1>
 
 <% form_tag :action => 'create' do %>
@@ -6,3 +16,5 @@
 <% end %>
 
 <%= link_to 'List Current Bats', :action => 'list' %>
+
+<% end %>

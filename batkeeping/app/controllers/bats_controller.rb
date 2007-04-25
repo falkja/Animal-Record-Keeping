@@ -115,7 +115,13 @@ redirect_to :action => 'list'
 
   def update
 	@bat = Bat.find(params[:id])
-    Bat::set_user_and_comment(session[:person], params[:move]['note']) #Do this before saving!
+	if @reactivating
+		note = 'reactivated'
+	else
+		note = params[:move][:note]
+	end
+		
+	Bat::set_user_and_comment(session[:person], note) #Do this before saving!
 		
 	if @bat.update_attributes(params[:bat])
 	  if @deactivating
@@ -146,7 +152,7 @@ redirect_to :action => 'list'
     elsif params[:redirectme] == 'move'
       @bats = Array.new
       @bats << @bat
-      redirect_to :action => 'move', :bats => @bats, :new_cage => @bat.cage, :old_cage => @cage, :note => params[:move]['note']
+      redirect_to :action => 'move', :bats => @bats, :new_cage => @bat.cage, :old_cage => @cage, :note => note
 	  else
 		redirect_to :action => 'show', :id => @bat
 	  end

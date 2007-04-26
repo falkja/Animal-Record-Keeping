@@ -89,6 +89,10 @@ redirect_to :action => 'list'
 	end
 
   def create
+		if (params[:bat][:cage_id] == nil) || (params[:bat][:band] == '') || (params[:bat][:collection_place] == '')
+			flash[:notice] = 'There were problems with your submission.  Please make sure all data fields are filled out.'
+			redirect_to :back
+		else
     @bat = Bat.new(params[:bat])
     @bat.leave_date = nil
 		Bat::set_user_and_comment(session[:person], 'new bat') #Do this before saving!
@@ -104,6 +108,7 @@ redirect_to :action => 'list'
     else
       render :action => 'new'
     end
+		end
   end
 
   def edit

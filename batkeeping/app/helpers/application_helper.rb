@@ -34,6 +34,7 @@ module ApplicationHelper
     bats = Array.new
     cages.each {|cage| bats << cage.bats}
     bats.flatten!
+    return bats.length
   end
   
 end

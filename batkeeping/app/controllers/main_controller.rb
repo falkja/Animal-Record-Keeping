@@ -30,6 +30,8 @@ class MainController < ApplicationController
   #lists things of relevance to only the user
   def user_summary_page
   
+  @todays_weather = Weather.today
+  
   if session[:person] != nil
 	  @user = User.find(params[:id])
 	  @mycages = @user.cages.active

@@ -1,0 +1,44 @@
+<div id='weathers'>
+
+<div class= "left_indent">
+
+<% for room in Room.find(:all, :order=> 'name') %>
+<% form_remote_tag(:update => 'weathers',
+        :url=>{:controller => 'weathers', :action => 'create', :room => room}) do %>
+<%= text_field 'weather', 'temperature', :size=>2 %>degrees<br/>
+<%= text_field 'weather', 'humidity', :size=>2 %>%<br/>
+<%= submit_tag 'Submit Temperature and Humidity' %><br/>
+<% end %>
+<% end %>
+
+<table>
+<th>Room</th>
+<th>Temperature</th>
+<th>Humidity</th>
+
+<% for room in Room.find(:all, :order=> 'name') %>
+<tr>
+<td><%= room.name %></td>
+<% if @todays_weather == nil %>
+
+<%# form_tag(:controller=>'weathers', :action => 'create', :room=> room) do %>
+
+<% form_remote_tag(:update => 'weathers',
+        :url=>{:controller => 'weathers', :action => 'create', :room => room}) do %>
+<td><%= text_field 'weather', 'temperature', :size=>2 %>degrees</td>
+<td><%= text_field 'weather', 'humidity', :size=>2 %>%</td>
+<td><%= submit_tag 'Submit Temperature and Humidity' %></td>
+<% end %>
+
+<% else %>
+<td><%= %></td>
+<td><%= %></td>
+<% end %>
+</tr>
+<% end %>
+
+</table>
+
+</div>
+
+</div>

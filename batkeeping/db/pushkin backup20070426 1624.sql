@@ -1,7 +1,7 @@
 -- MySQL Administrator dump 1.4
 --
 -- ------------------------------------------------------
--- Server version	5.2.3-falcon-alpha-community-nt
+-- Server version	5.0.32-Debian_7etch1-log
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -27,12 +27,12 @@ USE batkeeping;
 
 DROP TABLE IF EXISTS `bat_notes`;
 CREATE TABLE `bat_notes` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `bat_id` int(10) unsigned NOT NULL,
   `date` datetime NOT NULL,
   `text` text NOT NULL,
   `user_id` int(10) unsigned NOT NULL COMMENT 'signature',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -49,19 +49,19 @@ CREATE TABLE `bat_notes` (
 
 DROP TABLE IF EXISTS `bats`;
 CREATE TABLE `bats` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `cage_id` int(10) unsigned DEFAULT NULL,
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `cage_id` int(10) unsigned default NULL,
   `collection_date` datetime NOT NULL,
   `collection_age` varchar(45) NOT NULL COMMENT 'juvenile/adult',
   `collection_place` varchar(100) NOT NULL,
   `species` varchar(45) NOT NULL,
   `gender` varchar(1) NOT NULL COMMENT 'm/f',
-  `leave_date` datetime DEFAULT NULL COMMENT 'y/n - in lab or not',
+  `leave_date` datetime default NULL COMMENT 'y/n - in lab or not',
   `leave_reason` text COMMENT 'death/exported',
-  `band` varchar(10) DEFAULT NULL,
-  `user_id` int(10) unsigned DEFAULT NULL,
+  `band` varchar(10) default NULL,
+  `user_id` int(10) unsigned default NULL,
   `note` text,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -70,7 +70,7 @@ CREATE TABLE `bats` (
 
 /*!40000 ALTER TABLE `bats` DISABLE KEYS */;
 INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`species`,`gender`,`leave_date`,`leave_reason`,`band`,`user_id`,`note`) VALUES 
- (1,1,'2005-07-07 00:00:00','Adult','Oxon Hill, Maryland, USA','Eptesicus fuscus','M',NULL,NULL,'G39',NULL,'<tr><td>Ben\'s bat - catches mealworms and discriminates groove beads</td><td>BF</td><td>Apr 25, 2007</td></tr>'),
+ (1,1,'2005-07-07 00:00:00','Adult','Maryland','Eptesicus fuscus','M',NULL,NULL,'G39',NULL,'<tr><td>Ben\'s bat - catches mealworms and discriminates groove beads</td><td>BF</td><td>Apr 25, 2007</td></tr>'),
  (2,3,'2005-08-01 00:00:00','Juvenile','Oxon Hill, MD','Eptesicus fuscus','F',NULL,NULL,'GR27',NULL,NULL),
  (3,4,'2005-08-01 00:00:00','Juvenile','Oxon Hill, MD','Eptesicus fuscus','M',NULL,NULL,'GR30',NULL,NULL),
  (4,7,'2005-08-01 00:00:00','Juvenile','Oxon Hill, MD','Eptesicus fuscus','M',NULL,NULL,'GR37',NULL,NULL),
@@ -84,13 +84,13 @@ INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collectio
 
 DROP TABLE IF EXISTS `cage_in_histories`;
 CREATE TABLE `cage_in_histories` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `bat_id` int(10) unsigned NOT NULL,
   `cage_id` int(10) unsigned NOT NULL,
-  `date` datetime DEFAULT NULL,
-  `user_id` int(10) unsigned DEFAULT NULL COMMENT 'signature of user who did the change',
+  `date` datetime default NULL,
+  `user_id` int(10) unsigned default NULL COMMENT 'signature of user who did the change',
   `note` text,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -115,14 +115,14 @@ INSERT INTO `cage_in_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note`
 
 DROP TABLE IF EXISTS `cage_out_histories`;
 CREATE TABLE `cage_out_histories` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `bat_id` int(10) unsigned NOT NULL,
   `cage_id` int(10) unsigned NOT NULL,
-  `date` datetime DEFAULT NULL,
-  `user_id` int(10) unsigned DEFAULT NULL COMMENT 'sig of user who did the change',
-  `note` text CHARACTER SET utf8,
+  `date` datetime default NULL,
+  `user_id` int(10) unsigned default NULL COMMENT 'sig of user who did the change',
+  `note` text character set utf8,
   `cage_in_history_id` int(10) unsigned NOT NULL COMMENT 'each cage_out belongs to a cage in event',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -142,13 +142,13 @@ INSERT INTO `cage_out_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note
 
 DROP TABLE IF EXISTS `cages`;
 CREATE TABLE `cages` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `name` varchar(45) NOT NULL,
   `date_created` datetime NOT NULL,
-  `date_destroyed` datetime DEFAULT NULL,
-  `user_id` int(10) unsigned DEFAULT NULL COMMENT 'investigators user_id, can be nil',
+  `date_destroyed` datetime default NULL,
+  `user_id` int(10) unsigned default NULL COMMENT 'investigators user_id, can be nil',
   `room_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -182,13 +182,13 @@ INSERT INTO `cages` (`id`,`name`,`date_created`,`date_destroyed`,`user_id`,`room
 
 DROP TABLE IF EXISTS `census`;
 CREATE TABLE `census` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `animals` int(10) unsigned DEFAULT NULL,
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `animals` int(10) unsigned default NULL,
   `date` date NOT NULL,
   `room_id` int(10) unsigned NOT NULL,
-  `bats_added` varchar(2000) DEFAULT NULL,
-  `bats_removed` varchar(2000) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `bats_added` varchar(2000) default NULL,
+  `bats_removed` varchar(2000) default NULL,
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -207,12 +207,12 @@ INSERT INTO `census` (`id`,`animals`,`date`,`room_id`,`bats_added`,`bats_removed
 
 DROP TABLE IF EXISTS `medical_care_actions`;
 CREATE TABLE `medical_care_actions` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `proposed_treatment_id` int(10) unsigned NOT NULL,
   `date` datetime NOT NULL,
   `remarks` text NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -229,14 +229,14 @@ CREATE TABLE `medical_care_actions` (
 
 DROP TABLE IF EXISTS `medical_problems`;
 CREATE TABLE `medical_problems` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `bat_id` int(10) unsigned NOT NULL,
   `date_opened` datetime NOT NULL,
   `description` text NOT NULL,
-  `user_id` int(10) unsigned DEFAULT NULL,
-  `date_closed` datetime DEFAULT NULL,
+  `user_id` int(10) unsigned default NULL,
+  `date_closed` datetime default NULL,
   `title` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -253,14 +253,14 @@ CREATE TABLE `medical_problems` (
 
 DROP TABLE IF EXISTS `proposed_treatments`;
 CREATE TABLE `proposed_treatments` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `medical_problem_id` int(10) unsigned NOT NULL,
   `date_started` datetime NOT NULL,
   `date_finished` datetime NOT NULL,
-  `date_closed` datetime DEFAULT NULL,
+  `date_closed` datetime default NULL,
   `treatment` text NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -277,12 +277,12 @@ CREATE TABLE `proposed_treatments` (
 
 DROP TABLE IF EXISTS `protocol_end_histories`;
 CREATE TABLE `protocol_end_histories` (
-  `id` int(10) unsigned NOT NULL DEFAULT '0',
+  `id` int(10) unsigned NOT NULL default '0',
   `bat_id` int(10) unsigned NOT NULL,
   `protocol_id` int(10) unsigned NOT NULL,
-  `date` datetime DEFAULT NULL,
-  `user_id` int(10) unsigned DEFAULT NULL,
-  `protocol_start_history_id` int(10) unsigned DEFAULT NULL
+  `date` datetime default NULL,
+  `user_id` int(10) unsigned default NULL,
+  `protocol_start_history_id` int(10) unsigned default NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -299,12 +299,12 @@ CREATE TABLE `protocol_end_histories` (
 
 DROP TABLE IF EXISTS `protocol_start_histories`;
 CREATE TABLE `protocol_start_histories` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `bat_id` int(10) unsigned NOT NULL,
   `protocol_id` int(10) unsigned NOT NULL,
-  `date` datetime DEFAULT NULL,
-  `user_id` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `date` datetime default NULL,
+  `user_id` int(10) unsigned default NULL,
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -321,13 +321,13 @@ CREATE TABLE `protocol_start_histories` (
 
 DROP TABLE IF EXISTS `protocols`;
 CREATE TABLE `protocols` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `number` varchar(45) NOT NULL,
   `text` text NOT NULL,
   `start_date` datetime NOT NULL,
-  `renewal_A_date` datetime DEFAULT NULL,
-  `renewal_B_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `renewal_A_date` datetime default NULL,
+  `renewal_B_date` datetime default NULL,
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -344,9 +344,9 @@ CREATE TABLE `protocols` (
 
 DROP TABLE IF EXISTS `rooms`;
 CREATE TABLE `rooms` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `name` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -367,13 +367,13 @@ INSERT INTO `rooms` (`id`,`name`) VALUES
 
 DROP TABLE IF EXISTS `task_histories`;
 CREATE TABLE `task_histories` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `task_id` int(10) unsigned NOT NULL,
   `date_done` datetime NOT NULL,
   `remarks` text NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
-  `fed` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `fed` int(10) unsigned default NULL,
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -390,20 +390,20 @@ CREATE TABLE `task_histories` (
 
 DROP TABLE IF EXISTS `tasks`;
 CREATE TABLE `tasks` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `repeat_code` int(10) unsigned NOT NULL COMMENT '0 means daily 1 = sunday etc.',
-  `medical_problem_id` int(10) unsigned DEFAULT NULL,
-  `cage_id` int(10) unsigned DEFAULT NULL,
+  `medical_problem_id` int(10) unsigned default NULL,
+  `cage_id` int(10) unsigned default NULL,
   `title` text NOT NULL,
   `notes` text NOT NULL,
-  `internal_description` varchar(45) DEFAULT NULL,
-  `food` double DEFAULT NULL,
-  `dish_type` varchar(45) DEFAULT NULL,
-  `dish_num` int(10) unsigned DEFAULT NULL,
+  `internal_description` varchar(45) default NULL,
+  `food` double default NULL,
+  `dish_type` varchar(45) default NULL,
+  `dish_num` int(10) unsigned default NULL,
   `jitter` int(11) NOT NULL,
   `date_started` datetime NOT NULL,
-  `date_ended` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `date_ended` datetime default NULL,
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -432,7 +432,7 @@ DROP TABLE IF EXISTS `tasks_users`;
 CREATE TABLE `tasks_users` (
   `user_id` int(10) unsigned NOT NULL,
   `task_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`user_id`,`task_id`)
+  PRIMARY KEY  (`user_id`,`task_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -466,13 +466,13 @@ INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `name` varchar(100) NOT NULL,
   `initials` varchar(45) NOT NULL,
-  `email` varchar(100) DEFAULT NULL,
+  `email` varchar(100) default NULL,
   `start_date` datetime NOT NULL,
-  `end_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `end_date` datetime default NULL,
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -499,13 +499,13 @@ INSERT INTO `users` (`id`,`name`,`initials`,`email`,`start_date`,`end_date`) VAL
 
 DROP TABLE IF EXISTS `weathers`;
 CREATE TABLE `weathers` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `log_date` datetime NOT NULL,
   `temperature` float NOT NULL,
   `humidity` float NOT NULL,
-  `room_id` int(10) unsigned NOT NULL,
+  `room` varchar(45) NOT NULL,
   `sig` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -522,15 +522,15 @@ CREATE TABLE `weathers` (
 
 DROP TABLE IF EXISTS `weights`;
 CREATE TABLE `weights` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `bat_id` int(10) unsigned NOT NULL,
   `date` datetime NOT NULL,
   `weight` float NOT NULL,
   `note` text NOT NULL,
   `after_eating` varchar(1) NOT NULL COMMENT 'y/n',
   `user_id` int(10) unsigned NOT NULL,
-  `task_history_id` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `task_history_id` int(10) unsigned default NULL,
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

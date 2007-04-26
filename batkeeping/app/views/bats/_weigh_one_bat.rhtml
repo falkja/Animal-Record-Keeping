@@ -3,8 +3,6 @@
 <th>Weight</th>
 <th>Already Fed</th>
 <th align='left'>Weight Note</th>
-<th>Cage</th>
-<th>Cage change reason</th>
 
 <tr>
 <td><%= link_to weigh_one_bat.band, :controller => 'bats', :action => 'show', :id => weigh_one_bat %></td>
@@ -21,8 +19,7 @@
 <td><%= text_field 'note', weigh_one_bat.id %></td>
 
 <%# See http://www.rubyonrails.org/api/classes/ActionView/Helpers/FormOptionsHelper.html#M000404 %>
-<td><%= select 'bat_cage', weigh_one_bat.id.to_s , @cages.collect {|c| [c.name , c.id] }, :selected => weigh_one_bat.cage.id  %></td>
-<td><%= text_field 'cage_change_note', weigh_one_bat.id %></td>
+<td><%= link_to 'Move Bat', :action=>'move' %></td>
 
 <td><%= submit_tag 'Submit Weight' %></td>
 

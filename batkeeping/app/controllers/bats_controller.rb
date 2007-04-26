@@ -334,7 +334,7 @@ redirect_to :action => 'list'
     end
 		
     #when we finally get emails working uncomment the following
-    #email = MyMailer.deliver_mail("falk.ben@gmail.com")
+    #MyMailer.deliver_mail("falk.ben@gmail.com")
   end
 	
 	def manage_cage_tasks_after_move		

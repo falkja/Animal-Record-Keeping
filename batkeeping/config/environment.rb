@@ -54,9 +54,7 @@ end
 
 ActionMailer::Base.delivery_method = :smtp
 ActionMailer::Base.smtp_settings = {
-  :address => "129.2.37.63",
-  :user_name => "",
-  :password => "",
+  :address => "localhost",
   :port => 25,
   :domain => "zoopsych2-63.umd.edu"
 }

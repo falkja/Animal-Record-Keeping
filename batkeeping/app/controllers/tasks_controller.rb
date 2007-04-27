@@ -220,9 +220,12 @@ class TasksController < ApplicationController
 
   def create_feed_cage_task #called from new_feed_cage_task page
     @cage = Cage.find(params[:id])
+    
+    if (params[:task][:dish_num] != '') && (params[:users] != nil) && (params[:days] != nil)
+    
     @users = User.find(params[:users])
     @days = params[:days]
-            
+    
     if @days.include?("0")  #need to convert to multiple tasks
         @days.clear
         @days = ["1","2","3","4","5","6","7"]
@@ -253,6 +256,8 @@ class TasksController < ApplicationController
       end
     end
 
+    end
+
     if params[:source].include? 'weekend'
       @user = User.find('3')
     else
@@ -276,7 +281,7 @@ class TasksController < ApplicationController
     end
 	
 		feeding_tasks = feeding_tasks.sort_by{|task| [task.repeat_code]}
-
+    
     render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => feeding_tasks, 
                                       :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
   end

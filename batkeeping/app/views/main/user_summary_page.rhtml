@@ -1,10 +1,10 @@
 <h1>Summary page for <%= @user.name %></h1>
 
-<h2>Enter Temperature/Humidity for Today: <%= nice_date(Time.now) %></h2>
+<h2>Temperature/Humidity for Today: <%= nice_date(Time.now) %></h2>
 
 <%= render :partial => 'weathers/enter_weathers' %>
 
-<h2>Cages</h2>
+<h2>My Cages</h2>
 <p>
 <div class= "left_indent">
 <% if @mycages.length == 0 %> 
@@ -18,7 +18,7 @@ You have no cages
 </div>
 </p>
 
-<h2>Current Medical Problems</h2>
+<h2>My Current Medical Problems</h2>
 <p>
 <div class="left_indent">
 <% if @medical_problems.length > 0 %>

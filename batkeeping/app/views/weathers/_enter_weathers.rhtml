@@ -8,15 +8,15 @@
   <% form_remote_tag(:update => 'weathers',
         :url=>{:controller => 'weathers', :action => 'create', :room => room}) do %>
     <p><b><%= room.name %></b>
-    <%= text_field 'weather', 'temperature', :size=>2, :value=> '' %>&deg F
+    <%= text_field 'weather', 'temperature', :size=>2, :value=> '' %> &deg F
     <%= text_field 'weather', 'humidity', :size=>2, :value=> '' %>%
     <%= submit_tag 'Submit Temperature and Humidity' %></p>
   <% end %>
   
   <% else %>
     <p><b><%= room.name %></b>
-    <%= room_weather.temperature %>&deg F
-    <%= room_weather.humidity %> % </p>
+    <%= room_weather.temperature %> &deg F
+    <%= room_weather.humidity %>% </p>
   <% end %>
 <% end %>
 

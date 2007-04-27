@@ -1,6 +1,6 @@
 <h1>Summary page for <%= @user.name %></h1>
 
-<h2>Enter Temperature/Humidity</h2>
+<h2>Enter Temperature/Humidity for Today: <%= nice_date(Time.now) %></h2>
 
 <%= render :partial => 'weathers/enter_weathers' %>
 

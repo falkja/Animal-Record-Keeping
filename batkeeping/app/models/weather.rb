@@ -2,7 +2,7 @@ class Weather < ActiveRecord::Base
     belongs_to :room
     
     def self.today
-      Weather.find(:first, :conditions => 'log_date = ' + Date.today.to_s)
+      Weather.find(:first, :conditions => "log_date = '" + Date.today.to_s + "'")
     end
     
     

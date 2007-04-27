@@ -18,7 +18,7 @@
 		<td><%= link_to_remote bat.band, :url => {:controller=>'bats', :action=>:add_bat_to_move_list, 
 					:bat_to_add => bat, :id=>cage, :selected_bats=> selected_bats}, 
 					:update=>'bat_list' %></td>
-		<td><%=h bat.weights.recent.weight %>g</td>
+		<td><%=h bat.weights.recent_never_nil.weight %>g</td>
 		<td><%=h bat.average_weight %>g</td>
 		</tr>
 	<% end %>
@@ -46,7 +46,7 @@
 			<td><%= link_to_remote bat.band, :url => {:controller=>'bats', :action=>'remove_bat_from_move_list', 
 				:bat_to_remove => bat, :id=>cage, :selected_bats=> selected_bats}, 
 				:update=>'bat_list' %></td>
-			<td><%=h bat.weights.recent.weight %>g</td>
+			<td><%=h bat.weights.recent_never_nil.weight %>g</td>
 			<td><%=h bat.average_weight %>g</td>
 			</tr>
 		<% end %>

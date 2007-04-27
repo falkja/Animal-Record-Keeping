@@ -25,7 +25,11 @@ class Bat < ActiveRecord::Base
 		weights = self.weights
 		sum = 0
 		weights.each{|weight| sum=weight.weight + sum}
-		return (("%.0" + 1.to_s + "f")%(sum/weights.length)).to_f
+    if weights.length > 0
+      return (("%.0" + 1.to_s + "f")%(sum/weights.length)).to_f
+    else
+      return 0
+    end
 	end
 	
 	#From http://www.therailsway.com/tags/rails

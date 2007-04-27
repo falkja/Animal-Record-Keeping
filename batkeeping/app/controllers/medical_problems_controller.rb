@@ -8,16 +8,17 @@ class MedicalProblemsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @bats = Bat.sick
     render :action => 'list'
   end
 
   def list_current
+    @bats = Bat.sick
     @list_all = false
     list
   end
 
   def list_all
+    @bats = Bat.sick_or_previously_sick
     @list_all = true
     list
   end

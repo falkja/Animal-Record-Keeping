@@ -51,6 +51,15 @@ class Bat < ActiveRecord::Base
 		end
 		Bat.find(bat_ids.uniq, :order => 'band')
 	end
+  
+  def self.sick_or_previously_sick
+    @medical_problems = MedicalProblem.find(:all)
+		bat_ids = Array.new
+		for medical_problem in @medical_problems
+			bat_ids << medical_problem.bat.id
+		end
+		Bat.find(bat_ids.uniq, :order => 'band')
+  end
 	
 	#returns the room of the bat at a particular time, assumes cages dont move between rooms - probably a bad assumption
 	def in_what_cage(day,month,year)

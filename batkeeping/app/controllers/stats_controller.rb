@@ -34,7 +34,7 @@ class StatsController < ApplicationController
 		@month = params[:date][:month].to_i
 		@room = Room.find(params[:room][:id])
 		@days_this_month = 0...Date::civil(@year, @month, -1).day
-		@tempandhumidity_list = Weather.for_date(@year, @month, @days_this_month, @room)
+		@tempandhumidity_list = Weather.for_date(@year, @month, @days_this_month, @room.id)
 	end
 	
 	def compute_food_summary

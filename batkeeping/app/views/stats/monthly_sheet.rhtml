@@ -1,3 +1,15 @@
+<p>
+<% form_tag :controller => 'stats', :action => 'monthly_sheet' do %>
+	Show census page for
+	
+	<%= select_year(Date.today, :start_year => @start_year, :end_year => @end_year) %>
+	<%= select_month(Date.today) %>
+	<%= collection_select('room', 'id', @rooms, 'id', 'name') %>
+
+	<%= submit_tag 'Go' %>
+<% end %>
+</p>
+
 <h2><%= "Summary of " + @room.name + " for #{Date::MONTHNAMES[@month]} #{@year}" %></h2>
 
 <table border =1>
@@ -34,15 +46,3 @@
   <% end %>
 <% end %>
 </table>
-
-<p>
-<% form_tag :controller => 'stats', :action => 'monthly_sheet' do %>
-	Show census page for
-	
-	<%= select_year(Date.today, :start_year => @start_year, :end_year => @end_year) %>
-	<%= select_month(Date.today) %>
-	<%= collection_select('room', 'id', @rooms, 'id', 'name') %>
-
-	<%= submit_tag 'Go' %>
-<% end %>
-</p>

@@ -97,10 +97,7 @@ redirect_to :action => 'list'
     @bat.leave_date = nil
 		Bat::set_user_and_comment(session[:person], 'new bat') #Do this before saving!
     if @bat.save
-      census = Census.find_or_create_by_date_and_room_id(Date.today, @bat.cage.room)
-      census.tally(1, @bat.cage.room)
-      census.bats_added ? census.bats_added = census.bats_added + @bat.band + ' ' : census.bats_added = @bat.band + ' '
-      census.save
+      #census stuff will happen in the move function
       flash[:notice] = 'Bat was successfully created.'
       @bats = Array.new
       @bats << @bat

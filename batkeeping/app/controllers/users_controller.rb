@@ -9,12 +9,12 @@ class UsersController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @user_pages, @users = paginate :users, :conditions => 'end_date is null', :order => 'name', :per_page => 10
+    @users = User.find(:all, :conditions => 'end_date is null', :order => 'name')
     @list_all = false
   end
   
   def list_all
-    @user_pages, @users = paginate :users, :order => 'name', :per_page => 10
+    @users = User.find(:all, :order => 'name')
     @list_all = true
     render :action => 'list'
 	end

@@ -137,9 +137,12 @@ class TasksController < ApplicationController
 
   def create_weigh_cage_task #called from new_weigh_cage_task page
     @cage = Cage.find(params[:id])
+    
+    if (params[:users] != nil) && (params[:days] != nil) #error checking
+    
     @users = User.find(params[:users])
-    @days = params[:days]    
-            
+    @days = params[:days]
+    
     if @days.include?("0")  #only need one daily task
         @days.clear
         @days << "0"
@@ -167,6 +170,10 @@ class TasksController < ApplicationController
       end
     end
     
+    flash[:note] = 'Weigh cage task(s) successfully created. If the task does not appear below, maybe it is for a different day?'
+    
+    end
+    
     if params[:source].include? 'weekend'
       @user = User.find('3')
     else
@@ -189,6 +196,7 @@ class TasksController < ApplicationController
       weighing_tasks = Task.weighing_tasks
     end
     
+   
     render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => weighing_tasks, 
                                       :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
   end
@@ -221,7 +229,7 @@ class TasksController < ApplicationController
   def create_feed_cage_task #called from new_feed_cage_task page
     @cage = Cage.find(params[:id])
     
-    if (params[:task][:dish_num] != '') && (params[:users] != nil) && (params[:days] != nil)
+    if (params[:task][:dish_num] != '') && (params[:users] != nil) && (params[:days] != nil) #error checking
     
     @users = User.find(params[:users])
     @days = params[:days]
@@ -255,7 +263,9 @@ class TasksController < ApplicationController
       @task.users = @users
       end
     end
-
+    
+    flash[:note] = 'Feed cage task(s) successfully created. If the task does not appear below, maybe it is for a different day?'
+    
     end
 
     if params[:source].include? 'weekend'

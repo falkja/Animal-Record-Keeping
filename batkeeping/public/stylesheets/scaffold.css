@@ -141,7 +141,7 @@ div.scrollingdiv {
 }
 
 warning {
-	color: green;
+	color: red;
 	font-weight: bold;
 	font-style: italic;
 }

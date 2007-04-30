@@ -45,6 +45,11 @@
 <%= @bat.collection_place %>
 </p>
 
+<p>
+<b>Rabies Vaccination Date: </b>
+<%= @bat.vaccination_date ? nice_date(@bat.vaccination_date) : 'Not vaccinated' %>
+</p>
+
 <% if @bat.leave_date != nil %>
 <p>
 <b>Leave Date: </b>

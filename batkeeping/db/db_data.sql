@@ -1,7 +1,7 @@
 -- MySQL Administrator dump 1.4
 --
 -- ------------------------------------------------------
--- Server version	5.0.32-Debian_7etch1-log
+-- Server version	5.0.27-community-nt
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -59,8 +59,8 @@ CREATE TABLE `bats` (
   `leave_date` datetime default NULL COMMENT 'y/n - in lab or not',
   `leave_reason` text COMMENT 'death/exported',
   `band` varchar(10) default NULL,
-  `user_id` int(10) unsigned default NULL,
   `note` text,
+  `vaccination_date` date default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -69,44 +69,44 @@ CREATE TABLE `bats` (
 --
 
 /*!40000 ALTER TABLE `bats` DISABLE KEYS */;
-INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`species`,`gender`,`leave_date`,`leave_reason`,`band`,`user_id`,`note`) VALUES 
- (1,1,'2005-07-25 00:00:00','Adult','Fort Washington, MD','Eptesicus fuscus','F',NULL,NULL,'GR39',NULL,'<tr><td>Ben\'s bat - catches mealworms and discriminates groove beads</td><td>BF</td><td>Apr 25, 2007</td></tr>'),
+INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`species`,`gender`,`leave_date`,`leave_reason`,`band`,`note`,`vaccination_date`) VALUES 
+ (1,1,'2005-07-25 00:00:00','Adult','Fort Washington, MD','Eptesicus fuscus','F',NULL,NULL,'GR39','<tr><td>Ben\'s bat - catches mealworms and discriminates groove beads</td><td>BF</td><td>Apr 25, 2007</td></tr>',NULL),
  (2,3,'2005-07-11 00:00:00','Juvenile','Oxon Hill, MD','Eptesicus fuscus','F',NULL,NULL,'GR27',NULL,NULL),
  (3,4,'2005-07-11 00:00:00','Juvenile','Oxon Hill, MD','Eptesicus fuscus','M',NULL,NULL,'GR30',NULL,NULL),
  (4,7,'2005-07-11 00:00:00','Juvenile','Oxon Hill, MD','Eptesicus fuscus','M',NULL,NULL,'GR37',NULL,NULL),
- (5,2,'2005-08-15 00:00:00','Juvenile','Clinton, MD','Eptesicus fuscus','M',NULL,NULL,'GR41',NULL,'<tr><td>CATCHER</td><td>AP</td><td>Apr 27, 2007</td></tr>'),
+ (5,2,'2005-08-15 00:00:00','Juvenile','Clinton, MD','Eptesicus fuscus','M',NULL,NULL,'GR41','<tr><td>CATCHER</td><td>AP</td><td>Apr 27, 2007</td></tr>',NULL),
  (6,11,'2005-08-15 00:00:00','Juvenile','Clinton, MD','Eptesicus fuscus','M',NULL,NULL,'GR44',NULL,NULL),
  (7,20,'2005-08-15 00:00:00','Juvenile','Clinton, MD','Eptesicus fuscus','F',NULL,NULL,'GR53',NULL,NULL),
  (8,2,'2005-08-15 00:00:00','Juvenile','Clinton, MD','Eptesicus fuscus','F',NULL,NULL,'GR57',NULL,NULL);
-INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`species`,`gender`,`leave_date`,`leave_reason`,`band`,`user_id`,`note`) VALUES 
+INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`species`,`gender`,`leave_date`,`leave_reason`,`band`,`note`,`vaccination_date`) VALUES 
  (9,2,'2005-08-15 00:00:00','Juvenile','Clinton, MD','Eptesicus fuscus','M',NULL,NULL,'GR58',NULL,NULL),
- (10,2,'2005-08-15 00:00:00','Adult','Clinton, MD','Eptesicus fuscus','F',NULL,NULL,'GR65',NULL,'<tr><td>Bat used for ABR noise exposure study. </td><td>AP</td><td>Apr 27, 2007</td></tr>'),
- (11,2,'2005-08-15 00:00:00','Juvenile','Clinton, MD','Eptesicus fuscus','M',NULL,NULL,'GR78',NULL,'<tr><td>CATCHER</td><td>AP</td><td>Apr 27, 2007</td></tr>'),
- (12,3,'2005-08-15 00:00:00','Adult','Clinton, MD','Eptesicus fuscus','F',NULL,NULL,'GR91',NULL,'<tr><td>Former GR76. Rebanded.</td><td>AP</td><td>Apr 27, 2007</td></tr>'),
- (13,5,'2005-08-15 00:00:00','Juvenile','Clinton, MD','Eptesicus fuscus','M',NULL,NULL,'GR92 (band',NULL,'<tr><td>Former GR56. Rebanded.</td><td>AP</td><td>Apr 27, 2007</td></tr>'),
+ (10,2,'2005-08-15 00:00:00','Adult','Clinton, MD','Eptesicus fuscus','F',NULL,NULL,'GR65','<tr><td>Bat used for ABR noise exposure study. </td><td>AP</td><td>Apr 27, 2007</td></tr>',NULL),
+ (11,2,'2005-08-15 00:00:00','Juvenile','Clinton, MD','Eptesicus fuscus','M',NULL,NULL,'GR78','<tr><td>CATCHER</td><td>AP</td><td>Apr 27, 2007</td></tr>',NULL),
+ (12,3,'2005-08-15 00:00:00','Adult','Clinton, MD','Eptesicus fuscus','F',NULL,NULL,'GR91','<tr><td>Former GR76. Rebanded.</td><td>AP</td><td>Apr 27, 2007</td></tr>',NULL),
+ (13,5,'2005-08-15 00:00:00','Juvenile','Clinton, MD','Eptesicus fuscus','M',NULL,NULL,'GR92 (band','<tr><td>Former GR56. Rebanded.</td><td>AP</td><td>Apr 27, 2007</td></tr>',NULL),
  (14,13,'2006-07-05 00:00:00','Adult','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'B36',NULL,NULL),
  (15,13,'2006-07-05 00:00:00','Adult','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'B41',NULL,NULL);
-INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`species`,`gender`,`leave_date`,`leave_reason`,`band`,`user_id`,`note`) VALUES 
+INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`species`,`gender`,`leave_date`,`leave_reason`,`band`,`note`,`vaccination_date`) VALUES 
  (16,11,'2006-07-05 00:00:00','Adult','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'B42',NULL,NULL),
  (17,8,'2006-07-05 00:00:00','Adult','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'B59',NULL,NULL),
  (18,11,'2006-07-05 00:00:00','Adult','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'B63',NULL,NULL),
- (19,13,'2006-07-07 00:00:00','Juvenile','Brown University','Eptesicus fuscus','M',NULL,NULL,'B77',NULL,'<tr><td>Born around June, 15 2006</td><td>AP</td><td>Apr 27, 2007</td></tr>'),
+ (19,13,'2006-07-07 00:00:00','Juvenile','Brown University','Eptesicus fuscus','M',NULL,NULL,'B77','<tr><td>Born around June, 15 2006</td><td>AP</td><td>Apr 27, 2007</td></tr>',NULL),
  (20,13,'2006-08-02 00:00:00','Juvenile','Clinton, MD?','Eptesicus fuscus','M',NULL,NULL,'B85',NULL,NULL),
  (21,13,'2006-08-02 00:00:00','Juvenile','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'B86',NULL,NULL),
  (22,2,'2006-08-02 00:00:00','Juvenile','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'B88',NULL,NULL),
  (23,2,'2006-08-02 00:00:00','Juvenile','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'B89',NULL,NULL),
  (24,13,'2006-08-02 00:00:00','Juvenile','Clinton, MD?','Eptesicus fuscus','M',NULL,NULL,'W4',NULL,NULL);
-INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`species`,`gender`,`leave_date`,`leave_reason`,`band`,`user_id`,`note`) VALUES 
+INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`species`,`gender`,`leave_date`,`leave_reason`,`band`,`note`,`vaccination_date`) VALUES 
  (25,4,'2006-08-02 00:00:00','Juvenile','Clinton, MD?','Eptesicus fuscus','M',NULL,NULL,'W5',NULL,NULL),
  (26,2,'2006-08-02 00:00:00','Juvenile','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'W6',NULL,NULL),
  (27,13,'2006-08-02 00:00:00','Juvenile','Clinton, MD?','Eptesicus fuscus','M',NULL,NULL,'W8',NULL,NULL),
  (28,12,'2005-08-15 00:00:00','Adult','Clinton, MD','Eptesicus fuscus','F',NULL,NULL,'GR47',NULL,NULL),
  (29,12,'2005-08-15 00:00:00','Adult','Clinton, MD','Eptesicus fuscus','F',NULL,NULL,'GR54',NULL,NULL),
  (30,12,'2005-08-15 00:00:00','Juvenile','Clinton, MD','Eptesicus fuscus','F',NULL,NULL,'GR79',NULL,NULL),
- (31,12,'2005-08-15 00:00:00','Adult','Clinton, MD','Eptesicus fuscus','F',NULL,NULL,'GR81',NULL,'<tr><td>Former GR51. Rebanded 12/14/06</td><td>AP</td><td>Apr 27, 2007</td></tr>'),
- (32,12,'2006-07-05 00:00:00','Adult','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'B35',NULL,'<tr><td>Used for ABRnoise exposure experiments.</td><td>AP</td><td>Apr 27, 2007</td></tr>'),
+ (31,12,'2005-08-15 00:00:00','Adult','Clinton, MD','Eptesicus fuscus','F',NULL,NULL,'GR81','<tr><td>Former GR51. Rebanded 12/14/06</td><td>AP</td><td>Apr 27, 2007</td></tr>',NULL),
+ (32,12,'2006-07-05 00:00:00','Adult','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'B35','<tr><td>Used for ABRnoise exposure experiments.</td><td>AP</td><td>Apr 27, 2007</td></tr>',NULL),
  (33,12,'2006-07-05 00:00:00','Adult','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'B39',NULL,NULL);
-INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`species`,`gender`,`leave_date`,`leave_reason`,`band`,`user_id`,`note`) VALUES 
+INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`species`,`gender`,`leave_date`,`leave_reason`,`band`,`note`,`vaccination_date`) VALUES 
  (34,12,'2006-07-05 00:00:00','Adult','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'B50',NULL,NULL),
  (35,12,'2006-07-05 00:00:00','Adult','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'B62',NULL,NULL),
  (36,12,'2006-07-05 00:00:00','Juvenile','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'B65',NULL,NULL),
@@ -114,25 +114,25 @@ INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collectio
  (38,12,'2006-08-02 00:00:00','Juvenile','Clinton, MD?','Eptesicus fuscus','M',NULL,NULL,'B72',NULL,NULL),
  (39,12,'2006-08-02 00:00:00','Juvenile','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'B90',NULL,NULL),
  (40,12,'2006-08-02 00:00:00','Juvenile','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'W3',NULL,NULL),
- (41,12,'2006-07-07 00:00:00','Adult','Brown University','Eptesicus fuscus','F',NULL,NULL,'W11',NULL,'<tr><td>Former W9. Rebanded.</td><td>AP</td><td>Apr 27, 2007</td></tr>'),
- (42,3,'2005-08-15 00:00:00','Adult','Clinton, MD','Eptesicus fuscus','F',NULL,NULL,'GR62',NULL,'<tr><td>Used for ABR noise exposure experiment.</td><td>AP</td><td>Apr 27, 2007</td></tr>');
-INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`species`,`gender`,`leave_date`,`leave_reason`,`band`,`user_id`,`note`) VALUES 
+ (41,12,'2006-07-07 00:00:00','Adult','Brown University','Eptesicus fuscus','F',NULL,NULL,'W11','<tr><td>Former W9. Rebanded.</td><td>AP</td><td>Apr 27, 2007</td></tr>',NULL),
+ (42,3,'2005-08-15 00:00:00','Adult','Clinton, MD','Eptesicus fuscus','F',NULL,NULL,'GR62','<tr><td>Used for ABR noise exposure experiment.</td><td>AP</td><td>Apr 27, 2007</td></tr>',NULL);
+INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`species`,`gender`,`leave_date`,`leave_reason`,`band`,`note`,`vaccination_date`) VALUES 
  (43,10,'2006-07-05 00:00:00','Adult','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'B34',NULL,NULL),
  (44,9,'2006-07-05 00:00:00','Adult','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'B64',NULL,NULL),
- (45,6,'2006-07-05 00:00:00','Adult','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'B46',NULL,'<tr><td>Bat has a broken wing.</td><td>AP</td><td>Apr 27, 2007</td></tr>'),
- (46,16,'2004-07-14 00:00:00','Juvenile','Cheverly, MD','Eptesicus fuscus','M',NULL,NULL,'Y31',NULL,'<tr><td>CATCHER</td><td>AP</td><td>Apr 27, 2007</td></tr>'),
- (47,14,'2005-07-11 00:00:00','Adult','Oxon Hill, MD','Eptesicus fuscus','F',NULL,NULL,'GR34',NULL,'<tr><td>CATCHER</td><td>AP</td><td>Apr 27, 2007</td></tr>'),
- (48,14,'2005-08-15 00:00:00','Juvenile','Clinton, MD','Eptesicus fuscus','F',NULL,NULL,'GR59',NULL,'<tr><td>CATCHER</td><td>AP</td><td>Apr 27, 2007</td></tr>'),
+ (45,6,'2006-07-05 00:00:00','Adult','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'B46','<tr><td>Bat has a broken wing.</td><td>AP</td><td>Apr 27, 2007</td></tr>',NULL),
+ (46,16,'2004-07-14 00:00:00','Juvenile','Cheverly, MD','Eptesicus fuscus','M',NULL,NULL,'Y31','<tr><td>CATCHER</td><td>AP</td><td>Apr 27, 2007</td></tr>',NULL),
+ (47,14,'2005-07-11 00:00:00','Adult','Oxon Hill, MD','Eptesicus fuscus','F',NULL,NULL,'GR34','<tr><td>CATCHER</td><td>AP</td><td>Apr 27, 2007</td></tr>',NULL),
+ (48,14,'2005-08-15 00:00:00','Juvenile','Clinton, MD','Eptesicus fuscus','F',NULL,NULL,'GR59','<tr><td>CATCHER</td><td>AP</td><td>Apr 27, 2007</td></tr>',NULL),
  (49,15,'2005-08-15 00:00:00','Juvenile','Clinton, MD','Eptesicus fuscus','M',NULL,NULL,'GR46',NULL,NULL);
-INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`species`,`gender`,`leave_date`,`leave_reason`,`band`,`user_id`,`note`) VALUES 
+INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`species`,`gender`,`leave_date`,`leave_reason`,`band`,`note`,`vaccination_date`) VALUES 
  (50,16,'2005-08-15 00:00:00','Juvenile','Clinton, MD','Eptesicus fuscus','M',NULL,NULL,'GR61',NULL,NULL),
  (51,15,'2006-07-05 00:00:00','Adult','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'B37',NULL,NULL),
- (52,15,'2006-07-05 00:00:00','Adult','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'B40',NULL,'<tr><td>CATCHER</td><td>AP</td><td>Apr 27, 2007</td></tr>'),
- (53,14,'2006-07-05 00:00:00','Juvenile','Clinton, MD?','Eptesicus fuscus','M',NULL,NULL,'B60',NULL,'<tr><td>CATCHER</td><td>AP</td><td>Apr 27, 2007</td></tr>'),
- (54,3,'2005-07-25 00:00:00','Adult','Fort Washington, MD','Eptesicus fuscus','F',NULL,NULL,'GR32',NULL,'<tr><td>CATCHER</td><td>AP</td><td>Apr 27, 2007</td></tr>'),
- (55,13,'2006-07-05 00:00:00','Juvenile','Clinton, MD?','Eptesicus fuscus','M',NULL,NULL,'B47',NULL,'<tr><td>CATCHER</td><td>AP</td><td>Apr 27, 2007</td></tr><tr><td>YOU MAY NOT USE THIS BAT</td><td>AP</td><td>Apr 27, 2007</td></tr>'),
+ (52,15,'2006-07-05 00:00:00','Adult','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'B40','<tr><td>CATCHER</td><td>AP</td><td>Apr 27, 2007</td></tr>',NULL),
+ (53,14,'2006-07-05 00:00:00','Juvenile','Clinton, MD?','Eptesicus fuscus','M',NULL,NULL,'B60','<tr><td>CATCHER</td><td>AP</td><td>Apr 27, 2007</td></tr>',NULL),
+ (54,3,'2005-07-25 00:00:00','Adult','Fort Washington, MD','Eptesicus fuscus','F',NULL,NULL,'GR32','<tr><td>CATCHER</td><td>AP</td><td>Apr 27, 2007</td></tr>',NULL),
+ (55,13,'2006-07-05 00:00:00','Juvenile','Clinton, MD?','Eptesicus fuscus','M',NULL,NULL,'B47','<tr><td>CATCHER</td><td>AP</td><td>Apr 27, 2007</td></tr><tr><td>YOU MAY NOT USE THIS BAT</td><td>AP</td><td>Apr 27, 2007</td></tr>',NULL),
  (56,13,'2005-08-15 00:00:00','Juvenile','Clinton, MD','Eptesicus fuscus','M',NULL,NULL,'GR66',NULL,NULL);
-INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`species`,`gender`,`leave_date`,`leave_reason`,`band`,`user_id`,`note`) VALUES 
+INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`species`,`gender`,`leave_date`,`leave_reason`,`band`,`note`,`vaccination_date`) VALUES 
  (57,13,'2006-07-05 00:00:00','Juvenile','Clinton, MD?','Eptesicus fuscus','F',NULL,NULL,'B43',NULL,NULL),
  (58,2,'2006-07-05 00:00:00','Juvenile','Clinton, MD?','Eptesicus fuscus','M',NULL,NULL,'B38',NULL,NULL),
  (59,19,'2001-01-31 00:00:00','Adult','Maryland','Myotis septentrionalis','M',NULL,NULL,'OR82',NULL,NULL);
@@ -227,7 +227,8 @@ INSERT INTO `cage_in_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note`
  (63,4,20,'2007-04-27 14:18:46',5,'bat very overweight. Needs a diet.'),
  (64,4,7,'2007-04-27 14:30:57',5,'');
 INSERT INTO `cage_in_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note`) VALUES 
- (65,7,20,'2007-04-27 14:31:13',5,'');
+ (65,7,20,'2007-04-27 14:31:13',5,''),
+ (66,43,10,'2007-04-29 23:55:42',1,'reactivated');
 /*!40000 ALTER TABLE `cage_in_histories` ENABLE KEYS */;
 
 
@@ -258,7 +259,8 @@ INSERT INTO `cage_out_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note
  (3,13,2,'2007-04-27 11:11:53',5,'',15),
  (4,4,7,'2007-04-27 14:18:46',5,'bat very overweight. Needs a diet.',6),
  (5,4,20,'2007-04-27 14:30:57',5,'',63),
- (6,7,7,'2007-04-27 14:31:13',5,'',9);
+ (6,7,7,'2007-04-27 14:31:13',5,'',9),
+ (7,43,10,'2007-04-29 23:54:20',1,'',45);
 /*!40000 ALTER TABLE `cage_out_histories` ENABLE KEYS */;
 
 
@@ -328,7 +330,8 @@ CREATE TABLE `census` (
 /*!40000 ALTER TABLE `census` DISABLE KEYS */;
 INSERT INTO `census` (`id`,`animals`,`date`,`room_id`,`bats_added`,`bats_removed`) VALUES 
  (1,5,'2007-04-25',2,'G39 GR27 GR30 GR37 GR41 ',NULL),
- (2,59,'2007-04-27',2,'GR44 GR53 GR57 GR58 GR65 GR78 GR91 GR92 (bandless) B36 B41 B42 B59 B63 B77 B85 B86 B88 B89 W4 W5 W6 W8 GR47 GR54 GR79 GR81 B35 B39 B50 B62 B65 B66 B72 B90 W3 W11 GR62 B34 B64 B46 Y31 GR34 GR59 GR46 GR61 B37 B40 B60 GR32 B47 GR66 B43 B38 OR82 ',NULL);
+ (2,59,'2007-04-27',2,'GR44 GR53 GR57 GR58 GR65 GR78 GR91 GR92 (bandless) B36 B41 B42 B59 B63 B77 B85 B86 B88 B89 W4 W5 W6 W8 GR47 GR54 GR79 GR81 B35 B39 B50 B62 B65 B66 B72 B90 W3 W11 GR62 B34 B64 B46 Y31 GR34 GR59 GR46 GR61 B37 B40 B60 GR32 B47 GR66 B43 B38 OR82 ',NULL),
+ (3,5,'2007-04-29',2,'B34 B34 ','B34 B34 ');
 /*!40000 ALTER TABLE `census` ENABLE KEYS */;
 
 

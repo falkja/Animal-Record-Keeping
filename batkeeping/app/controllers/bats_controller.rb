@@ -417,13 +417,28 @@ redirect_to :action => 'list'
   end
   
   def add_bat_note
-	@bat = Bat.find(params[:id])
-	if @bat.note != nil
-	  @bat.note = @bat.note + '<tr><td>' + params[:bat][:note] + '</td><td>' + session[:person].initials + '</td><td>' + Time.now.strftime('%b %d, %Y') + '</td></tr>'
-	else
-	  @bat.note = '<tr><td>' + params[:bat][:note] + '</td><td>' + session[:person].initials + '</td><td>' + Time.now.strftime('%b %d, %Y') + '</td></tr>'
+		@bat = Bat.find(params[:id])
+		if @bat.note != nil
+			@bat.note = @bat.note + '<tr><td>' + params[:bat][:note] + '</td><td>' + session[:person].initials + '</td><td>' + Time.now.strftime('%b %d, %Y') + '</td></tr>'
+		else
+			@bat.note = '<tr><td>' + params[:bat][:note] + '</td><td>' + session[:person].initials + '</td><td>' + Time.now.strftime('%b %d, %Y') + '</td></tr>'
+		end
+		@bat.save
+		render :partial => 'bats/display_bat_notes'
 	end
-	@bat.save
-	render :partial => 'bats/display_bat_notes'
-  end
+
+	def allow_vaccination_date
+		render :partial => 'form_vaccination', :locals=>{:bat=>Bat.find(params[:bat]), :not_yet_vaccinated=>!params[:not_yet_vaccinated], 
+				:reactivating=>params[:reactivating]}
+	end
+	
+	def clear_vaccination_date
+		bat = Bat.find(params[:bat])
+		bat.vaccination_date = nil
+		bat.save
+		render :partial => 'form_vaccination', :locals=>{:bat=>bat, :not_yet_vaccinated=>!params[:not_yet_vaccinated], 
+				:reactivating=>params[:reactivating]}
+	end
+	
+
 end

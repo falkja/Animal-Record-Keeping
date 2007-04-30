@@ -365,7 +365,7 @@ redirect_to :action => 'list'
     
     Task::set_current_user(session[:person])
     @updated_tasks = @cage.update_weighing_tasks
-
+    
 		if params[:redirectme]
 			redirect_to :controller => 'cages', :action => 'weigh_cage', :id => params[:redirectme]
 		end

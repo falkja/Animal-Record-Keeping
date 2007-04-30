@@ -428,7 +428,7 @@ redirect_to :action => 'list'
 	end
 
 	def allow_vaccination_date
-		render :partial => 'form_vaccination', :locals=>{:bat=>Bat.find(params[:bat]), :not_yet_vaccinated=>!params[:not_yet_vaccinated], 
+		render :partial => 'form_vaccination', :locals=>{:bat=>Bat.find(params[:bat]), :show_vaccination_date_select=>true, 
 				:reactivating=>params[:reactivating]}
 	end
 	
@@ -436,7 +436,7 @@ redirect_to :action => 'list'
 		bat = Bat.find(params[:bat])
 		bat.vaccination_date = nil
 		bat.save
-		render :partial => 'form_vaccination', :locals=>{:bat=>bat, :not_yet_vaccinated=>!params[:not_yet_vaccinated], 
+		render :partial => 'form_vaccination', :locals=>{:bat=>bat, :show_vaccination_date_select=>false, 
 				:reactivating=>params[:reactivating]}
 	end
 	

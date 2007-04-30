@@ -45,14 +45,14 @@
 <%= text_field 'bat', 'collection_place', :disabled => @reactivating %></p>
 
 <% if @bat.vaccination_date %>
-	<% not_yet_vaccinated = false %>
+	<% show_vaccination_date_select = true %>
 <% else %>
-  <% not_yet_vaccinated = true %>
+  <% show_vaccination_date_select = false %>
 <% end %>
 
 <div id='vaccination'>
 
-<%= render :partial=>'form_vaccination', :locals =>{:bat => @bat, :not_yet_vaccinated=> not_yet_vaccinated, :reactivating=>@reactivating} %>
+<%= render :partial=>'form_vaccination', :locals =>{:bat => @bat, :show_vaccination_date_select=> show_vaccination_date_select, :reactivating=>@reactivating} %>
 
 </div>
 

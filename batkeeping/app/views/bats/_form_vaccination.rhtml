@@ -1,0 +1,19 @@
+<% if show_vaccination_date_select %>
+
+<p>
+[<%= link_to_remote '-', :url => {:controller => 'bats', :action => 'clear_vaccination_date', :bat => bat, :show_vaccination_date_select=>false, :reactivating=>reactivating}, 
+			:update => 'vaccination' %>]
+			
+<label for="bat_vaccination_date">Rabies Vaccination</label><br/>
+<%= date_select 'bat', 'vaccination_date', :disabled => (reactivating) %>
+</p>
+
+<% else %>
+
+<p>
+[<%= link_to_remote '+', :url => {:controller => 'bats', :action => 'allow_vaccination_date', :bat => bat, :show_vaccination_date_select=>true, :reactivating=>reactivating}, 
+			:update => 'vaccination' %>] Rabies Vaccination
+</p>
+
+<% end %>
+

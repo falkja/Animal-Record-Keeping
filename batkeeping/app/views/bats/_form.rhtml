@@ -60,7 +60,11 @@
 
 <p>
 
-Choose cage (previous cage: <%=h @bat.cage_out_histories[0].cage.name %>)
+Choose cage 
+
+<% if @reactivating %> 
+(previous cage: <%=h @bat.cage_out_histories[0].cage.name %>)
+<% end %>
 <table>
 <th></th>
 <th>Cage</th>

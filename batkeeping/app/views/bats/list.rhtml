@@ -1,22 +1,39 @@
 <h1>
-<% if @list_all %>
+<% if @list == "all" %>
 Listing all bats
-<% else %>
+<% elsif @list == "current" %>
 Listing current bats
+<% else %>
+Listing deactivated bats
 <% end %>
 </h1>
 
 <div class="left_indent">
+
+<% if @bats.length == 0 %>
+
+No bats.
+
+<% else %>
+
 <%= render :partial => 'bats/bat_list', :locals => { 
 		:bat_list => @bats,
-		:show_leave_date_and_reason => @list_all,
+		:show_leave_date_and_reason => @show_leave_date_and_reason,
 		:show_weigh_link => false } %>
+
+<% end %>
+
 </div>
 <br />
 
 <%= link_to 'New Bat', :action => 'new' %>
-<% if @list_all %>
+<% if @list == "all" %>
 <%= link_to 'List Current Bats', :controller => 'bats', :action => 'list' %>
-<% else %>
+<%= link_to 'List Deactivated Bats', :controller => 'bats', :action => 'list_deactivated' %>
+<% elsif @list == "current" %>
 <%= link_to 'List All Bats', :controller => 'bats', :action => 'list_all' %>
+<%= link_to 'List Deactivated Bats', :controller => 'bats', :action => 'list_deactivated' %>
+<% else %>
+<%= link_to 'List Current Bats', :controller => 'bats', :action => 'list' %>
+<%= link_to 'List Deactivated Bats', :controller => 'bats', :action => 'list_deactivated' %>
 <% end %>

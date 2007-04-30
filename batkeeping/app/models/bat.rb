@@ -61,43 +61,16 @@ class Bat < ActiveRecord::Base
 		Bat.find(bat_ids.uniq, :order => 'band')
   end
 	
-	#returns the room of the bat at a particular time, assumes cages dont move between rooms - probably a bad assumption
-	def in_what_cage(day,month,year)
-		cihs = self.cage_in_histories
-		today = Time.gm(year,month,day,23,59,59)
-		for cih in cihs
-			if cih.date < today
-				return cih.cage.room
-			end
-		end
+	def Bat.set_user_and_comment(user, cmt)
+		@@current_user = user
+		@@comment = cmt
 	end
-		
+	
 	#What was the date that the first bat was added to the colony (acc to database)
 	def self.earliest_addition
 		bat = Bat.find :first, :order => 'collection_date asc'
 		bat ? yoda = bat.collection_date : yoda = nil 
 		return yoda
-	end
-	
-	#Return all bats that left the colony (leave_date)
-	#on the given month (month is an integer from 1 to 12)
-	def self.left_on_month(month, year)
-		#from http://dev.mysql.com/doc/refman/5.0/en/date-calculations.html
-		bats = Bat.find(:all, :conditions => "YEAR(leave_date) = #{year} AND MONTH(leave_date) = #{month}")
-		bats ? yoda = bats.length : yoda = 0
-		return bats, yoda
-	end
-	
-	def self.arrived_on_month(month, year)
-		#from http://dev.mysql.com/doc/refman/5.0/en/date-calculations.html
-		bats = Bat.find(:all, :conditions => "YEAR(collection_date) = #{year} AND MONTH(collection_date) = #{month}")
-		bats ? yoda = bats.length : yoda = 0
-		return bats, yoda
-	end
-	
-	def Bat.set_user_and_comment(user, cmt)
-		@@current_user = user
-		@@comment = cmt
 	end
 	
 	#call this whenever you think the bat's cage could have changed

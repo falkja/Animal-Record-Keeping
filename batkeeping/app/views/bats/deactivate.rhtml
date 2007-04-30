@@ -3,7 +3,7 @@
 <% # This lets us pick a deactivate date and then sets that %>
 <% @bat.cage = nil %>
 
-<% form_tag :action => 'deactivate_bat', :id => @bat, :redirectme => 'list' do %>
+<% form_tag :action => 'deactivate_bat', :id => @bat, :redirectme => 'move' do %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Deactivate' %>
 <% end %>

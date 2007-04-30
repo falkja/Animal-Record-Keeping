@@ -40,12 +40,29 @@ options_for_select([
 </p>
 <% end %>
 
-<% if @task.internal_description != 'feed' %>
+<% if @task.internal_description == 'feed' %>
+<p>
+<label for="food">Food</label><br/>
+<%= text_field 'task', 'food', :size => 1, :autocomplete => 'off' %> g
+</p>
+
+<p>
+<label for="dish_type">Dish Type</label><br/>
+<%= select_tag("task[dish_type]", options_for_select([["Small","Small"],["Medium","Medium"], ["Long","Long"],["Metal tray","Metal tray"]], @task.dish_type)) %>
+</p>
+
+<p>
+<label for="dish_num">Number of dishes</label><br/>
+<%= text_field 'task', 'dish_num', :size => 1, :autocomplete => 'off' %>
+</p>
+<% else %>
+
 <p><label for="task_jitter">This task can be done one day ahead of schedule?</label>
 <%= check_box('task', 'jitter', {}, "-1", "0") %></p>
-<% end %>
 
 <p><label for="task_notes">Notes</label><br/>
 <%= text_field 'task', 'notes' %></p>
+<% end %>
+
 <!--[eoform:task]-->
 

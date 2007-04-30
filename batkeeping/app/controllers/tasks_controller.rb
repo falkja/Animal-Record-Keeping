@@ -197,7 +197,7 @@ class TasksController < ApplicationController
     end
     
    
-    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => weighing_tasks, 
+    render :partial => 'tasks_list', :locals => {:tasks => weighing_tasks, 
                                       :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
   end
 
@@ -217,7 +217,7 @@ class TasksController < ApplicationController
         task.save
     end    
     
-    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', 
+    render :partial => 'tasks_list', :locals => {:tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', 
                             :single_cage_task_list => true, :manage => true}
   end
   
@@ -292,7 +292,7 @@ class TasksController < ApplicationController
 	
 		feeding_tasks = feeding_tasks.sort_by{|task| [task.repeat_code]}
     
-    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => feeding_tasks, 
+    render :partial => 'tasks_list', :locals => {:tasks => feeding_tasks, 
                                       :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
   end
 
@@ -366,7 +366,7 @@ class TasksController < ApplicationController
     task = Task.find(params[:id])
     Task::set_current_user(session[:person])
     task.done
-    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => Task.find(params[:ids], :order => 'repeat_code'), :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
+    render :partial => 'tasks_list', :locals => {:tasks => Task.find(params[:ids], :order => 'repeat_code'), :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
   end
   
   def medical_task_done
@@ -397,7 +397,7 @@ class TasksController < ApplicationController
     tasks = Task.find(params[:ids], :order => 'repeat_code')
     tasks.delete(Task.find(params[:id]))
     Task.find(params[:id]).deactivate
-    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => tasks, :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
+    render :partial => 'tasks_list', :locals => {:tasks => tasks, :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
   end
   
   def destroy_medical_task
@@ -411,7 +411,7 @@ class TasksController < ApplicationController
 	    task.date_ended = Time.now
       task.save
     end
-    render :partial => 'tasks_list', :locals => {:tasks_list => nil, :tasks => [], :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => params[:manage]}
+    render :partial => 'tasks_list', :locals => {:tasks => [], :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => params[:manage]}
   end
   
 end

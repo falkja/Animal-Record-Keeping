@@ -1,6 +1,6 @@
 <h3>Feeding Tasks</h3>
 <div class="left_indent">
-  <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => feeding_tasks, :div_id => 'feeding_tasks' + count, 
+  <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => feeding_tasks, :div_id => 'feeding_tasks' + count, 
                                                                 :single_cage_task_list => single_cage_task_list, :manage => true} %>
   
   <% if cages.length > 0 %>
@@ -28,7 +28,7 @@
 
 <h3>Cage Weighing Tasks</h3>
 <div class="left_indent">
-  <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => weighing_tasks, :div_id => 'weighing_tasks' + count, 
+  <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => weighing_tasks, :div_id => 'weighing_tasks' + count, 
                                                                 :single_cage_task_list => single_cage_task_list, :manage => true} %>
   <% if cages.length > 0 %>
   <p>
@@ -55,7 +55,7 @@
 
 <h3>Medical Tasks</h3>
 <div class="left_indent">
-    <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => medical_tasks, :div_id => 'medical_tasks' + count, 
+    <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => medical_tasks, :div_id => 'medical_tasks' + count, 
                                                                   :single_cage_task_list => single_cage_task_list, :manage => true} %>
     
     <% if medical_problems.length > 0 %>
@@ -71,7 +71,7 @@
 
 <h3>General Tasks</h3>
 <div class="left_indent">
-  <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => general_tasks, :div_id => 'general_tasks' + count, 
+  <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => general_tasks, :div_id => 'general_tasks' + count, 
                                                                 :single_cage_task_list => single_cage_task_list, :manage => true} %>
   <p><%= button_to 'Add general task', :controller => 'tasks', :action => 'new' %></p>
 </div>

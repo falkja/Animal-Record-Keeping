@@ -41,7 +41,7 @@ No tasks.
 	<% if tasks.length > 0 %>
 		<p>
 		[<%= link_to_remote "Remove existing tasks",
-			:url => {:controller => "tasks", :action => "clear_tasks", :tasks_list => nil, :tasks => tasks, :div_id => div_id, 
+			:url => {:controller => "tasks", :action => "clear_tasks", :tasks => tasks, :div_id => div_id, 
 			:single_cage_task_list => true, :manage => true}, :update => div_id
 		%>]
 		</p>

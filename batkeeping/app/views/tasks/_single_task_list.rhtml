@@ -74,7 +74,7 @@
     <% end %>
     </td>
     
-    <td><%= task.notes %></td>
+    <td><%=h task.notes %></td>
     
     <td><%= link_to 'Show', :controller => 'tasks', :action => 'show', :id => task %></td>
     

@@ -59,10 +59,11 @@ options_for_select([
 
 <p><label for="task_jitter">This task can be done one day ahead of schedule?</label>
 <%= check_box('task', 'jitter', {}, "-1", "0") %></p>
-<p><label for="task_notes">Notes</label><br/>
 
-<%= text_field 'task', 'notes' %></p>
 <% end %>
+
+<p><label for="task_notes">Notes</label><br/>
+<%= text_field 'task', 'notes' %></p>
 
 <!--[eoform:task]-->
 

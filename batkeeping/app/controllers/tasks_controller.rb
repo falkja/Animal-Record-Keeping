@@ -170,7 +170,7 @@ class TasksController < ApplicationController
       end
     end
     
-    flash[:note] = 'Weigh cage task(s) successfully created. If the task does not appear below, maybe it is for a different day?'
+    flash[:note] = 'Weigh cage task(s) successfully created. If the task does not appear below, it may be for a different day or a different user.'
     
     end
     

@@ -1,5 +1,7 @@
 <div id='weathers'>
 
+<p style="color: green"><%= flash[:note] %></p>
+
 <div class= "left_indent">
 
 <% for room in Room.find(:all, :order=> 'name') %>
@@ -10,13 +12,17 @@
     <p><b><%= room.name %></b>
     <%= text_field 'weather', 'temperature', :size=>2, :value=> '' %> &deg F
     <%= text_field 'weather', 'humidity', :size=>2, :value=> '' %>%
-    <%= submit_tag 'Submit Temperature and Humidity' %></p>
+    <%= submit_tag 'Submit' %></p>
   <% end %>
   
   <% else %>
     <p><b><%= room.name %></b>
     <%= room_weather.temperature %> &deg F
-    <%= room_weather.humidity %>% </p>
+    <%= room_weather.humidity %>% 
+    <%= submit_to_remote('clear','clear', 
+        :url=>{:controller => 'weathers', :action => 'clear', :room => room},
+        :update => 'weathers') %>
+    </p>
   <% end %>
 <% end %>
 

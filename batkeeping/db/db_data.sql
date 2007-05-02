@@ -1198,7 +1198,7 @@ INSERT INTO `users` (`id`,`name`,`initials`,`email`,`start_date`,`end_date`) VAL
 DROP TABLE IF EXISTS `weathers`;
 CREATE TABLE `weathers` (
   `id` int(10) unsigned NOT NULL auto_increment,
-  `log_date` datetime NOT NULL,
+  `log_date` date NOT NULL,
   `temperature` float NOT NULL,
   `humidity` float NOT NULL,
   `room_id` int(10) unsigned NOT NULL,
@@ -1212,7 +1212,7 @@ CREATE TABLE `weathers` (
 
 /*!40000 ALTER TABLE `weathers` DISABLE KEYS */;
 INSERT INTO `weathers` (`id`,`log_date`,`temperature`,`humidity`,`room_id`,`sig`) VALUES 
- (1,'2007-04-27 00:00:00',78.3,49,3,'BF');
+ (1,'2007-04-27',78.3,49,3,'BF');
 /*!40000 ALTER TABLE `weathers` ENABLE KEYS */;
 
 

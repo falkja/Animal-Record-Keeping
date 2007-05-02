@@ -19,12 +19,12 @@ class WeathersController < ApplicationController
   end
   
   def clear
-    gfd
-    @weather = Weather.find(:first, :conditions=>'room_id = ' + params[:room] + ' log_date = ' + Date.today)
-    @weather.delete
-    @weather.save
-    asd
+    @weather = Weather.find(:first, :conditions=>'room_id = ' + params[:room] + ' and log_date = "' + Date.today.to_s + '"')
+    @weather.destroy
     
+		flash[:note]='The temperature/humidity data has been cleared.'
+		
     render :partial=>'enter_weathers'
   end
 end
+

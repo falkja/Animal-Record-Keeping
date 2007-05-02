@@ -16,13 +16,14 @@
   <% end %>
   
   <% else %>
-    <p><b><%= room.name %></b>
+    <p><form><b><%= room.name %></b>
     <%= room_weather.temperature %> &deg F
     <%= room_weather.humidity %>% 
-    <%= submit_to_remote('clear','clear', 
+		<%= submit_to_remote('Delete','Delete', 
         :url=>{:controller => 'weathers', :action => 'clear', :room => room},
         :update => 'weathers') %>
-    </p>
+    </form>
+		</p>
   <% end %>
 <% end %>
 

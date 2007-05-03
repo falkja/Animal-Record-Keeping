@@ -29,7 +29,8 @@ redirect_to :action => 'list'
 	end
 
 	def sort_by_species
-		bat_list = Bat.find(params[:ids], :order => 'species, band')
+		bat_list = Bat.find(params[:ids])
+		bat_list = bat_list.sort_by{|bat| [bat.species.name, bat.band]}
     render :partial => 'bat_list', :locals => {
 					:bat_list => bat_list, :div_id => params[:div_id],
 					:show_leave_date_and_reason => params[:show_leave_date_and_reason],
@@ -91,9 +92,11 @@ redirect_to :action => 'list'
   def new
 	@cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name")
 	@bat = Bat.new
+	@species = Species.find(:all)
 	@reactivating = false
 	@deactivating = false
 	@creating = true
+	@species = Species.find(:all)
 	end
 
   def create
@@ -128,6 +131,7 @@ redirect_to :action => 'list'
 	@current_user = session[:person]  
 	@cages = Cage.active
 	@bat = Bat.find(params[:id])
+	@species = Species.find(:all)
 	@deactivating = false
   end
 
@@ -177,6 +181,7 @@ redirect_to :action => 'list'
   def deactivate
 	@cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name" )
 	@bat = Bat.find(params[:id])
+	@species = Species.find(:all)
 	@deactivating = true
   end
   
@@ -200,6 +205,7 @@ redirect_to :action => 'list'
   
   def reactivate
     @bat = Bat.find(params[:id])
+		@species = Species.find(:all)
     @cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name" )
     @reactivating = true
   end
@@ -395,10 +401,7 @@ redirect_to :action => 'list'
     g = Gruff::Line.new(800)
     
     g.title = "Bat Weights"
-    bat.species == "Eptesicus fuscus" ? g.baseline_value = 13 : ''
-    bat.species == "Carollia perspicillata" ? g.baseline_value = 15 : ''
-    bat.species == "Glossophaga soricina" ? g.baseline_value = 11 : ''
-    bat.species == "Myotis septentrionalis" ? g.baseline_value = 7 : ''
+    bat.species.lower_weight_limit ? g.baseline_value = bat.species.lower_weight_limit : ''
     g.data(bat.band, weights)
     
     g.labels = dates_reduced #this is where we will need to put the dates

@@ -13,7 +13,7 @@
 
 <p>
 <b>Species: </b>
-<em><%= @bat.species %></em>
+<em><% if @bat.species %><%= @bat.species.name %><% end %></em>
 </p>
 
 <p>

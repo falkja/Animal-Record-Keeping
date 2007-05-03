@@ -9,7 +9,7 @@ class RoomsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @rooms_pages, @rooms = paginate :rooms, :per_page => 10
+    @rooms = Room.find(:all)
   end
 
   def show

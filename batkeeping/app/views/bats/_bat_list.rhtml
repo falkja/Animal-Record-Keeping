@@ -86,7 +86,7 @@
 	</td>
   <% end %>
   
-  <td><%=h bat.species %></td>
+  <td><% if bat.species %><%=h bat.species.name %><% end %></td>
   <td><%=h bat.gender %></td>
     
     <% if bat.weights.length > 0 %></td>

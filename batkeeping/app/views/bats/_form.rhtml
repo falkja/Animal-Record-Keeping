@@ -27,7 +27,7 @@
 </p>
 
 <p><label for="bat_species">Species</label><br/>
-<%= select_tag("bat[species]", options_for_select([["Eptesicus fuscus","Eptesicus fuscus"],["Glossophaga soricina","Glossophaga soricina"],["Carollia perspicillata","Carollia perspicillata"],["Myotis septentrionalis","Myotis septentrionalis"]],@bat.species), :disabled => @reactivating) %></p>
+<%= collection_select("bat", "species_id" , @species, "id", "name") %></p>
 
 <p><label for="bat_gender">Gender</label><br/>
 <%= select_tag("bat[gender]", options_for_select([["Male","M"],["Female","F"]],@bat.gender), :disabled => @reactivating) %>

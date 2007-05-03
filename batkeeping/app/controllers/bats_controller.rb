@@ -403,6 +403,7 @@ redirect_to :action => 'list'
     g.title = "Bat Weights"
     bat.species.lower_weight_limit ? g.baseline_value = bat.species.lower_weight_limit : ''
     g.data(bat.band, weights)
+    g.minimum_value = 0
     
     g.labels = dates_reduced #this is where we will need to put the dates
     

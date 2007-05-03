@@ -1,7 +1,7 @@
 -- MySQL Administrator dump 1.4
 --
 -- ------------------------------------------------------
--- Server version	5.0.27-community-nt
+-- Server version	5.0.32-Debian_7etch1-log
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -1234,8 +1234,7 @@ CREATE TABLE `weathers` (
 
 /*!40000 ALTER TABLE `weathers` DISABLE KEYS */;
 INSERT INTO `weathers` (`id`,`log_date`,`temperature`,`humidity`,`room_id`,`sig`) VALUES 
- (1,'2007-04-27',78.3,49,3,'BF'),
- (8,'2007-05-02',15,15,2,'BF');
+ (1,'2007-04-27',78.3,49,3,'BF');
 /*!40000 ALTER TABLE `weathers` ENABLE KEYS */;
 
 

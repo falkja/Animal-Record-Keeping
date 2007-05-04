@@ -46,7 +46,7 @@
     <% if task.done_by_schedule %> 
        <%= nice_date(task.last_done_date) %>
     <% else %>
-      <% if manage == true %>
+      <% if manage %>
         <% if task.doable %>
           <% if task.internal_description == "feed" %>
             <% label = 'Just Fed' %>

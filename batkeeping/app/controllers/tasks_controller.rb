@@ -413,5 +413,15 @@ class TasksController < ApplicationController
     end
     render :partial => 'tasks_list', :locals => {:tasks => [], :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => params[:manage]}
   end
-  
+	
+	def show_hide_task_categories
+		params[:tasks] ? tasks = Task.find(params[:tasks]) : tasks = Array.new
+		params[:medical_problems] ? medical_problems = MedicalProblem.find(params[:medical_problems]) : medical_problems = Array.new
+		params[:cages] ? cages = Cage.find(params[:cages]) : cages = Array.new
+		render :partial => 'show_hide_task_category', :locals => {:tasks => tasks, :div_id => params[:div_id],
+				:single_cage_task_list => params[:single_cage_task_list], :manage => params[:manage], :cages => cages,
+				:source => params[:source], :count => params[:count], :show => params[:show], :category_div => params[:category_div],
+				:medical_problems => medical_problems}
+	end
+	
 end

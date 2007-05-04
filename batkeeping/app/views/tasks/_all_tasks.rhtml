@@ -1,77 +1,37 @@
-<h3>Feeding Tasks</h3>
-<div class="left_indent">
-  <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => feeding_tasks, :div_id => 'feeding_tasks' + count, 
-                                                                :single_cage_task_list => single_cage_task_list, :manage => true} %>
-  
-  <% if cages.length > 0 %>
-  <p>
-  <% form_remote_tag :url => {:controller => 'tasks', :action => 'remote_new_feed_cage_task', :id => @cage, :div_id => 'feeding_tasks' + count, 
-                  :single_cage_task_list => single_cage_task_list, :source => source, :quick_add => true},
-                  :update => 'add_feeding_task' + count do %>
-  Cage: <%= select_tag("id", options_from_collection_for_select(cages, "id", "name")) %>
-  <%= submit_tag "Quick-add feeding task" %>
-  <% end %>
-  <div id = "add_feeding_task<%= count %>">
-  </div>
-  </p>
+<% (source.include? 'user_summary') ? show = true : show = false %>
 
-  <p>
-  <% form_tag :controller => 'tasks', :action => 'manage_feeding_tasks', :id => @cage do %>
-  Cage: 
-  <%= select_tag("id", options_from_collection_for_select(cages, "id", "name")) %>
-  <%= submit_tag "Manage feeding tasks" %>
-  <% end %>
-  </p>
-  
-  <% end %>
+<div id = 'feeding_tasks_category<%= count %>'>
+
+<%= render :partial=>'tasks/show_hide_task_category', :locals => {:tasks => feeding_tasks,
+			:div_id => 'feeding_tasks' + count, :single_cage_task_list => single_cage_task_list, 
+			:manage => true, :cages => cages, :source => source, :count => count, :show => show,
+			:category_div => 'feeding_tasks_category', :medical_problems => nil} %>
+
 </div>
 
-<h3>Cage Weighing Tasks</h3>
-<div class="left_indent">
-  <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => weighing_tasks, :div_id => 'weighing_tasks' + count, 
-                                                                :single_cage_task_list => single_cage_task_list, :manage => true} %>
-  <% if cages.length > 0 %>
-  <p>
-  <% form_remote_tag :url => {:controller => 'tasks', :action => 'remote_new_weigh_cage_task', :id => @cage, :div_id => 'weighing_tasks' + count, 
-                  :single_cage_task_list => single_cage_task_list, :source => source, :quick_add => true},
-                  :update => 'add_weighing_task' + count do %>
-  Cage: <%= select_tag("id", options_from_collection_for_select(cages, "id", "name")) %>
-  <%= submit_tag "Quick-add weighing task" %>
-  <% end %>
-  <div id = "add_weighing_task<%= count %>">
-  </div>
-  </p>
-  
-  <p>
-  <% form_tag :controller => 'tasks', :action => 'form_to_new_weigh_cage_task', :id => @cage do %>
-  Cage: 
-  <%= select_tag("id", options_from_collection_for_select(cages, "id", "name")) %>
-  <%= submit_tag "Manage weighing tasks" %>
-  <% end %>
-  </p>
-  
-  <% end %>
+<div id = 'weighing_tasks_category<%= count %>'>
+
+<%= render :partial=>'tasks/show_hide_task_category', :locals => {:tasks => weighing_tasks,
+			:div_id => 'weighing_tasks' + count, :single_cage_task_list => single_cage_task_list, 
+			:manage => true, :cages => cages, :source => source, :count => count, :show => show,
+			:category_div => 'weighing_tasks_category', :medical_problems => nil} %>
+
 </div>
 
-<h3>Medical Tasks</h3>
-<div class="left_indent">
-    <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => medical_tasks, :div_id => 'medical_tasks' + count, 
-                                                                  :single_cage_task_list => single_cage_task_list, :manage => true} %>
-    
-    <% if medical_problems.length > 0 %>
-    <p>
-    <% form_tag :controller => 'tasks', :action => 'new_medical_task' do %>
-    Medical Problem: 
-    <%= select_tag("id", options_from_collection_for_select(medical_problems, "id", "title")) %>
-    <%= submit_tag "Add new treatment" %>
-    <% end %>
-    </p>
-    <% end %>
+<div id = 'medical_tasks_category<%= count %>'>
+
+<%= render :partial=>'tasks/show_hide_task_category', :locals => {:tasks => medical_tasks,
+			:div_id => 'medical_tasks' + count, :single_cage_task_list => nil, 
+			:manage => true, :cages => nil, :source => source, :count => count, :show => show,
+			:category_div => 'medical_tasks_category', :medical_problems => medical_problems} %>
+
 </div>
 
-<h3>General Tasks</h3>
-<div class="left_indent">
-  <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => general_tasks, :div_id => 'general_tasks' + count, 
-                                                                :single_cage_task_list => single_cage_task_list, :manage => true} %>
-  <p><%= button_to 'Add general task', :controller => 'tasks', :action => 'new' %></p>
+<div id = 'general_tasks_category<%= count %>'>
+
+<%= render :partial=>'tasks/show_hide_task_category', :locals => {:tasks => general_tasks,
+			:div_id => 'general_tasks' + count, :single_cage_task_list => nil, 
+			:manage => true, :cages => nil, :source => source, :count => count, :show => show,
+			:category_div => 'general_tasks_category', :medical_problems => nil} %>
+
 </div>

@@ -10,9 +10,9 @@ class WeathersController < ApplicationController
       @weather.sig = session[:person].initials
       @weather.save
     
-      flash[:status]='Temperature/humidity entry added.'
+      flash[:note]='Temperature/humidity entry added.'
     else
-      flash[:status]='There was an error in your submission.'
+      flash[:note]='There was an error in your submission.'
     end
   
     render :partial=>'enter_weathers'
@@ -22,7 +22,7 @@ class WeathersController < ApplicationController
     @weather = Weather.find(:first, :conditions=>'room_id = ' + params[:room] + ' and log_date = "' + Date.today.to_s + '"')
     @weather.destroy
     
-		flash[:status]='The temperature/humidity data has been cleared.'
+		flash[:note]='The temperature/humidity data has been cleared.'
 		
     render :partial=>'enter_weathers'
   end

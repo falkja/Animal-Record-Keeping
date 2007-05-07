@@ -1,7 +1,7 @@
 class MedicalProblem < ActiveRecord::Base
 	belongs_to :bat
 	belongs_to :user
-	has_many :tasks
+	has_many :medical_treatments
   
   def self.current
       self.find(:all, :conditions => "date_closed is null")

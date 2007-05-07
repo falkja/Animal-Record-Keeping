@@ -1,2 +1,0 @@
-module ProtocolStartHistoriesHelper
-end

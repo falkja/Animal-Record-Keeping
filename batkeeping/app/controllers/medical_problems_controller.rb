@@ -12,13 +12,15 @@ class MedicalProblemsController < ApplicationController
   end
 
   def list_current
-    @bats = Bat.sick
+    @medical_problems = MedicalProblem.current
+		@medical_problems = @medical_problems.sort_by{|medical_problem| [medical_problem.bat.band, medical_problem.title]}
     @list_all = false
     list
   end
 
   def list_all
-    @bats = Bat.sick_or_previously_sick
+    @medical_problems = MedicalProblem.find(:all)
+		@medical_problems = @medical_problems.sort_by{|medical_problem| [medical_problem.bat.band, medical_problem.title]}
     @list_all = true
     list
   end

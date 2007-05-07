@@ -1,8 +1,0 @@
-<% for column in ProtocolHistory.content_columns %>
-<p>
-  <b><%= column.human_name %>:</b> <%=h @protocol_history.send(column.name) %>
-</p>
-<% end %>
-
-<%= link_to 'Edit', :action => 'edit', :id => @protocol_history %> |
-<%= link_to 'Back', :action => 'list' %>

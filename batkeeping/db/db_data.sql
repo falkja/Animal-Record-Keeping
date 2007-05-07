@@ -1,7 +1,7 @@
 -- MySQL Administrator dump 1.4
 --
 -- ------------------------------------------------------
--- Server version	5.0.32-Debian_7etch1-log
+-- Server version	5.0.27-community-nt
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -334,28 +334,6 @@ INSERT INTO `census` (`id`,`animals`,`date`,`room_id`,`bats_added`,`bats_removed
 
 
 --
--- Definition of table `medical_care_actions`
---
-
-DROP TABLE IF EXISTS `medical_care_actions`;
-CREATE TABLE `medical_care_actions` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `proposed_treatment_id` int(10) unsigned NOT NULL,
-  `date` datetime NOT NULL,
-  `remarks` text NOT NULL,
-  `user_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `medical_care_actions`
---
-
-/*!40000 ALTER TABLE `medical_care_actions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `medical_care_actions` ENABLE KEYS */;
-
-
---
 -- Definition of table `medical_problems`
 --
 
@@ -365,7 +343,6 @@ CREATE TABLE `medical_problems` (
   `bat_id` int(10) unsigned NOT NULL,
   `date_opened` datetime NOT NULL,
   `description` text NOT NULL,
-  `user_id` int(10) unsigned default NULL,
   `date_closed` datetime default NULL,
   `title` varchar(45) NOT NULL,
   PRIMARY KEY  (`id`)
@@ -376,101 +353,35 @@ CREATE TABLE `medical_problems` (
 --
 
 /*!40000 ALTER TABLE `medical_problems` DISABLE KEYS */;
-INSERT INTO `medical_problems` (`id`,`bat_id`,`date_opened`,`description`,`user_id`,`date_closed`,`title`) VALUES 
- (1,4,'2007-04-24 00:00:00','Abscess on face below right eye. White pus when drained. Mouth bleeding.',2,NULL,'Abscess under right eye'),
- (2,7,'2007-04-24 00:00:00','Abscess on face under right eye. Some pus when drained, bleeding in mouth.',2,NULL,'Abscess under right eye');
+INSERT INTO `medical_problems` (`id`,`bat_id`,`date_opened`,`description`,`date_closed`,`title`) VALUES 
+ (1,4,'2007-04-24 00:00:00','Abscess on face below right eye. White pus when drained. Mouth bleeding.',NULL,'Abscess under right eye'),
+ (2,7,'2007-04-24 00:00:00','Abscess on face under right eye. Some pus when drained, bleeding in mouth.',NULL,'Abscess under right eye');
 /*!40000 ALTER TABLE `medical_problems` ENABLE KEYS */;
 
 
 --
--- Definition of table `proposed_treatments`
+-- Definition of table `medical_treatments`
 --
 
-DROP TABLE IF EXISTS `proposed_treatments`;
-CREATE TABLE `proposed_treatments` (
+DROP TABLE IF EXISTS `medical_treatments`;
+CREATE TABLE `medical_treatments` (
   `id` int(10) unsigned NOT NULL auto_increment,
-  `medical_problem_id` int(10) unsigned NOT NULL,
-  `date_started` datetime NOT NULL,
-  `date_finished` datetime NOT NULL,
-  `date_closed` datetime default NULL,
-  `treatment` text NOT NULL,
-  `user_id` int(10) unsigned NOT NULL,
+  `title` varchar(45) NOT NULL,
+  `medical_problem_id` int(10) unsigned default NULL,
+  `date_opened` date NOT NULL,
+  `date_closed` date default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `proposed_treatments`
---
-
-/*!40000 ALTER TABLE `proposed_treatments` DISABLE KEYS */;
-/*!40000 ALTER TABLE `proposed_treatments` ENABLE KEYS */;
-
-
---
--- Definition of table `protocol_end_histories`
---
-
-DROP TABLE IF EXISTS `protocol_end_histories`;
-CREATE TABLE `protocol_end_histories` (
-  `id` int(10) unsigned NOT NULL default '0',
-  `bat_id` int(10) unsigned NOT NULL,
-  `protocol_id` int(10) unsigned NOT NULL,
-  `date` datetime default NULL,
-  `user_id` int(10) unsigned default NULL,
-  `protocol_start_history_id` int(10) unsigned default NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `protocol_end_histories`
+-- Dumping data for table `medical_treatments`
 --
 
-/*!40000 ALTER TABLE `protocol_end_histories` DISABLE KEYS */;
-/*!40000 ALTER TABLE `protocol_end_histories` ENABLE KEYS */;
-
-
---
--- Definition of table `protocol_start_histories`
---
-
-DROP TABLE IF EXISTS `protocol_start_histories`;
-CREATE TABLE `protocol_start_histories` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `bat_id` int(10) unsigned NOT NULL,
-  `protocol_id` int(10) unsigned NOT NULL,
-  `date` datetime default NULL,
-  `user_id` int(10) unsigned default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `protocol_start_histories`
---
-
-/*!40000 ALTER TABLE `protocol_start_histories` DISABLE KEYS */;
-/*!40000 ALTER TABLE `protocol_start_histories` ENABLE KEYS */;
-
-
---
--- Definition of table `protocols`
---
-
-DROP TABLE IF EXISTS `protocols`;
-CREATE TABLE `protocols` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `number` varchar(45) NOT NULL,
-  `text` text NOT NULL,
-  `start_date` datetime NOT NULL,
-  `renewal_A_date` datetime default NULL,
-  `renewal_B_date` datetime default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `protocols`
---
-
-/*!40000 ALTER TABLE `protocols` DISABLE KEYS */;
-/*!40000 ALTER TABLE `protocols` ENABLE KEYS */;
+/*!40000 ALTER TABLE `medical_treatments` DISABLE KEYS */;
+INSERT INTO `medical_treatments` (`id`,`title`,`medical_problem_id`,`date_opened`,`date_closed`) VALUES 
+ (5,'0.15 cc Bactrim',1,'2007-05-07',NULL),
+ (6,'observations',1,'2007-05-07',NULL);
+/*!40000 ALTER TABLE `medical_treatments` ENABLE KEYS */;
 
 
 --
@@ -542,7 +453,11 @@ CREATE TABLE `task_histories` (
 INSERT INTO `task_histories` (`id`,`task_id`,`date_done`,`remarks`,`user_id`,`fed`) VALUES 
  (1,137,'2007-04-27 14:10:42','',5,NULL),
  (2,137,'2007-04-27 14:14:02','',5,NULL),
- (3,209,'2007-04-27 14:33:58','',5,NULL);
+ (3,209,'2007-04-27 14:33:58','',5,NULL),
+ (4,242,'2007-05-07 11:51:00','',6,NULL),
+ (5,242,'2007-05-07 11:51:00','',6,NULL),
+ (6,242,'2007-05-07 11:51:00','',6,NULL),
+ (7,237,'2007-05-07 11:58:00','',6,NULL);
 /*!40000 ALTER TABLE `task_histories` ENABLE KEYS */;
 
 
@@ -554,7 +469,7 @@ DROP TABLE IF EXISTS `tasks`;
 CREATE TABLE `tasks` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `repeat_code` int(10) unsigned NOT NULL COMMENT '0 means daily 1 = sunday etc.',
-  `medical_problem_id` int(10) unsigned default NULL,
+  `medical_treatment_id` int(10) unsigned default NULL,
   `cage_id` int(10) unsigned default NULL,
   `title` text NOT NULL,
   `notes` text NOT NULL,
@@ -573,7 +488,7 @@ CREATE TABLE `tasks` (
 --
 
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (1,1,NULL,1,'Feed cage BF','','feed',1.5,'Small',1,0,'2007-04-25 13:12:09',NULL),
  (2,2,NULL,1,'Feed cage BF','','feed',1.5,'Small',1,0,'2007-04-25 13:12:09',NULL),
  (3,3,NULL,1,'Feed cage BF','','feed',1.5,'Small',1,0,'2007-04-25 13:12:09',NULL),
@@ -585,7 +500,7 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`
  (9,6,NULL,1,'Weigh cage BF','','weigh',NULL,NULL,NULL,-1,'2007-04-25 13:13:46',NULL),
  (10,1,NULL,7,'Feed cage MED','','feed',8,'Medium',2,0,'2007-04-27 10:04:24','2007-04-27 13:01:00'),
  (11,2,NULL,7,'Feed cage MED','','feed',8,'Medium',2,0,'2007-04-27 10:04:24','2007-04-27 13:01:08');
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (12,3,NULL,7,'Feed cage MED','','feed',8,'Medium',2,0,'2007-04-27 10:04:24','2007-04-27 13:01:19'),
  (13,4,NULL,7,'Feed cage MED','','feed',8,'Medium',2,0,'2007-04-27 10:04:24','2007-04-27 13:01:31'),
  (14,5,NULL,7,'Feed cage MED','','feed',8,'Medium',2,0,'2007-04-27 10:04:24','2007-04-27 13:01:39'),
@@ -596,7 +511,7 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`
  (19,3,NULL,2,'Feed cage Thin','','feed',30,'Long',2,0,'2007-04-27 10:05:03',NULL),
  (20,4,NULL,2,'Feed cage Thin','','feed',30,'Long',2,0,'2007-04-27 10:05:03',NULL),
  (21,5,NULL,2,'Feed cage Thin','','feed',30,'Long',2,0,'2007-04-27 10:05:03',NULL);
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (22,6,NULL,2,'Feed cage Thin','','feed',30,'Long',2,0,'2007-04-27 10:05:03',NULL),
  (23,7,NULL,2,'Feed cage Thin','','feed',30,'Long',2,0,'2007-04-27 10:05:03',NULL),
  (24,1,NULL,3,'Feed cage NP','','feed',10,'Medium',2,0,'2007-04-27 10:05:25',NULL),
@@ -608,7 +523,7 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`
  (30,7,NULL,3,'Feed cage NP','','feed',10,'Medium',2,0,'2007-04-27 10:05:25',NULL),
  (31,1,NULL,4,'Feed cage THIN2','','feed',6,'Medium',2,0,'2007-04-27 10:05:57',NULL),
  (32,2,NULL,4,'Feed cage THIN2','','feed',6,'Medium',2,0,'2007-04-27 10:05:57',NULL);
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (33,3,NULL,4,'Feed cage THIN2','','feed',6,'Medium',2,0,'2007-04-27 10:05:57',NULL),
  (34,4,NULL,4,'Feed cage THIN2','','feed',6,'Medium',2,0,'2007-04-27 10:05:57',NULL),
  (35,5,NULL,4,'Feed cage THIN2','','feed',6,'Medium',2,0,'2007-04-27 10:05:57',NULL),
@@ -620,7 +535,7 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`
  (41,4,NULL,5,'Feed cage THIN4','','feed',3,'Medium',2,0,'2007-04-27 10:06:40',NULL),
  (42,5,NULL,5,'Feed cage THIN4','','feed',3,'Medium',2,0,'2007-04-27 10:06:40',NULL),
  (43,6,NULL,5,'Feed cage THIN4','','feed',3,'Medium',2,0,'2007-04-27 10:06:40',NULL);
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (44,7,NULL,5,'Feed cage THIN4','','feed',3,'Medium',2,0,'2007-04-27 10:06:40',NULL),
  (45,1,NULL,19,'Feed cage NPM','','feed',1.5,'Small',1,0,'2007-04-27 10:07:10',NULL),
  (46,2,NULL,19,'Feed cage NPM','','feed',1.5,'Small',1,0,'2007-04-27 10:07:10',NULL),
@@ -632,7 +547,7 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`
  (52,1,NULL,8,'Feed cage MA2','','feed',3,'Medium',1,0,'2007-04-27 10:07:35',NULL),
  (53,2,NULL,8,'Feed cage MA2','','feed',3,'Medium',1,0,'2007-04-27 10:07:35',NULL),
  (54,3,NULL,8,'Feed cage MA2','','feed',3,'Medium',1,0,'2007-04-27 10:07:35',NULL);
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (55,4,NULL,8,'Feed cage MA2','','feed',3,'Medium',1,0,'2007-04-27 10:07:35',NULL),
  (56,5,NULL,8,'Feed cage MA2','','feed',3,'Medium',1,0,'2007-04-27 10:07:35',NULL),
  (57,6,NULL,8,'Feed cage MA2','','feed',3,'Medium',1,0,'2007-04-27 10:07:35',NULL),
@@ -644,7 +559,7 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`
  (63,5,NULL,11,'Feed cage RECOVERY','','feed',3,'Medium',1,0,'2007-04-27 10:07:54',NULL),
  (64,6,NULL,11,'Feed cage RECOVERY','','feed',3,'Medium',1,0,'2007-04-27 10:07:55',NULL),
  (65,7,NULL,11,'Feed cage RECOVERY','','feed',3,'Medium',1,0,'2007-04-27 10:07:55',NULL);
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (66,1,NULL,12,'Feed cage FLIGHT','','feed',28,'Long',3,0,'2007-04-27 10:08:13',NULL),
  (67,2,NULL,12,'Feed cage FLIGHT','','feed',28,'Long',3,0,'2007-04-27 10:08:13',NULL),
  (68,3,NULL,12,'Feed cage FLIGHT','','feed',28,'Long',3,0,'2007-04-27 10:08:13',NULL),
@@ -656,7 +571,7 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`
  (74,2,NULL,13,'Feed cage FLIGHT TEMP','','feed',20,'Long',2,0,'2007-04-27 10:08:31',NULL),
  (75,3,NULL,13,'Feed cage FLIGHT TEMP','','feed',20,'Long',2,0,'2007-04-27 10:08:31',NULL),
  (76,4,NULL,13,'Feed cage FLIGHT TEMP','','feed',20,'Long',2,0,'2007-04-27 10:08:31',NULL);
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (77,5,NULL,13,'Feed cage FLIGHT TEMP','','feed',20,'Long',2,0,'2007-04-27 10:08:31',NULL),
  (78,6,NULL,13,'Feed cage FLIGHT TEMP','','feed',20,'Long',2,0,'2007-04-27 10:08:32',NULL),
  (79,7,NULL,13,'Feed cage FLIGHT TEMP','','feed',20,'Long',2,0,'2007-04-27 10:08:32',NULL),
@@ -668,7 +583,7 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`
  (85,6,NULL,14,'Feed cage GS1','','feed',8,'Medium',2,0,'2007-04-27 10:09:18',NULL),
  (86,7,NULL,14,'Feed cage GS1','','feed',8,'Medium',2,0,'2007-04-27 10:09:18',NULL),
  (87,1,NULL,15,'Feed cage GS2','','feed',6,'Medium',2,0,'2007-04-27 10:09:37',NULL);
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (88,2,NULL,15,'Feed cage GS2','','feed',6,'Medium',2,0,'2007-04-27 10:09:37',NULL),
  (89,3,NULL,15,'Feed cage GS2','','feed',6,'Medium',2,0,'2007-04-27 10:09:37',NULL),
  (90,4,NULL,15,'Feed cage GS2','','feed',6,'Medium',2,0,'2007-04-27 10:09:37',NULL),
@@ -680,7 +595,7 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`
  (96,3,NULL,16,'Feed cage GS3','','feed',7,'Medium',2,0,'2007-04-27 10:09:56',NULL),
  (97,4,NULL,16,'Feed cage GS3','','feed',7,'Medium',2,0,'2007-04-27 10:09:56',NULL),
  (98,5,NULL,16,'Feed cage GS3','','feed',7,'Medium',2,0,'2007-04-27 10:09:56',NULL);
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (99,6,NULL,16,'Feed cage GS3','','feed',7,'Medium',2,0,'2007-04-27 10:09:56',NULL),
  (100,7,NULL,16,'Feed cage GS3','','feed',7,'Medium',2,0,'2007-04-27 10:09:56',NULL),
  (101,1,NULL,9,'Feed cage SURGERY2','','feed',1.5,'Medium',1,0,'2007-04-27 10:25:12',NULL),
@@ -691,7 +606,7 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`
  (106,6,NULL,9,'Feed cage SURGERY2','','feed',1.5,'Medium',1,0,'2007-04-27 10:25:12',NULL),
  (107,7,NULL,9,'Feed cage SURGERY2','','feed',1.5,'Medium',1,0,'2007-04-27 10:25:12',NULL),
  (108,1,NULL,10,'Feed cage SURGERY3','','feed',1.5,'Medium',1,0,'2007-04-27 10:25:35',NULL);
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (109,2,NULL,10,'Feed cage SURGERY3','','feed',1.5,'Medium',1,0,'2007-04-27 10:25:35',NULL),
  (110,3,NULL,10,'Feed cage SURGERY3','','feed',1.5,'Medium',1,0,'2007-04-27 10:25:35',NULL),
  (111,4,NULL,10,'Feed cage SURGERY3','','feed',1.5,'Medium',1,0,'2007-04-27 10:25:36',NULL),
@@ -701,9 +616,9 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`
  (115,1,NULL,6,'Feed cage NP2','','feed',2,'Medium',1,0,'2007-04-27 10:26:26',NULL),
  (116,2,NULL,6,'Feed cage NP2','','feed',2,'Medium',1,0,'2007-04-27 10:26:26',NULL),
  (117,3,NULL,6,'Feed cage NP2','','feed',2,'Medium',1,0,'2007-04-27 10:26:26',NULL),
- (118,4,NULL,6,'Feed cage NP2','','feed',2,'Medium',1,0,'2007-04-27 10:26:26',NULL),
- (119,5,NULL,6,'Feed cage NP2','','feed',2,'Medium',1,0,'2007-04-27 10:26:26',NULL);
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+ (118,4,NULL,6,'Feed cage NP2','','feed',2,'Medium',1,0,'2007-04-27 10:26:26',NULL);
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+ (119,5,NULL,6,'Feed cage NP2','','feed',2,'Medium',1,0,'2007-04-27 10:26:26',NULL),
  (120,6,NULL,6,'Feed cage NP2','','feed',2,'Medium',1,0,'2007-04-27 10:26:26',NULL),
  (121,7,NULL,6,'Feed cage NP2','','feed',2,'Medium',1,0,'2007-04-27 10:26:26',NULL),
  (122,3,NULL,12,'Weigh cage FLIGHT','','weigh',NULL,NULL,NULL,-1,'2007-04-27 10:38:21','2007-04-27 10:39:27'),
@@ -713,7 +628,7 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`
  (126,3,NULL,12,'Weigh cage FLIGHT','','weigh',NULL,NULL,NULL,-1,'2007-04-27 10:40:33','2007-04-27 10:43:35'),
  (127,6,NULL,12,'Weigh cage FLIGHT','','weigh',NULL,NULL,NULL,-1,'2007-04-27 10:41:05','2007-04-27 10:43:29'),
  (128,5,NULL,13,'Weigh cage FLIGHT TEMP','','weigh',NULL,NULL,NULL,-1,'2007-04-27 10:41:41','2007-04-27 10:42:50');
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (129,5,NULL,13,'Weigh cage FLIGHT TEMP','','weigh',NULL,NULL,NULL,-1,'2007-04-27 10:42:37','2007-04-27 10:42:50'),
  (130,3,NULL,12,'Weigh cage FLIGHT','','weigh',NULL,NULL,NULL,-1,'2007-04-27 10:43:06','2007-04-27 10:43:34'),
  (131,6,NULL,12,'Weigh cage FLIGHT','','weigh',NULL,NULL,NULL,-1,'2007-04-27 10:43:22','2007-04-27 10:43:28'),
@@ -723,7 +638,7 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`
  (135,5,NULL,13,'Weigh cage FLIGHT TEMP','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:04:30',NULL),
  (136,3,NULL,19,'Weigh cage NPM','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:04:44','2007-04-27 11:57:45'),
  (137,6,NULL,19,'Weigh cage NPM','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:04:56',NULL);
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (138,3,NULL,11,'Weigh cage RECOVERY','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:05:08',NULL),
  (139,6,NULL,11,'Weigh cage RECOVERY','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:05:18',NULL),
  (140,3,NULL,7,'Weigh cage MED','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:05:46','2007-04-27 14:32:38'),
@@ -734,7 +649,7 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`
  (145,5,NULL,4,'Weigh cage THIN2','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:08:05','2007-04-27 12:00:15'),
  (146,2,NULL,4,'Weigh cage THIN2','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:08:18',NULL),
  (147,5,NULL,8,'Weigh cage MA2','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:09:05','2007-04-27 12:00:24');
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (148,2,NULL,8,'Weigh cage MA2','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:09:20',NULL),
  (149,5,NULL,5,'Weigh cage THIN4','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:17:32','2007-04-27 12:00:31'),
  (150,2,NULL,5,'Weigh cage THIN4','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:17:45',NULL),
@@ -744,7 +659,7 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`
  (154,0,NULL,6,'Weigh cage NP2','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:20:04','2007-04-27 11:21:17'),
  (155,0,NULL,9,'Weigh cage SURGERY2','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:20:22','2007-04-27 11:21:20'),
  (156,0,NULL,10,'Weigh cage SURGERY3','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:20:29','2007-04-27 11:21:22');
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (157,0,NULL,14,'Weigh cage GS1','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:20:52','2007-04-27 11:21:24'),
  (158,0,NULL,15,'Weigh cage GS2','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:20:58','2007-04-27 11:21:26'),
  (159,0,NULL,16,'Weigh cage GS3','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:21:04','2007-04-27 11:21:28'),
@@ -755,7 +670,7 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`
  (164,6,NULL,9,'Weigh cage SURGERY2','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:21:52',NULL),
  (165,2,NULL,10,'Weigh cage SURGERY3','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:22:00',NULL),
  (166,3,NULL,10,'Weigh cage SURGERY3','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:22:03',NULL);
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (167,4,NULL,10,'Weigh cage SURGERY3','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:22:07',NULL),
  (168,5,NULL,10,'Weigh cage SURGERY3','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:22:10',NULL),
  (169,6,NULL,10,'Weigh cage SURGERY3','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:22:13',NULL),
@@ -766,7 +681,7 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`
  (174,6,NULL,6,'Weigh cage NP2','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:22:35',NULL),
  (175,2,NULL,14,'Weigh cage GS1','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:22:50',NULL),
  (176,3,NULL,14,'Weigh cage GS1','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:22:52',NULL);
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (177,4,NULL,14,'Weigh cage GS1','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:22:55',NULL),
  (178,5,NULL,14,'Weigh cage GS1','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:22:58',NULL),
  (179,6,NULL,14,'Weigh cage GS1','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:23:01',NULL),
@@ -777,7 +692,7 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`
  (184,6,NULL,15,'Weigh cage GS2','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:23:22',NULL),
  (185,2,NULL,16,'Weigh cage GS3','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:23:32',NULL),
  (186,3,NULL,16,'Weigh cage GS3','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:23:35',NULL);
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (187,4,NULL,16,'Weigh cage GS3','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:23:38',NULL),
  (188,5,NULL,16,'Weigh cage GS3','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:23:41',NULL),
  (189,6,NULL,16,'Weigh cage GS3','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:23:44',NULL),
@@ -788,7 +703,7 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`
  (194,3,NULL,3,'Weigh cage NP','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:57:30',NULL),
  (195,3,NULL,19,'Weigh cage NPM','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:58:02',NULL),
  (196,2,NULL,2,'Weigh cage Thin','','weigh',NULL,NULL,NULL,-1,'2007-04-27 11:59:10',NULL);
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (197,6,NULL,8,'Weigh cage MA2','','weigh',NULL,NULL,NULL,-1,'2007-04-27 12:01:37',NULL),
  (198,6,NULL,4,'Weigh cage THIN2','','weigh',NULL,NULL,NULL,-1,'2007-04-27 12:01:55',NULL),
  (199,6,NULL,5,'Weigh cage THIN4','','weigh',NULL,NULL,NULL,-1,'2007-04-27 12:02:10',NULL),
@@ -800,21 +715,35 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`
  (205,6,NULL,7,'Feed cage MED','','feed',1,'Medium',1,0,'2007-04-27 13:02:37',NULL),
  (206,7,NULL,7,'Feed cage MED','','feed',1,'Medium',1,0,'2007-04-27 13:02:37',NULL),
  (207,2,NULL,NULL,'Medicate Bats','',NULL,NULL,NULL,NULL,0,'2007-04-27 13:38:23',NULL);
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
  (208,4,NULL,NULL,'Medicate Bats','',NULL,NULL,NULL,NULL,0,'2007-04-27 13:38:23',NULL),
  (209,6,NULL,NULL,'Medicate Bats','',NULL,NULL,NULL,NULL,0,'2007-04-27 13:38:48',NULL),
  (210,3,NULL,NULL,'Medicate Bats','',NULL,NULL,NULL,NULL,0,'2007-04-27 13:42:28',NULL),
  (211,5,NULL,NULL,'Medicate Bats','',NULL,NULL,NULL,NULL,0,'2007-04-27 13:42:28',NULL),
- (212,0,1,NULL,'bat is currently under observation only. Keep an eye on sweating, skin lesion and weight. Restrict food, bat is severely overweight.','','medical',NULL,NULL,NULL,0,'2007-04-27 14:20:36',NULL),
- (213,0,2,NULL,'0.15cc Bactrim.','','medical',NULL,NULL,NULL,0,'2007-04-27 14:22:18',NULL),
  (214,1,NULL,20,'Feed cage MED2','','feed',2,'Medium',1,0,'2007-04-27 14:32:16',NULL),
  (215,2,NULL,20,'Feed cage MED2','','feed',2,'Medium',1,0,'2007-04-27 14:32:16',NULL),
- (216,3,NULL,20,'Feed cage MED2','','feed',2,'Medium',1,0,'2007-04-27 14:32:16',NULL);
-INSERT INTO `tasks` (`id`,`repeat_code`,`medical_problem_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+ (216,3,NULL,20,'Feed cage MED2','','feed',2,'Medium',1,0,'2007-04-27 14:32:16',NULL),
  (217,4,NULL,20,'Feed cage MED2','','feed',2,'Medium',1,0,'2007-04-27 14:32:16',NULL),
  (218,5,NULL,20,'Feed cage MED2','','feed',2,'Medium',1,0,'2007-04-27 14:32:16',NULL),
  (219,6,NULL,20,'Feed cage MED2','','feed',2,'Medium',1,0,'2007-04-27 14:32:16',NULL),
  (220,7,NULL,20,'Feed cage MED2','','feed',2,'Medium',1,0,'2007-04-27 14:32:16',NULL);
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+ (228,2,5,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-05-07 10:51:27','2007-05-07 11:12:05'),
+ (229,2,5,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-05-07 10:51:56','2007-05-07 11:12:03'),
+ (230,2,5,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-05-07 11:02:39','2007-05-07 11:12:01'),
+ (231,2,5,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-05-07 11:12:09','2007-05-07 11:49:24'),
+ (232,3,5,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-05-07 11:12:09','2007-05-07 11:49:22'),
+ (233,4,5,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-05-07 11:12:09','2007-05-07 11:49:21'),
+ (234,5,5,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-05-07 11:12:09','2007-05-07 11:49:20'),
+ (235,7,6,NULL,'Do observations','','medical',NULL,NULL,NULL,0,'2007-05-07 11:31:15',NULL),
+ (236,1,6,NULL,'Do observations','','medical',NULL,NULL,NULL,0,'2007-05-07 11:38:28',NULL);
+INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`) VALUES 
+ (237,2,6,NULL,'Do observations','','medical',NULL,NULL,NULL,0,'2007-05-07 11:38:28',NULL),
+ (238,3,6,NULL,'Do observations','','medical',NULL,NULL,NULL,0,'2007-05-07 11:38:28',NULL),
+ (239,4,6,NULL,'Do observations','','medical',NULL,NULL,NULL,0,'2007-05-07 11:38:28',NULL),
+ (240,5,6,NULL,'Do observations','','medical',NULL,NULL,NULL,0,'2007-05-07 11:38:28',NULL),
+ (241,6,6,NULL,'Do observations','','medical',NULL,NULL,NULL,0,'2007-05-07 11:38:28',NULL),
+ (242,2,5,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-05-07 11:49:29',NULL);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 
 
@@ -1075,6 +1004,27 @@ INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES
  (6,152),
  (6,207),
  (6,208),
+ (6,221),
+ (6,222),
+ (6,223),
+ (6,224),
+ (6,225),
+ (6,226),
+ (6,227),
+ (6,228),
+ (6,229),
+ (6,230),
+ (6,231),
+ (6,232),
+ (6,233),
+ (6,234),
+ (6,236),
+ (6,237),
+ (6,238),
+ (6,239),
+ (6,240),
+ (6,241),
+ (6,242),
  (8,101),
  (8,102),
  (8,103),
@@ -1123,7 +1073,8 @@ INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES
  (10,116),
  (10,117),
  (10,118),
- (10,119),
+ (10,119);
+INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES 
  (10,120),
  (10,121),
  (10,154),
@@ -1139,11 +1090,11 @@ INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES
  (11,150),
  (11,193),
  (11,196),
+ (12,235),
  (14,122),
  (14,123),
  (14,124),
- (14,125);
-INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES 
+ (14,125),
  (14,126),
  (14,127),
  (14,128),
@@ -1264,7 +1215,9 @@ INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user
  (1,1,'2007-04-25 13:15:48',19,'','y',6,NULL),
  (2,1,'2007-04-25 13:16:22',19,'','n',6,NULL),
  (3,59,'2007-04-27 14:10:42',6.4,'right arm swollen due to band being too tight. Removed band and applied topical antibiotic.','n',5,NULL),
- (4,59,'2007-04-27 14:14:02',6.4,'','n',5,NULL);
+ (4,59,'2007-04-27 14:14:02',6.4,'','n',5,NULL),
+ (5,4,'2007-05-07 11:51:00',15,'','n',6,6),
+ (6,4,'2007-05-07 11:58:00',12,'','n',6,7);
 /*!40000 ALTER TABLE `weights` ENABLE KEYS */;
 
 

@@ -43,7 +43,8 @@ class MainController < ApplicationController
       @my_medical_tasks = Task.medical_tasks
       @weekend = 'weekend'
     else
-      @medical_problems = @user.medical_problems.current
+      @medical_problems = Array.new
+			@user.tasks.medical_tasks.each{|task| @medical_problems << task.medical_problem}
       @my_medical_tasks_today = @user.tasks.medical_tasks_today
       @my_medical_tasks_not_today = @user.tasks.medical_tasks_not_today
       @my_medical_tasks = @user.tasks.medical_tasks

@@ -1,13 +1,10 @@
 <tr>
     <% if show_bat %>
-    <td><%= link_to bat.band, :controller => 'bats', :action => 'show', :id => bat %></td>
+    <td><%= link_to medical_problem.bat.band, :controller => 'bats', :action => 'show', :id => medical_problem.bat %></td>
     <% end %>
     
     <td>
       <%= link_to medical_problem.title, :controller => 'medical_problems', :action => 'show', :id => medical_problem %>
-    </td>
-    <td>
-      <%= link_to medical_problem.user.initials, :controller => 'users', :action => 'show', :id => medical_problem.user %>
     </td>
 
     <td>
@@ -37,23 +34,25 @@
       </td>
     <% end %>
 
-    <% for task in medical_problem.tasks.current %>
+    <% for medical_treatment in medical_problem.medical_treatments %>
       <td>
-        <%= link_to task.title, :controller => 'tasks', :action => 'show', :id => task %>
+        <%= link_to medical_treatment.title, :controller => 'medical_treatments', :action => 'show', :id => medical_treatment%>
       </td>
       <td>
-        <% if task.done_by_schedule %>
+        <% if medical_treatment.done_today == true %>
           Done
-        <% else %>
-          [<%= link_to 'Do', :controller => 'tasks', :action => 'do_medical_task', :id => task %>]
+        <% elsif medical_treatment.tasks.medical_tasks_today.length > 0 %>
+          [<%= link_to 'Do', :controller => 'tasks', :action => 'do_medical_task', :id => medical_treatment.todays_task %>]
+				<% else %>
+          [<%= link_to 'Create Medical Tasks', :controller => 'medical_treatments', :action=>:show, :id=> medical_treatment %>]
         <% end %>
       </td>
       <td>
-        [<%= link_to 'End', {:controller => 'tasks', :action => 'destroy_medical_task', :id => task}, :confirm => 'Are you sure?', :method => :post %>]
+        [<%= link_to 'End', {:controller => 'tasks', :action => 'destroy_medical_treatment', :id => medical_treatment}, :confirm => 'Are you sure?', :method => :post %>]
       </td>
       </tr>
       <tr>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td>
       <% if @list_all %>
         <td></td>
       <% end %>
@@ -62,7 +61,7 @@
       <% end %>
     <% end %>
     <% if medical_problem.date_closed == nil %>
-      <td>[<%= link_to 'Add New Treatment', :controller => 'tasks', :action => 'new_medical_task', :id => medical_problem %>]</td>
+      <td>[<%= link_to 'Add New Treatment', :controller => 'medical_treatments', :action => 'new', :id => medical_problem %>]</td>
     <% end %>
     </tr>
 <tr><td colspan = 10><hr /></td></tr>

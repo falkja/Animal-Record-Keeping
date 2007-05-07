@@ -1,0 +1,24 @@
+<h1>Listing medical_treatments</h1>
+
+<table>
+  <tr>
+  <% for column in MedicalTreatment.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+  </tr>
+  
+<% for medical_treatments in @medical_treatments %>
+  <tr>
+  <% for column in MedicalTreatment.content_columns %>
+    <td><%=h medical_treatments.send(column.name) %></td>
+  <% end %>
+    <td><%= link_to 'Show', :action => 'show', :id => medical_treatments %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => medical_treatments %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => medical_treatments }, :confirm => 'Are you sure?', :method => :post %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New medical_treatments', :action => 'new' %>

@@ -1,7 +1,7 @@
 class Task < ActiveRecord::Base
   has_and_belongs_to_many :users
   belongs_to :cage
-  belongs_to :medical_problem
+  belongs_to :medical_treatment
   has_many :task_histories, :order => 'date_done desc'
 
 	@@current_user = nil
@@ -35,7 +35,7 @@ class Task < ActiveRecord::Base
 	end
   
   def self.medical_tasks
-    find :all, :conditions => 'medical_problem_id is not null and date_ended is null', :order => 'repeat_code'
+    find :all, :conditions => 'medical_treatment_id is not null and date_ended is null', :order => 'repeat_code'
   end
   
   def self.medical_tasks_today

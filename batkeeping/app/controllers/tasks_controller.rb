@@ -296,30 +296,59 @@ class TasksController < ApplicationController
                                       :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
   end
 
-  def new_medical_task
-    @medical_problem = MedicalProblem.find(params[:id])
-    @deactivating = false
-  end
-
   def create_medical_task
-    medical_problem = MedicalProblem.find(params[:id])
-    task = Task.new(params[:task])
-    task.medical_problem = medical_problem
-    task.repeat_code = 0
-    task.internal_description = "medical"
-    task.jitter = 0
-    task.date_started = Time.now
-    if task.save
-      task.users << medical_problem.user
-      flash[:notice] = 'Medical Treatment successfully created.'
-      redirect_to :controller => 'medical_problems', :action => 'list'
-    else
-      render :action => 'new'
+    medical_treatment = MedicalTreatment.find(params[:id])
+		
+		users = User.find(params[:users])
+    days = params[:days]
+		
+		if days.include?("0")  #need to convert to multiple tasks
+			days.clear
+			days = ["1","2","3","4","5","6","7"]
     end
-  end
+		
+		all_tasks_created_successfully = true
+		for day in days
+			if medical_treatment.task_exists_on_day(day)
+				all_tasks_created_successfully = false
+			else
+				task = Task.new
+				task.repeat_code = day
+				task.medical_treatment = medical_treatment
+				task.title = "Do " + medical_treatment.title
+				task.internal_description = "medical"
+				task.jitter = 0
+				task.date_started = Time.now
+				task.save
+				
+				if (users.include?(User.find(1)) && ((day == "1") || (day == "7")))  #General Animal Care can't do tasks on weekend - add to weekend/holiday care
+					users << User.find(3)
+					users = users.uniq
+					task.users << users.uniq
+				elsif users.include?(User.find(3)) && ((day == "2") || (day == "3") || (day == "4") || (day == "5") || (day == "6")) #Weekend Care can't do tasks on weekdays - add to general animal care
+					users << User.find(1)
+					users = users.uniq
+					task.users << users.uniq
+				else
+					task.users = users
+				end
+			end
+		end
+		
+		if all_tasks_created_successfully
+			flash[:note] = 'All tasks created successfully.'
+		else
+			flash[:note] = 'One or more of your medical tasks could not be created because tasks already exist for that day.'
+		end
+		
+		render :partial => 'tasks_list', :locals => {:tasks => medical_treatment.tasks, 
+			:div_id => params[:div_id], :single_cage_task_list => false, :manage => true}
+	end
 
 	def do_medical_task
 		@task = Task.find(params[:id])
+		@medical_treatment = @task.medical_treatment
+		@medical_problem = @medical_treatment.medical_problem
 	end
 	
   def create
@@ -378,7 +407,7 @@ class TasksController < ApplicationController
 		task_history.save
 		
 		weight = Weight.new
-		weight.bat = task.medical_problem.bat
+		weight.bat = task.medical_treatment.medical_problem.bat
 		weight.date = task_history.date_done
 		weight.user = session[:person]
 		weight.weight = params[:bat][:weight]
@@ -390,7 +419,7 @@ class TasksController < ApplicationController
 		weight.save
 		task_history.weight = weight
 		
-    redirect_to :controller => 'medical_problems', :action => 'list'
+    redirect_to :controller => 'medical_problems', :action => 'list_current'
   end
   
   def destroy

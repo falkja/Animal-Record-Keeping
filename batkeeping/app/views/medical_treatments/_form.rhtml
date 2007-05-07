@@ -1,0 +1,20 @@
+<%= error_messages_for 'medical_treatments' %>
+
+<!--[form:medical_treatments]-->
+
+<p><b>Bat</b>
+<%= @medical_problem.bat.band %></p>
+
+<p><b>Medical Problem</b>
+<%= @medical_problem.title %></p>
+
+<p><b>Description</b>
+<%= @medical_problem.description %></p>
+
+<p><label for="medical_treatment_date_opened">Date started</label><br/>
+<%= date_select 'medical_treatment', 'date_opened'  %></p>
+
+<p><label for="medical_treatment_title">Treatment (include medications, dosages, suggested end date, etc.)</label><br/>
+<%= text_field 'medical_treatment', 'title'  %></p>
+
+<!--[eoform:medical_treatments]-->

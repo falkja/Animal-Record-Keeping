@@ -6,8 +6,8 @@
   <tr>
   
   <% if task.internal_description == 'medical' %>
-		<td><%= task.medical_problem.bat.band %></td>
-    <td><%= task.medical_problem.title %></td>
+		<td><%= task.medical_treatment.medical_problem.bat.band %></td>
+    <td><%= task.medical_treatment.medical_problem.title %></td>
   <% end %>
   
   <% if !single_cage_task_list %>

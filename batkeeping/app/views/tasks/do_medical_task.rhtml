@@ -3,16 +3,16 @@
 <% form_tag :action => 'medical_task_done', :id => @task do %>
 
 <p>Bat<br />
-<%= @task.medical_problem.bat.band %></p>
+<%= @medical_problem.bat.band %></p>
 
 <p>Medical Problem<br />
-<%= @task.medical_problem.title %></p>
+<%= @medical_problem.title %></p>
 
 <p>Description<br />
-<%= @task.medical_problem.description %></p>
+<%= @medical_problem.description %></p>
 
 <p>Treatment<br />
-<%= @task.title %></p>
+<%= @medical_treatment.title %></p>
 
 <p><label for="bat_weight">Weight</label><br />
 <%= text_field 'bat', 'weight', :size=>2, :autocomplete => 'off' %> g
@@ -20,7 +20,7 @@
 
 <p>
 <label for='checkbox_after_eating'>After Eating?</label><br />
-<% if @task.medical_problem.bat.cage.fed_today? == true %>
+<% if @medical_problem.bat.cage.fed_today? == true %>
 <%= check_box 'checkbox', 'after_eating', :checked=> 'checked' %>
 <%else%>
 <%= check_box 'checkbox', 'after_eating' %>

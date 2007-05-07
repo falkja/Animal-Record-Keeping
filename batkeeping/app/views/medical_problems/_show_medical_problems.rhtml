@@ -3,17 +3,13 @@
 <th>Bat</th>
 <% end %>
 <th>Medical Problem</th>
-<th>User</th>
 <th>Date Opened</th>
 <% if @list_all %>
   <th>Date Closed</th>
 <% end %>
 <th></th><th></th>
 <th>Treatment</th>
-<% for bat in bats %>
-  <% @list_all ? medical_problems = bat.medical_problems : medical_problems = bat.medical_problems.current %>
-  <% for medical_problem in medical_problems %>
-    <%= render :partial => 'medical_problems/medical_problem_for_bat', :locals => {:medical_problem => medical_problem, :bat => bat, :show_bat => show_bat} %>
-  <% end %>  
+<% for medical_problem in medical_problems %>
+    <%= render :partial => 'medical_problems/show_medical_problem', :locals => {:medical_problem => medical_problem, :show_bat => show_bat} %>
 <% end %>
 </table>

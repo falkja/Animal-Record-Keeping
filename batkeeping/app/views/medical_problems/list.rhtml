@@ -6,14 +6,14 @@
 
 <div class="left_indent">
 
-<% if @bats.length == 0 %>
+<% if @medical_problems.length == 0 %>
 
 <p>There are no medical problems!</p>
 
 <% else %>
 
 <p>
-<%= render :partial=>'show_medical_problems', :locals=>{:bats => @bats, :show_bat => true} %>
+<%= render :partial=>'show_medical_problems', :locals=>{:medical_problems => @medical_problems, :show_bat => true} %>
 </p>
 
 <% end %>

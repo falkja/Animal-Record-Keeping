@@ -76,9 +76,8 @@
 <th></th>
 <th></th>
 <th>Treatment</th>
-<% @show_bat = false %>
   <% for medical_problem in @bat.medical_problems.current %>
-    <%= render :partial => 'medical_problems/medical_problem_for_bat', :locals => {:medical_problem => medical_problem} %>
+    <%= render :partial => 'medical_problems/show_medical_problem', :locals => {:medical_problem => medical_problem, :show_bat => true} %>
   <% end %>  
 </table>
 </div>
@@ -95,9 +94,8 @@
 <th>Date Closed</th>
 <th></th><th></th>
 <th>Treatment</th>
-<% @show_bat = false %>
   <% for medical_problem in @bat.medical_problems.expired %>
-    <%= render :partial => 'medical_problems/medical_problem_for_bat', :locals => {:medical_problem => medical_problem} %>
+    <%= render :partial => 'medical_problems/show_medical_problem', :locals => {:medical_problem => medical_problem, :show_bat => true} %>
   <% end %>
 </table>
 </div>

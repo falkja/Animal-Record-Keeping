@@ -18,7 +18,7 @@ You have no cages
 </div>
 </p>
 
-<h2>My Current Medical Problems</h2>
+<h2>Medical Problems - You Administer Treatments</h2>
 <p>
 <div class="left_indent">
 <% if @medical_problems.length > 0 %>
@@ -29,7 +29,7 @@ You have no cages
 <th></th><th></th>
 <th>Treatment</th>
   <% for medical_problem in @medical_problems %>
-    <%= render :partial => 'medical_problems/medical_problem_for_bat', :locals => {:medical_problem => medical_problem, :bat => medical_problem.bat, :show_bat => true} %>
+    <%= render :partial => 'medical_problems/show_medical_problem', :locals => {:medical_problem => medical_problem, :show_bat => true} %>
   <% end %>  
 </table>
 <% else %>

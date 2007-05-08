@@ -44,7 +44,8 @@ class MainController < ApplicationController
       @weekend = 'weekend'
     else
       @medical_problems = Array.new
-			@user.tasks.medical_tasks.each{|task| @medical_problems << task.medical_problem}
+			@user.tasks.medical_tasks.each{|task| @medical_problems << task.medical_treatment.medical_problem}
+      @medical_problems.uniq!
       @my_medical_tasks_today = @user.tasks.medical_tasks_today
       @my_medical_tasks_not_today = @user.tasks.medical_tasks_not_today
       @my_medical_tasks = @user.tasks.medical_tasks

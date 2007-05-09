@@ -46,13 +46,12 @@ class MedicalTreatmentsController < ApplicationController
       render :action => 'edit'
     end
   end
-
-  def destroy
-    MedicalTreatment.find(params[:id]).destroy
-    redirect_to :action => 'list'
-  end
 	
 	def destroy_medical_treatment
-		
+		medical_treatment = MedicalTreatment.find(params[:id])
+    medical_treatment.tasks.current.each{|task| task.deactivate}
+    medical_treatment.date_closed = Date.today
+    medical_treatment.save
+    redirect_to :controller => 'medical_problems', :action => 'list_current'
 	end
 end

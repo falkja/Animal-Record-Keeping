@@ -1,8 +1,18 @@
-    <p>
-      <b>Treatment: </b><%= link_to task.title , :controller => 'tasks', :action => 'show', :id => task %>
       <div class="left_indent">
+				<b>Day: </b>      
+					<%= task.repeat_code == 1 ? "Every Sunday" : '' %>
+					<%= task.repeat_code == 2 ? "Every Monday" : '' %>
+					<%= task.repeat_code == 3 ? "Every Tuesday" : '' %>
+					<%= task.repeat_code == 4 ? "Every Wednesday" : '' %>
+					<%= task.repeat_code == 5 ? "Every Thursday" : '' %>
+					<%= task.repeat_code == 6 ? "Every Friday" : '' %>
+					<%= task.repeat_code == 7 ? "Every Saturday" : '' %><br />
+				<b>Users: </b>
+				<% for user in task.users %>
+					<%= user.name + ', ' %><br />
+				<% end %>
+				
         <b>Start Date: </b><%=h nice_date(task.date_started) %><br />
-        <b>End Date: </b><%=h nice_date(task.date_ended) %><br />
+				<% if task.date_ended %><b>End Date: </b><%=h nice_date(task.date_ended) %><br /><% end %>
         <%= render :partial => 'tasks/show_all_task_histories', :locals => {:task => task} %>
       </div>
-    </p>

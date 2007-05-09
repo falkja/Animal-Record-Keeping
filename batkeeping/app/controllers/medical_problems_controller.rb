@@ -58,7 +58,7 @@ class MedicalProblemsController < ApplicationController
     @medical_problem.bat = @bat
     if @medical_problem.save
       flash[:notice] = 'Medical problem was successfully created.'
-      redirect_to :controller => 'tasks', :action => 'new_medical_task', :id => @medical_problem
+      redirect_to :controller => 'medical_treatments', :action => 'new', :id => @medical_problem
     else
       render :action => 'new'
     end
@@ -75,9 +75,8 @@ class MedicalProblemsController < ApplicationController
     @deactivating = params[:deactivating]
     if @medical_problem.update_attributes(params[:medical_problem])
       if @deactivating
-          for task in @medical_problem.tasks.current
-            task.date_ended = @medical_problem.date_closed
-            task.save
+          for treatment in @medical_problem.medical_treatments.current
+            treatment.end_treatment
           end
       end
       flash[:notice] = 'Medical Problem was successfully updated.'

@@ -38,4 +38,10 @@ class MedicalTreatment < ActiveRecord::Base
 	def todays_task
 		return Task.find(:first, :conditions => '(medical_treatment_id = ' + self.id.to_s + ') and (repeat_code = ' + (Time.now.wday + 1).to_s + ') and (date_ended is null)')
 	end
+  
+  def end_treatment
+    self.tasks.current.each{|task| task.deactivate}
+    self.date_closed = Date.today
+    self.save
+  end
 end

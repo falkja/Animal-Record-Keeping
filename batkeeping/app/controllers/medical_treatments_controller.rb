@@ -27,7 +27,7 @@ class MedicalTreatmentsController < ApplicationController
 		@medical_treatment.medical_problem = @medical_problem
     if @medical_treatment.save
       flash[:notice] = 'Medical treatment was successfully created.'
-      redirect_to :controller => 'medical_problems', :action => 'list_current'
+      redirect_to :action => 'show', :id=>@medical_treatment
     else
       render :action => 'new'
     end
@@ -49,9 +49,7 @@ class MedicalTreatmentsController < ApplicationController
 	
 	def destroy_medical_treatment
 		medical_treatment = MedicalTreatment.find(params[:id])
-    medical_treatment.tasks.current.each{|task| task.deactivate}
-    medical_treatment.date_closed = Date.today
-    medical_treatment.save
+    medical_treatment.end_treatment
     redirect_to :controller => 'medical_problems', :action => 'list_current'
 	end
 end

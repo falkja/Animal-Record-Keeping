@@ -3,7 +3,7 @@
   <p><b>Bat: </b><%= link_to @medical_problem.bat.band, :controller => 'bats', :action => 'show', :id =>  @medical_problem.bat %></p>
   <p><b>Description: </b><%=h @medical_problem.description %></p>
 	<% users_names = Array.new %>
-	<% @medical_problem.tasks.each{|task| task.users.each{|user| users_names << user.name}} %>
+	<%# @medical_problem.tasks.each{|task| task.users.each{|user| users_names << user.name}} %>
   <p><b>User(s) Assigned: </b>
 	<% for user_name in users_names %>
 		<%= user_name + ", "%>

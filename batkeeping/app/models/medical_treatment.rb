@@ -2,6 +2,14 @@ class MedicalTreatment < ActiveRecord::Base
 	belongs_to :medical_problem
 	has_many :tasks
 	
+	def self.current
+		find(:all, :conditions => 'date_closed is null')
+	end
+	
+	def self.expired
+		find(:all, :conditions => 'date_closed is not null')
+	end
+	
 	def done_today
 		if self.tasks.length == 0
 			return "no_task"

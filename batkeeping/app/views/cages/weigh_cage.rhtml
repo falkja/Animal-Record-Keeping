@@ -25,7 +25,7 @@ There are no bats in this cage.
 <p>The following weighing tasks will be updated after all bats in cage have been weighed:
 <div class="left_indent">
 <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => @updateable_tasks, :div_id => 'weighing_tasks', 
-							:single_cage_task_list => false, :manage => false} %>
+							:same_type_task_list => false, :manage => false} %>
 </div>
 </p>
 <% else %>

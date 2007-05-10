@@ -63,7 +63,7 @@ class TasksController < ApplicationController
 		
 	  render :partial => 'hide_tasks', :locals => {:general_tasks => general_tasks, :weighing_tasks => weighing_tasks, :feeding_tasks => feeding_tasks,
 									:medical_tasks => medical_tasks, :div_id => params[:div_id], :feeding_cages => feeding_cages,
-									:cages => cages, :medical_problems => medical_problems, :single_cage_task_list => params[:single_cage_task_list], :source => params[:source]}
+									:cages => cages, :medical_problems => medical_problems, :same_type_task_list => params[:same_type_task_list], :source => params[:source]}
   end
   
   def show_tasks
@@ -102,7 +102,7 @@ class TasksController < ApplicationController
 		
 	  render :partial => 'show_tasks', :locals => {:general_tasks => general_tasks, :weighing_tasks => weighing_tasks, :feeding_tasks => feeding_tasks,
 									:medical_tasks => medical_tasks, :div_id => params[:div_id], :feeding_cages => feeding_cages,
-									:cages => cages, :medical_problems => medical_problems, :single_cage_task_list => params[:single_cage_task_list], :source => params[:source]}
+									:cages => cages, :medical_problems => medical_problems, :same_type_task_list => params[:same_type_task_list], :source => params[:source]}
   end
 
   def show
@@ -127,7 +127,7 @@ class TasksController < ApplicationController
 
   def remote_new_weigh_cage_task
     render :partial => 'remote_new_weigh_cage_task', :locals => {:cage => Cage.find(params[:id]), :div_id => params[:div_id], :source => params[:source], 
-                          :single_cage_task_list => params[:single_cage_task_list], :users=>User.current, :quick_add => params[:quick_add]}
+                          :same_type_task_list => params[:same_type_task_list], :users=>User.current, :quick_add => params[:quick_add]}
   end
 
   def new_weigh_cage_task
@@ -198,7 +198,7 @@ class TasksController < ApplicationController
     
    
     render :partial => 'tasks_list', :locals => {:tasks => weighing_tasks, 
-                                      :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
+                                      :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => true}
   end
 
 
@@ -218,12 +218,12 @@ class TasksController < ApplicationController
     end    
     
     render :partial => 'tasks_list', :locals => {:tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', 
-                            :single_cage_task_list => true, :manage => true}
+                            :same_type_task_list => true, :manage => true}
   end
   
   def remote_new_feed_cage_task
     render :partial => 'remote_new_feed_cage_task', :locals => {:cage => Cage.find(params[:id]), :div_id => params[:div_id], :source => params[:source], 
-															:single_cage_task_list => params[:single_cage_task_list], :users => User.current, :quick_add => params[:quick_add]}
+															:same_type_task_list => params[:same_type_task_list], :users => User.current, :quick_add => params[:quick_add]}
   end
 
   def create_feed_cage_task #called from new_feed_cage_task page
@@ -293,7 +293,7 @@ class TasksController < ApplicationController
 		feeding_tasks = feeding_tasks.sort_by{|task| [task.repeat_code]}
     
     render :partial => 'tasks_list', :locals => {:tasks => feeding_tasks, 
-                                      :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
+                                      :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => true}
   end
 
   def create_medical_task
@@ -342,7 +342,7 @@ class TasksController < ApplicationController
 		end
 		
 		render :partial => 'tasks_list', :locals => {:tasks => medical_treatment.tasks, 
-			:div_id => params[:div_id], :single_cage_task_list => false, :manage => true}
+			:div_id => params[:div_id], :same_type_task_list => true, :manage => true}
 	end
 
 	def do_medical_task
@@ -395,7 +395,7 @@ class TasksController < ApplicationController
     task = Task.find(params[:id])
     Task::set_current_user(session[:person])
     task.done
-    render :partial => 'tasks_list', :locals => {:tasks => Task.find(params[:ids], :order => 'repeat_code'), :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
+    render :partial => 'tasks_list', :locals => {:tasks => Task.find(params[:ids], :order => 'repeat_code'), :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => true}
   end
   
   def medical_task_done
@@ -426,7 +426,7 @@ class TasksController < ApplicationController
     tasks = Task.find(params[:ids], :order => 'repeat_code')
     tasks.delete(Task.find(params[:id]))
     Task.find(params[:id]).deactivate
-    render :partial => 'tasks_list', :locals => {:tasks => tasks, :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => true}
+    render :partial => 'tasks_list', :locals => {:tasks => tasks, :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => true}
   end
   
   def destroy_medical_task
@@ -440,7 +440,7 @@ class TasksController < ApplicationController
 	    task.date_ended = Time.now
       task.save
     end
-    render :partial => 'tasks_list', :locals => {:tasks => [], :div_id => params[:div_id], :single_cage_task_list => params[:single_cage_task_list], :manage => params[:manage]}
+    render :partial => 'tasks_list', :locals => {:tasks => [], :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => params[:manage]}
   end
 	
 	def show_hide_task_categories
@@ -448,7 +448,7 @@ class TasksController < ApplicationController
 		params[:medical_problems] ? medical_problems = MedicalProblem.find(params[:medical_problems]) : medical_problems = Array.new
 		params[:cages] ? cages = Cage.find(params[:cages]) : cages = Array.new
 		render :partial => 'show_hide_task_category', :locals => {:tasks => tasks, :div_id => params[:div_id],
-				:single_cage_task_list => params[:single_cage_task_list], :manage => params[:manage], :cages => cages,
+				:same_type_task_list => params[:same_type_task_list], :manage => params[:manage], :cages => cages,
 				:source => params[:source], :count => params[:count], :show => params[:show], :category_div => params[:category_div],
 				:medical_problems => medical_problems}
 	end

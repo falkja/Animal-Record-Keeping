@@ -3,9 +3,9 @@
 
 <% form_remote_tag(:update => div_id,
                        :url => { :controller => 'tasks', :action => 'create_feed_cage_task', 
-					   :id => cage, :div_id => div_id, :source => source, :single_cage_task_list => single_cage_task_list}) do %>
+					   :id => cage, :div_id => div_id, :source => source, :same_type_task_list => same_type_task_list}) do %>
 <table>
-<% if !single_cage_task_list %>
+<% if !same_type_task_list %>
 <th>Cage</th>
 <% end %>
 <th>Fed by*</th>
@@ -13,7 +13,7 @@
 <th COLSPAN=3>Food</th>
 
 <tr>
-<% if !single_cage_task_list %>
+<% if !same_type_task_list %>
 <td VALIGN=<%=valign %>><b><%=cage.name%></b></td>
 <% end %>
 

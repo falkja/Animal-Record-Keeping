@@ -1,6 +1,6 @@
 <b>Current Medical Tasks for Treatment: <%= medical_treatment.title %>:</b>
 <div class="left_indent">
 <p>
-<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => medical_treatment.tasks, :div_id => 'tasks_div', :single_cage_task_list => false, :manage => true} %>
+<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => medical_treatment.tasks.current, :div_id => 'tasks_div', :same_type_task_list => true, :manage => true} %>
 </p>
 </div>

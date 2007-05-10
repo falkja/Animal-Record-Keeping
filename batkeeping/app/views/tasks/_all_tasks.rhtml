@@ -3,7 +3,7 @@
 <div id = 'feeding_tasks_category<%= count %>'>
 
 <%= render :partial=>'tasks/show_hide_task_category', :locals => {:tasks => feeding_tasks,
-			:div_id => 'feeding_tasks' + count, :single_cage_task_list => single_cage_task_list, 
+			:div_id => 'feeding_tasks' + count, :same_type_task_list => same_type_task_list, 
 			:manage => true, :cages => cages, :source => source, :count => count, :show => show,
 			:category_div => 'feeding_tasks_category', :medical_problems => nil} %>
 
@@ -12,7 +12,7 @@
 <div id = 'weighing_tasks_category<%= count %>'>
 
 <%= render :partial=>'tasks/show_hide_task_category', :locals => {:tasks => weighing_tasks,
-			:div_id => 'weighing_tasks' + count, :single_cage_task_list => single_cage_task_list, 
+			:div_id => 'weighing_tasks' + count, :same_type_task_list => same_type_task_list, 
 			:manage => true, :cages => cages, :source => source, :count => count, :show => show,
 			:category_div => 'weighing_tasks_category', :medical_problems => nil} %>
 
@@ -21,7 +21,7 @@
 <div id = 'medical_tasks_category<%= count %>'>
 
 <%= render :partial=>'tasks/show_hide_task_category', :locals => {:tasks => medical_tasks,
-			:div_id => 'medical_tasks' + count, :single_cage_task_list => nil, 
+			:div_id => 'medical_tasks' + count, :same_type_task_list => nil, 
 			:manage => true, :cages => nil, :source => source, :count => count, :show => show,
 			:category_div => 'medical_tasks_category', :medical_problems => medical_problems} %>
 
@@ -30,7 +30,7 @@
 <div id = 'general_tasks_category<%= count %>'>
 
 <%= render :partial=>'tasks/show_hide_task_category', :locals => {:tasks => general_tasks,
-			:div_id => 'general_tasks' + count, :single_cage_task_list => nil, 
+			:div_id => 'general_tasks' + count, :same_type_task_list => nil, 
 			:manage => true, :cages => nil, :source => source, :count => count, :show => show,
 			:category_div => 'general_tasks_category', :medical_problems => nil} %>
 

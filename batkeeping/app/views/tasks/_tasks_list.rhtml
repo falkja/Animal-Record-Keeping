@@ -8,11 +8,11 @@ No tasks
 <% else %>
 <table>
   <thead>
-  <% if tasks[0].internal_description == 'medical' %>
+  <% if tasks[0].internal_description == 'medical' && (!same_type_task_list) %>
     <th>Bat</th>
 		<th>Medical Problem</th>
   <% end %>
-  <% if !single_cage_task_list %>
+  <% if !same_type_task_list %>
     <th>Title</th>
   <% end %>
     <th>User(s)</th>
@@ -23,7 +23,9 @@ No tasks
 	<% end %>
     <th>Frequency</th>
     <th>Last Done</th>
+		<% if tasks[0].internal_description != 'medical' %>
     <th>Notes</th>
+		<% end %>
   </thead>
  
  <tbody>  
@@ -32,18 +34,18 @@ No tasks
  <% if task.current? %>
  <%= render :partial => 'tasks/single_task_list', 
                   :locals => {:single_task_list => nil, :task => task, :manage => manage, :tasks => tasks, 
-                  :div_id => div_id, :single_cage_task_list => single_cage_task_list} %>
+                  :div_id => div_id, :same_type_task_list => same_type_task_list} %>
  <% end %>
 <% end %>
 
  </tbody>
 </table>
-<% if single_cage_task_list %>
+<% if same_type_task_list %>
 	<% if tasks.length > 0 %>
 		<p>
 		[<%= link_to_remote "Remove existing tasks",
 			:url => {:controller => "tasks", :action => "clear_tasks", :tasks => tasks, :div_id => div_id, 
-			:single_cage_task_list => true, :manage => true}, :update => div_id
+			:same_type_task_list => true, :manage => true}, :update => div_id
 		%>]
 		</p>
 		<% if tasks[0].internal_description == 'feed' %>
@@ -52,14 +54,18 @@ No tasks
 			<% elsif tasks[0].cage.tasks.feeding_tasks.length > 0 && task.cage.bats.length == 0 %>
 				<p><warning>Warning: this empty cage still has feeding tasks</warning></p>
 			<% end %>
-		<% end %>
 		
-		<% if tasks[0].internal_description == 'weigh' %>
+		<% elsif tasks[0].internal_description == 'weigh' %>
 			<% if tasks[0].cage.weighed_enough? == false && task.cage.bats.length > 0 %>
 				<p><warning>Warning: this occupied cage is not weighed enough</warning></p>
 			<% end %>
 			<% if tasks[0].cage.tasks.weighing_tasks.length > 0 && task.cage.bats.length == 0 %>
 				<p><warning>Warning: this empty cage still has weighing tasks</warning></p>
+			<% end %>
+		
+		<% elsif tasks[0].internal_description == 'medical' %>
+			<% if tasks.length < 7 %>
+				<p><warning>Warning: this medical treatment is not treated every day of the week</warning></p>
 			<% end %>
 		<% end %>
 		

@@ -4,7 +4,7 @@
 <p>Updated the following weighing tasks:
 <div class="left_indent">
 <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => @updated_tasks, :div_id => 'weighing_tasks', 
-							:single_cage_task_list => false, :manage => false} %>
+							:same_type_task_list => false, :manage => false} %>
 </div>
 </p>
 <% else %>

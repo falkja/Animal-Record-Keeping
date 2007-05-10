@@ -33,11 +33,11 @@
 <b>Current Feeding Tasks:</b>
 <div class="left_indent">
 <p>
-<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', :single_cage_task_list => true, :manage => true} %>
+<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', :same_type_task_list => true, :manage => true} %>
 </p>
 <p>
 [<%= link_to_remote "Quick-add feeding task", :url => {:controller => 'tasks', :action => 'remote_new_feed_cage_task', :id => @cage, :div_id => "feeding_tasks", 
-                                                          :source => 'show_cage', :single_cage_task_list => true, :users => User.current, :quick_add => true},
+                                                          :source => 'show_cage', :same_type_task_list => true, :users => User.current, :quick_add => true},
                                                           :update => 'add_feeding_task' %>]
 <div id = "add_feeding_task">
 </div>
@@ -49,11 +49,11 @@
 <b>Current Weighing Tasks:</b>
 <div class="left_indent">
 <p>
-<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => @cage.tasks.weighing_tasks, :div_id => 'weighing_tasks', :single_cage_task_list => true, :manage => true} %>
+<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => @cage.tasks.weighing_tasks, :div_id => 'weighing_tasks', :same_type_task_list => true, :manage => true} %>
 </p>
 <p>
   [<%= link_to_remote 'Quick-add weighing task', :url => {:controller => 'tasks', :action => 'remote_new_weigh_cage_task', :id => @cage, :div_id => 'weighing_tasks', 
-                  :single_cage_task_list => true, :source => 'show_cage', :quick_add => true},
+                  :same_type_task_list => true, :source => 'show_cage', :quick_add => true},
                   :update => 'add_weighing_task' %>]
   <div id = "add_weighing_task">
   </div>

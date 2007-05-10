@@ -17,5 +17,5 @@
 <em>This will add a feeding task to the list above</em>
 <div class="left_indent">
 <%= render :partial => 'tasks/remote_new_feed_cage_task', :locals => {:cage => cage, :div_id => 'tasks_div', :users => User.current,
-                                :source => 'show_cage', :single_cage_task_list => true, :quick_add => false} %>
+                                :source => 'show_cage', :same_type_task_list => true, :quick_add => false} %>
 </div>

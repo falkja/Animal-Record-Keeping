@@ -5,12 +5,12 @@
 
   <tr>
   
-  <% if task.internal_description == 'medical' %>
+  <% if task.internal_description == 'medical' && (!same_type_task_list) %>
 		<td><%= task.medical_treatment.medical_problem.bat.band %></td>
     <td><%= task.medical_treatment.medical_problem.title %></td>
   <% end %>
   
-  <% if !single_cage_task_list %>
+  <% if !same_type_task_list %>
     <td>
     <b>
       <%= task.title %>
@@ -52,13 +52,13 @@
             <% label = 'Just Fed' %>
             [<%= link_to_remote label, :url => {
             :controller => 'tasks', :action => 'done', :id => task, 
-            :ids => tasks, :div_id => div_id,  :single_cage_task_list => single_cage_task_list},
+            :ids => tasks, :div_id => div_id,  :same_type_task_list => same_type_task_list},
             :update => div_id%>]
           <% elsif task.internal_description == nil %>
             <% label = 'Just Done' %>
             [<%= link_to_remote label, :url => {
             :controller => 'tasks', :action => 'done', :id => task, 
-            :ids => tasks, :div_id => div_id,  :single_cage_task_list => single_cage_task_list},
+            :ids => tasks, :div_id => div_id,  :same_type_task_list => same_type_task_list},
             :update => div_id%>]
           <% elsif task.internal_description == "weigh" %>
               [<%= link_to 'Weigh Cage', :controller => 'cages', :action => 'weigh_cage', :id => task.cage %>]
@@ -74,13 +74,15 @@
     <% end %>
     </td>
     
-    <td><%=h task.notes %></td>
+		<% if (task.internal_description != 'medical') %>
+		<td><%=h task.notes %></td>
+		<% end %>
     
     <td><%= link_to 'Show', :controller => 'tasks', :action => 'show', :id => task %></td>
     
     <% if manage == true %>
     <td><%= link_to 'Edit',  :controller => 'tasks', :action => 'edit', :id => task %></td>
-    <td><%= link_to_remote 'Destroy', :url => { :controller => 'tasks', :action => 'destroy', :id => task, :ids => tasks, :div_id => div_id,  :single_cage_task_list => single_cage_task_list}, :confirm => 'Are you sure?', :method => :post, :update => div_id %></td>
+    <td><%= link_to_remote 'Destroy', :url => { :controller => 'tasks', :action => 'destroy', :id => task, :ids => tasks, :div_id => div_id,  :same_type_task_list => same_type_task_list}, :confirm => 'Are you sure?', :method => :post, :update => div_id %></td>
     <% end %>
 
  </tr>

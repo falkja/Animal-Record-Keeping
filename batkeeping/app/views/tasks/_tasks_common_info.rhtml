@@ -10,6 +10,6 @@
 <b>Current <%= task_type %> Tasks for <%= cage.name %>:</b>
 <div class="left_indent">
 <p>
-<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => tasks, :div_id => 'tasks_div', :single_cage_task_list => true, :manage => true} %>
+<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => tasks, :div_id => 'tasks_div', :same_type_task_list => true, :manage => true} %>
 </p>
 </div>

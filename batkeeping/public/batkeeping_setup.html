@@ -14,7 +14,7 @@
 <li><a href="http://dev.mysql.com/downloads/gui-tools/5.0.html">MySQL GUI tools</a></li>
 <li><a href="http://rubyforge.org/frs/?group_id=167">Ruby</a></li>
 <li><a href="http://rubyforge.org/frs/?group_id=126">RubyGems</a></li>
-<li><a href="http://www.tortoisecvs.org/download.shtml">Tortoise CVS</a></li>
+<li><a href="http://tortoisesvn.net/downloads">Tortoise SVN</a></li>
 <li><a href="http://rubyforge.org/projects/rmagick">RMagick</a></li>
 </ol>
  
@@ -72,7 +72,7 @@
 </p>
 
 <p>
-<li>Install Tortoise CVS</li>
+<li>Install Tortoise SVN</li>
 <ol type="a">
 <li>Default Installation</li>
 <li>Restart your computer</li>
@@ -93,22 +93,16 @@
 <h3>Configuration:</h3>
 <ol>
 <p>
-<li>First, download the CVS repository (our batkeeping rails files)</li>
+<li>Checkout (download) the SVN repository (our batkeeping source code)</li>
 <ol type="a">
-<li>go to rubyforge.org, create an account, and have one of the admins add you to the batkeeping project (hopefully you have already done this)</li>
-<li>Create a folder where the batkeeping folder will be held (My Documents works okay)</li>
-<li>right click on the folder, and choose cvs checkout</li>
-<li>you should now have a checkout module dialog</li>
-<li>fill in the following textboxes:</li>
-<ol type="I">
-<li>Change protocol to Secure shell (:ext:)</li>
-<li>server: "rubyforge.org"</li>
-<li>Repository folder: "/var/cvs/animals"</li>
-<li>Module: "batkeeping" --> make sure it's lowercase!!!</li>
-</ol>
-<li>click OK, then yes to accept the security alert</li>
-<li>Enter your rubyforge.org password at the prompt</li>
-<li>Woo Hoo!  You now have the most current CVS version of our batkeeping project.  There should now be a green check mark on it titled "batkeeping".</li>
+<li>Go to rubyforge.org, create an account, and have one of the admins add you to the batkeeping project (hopefully you have already done this)</li>
+<li>Create a folder where the batkeeping folder will be held (My Documents/batkeeping/ works okay)</li>
+<li>Right click on the folder, and choose "SVN Checkout..."</li>
+<li>You should now see the Checkout dialog</li>
+<li>The URL of repository should be "svn+ssh://<b><em>yourdevelopername</em></b>@rubyforge.org/var/svn/animals/trunk/batkeeping/" where "yourdevelopername" is replaced with your rubyforge account name</li>
+<li>Click OK</li>
+<li>Enter your rubyforge.org password at the prompt (twice)</li>
+<li>Woo Hoo!  You now have the most current sourcecode of our batkeeping project. After refreshing the directory, there should now be a green check mark on the directory you checked the code to.</li>
 </ol>
 </p>
 
@@ -120,7 +114,7 @@
 <li>type "create database batkeeping;" and then "exit"</li>
 <li>now open the MySQL Administrator</li>
 <li>Click Restore (along the left panel)</li>
-<li>Click Open Backup File, then navigate to the newly created batkeeping directory you just got from the CVS download, then into "db", then open the most recent db_data.sql file</li>
+<li>Click Open Backup File, then navigate to the newly created batkeeping directory you just got from the SVN download, then into "db", then open the most recent db_data.sql file</li>
 <li>Now click Start Restore</li>
 <li>You can now close the MySQL Admintrator.  Your database was created!</li>
 </ol>
@@ -153,9 +147,9 @@
 
 <ol>
 <p>
-<li>Downloading from CVS</li>
+<li>Working with SVN</li>
 <ol type="a">
-<li>Whenever you begin working on something for the project, make sure you start by doing a CVS Update on the batkeeping directory</li>
+<li>Whenever you begin working on something for the project, make sure you start by doing a SVN Update on the batkeeping directory (this should keep conflicts to a minimum if someone else is working on the same files as you)</li>
 </ol>
 </p>
 
@@ -164,11 +158,11 @@
 </p>
 
 <p>
-<li>Updating to CVS</li>
+<li>Uploading to SVN</li>
 <ol type="a">
-<li>Whenever you finish working on something for the project, make sure you upload it to the CVS repository, along with a comment about what you did, what’s broken, etc.</li>
-<li>If you added any files, you will have to right click on the folder, and choose 'CVS Add Contents' before committing.</li>
-<li>In order to upload changes you made you need to go to the batkeeping folder, right click, and choose CVS Commit.</li>
+<li>Whenever you finish working on something for the project, make sure you upload it to the SVN repository, along with a comment about what you did, what’s broken, etc.</li>
+<li>If you added any files, you will have to right click on the folder, and choose 'Tortoise SVN - Add' before committing.</li>
+<li>In order to upload changes you made you need to go to the batkeeping folder, right click, and choose SVN Commit.  Any files you've added aren't actually uploaded until you do a commit.</li>
 <li>Again, make sure you leave comments on what you worked on.</li>
 </ol>
 </p>

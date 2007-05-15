@@ -1,0 +1,13 @@
+<p><b>Medical Treatment:</b>
+
+<%= link_to medical_treatment.title, :controller => 'medical_treatments', :action => 'show', :id => medical_treatment %>
+
+</p>
+
+<div class='left_indent'>
+
+<p><b>Date Opened:</b> <%=h nice_date(medical_treatment.date_opened) %></p>
+
+<p><b>Date Closed:</b> <%=h nice_date(medical_treatment.date_closed) %></p>
+
+</div>

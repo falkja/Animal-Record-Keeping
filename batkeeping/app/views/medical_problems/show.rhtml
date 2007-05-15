@@ -6,7 +6,7 @@
   <p><b>Date Opened: </b><%=h nice_date @medical_problem.date_opened %></p>
   <% if @medical_problem.date_closed %><p><b>Date Closed: </b><%=h nice_date @medical_problem.date_closed %></p><% end %>
 
-<%= render :partial => 'tasks/show_all_medical_tasks', :locals => {:medical_problem => @medical_problem} %>
+<%= render :partial => 'medical_problems/show_all_treatments', :locals => {:medical_problem => @medical_problem} %>
 
 <hr />
 <%= link_to 'Edit', :action => 'edit', :id => @medical_problem %> |

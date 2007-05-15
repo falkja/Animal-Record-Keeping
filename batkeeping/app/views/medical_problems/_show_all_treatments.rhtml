@@ -1,0 +1,23 @@
+
+<h3>Current Treatments:</h3>
+<div class="left_indent">
+<% if medical_problem.medical_treatments.current.length == 0 %>
+  <p>No treatments</p>
+<% else %>
+	<% for treatment in medical_problem.medical_treatments.current %>
+		<%= render :partial => 'medical_treatments/show_treatment', :locals => {:medical_treatment => treatment} %>
+	<% end %>
+<% end %>
+</div>
+
+
+<h3>Expired Treatments:</h3>
+	<div class="left_indent">
+<% if medical_problem.medical_treatments.expired.length == 0 %>
+  <p>No treatments</p>
+<% else %>
+	<% for treatment in medical_problem.medical_treatments.expired %>
+		<%= render :partial => 'medical_treatments/show_treatment', :locals => {:medical_treatment => treatment} %>
+	<% end %>
+<% end %>
+</div>

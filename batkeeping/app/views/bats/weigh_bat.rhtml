@@ -10,13 +10,10 @@
 
 <div class='left_indent'>
 
-<% bats = Array.new %>
-<% bats << @bat %>
-
 <div id='medical_problems'>
 <% if @bat.medical_problems.current.length > 0 %>
 <p>
-<%= render :partial=>'medical_problems/show_medical_problems', :locals=>{:bats => bats, :show_bat => false} %>
+<%= render :partial=>'medical_problems/show_medical_problems', :locals=>{:medical_problems => @bat.medical_problems} %>
 </p>
 <% else %>
 No medical problems.
@@ -24,7 +21,7 @@ No medical problems.
 </div>
 
 <p>
-<%= link_to_remote 'Quick-Add New Medical Problem', :url=>{:controller => 'medical_problems', :action => :remote_new_medical_problem, :bats => bats},
+<%= link_to_remote 'Quick-Add New Medical Problem', :url=>{:controller => 'medical_problems', :action => :remote_new_medical_problem, :bat => @bat},
   :update=>'add_medical_problem'%>
 </p>
 

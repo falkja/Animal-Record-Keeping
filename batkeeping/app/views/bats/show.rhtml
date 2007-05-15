@@ -71,13 +71,12 @@
 <div class="left_indent">
 <table>
 <th>Medical Problem</th>
-<th>User</th>
 <th>Date Opened</th>
 <th></th>
 <th></th>
 <th>Treatment</th>
   <% for medical_problem in @bat.medical_problems.current %>
-    <%= render :partial => 'medical_problems/show_medical_problem', :locals => {:medical_problem => medical_problem, :show_bat => true} %>
+    <%= render :partial => 'medical_problems/show_medical_problem', :locals => {:medical_problem => medical_problem, :show_bat => false} %>
   <% end %>  
 </table>
 </div>

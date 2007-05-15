@@ -7,4 +7,4 @@
 
 <%= link_to 'Back', :action => 'list' %>
 
-<p>Show all medical treatments</p>
+<%= render :partial => 'medical_problems/show_all_treatments', :locals => {:medical_problem => @medical_problem} %>

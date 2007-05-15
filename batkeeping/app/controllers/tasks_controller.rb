@@ -309,16 +309,8 @@ class TasksController < ApplicationController
 		
 		all_tasks_created_successfully = true
 		for day in days
-			if medical_treatment.task_exists_on_day(day)
-				all_tasks_created_successfully = false
-			else
-				task = Task.new
-				task.repeat_code = day
-				task.medical_treatment = medical_treatment
-				task.title = "Do " + medical_treatment.title
-				task.internal_description = "medical"
-				task.jitter = 0
-				task.date_started = Time.now
+				task = Task.find_by_medical_treatment_id_and_repeat_code(medical_treatment, day) || Task.create(:medical_treatment => medical_treatment, :repeat_code => day, :jitter => 0, :date_started => Time.now, :title => "Do " + medical_treatment.title, :internal_description => "medical")
+        task.date_ended = nil
 				task.save
 				
 				if (users.include?(User.find(1)) && ((day == "1") || (day == "7")))  #General Animal Care can't do tasks on weekend - add to weekend/holiday care
@@ -332,16 +324,13 @@ class TasksController < ApplicationController
 				else
 					task.users = users
 				end
-			end
 		end
 		
-		if all_tasks_created_successfully
-			flash[:note] = 'All tasks created successfully.'
-		else
-			flash[:note] = 'One or more of your medical tasks could not be created because tasks already exist for that day.'
-		end
+    flash[:note] = 'All tasks created successfully.  If some tasks already existed for the day, they were overwritten.'
 		
-		render :partial => 'tasks_list', :locals => {:tasks => medical_treatment.tasks, 
+    medical_tasks = medical_treatment.tasks.current.sort_by{|task| [task.repeat_code]}
+    
+		render :partial => 'tasks_list', :locals => {:tasks => medical_tasks, 
 			:div_id => params[:div_id], :same_type_task_list => true, :manage => true}
 	end
 

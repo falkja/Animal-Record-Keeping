@@ -27,14 +27,6 @@ class MedicalTreatment < ActiveRecord::Base
 		end
 	end
 	
-	def task_exists_on_day(day)
-		if Task.find(:first, :conditions => '(medical_treatment_id = ' + self.id.to_s + ') and (repeat_code = ' + day.to_s + ') and (date_ended is null)')
-			return true
-		else
-			return false
-		end
-	end
-	
 	def todays_task
 		return Task.find(:first, :conditions => '(medical_treatment_id = ' + self.id.to_s + ') and (repeat_code = ' + (Time.now.wday + 1).to_s + ') and (date_ended is null)')
 	end

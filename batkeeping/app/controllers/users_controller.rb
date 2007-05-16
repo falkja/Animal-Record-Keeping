@@ -59,6 +59,16 @@ class UsersController < ApplicationController
   
   def update
     @user = User.find(params[:id])
+    @user.job_type = ''
+    if params[:medical][:checked] == '1'
+      @user.job_type = "Medical Care"
+    end
+    if params[:animal][:checked] == '1'
+      @user.job_type = @user.job_type + ' ' + "Animal Care"
+    end
+    if params[:weekend][:checked] == '1'
+      @user.job_type = @user.job_type + ' ' + "Weekend Care"
+    end
     if @user.update_attributes(params[:user])
       flash[:notice] = 'User was successfully updated.'
 	  if params[:redirectme] == 'list'

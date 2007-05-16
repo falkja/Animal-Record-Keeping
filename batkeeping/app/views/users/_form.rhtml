@@ -26,8 +26,22 @@
 <p><label for="user_start_date">Start date</label><br/>
 <%= date_select 'user', 'start_date' %></p>
 
-<p><label for="user_job_type">Job Type</label><br/>
-<%= select_tag("user[job_type]", options_for_select([["None",""],["Medical Care","Medical Care"],["Animal Care","Animal Care"],["Weekend Care","Weekend Care"]], @user.job_type))%></p>
+<p>Job Type<br/>
+
+<div class='left_indent'>
+
+<%= check_box('medical', 'checked', :checked => (@user.job_type ? (@user.job_type.include? "Med") : false)) %>
+<label for="user_medical">Medical Care</label><br/>
+
+<%= check_box('animal', 'checked', :checked => (@user.job_type ? (@user.job_type.include? "Ani") : false)) %>
+<label for="user_animal">Animal Care</label><br/>
+
+<%= check_box('weekend', 'checked', :checked => (@user.job_type ? (@user.job_type.include? "Wee") : false)) %>
+<label for="user_weekend">Weekend Care</label><br/>
+
+</div>
+
+</p>
 
 </div>
 

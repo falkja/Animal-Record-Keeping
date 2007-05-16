@@ -24,7 +24,7 @@
 <tr>
 <td valign='top'><b>Medical Task</b></td>
 <td>
-<% form_tag :controller => 'tasks', :action => 'new_medical_task' do %>
+<% form_tag :controller => 'medical_treatments', :action => 'new' do %>
     Medical Problem: 
     <%= select_tag("id", options_from_collection_for_select(@medical_problems, "id", "title")) %>
     <%= submit_tag "Add a new treatment" %>

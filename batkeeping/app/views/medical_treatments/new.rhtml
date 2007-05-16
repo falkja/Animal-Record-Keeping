@@ -5,6 +5,4 @@
   <%= submit_tag "Create" %>
 <% end %>
 
-<%= link_to 'Back', :action => 'list' %>
-
 <%= render :partial => 'medical_problems/show_all_treatments', :locals => {:medical_problem => @medical_problem} %>

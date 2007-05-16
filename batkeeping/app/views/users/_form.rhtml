@@ -25,6 +25,10 @@
 
 <p><label for="user_start_date">Start date</label><br/>
 <%= date_select 'user', 'start_date' %></p>
+
+<p><label for="user_job_type">Job Type</label><br/>
+<%= select_tag("user[job_type]", options_for_select([["None",""],["Medical Care","Medical Care"],["Animal Care","Animal Care"],["Weekend Care","Weekend Care"]], @user.job_type))%></p>
+
 </div>
 
 <%= @end_date  %>

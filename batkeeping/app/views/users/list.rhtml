@@ -15,6 +15,7 @@ Listing current users
     <% if @list_all %>
       <th>End Date</th>
     <% end %>
+    <th>Job Type</th>
   </tr>
   
 <% for user in @users %>
@@ -29,6 +30,7 @@ Listing current users
     <% if @list_all %>
       <td><%= nice_date_no_day user.end_date %></td>
     <% end %>
+    <td><%= user.job_type %></td>
 		<td><%= link_to 'Edit', :action => 'edit', :id => user %></td>
 		<td>
 		<% if user.end_date == nil %>

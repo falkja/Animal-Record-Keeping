@@ -47,7 +47,16 @@ class UsersController < ApplicationController
 
   def deactivate
 	@user = User.find(params[:id])
-	@deactivating = true	
+	
+	if @user.cages.active.length > 0
+		flash[:notice] = 'Deactivation failed.  User still owns cages.'
+		redirect_to :controller=> 'main', :action => 'user_summary_page', :id => @user
+	elsif @user.tasks.current.length > 0
+		flash[:notice] = 'Deactivation failed.  User still has tasks.'
+		redirect_to :controller=> 'main', :action => 'user_summary_page', :id => @user
+	end
+	
+	@deactivating = true
   end
   
   def reactivate
@@ -59,7 +68,8 @@ class UsersController < ApplicationController
   
   def update
     @user = User.find(params[:id])
-    @user.job_type = ''
+		
+		@user.job_type = ''
     if params[:medical][:checked] == '1'
       @user.job_type = "Medical Care"
     end
@@ -69,7 +79,8 @@ class UsersController < ApplicationController
     if params[:weekend][:checked] == '1'
       @user.job_type = @user.job_type + ' ' + "Weekend Care"
     end
-    if @user.update_attributes(params[:user])
+    
+		if @user.update_attributes(params[:user])
       flash[:notice] = 'User was successfully updated.'
 	  if params[:redirectme] == 'list'
 	    redirect_to :action => 'list'

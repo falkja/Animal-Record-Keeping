@@ -129,12 +129,14 @@ class CagesController < ApplicationController
   def deactivate
 	@cage = Cage.find(params[:id])
   @rooms = Room.find(:all, :order => 'name')
-  if @cage.bats.count == 0
-    @deactivating = true
-  else
-    flash[:notice] = @cage.name + ' was not empty.  Please move bats before deactivating cage.'
+  if @cage.bats.length > 0
+    flash[:notice] = 'Deactivation failed.' + @cage.name + ' is not empty.'
     redirect_to :controller => 'bats', :action => 'choose_cage'
-  end
+  elsif @cage.tasks.current.length > 0
+		flash[:notice] = 'Deactivation failed. ' + @cage.name + ' still has feeding or weighing tasks.'
+		redirect_to :action => 'show', :id => @cage
+	end
+	@deactivating = true
   end
   
   def reactivate

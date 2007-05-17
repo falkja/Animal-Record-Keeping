@@ -149,12 +149,16 @@ redirect_to :action => 'list'
 		
 		if @bat.update_attributes(params[:bat])
 			if @deactivating
-				for medical_problem in @bat.medical_problems
+				for medical_problem in @bat.medical_problems.current
 					medical_problem.date_closed = @bat.leave_date
 					medical_problem.save
-					for task in medical_problem.tasks.current
-						task.date_ended = @bat.leave_date
-						task.save
+					for treatment in medical_problem.medical_treatments.current
+						treatment.date_closed = @bat.leave_date
+						treatment.save
+						for task in treatment.tasks.current
+							task.date_ended = @bat.leave_date
+							task.save
+						end
 					end
 				end
 			end

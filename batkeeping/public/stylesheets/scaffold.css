@@ -86,7 +86,7 @@ div.hidden {
 div.mainmenu {
 	font-size: 80%;
 	color: black;
-	position:fixed;
+	position:absolute;
 	margin: 0cm;
 	top: 0cm;
 	left: 0cm;
@@ -102,7 +102,7 @@ div.mainmenu a {
 
 /* the log in name is shown here */
 div.session {
-	position:fixed;
+	position:absolute;
 	top: 0cm;
 	right: 1cm;
 	text-align: right;

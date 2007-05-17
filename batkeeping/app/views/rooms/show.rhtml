@@ -4,5 +4,23 @@
 </p>
 <% end %>
 
+<h3>Cages in room:</h3>
+
+<div class='left_indent'>
+
+<table>
+<th>Cage</th>
+<th>Room</th>
+<th>Bats</th>
+<% for cage in @room.cages.active %>
+<tr>
+<td><%= link_to cage.name, :controller=>'cages', :action =>'show', :cage => cage %></td>
+<td><%= cage.bats.length %></td>
+</tr>
+<% end %>
+</table>
+
+</div>
+
 <%= link_to 'Edit', :action => 'edit', :id => @rooms %> |
 <%= link_to 'Back', :action => 'list' %>

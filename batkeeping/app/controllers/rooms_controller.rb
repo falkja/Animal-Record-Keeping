@@ -45,7 +45,14 @@ class RoomsController < ApplicationController
   end
 
   def destroy
-    Room.find(params[:id]).destroy
-    redirect_to :action => 'list'
+    @room = Room.find(params[:id])
+		
+		if @room.cages.active.length > 0
+			flash[:notice] = 'Deactivation failed.  Room still has cages.'
+			redirect_to :action => 'show', :id => @room
+		else
+			@room.destroy
+			redirect_to :action => 'list'
+		end
   end
 end

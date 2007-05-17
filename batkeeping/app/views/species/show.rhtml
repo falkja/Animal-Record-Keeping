@@ -4,5 +4,22 @@
 </p>
 <% end %>
 
+<h3>Species' Bats:</h3>
+
+<div class='left_indent'>
+
+<table>
+<th>Bat</th>
+<th>Cage</th>
+<% for bat in @sp.bats.active %>
+<tr>
+<td><%= link_to bat.band, :controller=>'bats', :action =>'show', :id => bat %></td>
+<td><%= bat.cage.name %></td>
+</tr>
+<% end %>
+</table>
+
+</div>
+
 <%= link_to 'Edit', :action => 'edit', :id => @species %> |
 <%= link_to 'Back', :action => 'list' %>

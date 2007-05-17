@@ -14,7 +14,7 @@
 <th>Bats</th>
 <% for cage in @room.cages.active %>
 <tr>
-<td><%= link_to cage.name, :controller=>'cages', :action =>'show', :cage => cage %></td>
+<td><%= link_to cage.name, :controller=>'cages', :action =>'show', :id => cage %></td>
 <td><%= cage.bats.length %></td>
 </tr>
 <% end %>

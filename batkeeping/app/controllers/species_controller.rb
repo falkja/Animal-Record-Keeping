@@ -44,7 +44,13 @@ class SpeciesController < ApplicationController
   end
 
   def destroy
-    Species.find(params[:id]).destroy
-    redirect_to :action => 'list'
+    @sp = Species.find(params[:id])
+		if @sp.bats.active.length > 0
+			flash[:notice] = 'Deactivation failed.  Species still has bats.'
+			redirect_to :action => 'show', :id => @sp
+		else
+			@sp.destroy
+			redirect_to :action => 'list'
+		end
   end
 end

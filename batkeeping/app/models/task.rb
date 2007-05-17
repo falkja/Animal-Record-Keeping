@@ -7,17 +7,17 @@ class Task < ActiveRecord::Base
 	@@current_user = nil
 
   def self.general_tasks
-    find :all, :conditions => 'internal_description is null and date_ended is null', :order => 'repeat_code'
+    find :all, :conditions => '(internal_description != "weigh") and (internal_description != "feed") and (internal_description != "medical") and date_ended is null', :order => 'repeat_code'
   end
   
   def self.general_tasks_today
 		tday = Time.now.wday + 1   
-		find :all, :conditions => "((repeat_code = #{tday}) or (repeat_code = 0)) and (internal_description is null) and date_ended is null", :order => 'repeat_code'
+		find :all, :conditions => "((repeat_code = #{tday}) or (repeat_code = 0)) and (internal_description != 'weigh') and (internal_description != 'feed') and (internal_description != 'medical') and date_ended is null", :order => 'repeat_code'
 	end
   
   def self.general_tasks_not_today
 		tday = Time.now.wday + 1   
-		find :all, :conditions => "((repeat_code != #{tday}) and (repeat_code != 0)) and (internal_description is null) and date_ended is null", :order => 'repeat_code'
+		find :all, :conditions => "((repeat_code != #{tday}) and (repeat_code != 0)) and (internal_description != 'weigh') and (internal_description != 'feed') and (internal_description != 'medical') and date_ended is null", :order => 'repeat_code'
 	end
   
   def self.weighing_tasks

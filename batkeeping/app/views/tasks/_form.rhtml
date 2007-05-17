@@ -5,6 +5,16 @@
 <p><label for="task_title">Title</label><br/>
 <%= text_field 'task', 'title'  %></p>
 
+<% if (@task.internal_description != 'feed') && (@task.internal_description != 'medical') && (@task.internal_description != 'weigh') %>
+<p>
+Task Type:<br/>
+<label><%= radio_button :task, :internal_description, '' %>Other</label><br/>
+<label><%= radio_button :task, :internal_description, 'change_pads' %>Change Pads</label><br/>
+<label><%= radio_button :task, :internal_description, 'change_cages' %>Change Cages</label><br/>
+<label><%= radio_button :task, :internal_description, 'change_water' %>Give Fresh Water</label><br/>
+</p>
+<% end %>
+
 <p><label for="task_user">User(s) assigned</label><br/>
 <%= select_tag("users[id][]", options_from_collection_for_select(@users, "id", "name", @user_ids), :multiple => true) %></p>
 

@@ -36,23 +36,19 @@ class MainController < ApplicationController
 	  @user = User.find(params[:id])
 	  @mycages = @user.cages.active
 		
-    if params[:id] == '3' #weekend care gets all the medical problems and medical tasks
-      @medical_problems = MedicalProblem.current
+    if @user.weekend_care_user? #weekend care gets all the medical problems and medical tasks
       @my_medical_tasks_today = Task.medical_tasks_today
       @my_medical_tasks_not_today = Task.medical_tasks_not_today
       @my_medical_tasks = Task.medical_tasks
       @weekend = 'weekend'
     else
-      @medical_problems = Array.new
-			@user.tasks.medical_tasks.each{|task| @medical_problems << task.medical_treatment.medical_problem}
-      @medical_problems.uniq!
       @my_medical_tasks_today = @user.tasks.medical_tasks_today
       @my_medical_tasks_not_today = @user.tasks.medical_tasks_not_today
       @my_medical_tasks = @user.tasks.medical_tasks
       @weekend = ''
 	  end
 
-		@medical_problems = @medical_problems.sort_by{|medical_problem| [medical_problem.bat.band, medical_problem.title]}
+		@medical_problems = @user.bats_medical_problems
 
 	  @my_general_tasks_today = @user.tasks.general_tasks_today
 	  @my_weighing_tasks_today = @user.tasks.weighing_tasks_today

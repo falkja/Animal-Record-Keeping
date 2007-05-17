@@ -50,6 +50,9 @@
       <td>
         [<%= link_to 'End', {:controller => 'medical_treatments', :action => 'destroy_medical_treatment', :id => medical_treatment}, :confirm => 'Are you sure?', :method => :post %>]
       </td>
+			<% if medical_treatment.tasks.current.length < 7 %>
+			<td><warning>Treatment not given every day of the week</warning></td>
+			<% end %>
       </tr>
       <tr>
       <td></td><td></td><td></td><td></td>

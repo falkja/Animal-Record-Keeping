@@ -30,13 +30,13 @@
 
 <div class='left_indent'>
 
-<%= check_box('medical', 'checked', :checked => (@user.job_type ? (@user.job_type.include? "Med") : false)) %>
+<%= check_box('medical', 'checked', :checked => @user.medical_care_user?) %>
 <label for="user_medical">Medical Care</label><br/>
 
-<%= check_box('animal', 'checked', :checked => (@user.job_type ? (@user.job_type.include? "Ani") : false)) %>
+<%= check_box('animal', 'checked', :checked => @user.animal_care_user?) %>
 <label for="user_animal">Animal Care</label><br/>
 
-<%= check_box('weekend', 'checked', :checked => (@user.job_type ? (@user.job_type.include? "Wee") : false)) %>
+<%= check_box('weekend', 'checked', :checked => @user.weekend_care_user?) %>
 <label for="user_weekend">Weekend Care</label><br/>
 
 </div>

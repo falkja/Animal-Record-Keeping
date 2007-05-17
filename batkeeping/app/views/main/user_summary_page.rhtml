@@ -4,6 +4,18 @@
 
 <%= render :partial => 'weathers/enter_weathers' %>
 
+
+<% if @user.job_type != nil %>
+<h2>Jobs</h2>
+<p>
+<div class='left_indent'>
+<%= (@user.medical_care_user?) ? "Medical Care<br/>" : "" %>
+<%= (@user.animal_care_user?) ? "Animal Care<br/>" : "" %>
+<%= (@user.weekend_care_user?) ? "Weekend Care<br/>" : "" %>
+</div>
+</p>
+<% end %>
+
 <h2>My Cages</h2>
 <p>
 <div class= "left_indent">
@@ -18,7 +30,7 @@ You have no cages
 </div>
 </p>
 
-<h2>Assigned Medical Problems & Treatments</h2>
+<h2>My Bats' Medical Problems</h2>
 <p>
 <div class="left_indent">
 <% if @medical_problems.length > 0 %>

@@ -77,14 +77,22 @@ class CagesController < ApplicationController
   end
 
   def create
-    @cage = Cage.new(params[:cage])
-	@cage.date_destroyed = nil
-
-    if @cage.save
-      flash[:notice] = 'Cage was successfully created.'
-      redirect_to :controller => 'tasks', :action => 'new_weigh_cage_task', :id => @cage
+    if Cage.find(:first, :conditions => "name = '#{params[:cage][:name]}'")
+      flash[:notice] = 'There is already a cage with the same name.  Please choose a different name.'
+			redirect_to :back
+    elsif params[:cage][:name] == ''
+			flash[:notice] = 'There were problems with your submission.  Please make sure all data fields are filled out.'
+			redirect_to :back
     else
-      render :action => 'new'
+      @cage = Cage.new(params[:cage])
+      @cage.date_destroyed = nil
+
+      if @cage.save
+        flash[:notice] = 'Cage was successfully created.'
+        redirect_to :controller => 'tasks', :action => 'new_weigh_cage_task', :id => @cage
+      else
+        render :action => 'new'
+      end
     end
   end
 

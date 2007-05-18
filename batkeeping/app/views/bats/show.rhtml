@@ -102,26 +102,38 @@
 
 <%= render :partial => 'bats/display_weights', :locals => {:display_weights => @bat} %>
 
-<% if @cohs.length >0 %>
+<% if @cihs.length >0 %>
 <h3>Cage History:</h3>
 <div class="left_indent">
-  <table border='1'>
-  <th>Cage</th>
+
+  <table border='0'>
+  <th>New Cage</th>
+  <th>Old Cage</th>
   <th>Date in</th>
   <th>Why</th>
   <th>Who</th>
-  <th>Date out</th>
-  <th>Why</th>
-  <th>Who</th>
-  <% for coh in @cohs %>
+  
+  <% if @bat.cage == nil %>
+  <tr>
+  <td>Deactivated Bat</td>
+  <td><%=h @bat.cage_out_histories[0].cage.name %></td>
+  <td><%=h nice_date @bat.cage_out_histories[0].date %></td>
+  <td><%=h @bat.cage_out_histories[0].note %></td>
+  <td><%=h @bat.cage_out_histories[0].user.initials %></td>
+  </tr>
+  <% end %>
+  
+  <% for cih in @cihs %>
     <tr>
-    <td><%=h coh.cage.name %></td>
-    <td><%=h nice_date coh.cage_in_history.date %></td>
-    <td><%=h coh.cage_in_history.note %></td>
-    <td><%=h coh.cage_in_history.user.initials %></td>
-    <td><%=h nice_date coh.date %></td>
-    <td><%=h coh.note %></td>
-    <td><%=h coh.user.initials %></td>    
+    <td><%=h cih.cage.name %></td>
+    <% if cih.cage_out_history %>
+    <td><%=h cih.cage_out_history.cage.name %></td>
+    <% else %>
+    <td>-</td>
+    <% end %>
+    <td><%=h nice_date cih.date %></td>
+    <td><%=h cih.note %></td>
+    <td><%=h cih.user.initials %></td>
     </tr>
   <% end %>
   </table>
@@ -132,3 +144,7 @@
 
 <%= link_to 'Edit', :action => 'edit', :id => @bat %> |
 <%= link_to 'List Current Bats', :action => 'list' %>
+
+<% if @bat.cage != nil%>
+ | <%= link_to 'Move Bat', :action=>'single_bat_to_move', :id=>@bat %>
+<% end %>

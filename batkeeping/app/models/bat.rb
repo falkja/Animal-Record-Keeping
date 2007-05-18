@@ -77,9 +77,20 @@ class Bat < ActiveRecord::Base
 	#it updates both the cage out and cage in histories as required
 	def log_cage_change(old_cage, new_cage)
 		
+    unless new_cage == nil #if it is nill then the bat died or was exported and wasn't moved to a new cage
+			#Make a new entry in the cage in histories
+			cih = CageInHistory.new
+			cih.bat = self
+			cih.cage = new_cage
+			cih.user = @@current_user
+			cih.note = @@comment
+			cih.date = Time.new 
+			cih.save
+		end   
+    
 		#We may have to close out the last cage_in_history
 		#by creating a cage_out_history and attaching it to the cage_in_history
-		unless old_cage == nil #this means we just created it
+    unless old_cage == nil #this means we just created it
 			cih = self.cage_in_histories #a list of histories sorted by latest date
 			if cih
 				cih = cih[0]
@@ -104,18 +115,7 @@ class Bat < ActiveRecord::Base
 			coh.save
 			
 		end
-
-		unless new_cage == nil #if it is nill then the bat died or was exported and wasn't moved to a new cage
-			#Make a new entry in the cage in histories
-			cih = CageInHistory.new
-			cih.bat = self
-			cih.cage = new_cage
-			cih.user = @@current_user
-			cih.note = @@comment
-			cih.date = Time.new 
-
-			cih.save
-		end        
+     
 	end
 	
 	#called just before creation

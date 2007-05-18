@@ -27,7 +27,7 @@
 </p>
 
 <p><label for="bat_species">Species</label><br/>
-<%= select_tag("bat[species_id]", options_from_collection_for_select(@species, "id", "name", @bat.species.id), {:disabled => @reactivating}) %>
+<%= select_tag("bat[species_id]", options_from_collection_for_select(@species, "id", "name", (@bat.species ? @bat.species.id : '')), {:disabled => @reactivating}) %>
 </p>
 
 <p><label for="bat_gender">Gender</label><br/>

@@ -341,6 +341,14 @@ redirect_to :action => 'list'
     #MyMailer.deliver_mail("falk.ben@gmail.com")
   end
 	
+  def single_bat_to_move
+    bat = Bat.find(params[:id])
+    @bats = Array.new
+    @bats << bat
+    @cages = Cage.find(:all, :conditions => "date_destroyed is null and id != " + bat.cage.id.to_s, :order => "name")
+    @cage = bat.cage
+  end
+  
 	def manage_cage_tasks_after_move		
 		render :partial=> 'manage_cage_tasks_after_move', :locals=>{:step=>params[:step].to_i,:old_cage=>Cage.find(params[:old_cage]), :new_cage => Cage.find(params[:new_cage])}
 	end

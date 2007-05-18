@@ -107,7 +107,7 @@ redirect_to :action => 'list'
 			new_cage=Cage.find(params[:bat][:cage_id])
 			
 			#census stuff
-			census = Census.find_or_create_by_date_and_room_id(Date.today, new_cage)
+			census = Census.find_or_create_by_date_and_room_id(Date.today, new_cage.room)
 			census.tally(1, new_cage.room)
 			census.bats_added ? census.bats_added = census.bats_added + @bat.band + ' ' : census.bats_added = @bat.band + ' '
 			census.save

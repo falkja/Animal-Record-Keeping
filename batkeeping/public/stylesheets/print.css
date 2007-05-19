@@ -1,0 +1,19 @@
+@import url(scaffold.css);
+
+body {
+	padding-top:0cm;
+	padding-left: 0cm;
+	padding-right: 0cm;
+	}
+	
+pre {
+  padding: 0px;
+}
+	
+div.mainmenu {
+	display:none;
+}
+
+div.left_indent {
+	margin-left: .1cm;
+}

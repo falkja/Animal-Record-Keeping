@@ -5,28 +5,39 @@
 
 <div class= "left_indent">
 
+<form>
+
+<table>
+
+<th>Room</th>
+<th>Temperature</th>
+<th>Humidity</th>
+
 <% for room in Room.find(:all, :order=> 'name') %>
-  <% room_weather = room.weathers.today %>
-  <% if room_weather == nil %>
-  <% form_remote_tag(:update => 'weathers',
-        :url=>{:controller => 'weathers', :action => 'create', :room => room}) do %>
-    <p><b><%= room.name %></b>
-    <%= text_field 'weather', 'temperature', :size=>2, :value=> '' %> &deg F
-    <%= text_field 'weather', 'humidity', :size=>2, :value=> '' %>%
-    <%= submit_tag 'Submit' %></p>
-  <% end %>
-  
-  <% else %>
-    <p><form><b><%= room.name %></b>
-    <%= room_weather.temperature %> &deg F
-    <%= room_weather.humidity %>% 
-		<%= submit_to_remote('Delete','Delete', 
+<tr>
+<td><%= room.name %></td>
+
+<% room_weather = room.weathers.today %>
+<% if room_weather == nil %>
+<td><%= text_field 'weather', 'temperature', :size=>2, :value=> '' %> &deg F</td>
+<td><%= text_field 'weather', 'humidity', :size=>2, :value=> '' %>%</td>
+<td><%= submit_to_remote 'Submit', 'Submit', :update => 'weathers',
+        :url=>{:controller => 'weathers', :action => 'create', :room => room} %></td>
+
+<% else %>
+<td><%= room_weather.temperature %> &deg F</td>
+<td><%= room_weather.humidity %>%</td>
+<td><%= submit_to_remote('Delete','Delete', 
         :url=>{:controller => 'weathers', :action => 'clear', :room => room},
-        :update => 'weathers') %>
-    </form>
-		</p>
-  <% end %>
+        :update => 'weathers') %></td>
 <% end %>
+
+</tr>
+<% end %>
+
+</table>
+
+</form>
 
 </div>
 

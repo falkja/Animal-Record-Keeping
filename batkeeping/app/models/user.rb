@@ -8,11 +8,19 @@ class User < ActiveRecord::Base
   def self.current
     find :all, :conditions => 'end_date is null', :order => 'name'
   end
-
-  def self.find_ordinary_users
-    find :all, :conditions => 'id > 3', :order => 'name'
-  end
-
+	
+	def self.current_weekend_care
+		find :all, :conditions => "end_date is null and job_type REGEXP 'Weekend Care'", :order => 'name'
+	end
+	
+	def self.current_medical_care
+		find :all, :conditions => "end_date is null and job_type REGEXP 'Medical Care'", :order => 'name'
+	end
+	
+	def self.current_animal_care
+		find :all, :conditions => "end_date is null and job_type REGEXP 'Animal Care'", :order => 'name'
+	end
+	
 	def medical_care_user?
 		if self.job_type == nil
 			return false

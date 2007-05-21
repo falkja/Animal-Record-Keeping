@@ -28,11 +28,11 @@
 
 <p>Job Type<br/>
 
-<%= check_box('medical', 'checked', :checked => @user.medical_care_user?) %>
-<label for="medical_checked">Medical Care</label><br/>
-
 <%= check_box('animal', 'checked', :checked => @user.animal_care_user?) %>
 <label for="animal_checked">Animal Care</label><br/>
+
+<%= check_box('medical', 'checked', :checked => @user.medical_care_user?) %>
+<label for="medical_checked">Medical Care</label><br/>
 
 <%= check_box('weekend', 'checked', :checked => @user.weekend_care_user?) %>
 <label for="weekend_checked">Weekend Care</label><br/>

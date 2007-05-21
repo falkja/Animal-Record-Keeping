@@ -1,0 +1,7 @@
+<h2>Choose Weekend Care User's Summary Page</h2>
+
+<div class='left_indent'>
+<% for user in @users %>
+	<p><%= link_to user.name, :controller=> 'main', :action => :user_summary_page, :id => user %></p>
+<% end %>
+</div>

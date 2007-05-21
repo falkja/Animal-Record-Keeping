@@ -1,10 +1,52 @@
 <% form_tag :action => 'login', :id => @user do %>
 
 <p>User: <%= select_tag("user[id]", options_from_collection_for_select(@users, "id", "name")) %>
-
-<%#= collection_select("User", "user_id" , @users, "id", "name") %>
 <%= submit_tag 'sign in' %>
-<% end %>
 </p>
 
-<p><%= link_to 'Add User', :controller => 'users', :action => 'new' %></p>
+<% end %>
+
+<div class='right_aligned'>
+
+<p>
+Animal Care Users:<br/>
+<div class='left_indent'>
+<% if @animal_care_users.length == 0 %>
+	<warning>No Animal Care Users</warning>
+<% else %>
+	<% for user in @animal_care_users %>
+		<%= link_to user.name, :controller => 'users', :action => :show, :id => user %><br/>
+	<% end %>
+<% end %>
+</div>
+</p>
+
+<p>
+Medical Care Users:<br/>
+<div class='left_indent'>
+<% if @medical_care_users.length == 0 %>
+	<warning>No Medical Care Users</warning>
+<% else %>
+	<% for user in @medical_care_users %>
+		<%= link_to user.name, :controller => 'users', :action => :show, :id => user %><br/>
+	<% end %>
+<% end %>
+</div>
+</p>
+
+<p>
+Weekend Care Users:<br/>
+<div class='left_indent'>
+<% if @weekend_care_users.length == 0 %>
+	<warning>No Weekend Care Users</warning>
+<% else %>
+	<% for user in @weekend_care_users %>
+		<%= link_to user.name, :controller => 'users', :action => :show, :id => user %><br/>
+	<% end %>
+<% end %>
+</div>
+</p>
+
+</div>
+
+<p><%= link_to 'List Users', :controller => 'users', :action => 'list' %> | <%= link_to 'Add User', :controller => 'users', :action => 'new' %></p>

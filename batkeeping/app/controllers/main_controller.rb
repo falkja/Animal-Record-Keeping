@@ -1,7 +1,10 @@
 class MainController < ApplicationController
   
   def index
-	@users = User.find(:all, :conditions => "end_date is null", :order => "name")
+		@users = User.current
+		@weekend_care_users = User.current_weekend_care
+		@medical_care_users = User.current_medical_care
+		@animal_care_users = User.current_animal_care
   end
   
   #just show all cage changes
@@ -26,6 +29,16 @@ class MainController < ApplicationController
 	flash[:notice] = "Session timed out."
 	redirect_to :action => 'index'
   end
+
+	def choose_weekend_user_summary_page
+		@users = User.current_weekend_care
+		if @users.length == 1
+			redirect_to :action => 'user_summary_page', :id => @users[0]
+		elsif @users.length == 0
+			flash[:notice] = "No weekend care users."
+			redirect_to :controller => 'users', :action => 'list'
+		end
+	end
 
   #lists things of relevance to only the user
   def user_summary_page

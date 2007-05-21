@@ -1,5 +1,5 @@
 <ul id="nav">
-<li><a href="">Main</a>
+<li><%= link_to 'Main', :controller => 'main', :action => :user_summary_page, :id => User.find(session[:person].id) %>
 	<ul>
 	<li><%= link_to 'My Page', :controller => 'main', :action => :user_summary_page, :id => User.find(session[:person].id) %></li>
 	<li><%= link_to 'Colony Status', :controller => :stats %></li>
@@ -14,7 +14,7 @@
   </li>
 	</ul>
 </li>
-<li><a href="">Bats</a>
+<li><%= link_to 'Bats', :controller => 'bats', :action => :list %>
 	<ul>
 	<li><%= link_to 'List Bats', :controller => 'bats', :action => :list %></li>
 	<li><%= link_to 'New Bat', :controller => 'bats', :action => :new %></li>
@@ -22,7 +22,7 @@
 	<li><%= link_to 'Move Bat', :controller => 'bats', :action => :choose_cage %></li>
 	</ul>
 </li>
-<li><a href="">Cages</a>
+<li><%= link_to 'Cages', :controller => 'cages', :action => :list %>
 	<ul>
 	<li><%= link_to 'List Cages', :controller => 'cages', :action => :list %></li>
 	<li><%= link_to 'New Cage', :controller => 'cages', :action => :new %></li>
@@ -30,22 +30,29 @@
 	<li><%= link_to 'Move Cage', :controller => 'cages', :action => :move_cage %></li>
 	</ul>
 </li>
-<li><a href="">Users</a>
+<li><%= link_to 'Users', :controller => 'users', :action => :list %>
 	<ul>
 	<li><%= link_to 'List Users', :controller => 'users', :action => :list %></li>
 	<li><%= link_to 'New User', :controller => 'users', :action => :new %></li>
 	</ul>
 </li>
-<li><a href="">Medical Problems</a>
+<li><%= link_to 'Medical Problems', :controller => 'medical_problems', :action => :list_current %>
 	<ul>
 	<li><%= link_to 'List Medical Problems', :controller => 'medical_problems', :action => :list_current %></li>
 	<li><%= link_to 'New Medical Problem', :controller => 'medical_problems', :action => :new %></li>
 	</ul>
 </li>
-<li><a href="">Tasks</a>
+<li><%= link_to 'Tasks', :controller => 'tasks', :action => :list %>
 	<ul>
 	<li><%= link_to 'List Tasks', :controller => 'tasks', :action => :list %></li>
 	<li><%= link_to 'New Task', :controller => 'tasks', :action => :choose_new_task %></li>
+	</ul>
+</li>
+<li><%= link_to 'Help' %>
+	<ul>
+	<li><%= link_to 'About' %></li>
+	<li><a href="/manual.html">Manual</a></li>
+	<li><%= link_to 'Bug Report' %></li>
 	</ul>
 </li>
 </ul>

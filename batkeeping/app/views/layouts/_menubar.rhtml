@@ -50,9 +50,9 @@
 </li>
 <li><%= link_to 'Help' %>
 	<ul>
-	<li><%= link_to 'About' %></li>
-	<li><a href="/manual.html">Manual</a></li>
+	<li><%= link_to 'Manual', :controller => 'help', :action => 'manual' %></li>
 	<li><%= link_to 'Bug Report' %></li>
+	<li><%= link_to 'About', :controller => 'help', :action => 'about'%></li>
 	</ul>
 </li>
 </ul>

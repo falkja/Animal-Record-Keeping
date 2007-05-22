@@ -117,6 +117,7 @@ class TasksController < ApplicationController
   def new
     @task = Task.new
     @users = User.current
+    @show_users = true
   end
 
   #called from the form on the list tasks page, needed so that the page that is requested has an ID attached to it so that refreshes of the page don't break
@@ -341,7 +342,7 @@ class TasksController < ApplicationController
 	end
 	
   def create
-    @users = User.find(params[:users][:id])
+    (params[:users] == nil) ? @users = Array.new : @users = User.find(params[:users][:id])
     @days = params[:days]
             
     if @days.include?("0")  #only need one daily task
@@ -442,4 +443,14 @@ class TasksController < ApplicationController
 				:medical_problems => medical_problems}
 	end
 	
+  def show_hide_users
+    @users = User.current
+    if params[:show_users] == "1"
+      show_users = false
+    else
+      show_users = true
+    end
+    render :partial => 'users_for_tasks', :locals=>{:show_users => show_users}
+  end
+  
 end

@@ -117,7 +117,6 @@ class TasksController < ApplicationController
   def new
     @task = Task.new
     @users = User.current
-    @show_users = true
   end
 
   #called from the form on the list tasks page, needed so that the page that is requested has an ID attached to it so that refreshes of the page don't break
@@ -372,7 +371,11 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
     if @task.update_attributes(params[:task])
-      @task.users = User.find(params[:users][:id])
+      if params[:users]
+        @task.users = User.find(params[:users][:id])
+      else
+        @task.users = Array.new
+      end
       flash[:notice] = 'Task was successfully updated.'
       redirect_to :action => 'list'
     else
@@ -445,6 +448,11 @@ class TasksController < ApplicationController
 	
   def show_hide_users
     @users = User.current
+    if params[:task]
+      task = Task.find(params[:task])
+      @user_ids = Array.new
+      task.users.each {|user| @user_ids << user.id }
+    end
     if params[:show_users] == "1"
       show_users = false
     else

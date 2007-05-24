@@ -1,0 +1,19 @@
+<% if show_users %>
+<p><label for="task_user">User(s) assigned</label><br/>
+<%= select_tag("users[id][]", options_from_collection_for_select(@users, "id", "name", @user_ids), :multiple => true) %></p>
+<% else %>
+<div class='left_indent'>
+<p>
+Weekday Animal Care:<br/>
+<% for user in User.current_animal_care %>
+<%= user.name %>
+<% end %>
+</p>
+<p>
+Weekend Animal Care:<br/>
+<% for user in User.current_weekend_care %>
+<%= user.name %>
+<% end %>
+</p>
+</div>
+<% end %>

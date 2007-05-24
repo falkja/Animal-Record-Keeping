@@ -15,16 +15,16 @@ Task Type:<br/>
 </p>
 <% end %>
 
-<%= check_box :task, :animal_care, :checked => (@task.animal_care == '1') %>
-<label for="task_animal_care">Task Done By Animal Care</label>
+<%= check_box :task, :animal_care, :checked => @task.animal_care %>
+<label for="task_animal_care">Task Assigned To Animal Care</label>
 
 <%= observe_field("task_animal_care",
-     :url => {:controller => "tasks", :action => :show_hide_users},
+     :url => {:controller => "tasks", :action => :show_hide_users, :task => @task},
      :update => "users", :with => "show_users")
      %>
 
 <div id='users'>
-  <%= render :partial => 'users_for_tasks', :locals=>{:show_users => @show_users} %>
+  <%= render :partial => 'users_for_tasks', :locals=>{:show_users => !@task.animal_care} %>
 </div>
 
 <% if @editing %>

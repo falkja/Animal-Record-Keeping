@@ -2,21 +2,23 @@
 
 <!--[form:task]-->
 
-<p><label for="task_title">Title</label><br/>
-<%= text_field 'task', 'title'  %></p>
+<% if @task.medical_treatment_id == nil && @task.cage_id == nil %>
+<p><%= check_box :switch, :room, :checked => @task.room_id != nil %>
+<label for="switch_room">Room Task</label></p>
 
-<% if (@task.internal_description != 'feed') && (@task.internal_description != 'medical') && (@task.internal_description != 'weigh') %>
-<p>
-Task Type:<br/>
-<label><%= radio_button :task, :internal_description, '' %>Other</label><br/>
-<label><%= radio_button :task, :internal_description, 'change_pads' %>Change Pads</label><br/>
-<label><%= radio_button :task, :internal_description, 'change_cages' %>Change Cages</label><br/>
-<label><%= radio_button :task, :internal_description, 'change_water' %>Give Fresh Water</label><br/>
-</p>
+<%= observe_field("switch_room",
+     :url => {:controller => "tasks", :action => :show_hide_rooms, :task => @task},
+     :update => "rooms", :with => "switch_room")
+     %>
+		 
 <% end %>
 
-<%= check_box :task, :animal_care %>
-<label for="task_animal_care">Task Assigned To Animal Care</label>
+<div id="rooms">
+	<%= render :partial=>'rooms_for_tasks', :locals => {:show_rooms => @task.room_id} %>
+</div>
+
+<p><%= check_box :task, :animal_care %>
+<label for="task_animal_care">Task Assigned To Animal Care</label></p>
 
 <%= observe_field("task_animal_care",
      :url => {:controller => "tasks", :action => :show_hide_users, :task => @task},

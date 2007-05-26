@@ -1,0 +1,20 @@
+<% if show_rooms %>
+
+<p>
+<label for="task_room_id">Room</label><br/>
+<%= select_tag ("task[room_id]", options_from_collection_for_select(@rooms, "id", "name")) %>
+</p>
+
+<p>
+Task Type:<br/>
+<label><%= radio_button :task, :internal_description, 'change_pads' %>Change Pads</label><br/>
+<label><%= radio_button :task, :internal_description, 'change_cages' %>Change Cages</label><br/>
+<label><%= radio_button :task, :internal_description, 'change_water' %>Give Fresh Water</label><br/>
+</p>
+
+<%else%>
+
+<p><label for="task_title">Title</label><br/>
+<%= text_field 'task', 'title'  %></p>
+
+<% end %>

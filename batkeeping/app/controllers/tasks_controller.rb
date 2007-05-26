@@ -117,6 +117,7 @@ class TasksController < ApplicationController
   def new
     @task = Task.new
     @users = User.current
+		@rooms = Room.find(:all)
   end
 
   #called from the form on the list tasks page, needed so that the page that is requested has an ID attached to it so that refreshes of the page don't break
@@ -342,6 +343,7 @@ class TasksController < ApplicationController
 	
   def create
     (params[:users] == nil) ? @users = Array.new : @users = User.find(params[:users][:id])
+		
     @days = params[:days]
             
     if @days.include?("0")  #only need one daily task
@@ -350,10 +352,19 @@ class TasksController < ApplicationController
     end
     
     for day in @days
-        @task = Task.new(params[:task])
+				@task = Task.new(params[:task])
         @task.repeat_code = day
-        @task.internal_description = nil
-		@task.date_started = Time.now
+				@task.date_started = Time.now
+				
+				case params[:task][:internal_description]
+					when "change_pads"
+						@task.title = "Change pads in " + Room.find(params[:task][:room_id]).name
+					when "change_cages"
+						@task.title = "Change cages in " + Room.find(params[:task][:room_id]).name
+					when "change_water"
+						@task.title = "Change water in " + Room.find(params[:task][:room_id]).name
+				end
+				
         @task.save
         @task.users = @users
     end
@@ -366,16 +377,24 @@ class TasksController < ApplicationController
     @user_ids = Array.new 
     @task.users.each {|user| @user_ids << user.id }
     @editing = true
+		@rooms = Room.find(:all)
   end
 
   def update
     @task = Task.find(params[:id])
+		
+		case params[:task][:internal_description]
+			when "change_pads"
+				@task.title = "Change pads in " + Room.find(params[:task][:room_id]).name
+			when "change_cages"
+				@task.title = "Change cages in " + Room.find(params[:task][:room_id]).name
+			when "change_water"
+				@task.title = "Change water in " + Room.find(params[:task][:room_id]).name
+		end
+			
     if @task.update_attributes(params[:task])
-      if params[:users]
-        @task.users = User.find(params[:users][:id])
-      else
-        @task.users = Array.new
-      end
+      params[:users] ? @task.users = User.find(params[:users][:id]) : @task.users = Array.new
+      
       flash[:notice] = 'Task was successfully updated.'
       redirect_to :action => 'list'
     else
@@ -453,12 +472,18 @@ class TasksController < ApplicationController
       @user_ids = Array.new
       task.users.each {|user| @user_ids << user.id }
     end
-    if params[:show_users] == "1"
-      show_users = false
-    else
-      show_users = true
-    end
+    (params[:show_users] == "1") ? show_users = false : show_users = true
     render :partial => 'users_for_tasks', :locals=>{:show_users => show_users}
   end
   
+	
+	def show_hide_rooms
+		@rooms = Room.find(:all)
+		(params[:switch_room] == "1") ?	show_rooms = true : show_rooms = false
+		
+		params[:task] ? @task = Task.find(params[:task]) : ''
+		
+		render :partial => 'rooms_for_tasks', :locals=>{:show_rooms => show_rooms}
+	end
+	
 end

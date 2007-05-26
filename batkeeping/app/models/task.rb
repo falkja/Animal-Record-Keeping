@@ -2,6 +2,7 @@ class Task < ActiveRecord::Base
   has_and_belongs_to_many :users
   belongs_to :cage
   belongs_to :medical_treatment
+	belongs_to :room
   has_many :task_histories, :order => 'date_done desc'
 
 	@@current_user = nil

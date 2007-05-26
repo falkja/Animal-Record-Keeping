@@ -49,14 +49,12 @@
       <% if manage %>
         <% if task.doable %>
           <% if task.internal_description == "feed" %>
-            <% label = 'Just Fed' %>
-            [<%= link_to_remote label, :url => {
+            [<%= link_to_remote 'Just Fed', :url => {
             :controller => 'tasks', :action => 'done', :id => task, 
             :ids => tasks, :div_id => div_id,  :same_type_task_list => same_type_task_list},
             :update => div_id%>]
-          <% elsif task.internal_description == nil %>
-            <% label = 'Just Done' %>
-            [<%= link_to_remote label, :url => {
+          <% elsif task.cage_id == nil && task.medical_treatment_id == nil %>
+            [<%= link_to_remote 'Just Done', :url => {
             :controller => 'tasks', :action => 'done', :id => task, 
             :ids => tasks, :div_id => div_id,  :same_type_task_list => same_type_task_list},
             :update => div_id%>]

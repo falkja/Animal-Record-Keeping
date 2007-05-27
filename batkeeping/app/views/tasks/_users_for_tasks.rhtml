@@ -7,18 +7,20 @@
 Weekday Animal Care:<br/>
 <% if User.current_animal_care.length == 0 %>
 <warning>No current weekday care user</warning>
-<% end %>
-<% for user in User.current_animal_care %>
-<%= user.name %>
+<% else %>
+	<% for user in User.current_animal_care %>
+		<%= user.name %>
+	<% end %>
 <% end %>
 </p>
 <p>
 Weekend Animal Care:<br/>
 <% if User.current_weekend_care.length == 0 %>
 <warning>No current weekend care user</warning>
-<% end %>
-<% for user in User.current_weekend_care %>
-<%= user.name %>
+<% else %>
+	<% for user in User.current_weekend_care %>
+		<%= user.name %>
+	<% end %>
 <% end %>
 </p>
 </div>

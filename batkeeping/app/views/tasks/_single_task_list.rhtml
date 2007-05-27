@@ -18,9 +18,13 @@
     </td>
   <% end %>
     <td>
-      <% for user in task.users %>
-      <%= user.initials %><br/>
-      <% end %>
+			<% if task.animal_care == true %>
+				Animal Care
+			<% else %>
+				<% for user in task.users %>
+					<%= user.initials %><br/>
+				<% end %>
+			<% end %>
     </td>
   
 	<% if task.internal_description == 'feed' %>

@@ -2,6 +2,9 @@
 
 <!--[form:task]-->
 
+<p><label for="task_title">Title</label><br/>
+<%= text_field 'task', 'title'  %></p>
+
 <% if @task.medical_treatment_id == nil && @task.cage_id == nil %>
 <p><%= check_box :switch, :room, :checked => @task.room_id != nil %>
 <label for="switch_room">Room Task</label></p>

@@ -10,15 +10,45 @@
     <% end %>
 </p>
 
+<% if @task.room_id %>
+	<b>Room:</b> <%=h @task.room.name %>
+<% end %>
+
 <% if @task.internal_description == 'medical' %>
 <b>Medical Problem:</b> <%=h @task.medical_treatment.medical_problem.title %>
 <% end %>
 
 <p>
   <b>Who:</b>
-    <% for user in @task.users %>
-      <%=h user.name %>, 
-    <% end %>
+		<% if @task.animal_care == true %>
+				Animal Care Staff<br/>
+				<div class='left_indent'>
+				<p>
+				Weekday Animal Care:
+				<% if User.current_animal_care.length == 0 %>
+					<warning>No current weekday care user</warning>
+				<% else %>
+					<% for user in User.current_animal_care %>
+						<%= user.name %>
+					<% end %>
+				<% end %>
+				</p>
+				<p>
+				Weekend Animal Care:
+				<% if User.current_weekend_care.length == 0 %>
+					<warning>No current weekend care user</warning>
+				<% else %>
+					<% for user in User.current_weekend_care %>
+						<%= user.name %><br/>
+					<% end %>
+				<% end %>
+				</p>
+				</div>
+		<% else %>
+			<% for user in @task.users %>
+				<%=h user.name %>, 
+			<% end %>
+		<% end %>
 </p>
 
 <p>

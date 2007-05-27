@@ -355,16 +355,6 @@ class TasksController < ApplicationController
 				@task = Task.new(params[:task])
         @task.repeat_code = day
 				@task.date_started = Time.now
-				
-				case params[:task][:internal_description]
-					when "change_pads"
-						@task.title = "Change pads in " + Room.find(params[:task][:room_id]).name
-					when "change_cages"
-						@task.title = "Change cages in " + Room.find(params[:task][:room_id]).name
-					when "change_water"
-						@task.title = "Change water in " + Room.find(params[:task][:room_id]).name
-				end
-				
         @task.save
         @task.users = @users
     end
@@ -382,15 +372,6 @@ class TasksController < ApplicationController
 
   def update
     @task = Task.find(params[:id])
-		
-		case params[:task][:internal_description]
-			when "change_pads"
-				@task.title = "Change pads in " + Room.find(params[:task][:room_id]).name
-			when "change_cages"
-				@task.title = "Change cages in " + Room.find(params[:task][:room_id]).name
-			when "change_water"
-				@task.title = "Change water in " + Room.find(params[:task][:room_id]).name
-		end
 			
     if @task.update_attributes(params[:task])
       params[:users] ? @task.users = User.find(params[:users][:id]) : @task.users = Array.new

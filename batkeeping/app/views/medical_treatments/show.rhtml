@@ -1,9 +1,10 @@
 <h1>Showing Medical Treatment</h1>
 
-<p><b>Medical Problem:</b> <%=h @medical_treatment.medical_problem.title %></p>
+<p><b>Medical Problem:</b> <%= link_to @medical_treatment.medical_problem.title, :controller => :medical_problems, :action => :show, :id => @medical_treatment.medical_problem %></p>
 
 <%= render :partial => 'medical_treatments/show_treatment', :locals => {:medical_treatment => @medical_treatment} %>
 
+<% if @medical_treatment.date_closed == nil %>
 <%= render :partial => 'tasks/common_info_medical_tasks', :locals => {:medical_treatment => @medical_treatment} %>
 
 <b>Add Medical Tasks:</b><br/>
@@ -11,5 +12,4 @@
 <div class="left_indent">
 <%= render :partial => 'tasks/manage_medical_tasks', :locals => {:medical_treatment => @medical_treatment, :quick_add => false, :div_id => 'tasks_div'} %>
 </div>
-
-<%= link_to 'Edit', :action => 'edit', :id => @medical_treatment %>
+<% end %>

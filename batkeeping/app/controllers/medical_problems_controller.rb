@@ -104,6 +104,6 @@ class MedicalProblemsController < ApplicationController
     @medical_problem = MedicalProblem.find(params[:id])
     @medical_problem.date_closed = nil
     @medical_problem.save
-    redirect_to :action => 'list'
+    redirect_to :action => :list_current
   end
 end

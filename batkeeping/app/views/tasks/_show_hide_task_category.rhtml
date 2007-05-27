@@ -63,15 +63,7 @@ General Tasks
 	
 	<% elsif category_div == 'medical_tasks_category' %>
 	
-    <% if medical_problems.length > 0 %>
-    <p>
-    <% form_tag :controller => 'medical_treatments', :action => 'new' do %>
-    Medical Problem: 
-    <%= select_tag("id", options_from_collection_for_select(medical_problems, "id", "title")) %>
-    <%= submit_tag "Add new treatment" %>
-    <% end %>
-    </p>
-    <% end %>
+		<%= render :partial => 'tasks/manage_medical_treatments', :locals => {:medical_problems => medical_problems} %>
 	
 	<% elsif category_div == 'general_tasks_category' %>
 	

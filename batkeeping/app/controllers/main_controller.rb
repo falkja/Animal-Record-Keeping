@@ -35,7 +35,7 @@ class MainController < ApplicationController
 		if @users.length == 1
 			redirect_to :action => 'user_summary_page', :id => @users[0]
 		elsif @users.length == 0
-			flash[:notice] = "No weekend care users."
+			flash[:notice] = "No weekend care users"
 			redirect_to :controller => 'users', :action => 'list'
 		end
 	end

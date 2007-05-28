@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
 		end
 		medical_problems = Array.new
 		for bat in users_bats
-			for medical_problem in bat.medical_problems
+			for medical_problem in bat.medical_problems.current
 				medical_problems << medical_problem
 			end
 		end

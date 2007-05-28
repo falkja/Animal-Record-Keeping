@@ -282,7 +282,7 @@ CREATE TABLE  `batkeeping`.`medical_problems` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `batkeeping`.`medical_problems` VALUES  (1,4,'2007-04-24 00:00:00','Abscess on face below right eye. White pus when drained. Mouth bleeding.',NULL,'Abscess under right eye'),
- (2,7,'2007-04-24 00:00:00','Abscess on face under right eye. Some pus when drained, bleeding in mouth.',NULL,'Abscess under right eye');
+ (2,7,'2007-04-24 00:00:00','Abscess on face under right eye. Some pus when drained, bleeding in mouth.','2007-05-27 00:00:00','Abscess under right eye');
 CREATE TABLE  `batkeeping`.`medical_treatments` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `title` varchar(45) NOT NULL,
@@ -291,8 +291,9 @@ CREATE TABLE  `batkeeping`.`medical_treatments` (
   `date_closed` date default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-INSERT INTO `batkeeping`.`medical_treatments` VALUES  (5,'0.15 cc Bactrim',1,'2007-05-07',NULL),
- (6,'observations',1,'2007-05-07',NULL);
+INSERT INTO `batkeeping`.`medical_treatments` VALUES  (5,'0.15 cc Bactrim',1,'2007-05-07','2007-05-27'),
+ (6,'observations',1,'2007-05-07','2007-05-27'),
+ (7,'0.15 cc Bactrim',1,'2007-05-27',NULL);
 CREATE TABLE  `batkeeping`.`rooms` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `name` varchar(45) NOT NULL,
@@ -343,18 +344,18 @@ CREATE TABLE  `batkeeping`.`tasks` (
   `room_id` int(11) default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-INSERT INTO `batkeeping`.`tasks` VALUES  (1,1,NULL,1,'Feed cage BF','','feed',1.5,'Small',1,0,'2007-04-25 13:12:09',NULL,0,NULL),
- (2,2,NULL,1,'Feed cage BF','','feed',1.5,'Small',1,0,'2007-04-25 13:12:09',NULL,0,NULL),
- (3,3,NULL,1,'Feed cage BF','','feed',1.5,'Small',1,0,'2007-04-25 13:12:09',NULL,0,NULL),
- (4,4,NULL,1,'Feed cage BF','','feed',1.5,'Small',1,0,'2007-04-25 13:12:09',NULL,0,NULL),
- (5,5,NULL,1,'Feed cage BF','','feed',1.5,'Small',1,0,'2007-04-25 13:12:09',NULL,0,NULL),
- (6,6,NULL,1,'Feed cage BF','','feed',1.5,'Small',1,0,'2007-04-25 13:12:09',NULL,0,NULL),
- (7,7,NULL,1,'Feed cage BF','','feed',1.5,'Small',1,0,'2007-04-25 13:12:09',NULL,1,NULL),
+INSERT INTO `batkeeping`.`tasks` VALUES  (1,1,NULL,1,'Feed cage BF','','feed',1.5,'Small',1,0,'2007-04-25 13:12:09','2007-05-27 20:03:42',0,NULL),
+ (2,2,NULL,1,'Feed cage BF','','feed',1.5,'Small',1,0,'2007-04-25 13:12:09','2007-05-27 20:03:42',0,NULL),
+ (3,3,NULL,1,'Feed cage BF','','feed',1.5,'Small',1,0,'2007-04-25 13:12:09','2007-05-27 20:03:42',0,NULL),
+ (4,4,NULL,1,'Feed cage BF','','feed',1.5,'Small',1,0,'2007-04-25 13:12:09','2007-05-27 20:03:42',0,NULL),
+ (5,5,NULL,1,'Feed cage BF','','feed',1.5,'Small',1,0,'2007-04-25 13:12:09','2007-05-27 20:03:42',0,NULL),
+ (6,6,NULL,1,'Feed cage BF','','feed',1.5,'Small',1,0,'2007-04-25 13:12:09','2007-05-27 20:03:42',0,NULL),
+ (7,7,NULL,1,'Feed cage BF','','feed',1.5,'Small',1,0,'2007-04-25 13:12:09','2007-05-27 20:03:42',1,NULL),
  (8,3,NULL,1,'Weigh cage BF','','weigh',NULL,NULL,NULL,-1,'2007-04-25 13:13:35','2007-05-16 08:21:17',0,NULL),
  (9,6,NULL,1,'Weigh cage BF','','weigh',NULL,NULL,NULL,-1,'2007-04-25 13:13:46','2007-05-16 08:21:19',0,NULL),
- (10,1,NULL,7,'Feed cage MED','','feed',8,'Medium',2,0,'2007-04-27 10:04:24','2007-04-27 13:01:00',0,NULL),
- (11,2,NULL,7,'Feed cage MED','','feed',8,'Medium',2,0,'2007-04-27 10:04:24','2007-04-27 13:01:08',0,NULL);
-INSERT INTO `batkeeping`.`tasks` VALUES  (12,3,NULL,7,'Feed cage MED','','feed',8,'Medium',2,0,'2007-04-27 10:04:24','2007-04-27 13:01:19',0,NULL),
+ (10,1,NULL,7,'Feed cage MED','','feed',8,'Medium',2,0,'2007-04-27 10:04:24','2007-04-27 13:01:00',0,NULL);
+INSERT INTO `batkeeping`.`tasks` VALUES  (11,2,NULL,7,'Feed cage MED','','feed',8,'Medium',2,0,'2007-04-27 10:04:24','2007-04-27 13:01:08',0,NULL),
+ (12,3,NULL,7,'Feed cage MED','','feed',8,'Medium',2,0,'2007-04-27 10:04:24','2007-04-27 13:01:19',0,NULL),
  (13,4,NULL,7,'Feed cage MED','','feed',8,'Medium',2,0,'2007-04-27 10:04:24','2007-04-27 13:01:31',0,NULL),
  (14,5,NULL,7,'Feed cage MED','','feed',8,'Medium',2,0,'2007-04-27 10:04:24','2007-04-27 13:01:39',0,NULL),
  (15,6,NULL,7,'Feed cage MED','','feed',8,'Medium',2,0,'2007-04-27 10:04:24','2007-04-27 13:01:50',0,NULL),
@@ -363,9 +364,9 @@ INSERT INTO `batkeeping`.`tasks` VALUES  (12,3,NULL,7,'Feed cage MED','','feed',
  (18,2,NULL,2,'Feed cage Thin','','feed',30,'Long',2,0,'2007-04-27 10:05:03',NULL,0,NULL),
  (19,3,NULL,2,'Feed cage Thin','','feed',30,'Long',2,0,'2007-04-27 10:05:03',NULL,0,NULL),
  (20,4,NULL,2,'Feed cage Thin','','feed',30,'Long',2,0,'2007-04-27 10:05:03',NULL,0,NULL),
- (21,5,NULL,2,'Feed cage Thin','','feed',30,'Long',2,0,'2007-04-27 10:05:03',NULL,0,NULL),
- (22,6,NULL,2,'Feed cage Thin','','feed',30,'Long',2,0,'2007-04-27 10:05:03',NULL,0,NULL);
-INSERT INTO `batkeeping`.`tasks` VALUES  (23,7,NULL,2,'Feed cage Thin','','feed',30,'Long',2,0,'2007-04-27 10:05:03',NULL,0,NULL),
+ (21,5,NULL,2,'Feed cage Thin','','feed',30,'Long',2,0,'2007-04-27 10:05:03',NULL,0,NULL);
+INSERT INTO `batkeeping`.`tasks` VALUES  (22,6,NULL,2,'Feed cage Thin','','feed',30,'Long',2,0,'2007-04-27 10:05:03',NULL,0,NULL),
+ (23,7,NULL,2,'Feed cage Thin','','feed',30,'Long',2,0,'2007-04-27 10:05:03',NULL,0,NULL),
  (24,1,NULL,3,'Feed cage NP','','feed',10,'Medium',2,0,'2007-04-27 10:05:25',NULL,0,NULL),
  (25,2,NULL,3,'Feed cage NP','','feed',10,'Medium',2,0,'2007-04-27 10:05:25',NULL,0,NULL),
  (26,3,NULL,3,'Feed cage NP','','feed',10,'Medium',2,0,'2007-04-27 10:05:25',NULL,0,NULL),
@@ -375,9 +376,9 @@ INSERT INTO `batkeeping`.`tasks` VALUES  (23,7,NULL,2,'Feed cage Thin','','feed'
  (30,7,NULL,3,'Feed cage NP','','feed',10,'Medium',2,0,'2007-04-27 10:05:25',NULL,0,NULL),
  (31,1,NULL,4,'Feed cage THIN2','','feed',6,'Medium',2,0,'2007-04-27 10:05:57',NULL,0,NULL),
  (32,2,NULL,4,'Feed cage THIN2','','feed',6,'Medium',2,0,'2007-04-27 10:05:57',NULL,0,NULL),
- (33,3,NULL,4,'Feed cage THIN2','','feed',6,'Medium',2,0,'2007-04-27 10:05:57',NULL,0,NULL),
- (34,4,NULL,4,'Feed cage THIN2','','feed',6,'Medium',2,0,'2007-04-27 10:05:57',NULL,0,NULL);
-INSERT INTO `batkeeping`.`tasks` VALUES  (35,5,NULL,4,'Feed cage THIN2','','feed',6,'Medium',2,0,'2007-04-27 10:05:57',NULL,0,NULL),
+ (33,3,NULL,4,'Feed cage THIN2','','feed',6,'Medium',2,0,'2007-04-27 10:05:57',NULL,0,NULL);
+INSERT INTO `batkeeping`.`tasks` VALUES  (34,4,NULL,4,'Feed cage THIN2','','feed',6,'Medium',2,0,'2007-04-27 10:05:57',NULL,0,NULL),
+ (35,5,NULL,4,'Feed cage THIN2','','feed',6,'Medium',2,0,'2007-04-27 10:05:57',NULL,0,NULL),
  (36,6,NULL,4,'Feed cage THIN2','','feed',6,'Medium',2,0,'2007-04-27 10:05:57',NULL,0,NULL),
  (37,7,NULL,4,'Feed cage THIN2','','feed',6,'Medium',2,0,'2007-04-27 10:05:57',NULL,0,NULL),
  (38,1,NULL,5,'Feed cage THIN4','','feed',3,'Medium',2,0,'2007-04-27 10:06:40',NULL,0,NULL),
@@ -387,9 +388,9 @@ INSERT INTO `batkeeping`.`tasks` VALUES  (35,5,NULL,4,'Feed cage THIN2','','feed
  (42,5,NULL,5,'Feed cage THIN4','','feed',3,'Medium',2,0,'2007-04-27 10:06:40',NULL,0,NULL),
  (43,6,NULL,5,'Feed cage THIN4','','feed',3,'Medium',2,0,'2007-04-27 10:06:40',NULL,0,NULL),
  (44,7,NULL,5,'Feed cage THIN4','','feed',3,'Medium',2,0,'2007-04-27 10:06:40',NULL,0,NULL),
- (45,1,NULL,19,'Feed cage NPM','','feed',1.5,'Small',1,0,'2007-04-27 10:07:10',NULL,0,NULL),
- (46,2,NULL,19,'Feed cage NPM','','feed',1.5,'Small',1,0,'2007-04-27 10:07:10',NULL,0,NULL);
-INSERT INTO `batkeeping`.`tasks` VALUES  (47,3,NULL,19,'Feed cage NPM','','feed',1.5,'Small',1,0,'2007-04-27 10:07:10',NULL,0,NULL),
+ (45,1,NULL,19,'Feed cage NPM','','feed',1.5,'Small',1,0,'2007-04-27 10:07:10',NULL,0,NULL);
+INSERT INTO `batkeeping`.`tasks` VALUES  (46,2,NULL,19,'Feed cage NPM','','feed',1.5,'Small',1,0,'2007-04-27 10:07:10',NULL,0,NULL),
+ (47,3,NULL,19,'Feed cage NPM','','feed',1.5,'Small',1,0,'2007-04-27 10:07:10',NULL,0,NULL),
  (48,4,NULL,19,'Feed cage NPM','','feed',1.5,'Small',1,0,'2007-04-27 10:07:10',NULL,0,NULL),
  (49,5,NULL,19,'Feed cage NPM','','feed',1.5,'Small',1,0,'2007-04-27 10:07:10',NULL,0,NULL),
  (50,6,NULL,19,'Feed cage NPM','','feed',1.5,'Small',1,0,'2007-04-27 10:07:10',NULL,0,NULL),
@@ -399,9 +400,9 @@ INSERT INTO `batkeeping`.`tasks` VALUES  (47,3,NULL,19,'Feed cage NPM','','feed'
  (54,3,NULL,8,'Feed cage MA2','','feed',3,'Medium',1,0,'2007-04-27 10:07:35',NULL,0,NULL),
  (55,4,NULL,8,'Feed cage MA2','','feed',3,'Medium',1,0,'2007-04-27 10:07:35',NULL,0,NULL),
  (56,5,NULL,8,'Feed cage MA2','','feed',3,'Medium',1,0,'2007-04-27 10:07:35',NULL,0,NULL),
- (57,6,NULL,8,'Feed cage MA2','','feed',3,'Medium',1,0,'2007-04-27 10:07:35',NULL,0,NULL),
- (58,7,NULL,8,'Feed cage MA2','','feed',3,'Medium',1,0,'2007-04-27 10:07:35',NULL,0,NULL);
-INSERT INTO `batkeeping`.`tasks` VALUES  (59,1,NULL,11,'Feed cage RECOVERY','','feed',3,'Medium',1,0,'2007-04-27 10:07:54',NULL,0,NULL),
+ (57,6,NULL,8,'Feed cage MA2','','feed',3,'Medium',1,0,'2007-04-27 10:07:35',NULL,0,NULL);
+INSERT INTO `batkeeping`.`tasks` VALUES  (58,7,NULL,8,'Feed cage MA2','','feed',3,'Medium',1,0,'2007-04-27 10:07:35',NULL,0,NULL),
+ (59,1,NULL,11,'Feed cage RECOVERY','','feed',3,'Medium',1,0,'2007-04-27 10:07:54',NULL,0,NULL),
  (60,2,NULL,11,'Feed cage RECOVERY','','feed',3,'Medium',1,0,'2007-04-27 10:07:54',NULL,0,NULL),
  (61,3,NULL,11,'Feed cage RECOVERY','','feed',3,'Medium',1,0,'2007-04-27 10:07:54',NULL,0,NULL),
  (62,4,NULL,11,'Feed cage RECOVERY','','feed',3,'Medium',1,0,'2007-04-27 10:07:54',NULL,0,NULL),
@@ -565,23 +566,46 @@ INSERT INTO `batkeeping`.`tasks` VALUES  (216,3,NULL,20,'Feed cage MED2','','fee
  (229,2,5,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-05-07 10:51:56','2007-05-07 11:12:03',0,NULL),
  (230,2,5,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-05-07 11:02:39','2007-05-07 11:12:01',0,NULL),
  (231,2,5,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-05-07 11:12:09','2007-05-07 11:49:24',0,NULL),
- (232,3,5,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-05-07 11:12:09','2007-05-07 11:49:22',0,NULL),
+ (232,3,5,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-05-07 11:12:09','2007-05-27 10:46:38',0,NULL),
  (233,4,5,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-05-07 11:12:09','2007-05-07 11:49:21',0,NULL);
 INSERT INTO `batkeeping`.`tasks` VALUES  (234,5,5,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-05-07 11:12:09','2007-05-07 11:49:20',0,NULL),
- (235,7,6,NULL,'Do observations','','medical',NULL,NULL,NULL,0,'2007-05-07 11:31:15',NULL,0,NULL),
- (236,1,6,NULL,'Do observations','','medical',NULL,NULL,NULL,0,'2007-05-07 11:38:28',NULL,0,NULL),
- (237,2,6,NULL,'Do observations','','medical',NULL,NULL,NULL,0,'2007-05-07 11:38:28',NULL,0,NULL),
- (238,3,6,NULL,'Do observations','','medical',NULL,NULL,NULL,0,'2007-05-07 11:38:28',NULL,0,NULL),
- (239,4,6,NULL,'Do observations','','medical',NULL,NULL,NULL,0,'2007-05-07 11:38:28',NULL,0,NULL),
- (240,5,6,NULL,'Do observations','','medical',NULL,NULL,NULL,0,'2007-05-07 11:38:28',NULL,0,NULL),
- (241,6,6,NULL,'Do observations','','medical',NULL,NULL,NULL,0,'2007-05-07 11:38:28',NULL,0,NULL),
- (242,2,5,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-05-07 11:49:29',NULL,0,NULL),
- (243,7,NULL,NULL,'Change cages in Fruit Bats (4148L)','','change_cages',NULL,NULL,NULL,-1,'2007-05-26 00:16:49',NULL,1,1),
- (244,0,NULL,1,'Weigh cage BF','','weigh',NULL,NULL,NULL,-1,'2007-05-26 00:42:46',NULL,NULL,NULL);
-INSERT INTO `batkeeping`.`tasks` VALUES  (245,2,NULL,NULL,'','',NULL,NULL,NULL,NULL,-1,'2007-05-26 10:02:55','2007-05-26 10:03:56',1,1),
+ (235,7,6,NULL,'Do observations','','medical',NULL,NULL,NULL,0,'2007-05-07 11:31:15','2007-05-27 10:11:39',0,NULL),
+ (236,1,6,NULL,'Do observations','','medical',NULL,NULL,NULL,0,'2007-05-07 11:38:28','2007-05-27 10:11:39',0,NULL),
+ (237,2,6,NULL,'Do observations','','medical',NULL,NULL,NULL,0,'2007-05-07 11:38:28','2007-05-27 10:11:39',0,NULL),
+ (238,3,6,NULL,'Do observations','','medical',NULL,NULL,NULL,0,'2007-05-07 11:38:28','2007-05-27 10:11:39',0,NULL),
+ (239,4,6,NULL,'Do observations','','medical',NULL,NULL,NULL,0,'2007-05-07 11:38:28','2007-05-27 10:11:39',0,NULL),
+ (240,5,6,NULL,'Do observations','','medical',NULL,NULL,NULL,0,'2007-05-07 11:38:28','2007-05-27 10:11:39',0,NULL),
+ (241,6,6,NULL,'Do observations','','medical',NULL,NULL,NULL,0,'2007-05-07 11:38:28','2007-05-27 10:11:39',0,NULL),
+ (242,2,5,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-05-07 11:49:29','2007-05-27 10:35:51',0,NULL),
+ (243,7,NULL,NULL,'Change cages in Fruit Bats (4148L)','','change_cages',NULL,NULL,NULL,-1,'2007-05-26 00:16:49',NULL,1,1);
+INSERT INTO `batkeeping`.`tasks` VALUES  (244,0,NULL,1,'Weigh cage BF','','weigh',NULL,NULL,NULL,-1,'2007-05-26 00:42:46','2007-05-27 20:34:02',NULL,NULL),
+ (245,2,NULL,NULL,'','',NULL,NULL,NULL,NULL,-1,'2007-05-26 10:02:55','2007-05-26 10:03:56',1,1),
  (246,2,NULL,NULL,'Change pads in Fruit Bats (4148L)','','change_pads',NULL,NULL,NULL,0,'2007-05-26 10:06:02',NULL,0,1),
- (247,7,NULL,NULL,'Change cages in Belfry (4102D)','',NULL,NULL,NULL,NULL,-1,'2007-05-26 10:08:13',NULL,1,2),
- (248,4,NULL,NULL,'Change water in Colony Room (4100)','','change_water',NULL,NULL,NULL,0,'2007-05-26 10:10:47',NULL,1,3);
+ (247,7,NULL,NULL,'Change cages in Belfry (4102D)','','change_cages',NULL,NULL,NULL,-1,'2007-05-26 10:08:13',NULL,0,1),
+ (248,4,NULL,NULL,'Change water in Colony Room (4100)','','change_water',NULL,NULL,NULL,0,'2007-05-26 10:10:47',NULL,1,3),
+ (249,7,5,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-05-27 10:13:55','2007-05-27 10:35:51',NULL,NULL),
+ (250,1,5,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-05-27 10:14:07','2007-05-27 10:35:51',NULL,NULL),
+ (251,1,NULL,1,'Feed cage BF','','feed',4.5,'Small',2,0,'2007-05-27 20:12:42','2007-05-27 20:12:50',NULL,NULL),
+ (252,2,NULL,1,'Feed cage BF','','feed',4.5,'Small',2,0,'2007-05-27 20:12:43','2007-05-27 20:12:50',NULL,NULL),
+ (253,3,NULL,1,'Feed cage BF','','feed',4.5,'Small',2,0,'2007-05-27 20:12:43','2007-05-27 20:12:50',NULL,NULL);
+INSERT INTO `batkeeping`.`tasks` VALUES  (254,4,NULL,1,'Feed cage BF','','feed',4.5,'Small',2,0,'2007-05-27 20:12:43','2007-05-27 20:12:50',NULL,NULL),
+ (255,5,NULL,1,'Feed cage BF','','feed',4.5,'Small',2,0,'2007-05-27 20:12:43','2007-05-27 20:12:50',NULL,NULL),
+ (256,6,NULL,1,'Feed cage BF','','feed',4.5,'Small',2,0,'2007-05-27 20:12:43','2007-05-27 20:12:50',NULL,NULL),
+ (257,7,NULL,1,'Feed cage BF','','feed',4.5,'Small',2,0,'2007-05-27 20:12:43','2007-05-27 20:12:50',NULL,NULL),
+ (258,4,NULL,1,'Feed cage BF','','feed',4.5,'Small',2,0,'2007-05-27 20:12:47','2007-05-27 20:12:50',NULL,NULL),
+ (259,4,NULL,1,'Feed cage BF','','feed',10,'Metal tray',1,0,'2007-05-27 20:22:54',NULL,1,NULL),
+ (260,1,NULL,1,'Feed cage BF','','feed',10,'Metal tray',1,0,'2007-05-27 20:23:00',NULL,1,NULL),
+ (261,2,NULL,1,'Feed cage BF','','feed',10,'Metal tray',1,0,'2007-05-27 20:23:00',NULL,1,NULL),
+ (262,3,NULL,1,'Feed cage BF','','feed',10,'Metal tray',1,0,'2007-05-27 20:23:01',NULL,1,NULL),
+ (263,4,NULL,1,'Feed cage BF','','feed',10,'Metal tray',1,0,'2007-05-27 20:23:01','2007-05-27 21:17:00',1,NULL),
+ (264,5,NULL,1,'Feed cage BF','','feed',10,'Metal tray',1,0,'2007-05-27 20:23:01',NULL,1,NULL);
+INSERT INTO `batkeeping`.`tasks` VALUES  (265,6,NULL,1,'Feed cage BF','','feed',10,'Metal tray',1,0,'2007-05-27 20:23:01',NULL,1,NULL),
+ (266,7,NULL,1,'Feed cage BF','','feed',10,'Metal tray',1,0,'2007-05-27 20:23:01',NULL,1,NULL),
+ (267,5,NULL,1,'Feed cage BF','','feed',4.5,'Small',2,0,'2007-05-27 20:24:00','2007-05-27 21:16:57',0,NULL),
+ (268,3,NULL,1,'Weigh cage BF','','weigh',NULL,NULL,NULL,-1,'2007-05-27 20:33:16','2007-05-27 20:34:02',1,NULL),
+ (269,5,NULL,1,'Weigh cage BF','','weigh',NULL,NULL,NULL,-1,'2007-05-27 20:33:28','2007-05-27 20:34:02',1,NULL),
+ (270,5,NULL,1,'Weigh cage BF','','weigh',NULL,NULL,NULL,-1,'2007-05-27 20:33:31','2007-05-27 20:34:02',0,NULL),
+ (271,4,7,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-05-27 20:44:33',NULL,1,NULL);
 CREATE TABLE  `batkeeping`.`tasks_users` (
   `user_id` int(10) unsigned NOT NULL,
   `task_id` int(10) unsigned NOT NULL,
@@ -834,7 +858,6 @@ INSERT INTO `batkeeping`.`tasks_users` VALUES  (3,202),
  (6,229),
  (6,230),
  (6,231),
- (6,232),
  (6,233),
  (6,234),
  (6,236),
@@ -890,15 +913,17 @@ INSERT INTO `batkeeping`.`tasks_users` VALUES  (3,202),
  (9,187),
  (9,188),
  (9,189),
+ (9,250),
+ (9,267),
  (10,115),
  (10,116),
  (10,117),
  (10,118),
  (10,119),
  (10,120),
- (10,121),
- (10,154);
-INSERT INTO `batkeeping`.`tasks_users` VALUES  (10,170),
+ (10,121);
+INSERT INTO `batkeeping`.`tasks_users` VALUES  (10,154),
+ (10,170),
  (10,171),
  (10,172),
  (10,173),
@@ -911,6 +936,7 @@ INSERT INTO `batkeeping`.`tasks_users` VALUES  (10,170),
  (11,193),
  (11,196),
  (12,235),
+ (13,247),
  (14,122),
  (14,123),
  (14,124),
@@ -940,7 +966,18 @@ INSERT INTO `batkeeping`.`tasks_users` VALUES  (10,170),
  (14,198),
  (14,199),
  (14,210),
- (14,211);
+ (14,211),
+ (16,232),
+ (16,249),
+ (16,251),
+ (16,252),
+ (16,253),
+ (16,254),
+ (16,255),
+ (16,256),
+ (16,257),
+ (16,258),
+ (16,270);
 CREATE TABLE  `batkeeping`.`users` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `name` varchar(100) NOT NULL,
@@ -953,7 +990,7 @@ CREATE TABLE  `batkeeping`.`users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `batkeeping`.`users` VALUES  (1,'Vanessa Reed','VR','nessareed@mindspring.com','2007-04-24 00:00:00',NULL,' Animal Care'),
  (2,'General Medical Care','GMC','','2007-04-24 00:00:00','2007-05-21 00:00:00',''),
- (3,'Krystal Medley','KM','klmedley@hotmail.com','2007-04-24 00:00:00',NULL,' Weekend Care'),
+ (3,'Krystal Medley','KM','klmedley@hotmail.com','2007-04-24 00:00:00',NULL,'Medical Care Weekend Care'),
  (4,'Amaya Perez Cruz','APC','amaya.eneko@gmail.com','2007-04-24 00:00:00','2007-04-24 00:00:00',NULL),
  (5,'Amaya Perez','AP','perez@psyc.umd.edu','2007-04-24 00:00:00',NULL,'Medical Care'),
  (6,'Ben Falk','BF','falk.ben@gmail.com','2007-04-24 00:00:00',NULL,'Medical Care'),
@@ -962,9 +999,9 @@ INSERT INTO `batkeeping`.`users` VALUES  (1,'Vanessa Reed','VR','nessareed@minds
  (9,'Genevieve Spanjer Wright','GSW','gspanjer@umd.edu','2007-04-25 00:00:00',NULL,''),
  (10,'Mohit Chadha','MC','mchadha@psyc.umd.edu','2007-04-27 00:00:00',NULL,NULL),
  (11,'Wei Xian','WX','wxian@psyc.umd.edu','2007-04-27 00:00:00',NULL,NULL),
- (12,'Chen Chiu','CC','chiuc@wam.umd.edu','2007-04-27 00:00:00',NULL,NULL),
- (13,'Kaushik Ghose','KG','kghose@umd.edu','2007-04-27 00:00:00',NULL,NULL);
-INSERT INTO `batkeeping`.`users` VALUES  (14,'Samantha McIlwain','SM','smcilwai@umd.edu','2007-04-27 00:00:00',NULL,'Medical Care'),
+ (12,'Chen Chiu','CC','chiuc@wam.umd.edu','2007-04-27 00:00:00',NULL,'');
+INSERT INTO `batkeeping`.`users` VALUES  (13,'Kaushik Ghose','KG','kghose@umd.edu','2007-04-27 00:00:00',NULL,NULL),
+ (14,'Samantha McIlwain','SM','smcilwai@umd.edu','2007-04-27 00:00:00',NULL,'Medical Care'),
  (16,'Cynthia F. Moss','CFM','cmoss@psyc.umd.edu','2007-04-27 00:00:00',NULL,NULL),
  (18,'Joe','J','s','2007-05-18 00:00:00','2007-05-21 00:00:00','');
 CREATE TABLE  `batkeeping`.`weathers` (

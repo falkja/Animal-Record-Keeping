@@ -31,10 +31,12 @@
 		<td><%=h task.food %>g</td>
 		<td><%=h task.dish_num.to_s + " " + task.dish_type.to_s %></td>
 		<% cage = Cage.find(task.cage_id) %>
+		<td>
 		<% if cage.bats.length > 0 %>
 			<% average = task.food / cage.bats.length %>
-			<td><%= (("%.0" + 1.to_s + "f") % average).to_f %> g</td>
+			<%= (("%.0" + 1.to_s + "f") % average).to_f %> g
 		<% end %>
+		</td>
 	<% end %>
     <td>
       <%= task.repeat_code == 0 ? "Daily" : '' %>

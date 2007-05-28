@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
 		end
 	end
 
-	def bats_medical_problems
+	def bats_medical_problems #returns the users's bat's medical problems unless the user is a medical care user, in which case it returns all the medical problems
 		if self.medical_care_user?
 			return MedicalProblem.current
 		end

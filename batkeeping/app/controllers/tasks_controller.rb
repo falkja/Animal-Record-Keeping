@@ -28,11 +28,7 @@ class TasksController < ApplicationController
   end
   
   def hide_tasks
-    if params[:source].include? 'weekend'
-      @user = User.find('3')
-    else
-      @user = User.find(session[:person].id)
-    end
+		@user = User.find(session[:person].id)
     
     params[:medical_tasks] ? medical_tasks = Task.find(params[:medical_tasks]) : medical_tasks = Array.new
     params[:general_tasks] ? general_tasks = Task.find(params[:general_tasks]) : general_tasks = Array.new
@@ -67,11 +63,7 @@ class TasksController < ApplicationController
   end
   
   def show_tasks
-    if params[:source].include? 'weekend'
-      @user = User.find('3')
-    else
-      @user = User.find(session[:person].id)
-    end
+		@user = User.find(session[:person].id)
     
     params[:medical_tasks] ? medical_tasks = Task.find(params[:medical_tasks]) : medical_tasks = Array.new
     params[:general_tasks] ? general_tasks = Task.find(params[:general_tasks]) : general_tasks = Array.new
@@ -166,11 +158,7 @@ class TasksController < ApplicationController
     
     end
     
-    if params[:source].include? 'weekend'
-      @user = User.find('3')
-    else
-      @user = User.find(session[:person].id)
-    end
+		@user = User.find(session[:person].id)
     
     if (params[:source].include? 'user_summary') && (params[:div_id].include? 'todays_tasks')
       weighing_tasks = @user.tasks.weighing_tasks_today
@@ -248,13 +236,9 @@ class TasksController < ApplicationController
     flash[:note] = 'Feed cage task(s) successfully created. If the task does not appear below, it could be for a different day or for a different user (if on user summary page)'
     
     end
-
-    if params[:source].include? 'weekend'
-      @user = User.find('3')
-    else
-      @user = User.find(session[:person].id)
-    end
-
+		
+		@user = User.find(session[:person].id)
+		
     if (params[:source].include? 'user_summary') && (params[:div_id].include? 'todays_tasks')
       feeding_tasks = @user.tasks.feeding_tasks_today
     elsif (params[:source].include? 'user_summary') && (params[:div_id].include? 'other_tasks')

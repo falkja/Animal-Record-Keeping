@@ -1,0 +1,11 @@
+<p><%= check_box :task, :animal_care %>Assign To Animal Care Staff</p>
+
+<%= observe_field("task_animal_care",
+     :url => {:controller => "tasks", :action => :show_hide_users, :task => @task, :quick_add => quick_add, :show_medical => show_medical, :div_id => div_id},
+     :update => "users" + div_id, :with => "show_users")
+     %>
+
+<div id="users<%= div_id %>">
+	<%= render :partial => 'tasks/users_for_tasks', 
+			:locals=>{:show_users =>show_users, :users => users, :quick_add => quick_add, :user_ids => user_ids, :show_medical => show_medical} %>
+</div>

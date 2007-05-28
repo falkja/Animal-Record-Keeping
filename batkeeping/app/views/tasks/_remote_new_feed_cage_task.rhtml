@@ -1,6 +1,3 @@
-<% quick_add ? valign = 'bottom' : valign = 'top' %>
-
-
 <% form_remote_tag(:update => div_id,
                        :url => { :controller => 'tasks', :action => 'create_feed_cage_task', 
 					   :id => cage, :div_id => div_id, :source => source, :same_type_task_list => same_type_task_list}) do %>
@@ -8,21 +5,21 @@
 <% if !same_type_task_list %>
 <th>Cage</th>
 <% end %>
-<th>Fed by*</th>
+<th>Fed by</th>
 <th>On days</th>
 <th COLSPAN=3>Food</th>
 
 <tr>
 <% if !same_type_task_list %>
-<td VALIGN=<%=valign %>><b><%=cage.name%></b></td>
+<td VALIGN=top><b><%=cage.name%></b></td>
 <% end %>
 
-<td VALIGN=<%=valign %>>
-<%= select_tag("users[]", options_from_collection_for_select(users, "id", "name"), 
-:multiple => !quick_add) %>
+<td VALIGN=top>
+<%= render :partial => 'tasks/animal_care_checkbox', :locals => {:show_users => true, :users => users, :quick_add => quick_add, :show_medical => false, :div_id => div_id} %>
 </td>
 
-<td VALIGN=<%=valign %>>
+<td VALIGN=top>
+<br/>
 <%= select_tag("days[]", 
 options_for_select([
 ["Daily", 0],
@@ -59,18 +56,11 @@ options_for_select([
 <%= text_field 'task', 'dish_num', :size => 1, :autocomplete => 'off' %>
 </td>
 
-<td VALIGN=<%=valign %>>
+<td VALIGN=top>
 <%= submit_tag "Add task" %>
 </td>
 
 </tr>
 </table>
 
-<p>
-<em>* Note:</em><br />
-<ol>
-<li>Weekend tasks assigned to <b>General Animal Care</b> are automatically added to <b>Weekend/Holiday Care</b>.</li>
-<li>Weekday tasks assigned to <b>Weekend/Holiday Care</b> are automatically added to <b>General Animal Care.</b></li>
-</ol>
-</p>
 <% end %>

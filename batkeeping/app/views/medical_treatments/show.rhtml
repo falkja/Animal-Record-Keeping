@@ -10,6 +10,6 @@
 <b>Add Medical Tasks:</b><br/>
 <em>This will add medical task(s) to the list above</em>
 <div class="left_indent">
-<%= render :partial => 'tasks/manage_medical_tasks', :locals => {:medical_treatment => @medical_treatment, :quick_add => false, :div_id => 'tasks_div'} %>
+<%= render :partial => 'tasks/manage_medical_tasks', :locals => {:medical_treatment => @medical_treatment, :quick_add => false, :div_id => 'tasks_div', :users => @users} %>
 </div>
 <% end %>

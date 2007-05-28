@@ -5,7 +5,7 @@
 <% if !same_type_task_list %>
 <th>Cage</th>
 <% end %>
-<th>Weighed by*</th>
+<th>Weighed by</th>
 <th>On days</th>
 
 <tr>
@@ -14,8 +14,7 @@
 <% end %>
 
 <td VALIGN=top>
-<%= select_tag("users[]", options_from_collection_for_select(users, "id", "name"), 
-:multiple => !quick_add) %>
+<%= render :partial => 'tasks/animal_care_checkbox', :locals => {:show_users => true, :users => users, :quick_add => quick_add, :show_medical => false, :div_id => div_id} %>
 </td>
 
 <td VALIGN=top>
@@ -40,11 +39,4 @@ options_for_select([
 </tr>
 </table>
 
-<p>
-<em>* Note:</em><br />
-<ol>
-<li>Weekend tasks assigned to <b>General Animal Care</b> are automatically added to <b>Weekend/Holiday Care</b>.</li>
-<li>Weekday tasks assigned to <b>Weekend/Holiday Care</b> are automatically added to <b>General Animal Care.</b></li>
-</ol>
-</p>
 <% end %>

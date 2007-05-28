@@ -1,27 +1,47 @@
 <% if show_users %>
-<p><label for="task_user">User(s) assigned</label><br/>
-<%= select_tag("users[id][]", options_from_collection_for_select(@users, "id", "name", @user_ids), :multiple => true) %></p>
+<p><label for="task_user"><b>User(s) assigned:</b></label><br/>
+<%= select_tag("users[]", options_from_collection_for_select(users, "id", "name", user_ids), :multiple => !quick_add) %></p>
 <% else %>
 <div class='left_indent'>
+
+<% if !show_medical %>
+
 <p>
-Weekday Animal Care:<br/>
+<b>Weekday Care:</b><br/>
 <% if User.current_animal_care.length == 0 %>
 <warning>No current weekday care user</warning>
 <% else %>
 	<% for user in User.current_animal_care %>
-		<%= user.name %>
+		<%= user.name %><br/>
 	<% end %>
 <% end %>
 </p>
+
 <p>
-Weekend Animal Care:<br/>
+<b>Weekend Care:</b><br/>
 <% if User.current_weekend_care.length == 0 %>
 <warning>No current weekend care user</warning>
 <% else %>
 	<% for user in User.current_weekend_care %>
-		<%= user.name %>
+		<%= user.name %><br/>
 	<% end %>
 <% end %>
 </p>
+
+<% else %>
+
+<p>
+<b>Medical Care:</b><br/>
+<% if User.current_medical_care.length == 0 %>
+<warning>No current medical care user</warning>
+<% else %>
+	<% for user in User.current_medical_care %>
+		<%= user.name %><br/>
+	<% end %>
+<% end %>
+</p>
+
+<% end %>
+
 </div>
 <% end %>

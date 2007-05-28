@@ -139,9 +139,9 @@ class TasksController < ApplicationController
   def create_weigh_cage_task #called from new_weigh_cage_task page
     @cage = Cage.find(params[:id])
     
-    if (params[:users] != nil) && (params[:days] != nil) #error checking
+    if ( (params[:users] != nil) || (params[:task][:animal_care] == '1') ) && (params[:days] != nil) #error checking
     
-    @users = User.find(params[:users])
+    params[:users] ? @users = User.find(params[:users]) : @users = Array.new
     @days = params[:days]
     
     if @days.include?("0")  #only need one daily task
@@ -157,18 +157,9 @@ class TasksController < ApplicationController
       @task.internal_description = "weigh"
       @task.jitter = -1
       @task.date_started = Time.now
+			@task.animal_care = params[:task][:animal_care]
       @task.save
-      if @users.include?(User.find(1)) && ((day == "1") || (day == "7") || (day == "0"))  #General Animal Care can't do tasks on weekend - add to weekend/holiday care
-        @users << User.find(3)
-        @users = @users.uniq
-        @task.users << @users.uniq
-      elsif @users.include?(User.find(3)) && ((day == "2") || (day == "3") || (day == "4") || (day == "5") || (day == "6") || (day == "0")) #Weekend Care can't do tasks on weekdays - add to general animal care
-        @users << User.find(1)
-        @users = @users.uniq
-        @task.users << @users.uniq
-      else
-        @task.users = @users
-      end
+			@task.users = @users
     end
     
     flash[:note] = 'Weigh cage task(s) successfully created. If the task does not appear below, it may be for a different day or a different user.'
@@ -197,7 +188,6 @@ class TasksController < ApplicationController
       weighing_tasks = Task.weighing_tasks
     end
     
-   
     render :partial => 'tasks_list', :locals => {:tasks => weighing_tasks, 
                                       :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => true}
   end
@@ -229,10 +219,9 @@ class TasksController < ApplicationController
 
   def create_feed_cage_task #called from new_feed_cage_task page
     @cage = Cage.find(params[:id])
-    
-    if (params[:task][:dish_num] != '') && (params[:users] != nil) && (params[:days] != nil) #error checking
-    
-    @users = User.find(params[:users])
+    if (params[:task][:dish_num] != '') && ( (params[:users] != nil) || (params[:task][:animal_care] == "1") ) && (params[:days] != nil) #error checking
+		
+		params[:users] ? @users = User.find(params[:users]) : @users = Array.new
     @days = params[:days]
     
     if @days.include?("0")  #need to convert to multiple tasks
@@ -251,21 +240,12 @@ class TasksController < ApplicationController
       @task.dish_num = params[:task][:dish_num]
       @task.jitter = 0
       @task.date_started = Time.now
-      @task.save
-      if (@users.include?(User.find(1)) && ((day == "1") || (day == "7")))  #General Animal Care can't do tasks on weekend - add to weekend/holiday care
-        @users << User.find(3)
-        @users = @users.uniq
-        @task.users << @users.uniq
-      elsif @users.include?(User.find(3)) && ((day == "2") || (day == "3") || (day == "4") || (day == "5") || (day == "6")) #Weekend Care can't do tasks on weekdays - add to general animal care
-        @users << User.find(1)
-        @users = @users.uniq
-        @task.users << @users.uniq
-      else
+      @task.animal_care= params[:task][:animal_care]
+			@task.save
       @task.users = @users
-      end
     end
     
-    flash[:note] = 'Feed cage task(s) successfully created. If the task does not appear below, maybe it is for a different day?'
+    flash[:note] = 'Feed cage task(s) successfully created. If the task does not appear below, it could be for a different day or for a different user (if on user summary page)'
     
     end
 
@@ -298,9 +278,11 @@ class TasksController < ApplicationController
   end
 
   def create_medical_task
-    medical_treatment = MedicalTreatment.find(params[:id])
+    if ( (params[:users] != nil) || (params[:task][:animal_care] == '1') ) && (params[:days] != nil) #error checking
 		
-		users = User.find(params[:users])
+		medical_treatment = MedicalTreatment.find(params[:id])
+		
+		params[:users] ? users = User.find(params[:users]) : users = Array.new
     days = params[:days]
 		
 		if days.include?("0")  #need to convert to multiple tasks
@@ -312,19 +294,9 @@ class TasksController < ApplicationController
 		for day in days
 				task = Task.find_by_medical_treatment_id_and_repeat_code(medical_treatment, day) || Task.create(:medical_treatment => medical_treatment, :repeat_code => day, :jitter => 0, :date_started => Time.now, :title => "Do " + medical_treatment.title, :internal_description => "medical")
         task.date_ended = nil
+				task.animal_care = params[:task][:animal_care]
 				task.save
-				
-				if (users.include?(User.find(1)) && ((day == "1") || (day == "7")))  #General Animal Care can't do tasks on weekend - add to weekend/holiday care
-					users << User.find(3)
-					users = users.uniq
-					task.users << users.uniq
-				elsif users.include?(User.find(3)) && ((day == "2") || (day == "3") || (day == "4") || (day == "5") || (day == "6")) #Weekend Care can't do tasks on weekdays - add to general animal care
-					users << User.find(1)
-					users = users.uniq
-					task.users << users.uniq
-				else
-					task.users = users
-				end
+				task.users = users
 		end
 		
     flash[:note] = 'All tasks created successfully.  If some tasks already existed for the day, they were overwritten.'
@@ -333,6 +305,8 @@ class TasksController < ApplicationController
     
 		render :partial => 'tasks_list', :locals => {:tasks => medical_tasks, 
 			:div_id => params[:div_id], :same_type_task_list => true, :manage => true}
+		
+		end
 	end
 
 	def do_medical_task
@@ -342,7 +316,7 @@ class TasksController < ApplicationController
 	end
 	
   def create
-    (params[:users] == nil) ? @users = Array.new : @users = User.find(params[:users][:id])
+    (params[:users] == nil) ? @users = Array.new : @users = User.find(params[:users])
 		
     @days = params[:days]
             
@@ -374,7 +348,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
 			
     if @task.update_attributes(params[:task])
-      params[:users] ? @task.users = User.find(params[:users][:id]) : @task.users = Array.new
+      params[:users] ? @task.users = User.find(params[:users]) : @task.users = Array.new
       
       flash[:notice] = 'Task was successfully updated.'
       redirect_to :action => 'list'
@@ -447,14 +421,17 @@ class TasksController < ApplicationController
 	end
 	
   def show_hide_users
-    @users = User.current
+    users = User.current
     if params[:task]
       task = Task.find(params[:task])
-      @user_ids = Array.new
-      task.users.each {|user| @user_ids << user.id }
+      user_ids = Array.new
+      task.users.each {|user| user_ids << user.id }
     end
     (params[:show_users] == "1") ? show_users = false : show_users = true
-    render :partial => 'users_for_tasks', :locals=>{:show_users => show_users}
+    render :partial => 'users_for_tasks', 
+				:locals=>{:show_users => show_users, :users => users, :user_ids => user_ids, 
+				:quick_add => params[:quick_add], :show_medical => params[:show_medical], 
+				:div_id => params[:div_id]}
   end
   
 	

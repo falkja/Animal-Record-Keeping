@@ -20,17 +20,11 @@
 	<%= render :partial=>'rooms_for_tasks', :locals => {:show_rooms => @task.room_id} %>
 </div>
 
-<p><%= check_box :task, :animal_care %>
-<label for="task_animal_care">Task Assigned To Animal Care</label></p>
+<% @task.medical_treatment_id ? medical = true : medical = false %>
 
-<%= observe_field("task_animal_care",
-     :url => {:controller => "tasks", :action => :show_hide_users, :task => @task},
-     :update => "users", :with => "show_users")
-     %>
-
-<div id='users'>
-  <%= render :partial => 'users_for_tasks', :locals=>{:show_users => !@task.animal_care} %>
-</div>
+<%= render :partial => 'tasks/animal_care_checkbox', 
+		:locals =>{:users => @users, :quick_add => false, :user_ids => @user_ids, 
+		:show_medical => medical, :show_users => !@task.animal_care, :div_id => ''}%>
 
 <% if @editing %>
 <label for="on_days">On days</label><br/>

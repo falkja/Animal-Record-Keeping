@@ -1,4 +1,4 @@
-<% quick_add ? valign = 'bottom' : valign = 'top' %>
+<% valign = 'top' %>
 
 <% form_remote_tag(:update => div_id,
 						:url => { :controller => 'tasks', :action => 'create_medical_task', 
@@ -9,8 +9,7 @@
 
 <tr>
 <td VALIGN=<%=valign %>>
-<%= select_tag("users[]", options_from_collection_for_select(User.current, "id", "name"), 
-:multiple => !quick_add) %>
+<%= render :partial => 'tasks/animal_care_checkbox', :locals => {:show_users => true, :users => users, :quick_add => quick_add, :show_medical => true, :div_id => div_id} %>
 </td>
 
 <td VALIGN=<%=valign %>>
@@ -35,11 +34,4 @@ options_for_select([
 </tr>
 </table>
 
-<p>
-<em>* Note:</em><br />
-<ol>
-<li>Weekend tasks assigned to <b>General Animal Care</b> are automatically added to <b>Weekend/Holiday Care</b>.</li>
-<li>Weekday tasks assigned to <b>Weekend/Holiday Care</b> are automatically added to <b>General Animal Care.</b></li>
-</ol>
-</p>
 <% end %>

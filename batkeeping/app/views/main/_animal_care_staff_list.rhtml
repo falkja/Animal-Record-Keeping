@@ -7,7 +7,11 @@ Weekday Care:<br/>
 	<warning>No Animal Care Users</warning>
 <% else %>
 	<% for user in animal_care_users %>
-		<%= link_to user.name, :controller => 'main', :action => :user_summary_page, :id => user %><br/>
+		<% if user_summary_page %>
+      <%= link_to user.name, :controller => 'main', :action => :user_summary_page, :id => user %><br/>
+    <% else %>
+      <%= link_to user.name, :controller => 'users', :action => :show, :id => user %><br/>
+    <% end %>
 	<% end %>
 <% end %>
 </div>
@@ -20,7 +24,11 @@ Weekend Care:<br/>
 	<warning>No Weekend Care Users</warning>
 <% else %>
 	<% for user in weekend_care_users %>
-		<%= link_to user.name, :controller => 'main', :action => :user_summary_page, :id => user %><br/>
+    <% if user_summary_page %>
+      <%= link_to user.name, :controller => 'main', :action => :user_summary_page, :id => user %><br/>
+    <% else %>
+      <%= link_to user.name, :controller => 'users', :action => :show, :id => user %><br/>
+    <% end %>
 	<% end %>
 <% end %>
 </div>
@@ -33,7 +41,11 @@ Medical Care:<br/>
 	<warning>No Medical Care Users</warning>
 <% else %>
 	<% for user in medical_care_users %>
-		<%= link_to user.name, :controller => 'main', :action => :user_summary_page, :id => user %><br/>
+    <% if user_summary_page %>
+      <%= link_to user.name, :controller => 'main', :action => :user_summary_page, :id => user %><br/>
+    <% else %>
+      <%= link_to user.name, :controller => 'users', :action => :show, :id => user %><br/>
+    <% end %>
 	<% end %>
 <% end %>
 </div>

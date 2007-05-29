@@ -2,9 +2,9 @@
 <li><%= link_to 'Main', :controller => 'main', :action => :user_summary_page, :id => User.find(session[:person].id) %>
 	<ul>
 	<li><%= link_to 'My Page', :controller => 'main', :action => :user_summary_page, :id => User.find(session[:person].id) %></li>
+	<li><%= link_to 'Animal Care Staff', :controller => 'main', :action => :animal_care_staff %></li>
 	<li><%= link_to 'Colony Status', :controller => :stats %></li>
-	<li><%= link_to 'Weekend Care', :controller => 'main', :action => :choose_weekend_user_summary_page %></li>
-  <li><b><a href="">Admin ...</a></b>
+	<li><b><a href="">Admin ...</a></b>
 	<ul>
     <li><%= link_to 'List Rooms', :controller => 'rooms', :action => :list %></li>
     <li><%= link_to 'New Room', :controller => 'rooms', :action => :new %></li>

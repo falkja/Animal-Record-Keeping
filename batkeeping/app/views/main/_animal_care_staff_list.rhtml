@@ -1,0 +1,40 @@
+<h3>Animal Care Staff</h3>
+
+<p>
+Weekday Care:<br/>
+<div class='left_indent'>
+<% if animal_care_users.length == 0 %>
+	<warning>No Animal Care Users</warning>
+<% else %>
+	<% for user in animal_care_users %>
+		<%= link_to user.name, :controller => 'main', :action => :user_summary_page, :id => user %><br/>
+	<% end %>
+<% end %>
+</div>
+</p>
+
+<p>
+Weekend Care:<br/>
+<div class='left_indent'>
+<% if weekend_care_users.length == 0 %>
+	<warning>No Weekend Care Users</warning>
+<% else %>
+	<% for user in weekend_care_users %>
+		<%= link_to user.name, :controller => 'main', :action => :user_summary_page, :id => user %><br/>
+	<% end %>
+<% end %>
+</div>
+</p>
+
+<p>
+Medical Care:<br/>
+<div class='left_indent'>
+<% if medical_care_users.length == 0 %>
+	<warning>No Medical Care Users</warning>
+<% else %>
+	<% for user in medical_care_users %>
+		<%= link_to user.name, :controller => 'main', :action => :user_summary_page, :id => user %><br/>
+	<% end %>
+<% end %>
+</div>
+</p>

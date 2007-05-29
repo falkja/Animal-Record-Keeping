@@ -8,44 +8,8 @@
 
 <div class='right_aligned'>
 
-<p>
-Animal Care Users:<br/>
-<div class='left_indent'>
-<% if @animal_care_users.length == 0 %>
-	<warning>No Animal Care Users</warning>
-<% else %>
-	<% for user in @animal_care_users %>
-		<%= link_to user.name, :controller => 'users', :action => :show, :id => user %><br/>
-	<% end %>
-<% end %>
-</div>
-</p>
-
-<p>
-Medical Care Users:<br/>
-<div class='left_indent'>
-<% if @medical_care_users.length == 0 %>
-	<warning>No Medical Care Users</warning>
-<% else %>
-	<% for user in @medical_care_users %>
-		<%= link_to user.name, :controller => 'users', :action => :show, :id => user %><br/>
-	<% end %>
-<% end %>
-</div>
-</p>
-
-<p>
-Weekend Care Users:<br/>
-<div class='left_indent'>
-<% if @weekend_care_users.length == 0 %>
-	<warning>No Weekend Care Users</warning>
-<% else %>
-	<% for user in @weekend_care_users %>
-		<%= link_to user.name, :controller => 'users', :action => :show, :id => user %><br/>
-	<% end %>
-<% end %>
-</div>
-</p>
+<%= render :partial => 'main/animal_care_staff_list',
+		:locals => {:animal_care_users => @animal_care_users, :medical_care_users => @medical_care_users, :weekend_care_users => @weekend_care_users} %>
 
 </div>
 

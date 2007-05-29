@@ -30,21 +30,21 @@ class MainController < ApplicationController
 	redirect_to :action => 'index'
   end
 
-	def choose_weekend_user_summary_page
-		@users = User.current_weekend_care
-		if @users.length == 1
-			redirect_to :action => 'user_summary_page', :id => @users[0]
-		elsif @users.length == 0
-			flash[:notice] = "No weekend care users"
-			redirect_to :controller => 'users', :action => 'list'
-		end
+	def animal_care_staff
+		@weekend_care_users = User.current_weekend_care
+		@medical_care_users = User.current_medical_care
+		@animal_care_users = User.current_animal_care
 	end
 
   #lists things of relevance to only the user
   def user_summary_page
   
   if session[:person] != nil
-	  @user = User.find(params[:id])
+		@weekend_care_users = User.current_weekend_care
+		@medical_care_users = User.current_medical_care
+		@animal_care_users = User.current_animal_care
+		
+		@user = User.find(params[:id])
 	  @cages = @user.cages.active
 		@medical_problems = @user.bats_medical_problems
     @feeding_cages = @user.cages.has_feeding_tasks

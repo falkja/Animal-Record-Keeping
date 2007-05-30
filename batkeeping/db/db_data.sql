@@ -373,28 +373,6 @@ INSERT INTO `census` (`id`,`animals`,`date`,`room_id`,`bats_added`,`bats_removed
 
 
 --
--- Definition of table `medical_care_actions`
---
-
-DROP TABLE IF EXISTS `medical_care_actions`;
-CREATE TABLE `medical_care_actions` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `proposed_treatment_id` int(10) unsigned NOT NULL,
-  `date` datetime NOT NULL,
-  `remarks` text NOT NULL,
-  `user_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `medical_care_actions`
---
-
-/*!40000 ALTER TABLE `medical_care_actions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `medical_care_actions` ENABLE KEYS */;
-
-
---
 -- Definition of table `medical_problems`
 --
 
@@ -490,6 +468,29 @@ INSERT INTO `species` (`id`,`name`,`lower_weight_limit`) VALUES
  (2,'Eptesicus fuscus',13),
  (3,'Myotis septentrionalis',6);
 /*!40000 ALTER TABLE `species` ENABLE KEYS */;
+
+
+--
+-- Definition of table `task_census`
+--
+
+DROP TABLE IF EXISTS `task_census`;
+CREATE TABLE `task_census` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `internal_description` varchar(45) NOT NULL,
+  `date_done` date DEFAULT NULL,
+  `room_id` int(10) unsigned NOT NULL,
+  `task_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `task_census`
+--
+
+/*!40000 ALTER TABLE `task_census` DISABLE KEYS */;
+/*!40000 ALTER TABLE `task_census` ENABLE KEYS */;
 
 
 --
@@ -814,7 +815,7 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`
  (244,0,NULL,1,'Weigh cage BF','','weigh',NULL,NULL,NULL,-1,'2007-05-26 00:42:46','2007-05-27 20:34:02',NULL,NULL);
 INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`,`animal_care`,`room_id`) VALUES 
  (245,2,NULL,NULL,'','',NULL,NULL,NULL,NULL,-1,'2007-05-26 10:02:55','2007-05-26 10:03:56',1,1),
- (246,2,NULL,NULL,'Change pads in Fruit Bats (4148L)','','change_pads',NULL,NULL,NULL,0,'2007-05-26 10:06:02',NULL,0,1),
+ (246,2,NULL,NULL,'Change pads in Fruit Bats (4148L)','','change_pads',NULL,NULL,NULL,-1,'2007-05-26 10:06:02',NULL,1,1),
  (247,7,NULL,NULL,'Change cages in Belfry (4102D)','','change_cages',NULL,NULL,NULL,-1,'2007-05-26 10:08:13',NULL,0,1),
  (248,4,NULL,NULL,'Change water in Colony Room (4100)','','change_water',NULL,NULL,NULL,0,'2007-05-26 10:10:47',NULL,1,3),
  (249,7,5,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-05-27 10:13:55','2007-05-27 10:35:51',NULL,NULL),
@@ -1122,7 +1123,6 @@ INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES
  (6,241),
  (6,242),
  (6,244),
- (6,246),
  (8,101),
  (8,102),
  (8,103),
@@ -1172,9 +1172,9 @@ INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES
  (10,115),
  (10,116),
  (10,117),
- (10,118);
+ (10,118),
+ (10,119);
 INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES 
- (10,119),
  (10,120),
  (10,121),
  (10,154),
@@ -1273,7 +1273,7 @@ INSERT INTO `users` (`id`,`name`,`initials`,`email`,`start_date`,`end_date`,`job
 INSERT INTO `users` (`id`,`name`,`initials`,`email`,`start_date`,`end_date`,`job_type`) VALUES 
  (13,'Kaushik Ghose','KG','kghose@umd.edu','2007-04-27 00:00:00',NULL,NULL),
  (14,'Samantha McIlwain','SM','smcilwai@umd.edu','2007-04-27 00:00:00',NULL,'Medical Care'),
- (16,'Cynthia F. Moss','CFM','cmoss@psyc.umd.edu','2007-04-27 00:00:00',NULL,NULL),
+ (16,'Cynthia F. Moss','CFM','cmoss@psyc.umd.edu','2007-04-27 00:00:00',NULL,' Weekend Care'),
  (18,'Joe','J','s','2007-05-18 00:00:00','2007-05-21 00:00:00','');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 

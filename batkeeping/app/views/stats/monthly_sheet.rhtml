@@ -34,8 +34,14 @@
 	<th>Bats</th>
 	<th>Bats +</th>
 	<th>Bats -</th>
+  <th>Fed</th>
+  <th>Water</th>
+  <th>Pads</th>
+  <th>Cages</th>
+  <th>Floor</th>
 	<th>Temp</th>
 	<th>Humid</th>
+  
 <% for day in @days_this_month %>
 	
   <% if Date.new(@year, @month, day+1) <= Date.today %>
@@ -49,7 +55,13 @@
   <td><%= @room.bats_added_when(day+1, @month, @year)%></td>
 	
   <td><%= @room.bats_removed_when(day+1, @month, @year)%></td>
-	
+
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+
 	<% if @tempandhumidity_list[day] %>
 		<td><%= @tempandhumidity_list[day].temperature %></td>
 		<td><%= @tempandhumidity_list[day].humidity %></td>
@@ -63,3 +75,9 @@
   <% end %>
 <% end %>
 </table>
+
+<div class='show_print_only'>
+<p>
+Signature: _______________________________ Date: ___ /___ /_____
+</p>
+</div>

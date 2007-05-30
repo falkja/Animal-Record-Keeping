@@ -158,3 +158,7 @@ div.right_aligned {
 	background-color:#eee; 
 	color:#000;
 }
+
+div.show_print_only{
+	display:none;
+}

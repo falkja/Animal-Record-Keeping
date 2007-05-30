@@ -21,3 +21,7 @@ div.left_indent {
 div.no_print {
 	display:none;
 }
+
+div.show_print_only{
+	display:inline;
+}

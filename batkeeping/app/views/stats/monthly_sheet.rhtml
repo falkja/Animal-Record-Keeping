@@ -1,3 +1,4 @@
+<div class='no_print'>
 <p>
 <% form_tag :controller => 'stats', :action => 'monthly_sheet' do %>
 	Show census page for
@@ -9,8 +10,24 @@
 	<%= submit_tag 'Go' %>
 <% end %>
 </p>
+</div>
 
 <h2><%= "Summary of " + @room.name + " for #{Date::MONTHNAMES[@month]} #{@year}" %></h2>
+
+<p>
+<table>
+<tr>
+<td><b>Department:</b> Psychology</td>
+</tr>
+<tr>
+<td><b>Species:</b>
+<% for sp in @room.species_listing %>
+<%= sp %>
+<% end %>
+</td>
+</tr>
+</table>
+</p>
 
 <table border =1>
 	<th>Day</th>

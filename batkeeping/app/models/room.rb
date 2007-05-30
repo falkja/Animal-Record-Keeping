@@ -22,4 +22,17 @@ class Room < ActiveRecord::Base
 		return bats
 	end
   
+  def species_listing
+    cages = Array.new
+    self.cages.each{|cage| cages << cage}
+    
+    bats = Array.new
+    cages.each{|cage| cage.bats.each{|bat| bats << bat}}
+    
+    species_list = Array.new
+    bats.each{|bat| species_list << bat.species.name}
+    species_list = species_list.uniq
+    return species_list
+  end
+  
 end

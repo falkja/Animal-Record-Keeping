@@ -7,7 +7,7 @@ body {
 	}
 	
 pre {
-  padding: 0px;
+	padding: 0px;
 }
 	
 div.mainmenu {
@@ -16,4 +16,8 @@ div.mainmenu {
 
 div.left_indent {
 	margin-left: .1cm;
+}
+
+div.no_print {
+	display:none;
 }

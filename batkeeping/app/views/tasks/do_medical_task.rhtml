@@ -19,12 +19,12 @@
 </p>
 
 <p>
-<label for='checkbox_after_eating'>After Eating?</label><br />
 <% if @medical_problem.bat.cage.fed_today? == true %>
 <%= check_box 'checkbox', 'after_eating', :checked=> 'checked' %>
 <%else%>
 <%= check_box 'checkbox', 'after_eating' %>
 <% end %>
+<label for='checkbox_after_eating'>After Eating</label>
 </p>
 
 <p><label for="task_history_date_done">Date Treatment Given</label><br />

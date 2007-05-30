@@ -14,5 +14,5 @@
 <% if @bat.weights.length == 0 %>
 No previous weights.
 <% else %>
-<%= render :partial => 'display_weights', :locals => {:display_weights => @bat} %>
+<%= render :partial => 'display_weights', :locals => {:bat => @bat} %>
 <% end %>

@@ -203,6 +203,10 @@ class Task < ActiveRecord::Base
   
   def done_with_date(date_done)
     if (date_done.yday >= self.find_post) && (date_done.yday <= (self.find_post - self.jitter))
+      task_census = TaskCensus.find(:first, :conditions => "task_id = #{self.id} and date = '#{date_done.year}-#{date_done.month}-#{date_done.day}'")
+      task_census.date_done = date_done
+      task_census.save
+      
       task_history = TaskHistory.new
       task_history.task = self
       task_history.date_done = date_done

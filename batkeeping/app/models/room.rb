@@ -36,4 +36,11 @@ class Room < ActiveRecord::Base
     return species_list
   end
   
+  def total_feed_tasks_when(day, month, year)
+    TaskCensus.find(:all, :conditions=> "room_id = #{self.id} and internal_description = 'feed' and date = '#{year}-#{month}-#{day}'")
+  end
+  
+  def done_feed_tasks_when(day, month, year)
+    TaskCensus.find(:all, :conditions=> "date_done is not null and room_id = #{self.id} and internal_description = 'feed' and date = '#{year}-#{month}-#{day}'")
+  end
 end

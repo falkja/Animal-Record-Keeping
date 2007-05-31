@@ -4,6 +4,7 @@ class Task < ActiveRecord::Base
   belongs_to :medical_treatment
 	belongs_to :room
   has_many :task_histories, :order => 'date_done desc'
+	has_many :task_census
 
 	@@current_user = nil
 
@@ -68,12 +69,12 @@ class Task < ActiveRecord::Base
   end
 
 	def self.feeding_tasks_today
-		tday = Time.now.wday + 1   
+		tday = Time.now.wday + 1
 		find :all, :conditions => "((repeat_code = #{tday}) or (repeat_code = 0)) and (internal_description = 'feed') and date_ended is null", :order => 'repeat_code'
 	end
 
 	def self.feeding_tasks_not_today
-		tday = Time.now.wday + 1   
+		tday = Time.now.wday + 1
 		find :all, :conditions => "((repeat_code != #{tday}) and (repeat_code != 0)) and (internal_description = 'feed') and date_ended is null", :order => 'repeat_code'
 	end
 
@@ -82,12 +83,12 @@ class Task < ActiveRecord::Base
 	end
 	
 	def self.animal_care_user_feeding_tasks_today
-		tday = Time.now.wday + 1   
+		tday = Time.now.wday + 1
 		find :all, :conditions => "((repeat_code = #{tday}) or (repeat_code = 0)) and (internal_description = 'feed') and date_ended is null and animal_care = 1", :order => 'repeat_code'
 	end
 	
 	def self.animal_care_user_feeding_tasks_not_today
-		tday = Time.now.wday + 1   
+		tday = Time.now.wday + 1
 		find :all, :conditions => "((repeat_code != #{tday}) and (repeat_code != 0)) and (internal_description = 'feed') and date_ended is null and animal_care = 1", :order => 'repeat_code'
 	end
 	

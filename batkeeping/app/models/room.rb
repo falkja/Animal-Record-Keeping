@@ -2,6 +2,7 @@ class Room < ActiveRecord::Base
     has_many :cages
     has_many :weathers
 		has_many :tasks
+		has_many :task_census
     
   #returns the number of bats at any day for a given room
 	def num_bats_when(day, month, year)

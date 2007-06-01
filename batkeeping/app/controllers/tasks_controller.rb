@@ -89,7 +89,10 @@ class TasksController < ApplicationController
       @weighing_tasks = Task.weighing_tasks
       @feeding_tasks = Task.feeding_tasks
     end
-    
+		
+		@feeding_tasks = @feeding_tasks.sort_by{|task| [task.repeat_code, task.title]}
+		@weighing_tasks = @weighing_tasks.sort_by{|task| [task.repeat_code, task.title]}
+		
 		params[:feeding_cages] ? @feeding_cages = Cage.find(params[:feeding_cages]) : @feeding_cages = Array.new
 		params[:medical_problems] ? @medical_problems = MedicalProblem.find(params[:medical_problems]) : @medical_problems = Array.new
 		params[:cages] ? @cages = Cage.find(params[:cages]) : @cages = Array.new
@@ -174,6 +177,8 @@ class TasksController < ApplicationController
       weighing_tasks = Task.weighing_tasks
     end
     
+		weighing_tasks = weighing_tasks.sort_by{|task| [task.repeat_code, task.title]}
+		
     render :partial => 'tasks_list', :locals => {:tasks => weighing_tasks, 
                                       :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => true}
   end
@@ -253,7 +258,7 @@ class TasksController < ApplicationController
       feeding_tasks = Task.feeding_tasks
     end
 	
-		feeding_tasks = feeding_tasks.sort_by{|task| [task.repeat_code]}
+		feeding_tasks = feeding_tasks.sort_by{|task| [task.repeat_code, task.title]}
     
     render :partial => 'tasks_list', :locals => {:tasks => feeding_tasks, 
                                       :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => true}
@@ -283,7 +288,7 @@ class TasksController < ApplicationController
 		
     flash[:note] = 'All tasks created successfully.  If some tasks already existed for the day, they were overwritten.'
 		
-    medical_tasks = medical_treatment.tasks.current.sort_by{|task| [task.repeat_code]}
+    medical_tasks = medical_treatment.tasks.current.sort_by{|task| [task.repeat_code, task.title]}
     
 		render :partial => 'tasks_list', :locals => {:tasks => medical_tasks, 
 			:div_id => params[:div_id], :same_type_task_list => true, :manage => true}
@@ -343,7 +348,7 @@ class TasksController < ApplicationController
     task = Task.find(params[:id])
     Task::set_current_user(session[:person])
     task.done
-    render :partial => 'tasks_list', :locals => {:tasks => Task.find(params[:ids], :order => 'repeat_code'), :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => true}
+    render :partial => 'tasks_list', :locals => {:tasks => Task.find(params[:ids], :order => 'repeat_code, title'), :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => true}
   end
   
   def medical_task_done
@@ -371,7 +376,7 @@ class TasksController < ApplicationController
   end
   
   def destroy
-    tasks = Task.find(params[:ids], :order => 'repeat_code')
+    tasks = Task.find(params[:ids], :order => 'repeat_code, title')
     tasks.delete(Task.find(params[:id]))
     Task.find(params[:id]).deactivate
     render :partial => 'tasks_list', :locals => {:tasks => tasks, :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => true}
@@ -392,7 +397,7 @@ class TasksController < ApplicationController
   end
 	
 	def show_hide_task_categories
-		params[:tasks] ? tasks = Task.find(params[:tasks]) : tasks = Array.new
+		params[:tasks] ? tasks = Task.find(params[:tasks], :order => 'repeat_code, title') : tasks = Array.new
 		params[:medical_problems] ? medical_problems = MedicalProblem.find(params[:medical_problems]) : medical_problems = Array.new
 		params[:cages] ? cages = Cage.find(params[:cages]) : cages = Array.new
 		render :partial => 'show_hide_task_category', :locals => {:tasks => tasks, :div_id => params[:div_id],

@@ -87,6 +87,14 @@ class MainController < ApplicationController
 			Task.animal_care_user_feeding_tasks_not_today.each{|task| @my_feeding_tasks_not_today << task}
 		end
 		
+		@my_feeding_tasks = @my_feeding_tasks.sort_by{|task| [task.repeat_code, task.title]}
+		@my_feeding_tasks_today = @my_feeding_tasks_today.sort_by{|task| [task.repeat_code, task.title]}
+		@my_feeding_tasks_not_today = @my_feeding_tasks_not_today.sort_by{|task| [task.repeat_code, task.title]}
+		
+		@my_weighing_tasks = @my_weighing_tasks.sort_by{|task| [task.title]}
+		@my_weighing_tasks_today = @my_weighing_tasks_today.sort_by{|task| [task.title]}
+		@my_weighing_tasks_not_today = @my_weighing_tasks_not_today.sort_by{|task| [task.title]}
+	
 	else
 	  redirect_to :action => 'index'
 	end

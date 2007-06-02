@@ -17,7 +17,7 @@
 <% end %>
 
 <div id="rooms">
-	<%= render :partial=>'rooms_for_tasks', :locals => {:show_rooms => @task.room_id} %>
+	<%= render :partial=>'rooms_for_tasks', :locals => {:show_rooms => (@task.room_id && (@task.cage_id == nil) )} %>
 </div>
 
 <% @task.medical_treatment_id ? medical = true : medical = false %>

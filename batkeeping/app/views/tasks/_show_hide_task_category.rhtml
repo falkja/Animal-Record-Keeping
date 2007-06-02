@@ -26,7 +26,7 @@ General Tasks
   <% form_remote_tag :url => {:controller => 'tasks', :action => 'remote_new_feed_cage_task', :id => @cage, :div_id => div_id, 
                   :same_type_task_list => same_type_task_list, :source => source, :quick_add => true},
                   :update => 'add_feeding_task' + count do %>
-  Cage: <%= select_tag("id", options_from_collection_for_select(cages, "id", "name")) %>
+  Cage: <%= select_tag("id", options_from_collection_for_select(cages.sort_by{|cage| [cage.name]}, "id", "name")) %>
   <%= submit_tag "Quick-add feeding task" %>
   <% end %>
   <div id = "add_feeding_task<%= count %>">
@@ -36,7 +36,7 @@ General Tasks
   <p>
   <% form_tag :controller => 'tasks', :action => 'manage_feeding_tasks', :id => @cage do %>
   Cage: 
-  <%= select_tag("id", options_from_collection_for_select(cages, "id", "name")) %>
+  <%= select_tag("id", options_from_collection_for_select(cages.sort_by{|cage| [cage.name]}, "id", "name")) %>
   <%= submit_tag "Manage feeding tasks" %>
   <% end %>
   </p>
@@ -46,7 +46,7 @@ General Tasks
   <% form_remote_tag :url => {:controller => 'tasks', :action => 'remote_new_weigh_cage_task', :id => @cage, :div_id => 'weighing_tasks' + count, 
                   :same_type_task_list => same_type_task_list, :source => source, :quick_add => true},
                   :update => 'add_weighing_task' + count do %>
-  Cage: <%= select_tag("id", options_from_collection_for_select(cages, "id", "name")) %>
+  Cage: <%= select_tag("id", options_from_collection_for_select(cages.sort_by{|cage| [cage.name]}, "id", "name")) %>
   <%= submit_tag "Quick-add weighing task" %>
   <% end %>
   <div id = "add_weighing_task<%= count %>">
@@ -56,7 +56,7 @@ General Tasks
   <p>
   <% form_tag :controller => 'tasks', :action => 'form_to_new_weigh_cage_task', :id => @cage do %>
   Cage: 
-  <%= select_tag("id", options_from_collection_for_select(cages, "id", "name")) %>
+  <%= select_tag("id", options_from_collection_for_select(cages.sort_by{|cage| [cage.name]}, "id", "name")) %>
   <%= submit_tag "Manage weighing tasks" %>
   <% end %>
   </p>

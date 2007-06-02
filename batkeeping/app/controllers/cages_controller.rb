@@ -208,7 +208,14 @@ class CagesController < ApplicationController
       new_census.bats_added ? new_census.bats_added = new_census.bats_added + bat.band + ' ' : new_census.bats_added = bat.band + ' '
     end
     new_census.save
+		
+		for task in cage.tasks
+			task.room = cage.room
+			task.save
+		end
     
+		cage.tasks.today.each{|task| TaskCensus.room_swap(cage.room,task)}
+		
     flash[:notice] = 'Cage ' + cage.name + ' was moved from ' + old_room.name + ' to ' + cage.room.name
     redirect_to :action => 'move_cage'
   end

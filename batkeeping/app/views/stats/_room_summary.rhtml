@@ -13,7 +13,7 @@
 
 <h3><%=h room.name %></h3>
 
-There are <b><%= room.cages.length %></b> cages in the colony room
+There are <b><%= room.cages.active.length %></b> cages 
 containing <b><%= bats_in_cages(room.cages) %></b> bats.
 
 <div class="left_indent">
@@ -21,7 +21,9 @@ containing <b><%= bats_in_cages(room.cages) %></b> bats.
 <p>
 <div id="<%=h room.name %>">
 <% @div_id = room.name %>
-<%= render :partial => 'cages/cage_list', :locals => {:cage_list => room.cages} %>
+<% if room.cages.active.length > 0 %>
+<%= render :partial => 'cages/cage_list', :locals => {:cage_list => room.cages.active} %>
+<% end %>
 </div>
 </p>
 

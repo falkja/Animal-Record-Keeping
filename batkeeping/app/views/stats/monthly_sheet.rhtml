@@ -15,18 +15,7 @@
 <h2><%= "Summary of " + @room.name + " for #{Date::MONTHNAMES[@month]} #{@year}" %></h2>
 
 <p>
-<table>
-<tr>
-<td><b>Department:</b> Psychology</td>
-</tr>
-<tr>
-<td><b>Species:</b>
-<% for sp in @room.species_listing %>
-<%= sp %>
-<% end %>
-</td>
-</tr>
-</table>
+<b>Department:</b> Psychology<br />
 </p>
 
 <table border =1>

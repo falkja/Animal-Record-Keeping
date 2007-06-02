@@ -18,7 +18,7 @@ class Task < ActiveRecord::Base
 	end
   
   def self.general_tasks_not_today
-		tday = Time.now.wday + 1   
+		tday = Time.now.wday + 1
 		find :all, :conditions => "((repeat_code != #{tday}) and (repeat_code != 0)) and (medical_treatment_id is null) and (cage_id is null) and date_ended is null", :order => 'repeat_code'
 	end
   
@@ -32,7 +32,7 @@ class Task < ActiveRecord::Base
 	end
 	
 	def self.animal_care_user_general_tasks_not_today
-		tday = Time.now.wday + 1   
+		tday = Time.now.wday + 1
 		find :all, :conditions => "((repeat_code != #{tday}) and (repeat_code != 0)) and (medical_treatment_id is null) and (cage_id is null) and date_ended is null and animal_care = 1", :order => 'repeat_code'
 	end
 	
@@ -41,7 +41,7 @@ class Task < ActiveRecord::Base
   end
   
   def self.weighing_tasks_today
-		tday = Time.now.wday + 1   
+		tday = Time.now.wday + 1
 		find :all, :conditions => "((repeat_code = #{tday}) or (repeat_code = 0)) and (internal_description = 'weigh') and date_ended is null", :order => 'repeat_code'
 	end
   
@@ -130,7 +130,7 @@ class Task < ActiveRecord::Base
 
 	def self.today
 		tday = Time.now.wday + 1   
-		find :all, :conditions => '(repeat_code = #{tday}) or (repeat_code = 0) and date_ended is null', :order => 'repeat_code'
+		find :all, :conditions => "(repeat_code = #{tday} or repeat_code = 0) and date_ended is null", :order => 'repeat_code'
 	end
     
   #returns true or false depending if the last_done_date and current date indicate
@@ -195,6 +195,9 @@ class Task < ActiveRecord::Base
   def deactivate
     self.date_ended = Time.now
     self.save
+		
+		task_census = TaskCensus.find(:first, :conditions => "task_id = #{self.id} and date = '#{Time.now.strftime("%Y-%m-%d")}'")
+		task_census ? task_census.destroy : ''
   end
   
   def done

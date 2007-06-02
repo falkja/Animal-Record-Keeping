@@ -146,6 +146,7 @@ class TasksController < ApplicationController
       @task = Task.new
       @task.repeat_code = day
       @task.cage = @cage
+			@task.room = @cage.room
       @task.title = "Weigh cage " + @cage.name    
       @task.internal_description = "weigh"
       @task.jitter = -1
@@ -153,6 +154,9 @@ class TasksController < ApplicationController
 			@task.animal_care = params[:task][:animal_care]
       @task.save
 			@task.users = @users
+			
+			task_census = TaskCensus.new
+			task_census.create_task_census(@cage.room, @task)
     end
     
     flash[:note] = 'Weigh cage task(s) successfully created. If the task does not appear below, it may be for a different day or a different user.'
@@ -224,6 +228,7 @@ class TasksController < ApplicationController
       @task = Task.new
       @task.repeat_code = day
       @task.cage = @cage
+			@task.room = @cage.room
       @task.title = "Feed cage " + @cage.name    
       @task.internal_description = "feed"
       @task.food = params[:task][:food]
@@ -234,6 +239,9 @@ class TasksController < ApplicationController
       @task.animal_care= params[:task][:animal_care]
 			@task.save
       @task.users = @users
+			
+			task_census = TaskCensus.new
+			task_census.create_task_census(@cage.room, @task)
     end
     
     flash[:note] = 'Feed cage task(s) successfully created. If the task does not appear below, it could be for a different day or for a different user (if on user summary page)'
@@ -333,10 +341,28 @@ class TasksController < ApplicationController
 
   def update
     @task = Task.find(params[:id])
+		
+		old_room = Room.find(@task.room)
+		old_repeat_code = @task.repeat_code
 			
     if @task.update_attributes(params[:task])
       params[:users] ? @task.users = User.find(params[:users]) : @task.users = Array.new
-      
+			
+			if (old_room != @task.room)
+				TaskCensus.room_swap(Room.find(params[:task][:room]), @task)
+			end
+			
+			if (old_repeat_code != @task.repeat_code)
+				task_census = TaskCensus.find(:first, :conditions => "task_id = #{@task.id} and date = '#{Time.now.strftime("%Y-%m-%d")}'")
+				task_census ? task_census.destroy : ''
+				
+				tday = Time.now.wday + 1
+				if (@task.repeat_code == tday) || (@task.repeat_code == 0)
+					task_census = TaskCensus.new
+					task_census.create_task_census(@task.room, @task)
+				end
+			end
+			
       flash[:notice] = 'Task was successfully updated.'
       redirect_to :action => 'list'
     else

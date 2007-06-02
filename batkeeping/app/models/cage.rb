@@ -15,15 +15,17 @@ class Cage < ActiveRecord::Base
     for cage in @cages
       @cages.delete_if{|cage| cage.bats.length == 0}
     end
+		@cages = @cages.sort_by{|cage| [cage.name]}
     return @cages
   end
   
   def self.has_feeding_tasks
-	@cages = find :all, :order => "name"
+		@cages = find :all, :order => "name"
 		for cage in @cages
 			@cages.delete_if{|cage| cage.tasks.feeding_tasks.length == 0}
 		end
-	return @cages
+		@cages = @cages.sort_by{|cage| [cage.name]}
+		return @cages
   end
   
   def average_bat_weight

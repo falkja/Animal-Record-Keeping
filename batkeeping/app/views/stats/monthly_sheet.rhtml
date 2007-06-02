@@ -46,7 +46,7 @@
   <td><%= @room.bats_removed_when(day+1, @month, @year)%></td>
 
   <td><%= @room.done_feed_tasks_when(day+1, @month, @year).length %>/<%= @room.total_feed_tasks_when(day+1, @month, @year).length %></td>
-  <td></td>
+  <td><%= @room.done_water_tasks_when(day + 1, @month, @year).length %>/<%= @room.total_water_tasks_when(day + 1, @month, @year).length %></td>
   <td></td>
   <td></td>
   <td></td>

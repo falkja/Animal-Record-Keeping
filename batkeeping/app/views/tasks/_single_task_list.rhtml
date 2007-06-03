@@ -17,6 +17,12 @@
     </b>
     </td>
   <% end %>
+	
+	<% if task.room_id %>
+		<td><%= task.room.name %></td>
+	<% end %>
+	
+	
     <td>
 			<% if task.animal_care == true %>
 				Animal Care

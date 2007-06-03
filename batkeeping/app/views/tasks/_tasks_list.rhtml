@@ -15,7 +15,10 @@ No tasks
   <% if !same_type_task_list %>
     <th>Title</th>
   <% end %>
-    <th>User(s)</th>
+	<% if tasks[0].room_id %>
+		<th>Room</th>
+	<% end %>
+		<th>User(s)</th>
 	<% if tasks[0].internal_description == 'feed' %>
 		<th>Food</th>
 		<th>Dishes</th>
@@ -23,9 +26,9 @@ No tasks
 	<% end %>
     <th>Frequency</th>
     <th>Last Done</th>
-		<% if tasks[0].internal_description != 'medical' %>
+	<% if tasks[0].internal_description != 'medical' %>
     <th>Notes</th>
-		<% end %>
+	<% end %>
   </thead>
  
  <tbody>  

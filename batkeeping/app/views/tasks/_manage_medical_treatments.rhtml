@@ -4,10 +4,9 @@
 	<div class='left_indent'>
 	<% for problem in medical_problems %>
 		<p>
-		Bat: <%= link_to problem.bat.band, :controller => :bats, :action => :show, :id => problem.bat %><br/>
 		Medical Problem: <%= link_to problem.title, :controller => :medical_problems, :action => :show, :id => problem %><br/>
+		Bat: <%= link_to problem.bat.band, :controller => :bats, :action => :show, :id => problem.bat %>
 		
-		<div class='left_indent'>
 		<% if problem.medical_treatments.current.length == 0 %>
 			<% form_tag  :controller => :medical_treatments, :action => :new, :id => problem do %>
 				No current treatments for medical problem
@@ -19,7 +18,6 @@
 				<%= submit_tag "Manage medical tasks for treatment" %>
 			<% end %>
 		<% end %>
-		</div>
 		
 		</p>
 	<% end %>

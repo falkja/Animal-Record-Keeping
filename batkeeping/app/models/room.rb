@@ -51,4 +51,28 @@ class Room < ActiveRecord::Base
 	def done_water_tasks_when(day, month, year)
 		TaskCensus.find(:all, :conditions=> "date_done is not null and room_id = #{self.id} and internal_description = 'change_water' and date = '#{year}-#{month}-#{day}'")
 	end
+	
+	def total_pads_tasks_when(day, month, year)
+		TaskCensus.find(:all, :conditions=> "room_id = #{self.id} and internal_description = 'change_pads' and date = '#{year}-#{month}-#{day}'")
+	end
+	
+	def done_pads_tasks_when(day, month, year)
+		TaskCensus.find(:all, :conditions=> "date_done is not null and room_id = #{self.id} and internal_description = 'change_pads' and date = '#{year}-#{month}-#{day}'")
+	end
+	
+	def total_cages_tasks_when(day, month, year)
+		TaskCensus.find(:all, :conditions=> "room_id = #{self.id} and internal_description = 'change_cages' and date = '#{year}-#{month}-#{day}'")
+	end
+	
+	def done_cages_tasks_when(day, month, year)
+		TaskCensus.find(:all, :conditions=> "date_done is not null and room_id = #{self.id} and internal_description = 'change_cages' and date = '#{year}-#{month}-#{day}'")
+	end
+	
+	def total_floor_tasks_when(day, month, year)
+		TaskCensus.find(:all, :conditions=> "room_id = #{self.id} and internal_description = 'clean_floor' and date = '#{year}-#{month}-#{day}'")
+	end
+	
+	def done_floor_tasks_when(day, month, year)
+		TaskCensus.find(:all, :conditions=> "date_done is not null and room_id = #{self.id} and internal_description = 'clean_floor' and date = '#{year}-#{month}-#{day}'")
+	end
 end

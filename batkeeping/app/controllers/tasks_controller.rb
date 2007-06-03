@@ -110,7 +110,6 @@ class TasksController < ApplicationController
   def new
     @task = Task.new
     @users = User.current
-		@rooms = Room.find(:all)
   end
 
   #called from the form on the list tasks page, needed so that the page that is requested has an ID attached to it so that refreshes of the page don't break
@@ -326,6 +325,11 @@ class TasksController < ApplicationController
 				@task.date_started = Time.now
         @task.save
         @task.users = @users
+			
+				if params[:task][:room]
+					task_census = TaskCensus.new
+					task_census.create_task_census(@task.room, @task)
+				end
     end
     redirect_to :action => 'list'
   end
@@ -336,20 +340,19 @@ class TasksController < ApplicationController
     @user_ids = Array.new 
     @task.users.each {|user| @user_ids << user.id }
     @editing = true
-		@rooms = Room.find(:all)
+		@rooms = Room.find(:all, :order => "name")
   end
 
   def update
     @task = Task.find(params[:id])
-		
-		old_room = Room.find(@task.room)
+		old_room = Room.find(@task.room_id)
 		old_repeat_code = @task.repeat_code
-			
+		
     if @task.update_attributes(params[:task])
       params[:users] ? @task.users = User.find(params[:users]) : @task.users = Array.new
 			
 			if (old_room != @task.room)
-				TaskCensus.room_swap(Room.find(params[:task][:room]), @task)
+				TaskCensus.room_swap(@task.room, @task)
 			end
 			
 			if (old_repeat_code != @task.repeat_code)
@@ -448,7 +451,7 @@ class TasksController < ApplicationController
   
 	
 	def show_hide_rooms
-		@rooms = Room.find(:all)
+		@rooms = Room.find(:all, :order => "name")
 		(params[:switch_room] == "1") ?	show_rooms = true : show_rooms = false
 		
 		params[:task] ? @task = Task.find(params[:task]) : ''

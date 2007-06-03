@@ -2,7 +2,7 @@
 
 <p>
 <label for="task_room_id">Room</label><br/>
-<%= select_tag ("task[room_id]", options_from_collection_for_select(@rooms, "id", "name")) %>
+<%= select_tag ("task[room_id]", options_from_collection_for_select(@rooms, "id", "name", @task ? @task.room.id : '')) %>
 </p>
 
 <p>

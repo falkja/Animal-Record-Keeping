@@ -47,9 +47,9 @@
 
   <td><%= @room.done_feed_tasks_when(day+1, @month, @year).length %>/<%= @room.total_feed_tasks_when(day+1, @month, @year).length %></td>
   <td><%= @room.done_water_tasks_when(day + 1, @month, @year).length %>/<%= @room.total_water_tasks_when(day + 1, @month, @year).length %></td>
-  <td></td>
-  <td></td>
-  <td></td>
+  <td><%= @room.done_pads_tasks_when(day + 1, @month, @year).length %>/<%= @room.total_pads_tasks_when(day + 1, @month, @year).length %></td>
+  <td><%= @room.done_cages_tasks_when(day + 1, @month, @year).length %>/<%= @room.total_cages_tasks_when(day + 1, @month, @year).length %></td>
+  <td><%= @room.done_floor_tasks_when(day + 1, @month, @year).length %>/<%= @room.total_floor_tasks_when(day + 1, @month, @year).length %></td>
 
 	<% if @tempandhumidity_list[day] %>
 		<td><%= @tempandhumidity_list[day].temperature %></td>

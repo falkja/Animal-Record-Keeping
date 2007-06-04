@@ -132,7 +132,13 @@ class Task < ActiveRecord::Base
 		tday = Time.now.wday + 1   
 		find :all, :conditions => "(repeat_code = #{tday} or repeat_code = 0) and date_ended is null", :order => 'repeat_code'
 	end
-    
+	
+	def general_task?
+		if !self.cage_id and !self.medical_treatment_id then return true
+		else return false
+		end
+	end
+	
   #returns true or false depending if the last_done_date and current date indicate
   #if the task was completed on schedule
   #Note this is modulo week. So if we skip a week we won't know
@@ -206,9 +212,11 @@ class Task < ActiveRecord::Base
   
   def done_with_date(date_done)
     if (date_done.yday >= self.find_post) && (date_done.yday <= (self.find_post - self.jitter))
-      task_census = TaskCensus.find(:first, :conditions => "task_id = #{self.id} and date = '#{date_done.year}-#{date_done.month}-#{date_done.day}'")
-      task_census.date_done = date_done
-      task_census.save
+      if self.internal_description == 'change_pads' || self.internal_description == 'feed' || self.internal_description == 'change_cages' || self.internal_description == 'clean_floor' || self.internal_description == 'change_water'
+				task_census = TaskCensus.find(:first, :conditions => "task_id = #{self.id} and date = '#{date_done.year}-#{date_done.month}-#{date_done.day}'")
+				task_census.date_done = date_done
+				task_census.save
+			end
       
       task_history = TaskHistory.new
       task_history.task = self

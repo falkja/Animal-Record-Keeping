@@ -15,7 +15,7 @@ No tasks
   <% if !same_type_task_list %>
     <th>Title</th>
   <% end %>
-	<% if tasks[0].room_id %>
+	<% if tasks[0].room_id || tasks[0].general_task? %>
 		<th>Room</th>
 	<% end %>
 		<th>User(s)</th>

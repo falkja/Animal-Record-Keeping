@@ -20,6 +20,8 @@
 	
 	<% if task.room_id %>
 		<td><%= task.room.name %></td>
+	<% elsif task.general_task? %>
+		<td></td>
 	<% end %>
 	
 	

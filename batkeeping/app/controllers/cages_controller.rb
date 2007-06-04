@@ -74,6 +74,10 @@ class CagesController < ApplicationController
     @cage = Cage.new
     @deactivating = false
     @rooms = Room.find(:all, :order => 'name')
+		if @rooms.length == 0
+			flash[:notice] = 'New cages need a room.  Create a room before creating a cage.'
+			redirect_to :controller => 'rooms', :action => :new
+		end
   end
 
   def create
@@ -133,7 +137,7 @@ class CagesController < ApplicationController
 	@cage = Cage.find(params[:id])
   @rooms = Room.find(:all, :order => 'name')
   if @cage.bats.length > 0
-    flash[:notice] = 'Deactivation failed.' + @cage.name + ' is not empty.'
+    flash[:notice] = 'Deactivation failed. ' + @cage.name + ' is not empty.'
     redirect_to :controller => 'bats', :action => 'choose_cage'
   elsif @cage.tasks.current.length > 0
 		flash[:notice] = 'Deactivation failed. ' + @cage.name + ' still has feeding or weighing tasks.'

@@ -1,55 +1,412 @@
+<a name=top></a>
+
 <h1>Batkeeping Manual</h1>
 
-<h2>General Hints</h2>
-<ol>
-<li>If you make a mistake you can usually roll it back by reediting whatever change you have done. Rarely an error will require a direct manipulation of the database. Contact an administrator for this</li>
-<li>You can perform any operation in a new window or tab. So, for instance, if you are weighing a bat and you need to open a medical ticket for it, you don't need to stop your weight entry. Simply right click on the relevant link and work in a new window or tab. Once that is done, close the tab and return to the weighing operation.</li>
-</ol>
+<p>
+<a href=#WhatIsBatkeeping>What is batkeeping?</a>
+</p>
 
-<h2>Add user</h2>
-When you first start you will need to sign in. If you haven't done so already you need to add yourself to the user list. Click "Add User", fill out the form and click "Create". You will now see a list of current users. proceed to sign in.
+<p>
+<a href=#SignIn>Sign in Page</a>
+</p>
 
-<h2>Sign in</h2>
-On the top-right of the page is the "sign in" link. Click to go to the sign in page. Select your name from the drop down list and click "sign in". You should now see an extended list of links and tasks.
+<p>
+<a href=#MainMenu>Main Menu</a>
+<ul>
+<li><a href=#MyPage>My Page</a></li>
+<li><a href=#ColonyStatus>Colony Status</a></li>
+<ul>
+<li><a href=#CensusPage>Census Page</a></li>
+</ul>
+<li><a href=#AnimalCareStaff>Animal Care Staff</a></li>
+<li><a href=#Admin>Admin</a></li>
+<ul>
+<li><a href=#ListUsers>List Users</a></li>
+<li><a href=#NewUser>New User</a></li>
+<li><a href=#ListSpecies>List Species</a></li>
+<li><a href=#NewSpecies>New Species</a></li>
+<li><a href=#ListRooms>List Rooms</a></li>
+<li><a href=#NewRoom>New Room</a></li>
+</ul>
+</ul>
+</p>
 
-<h2>New Cage</h2>
-Whenever a new cage is to be created click "new cage". Fill in the details. If you leave "owner" blank then it will be treated as a non-protocol cage and will be set to be fed by animal care
+<p>
+<a href=#BatsMenu>Bats Menu</a>
+<ul>
+<li><a href=#ListBats>List Bats</a></li>
+<li><a href=#NewBat>New Bat</a></li>
+<li><a href=#WeighBat>Weigh Bat</a></li>
+<li><a href=#MoveBat>Move Bat</a></li>
+</ul>
+</p>
 
-<h2>New Bat</h2>
-Click "new bat" to make an entry for a new bat and click "Create". Remember to assign the proper cage.
+<p>
+<a href=#CagesMenu>Cages Menu</a>
+<ul>
+<li><a href=#ListCages>List Cages</a></li>
+<li><a href=#NewCage>New Cage</a></li>
+<li><a href=#WeighCage>Weigh Cage</a></li>
+<li><a href=#MoveCage>Move Cage</a></li>
+</ul>
+</p>
 
-<h2>Weighing Bats</h2>
-Click "Weigh Bat(s)" and select a single bat or a whole cage to weigh. Weigh time is also inspection time so enter any notes you have in the Notes text box. During the weigh operation you can also change the cage of the bat e.g. if the bat weighs too little and needs to be moved to a special cage. Remember to enter a cage change note in such a case.
+<p>
+<a href=#MedicalProblemsMenu>Medical Problems Menu</a>
+<ul>
+<li><a href=#ListMedicalProblems>List Medical Problem</a></li>
+<li><a href=#NewMedicalProblem>New Medical Problem</a></li>
+</ul>
+</p>
+
+<p>
+<a href=#TasksMenu>Tasks Menu</a>
+<ul>
+<li><a href=#ListTasks>List Tasks</a></li>
+<li><a href=#NewTask>New Task</a></li>
+</ul>
+</p>
+
+<p>
+<a href=#TasksMenu>Help Menu</a>
+<ul>
+<li><a href=#Manual>Manual</a></li>
+<li><a href=#BugReport>Bug Report</a></li>
+</ul>
+</p>
+
+<p>
+<a href=#InstallBatkeeping>Install Batkeeping</a>
+</p>
+
+<a name="WhatIsBatkeeping"></a>
+
+<h2>What Is Batkeeping?</h2>
+
+<p>
+Batkeeping is a program for keeping records of weight and health of bats in a computer database.  The aim of the program is to replace the difficult to organize paper records of the old weight tracking system with a user friendly web application that hopefully makes everyone's lives a bit easier.
+</p>
+
+<p>
+Some features:
+<ul>
+<li>Weight tracking with graphs</li>
+<li>Automatic census keeping</li>
+<li>Task management</li>
+<li>Medical problem tracking</li>
+</ul>
+</p>
+
+<p>
+Batkeeping runs on <a href='http://rubyonrails.com'>Ruby on Rails</a>, an open source web framework for developing database driven web applications.  Batkeeping was built "in-lab" and is customized for our animal care protocols and standards.
+</p>
+
+<a href=#top>Top</a>
+
+<a name="SignIn"></a>
+
+<h2>Sign in page</h2>
+<p>
+Before you are able to access the database you must sign in.  When you reach the signin page, just select your name from the drop down list and click "sign in". You should be taken directly to your user summary page.
+</p>
+
+<p>
+If you do not have a user name, you can create one (this is the only part of the database that is accessable without signing in).  To create a user, click the link on the signin page which reads: "Add User".  Fill out the correct fields in the form and submit.  Then go back to the signin page and your newly created user should appear in the drop down list.
+</p>
+
+<a href=#top>Top</a>
+
+<a name=MainMenu></a>
+
+<h2>Main Menu</h2>
+
+<a name=MyPage></a>
+
+<h3>My Page</h3>
+
+<p>
+My Page takes you to your User Summary Page.  The User Summary Page is a quick summary of all the things in the database that relate to that user.
+</p>
+<p>
+The User Summary Page lists:
+<ul>
+<li>A form for filling out the temperature and humidity in all the rooms in the database</li>
+<li>The users' current jobs</li>
+<li>The users' current cages</li>
+<li>The users' bats' current medical problems (all bats with medical problems in cages that the user owns) OR all current medical problems in the database if one of the users' jobs is medical care</li>
+<li>The users' tasks</li>
+</ul>
+</p>
+
+<a href=#top>Top</a>
+
+<a name=ColonyStatus></a>
+
+<h3>Colony Status</h3>
+
+<p>
+The colony status page is a listing of some statistics about the colony.  It contains a listing of the bats separated by room, the food needed by cage, and the bats in medical care.
+</p>
+
+<p>
+There is a link at the top of the page that will take you to the Census Page for a given date (within the last 7 years).
+</p>
+
+<a href=#top>Top</a>
+
+<a name=CensusPage></a>
+
+<h4>Census Page</h4>
+
+<p>
+The census page shows how many bats were in each room at any point in time.  It also lists the bats band numbers that were moved in or out of the room.  It also tracks whether all the room's tasks were completed on that day.
+</p>
+
+<a href=#top>Top</a>
+
+<a name=AnimalCareStaff></a>
+
+<h3>Animal Care Staff</h3>
+
+<p>
+The animal care staff takes you to a listing of the current animal care staff (weekday care, weekend care, and medical care).  All the users names are links to their respective user summary pages.  They will all share the tasks assigned to their job, but may have tasks that differ depending on the user's individually assigned tasks.
+</p>
+
+<a href=#top>Top</a>
+
+<a name=Admin></a>
+
+<h3>Admin</h3>
+
+<a name=ListUsers></a>
+
+<h4>List Users</h4>
+
+<p>
+Lists the users for batkeeping.  Of any of the items in the admin directory, this would be the most used.
+</p>
+
+<a href=#top>Top</a>
+
+<a name=NewUser></a>
+
+<h4>New User</h4>
+
+<p>
+Creates a new user.
+</p>
+
+<a href=#top>Top</a>
+
+<a name=ListSpecies></a>
+
+<h4>List Species</h4>
+
+<p>
+List the species of bats in the lab.  The lower weight limit is used to draw the graphs of the bats weights.
+</p>
+
+<a href=#top>Top</a>
+
+<a name=NewSpecies></a>
+
+<h4>New Species</h4>
+
+<p>
+Creates a new species.
+</p>
+
+<a href=#top>Top</a>
+
+<a name=ListRooms></a>
+
+<h4>List Rooms</h4>
+
+<p>
+Lists the rooms.
+</p>
+
+<a href=#top>Top</a>
+
+<a name=NewRoom></a>
+
+<h4>New Room</h4>
+
+<p>
+Creates a new room.
+</p>
+
+<a href=#top>Top</a>
 
 
-<h2>Moving bats from one cage to another</h2>
-Click "Move Bat(s)" and then select the source cage. Select as many bats as you need from the list (hold down CTRL key to select multiple bats), select the cage to move to and then click "move"
+<a name=BatsMenu></a>
 
-<h2>Deactivating a cage</h2>
-A cage that has no bats and whose cage label has been removed should be deactivated (i.e. removed) from the database by clicking deactivate. Such a cage no longer appears in the current cages listing, though a record of it can be accessed through the "list all cages" link.
+<h2>Bats Menu</h2>
 
-<h2>Deactivating a bat</h2>
-A bat that has died or has been exported from the lab needs to be deactivated in the database. Click "deactivate" to complete this operation.
+<a name=ListBats></a>
 
-<h2>Medical Care</h2>
-To view all current medical problems click "List medical bats". 
+<h3>List Bats</h3>
 
-<h3>Noting a new medical problem</h3>
-Click "New medical problem", pick a bat, enter a brief title, date and description and assign it to someone. Click "Create Medical Problem".
+<p>
+Lists the bats in the colony.  Click the headers to sort.
+</p>
 
-<h3>Proposing a new treatment</h3>
-For each medical problem you can enter proposed treatments my clicking "New Treatment" from the listing of all the medical problems. For the finish date, if you want to do a one time treatment just leave the finish date as the start date, which will cause the proposed treatment to expire the next day.
+<a href=#top>Top</a>
 
-<em>NOTE</em> Each proposed treatment is set up so that it will appear on the list of treatments to do once a day. So if you need a treatment that needs to be done twice a day e.g. morning and evening, then you need to make two proposed treatments one for AM and one for PM. That way for a given day we can keep track if the morning and/or evening treatments have been done.
+<a name=NewBat></a>
 
-<h3>Perform a treatment</h3>
-In the list of medical problems, for each treatment there is a "do" link. Click this to indicate that a medical care action has been performed. If there is no "do" link then that action has already been performed for today.
+<h3>New Bat</h3>
 
-<h3>End a treatment</h3>
-Click "end" to close down a treatment for a given medical problem.
+<p>
+Creates a new bat.  Create a cage before creating a new bat.  Otherwise you'll have to carry the bat around with you.  You'll also need a species before creating a new bat.  Most likely this has already been done.
+</p>
 
-<h3>End Medical Problem</h3>
-Click "close" to close down a medical problem for a given bat.
+<a href=#top>Top</a>
 
-<h2>Installing batkeeping</h2>
+<a name=WeighBat></a>
+
+<h3>Weigh Bat</h3>
+
+<p>
+Brings up a list of bats to weigh.  Click the bat band and then enter the weight for the bat in the form.  A list of previous weights appear below as well as a link to graph the weights.  The after eating checkbox will automatically be checked if the bat's cage has been fed today, but you can uncheck it.</p>
+
+<p>As you weigh the bat you can quickly add a medical problem if you find one for the bat.  If the bat needs to be moved or if you need to create a treatment for the medical problem, that will open a new page.
+</p>
+
+<a href=#top>Top</a>
+
+<a name=MoveBat></a>
+
+<h3>Move Bat</h3>
+
+<p>
+First select the cage that the bat(s) is/are coming from, then the particular bat(s), then click select bats, and then the destination cage.  Once you click submit at the bottom of the page you will be taken to a series of steps for modifying the weighing tasks and feedings tasks of the old and new cage of the bat(s) you moved.  This action automatically updates the census page if the bat is moved between rooms.
+</p>
+
+<a href=#top>Top</a>
+
+<a name=CagesMenu></a>
+
+<h2>Cages Menu</h2>
+
+<a name=ListCages></a>
+
+<h3>List Cages</h3>
+
+<p>
+List the cages in the colony.  Click the headers to sort the cages.  This is where you deactivate a cage (destroy).  You must move all bats out of the cage before the cage is destroyed.  We don't want homeless bats.
+</p>
+
+<a href=#top>Top</a>
+
+<a name=NewCage></a>
+
+<h3>New Cage</h3>
+
+<p>
+Creates a new cage.  You need a room to put the cage in before creating the cage.
+</p>
+
+<a href=#top>Top</a>
+
+<a name=WeighCage></a>
+
+<h3>Weigh Cage</h3>
+
+<p>
+Brings up a list of cages to weigh.  Once you choose the cage a list of bats will appear.  Choose the bat to weigh and enter the bats weight in the form.  Follow the same procedures as you would if you were <a href=#WeighBat>weighing a single bat</a>.
+</p>
+
+<a href=#top>Top</a>
+
+<a name=MoveCage></a>
+
+<h3>Move Cage</h3>
+
+<p>
+Brings up a list of cages for you to choose to move.  Then choose a room, and then click Move Cage.
+</p>
+
+<a href=#top>Top</a>
+
+<a name=MedicalProblemsMenu></a>
+
+<h2>Medical Problems Menu</h2>
+
+<a name=ListMedicalProblems></a>
+
+<h3>List Medical Problems</h3>
+
+<p>
+List the medical problems.
+</p>
+
+<a href=#top>Top</a>
+
+<a name=NewMedicalProblem></a>
+
+<h3>New Medical Problem</h3>
+
+<p>
+Create a new medical problem.
+</p>
+
+<a href=#top>Top</a>
+
+<a name=TasksMenu></a>
+
+<h2>Tasks Menu</h2>
+
+<a name=ListTasks></a>
+
+<h3>List Tasks</h3>
+
+<p>
+Lists all tasks.
+</p>
+
+<a href=#top>Top</a>
+
+<a name=NewTask></a>
+
+<h3>New Task</h3>
+
+<p>
+Brings up a menu for which type of task you want to create.
+</p>
+
+<a href=#top>Top</a>
+
+<a name=HelpMenu></a>
+
+<h2>Help Menu</h2>
+
+<a name=Manual></a>
+
+<h3>Manual</h3>
+
+<p>
+This page, doofus.
+</p>
+
+<a href=#top>Top</a>
+
+<a name=BugReport></a>
+
+<h3>Bug Report</h3>
+
+<p>
+Submit a bug report (by email).
+</p>
+
+<a href=#top>Top</a>
+
+<a name=InstallBatkeeping></a>
+
+<h2>Install batkeeping</h2>
+
+<p>
 <%= link_to 'Installation Procedures', :controller => 'help', :action => 'install'%>
+</p>
+
+<a href=#top>Top</a>

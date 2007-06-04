@@ -6,10 +6,12 @@
   <li><%= link_to 'Animal Care Staff', :controller => 'main', :action => :animal_care_staff %></li>
 	<li><b><a href="">Admin ...</a></b>
 	<ul>
-    <li><%= link_to 'List Rooms', :controller => 'rooms', :action => :list %></li>
-    <li><%= link_to 'New Room', :controller => 'rooms', :action => :new %></li>
+		<li><%= link_to 'List Users', :controller => 'users', :action => :list %></li>
+		<li><%= link_to 'New User', :controller => 'users', :action => :new %></li>
 		<li><%= link_to 'List Species', :controller => 'species', :action => :list %></li>
     <li><%= link_to 'New Species', :controller => 'species', :action => :new %></li>
+    <li><%= link_to 'List Rooms', :controller => 'rooms', :action => :list %></li>
+    <li><%= link_to 'New Room', :controller => 'rooms', :action => :new %></li>
 	</ul>
   </li>
 	</ul>
@@ -28,12 +30,6 @@
 	<li><%= link_to 'New Cage', :controller => 'cages', :action => :new %></li>
 	<li><%= link_to 'Weigh Cage', :controller => 'cages', :action => :choose_cage_to_weigh %></li>
 	<li><%= link_to 'Move Cage', :controller => 'cages', :action => :move_cage %></li>
-	</ul>
-</li>
-<li><%= link_to 'Users', :controller => 'users', :action => :list %>
-	<ul>
-	<li><%= link_to 'List Users', :controller => 'users', :action => :list %></li>
-	<li><%= link_to 'New User', :controller => 'users', :action => :new %></li>
 	</ul>
 </li>
 <li><%= link_to 'Medical Problems', :controller => 'medical_problems', :action => :list_current %>

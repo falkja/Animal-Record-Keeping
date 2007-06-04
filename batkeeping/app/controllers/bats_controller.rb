@@ -85,13 +85,21 @@ redirect_to :action => 'list'
   end
 
   def new
-	@cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name")
-	@bat = Bat.new
-	@species = Species.find(:all)
-	@reactivating = false
-	@deactivating = false
-	@creating = true
-	@species = Species.find(:all)
+		@cages = Cage.active
+		@bat = Bat.new
+		@species = Species.find(:all)
+		@reactivating = false
+		@deactivating = false
+		@creating = true
+		@species = Species.find(:all)
+		if @cages.length == 0
+			flash[:notice] = 'New bats need a cage.  Create a cage before creating a bat.'
+			redirect_to :controller => 'cages', :action => :new
+		end
+		if @species.length == 0
+			flash[:notice] = 'New bats need a species.  Create a species before creating a bat.'
+			redirect_to :controller => 'species', :action => :new
+		end
 	end
 
   def create

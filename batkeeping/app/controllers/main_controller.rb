@@ -38,7 +38,7 @@ class MainController < ApplicationController
 
   #lists things of relevance to only the user
   def user_summary_page
-  
+	
   if session[:person] != nil
 		TaskCensus.populate_todays_tasks
 		

@@ -1,14 +1,3 @@
-<% if Cage.active.length == 0 %>
-
-<p>
-New bats need a cage. <br />
-Please <%= link_to 'create', :controller => 'cages',:action => 'new' %> or 
-<%= link_to 'activate', :controller => 'cages', :action => 'list_all' %> a cage
-before adding bats.
-</p>
-
-<% else %>
-
 <h1>New bat</h1>
 
 <% form_tag :action => 'create' do %>

@@ -11,5 +11,6 @@ class HelpController < ApplicationController
 	def install
 	end
 	
-	
+	def bug_report
+  end
 end

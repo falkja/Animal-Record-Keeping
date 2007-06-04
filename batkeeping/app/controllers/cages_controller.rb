@@ -134,33 +134,31 @@ class CagesController < ApplicationController
   end
   
   def deactivate
-	@cage = Cage.find(params[:id])
-  @rooms = Room.find(:all, :order => 'name')
-  if @cage.bats.length > 0
-    flash[:notice] = 'Deactivation failed. ' + @cage.name + ' is not empty.'
-    redirect_to :controller => 'bats', :action => 'choose_cage'
-  elsif @cage.tasks.current.length > 0
-		flash[:notice] = 'Deactivation failed. ' + @cage.name + ' still has feeding or weighing tasks.'
-		redirect_to :action => 'show', :id => @cage
-	end
-	@deactivating = true
+    @cage = Cage.find(params[:id])
+    @rooms = Room.find(:all, :order => 'name')
+    if @cage.bats.length > 0
+      flash[:notice] = 'Deactivation failed. ' + @cage.name + ' is not empty.'
+      redirect_to :controller => 'bats', :action => 'choose_cage'
+    elsif @cage.tasks.current.length > 0
+      flash[:notice] = 'Deactivation failed. ' + @cage.name + ' still has feeding or weighing tasks.'
+      redirect_to :action => 'show', :id => @cage
+    end
+    @deactivating = true
   end
   
   def reactivate
-	@cage = Cage.find(params[:id])
-	@cage.date_destroyed = nil
-	@cage.save
-	redirect_to :controller => 'tasks', :action => 'new_weigh_cage_task', :id => @cage
+    @cage = Cage.find(params[:id])
+    @cage.date_destroyed = nil
+    @cage.save
+    redirect_to :controller => 'tasks', :action => 'new_weigh_cage_task', :id => @cage
   end
 
   def choose_cage_to_weigh
-       @all_cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name")
-       @cages = Array.new
-	for cage in @all_cages
-	  if cage.bats.count > 0 
-		  @cages << cage
-	  end
-	end
+    @all_cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name")
+    @cages = Array.new
+    for cage in @all_cages
+      (cage.bats.count > 0) ? @cages << cage : ''
+    end
   end
 
   def weigh_cage

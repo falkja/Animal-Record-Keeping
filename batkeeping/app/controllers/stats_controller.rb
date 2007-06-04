@@ -20,21 +20,24 @@ class StatsController < ApplicationController
 	# colony rooms. We need to pass through params
 	# :year :month :room
 	def monthly_sheet
-    earliest = Bat.earliest_addition
-		@end_year = Time.now.year
-		if earliest
-			@start_year = earliest.year			
-		else	
-			@start_year = @end_year
-		end
-    @rooms = Room.find(:all, :order=> 'name')
-    
-    
-		@year = params[:date][:year].to_i
-		@month = params[:date][:month].to_i
-		@room = Room.find(params[:room][:id])
-		@days_this_month = 0...Date::civil(@year, @month, -1).day
-		@tempandhumidity_list = Weather.for_date(@year, @month, @days_this_month, @room.id)
+    if (params[:date][:year] == '')
+      redirect_to :back
+    else
+      earliest = Bat.earliest_addition
+      @end_year = Time.now.year
+      if earliest
+        @start_year = earliest.year			
+      else	
+        @start_year = @end_year
+      end
+      @rooms = Room.find(:all, :order=> 'name')
+      
+      @year = params[:date][:year].to_i
+      @month = params[:date][:month].to_i
+      @room = Room.find(params[:room][:id])
+      @days_this_month = 0...Date::civil(@year, @month, -1).day
+      @tempandhumidity_list = Weather.for_date(@year, @month, @days_this_month, @room.id)
+    end
 	end
 	
 	def compute_food_summary

@@ -42,24 +42,34 @@ class MedicalProblemsController < ApplicationController
 
   def remote_create
     bat = Bat.find(params[:bat])
-    @medical_problem = MedicalProblem.new(params[:medical_problem])
-    @medical_problem.date_closed = nil
-    @medical_problem.date_opened = Time.now
-    @medical_problem.bat = bat
-    @medical_problem.save
-    render :partial=>'medical_problems/show_medical_problems', :locals=>{:medical_problems => bat.medical_problems, :show_bat => false}
+    if params[:medical_problem][:title] == ''
+      flash[:note] = 'There were problems with your submission.  Please make sure all data fields are filled out.'
+      render :partial=>'medical_problems/show_medical_problems', :locals=>{:medical_problems => bat.medical_problems, :show_bat => false}
+    else
+      @medical_problem = MedicalProblem.new(params[:medical_problem])
+      @medical_problem.date_closed = nil
+      @medical_problem.date_opened = Time.now
+      @medical_problem.bat = bat
+      @medical_problem.save
+      render :partial=>'medical_problems/show_medical_problems', :locals=>{:medical_problems => bat.medical_problems, :show_bat => false}
+    end
   end
   
   def create
-    @bat = Bat.find(params[:bat][:id])
-    @medical_problem = MedicalProblem.new(params[:medical_problem])
-    @medical_problem.date_closed = nil
-    @medical_problem.bat = @bat
-    if @medical_problem.save
-      flash[:notice] = 'Medical problem was successfully created.'
-      redirect_to :controller => 'medical_treatments', :action => 'new', :id => @medical_problem
+    if params[:medical_problem][:title] == ''
+      flash[:notice] = 'There were problems with your submission.  Please make sure all data fields are filled out.'
+      redirect_to :back
     else
-      render :action => 'new'
+      @bat = Bat.find(params[:bat][:id])
+      @medical_problem = MedicalProblem.new(params[:medical_problem])
+      @medical_problem.date_closed = nil
+      @medical_problem.bat = @bat
+      if @medical_problem.save
+        flash[:notice] = 'Medical problem was successfully created.'
+        redirect_to :controller => 'medical_treatments', :action => 'new', :id => @medical_problem
+      else
+        render :action => 'new'
+      end
     end
   end
 

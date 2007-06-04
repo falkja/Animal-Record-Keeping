@@ -1,7 +1,7 @@
 class BatsController < ApplicationController
   require "gruff"
   def index
-redirect_to :action => 'list'
+    redirect_to :action => 'list'
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
@@ -142,45 +142,39 @@ redirect_to :action => 'list'
   end
 
   def update
-		@bat = Bat.find(params[:id])
-		if @reactivating
-			note = 'reactivated'
-		elsif (params[:move] != nil)
-			note = params[:move][:note]
-		else
-			note = ''
-		end
-		
-		Bat::set_user_and_comment(session[:person], note) #Do this before saving!
-		
-		if @bat.update_attributes(params[:bat])
-			if @deactivating
-				for medical_problem in @bat.medical_problems.current
-					medical_problem.date_closed = @bat.leave_date
-					medical_problem.save
-					for treatment in medical_problem.medical_treatments.current
-						treatment.date_closed = @bat.leave_date
-						treatment.save
-						for task in treatment.tasks.current
-							task.date_ended = @bat.leave_date
-							task.save
-						end
-					end
-				end
-			end
-			flash[:notice] = 'Bat was successfully updated.'
-			if params[:redirectme] == 'list'
-				redirect_to :action => 'list'
-			elsif params[:redirectme] == 'move'
-				@bats = Array.new
-				@bats << @bat
-				redirect_to :action => 'move', :bats => @bats, :new_cage => @bat.cage, :old_cage => @cage, :note => note
-			else
-				redirect_to :action => 'show', :id => @bat
-			end
-		else
-			render :action => 'edit'
-		end
+    if ( (params[:bat][:band] == '') || (params[:bat][:collection_place] == '') ) && !@deactivating && !@reactivating
+      flash[:notice] = 'There were problems with your submission.  Please make sure all data fields are filled out.'
+      redirect_to :back
+    elsif !@deactivating && !@reactivating && Bat.find(:first, :conditions => "band = '#{params[:bat][:band]}'")
+      flash[:notice] = 'There is already a bat with the same band.  Please choose a different band.'
+			redirect_to :back
+    else 
+      @bat = Bat.find(params[:id])
+      if @reactivating
+        note = 'reactivated'
+      elsif (params[:move] != nil)
+        note = params[:move][:note]
+      else
+        note = ''
+      end
+      
+      Bat::set_user_and_comment(session[:person], note) #Do this before saving!
+      
+      if @bat.update_attributes(params[:bat])
+        flash[:notice] = 'Bat was successfully updated.'
+        if params[:redirectme] == 'list'
+          redirect_to :action => 'list'
+        elsif params[:redirectme] == 'move'
+          @bats = Array.new
+          @bats << @bat
+          redirect_to :action => 'move', :bats => @bats, :new_cage => @bat.cage, :old_cage => @cage, :note => note
+        else
+          redirect_to :action => 'show', :id => @bat
+        end
+      else
+        render :action => 'edit'
+      end
+    end
   end
 
   def destroy
@@ -209,7 +203,20 @@ redirect_to :action => 'list'
 		census.tally(-1, @cage.room)
 		census.bats_removed ? census.bats_removed = census.bats_removed + @bat.band + ' ' : census.bats_removed = @bat.band + ' '
 		census.save
-	
+    
+    for medical_problem in @bat.medical_problems.current
+      medical_problem.date_closed = @bat.leave_date
+      medical_problem.save
+      for treatment in medical_problem.medical_treatments.current
+        treatment.date_closed = @bat.leave_date
+        treatment.save
+        for task in treatment.tasks.current
+          task.date_ended = @bat.leave_date
+          task.save
+        end
+      end
+    end
+    
 		update
   end
   
@@ -222,22 +229,27 @@ redirect_to :action => 'list'
   
   #because now we need to choose a cage for the zombie bat!
   def reactivate_bat
-		@bat = Bat.find(params[:id])
-		@bat.leave_date = nil
-		@bat.leave_reason = nil
-		@bat.save
-		@cage = nil
+    if params[:bat] == nil
+      flash[:notice] = "Reactivation failed.  Choose a cage for your reactivated bat."
+      redirect_to :back
+    else
+      @bat = Bat.find(params[:id])
+      @bat.leave_date = nil
+      @bat.leave_reason = nil
+      @bat.save
+      @cage = nil
 		
-		@bat.cage = Cage.find(params[:bat]['cage_id'])
-		@reactivating = true
+      @bat.cage = Cage.find(params[:bat][:cage_id])
+      @reactivating = true
 	
-		#census stuff
-		census = Census.find_or_create_by_date_and_room_id(Date.today, @bat.cage.room)
-		census.tally(1, @bat.cage.room)
-		census.bats_added ? census.bats_added = census.bats_added + @bat.band + ' ' : census.bats_added = @bat.band + ' '
-		census.save
+      #census stuff
+      census = Census.find_or_create_by_date_and_room_id(Date.today, @bat.cage.room)
+      census.tally(1, @bat.cage.room)
+      census.bats_added ? census.bats_added = census.bats_added + @bat.band + ' ' : census.bats_added = @bat.band + ' '
+      census.save
 	
-		update
+      update
+    end
   end
 
   #choose a cage to move bats from
@@ -373,28 +385,33 @@ redirect_to :action => 'list'
   end
   
   def submit_weight
-		@bat = Bat.find(params[:id])
-    #enter weights
-		@cage = @bat.cage
-		weight = Weight.new
-		weight.bat = @bat
-		weight.date = Time.now
-		weight.user = session[:person]
-		weight.weight = params[:weight][@bat.id.to_s] #The hash key is actually a string, so we need to convert the id to a string
-    weight.note = params[:note][@bat.id.to_s]
-    if params[:checkbox][:after_eating] == '1'
-      weight.after_eating = 'y'
+    @bat = Bat.find(params[:id])
+    if params[:weight][@bat.id.to_s] == ''
+      flash[:notice] = 'Submission failed. No weight entered.'
+      redirect_to :back
     else
-      weight.after_eating =  'n'
+      #enter weights
+      @cage = @bat.cage
+      weight = Weight.new
+      weight.bat = @bat
+      weight.date = Time.now
+      weight.user = session[:person]
+      weight.weight = params[:weight][@bat.id.to_s] #The hash key is actually a string, so we need to convert the id to a string
+      weight.note = params[:note][@bat.id.to_s]
+      if params[:checkbox][:after_eating] == '1'
+        weight.after_eating = 'y'
+      else
+        weight.after_eating =  'n'
+      end
+      weight.save
+      
+      Task::set_current_user(session[:person])
+      @updated_tasks = @cage.update_weighing_tasks
+      
+      if params[:redirectme]
+        redirect_to :controller => 'cages', :action => 'weigh_cage', :id => params[:redirectme]
+      end
     end
-		weight.save
-    
-    Task::set_current_user(session[:person])
-    @updated_tasks = @cage.update_weighing_tasks
-    
-		if params[:redirectme]
-			redirect_to :controller => 'cages', :action => 'weigh_cage', :id => params[:redirectme]
-		end
   end
   
   def graph_weights
@@ -425,13 +442,17 @@ redirect_to :action => 'list'
   
   def add_bat_note
 		@bat = Bat.find(params[:id])
-		if @bat.note != nil
-			@bat.note = @bat.note + '<tr><td>' + params[:bat][:note] + '</td><td>' + session[:person].initials + '</td><td>' + Time.now.strftime('%b %d, %Y') + '</td></tr>'
-		else
-			@bat.note = '<tr><td>' + params[:bat][:note] + '</td><td>' + session[:person].initials + '</td><td>' + Time.now.strftime('%b %d, %Y') + '</td></tr>'
-		end
-		@bat.save
-		render :partial => 'bats/display_bat_notes'
+    if params[:bat][:note] == ''
+      render :partial => 'bats/display_bat_notes'
+    else
+      if @bat.note != nil
+        @bat.note = @bat.note + '<tr><td>' + params[:bat][:note] + '</td><td>' + session[:person].initials + '</td><td>' + Time.now.strftime('%b %d, %Y') + '</td></tr>'
+      else
+        @bat.note = '<tr><td>' + params[:bat][:note] + '</td><td>' + session[:person].initials + '</td><td>' + Time.now.strftime('%b %d, %Y') + '</td></tr>'
+      end
+      @bat.save
+      render :partial => 'bats/display_bat_notes'
+    end
 	end
 
 	def show_or_hide_vaccination_date

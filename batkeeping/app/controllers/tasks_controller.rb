@@ -194,16 +194,20 @@ class TasksController < ApplicationController
 	  
   def update_multiple_feeding_tasks
     @cage = Cage.find(params[:id])
-    
-    for task in @cage.tasks.feeding_tasks
-        task.food = params[:task][:food]
-        task.dish_type = params[:task][:dish_type]
-        task.dish_num = params[:task][:dish_num]
-        task.save
-    end    
-    
-    render :partial => 'tasks_list', :locals => {:tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', 
-                            :same_type_task_list => true, :manage => true}
+    if (params[:task][:food] == '') || (params[:task][:dish_num] == '')
+      flash[:note] = 'There were problems with your submission.  Please make sure all data fields are filled out.'
+      render :partial => 'tasks_list', :locals => {:tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', 
+                              :same_type_task_list => true, :manage => true}
+    else
+      for task in @cage.tasks.feeding_tasks
+          task.food = params[:task][:food]
+          task.dish_type = params[:task][:dish_type]
+          task.dish_num = params[:task][:dish_num]
+          task.save
+      end
+      render :partial => 'tasks_list', :locals => {:tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', 
+                              :same_type_task_list => true, :manage => true}
+    end
   end
   
   def remote_new_feed_cage_task
@@ -214,37 +218,36 @@ class TasksController < ApplicationController
   def create_feed_cage_task #called from new_feed_cage_task page
     @cage = Cage.find(params[:id])
     if (params[:task][:dish_num] != '') && ( (params[:users] != nil) || (params[:task][:animal_care] == "1") ) && (params[:days] != nil) #error checking
-		
-		params[:users] ? @users = User.find(params[:users]) : @users = Array.new
-    @days = params[:days]
-    
-    if @days.include?("0")  #need to convert to multiple tasks
-        @days.clear
-        @days = ["1","2","3","4","5","6","7"]
-    end
-    
-    for day in @days
-      @task = Task.new
-      @task.repeat_code = day
-      @task.cage = @cage
-			@task.room = @cage.room
-      @task.title = "Feed cage " + @cage.name    
-      @task.internal_description = "feed"
-      @task.food = params[:task][:food]
-      @task.dish_type = params[:task][:dish_type]
-      @task.dish_num = params[:task][:dish_num]
-      @task.jitter = 0
-      @task.date_started = Time.now
-      @task.animal_care= params[:task][:animal_care]
-			@task.save
-      @task.users = @users
-			
-			task_census = TaskCensus.new
-			task_census.create_task_census(@cage.room, @task)
-    end
-    
-    flash[:note] = 'Feed cage task(s) successfully created. If the task does not appear below, it could be for a different day or for a different user (if on user summary page)'
-    
+      params[:users] ? @users = User.find(params[:users]) : @users = Array.new
+      @days = params[:days]
+      
+      if @days.include?("0")  #need to convert to multiple tasks
+          @days.clear
+          @days = ["1","2","3","4","5","6","7"]
+      end
+      
+      for day in @days
+        @task = Task.new
+        @task.repeat_code = day
+        @task.cage = @cage
+        @task.room = @cage.room
+        @task.title = "Feed cage " + @cage.name    
+        @task.internal_description = "feed"
+        @task.food = params[:task][:food]
+        @task.dish_type = params[:task][:dish_type]
+        @task.dish_num = params[:task][:dish_num]
+        @task.jitter = 0
+        @task.date_started = Time.now
+        @task.animal_care= params[:task][:animal_care]
+        @task.save
+        @task.users = @users
+        
+        task_census = TaskCensus.new
+        task_census.create_task_census(@cage.room, @task)
+      end
+      
+      flash[:note] = 'Feed cage task(s) successfully created. If the task does not appear below, it could be for a different day or for a different user (if on user summary page)'
+      
     end
 		
 		@user = User.find(session[:person].id)

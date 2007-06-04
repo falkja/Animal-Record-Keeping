@@ -23,14 +23,19 @@ class MedicalTreatmentsController < ApplicationController
   end
 
   def create
-    @medical_problem = MedicalProblem.find(params[:id])
-		@medical_treatment = MedicalTreatment.new(params[:medical_treatment])
-		@medical_treatment.medical_problem = @medical_problem
-    if @medical_treatment.save
-      flash[:notice] = 'Medical treatment was successfully created.'
-      redirect_to :action => 'show', :id=>@medical_treatment
+    if (params[:medical_treatment][:title] == '')
+      flash[:notice] = 'There were problems with your submission.  Please make sure all data fields are filled out.'
+      redirect_to :back
     else
-      render :action => 'new'
+      @medical_problem = MedicalProblem.find(params[:id])
+      @medical_treatment = MedicalTreatment.new(params[:medical_treatment])
+      @medical_treatment.medical_problem = @medical_problem
+      if @medical_treatment.save
+        flash[:notice] = 'Medical treatment was successfully created.'
+        redirect_to :action => 'show', :id=>@medical_treatment
+      else
+        render :action => 'new'
+      end
     end
   end
 

@@ -112,20 +112,6 @@ CREATE TABLE `census` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `medical_care_actions`
---
-
-DROP TABLE IF EXISTS `medical_care_actions`;
-CREATE TABLE `medical_care_actions` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `proposed_treatment_id` int(10) unsigned NOT NULL,
-  `date` datetime NOT NULL,
-  `remarks` text NOT NULL,
-  `user_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
 -- Table structure for table `medical_problems`
 --
 
@@ -174,6 +160,21 @@ CREATE TABLE `species` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `lower_weight_limit` float DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `task_census`
+--
+
+DROP TABLE IF EXISTS `task_census`;
+CREATE TABLE `task_census` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `internal_description` varchar(45) NOT NULL,
+  `date_done` date DEFAULT NULL,
+  `room_id` int(10) unsigned NOT NULL,
+  `task_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -284,4 +285,4 @@ CREATE TABLE `weights` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2007-05-28 20:36:04
+-- Dump completed on 2007-06-04 21:18:24

@@ -355,8 +355,8 @@ class BatsController < ApplicationController
       end
     end
 		
-    #when we finally get emails working uncomment the following
-    #MyMailer.deliver_mail("falk.ben@gmail.com")
+    MyMailer.deliver_after_move(@new_cage.user, @bats, @new_cage, @old_cage)
+    MyMailer.deliver_after_move(@old_cage.user, @bats, @new_cage, @old_cage)
   end
 	
   def single_bat_to_move

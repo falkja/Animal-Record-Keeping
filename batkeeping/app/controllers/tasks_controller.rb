@@ -143,8 +143,12 @@ class TasksController < ApplicationController
   end
 
   def new_weigh_cage_task
-    @cage = Cage.find(params[:id])
-    @users = User.current
+    if params[:id] == nil
+      redirect_to :back
+    else
+      @cage = Cage.find(params[:id])
+      @users = User.current
+    end
   end
 
   def create_weigh_cage_task #called from new_weigh_cage_task page
@@ -207,8 +211,12 @@ class TasksController < ApplicationController
 
 
   def manage_feeding_tasks
-    @cage = Cage.find(params[:id])
-    @users = User.current
+    if params[:id] == nil
+      redirect_to :back
+    else
+      @cage = Cage.find(params[:id])
+      @users = User.current
+    end
   end
 	  
   def update_multiple_feeding_tasks

@@ -24,8 +24,7 @@ class User < ActiveRecord::Base
 	def medical_care_user?
 		if self.job_type == nil
 			return false
-		end
-		if self.job_type.include? "Med"
+		elsif self.job_type.include? "Med"
 			return true
 		else
 			return false
@@ -35,8 +34,7 @@ class User < ActiveRecord::Base
 	def weekend_care_user?
 		if self.job_type == nil
 			return false
-		end
-		if self.job_type.include? "Wee"
+		elsif self.job_type.include? "Wee"
 			return true
 		else
 			return false
@@ -46,13 +44,22 @@ class User < ActiveRecord::Base
 	def animal_care_user?
 		if self.job_type == nil
 			return false
-		end
-		if self.job_type.include? "Ani"
+		elsif self.job_type.include? "Ani"
 			return true
 		else
 			return false
 		end
 	end
+  
+  def administrator?
+    if self.job_type == nil
+			return false
+		elsif self.job_type.include? "Admin"
+			return true
+		else
+			return false
+    end
+  end
 
 	def bats_medical_problems #returns the users's bat's medical problems unless the user is a medical care user, in which case it returns all the medical problems
 		if self.medical_care_user?

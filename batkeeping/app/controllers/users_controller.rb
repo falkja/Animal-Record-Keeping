@@ -26,7 +26,7 @@ class UsersController < ApplicationController
   def new
     @part_user_data = User.new 
     @user = User.new
-	@deactivating = false
+    @deactivating = false
   end
 
   def create
@@ -41,6 +41,19 @@ class UsersController < ApplicationController
 			redirect_to :back
     else
       @user = User.new(params[:user])
+      		@user.job_type = ''
+      if params[:medical][:checked] == '1'
+        @user.job_type = "Medical Care"
+      end
+      if params[:animal][:checked] == '1'
+        @user.job_type = @user.job_type + ' ' + "Animal Care"
+      end
+      if params[:weekend][:checked] == '1'
+        @user.job_type = @user.job_type + ' ' + "Weekend Care"
+      end
+      if params[:administrator][:checked] == '1'
+        @user.job_type = @user.job_type + ' ' + "Administrator"
+      end
       @user.end_date = nil
       if @user.save
         flash[:notice] = 'User was successfully created.'
@@ -53,7 +66,7 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-	@deactivating = false
+    @deactivating = false
   end
 
   def deactivate
@@ -89,6 +102,9 @@ class UsersController < ApplicationController
     end
     if params[:weekend][:checked] == '1'
       @user.job_type = @user.job_type + ' ' + "Weekend Care"
+    end
+    if params[:administrator][:checked] == '1'
+      @user.job_type = @user.job_type + ' ' + "Administrator"
     end
     
 		if @user.update_attributes(params[:user])

@@ -10,7 +10,6 @@
 <%   @end_date = '<div class="hidden">' %>
 <% end %>
 
-
 <!--[form:user]-->
 
 <%= @everything_else %>
@@ -36,6 +35,9 @@
 
 <%= check_box('medical', 'checked', :checked => @user.medical_care_user?) %>
 <label for="medical_checked">Medical Care Staff</label><br/>
+
+<%= check_box('administrator', 'checked', :checked => @user.administrator?) %>
+<label for="administrator_checked">Administrator</label><br/>
 
 </p>
 

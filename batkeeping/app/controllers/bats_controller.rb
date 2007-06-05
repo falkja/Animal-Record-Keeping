@@ -356,7 +356,9 @@ class BatsController < ApplicationController
     end
 		
     MyMailer.deliver_after_move(@new_cage.user, @bats, @new_cage, @old_cage)
-    MyMailer.deliver_after_move(@old_cage.user, @bats, @new_cage, @old_cage)
+    if (@new_cage.user != @old_cage.user)
+      MyMailer.deliver_after_move(@old_cage.user, @bats, @new_cage, @old_cage)
+    end
   end
 	
   def single_bat_to_move

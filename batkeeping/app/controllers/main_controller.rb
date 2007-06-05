@@ -40,8 +40,6 @@ class MainController < ApplicationController
   def user_summary_page
 	
   if session[:person] != nil
-		TaskCensus.populate_todays_tasks
-		
 		@weekend_care_users = User.current_weekend_care
 		@medical_care_users = User.current_medical_care
 		@animal_care_users = User.current_animal_care

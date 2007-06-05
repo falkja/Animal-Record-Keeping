@@ -9,14 +9,32 @@ No tasks
 <table>
   <thead>
   <% if tasks[0].internal_description == 'medical' && (!same_type_task_list) %>
-    <th>Bat</th>
+    <th>
+    <%= link_to_remote( "Title",
+		:update => div_id,
+		:url =>{ :controller => 'tasks', :action => 'sort_by_title', 
+					:tasks => tasks, :div_id => div_id, :same_type_task_list => same_type_task_list,
+          :manage => manage}) %>
+    </th>
 		<th>Medical Problem</th>
   <% end %>
   <% if !same_type_task_list %>
-    <th>Title</th>
+    <th>
+    <%= link_to_remote( "Title",
+		:update => div_id,
+		:url =>{ :controller => 'tasks', :action => 'sort_by_title', 
+					:tasks => tasks, :div_id => div_id, :same_type_task_list => same_type_task_list,
+          :manage => manage}) %>
+    </th>
   <% end %>
 	<% if tasks[0].room_id || tasks[0].general_task? %>
-		<th>Room</th>
+		<th>
+    <%= link_to_remote( "Room",
+		:update => div_id,
+		:url =>{ :controller => 'tasks', :action => 'sort_by_room', 
+					:tasks => tasks, :div_id => div_id, :same_type_task_list => same_type_task_list,
+          :manage => manage}) %>
+    </th>
 	<% end %>
 		<th>User(s)</th>
 	<% if tasks[0].internal_description == 'feed' %>
@@ -24,7 +42,13 @@ No tasks
 		<th>Dishes</th>
 		<th>Food/Bat</th>
 	<% end %>
-    <th>Frequency</th>
+    <th>
+    <%= link_to_remote( "Frequency",
+		:update => div_id,
+		:url =>{ :controller => 'tasks', :action => 'sort_by_repeat_code', 
+					:tasks => tasks, :div_id => div_id, :same_type_task_list => same_type_task_list,
+          :manage => manage}) %>
+    </th>
     <th>Last Done</th>
 	<% if tasks[0].internal_description != 'medical' %>
     <th>Notes</th>

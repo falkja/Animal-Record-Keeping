@@ -98,6 +98,25 @@ class TasksController < ApplicationController
 		params[:cages] ? @cages = Cage.find(params[:cages]) : @cages = Array.new
   end
 
+  def sort_by_room
+    tasks = Task.find(params[:tasks], :order => 'title, repeat_code')
+    tasks = tasks.sort_by{|task| [task.room_id ? task.room.name : '']}
+    render :partial => 'tasks_list', :locals => {:tasks => tasks, 
+      :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => params[:manage]}
+  end
+
+  def sort_by_title
+    tasks = Task.find(params[:tasks], :order => 'title')
+    render :partial => 'tasks_list', :locals => {:tasks => tasks, 
+      :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => params[:manage]}
+  end
+  
+  def sort_by_repeat_code
+    tasks = Task.find(params[:tasks], :order => 'repeat_code, title')
+    render :partial => 'tasks_list', :locals => {:tasks => tasks, 
+      :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => params[:manage]}
+  end
+  
   def show
     @task = Task.find(params[:id])
   end

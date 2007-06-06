@@ -51,6 +51,19 @@ class MedicalProblemsController < ApplicationController
       @medical_problem.date_opened = Time.now
       @medical_problem.bat = bat
       @medical_problem.save
+      
+      msg_body = "A medical problem has been created.\n\n"
+      msg_body = msg_body + "Bat: " + @medical_problem.bat.band
+      msg_body = msg_body + "\nMedical problem: " + @medical_problem.title
+      msg_body = msg_body + "\nMedical problem description: " + @medical_problem.description
+      msg_body = msg_body + "\nCreated by: " + session[:person].name
+      msg_body = msg_body + "\n\nFaithfully yours, etc."
+      
+      for user in User.current_medical_care
+        greeting = "Hi " + user.name + ",\n\n"
+        MyMailer.deliver_mail(user, "medical problem created", greeting + msg_body)
+      end
+      
       render :partial=>'medical_problems/show_medical_problems', :locals=>{:medical_problems => bat.medical_problems, :show_bat => false}
     end
   end
@@ -66,6 +79,19 @@ class MedicalProblemsController < ApplicationController
       @medical_problem.bat = @bat
       if @medical_problem.save
         flash[:notice] = 'Medical problem was successfully created.'
+        
+        msg_body = "A medical problem has been created.\n\n"
+        msg_body = msg_body + "Bat: " + @medical_problem.bat.band
+        msg_body = msg_body + "\nMedical problem: " + @medical_problem.title
+        msg_body = msg_body + "\nMedical problem description: " + @medical_problem.description
+        msg_body = msg_body + "\nCreated by: " + session[:person].name
+        msg_body = msg_body + "\n\nFaithfully yours, etc."
+        
+        for user in User.current_medical_care
+          greeting = "Hi " + user.name + ",\n\n"
+          MyMailer.deliver_mail(user, "medical problem created", greeting + msg_body)
+        end
+        
         redirect_to :controller => 'medical_treatments', :action => 'new', :id => @medical_problem
       else
         render :action => 'new'

@@ -1,5 +1,0 @@
-Hi <%= @account.name %>,
-
-This is a confirmation to email to notify you that the following bats: <% for bat in @bats %><%= bat.band %> <% end %>were moved <%= (@account == @old_cage.user) ? 'out of your cage ' + @old_cage.name + ' and into ' + @new_cage.name : 'into your cage ' + @new_cage.name + ' and out of ' + @old_cage.name %>
-
-Faithfully yours, etc.

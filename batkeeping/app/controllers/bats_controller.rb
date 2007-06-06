@@ -355,9 +355,18 @@ class BatsController < ApplicationController
       end
     end
 		
-    MyMailer.deliver_after_move(@new_cage.user, @bats, @new_cage, @old_cage)
+    greeting = "Hi " + @new_cage.user.name + ",\n\n"
+    msg_body = "This is is a confirmation to email to notify you that the following bats: "
+    for bat in @bats
+      msg_body = msg_body + bat.band + ' '
+    end
+    msg_body = msg_body + "were moved from " + @old_cage.name + " to " + @new_cage.name
+    msg_body = msg_body + "\n\nFaithfully yours, etc."
+    
+    MyMailer.deliver_mail(@new_cage.user, "moved bats", greeting + msg_body)
     if (@new_cage.user != @old_cage.user)
-      MyMailer.deliver_after_move(@old_cage.user, @bats, @new_cage, @old_cage)
+      greeting = "Hi " + @old_cage.user.name + ",\n\n"
+      MyMailer.deliver_mail(@old_cage.user, "moved bats", greeting + msg_body)
     end
   end
 	

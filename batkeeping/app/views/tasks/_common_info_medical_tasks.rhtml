@@ -1,6 +1,7 @@
 <b>Current Medical Tasks for Treatment: <%= medical_treatment.title %>:</b>
 <div class="left_indent">
 <p>
-<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => medical_treatment.tasks.current.sort_by{|task| [task.repeat_code]}, :div_id => 'tasks_div', :same_type_task_list => true, :manage => true} %>
+<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => Task.fine(medical_treatment.tasks.current, :order => 'repeat_code, title'), 
+		:div_id => 'tasks_div', :same_type_task_list => true, :manage => true, :sorted_by => 'repeat_code'} %>
 </p>
 </div>

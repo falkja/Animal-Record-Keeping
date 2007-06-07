@@ -19,7 +19,7 @@ General Tasks
 
 <div class="left_indent">
   <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => tasks, :div_id => div_id, 
-			:same_type_task_list => same_type_task_list, :manage => manage} %>
+			:same_type_task_list => same_type_task_list, :manage => manage, :sorted_by => sorted_by} %>
   
 	<% if (category_div == 'feeding_tasks_category') && (cages.length > 0) %>
 	<p>

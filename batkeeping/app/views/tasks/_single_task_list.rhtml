@@ -64,14 +64,16 @@
         <% if task.doable %>
           <% if task.internal_description == "feed" %>
             [<%= link_to_remote 'Just Fed', :url => {
-            :controller => 'tasks', :action => 'done', :id => task, 
-            :ids => tasks, :div_id => div_id,  :same_type_task_list => same_type_task_list},
+            :controller => 'tasks', :action => 'done', :id => task, :sorted_by => sorted_by,
+            :ids => tasks, :div_id => div_id,  :same_type_task_list => same_type_task_list,
+						:manage => manage},
             :update => div_id%>]
           <% elsif task.cage_id == nil && task.medical_treatment_id == nil %>
-            [<%= link_to_remote 'Just Done', :url => {
-            :controller => 'tasks', :action => 'done', :id => task, 
-            :ids => tasks, :div_id => div_id,  :same_type_task_list => same_type_task_list},
-            :update => div_id%>]
+						[<%= link_to_remote 'Just Done', :url => {
+            :controller => 'tasks', :action => 'done', :id => task, :sorted_by => sorted_by,
+            :ids => tasks, :div_id => div_id,  :same_type_task_list => same_type_task_list,
+						:manage => manage},
+            :update => div_id %>]
           <% elsif task.internal_description == "weigh" %>
               [<%= link_to 'Weigh Cage', :controller => 'cages', :action => 'weigh_cage', :id => task.cage %>]
           <% elsif task.internal_description == "medical" %>
@@ -94,7 +96,10 @@
     
     <% if manage %>
     <td><%= link_to 'Edit',  :controller => 'tasks', :action => 'edit', :id => task %></td>
-    <td><%= link_to_remote 'Destroy', :url => { :controller => 'tasks', :action => 'destroy', :id => task, :ids => tasks, :div_id => div_id,  :same_type_task_list => same_type_task_list}, :confirm => 'Are you sure?', :method => :post, :update => div_id %></td>
+    <td><%= link_to_remote 'Destroy', :url => {
+				:controller => 'tasks', :action => 'destroy', :id => task, :ids => tasks, :div_id => div_id,  
+				:same_type_task_list => same_type_task_list, :sorted_by => sorted_by, :manage => manage}, 
+				:confirm => 'Are you sure?', :method => :post, :update => div_id %></td>
     <% end %>
 
  </tr>

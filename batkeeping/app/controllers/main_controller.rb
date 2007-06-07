@@ -38,7 +38,6 @@ class MainController < ApplicationController
 
   #lists things of relevance to only the user
   def user_summary_page
-	
   if session[:person] != nil
 		@weekend_care_users = User.current_weekend_care
 		@medical_care_users = User.current_medical_care

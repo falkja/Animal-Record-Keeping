@@ -33,7 +33,8 @@ class TasksController < ApplicationController
 	  render :partial => 'hide_tasks', :locals => {:general_tasks => @general_tasks, :weighing_tasks => @weighing_tasks, 
                   :feeding_tasks => @feeding_tasks, :user => @user, :source => params[:source],
 									:medical_tasks => @medical_tasks, :div_id => params[:div_id], :feeding_cages => @feeding_cages,
-									:cages => @cages, :medical_problems => @medical_problems, :same_type_task_list => params[:same_type_task_list]}
+									:cages => @cages, :medical_problems => @medical_problems, :same_type_task_list => params[:same_type_task_list],
+									:sorted_by => params[:sorted_by]}
   end
   
   def show_tasks
@@ -42,7 +43,8 @@ class TasksController < ApplicationController
 	  render :partial => 'show_tasks', :locals => {:general_tasks => @general_tasks, :weighing_tasks => @weighing_tasks, 
                   :feeding_tasks => @feeding_tasks, :user => @user, :source => params[:source],
 									:medical_tasks => @medical_tasks, :div_id => params[:div_id], :feeding_cages => @feeding_cages,
-									:cages => @cages, :medical_problems => @medical_problems, :same_type_task_list => params[:same_type_task_list]}
+									:cages => @cages, :medical_problems => @medical_problems, :same_type_task_list => params[:same_type_task_list],
+									:sorted_by => params[:sorted_by]}
   end
 
   def show_hide_tasks
@@ -98,23 +100,19 @@ class TasksController < ApplicationController
 		params[:cages] ? @cages = Cage.find(params[:cages]) : @cages = Array.new
   end
 
-  def sort_by_room
-    tasks = Task.find(params[:tasks], :order => 'title, repeat_code')
-    tasks = tasks.sort_by{|task| [task.room_id ? task.room.name : '']}
+  def sort_by
+    if params[:sorted_by] == 'room'
+			tasks = Task.find(params[:tasks], :order => 'title, repeat_code')
+			tasks = tasks.sort_by{|task| [task.room_id ? task.room.name : '']}
+		elsif params[:sorted_by] == 'title'
+			tasks = Task.find(params[:tasks], :order => 'title')
+		elsif params[:sorted_by] == 'repeat_code'
+			tasks = Task.find(params[:tasks], :order => 'repeat_code, title')
+		end
+		
     render :partial => 'tasks_list', :locals => {:tasks => tasks, 
-      :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => params[:manage]}
-  end
-
-  def sort_by_title
-    tasks = Task.find(params[:tasks], :order => 'title')
-    render :partial => 'tasks_list', :locals => {:tasks => tasks, 
-      :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => params[:manage]}
-  end
-  
-  def sort_by_repeat_code
-    tasks = Task.find(params[:tasks], :order => 'repeat_code, title')
-    render :partial => 'tasks_list', :locals => {:tasks => tasks, 
-      :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => params[:manage]}
+      :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => params[:manage],
+			:sorted_by => params[:sorted_by]}
   end
   
   def show
@@ -205,8 +203,8 @@ class TasksController < ApplicationController
     
 		weighing_tasks = weighing_tasks.sort_by{|task| [task.repeat_code, task.title]}
 		
-    render :partial => 'tasks_list', :locals => {:tasks => weighing_tasks, 
-                                      :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => true}
+    render :partial => 'tasks_list', :locals => {:tasks => weighing_tasks, :sorted_by => params[:sorted_by],
+			:div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => true}
   end
 
 
@@ -224,7 +222,7 @@ class TasksController < ApplicationController
     if (params[:task][:food] == '') || (params[:task][:dish_num] == '')
       flash[:note] = 'There were problems with your submission.  Please make sure all data fields are filled out.'
       render :partial => 'tasks_list', :locals => {:tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', 
-                              :same_type_task_list => true, :manage => true}
+				:same_type_task_list => true, :manage => true, :sorted_by => params[:sorted_by]}
     else
       for task in @cage.tasks.feeding_tasks
           task.food = params[:task][:food]
@@ -233,7 +231,7 @@ class TasksController < ApplicationController
           task.save
       end
       render :partial => 'tasks_list', :locals => {:tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', 
-                              :same_type_task_list => true, :manage => true}
+				:same_type_task_list => true, :manage => true, :sorted_by => params[:sorted_by]}
     end
   end
   
@@ -294,10 +292,10 @@ class TasksController < ApplicationController
     elsif params[:source] == 'task_list' && (params[:div_id].include? 'all_tasks')
       feeding_tasks = Task.feeding_tasks
     end
-	
+		
 		feeding_tasks = feeding_tasks.sort_by{|task| [task.repeat_code, task.title]}
     
-    render :partial => 'tasks_list', :locals => {:tasks => feeding_tasks, 
+    render :partial => 'tasks_list', :locals => {:tasks => feeding_tasks, :sorted_by => params[:sorted_by],
                                       :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => true}
   end
 
@@ -327,7 +325,7 @@ class TasksController < ApplicationController
 		
     medical_tasks = medical_treatment.tasks.current.sort_by{|task| [task.repeat_code, task.title]}
     
-		render :partial => 'tasks_list', :locals => {:tasks => medical_tasks, 
+		render :partial => 'tasks_list', :locals => {:tasks => medical_tasks, :sorted_by => params[:sorted_by],
 			:div_id => params[:div_id], :same_type_task_list => true, :manage => true}
 		
 		end
@@ -407,7 +405,10 @@ class TasksController < ApplicationController
     task = Task.find(params[:id])
     Task::set_current_user(session[:person])
     task.done
-    render :partial => 'tasks_list', :locals => {:tasks => Task.find(params[:ids], :order => 'repeat_code, title'), :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => true}
+		
+		params[:tasks] = params[:ids]
+		
+		sort_by
   end
   
   def medical_task_done
@@ -435,10 +436,13 @@ class TasksController < ApplicationController
   end
   
   def destroy
-    tasks = Task.find(params[:ids], :order => 'repeat_code, title')
+    tasks = Task.find(params[:ids])
     tasks.delete(Task.find(params[:id]))
     Task.find(params[:id]).deactivate
-    render :partial => 'tasks_list', :locals => {:tasks => tasks, :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => true}
+		
+		params[:tasks] = params[:ids]
+		
+    sort_by
   end
   
   def destroy_medical_task

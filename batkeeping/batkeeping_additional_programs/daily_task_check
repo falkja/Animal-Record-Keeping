@@ -1,0 +1,2 @@
+cd /mnt/raid/software/batkeeping/
+rake email_if_tasks_not_done RAILS_ENV=production

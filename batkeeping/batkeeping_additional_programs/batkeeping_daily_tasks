@@ -1,0 +1,2 @@
+cd /mnt/raid/software/batkeeping/
+rake populate_census_entries RAILS_ENV=production

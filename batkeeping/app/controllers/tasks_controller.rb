@@ -466,7 +466,7 @@ class TasksController < ApplicationController
 		render :partial => 'show_hide_task_category', :locals => {:tasks => tasks, :div_id => params[:div_id],
 				:same_type_task_list => params[:same_type_task_list], :manage => params[:manage], :cages => cages,
 				:source => params[:source], :count => params[:count], :show => params[:show], :category_div => params[:category_div],
-				:medical_problems => medical_problems}
+				:medical_problems => medical_problems, :sorted_by => params[:sorted_by]}
 	end
 	
   def show_hide_users

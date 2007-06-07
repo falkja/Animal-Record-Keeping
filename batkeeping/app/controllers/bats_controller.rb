@@ -356,7 +356,7 @@ class BatsController < ApplicationController
     end
 		
     greeting = "Hi " + @new_cage.user.name + ",\n\n"
-    msg_body = "This is is a confirmation to email to notify you that the following bats: "
+    msg_body = "This is a confirmation to email to notify you that the following bats: "
     for bat in @bats
       msg_body = msg_body + bat.band + ' '
     end

@@ -4,7 +4,7 @@
 		:url => {:controller => 'tasks', :action => 'show_hide_task_categories', :tasks => tasks,
 			:div_id => div_id, :same_type_task_list => same_type_task_list, 
 			:manage => manage, :cages => cages, :source => source, :count => count, :show => false,
-			:category_div => category_div, :medical_problems => medical_problems}%>]
+			:category_div => category_div, :medical_problems => medical_problems, :sorted_by => sorted_by}%>]
 
 <% if category_div == 'feeding_tasks_category' %>
 Feeding Tasks
@@ -77,7 +77,7 @@ General Tasks
 		:url => {:controller => 'tasks', :action => 'show_hide_task_categories', :tasks => tasks,
 			:div_id => div_id, :same_type_task_list => same_type_task_list, 
 			:manage => manage, :cages => cages, :source => source, :count => count, :show => true,
-			:category_div => category_div, :medical_problems => medical_problems}%>]
+			:category_div => category_div, :medical_problems => medical_problems, :sorted_by => sorted_by}%>]
 
 <% if category_div == 'feeding_tasks_category' %>
 Feeding Tasks

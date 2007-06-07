@@ -258,13 +258,12 @@ class Task < ActiveRecord::Base
     end
   end
   
-	def self.tasks_not_done_today
-		tasks_today = Task.today
+  def self.tasks_not_done_today(tasks)
 		tasks_not_done = Array.new
-		for task in tasks_today
+    for task in tasks
 			task.done_by_schedule ? '' : tasks_not_done << task
 		end
 		return tasks_not_done
-	end
+  end
 	
 end

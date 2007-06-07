@@ -21,6 +21,10 @@ class User < ActiveRecord::Base
 		find :all, :conditions => "end_date is null and job_type REGEXP 'Animal Care'", :order => 'name'
 	end
 	
+  def self.administrator
+    find :all, :conditions => "end_date is null and job_type REGEXP 'Administrator'", :order => 'name'
+  end
+  
 	def medical_care_user?
 		if self.job_type == nil
 			return false

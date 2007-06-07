@@ -1,7 +1,7 @@
 <h2>[<%= link_to_remote '+', :url => {:controller => 'tasks', :action => :show_tasks, :feeding_tasks => feeding_tasks, 
         :weighing_tasks => weighing_tasks, :general_tasks => general_tasks, :medical_tasks => medical_tasks,
         :div_id => div_id, :feeding_cages => feeding_cages, :cages => cages, :medical_problems => medical_problems, 
-        :same_type_task_list => same_type_task_list, :source => source, :user => user},
+        :same_type_task_list => same_type_task_list, :source => source, :user => user, :sorted_by => sorted_by},
         :update => div_id %>]
 <% if div_id == 'todays_tasks' %>
 Today's Tasks

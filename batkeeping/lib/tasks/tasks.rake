@@ -50,7 +50,15 @@ task :email_if_tasks_not_done => :environment do
     greeting = "Administrator: " + user.name + ",\n\n"
     msg_body = "This is a warning email to notify you that the following tasks were not completed today:\n"
     for task in tasks_not_done
-      msg_body = msg_body + "Task: " + task.title + " Assigned to: " + task.users ? task.users.each{|user| user.name : 'Animal Care Staff' + ", "} + "\n"
+      msg_body = msg_body + "Task: " + task.title + " Assigned to: " 
+        if (task.users.length > 0)
+          for user in task.users
+            @msg_body = @msg_body + user.name + ", "
+          end
+        else
+          msg_body = msg_body + "Animal Care Staff"
+        end
+        msg_body = msg_body + "\n"
     end
     msg_body = msg_body + "\nFaithfully yours, etc."
     MyMailer.deliver_mail(user, "tasks not done today", greeting + msg_body)

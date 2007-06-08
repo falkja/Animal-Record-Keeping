@@ -18,6 +18,11 @@
 <%= (@user.animal_care_user?) ? "Weekday Care<br/>" : "" %>
 <%= (@user.weekend_care_user?) ? "Weekend Care<br/>" : "" %>
 <%= (@user.medical_care_user?) ? "Medical Care<br/>" : "" %>
+
+<% if (@user.animal_care_user? || @user.weekend_care_user? || @user.medical_care_user? || @user.administrator?) %>
+  <p><%= button_to('Send Email to Lab', :controller => 'main', :action => 'lab_email') %></p>
+<% end %>
+
 </div>
 </p>
 <% end %>

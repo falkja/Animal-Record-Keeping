@@ -1,0 +1,24 @@
+<h1>Send Email to Lab</h1>
+
+<p>
+To:<br/>
+<% for user in @users %>
+  <%= user.name + ", " + user.email %><br/>
+<% end %>
+</p>
+
+<% form_tag :action => 'send_lab_email', :users_emails => @users_emails do %>
+
+<p>
+Subject:<br/>
+<%= text_field 'email', 'subject', :value => @subject %>
+</p>
+
+<p>
+Body:<br/>
+<%= text_area 'email', 'body', :value => @greeting + @msg_body, :cols => 80 %>
+</p>
+
+<p><%= submit_tag "Send Email to Lab" %></p>
+
+<% end %>

@@ -113,7 +113,7 @@ class MainController < ApplicationController
       @msg_body = "Tasks not done today (" + Time.now.strftime('%m-%d-%Y') + "):\n\n"
       for task in @tasks_not_done
         @msg_body = @msg_body + "Task: " + task.title + " Assigned to: " 
-        if task.users
+        if (task.users.length > 0)
           for user in task.users
             @msg_body = @msg_body + user.name + ", "
           end

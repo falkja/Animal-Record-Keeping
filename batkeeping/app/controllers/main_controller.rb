@@ -110,9 +110,9 @@ class MainController < ApplicationController
     @greeting = "Dear Batlab,\n\n"
     
     if @tasks_not_done.length > 0
-      @msg_body = "Tasks not done today (" + Time.now.strftime('%m-%d-%Y') + "):\n\n"
+      @msg_body = "Tasks not done today (" + Time.now.strftime('%B %d, %Y') + "):\n\n"
       for task in @tasks_not_done
-        @msg_body = @msg_body + "Task: " + task.title + " Assigned to: " 
+        @msg_body = @msg_body + "Task: " + task.title + "\nAssigned to: " 
         if (task.users.length > 0)
           for user in task.users
             @msg_body = @msg_body + user.name + ", "
@@ -120,12 +120,12 @@ class MainController < ApplicationController
         else
           @msg_body = @msg_body + "Animal Care Staff"
         end
-        @msg_body = @msg_body + "\n"
+        @msg_body = @msg_body + "\n\n"
       end
     else
-      @msg_body = "All of today's tasks completed."
+      @msg_body = "All of today's tasks completed.\n\n"
     end
-    @msg_body = @msg_body + "\n\nFaithfully yours, etc."
+    @msg_body = @msg_body + "Faithfully yours, etc."
   end
   
   def send_lab_email

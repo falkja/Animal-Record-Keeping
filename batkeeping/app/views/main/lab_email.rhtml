@@ -2,9 +2,14 @@
 
 <p>
 To:<br/>
+<table>
 <% for user in @users %>
-  <%= user.name + ", " + user.email %><br/>
+  <tr>
+	<td><%= user.name %></td>
+	<td><%= user.email %></td>
+	</tr>
 <% end %>
+</table>
 </p>
 
 <% form_tag :action => 'send_lab_email', :users_emails => @users_emails do %>
@@ -16,7 +21,7 @@ Subject:<br/>
 
 <p>
 Body:<br/>
-<%= text_area 'email', 'body', :value => @greeting + @msg_body, :cols => 80 %>
+<%= text_area 'email', 'body', :value => @greeting + @msg_body, :cols => 60 %>
 </p>
 
 <p><%= submit_tag "Send Email to Lab" %></p>

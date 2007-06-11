@@ -61,7 +61,7 @@ class MedicalProblemsController < ApplicationController
       
       for user in User.current_medical_care
         greeting = "Hi " + user.name + ",\n\n"
-        MyMailer.deliver_mail(user, "medical problem created", greeting + msg_body)
+        MyMailer.deliver_mail(user.email, "medical problem created", greeting + msg_body)
       end
       
       render :partial=>'medical_problems/show_medical_problems', :locals=>{:medical_problems => bat.medical_problems, :show_bat => false}
@@ -89,7 +89,7 @@ class MedicalProblemsController < ApplicationController
         
         for user in User.current_medical_care
           greeting = "Hi " + user.name + ",\n\n"
-          MyMailer.deliver_mail(user, "medical problem created", greeting + msg_body)
+          MyMailer.deliver_mail(user.email, "medical problem created", greeting + msg_body)
         end
         
         redirect_to :controller => 'medical_treatments', :action => 'new', :id => @medical_problem

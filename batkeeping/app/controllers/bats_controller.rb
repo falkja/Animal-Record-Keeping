@@ -363,10 +363,10 @@ class BatsController < ApplicationController
     msg_body = msg_body + "were moved from " + @old_cage.name + " to " + @new_cage.name
     msg_body = msg_body + "\n\nFaithfully yours, etc."
     
-    MyMailer.deliver_mail(@new_cage.user, "moved bats", greeting + msg_body)
+    MyMailer.deliver_mail(@new_cage.user.email, "moved bats", greeting + msg_body)
     if (@new_cage.user != @old_cage.user)
       greeting = "Hi " + @old_cage.user.name + ",\n\n"
-      MyMailer.deliver_mail(@old_cage.user, "moved bats", greeting + msg_body)
+      MyMailer.deliver_mail(@old_cage.user.email, "moved bats", greeting + msg_body)
     end
   end
 	

@@ -25,18 +25,7 @@ task :email_if_tasks_not_done => :environment do
       
       #per user generated email
       greeting = "Hi " + user.name + ",\n\n"
-      msg_body = "This is a warning email to notify you that the following tasks were not completed today (" + Time.now.strftime('%B %d, %Y') + "):\n\n"
-      for task in tasks_not_done
-        msg_body = msg_body + "Task: " + task.title + "\nAssigned to: " 
-        if (task.users.length > 0)
-          for user in task.users
-            msg_body = msg_body + user.name + ", "
-          end
-        else
-          msg_body = msg_body + "Animal Care Staff"
-        end
-        msg_body = msg_body + "\n\n"
-      end
+      msg_body = MyMailer.create_msg_for_tasks_undone(tasks_not_done)
       msg_body = msg_body + "Faithfully yours, etc."
       MyMailer.deliver_mail(user, "tasks not done today", greeting + msg_body)
       
@@ -44,25 +33,18 @@ task :email_if_tasks_not_done => :environment do
     
 	end
   
-  #all administrators get one email
+  #all administrators get CCed on one email
   users_emails = Array.new
 	User.administrator.each{|user| users_emails << user.email}
 	
-	greeting = "Administrator(s),\n\n"
-	msg_body = "This is a warning email to notify you that the following tasks were not completed today (" + Time.now.strftime('%B %d, %Y') + "):\n\n"
-	
-  tasks_not_done = Task.tasks_not_done_today(Task.today)
-	for task in tasks_not_done
-		msg_body = msg_body + "Task: " + task.title + "\nAssigned to: " 
-		if (task.users.length > 0)
-			for user in task.users
-				msg_body = msg_body + user.name + ", "
-			end
-		else
-			msg_body = msg_body + "Animal Care Staff"
-		end
-		msg_body = msg_body + "\n\n"
+	tasks_not_done = Task.tasks_not_done_today(Task.today)
+	if tasks_not_done.length > 0
+		
+		greeting = "Administrator(s),\n\n"
+		msg_body = MyMailer.create_msg_for_tasks_undone(tasks_not_done)
+		msg_body = msg_body + "Faithfully yours, etc."
+		MyMailer.deliver_mass_mail(users_emails, "tasks not done today", greeting + msg_body)
+		
 	end
-	msg_body = msg_body + "Faithfully yours, etc."
-	MyMailer.deliver_mass_mail(users_emails, "tasks not done today", greeting + msg_body)
+	
 end

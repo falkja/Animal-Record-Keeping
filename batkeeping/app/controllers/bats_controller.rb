@@ -476,7 +476,7 @@ class BatsController < ApplicationController
 
 	def show_or_hide_vaccination_date
     if params[:bat]
-      bat = bat.find(params[:bat])
+      bat = Bat.find(params[:bat])
     else
       bat = nil
     end

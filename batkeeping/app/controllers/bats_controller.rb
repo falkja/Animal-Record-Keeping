@@ -355,18 +355,26 @@ class BatsController < ApplicationController
       end
     end
 		
-    greeting = "Hi " + @new_cage.user.name + ",\n\n"
-    msg_body = "This is a confirmation to email to notify you that the following bats: "
-    for bat in @bats
-      msg_body = msg_body + bat.band + ' '
+    if @new_cage
+      greeting = "Hi " + @new_cage.user.name + ",\n\n"
+      msg_body = "This is a confirmation to email to notify you that the following bats: "
+      for bat in @bats
+        msg_body = msg_body + bat.band + ' '
+      end
+      if @old_cage && @new_cage
+        msg_body = msg_body + "were moved from " + @old_cage.name + " to " + @new_cage.name
+      else
+        msg_body = msg_body + "were moved to " + @new_cage.name
+      end
+      msg_body = msg_body + "\n\nFaithfully yours, etc."
+      
+      MyMailer.deliver_mail(@new_cage.user.email, "moved bats", greeting + msg_body)
     end
-    msg_body = msg_body + "were moved from " + @old_cage.name + " to " + @new_cage.name
-    msg_body = msg_body + "\n\nFaithfully yours, etc."
-    
-    MyMailer.deliver_mail(@new_cage.user.email, "moved bats", greeting + msg_body)
-    if (@new_cage.user != @old_cage.user)
-      greeting = "Hi " + @old_cage.user.name + ",\n\n"
-      MyMailer.deliver_mail(@old_cage.user.email, "moved bats", greeting + msg_body)
+    if @new_cage && @old_cage
+      if (@new_cage.user != @old_cage.user)
+        greeting = "Hi " + @old_cage.user.name + ",\n\n"
+        MyMailer.deliver_mail(@old_cage.user.email, "moved bats", greeting + msg_body)
+      end
     end
   end
 	
@@ -467,7 +475,12 @@ class BatsController < ApplicationController
 	end
 
 	def show_or_hide_vaccination_date
-		render :partial => 'form_vaccination', :locals=>{:bat=>Bat.find(params[:bat]), :show_vaccination_date_select=>params[:show_vaccination_date_select], 
+    if params[:bat]
+      bat = bat.find(params[:bat])
+    else
+      bat = nil
+    end
+		render :partial => 'form_vaccination', :locals=>{:bat=>bat, :show_vaccination_date_select=>params[:show_vaccination_date_select], 
 				:reactivating=>params[:reactivating]}
 	end
 	

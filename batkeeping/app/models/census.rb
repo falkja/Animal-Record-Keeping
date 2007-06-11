@@ -7,7 +7,11 @@ class Census < ActiveRecord::Base
 				self.animals = self.animals + num_bats
 			else
 				last_census = Census.find(:first, :order => 'date desc', :conditions => 'room_id = ' + room.id.to_s)
-				last_census ? self.animals = last_census.animals + num_bats : self.animals = num_bats
+				if last_census && last_census.animals
+          self.animals = last_census.animals + num_bats
+        else 
+          self.animals = num_bats
+        end
 			end
 			self.save
 		end

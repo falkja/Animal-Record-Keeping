@@ -1,2 +1,2 @@
 cd /mnt/raid/software/batkeeping
-ruby script/server -e production -d
+ruby script/server -e development -d

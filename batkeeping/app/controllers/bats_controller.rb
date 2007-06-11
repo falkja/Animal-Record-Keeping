@@ -145,7 +145,7 @@ class BatsController < ApplicationController
     if ( (params[:bat][:band] == '') || (params[:bat][:collection_place] == '') ) && !@deactivating && !@reactivating
       flash[:notice] = 'There were problems with your submission.  Please make sure all data fields are filled out.'
       redirect_to :back
-    elsif !@deactivating && !@reactivating && Bat.find(:first, :conditions => "band = '#{params[:bat][:band]}'")
+    elsif !@deactivating && !@reactivating && (Bat.find(:all, :conditions => "band = '#{params[:bat][:band]}'").length > 1)
       flash[:notice] = 'There is already a bat with the same band.  Please choose a different band.'
 			redirect_to :back
     else 

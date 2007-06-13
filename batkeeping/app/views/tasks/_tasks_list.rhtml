@@ -10,11 +10,11 @@ No tasks
   <thead>
   <% if tasks[0].internal_description == 'medical' && (!same_type_task_list) %>
     <th>
-    <%= link_to_remote( "Title",
+    <%= link_to_remote( "Bat",
 		:update => div_id,
 		:url =>{ :controller => 'tasks', :action => 'sort_by', 
 					:tasks => tasks, :div_id => div_id, :same_type_task_list => same_type_task_list,
-          :manage => manage, :sorted_by => 'title'}) %>
+          :manage => manage, :sorted_by => 'bat'}) %>
     </th>
 		<th>Medical Problem</th>
   <% end %>

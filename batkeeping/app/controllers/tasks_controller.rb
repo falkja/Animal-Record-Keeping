@@ -108,6 +108,9 @@ class TasksController < ApplicationController
 			tasks = Task.find(params[:tasks], :order => 'title')
 		elsif params[:sorted_by] == 'repeat_code'
 			tasks = Task.find(params[:tasks], :order => 'repeat_code, title')
+    elsif params[:sorted_by] == 'bat'
+      tasks = Task.find(params[:tasks], :order => 'title, repeat_code')
+      tasks = tasks.sort_by{|task|[task.medical_treatment.medical_problem.bat.band]}
 		end
 		
     render :partial => 'tasks_list', :locals => {:tasks => tasks, 

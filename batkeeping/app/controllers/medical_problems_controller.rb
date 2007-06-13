@@ -59,10 +59,11 @@ class MedicalProblemsController < ApplicationController
       msg_body = msg_body + "\nCreated by: " + session[:person].name
       msg_body = msg_body + "\n\nFaithfully yours, etc."
       
-      for user in User.current_medical_care
-        greeting = "Hi " + user.name + ",\n\n"
-        MyMailer.deliver_mail(user.email, "medical problem created", greeting + msg_body)
-      end
+      medical_users_emails = Array.new
+      User.current_medical_care.each{|user| medical_users_emails << user.email}
+      
+      greeting = "Hi medical care users,\n\n"
+      MyMailer.deliver_mass_mail(medical_users_emails, "medical problem created", greeting + msg_body)
       
       render :partial=>'medical_problems/show_medical_problems', :locals=>{:medical_problems => bat.medical_problems, :show_bat => false}
     end
@@ -87,10 +88,11 @@ class MedicalProblemsController < ApplicationController
         msg_body = msg_body + "\nCreated by: " + session[:person].name
         msg_body = msg_body + "\n\nFaithfully yours, etc."
         
-        for user in User.current_medical_care
-          greeting = "Hi " + user.name + ",\n\n"
-          MyMailer.deliver_mail(user.email, "medical problem created", greeting + msg_body)
-        end
+        medical_users_emails = Array.new
+        User.current_medical_care.each{|user| medical_users_emails << user.email}
+        
+        greeting = "Hi medical care users,\n\n"
+        MyMailer.deliver_mass_mail(medical_users_emails, "medical problem created", greeting + msg_body)
         
         redirect_to :controller => 'medical_treatments', :action => 'new', :id => @medical_problem
       else

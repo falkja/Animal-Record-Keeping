@@ -16,7 +16,13 @@ No tasks
 					:tasks => tasks, :div_id => div_id, :same_type_task_list => same_type_task_list,
           :manage => manage, :sorted_by => 'bat'}) %>
     </th>
-		<th>Medical Problem</th>
+    <th>
+    <%= link_to_remote( "Medical Problem",
+		:update => div_id,
+		:url =>{ :controller => 'tasks', :action => 'sort_by', 
+					:tasks => tasks, :div_id => div_id, :same_type_task_list => same_type_task_list,
+          :manage => manage, :sorted_by => 'medical_problem'}) %>
+    </th>
   <% end %>
   <% if !same_type_task_list %>
     <th>

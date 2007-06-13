@@ -4,7 +4,6 @@ class Census < ActiveRecord::Base
 		def tally(num_bats, room)
 			self.room = room
 			if self.animals != nil
-        sdf
 				self.animals = self.animals + num_bats
 			else
 				last_census = Census.find(:first, :order => 'date desc', :conditions => "room_id = #{room.id.to_s} and date < '#{Date.today.to_s}'")

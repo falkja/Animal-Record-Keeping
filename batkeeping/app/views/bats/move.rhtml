@@ -24,11 +24,6 @@
 </tr>
 </table>
 
-<% if @new_cage != nil %>
-<p><warning>Send email alert to owner of <%=h @new_cage.name %> that bat(s)
-have been moved and are now under his/her care</warning></p>
-<% end %>
-
 <div id='cage_tasks'>
 <% if (@old_cage != nil) && (@new_cage != nil) %>
 <%= render :partial => 'bats/manage_cage_tasks_after_move', :locals => {:step=>1, :old_cage=>@old_cage,

@@ -13,16 +13,19 @@
 <th>Temperature</th>
 <th>Humidity</th>
 
+<% i = 0 %>
+
 <% for room in Room.find(:all, :order=> 'name') %>
+<% i = i + 1 %>
 <tr>
 <td><%= room.name %></td>
 
 <% room_weather = room.weathers.today %>
 <% if room_weather == nil %>
-<td><%= text_field 'weather', 'temperature', :size=>2, :value=> '' %> &deg F</td>
-<td><%= text_field 'weather', 'humidity', :size=>2, :value=> '' %>%</td>
+<td><%= text_field 'weather' + i.to_s, 'temperature', :size=>2, :value=> '' %> &deg F</td>
+<td><%= text_field 'weather' + i.to_s, 'humidity', :size=>2, :value=> '' %>%</td>
 <td><%= submit_to_remote 'Submit', 'Submit', :update => 'weathers',
-        :url=>{:controller => 'weathers', :action => 'create', :room => room} %></td>
+        :url=>{:controller => 'weathers', :action => 'create', :room => room, :i => i} %></td>
 
 <% else %>
 <td><%= room_weather.temperature %> &deg F</td>

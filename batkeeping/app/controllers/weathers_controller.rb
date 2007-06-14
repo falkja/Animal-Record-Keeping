@@ -1,15 +1,16 @@
 class WeathersController < ApplicationController
   
   def create
-    if (params[:weather][:temperature] != '') && (params[:weather][:humidity] != '') && (params[:weather][:humidity].to_f <= 100) && (params[:weather][:humidity].to_f >= 0)
+    i = params[:i]
+    if (params['weather' + i][:temperature] != '') && (params['weather' + i][:humidity] != '') && (params['weather' + i][:humidity].to_f <= 100) && (params['weather' + i][:humidity].to_f >= 0)
       @weather = Weather.new
-      @weather.temperature = params[:weather][:temperature]
-      @weather.humidity = params[:weather][:humidity]
+      @weather.temperature = params['weather' + i][:temperature]
+      @weather.humidity = params['weather' + i][:humidity]
       @weather.room = Room.find(params[:room])
       @weather.log_date = Date.today
       @weather.sig = session[:person].initials
       @weather.save
-    
+      
       flash[:note]='Temperature/humidity entry added.'
     else
       flash[:note]='There was an error in your submission.'

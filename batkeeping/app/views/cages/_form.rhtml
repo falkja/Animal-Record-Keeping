@@ -14,7 +14,7 @@
 <%= @everything_else %>
 
 <p><label for="cage_name">Name</label><br/>
-<%= text_field 'cage', 'name', :disabled => @disable_cage_name_change %></p>
+<%= text_field 'cage', 'name', :disabled => @disable_cage_name_change, :focus => true %></p>
 
 <p><label for="cage_date_created">Date created</label><br/>
 <%= date_select 'cage', 'date_created', :disabled => @disable_cage_name_change %></p>

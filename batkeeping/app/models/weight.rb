@@ -19,6 +19,6 @@ class Weight < ActiveRecord::Base
 	end
   
 	def self.today
-		self.find(:all, :order => "date DESC", :limit => 1, :conditions => "weights.date >= '" + Time.now.strftime("%Y-%m-%d") + "'")
+		self.find(:first, :order => "date DESC", :conditions => "weights.date >= '#{Time.now.strftime("%Y-%m-%d")}'")
 	end
 end

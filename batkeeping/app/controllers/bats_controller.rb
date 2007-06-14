@@ -401,6 +401,7 @@ class BatsController < ApplicationController
   def weigh_bat
     @bat = Bat.find(params[:id])
     @cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name" )
+    @bat.weights.today ? @weight = @bat.weights.today : @weight = Weight.new
   end
   
   def submit_weight
@@ -411,12 +412,14 @@ class BatsController < ApplicationController
     else
       #enter weights
       @cage = @bat.cage
-      weight = Weight.new
+      
+      @bat.weights.today ? weight = @bat.weights.today : weight = Weight.new
+      
       weight.bat = @bat
       weight.date = Time.now
       weight.user = session[:person]
-      weight.weight = params[:weight][@bat.id.to_s] #The hash key is actually a string, so we need to convert the id to a string
-      weight.note = params[:note][@bat.id.to_s]
+      weight.weight = params[:weight][:weight]
+      weight.note = params[:weight][:note]
       if params[:checkbox][:after_eating] == '1'
         weight.after_eating = 'y'
       else

@@ -8,9 +8,9 @@
 <tr>
 <td><%= link_to bat.band, :controller => 'bats', :action => 'weigh_bat', :id => bat, :redirectme => bat.cage %></td>
 
-<% if bat.weights.today.length > 0 %>
-<td><b><%=h bat.weights.recent.weight %></b></td>
-<td><b><%=h bat.weights.recent.note %></b></td>
+<% if bat.weights.today %>
+<td><b><%=h bat.weights.today.weight %></b></td>
+<td><b><%=h bat.weights.today.note %></b></td>
 <% end %>
 
 </tr>

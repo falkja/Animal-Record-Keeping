@@ -13,7 +13,7 @@
 <div id='medical_problems'>
 <% if @bat.medical_problems.current.length > 0 %>
 <p>
-<%= render :partial=>'medical_problems/show_medical_problems', :locals=>{:medical_problems => @bat.medical_problems} %>
+<%= render :partial=>'medical_problems/show_medical_problems', :locals=>{:medical_problems => @bat.medical_problems, :show_bat => false} %>
 </p>
 <% else %>
 No medical problems.

@@ -13,3 +13,5 @@
 <%= render :partial => 'tasks/manage_medical_tasks', :locals => {:medical_treatment => @medical_treatment, :quick_add => false, :div_id => 'tasks_div', :users => @users} %>
 </div>
 <% end %>
+
+<p><%= button_to 'Done', :controller => 'medical_problems', :action => 'list_current' %></p>

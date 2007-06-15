@@ -341,6 +341,8 @@ class TasksController < ApplicationController
 		@task = Task.find(params[:id])
 		@medical_treatment = @task.medical_treatment
 		@medical_problem = @medical_treatment.medical_problem
+    bat = @medical_problem.bat
+    bat.weights.today ? @weight = bat.weights.today : @weight = Weight.new
 	end
 	
   def create
@@ -424,19 +426,32 @@ class TasksController < ApplicationController
 		task_history.user = session[:person]
 		task_history.task = task
 		task_history.save
-		
-		weight = Weight.new
-		weight.bat = task.medical_treatment.medical_problem.bat
-		weight.date = task_history.date_done
-		weight.user = session[:person]
-		weight.weight = params[:bat][:weight]
-    if params[:checkbox][:after_eating] == '1'
-      weight.after_eating = 'y'
-    else
-      weight.after_eating =  'n'
+    
+    if params[:weight][:weight] != ''
+      
+      bat = task.medical_treatment.medical_problem.bat
+      cage = bat.cage
+      
+      bat.weights.today ? weight = bat.weights.today : weight = Weight.new
+      
+      weight.bat = bat
+      weight.date = task_history.date_done
+      weight.user = session[:person]
+      weight.weight = params[:weight][:weight]
+      weight.note = params[:weight][:note]
+      if params[:checkbox][:after_eating] == '1'
+        weight.after_eating = 'y'
+      else
+        weight.after_eating =  'n'
+      end
+      weight.save
+      
+      Task::set_current_user(session[:person])
+      cage.update_weighing_tasks
+      
+      task_history.weight = weight
+      
     end
-		weight.save
-		task_history.weight = weight
 		
     redirect_to :controller => 'medical_problems', :action => 'list_current'
   end

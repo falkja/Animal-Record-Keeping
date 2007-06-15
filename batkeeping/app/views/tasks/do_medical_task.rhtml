@@ -14,17 +14,10 @@
 <p>Treatment<br />
 <%= @medical_treatment.title %></p>
 
-<p><label for="bat_weight">Weight</label><br />
-<%= text_field 'bat', 'weight', :size=>2, :autocomplete => 'off' %> g
-</p>
-
-<p>
-<% if @medical_problem.bat.cage.fed_today? == true %>
-<%= check_box 'checkbox', 'after_eating', :checked=> 'checked' %>
-<%else%>
-<%= check_box 'checkbox', 'after_eating' %>
-<% end %>
-<label for='checkbox_after_eating'>After Eating</label>
+<p>Weight<br />
+	<div class='left_indent'>
+		<%= render :partial => 'bats/weigh_one_bat', :locals => {:bat => @medical_problem.bat, :initial_weight => true} %>
+	</div>
 </p>
 
 <p><label for="task_history_date_done">Date Treatment Given</label><br />

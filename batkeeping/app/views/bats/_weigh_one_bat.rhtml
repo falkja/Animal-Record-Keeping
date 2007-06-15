@@ -34,10 +34,11 @@ If the bat has too many mites to remove, create a medical problem for the bat so
 
 <td><%= text_field 'weight', 'note' %></td>
 
-<td><%= link_to 'Move Bat', :action=>'single_bat_to_move', :id=>bat %></td>
-
 <% if !initial_weight %>
+
+  <td><%= link_to 'Move Bat', :action=>'single_bat_to_move', :id=>bat %></td>
 	<td><%= submit_tag 'Submit Weight' %></td>
+  
 <% end %>
 
 </tr>

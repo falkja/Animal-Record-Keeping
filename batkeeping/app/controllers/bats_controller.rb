@@ -91,15 +91,14 @@ class BatsController < ApplicationController
 		@reactivating = false
 		@deactivating = false
 		@creating = true
-		@species = Species.find(:all)
 		if @cages.length == 0
 			flash[:notice] = 'New bats need a cage.  Create a cage before creating a bat.'
 			redirect_to :controller => 'cages', :action => :new
-		end
-		if @species.length == 0
+		elsif @species.length == 0
 			flash[:notice] = 'New bats need a species.  Create a species before creating a bat.'
 			redirect_to :controller => 'species', :action => :new
 		end
+		@weight = Weight.new
 	end
 
   def create
@@ -110,26 +109,31 @@ class BatsController < ApplicationController
       flash[:notice] = 'There is already a bat with the same band.  Please choose a different band.'
 			redirect_to :back
 		else
-    @bat = Bat.new(params[:bat])
-    @bat.leave_date = nil
-		Bat::set_user_and_comment(session[:person], 'new bat') #Do this before saving!
-    if @bat.save
-      
-			new_cage=Cage.find(params[:bat][:cage_id])
+			@bat = Bat.new(params[:bat])
+			@bat.leave_date = nil
 			
-			#census stuff
-			census = Census.find_or_create_by_date_and_room_id(Date.today, new_cage.room)
-			census.tally(1, new_cage.room)
-			census.bats_added ? census.bats_added = census.bats_added + @bat.band + ' ' : census.bats_added = @bat.band + ' '
-			census.save
-      
-			flash[:notice] = 'Bat was successfully created.'
-      @bats = Array.new
-      @bats << @bat
-      redirect_to :action => 'move', :bats => @bats, :new_cage => new_cage, :old_cage => nil, :note => 'new bat'
-    else
-      render :action => 'new'
-    end
+			Bat::set_user_and_comment(session[:person], 'new bat') #Do this before saving!
+			if @bat.save
+				
+				new_cage=Cage.find(params[:bat][:cage_id])
+				
+				#census stuff
+				census = Census.find_or_create_by_date_and_room_id(Date.today, new_cage.room)
+				census.tally(1, new_cage.room)
+				census.bats_added ? census.bats_added = census.bats_added + @bat.band + ' ' : census.bats_added = @bat.band + ' '
+				census.save
+				
+				if params[:weight][:weight] != ''
+					save_weight
+				end
+				
+				flash[:notice] = 'Bat was successfully created.'
+				@bats = Array.new
+				@bats << @bat
+				redirect_to :action => 'move', :bats => @bats, :new_cage => new_cage, :old_cage => nil, :note => 'new bat'
+			else
+				render :action => 'new'
+			end
 		end
   end
 
@@ -403,39 +407,42 @@ class BatsController < ApplicationController
     @cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name" )
     @bat.weights.today ? @weight = @bat.weights.today : @weight = Weight.new
   end
-  
+	
   def submit_weight
     @bat = Bat.find(params[:id])
-    if params[:weight][@bat.id.to_s] == ''
+		if params[:weight][:weight] == ''
       flash[:notice] = 'Submission failed. No weight entered.'
-      redirect_to :back
+			redirect_to :back
+			return false
     else
-      #enter weights
-      @cage = @bat.cage
-      
-      @bat.weights.today ? weight = @bat.weights.today : weight = Weight.new
-      
-      weight.bat = @bat
-      weight.date = Time.now
-      weight.user = session[:person]
-      weight.weight = params[:weight][:weight]
-      weight.note = params[:weight][:note]
-      if params[:checkbox][:after_eating] == '1'
-        weight.after_eating = 'y'
-      else
-        weight.after_eating =  'n'
-      end
-      weight.save
-      
-      Task::set_current_user(session[:person])
-      @updated_tasks = @cage.update_weighing_tasks
-      
-      if params[:redirectme]
-        redirect_to :controller => 'cages', :action => 'weigh_cage', :id => params[:redirectme]
-      end
-    end
+			save_weight
+			if params[:redirectme]
+				redirect_to :controller => 'cages', :action => 'weigh_cage', :id => params[:redirectme]
+			end
+		end
   end
   
+	def save_weight
+		@cage = @bat.cage
+		
+		@bat.weights.today ? weight = @bat.weights.today : weight = Weight.new
+		
+		weight.bat = @bat
+		weight.date = Time.now
+		weight.user = session[:person]
+		weight.weight = params[:weight][:weight]
+		weight.note = params[:weight][:note]
+		if params[:checkbox][:after_eating] == '1'
+			weight.after_eating = 'y'
+		else
+			weight.after_eating =  'n'
+		end
+		weight.save
+		
+		Task::set_current_user(session[:person])
+		@updated_tasks = @cage.update_weighing_tasks
+	end
+	
   def graph_weights
     bat = Bat.find(params[:id])
     weight_classes = bat.weights

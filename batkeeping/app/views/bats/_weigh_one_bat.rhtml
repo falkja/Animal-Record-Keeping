@@ -9,17 +9,23 @@ If the bat has too many mites to remove, create a medical problem for the bat so
 </p>
 
 <table>
-<th>Band</th>
+<% if bat.band %>
+	<th>Band</th>
+<% end %>
 <th>Weight</th>
 <th>Already Fed</th>
 <th align='left'>Weight Note</th>
 
 <tr>
-<td><%= link_to bat.band, :controller => 'bats', :action => 'show', :id => bat %></td>
+
+<% if bat.band %>
+	<td><%= link_to bat.band, :controller => 'bats', :action => 'show', :id => bat %></td>
+<% end %>
+
 <td><%= text_field 'weight', 'weight', :size => 4, :autocomplete => 'off' %> g</td>
 
 <td><label for='checkbox_after_eating'>After Eating?</label>
-<% if bat.cage.fed_today? == true %>
+<% if bat.cage && bat.cage.fed_today? %>
 <%= check_box 'checkbox', 'after_eating', :checked=> 'checked' %>
 <%else%>
 <%= check_box 'checkbox', 'after_eating' %>
@@ -30,7 +36,9 @@ If the bat has too many mites to remove, create a medical problem for the bat so
 
 <td><%= link_to 'Move Bat', :action=>'single_bat_to_move', :id=>bat %></td>
 
-<td><%= submit_tag 'Submit Weight' %></td>
+<% if !initial_weight %>
+	<td><%= submit_tag 'Submit Weight' %></td>
+<% end %>
 
 </tr>
 </table>

@@ -57,11 +57,20 @@
 
 </div>
 
+<% if @creating %>
+	<h3>Initial Weight</h3>
+	<div class='left_indent'>
+		<%= render :partial => 'weigh_one_bat', :locals => {:bat => @bat, :initial_weight => true} %>
+	</div>
+<% end %>
+
 <% if (@reactivating == true) || (@creating == true) %>
 
 <p>
 
-Choose cage 
+<h3>Choose Cage</h3>
+
+<div class='left_indent'>
 
 <% if @reactivating %> 
 (previous cage: <%=h @bat.cage_out_histories[0].cage.name %>)
@@ -83,6 +92,7 @@ Choose cage
 
 </table>
 
+</div>
 
 </p>
 <% end %>

@@ -18,7 +18,7 @@
 </p>
 
 <p><label for="medical_problem_title">Title (please be brief)</label><br/>
-<%= text_field 'medical_problem', 'title', :disabled => @disable_medical_problem_name_change %></p>
+<%= text_field 'medical_problem', 'title', :disabled => @disable_medical_problem_name_change, :maxlength => 45 %></p>
 
 <p><label for="medical_problem_date_opened">Date opened</label><br/>
 <%= date_select 'medical_problem', 'date_opened'  %></p>

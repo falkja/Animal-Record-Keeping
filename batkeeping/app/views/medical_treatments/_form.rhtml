@@ -15,6 +15,6 @@
 <%= date_select 'medical_treatment', 'date_opened'  %></p>
 
 <p><label for="medical_treatment_title">Treatment (include medications, dosages, suggested end date, etc.)</label><br/>
-<%= text_field 'medical_treatment', 'title'  %></p>
+<%= text_field 'medical_treatment', 'title', :maxlength => 45 %></p>
 
 <!--[eoform:medical_treatments]-->

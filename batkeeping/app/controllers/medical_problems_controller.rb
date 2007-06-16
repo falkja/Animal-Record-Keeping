@@ -46,24 +46,29 @@ class MedicalProblemsController < ApplicationController
       flash[:note] = 'There were problems with your submission.  Please make sure all data fields are filled out.'
       render :partial=>'medical_problems/show_medical_problems', :locals=>{:medical_problems => bat.medical_problems, :show_bat => false}
     else
+			flash[:note] = "Medical problem was successfully created"
       @medical_problem = MedicalProblem.new(params[:medical_problem])
       @medical_problem.date_closed = nil
       @medical_problem.date_opened = Time.now
       @medical_problem.bat = bat
       @medical_problem.save
       
-      msg_body = "A medical problem has been created.\n\n"
-      msg_body = msg_body + "Bat: " + @medical_problem.bat.band
-      msg_body = msg_body + "\nMedical problem: " + @medical_problem.title
-      msg_body = msg_body + "\nMedical problem description: " + @medical_problem.description
-      msg_body = msg_body + "\nCreated by: " + session[:person].name
-      msg_body = msg_body + "\n\nFaithfully yours, etc."
-      
-      medical_users_emails = Array.new
-      User.current_medical_care.each{|user| medical_users_emails << user.email}
-      
-      greeting = "Hi medical care users,\n\n"
-      MyMailer.deliver_mass_mail(medical_users_emails, "medical problem created", greeting + msg_body)
+			if User.current_medical_care.length == 0
+				flash[:note] = flash[:note] + "<warning> No current medical care users - no emails sent</warning>"
+			else
+				msg_body = "A medical problem has been created.\n\n"
+				msg_body = msg_body + "Bat: " + @medical_problem.bat.band
+				msg_body = msg_body + "\nMedical problem: " + @medical_problem.title
+				msg_body = msg_body + "\nMedical problem description: " + @medical_problem.description
+				msg_body = msg_body + "\nCreated by: " + session[:person].name
+				msg_body = msg_body + "\n\nFaithfully yours, etc."
+				
+				medical_users_emails = Array.new
+				User.current_medical_care.each{|user| medical_users_emails << user.email}
+				
+				greeting = "Hi medical care users,\n\n"
+				MyMailer.deliver_mass_mail(medical_users_emails, "medical problem created", greeting + msg_body)
+			end
       
       render :partial=>'medical_problems/show_medical_problems', :locals=>{:medical_problems => bat.medical_problems, :show_bat => false}
     end
@@ -79,20 +84,24 @@ class MedicalProblemsController < ApplicationController
       @medical_problem.date_closed = nil
       @medical_problem.bat = @bat
       if @medical_problem.save
-        flash[:notice] = 'Medical problem was successfully created.'
+        flash[:notice] = 'Medical problem was successfully created'
         
-        msg_body = "A medical problem has been created.\n\n"
-        msg_body = msg_body + "Bat: " + @medical_problem.bat.band
-        msg_body = msg_body + "\nMedical problem: " + @medical_problem.title
-        msg_body = msg_body + "\nMedical problem description: " + @medical_problem.description
-        msg_body = msg_body + "\nCreated by: " + session[:person].name
-        msg_body = msg_body + "\n\nFaithfully yours, etc."
-        
-        medical_users_emails = Array.new
-        User.current_medical_care.each{|user| medical_users_emails << user.email}
-        
-        greeting = "Hi medical care users,\n\n"
-        MyMailer.deliver_mass_mail(medical_users_emails, "medical problem created", greeting + msg_body)
+				if User.current_medical_care.length == 0
+					flash[:notice] = flash[:notice] + "<warning> No current medical care users - no emails sent</warning>"
+				else
+					msg_body = "A medical problem has been created.\n\n"
+					msg_body = msg_body + "Bat: " + @medical_problem.bat.band
+					msg_body = msg_body + "\nMedical problem: " + @medical_problem.title
+					msg_body = msg_body + "\nMedical problem description: " + @medical_problem.description
+					msg_body = msg_body + "\nCreated by: " + session[:person].name
+					msg_body = msg_body + "\n\nFaithfully yours, etc."
+					
+					medical_users_emails = Array.new
+					User.current_medical_care.each{|user| medical_users_emails << user.email}
+					
+					greeting = "Hi medical care users,\n\n"
+					MyMailer.deliver_mass_mail(medical_users_emails, "medical problem created", greeting + msg_body)
+				end
         
         redirect_to :controller => 'medical_treatments', :action => 'new', :id => @medical_problem
       else

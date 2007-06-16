@@ -2,7 +2,7 @@
 
 <% form_tag :action => 'submit_weight', :id => @bat, :redirectme => params[:redirectme] do %>
 
-<%= render :partial => "bats/weigh_one_bat", :locals => {:bat => @bat} %>
+<%= render :partial => "bats/weigh_one_bat", :locals => {:bat => @bat, :initial_weight => false} %>
 
 <% end %>
 

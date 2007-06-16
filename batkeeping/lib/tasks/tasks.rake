@@ -24,7 +24,7 @@ task :email_if_tasks_not_done => :environment do
       
       #per user generated email
       greeting = "Hi " + user.name + ",\n\n"
-      msg_body = MyMailer.create_msg_for_tasks_undone(tasks_not_done)
+      msg_body = MyMailer.create_msg_for_tasks_not_done(tasks_not_done)
       msg_body = msg_body + "Faithfully yours, etc."
       MyMailer.deliver_mail(user.email, "tasks not done today", greeting + msg_body)
       
@@ -40,7 +40,7 @@ task :email_if_tasks_not_done => :environment do
 	if tasks_not_done.length > 0
 		
 		greeting = "Administrator(s),\n\n"
-		msg_body = MyMailer.create_msg_for_tasks_undone(tasks_not_done)
+		msg_body = MyMailer.create_msg_for_tasks_not_done(tasks_not_done)
 		msg_body = msg_body + "Faithfully yours, etc."
 		MyMailer.deliver_mass_mail(users_emails, "tasks not done today", greeting + msg_body)
 		

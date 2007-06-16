@@ -109,7 +109,7 @@ class MainController < ApplicationController
     
     @greeting = "Dear Batlab,\n\n"
     
-    @msg_body = MyMailer.create_msg_for_tasks_undone(@tasks_not_done)
+    @msg_body = MyMailer.create_msg_for_tasks_not_done(@tasks_not_done)
 		
     @msg_body = @msg_body + "This message brought to you by,\n\n" + session[:person].name
   end

@@ -1,21 +1,23 @@
-<% if task.task_histories.length == 0 %>
+<% if task_histories.length == 0 %>
   <p><b>This task has never been done</b></p>
 <% else %>
-  <h4><%=h task.title %> Done:</h4>
+  <h4><%=h task_histories[0].task.title %> Done:</h4>
   <div class="left_indent">
-  <% for task_history in task.task_histories %>
-      <p>
-      <b>Date: </b><%= nice_date_with_time(task_history.date_done) %><br/>
-      <% if task_history.fed != nil %>
-      <b>Fed: </b><%= task_history.fed %> grams<br/>
-      <% end %>
-			<% if task_history.weight != nil %>
+  <% for task_history in task_histories %>
+		<p>
+		<b>Date: </b><%= nice_date_with_dow_and_time(task_history.date_done) %><br/>
+		<% if task_history.fed != nil %>
+			<b>Fed: </b><%= task_history.fed %> grams<br/>
+		<% end %>
+		<% if task_history.weight != nil %>
 			<b>Weight: </b><%=h task_history.weight.weight %> g<br/>
-			<% end %>
-      <b>Remarks: </b><%= task_history.remarks %><br/>
-      <b>User: </b><%=h task_history.user.name %><br/>
-      </p>
-      <hr width = "60%" align=LEFT />
+		<% end %>
+		<% if task_history.remarks != '' %>
+			<b>Remarks: </b><%= task_history.remarks %><br/>
+		<% end %>
+		<b>User: </b><%=h task_history.user.name %><br/>
+		</p>
+		<hr width = "60%" align=LEFT />
   <% end %>
   </div>
 <% end %>

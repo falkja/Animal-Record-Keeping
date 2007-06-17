@@ -323,7 +323,7 @@ class TasksController < ApplicationController
 		
 		all_tasks_created_successfully = true
 		for day in days
-				task = Task.find_by_medical_treatment_id_and_repeat_code(medical_treatment, day) || Task.create(:medical_treatment => medical_treatment, :repeat_code => day, :jitter => 0, :date_started => Time.now, :title => "Do " + medical_treatment.title, :internal_description => "medical")
+				task = Task.find_by_medical_treatment_id_and_repeat_code(medical_treatment, day) || Task.create(:medical_treatment => medical_treatment, :repeat_code => day, :jitter => 0, :date_started => Time.now, :title => medical_treatment.title, :internal_description => "medical")
         task.date_ended = nil
 				task.animal_care = params[:task][:animal_care]
 				task.save
@@ -346,6 +346,7 @@ class TasksController < ApplicationController
 		@medical_problem = @medical_treatment.medical_problem
     bat = @medical_problem.bat
     bat.weights.today ? @weight = bat.weights.today : @weight = Weight.new
+		@task_histories = @medical_treatment.task_histories
 	end
 	
   def create

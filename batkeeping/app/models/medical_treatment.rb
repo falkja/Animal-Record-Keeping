@@ -36,4 +36,12 @@ class MedicalTreatment < ActiveRecord::Base
     self.date_closed = Date.today
     self.save
   end
+	
+	def task_histories
+		tasks = self.tasks
+		task_histories = Array.new
+		tasks.each{|task| task.task_histories.each{|task_history| task_histories << task_history}}
+		task_histories = task_histories.sort_by{|task_history| [Time.now - task_history.date_done]}
+		return task_histories
+	end
 end

@@ -15,6 +15,7 @@ class MedicalTreatmentsController < ApplicationController
   def show
     @medical_treatment = MedicalTreatment.find(params[:id])
 		@users = User.current
+		@task_histories = @medical_treatment.task_histories
   end
 
   def new

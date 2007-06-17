@@ -29,6 +29,15 @@ module ApplicationHelper
     end
   end
   
+	# Produces -> Sunday, May 25, 2006, 04:16 PM
+	def nice_date_with_dow_and_time(date)
+    if (date != nil)
+      date.strftime("%A, %B %d, %Y, %I:%M %p")
+    else
+      'N/A'
+    end
+	end
+	
   #given an array of cages, returns number of bats in them
   def bats_in_cages(cages)
     bats = Array.new

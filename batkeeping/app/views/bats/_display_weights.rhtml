@@ -1,8 +1,12 @@
-<% if bat.weights.length == 0 %>
-No weights.
-<% else %>
+<div id='display_weights'>
+
 <h3>Weight History:</h3>
+
 <div class="left_indent">
+
+<% if bat.weights.length == 0 %>
+	No weights
+<% else %>
 <table>
   <th>Date</th>
   <th>Weight</th>
@@ -16,10 +20,19 @@ No weights.
   <td><%= weight.after_eating == 'y' ? 'After Eating' : 'Before Eating' %></td>
   <td><%= weight.note %></td>
   <td><%= weight.user.initials %></td>
-	<td><%= link_to 'Destroy', {:controller => 'weights', :action => 'destroy', :id => weight }, :confirm => 'Are you sure?', :method => :post %></td>
+	<td>
+		<%= link_to_remote 'Destroy', :update => 'display_weights', :url => {
+			:controller => 'weights', :action => 'destroy', :id => weight, :bat => bat}, :confirm => 'Are you sure?', :method => :post %>
+	</td>
   </tr>
   <% end %>
 </table>
 <p><%= link_to 'Graph Weights', :controller => 'bats', :action => :graph_weights, :id => bat %></p>
 <% end %>
+
+
+<p><%= link_to 'Weigh Bat', :controller => 'bats', :action => :weigh_bat, :id => bat %></p>
+
+</div>
+
 </div>

@@ -44,7 +44,7 @@ If the bat has too many mites to remove, create a medical problem for the bat so
 
   <td><%= link_to 'Move Bat', :action=>'single_bat_to_move', :id=>bat %></td>
 	<td><%= submit_tag 'Submit Weight' %></td>
-  
+
 <% end %>
 
 </tr>
@@ -60,7 +60,9 @@ If the bat has too many mites to remove, create a medical problem for the bat so
 <p>
 <%= link_to_remote 'Edit today\'s weight', :update => 'weigh_one_bat', :url =>{
 		:controller => 'bats', :action => 'todays_weight_exists', :id => bat, :initial_weight => initial_weight } %>
-
+<div class="hidden">
+<%= text_field 'weight', 'new_weight', :value => 'true' %>
+</div>
 </p>
 <% end %>
 

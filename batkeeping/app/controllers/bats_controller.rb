@@ -435,10 +435,10 @@ class BatsController < ApplicationController
 	def save_weight
 		@cage = @bat.cage
 		
-		if params[:new_weight]
+		if params[:weight][:new_weight]
 			weight = Weight.new
 		else
-			@bat.weights.today ? weight = @bat.weights.today : weight = Weight.new
+			weight = @bat.weights.today
 		end
 		
 		weight.bat = @bat

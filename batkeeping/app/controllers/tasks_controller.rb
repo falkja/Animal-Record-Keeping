@@ -424,6 +424,7 @@ class TasksController < ApplicationController
   end
   
   def medical_task_done
+		
     task = Task.find(params[:id])
 		
 		task_history = TaskHistory.new(params[:task_history])
@@ -436,7 +437,11 @@ class TasksController < ApplicationController
       bat = task.medical_treatment.medical_problem.bat
       cage = bat.cage
       
-      bat.weights.today ? weight = bat.weights.today : weight = Weight.new
+			if params[:weight][:new_weight]
+				weight = Weight.new
+			else
+				weight = bat.weights.today
+			end
       
       weight.bat = bat
       weight.date = task_history.date_done

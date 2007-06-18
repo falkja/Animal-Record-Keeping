@@ -46,6 +46,7 @@ class WeightsController < ApplicationController
 
   def destroy
     Weight.find(params[:id]).destroy
-    redirect_to :action => 'list'
+		bat = Bat.find(params[:bat])
+		render :partial => 'bats/display_weights', :locals => {:bat => bat}
   end
 end

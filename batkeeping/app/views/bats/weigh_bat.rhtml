@@ -1,6 +1,6 @@
 <h1>Weigh <%= @bat.band%> in <%= @bat.cage.name %></h1>
 
-<% form_tag :action => 'submit_weight', :id => @bat, :redirectme => params[:redirectme] do %>
+<% form_tag :action => 'submit_weight', :id => @bat, :redirectme => params[:redirectme], :new_weight => @new_weight do %>
 
 <%= render :partial => "bats/weigh_one_bat", :locals => {:bat => @bat, :initial_weight => false} %>
 
@@ -13,10 +13,10 @@
 <div id='medical_problems'>
 <% if @bat.medical_problems.current.length > 0 %>
 <p>
-<%= render :partial=>'medical_problems/show_medical_problems', :locals=>{:medical_problems => @bat.medical_problems, :show_bat => false} %>
+<%= render :partial=>'medical_problems/show_medical_problems', :locals=>{:medical_problems => @bat.medical_problems.current, :show_bat => false} %>
 </p>
 <% else %>
-No medical problems.
+<p>No current medical problems</p>
 <% end %>
 </div>
 
@@ -30,10 +30,30 @@ No medical problems.
 
 </div>
 
-<% if @bat.weights.length == 0 %>
-No previous weights.
+<h4>Previous Medical Problems for <%= @bat.band%></h4>
+
+<div class='left_indent'>
+
+<% if @bat.medical_problems.expired.length > 0 %>
+<p>
+<%= render :partial=>'medical_problems/show_medical_problems', :locals=>{:medical_problems => @bat.medical_problems.expired, :show_bat => false} %>
+</p>
 <% else %>
-<%= render :partial => 'display_weights', :locals => {:bat => @bat} %>
+<p>No previous medical problems</p>
 <% end %>
+
+</div>
+
+<h4>Previous Weights for <%= @bat.band%></h4>
+
+<div class='left_indent'>
+
+<% if @bat.weights.length == 0 %>
+	<p>No previous weights</p>
+<% else %>
+	<%= render :partial => 'display_weights', :locals => {:bat => @bat} %>
+<% end %>
+
+</div>
 
 <p><%= link_to 'Back', :controller => 'bats', :action => 'choose_bat_to_weigh' %></p>

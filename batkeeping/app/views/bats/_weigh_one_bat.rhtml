@@ -1,3 +1,7 @@
+<div id='weigh_one_bat'>
+
+<% if !initial_weight %>
+
 <p>
 As you weigh the bat:
 <ul>
@@ -7,6 +11,8 @@ If the bat has too many mites to remove, create a medical problem for the bat so
 <li><b>Brush the bats teeth</b> (at least once per week).  This will help keep the bat's gums healthy.</li>
 </ul>
 </p>
+
+<% end %>
 
 <table>
 <% if bat.band %>
@@ -43,3 +49,19 @@ If the bat has too many mites to remove, create a medical problem for the bat so
 
 </tr>
 </table>
+
+
+<% if @weight.weight %>
+<p>
+<%= link_to_remote 'Add a new weight for today', :update => 'weigh_one_bat', :url =>{
+		:controller => 'bats', :action => 'todays_weight_exists', :id => bat, :new_weight => true, :initial_weight => initial_weight } %>
+</p>
+<% elsif bat.weights.today %>
+<p>
+<%= link_to_remote 'Edit today\'s weight', :update => 'weigh_one_bat', :url =>{
+		:controller => 'bats', :action => 'todays_weight_exists', :id => bat, :initial_weight => initial_weight } %>
+
+</p>
+<% end %>
+
+</div>

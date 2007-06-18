@@ -16,6 +16,7 @@ No weights.
   <td><%= weight.after_eating == 'y' ? 'After Eating' : 'Before Eating' %></td>
   <td><%= weight.note %></td>
   <td><%= weight.user.initials %></td>
+	<td><%= link_to 'Destroy', {:controller => 'weights', :action => 'destroy', :id => weight }, :confirm => 'Are you sure?', :method => :post %></td>
   </tr>
   <% end %>
 </table>

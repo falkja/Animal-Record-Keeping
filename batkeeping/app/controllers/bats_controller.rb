@@ -405,8 +405,7 @@ class BatsController < ApplicationController
   
   def weigh_bat
     @bat = Bat.find(params[:id])
-    @cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name" )
-    @bat.weights.today ? @weight = @bat.weights.today : @weight = Weight.new
+		@bat.weights.today ? @weight = @bat.weights.today : @weight = Weight.new
   end
 	
   def submit_weight
@@ -423,10 +422,24 @@ class BatsController < ApplicationController
 		end
   end
   
+	def todays_weight_exists
+		bat = Bat.find(params[:id])
+		if params[:new_weight]
+			@weight = Weight.new
+		else
+			@weight = bat.weights.today
+		end
+		render :partial => 'weigh_one_bat', :locals => {:bat => bat, :initial_weight => params[:initial_weight]}
+	end
+	
 	def save_weight
 		@cage = @bat.cage
 		
-		@bat.weights.today ? weight = @bat.weights.today : weight = Weight.new
+		if params[:new_weight]
+			weight = Weight.new
+		else
+			@bat.weights.today ? weight = @bat.weights.today : weight = Weight.new
+		end
 		
 		weight.bat = @bat
 		weight.date = Time.now

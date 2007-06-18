@@ -197,16 +197,17 @@ class BatsController < ApplicationController
   def deactivate_bat
 		@bat = Bat.find(params[:id])
 		@cage = Cage.find(@bat.cage)
-		params[:move]['note'] = params[:move]['note']
-		params[:bat]['cage_id'] = nil
+		params[:bat][:leave_reason] = params[:move][:note]
+		params[:bat][:cage_id] = nil
 		@deactivating = true
-	
+    
 		#census stuff
-	
 		census = Census.find_or_create_by_date_and_room_id(Date.today, @cage.room)
 		census.tally(-1, @cage.room)
 		census.bats_removed ? census.bats_removed = census.bats_removed + @bat.band + ' ' : census.bats_removed = @bat.band + ' '
 		census.save
+    
+    @bat.update_attributes(params[:bat])
     
     for medical_problem in @bat.medical_problems.current
       medical_problem.date_closed = @bat.leave_date

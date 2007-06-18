@@ -1,7 +1,12 @@
 <tr>
     <% if show_bat %>
     <td><%= link_to medical_problem.bat.band, :controller => 'bats', :action => 'show', :id => medical_problem.bat %></td>
-    <td><%= link_to medical_problem.bat.cage.name, :controller => 'cages', :action => :show, :id => medical_problem.bat.cage %></td>
+    <td>
+      <% if medical_problem.bat.cage %>
+        <%= link_to medical_problem.bat.cage.name, :controller => 'cages', :action => :show, :id => medical_problem.bat.cage %></td>
+      <% else %>
+        -
+      <% end %>
     <% end %>
     
     <td>
@@ -31,7 +36,9 @@
       </td>
       <td></td>
       <td>
-        <%= link_to 'Reactivate', :controller => 'medical_problems', :action => 'reactivate', :id => medical_problem %>
+        <% if medical_problem.bat.leave_date == nil %>
+          <%= link_to 'Reactivate', :controller => 'medical_problems', :action => 'reactivate', :id => medical_problem %>
+        <% end %>
       </td>
     <% end %>
 

@@ -440,7 +440,7 @@ class TasksController < ApplicationController
 			if params[:weight][:new_weight]
 				weight = Weight.new
 			else
-				weight = bat.weights.today
+				bat.weights.today ? weight = bat.weights.today : weight = Weight.new
 			end
       
       weight.bat = bat

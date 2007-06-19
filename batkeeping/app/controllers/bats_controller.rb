@@ -207,6 +207,8 @@ class BatsController < ApplicationController
 		census.bats_removed ? census.bats_removed = census.bats_removed + @bat.band + ' ' : census.bats_removed = @bat.band + ' '
 		census.save
     
+		Bat::set_user_and_comment(session[:person], params[:move][:note]) #Do this before saving!
+		
     @bat.update_attributes(params[:bat])
     
     for medical_problem in @bat.medical_problems.current

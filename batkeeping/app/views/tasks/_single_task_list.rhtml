@@ -37,7 +37,7 @@
 				Animal Care
 			<% else %>
 				<% for user in task.users %>
-					<%= user.initials %><br/>
+					<%= user.initials %><%= (user != task.users.last) ? "," : "" %>
 				<% end %>
 			<% end %>
     </td>

@@ -3,6 +3,10 @@ task :populate_census_entries => :environment do
   TaskCensus.populate_todays_tasks
 end
 
+task :convert_bat_notes => :environment do
+  Bat.convert_bat_notes
+end
+
 desc 'email_if_tasks_not_done'
 task :email_if_tasks_not_done => :environment do
   for user in User.current

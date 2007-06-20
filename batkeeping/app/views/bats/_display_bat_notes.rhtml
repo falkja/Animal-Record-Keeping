@@ -1,5 +1,7 @@
 <div id='bat_notes'>
-<% if @bat.note != nil %>
+
+
+<% if @bat.bat_notes.length > 0 %>
 <p>
 <b>Notes on bat: </b>
 <div class="left_indent">
@@ -7,7 +9,19 @@
 <th>Note</th>
 <th>User</th>
 <th>Date</th>
-<%= @bat.note %>
+
+<% for note in @bat.bat_notes %>
+<tr>
+<td><%= note.text %></td>
+<td><%= note.user.initials %></td>
+<td><%= nice_date(note.date) %></td>
+<td>
+	<%= link_to_remote 'Delete', :update => 'bat_notes', :url => {
+			:controller => 'bat_notes', :action => 'destroy', :id => @bat, :note => note}, :confirm => 'Are you sure?', :method => :post %>
+</td>
+</tr>
+<% end %>
+
 </table>
 </div>
 <% end %>
@@ -18,8 +32,8 @@
                        :url => { :controller => 'bats', :action => 'add_bat_note', 
 					   :id => @bat }) do %>
 	<b><label for="bat_note">Add note:</label></b>
-	<%= text_field 'bat', 'note', :value => '', :autocomplete => 'off' %>
-	<%= submit_tag "Add permanent note on bat" %>
+	<%= text_field 'bat', 'note', :value => '', :autocomplete => 'off', :focus => true %>
+	<%= submit_tag "Add note on bat" %>
 <% end %>
 </p>
 </div>

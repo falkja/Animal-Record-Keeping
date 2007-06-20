@@ -5,6 +5,7 @@ class Bat < ActiveRecord::Base
 	has_many :cage_in_histories, :order => "date desc"
 	has_many :cage_out_histories, :order => "date desc"
 	has_many :medical_problems, :order => "date_opened desc"
+	has_many :bat_notes, :order => "date desc"
 	
 	@@current_user = nil #needed for the sig
 	@@comment = nil #needed if we wanna comment a cage move
@@ -136,5 +137,21 @@ class Bat < ActiveRecord::Base
 			log_cage_change(@old_cage, @new_cage)
 		end
 	end        
-		
+	
+	def self.convert_bat_notes
+		bats = Bat.find(:all, :conditions => "note is not null")
+		for bat in bats
+			bat.note.each("</tr>") {|single_note|
+				bat_note = BatNote.new
+				bat_note.bat = bat
+				note_parts = Array.new
+				note_parts = single_note.split("</td>")
+				bat_note.text = note_parts[0].sub("<tr><td>","")
+				bat_note.user = User.find(:first, :conditions => "initials = '#{note_parts[1].sub('<td>','')}'")
+				bat_note.date = note_parts[2].sub("<td>","")
+				bat_note.save
+			}
+		end
+	end
+	
 end

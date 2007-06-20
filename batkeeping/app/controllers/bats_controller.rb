@@ -491,12 +491,19 @@ class BatsController < ApplicationController
     if params[:bat][:note] == ''
       render :partial => 'bats/display_bat_notes'
     else
-      if @bat.note != nil
-        @bat.note = @bat.note + '<tr><td>' + params[:bat][:note] + '</td><td>' + session[:person].initials + '</td><td>' + Time.now.strftime('%b %d, %Y') + '</td></tr>'
-      else
-        @bat.note = '<tr><td>' + params[:bat][:note] + '</td><td>' + session[:person].initials + '</td><td>' + Time.now.strftime('%b %d, %Y') + '</td></tr>'
-      end
-      @bat.save
+      bat_note = BatNote.new
+			bat_note.bat = @bat
+			bat_note.text = params[:bat][:note]
+			bat_note.date = Time.now
+			bat_note.user = session[:person]
+			bat_note.save
+			
+			#if @bat.note != nil
+        #@bat.note = @bat.note + '<tr><td>' + params[:bat][:note] + '</td><td>' + session[:person].initials + '</td><td>' + Time.now.strftime('%b %d, %Y') + '</td></tr>'
+      #else
+        #@bat.note = '<tr><td>' + params[:bat][:note] + '</td><td>' + session[:person].initials + '</td><td>' + Time.now.strftime('%b %d, %Y') + '</td></tr>'
+      #end
+      #@bat.save
       render :partial => 'bats/display_bat_notes'
     end
 	end

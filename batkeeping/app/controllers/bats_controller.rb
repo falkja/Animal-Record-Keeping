@@ -497,13 +497,6 @@ class BatsController < ApplicationController
 			bat_note.date = Time.now
 			bat_note.user = session[:person]
 			bat_note.save
-			
-			#if @bat.note != nil
-        #@bat.note = @bat.note + '<tr><td>' + params[:bat][:note] + '</td><td>' + session[:person].initials + '</td><td>' + Time.now.strftime('%b %d, %Y') + '</td></tr>'
-      #else
-        #@bat.note = '<tr><td>' + params[:bat][:note] + '</td><td>' + session[:person].initials + '</td><td>' + Time.now.strftime('%b %d, %Y') + '</td></tr>'
-      #end
-      #@bat.save
       render :partial => 'bats/display_bat_notes'
     end
 	end

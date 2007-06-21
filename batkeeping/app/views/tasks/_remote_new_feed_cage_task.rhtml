@@ -1,5 +1,5 @@
 <% form_remote_tag(:update => div_id,
-                       :url => { :controller => 'tasks', :action => 'create_feed_cage_task', 
+                       :url => { :controller => 'tasks', :action => 'create_feed_cage_task', :user => user,
 					   :id => cage, :div_id => div_id, :source => source, :same_type_task_list => same_type_task_list}) do %>
 <table>
 <% if !same_type_task_list %>

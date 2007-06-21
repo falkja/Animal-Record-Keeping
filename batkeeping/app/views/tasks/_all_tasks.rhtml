@@ -5,7 +5,7 @@
 <%= render :partial=>'tasks/show_hide_task_category', :locals => {:tasks => feeding_tasks,
 			:div_id => 'feeding_tasks' + count, :same_type_task_list => same_type_task_list, 
 			:manage => true, :cages => cages, :source => source, :count => count, :show => show,
-			:category_div => 'feeding_tasks_category', :medical_problems => nil, :sorted_by => sorted_by} %>
+			:category_div => 'feeding_tasks_category', :medical_problems => nil, :sorted_by => sorted_by, :user => user} %>
 
 </div>
 
@@ -14,7 +14,7 @@
 <%= render :partial=>'tasks/show_hide_task_category', :locals => {:tasks => weighing_tasks,
 			:div_id => 'weighing_tasks' + count, :same_type_task_list => same_type_task_list, 
 			:manage => true, :cages => cages, :source => source, :count => count, :show => show,
-			:category_div => 'weighing_tasks_category', :medical_problems => nil, :sorted_by => sorted_by} %>
+			:category_div => 'weighing_tasks_category', :medical_problems => nil, :sorted_by => sorted_by, :user => user} %>
 
 </div>
 

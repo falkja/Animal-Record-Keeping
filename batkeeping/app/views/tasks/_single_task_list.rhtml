@@ -104,7 +104,7 @@
     <% if manage %>
     <td><%= link_to 'Edit',  :controller => 'tasks', :action => 'edit', :id => task %></td>
     <td><%= link_to_remote 'Destroy', :url => {
-				:controller => 'tasks', :action => 'destroy', :id => task, :ids => tasks, :div_id => div_id,  
+				:controller => 'tasks', :action => 'destroy', :id => task, :ids => tasks, :div_id => div_id, :sorted_by => sorted_by,
 				:same_type_task_list => same_type_task_list, :sorted_by => sorted_by, :manage => manage}, 
 				:confirm => 'Are you sure?', :method => :post, :update => div_id %></td>
     <% end %>

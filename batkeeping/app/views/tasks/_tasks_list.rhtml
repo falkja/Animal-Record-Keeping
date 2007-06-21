@@ -85,8 +85,7 @@ No tasks
 		<p>
 		[<%= link_to_remote "Remove existing tasks",
 			:url => {:controller => "tasks", :action => "clear_tasks", :tasks => tasks, :div_id => div_id, 
-			:same_type_task_list => true, :manage => true}, :update => div_id
-		%>]
+			:same_type_task_list => true, :manage => manage}, :update => div_id %>]
 		</p>
 		<% if tasks[0].internal_description == 'feed' %>
 			<% if tasks[0].cage.fed_every_day? == false && task.cage.bats.length > 0 %>

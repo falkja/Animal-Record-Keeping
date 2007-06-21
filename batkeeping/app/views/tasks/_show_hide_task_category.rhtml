@@ -20,7 +20,9 @@ General Tasks
 <div class="left_indent">
   <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => tasks, :div_id => div_id, 
 			:same_type_task_list => same_type_task_list, :manage => manage, :sorted_by => sorted_by} %>
-  
+	<p><%= link_to_remote "All Feeding Tasks Done",
+			:url => {:controller => "tasks", :action => "done_tasks", :tasks => tasks, :div_id => div_id, 
+			:same_type_task_list =>same_type_task_list, :manage => manage, :source => source}, :update => div_id %></p>
 	<% if (category_div == 'feeding_tasks_category') && (cages.length > 0) %>
 	<p>
   <% form_remote_tag :url => {:controller => 'tasks', :action => 'remote_new_feed_cage_task', :id => @cage, :div_id => div_id, 

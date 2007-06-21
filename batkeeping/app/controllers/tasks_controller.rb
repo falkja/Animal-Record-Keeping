@@ -286,27 +286,31 @@ class TasksController < ApplicationController
 		
 		@user = User.find(session[:person].id)
 		
-    if (params[:source].include? 'user_summary') && (params[:div_id].include? 'todays_tasks')
-      feeding_tasks = @user.tasks.feeding_tasks_today
-    elsif (params[:source].include? 'user_summary') && (params[:div_id].include? 'other_tasks')
-      feeding_tasks = @user.tasks.feeding_tasks_not_today
-    elsif (params[:source].include? 'user_summary') && (params[:div_id].include? 'all_tasks')
-      feeding_tasks = @user.tasks.feeding_tasks
-    elsif params[:source] == 'show_cage'
-      feeding_tasks = @cage.tasks.feeding_tasks
-    elsif params[:source] == 'task_list' && (params[:div_id].include? 'todays_tasks')
-      feeding_tasks = Task.feeding_tasks_today
-    elsif params[:source] == 'task_list' && (params[:div_id].include? 'other_tasks')
-      feeding_tasks = Task.feeding_tasks_not_today
-    elsif params[:source] == 'task_list' && (params[:div_id].include? 'all_tasks')
-      feeding_tasks = Task.feeding_tasks
-    end
+		find_feeding_tasks
 		
-		feeding_tasks = feeding_tasks.sort_by{|task| [task.repeat_code, task.title]}
+		@feeding_tasks = @feeding_tasks.sort_by{|task| [task.repeat_code, task.title]}
     
-    render :partial => 'tasks_list', :locals => {:tasks => feeding_tasks, :sorted_by => params[:sorted_by],
+    render :partial => 'tasks_list', :locals => {:tasks => @feeding_tasks, :sorted_by => params[:sorted_by],
                                       :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => true}
   end
+
+	def find_feeding_tasks
+		if (params[:source].include? 'user_summary') && (params[:div_id].include? 'todays_tasks')
+      @feeding_tasks = @user.tasks.feeding_tasks_today
+    elsif (params[:source].include? 'user_summary') && (params[:div_id].include? 'other_tasks')
+      @feeding_tasks = @user.tasks.feeding_tasks_not_today
+    elsif (params[:source].include? 'user_summary') && (params[:div_id].include? 'all_tasks')
+      @feeding_tasks = @user.tasks.feeding_tasks
+    elsif params[:source] == 'show_cage'
+      @feeding_tasks = @cage.tasks.feeding_tasks
+    elsif params[:source] == 'task_list' && (params[:div_id].include? 'todays_tasks')
+      @feeding_tasks = Task.feeding_tasks_today
+    elsif params[:source] == 'task_list' && (params[:div_id].include? 'other_tasks')
+      @feeding_tasks = Task.feeding_tasks_not_today
+    elsif params[:source] == 'task_list' && (params[:div_id].include? 'all_tasks')
+      @feeding_tasks = Task.feeding_tasks
+    end
+	end
 
   def create_medical_task
     if ( (params[:users] != nil) || (params[:task][:animal_care] == '1') ) && (params[:days] != nil) #error checking
@@ -487,6 +491,17 @@ class TasksController < ApplicationController
       task.save
     end
     render :partial => 'tasks_list', :locals => {:tasks => [], :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => params[:manage]}
+  end
+	
+  def done_tasks
+		@user = User.find(session[:person].id)
+		find_feeding_tasks
+		Task::set_current_user(session[:person])
+    for task in @feeding_tasks
+			task.done
+    end
+    flash[:note] = "All tasks done"
+    render :partial => 'tasks_list', :locals => {:tasks => @feeding_tasks, :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => params[:manage]}
   end
 	
 	def show_hide_task_categories

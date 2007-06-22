@@ -73,13 +73,13 @@
             [<%= link_to_remote 'Just Fed', :url => {
             :controller => 'tasks', :action => 'done', :id => task, :sorted_by => sorted_by,
             :ids => tasks, :div_id => div_id,  :same_type_task_list => same_type_task_list,
-						:manage => manage},
+						:manage => manage, :sorted_by => sorted_by },
             :update => div_id%>]
           <% elsif task.cage_id == nil && task.medical_treatment_id == nil %>
 						[<%= link_to_remote 'Just Done', :url => {
             :controller => 'tasks', :action => 'done', :id => task, :sorted_by => sorted_by,
             :ids => tasks, :div_id => div_id,  :same_type_task_list => same_type_task_list,
-						:manage => manage},
+						:manage => manage, :sorted_by => sorted_by},
             :update => div_id %>]
           <% elsif task.internal_description == "weigh" %>
               [<%= link_to 'Weigh Cage', :controller => 'cages', :action => 'weigh_cage', :id => task.cage %>]

@@ -104,8 +104,6 @@ class TasksController < ApplicationController
     if params[:sorted_by] == 'room'
 			tasks = Task.find(params[:tasks], :order => 'title, repeat_code')
 			tasks = tasks.sort_by{|task| [task.room_id ? task.room.name : '']}
-		elsif params[:sorted_by] == 'title'
-			tasks = Task.find(params[:tasks], :order => 'title, repeat_code')
 		elsif params[:sorted_by] == 'repeat_code'
 			tasks = Task.find(params[:tasks], :order => 'repeat_code, title')
     elsif params[:sorted_by] == 'bat'
@@ -117,6 +115,8 @@ class TasksController < ApplicationController
     elsif params[:sorted_by] == 'cage'
       tasks = Task.find(params[:tasks], :order => 'title, repeat_code')
       tasks = tasks.sort_by{|task|[task.medical_treatment.medical_problem.bat.cage.name]}
+		elsif params[:sorted_by] == 'title' #title
+			tasks = Task.find(params[:tasks], :order => 'title, repeat_code')
 		end
 		
     render :partial => 'tasks_list', :locals => {:tasks => tasks, 
@@ -193,7 +193,7 @@ class TasksController < ApplicationController
     
     end
     
-		@user = User.find(params[:user])
+		params[:user] ? @user = User.find(params[:user]) : ''
     
     if (params[:source].include? 'user_summary') && (params[:div_id].include? 'todays_tasks')
       weighing_tasks = @user.tasks.weighing_tasks_today
@@ -295,7 +295,7 @@ class TasksController < ApplicationController
       
     end
     
-		@user = User.find(params[:user])
+		params[:user] ? @user = User.find(params[:user]) : ''
 		
 		find_feeding_tasks
 		
@@ -377,23 +377,23 @@ class TasksController < ApplicationController
     (params[:users] == nil) ? @users = Array.new : @users = User.find(params[:users])
 		
     @days = params[:days]
-            
+		
     if @days.include?("0")  #only need one daily task
-        @days.clear
-        @days << "0"
+			@days.clear
+			@days << "0"
     end
     
     for day in @days
-				@task = Task.new(params[:task])
-        @task.repeat_code = day
-				@task.date_started = Time.now
-        @task.save
-        @task.users = @users
+			@task = Task.new(params[:task])
+			@task.repeat_code = day
+			@task.date_started = Time.now
+			@task.save
+			@task.users = @users
 			
-				if params[:task][:room]
-					task_census = TaskCensus.new
-					task_census.create_task_census(@task.room, @task)
-				end
+			if params[:task][:room_id]
+				task_census = TaskCensus.new
+				task_census.create_task_census(@task.room, @task)
+			end
     end
     redirect_to :action => 'list'
   end
@@ -430,7 +430,7 @@ class TasksController < ApplicationController
 				end
 			end
 			
-      flash[:notice] = 'Task was successfully updated.'
+      flash[:notice] = 'Task was successfully updated'
       redirect_to :action => 'list'
     else
       render :action => 'edit'
@@ -438,12 +438,11 @@ class TasksController < ApplicationController
   end
 
   def done
-    task = Task.find(params[:id])
+		task = Task.find(params[:id])
     Task::set_current_user(session[:person])
     task.done
-		
 		params[:tasks] = params[:ids]
-		
+		flash[:note] = "Task was successfully updated"
 		sort_by
   end
   
@@ -514,7 +513,7 @@ class TasksController < ApplicationController
   end
 	
   def done_tasks
-		@user = User.find(params[:user])
+		params[:user] ? @user = User.find(params[:user]) : ''
 		find_feeding_tasks
 		Task::set_current_user(session[:person])
     for task in @feeding_tasks

@@ -119,7 +119,7 @@ class BatsController < ApplicationController
 				
 				#census stuff
 				census = Census.find_or_create_by_date_and_room_id(Date.today, new_cage.room)
-				census.tally(1, new_cage.room)
+				census.tally(1, Date.today, new_cage.room)
 				census.bats_added ? census.bats_added = census.bats_added + @bat.band + ' ' : census.bats_added = @bat.band + ' '
 				census.save
 				
@@ -200,25 +200,25 @@ class BatsController < ApplicationController
 		params[:bat][:leave_reason] = params[:move][:note]
 		params[:bat][:cage_id] = nil
 		@deactivating = true
-    
+		
+		date = Date.civil(params[:bat]["leave_date(1i)"].to_i, params[:bat]["leave_date(2i)"].to_i, params[:bat]["leave_date(3i)"].to_i)
+		
 		#census stuff
-		census = Census.find_or_create_by_date_and_room_id(Date.today, @cage.room)
-		census.tally(-1, @cage.room)
+		census = Census.find_or_create_by_date_and_room_id(date, @cage.room)
+		census.tally(-1, date, @cage.room)
 		census.bats_removed ? census.bats_removed = census.bats_removed + @bat.band + ' ' : census.bats_removed = @bat.band + ' '
 		census.save
-    
-		Bat::set_user_and_comment(session[:person], params[:move][:note]) #Do this before saving!
 		
-    @bat.update_attributes(params[:bat])
-    
+		Census.update_after(-1, date, @cage.room)
+		
     for medical_problem in @bat.medical_problems.current
-      medical_problem.date_closed = @bat.leave_date
+      medical_problem.date_closed = date
       medical_problem.save
       for treatment in medical_problem.medical_treatments.current
-        treatment.date_closed = @bat.leave_date
+        treatment.date_closed = date
         treatment.save
         for task in treatment.tasks.current
-          task.date_ended = @bat.leave_date
+          task.date_ended = date
           task.save
         end
       end
@@ -251,7 +251,7 @@ class BatsController < ApplicationController
 	
       #census stuff
       census = Census.find_or_create_by_date_and_room_id(Date.today, @bat.cage.room)
-      census.tally(1, @bat.cage.room)
+      census.tally(1, Date.today, @bat.cage.room)
       census.bats_added ? census.bats_added = census.bats_added + @bat.band + ' ' : census.bats_added = @bat.band + ' '
       census.save
 	
@@ -347,14 +347,14 @@ class BatsController < ApplicationController
       
       if @old_cage.room != @new_cage.room
         old_census = Census.find_or_create_by_date_and_room_id(Date.today, @old_cage.room)
-        old_census.tally(-@bats.length, @old_cage.room)
+        old_census.tally(-@bats.length, Date.today, @old_cage.room)
         for bat in @bats
           old_census.bats_removed ? old_census.bats_removed = old_census.bats_removed + bat.band + ' ' : old_census.bats_removed = bat.band + ' '
         end
         old_census.save
         
         new_census = Census.find_or_create_by_date_and_room_id(Date.today, @new_cage.room)
-        new_census.tally(@bats.length, @new_cage.room)
+        new_census.tally(@bats.length, Date.today, @new_cage.room)
         for bat in @bats
           new_census.bats_added ? new_census.bats_added = new_census.bats_added + bat.band + ' ' : new_census.bats_added = bat.band + ' '
         end

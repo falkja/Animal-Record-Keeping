@@ -5,7 +5,7 @@
 <div class="left_indent">
 
 <p>
-<%= render :partial => 'tasks/remote_new_weigh_cage_task', :locals => {:cage => cage, :div_id => 'tasks_div', :users => User.current,
+<%= render :partial => 'tasks/remote_new_weigh_cage_task', :locals => {:cage => cage, :div_id => 'tasks_div', :users => User.current, :user => nil,
                                 :source => 'show_cage', :same_type_task_list => true, :quick_add => false} %>
 </p>
 

@@ -25,6 +25,25 @@ class MedicalProblemsController < ApplicationController
     list
   end
   
+	def sort_by
+		if params[:sorted_by] == 'medical_problem'
+			medical_problems = MedicalProblem.find(params[:medical_problems], :order => 'title')
+		elsif params[:sorted_by] == 'cage'
+			medical_problems = MedicalProblem.find(params[:medical_problems], :order => 'title')
+			medical_problems = medical_problems.sort_by{|medical_problem| [medical_problem.bat.cage ? medical_problem.bat.cage.name : '']}
+		elsif params[:sorted_by] == 'bat'
+			medical_problems = MedicalProblem.find(params[:medical_problems], :order => 'title')
+			medical_problems = medical_problems.sort_by{|medical_problem| [medical_problem.bat.band]}
+		elsif params[:sorted_by] == 'date_opened'
+			medical_problems = MedicalProblem.find(params[:medical_problems], :order => 'date_opened, title')
+		elsif params[:sorted_by] == 'date_closed'
+			medical_problems = MedicalProblem.find(params[:medical_problems], :order => 'date_closed, title')
+		end
+		
+		render :partial=>'show_medical_problems', :locals=>{:medical_problems => medical_problems, :show_bat => params[:show_bat], 
+				:list_all => params[:list_all], :div_id => params[:div_id], :sorted_by => params[:sorted_by]}
+	end
+	
   def show
     @medical_problem = MedicalProblem.find(params[:id])
   end
@@ -44,7 +63,8 @@ class MedicalProblemsController < ApplicationController
     bat = Bat.find(params[:bat])
     if params[:medical_problem][:title] == ''
       flash[:note] = 'There were problems with your submission.  Please make sure all data fields are filled out.'
-      render :partial=>'medical_problems/show_medical_problems', :locals=>{:medical_problems => bat.medical_problems, :show_bat => false}
+			render :partial=>'show_medical_problems', :locals=>{:medical_problems => bat.medical_problems.current, :show_bat => false, 
+				:list_all => false, :div_id => 'current_medical_problem'}
     else
 			flash[:note] = "Medical problem was successfully created"
       @medical_problem = MedicalProblem.new(params[:medical_problem])
@@ -69,8 +89,9 @@ class MedicalProblemsController < ApplicationController
 				greeting = "Hi medical care users,\n\n"
 				MyMailer.deliver_mass_mail(medical_users_emails, "medical problem created", greeting + msg_body)
 			end
-      
-      render :partial=>'medical_problems/show_medical_problems', :locals=>{:medical_problems => bat.medical_problems, :show_bat => false}
+			
+      render :partial=>'show_medical_problems', :locals=>{:medical_problems => bat.medical_problems.current, :show_bat => false, 
+				:list_all => false, :div_id => 'current_medical_problem'}
     end
   end
   

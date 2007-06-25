@@ -50,17 +50,8 @@ You have no cages
 <p>
 <div class="left_indent">
 <% if @medical_problems.length > 0 %>
-<table>
-<th>Bat</th>
-<th>Cage</th>
-<th>Medical Problem</th>
-<th>Date Opened</th>
-<th></th><th></th>
-<th>Treatment</th>
-  <% for medical_problem in @medical_problems %>
-    <%= render :partial => 'medical_problems/show_medical_problem', :locals => {:medical_problem => medical_problem, :show_bat => true} %>
-  <% end %>  
-</table>
+<%= render :partial => 'medical_problems/show_medical_problems', :locals=>{:medical_problems => @medical_problems, :show_bat => true, 
+				:list_all => false, :div_id => 'medical_problems'} %>
 <% else %>
 No medical problems
 <% end %>

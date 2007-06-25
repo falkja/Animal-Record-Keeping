@@ -69,16 +69,10 @@
 <% if @bat.medical_problems.current.length > 0 %>
 <h3>Current Medical Problems:</h3>
 <div class="left_indent">
-<table>
-<th>Medical Problem</th>
-<th>Date Opened</th>
-<th></th>
-<th></th>
-<th>Treatment</th>
-  <% for medical_problem in @bat.medical_problems.current %>
-    <%= render :partial => 'medical_problems/show_medical_problem', :locals => {:medical_problem => medical_problem, :show_bat => false} %>
-  <% end %>  
-</table>
+
+<%= render :partial => 'medical_problems/show_medical_problems', :locals=>{:medical_problems => @bat.medical_problems.current, :show_bat => false, 
+				:list_all => false, :div_id => 'current_medical_problems'} %>
+
 </div>
 <% end %>
 
@@ -86,16 +80,10 @@
 <% @list_all = true %>
 <h3>Past Medical Problems:</h3>
 <div class="left_indent">
-<table>
-<th>Medical Problem</th>
-<th>Date Opened</th>
-<th>Date Closed</th>
-<th></th><th></th>
-<th>Treatment</th>
-  <% for medical_problem in @bat.medical_problems.expired %>
-    <%= render :partial => 'medical_problems/show_medical_problem', :locals => {:medical_problem => medical_problem, :show_bat => false} %>
-  <% end %>
-</table>
+
+<%= render :partial => 'medical_problems/show_medical_problems', :locals=>{:medical_problems => @bat.medical_problems.expired, :show_bat => false, 
+				:list_all => true, :div_id => 'expired_medical_problems'} %>
+
 </div>
 <% end %>
 

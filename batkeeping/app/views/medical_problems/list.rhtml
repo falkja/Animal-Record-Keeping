@@ -13,7 +13,8 @@
 <% else %>
 
 <p>
-<%= render :partial=>'show_medical_problems', :locals=>{:medical_problems => @medical_problems, :show_bat => true} %>
+<%= render :partial=>'show_medical_problems', :locals=>{:medical_problems => @medical_problems, :show_bat => true, 
+		:list_all => @list_all, :div_id => 'medical_problems'} %>
 </p>
 
 <% end %>

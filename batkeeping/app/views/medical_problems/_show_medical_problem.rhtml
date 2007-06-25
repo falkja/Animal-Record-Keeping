@@ -19,7 +19,7 @@
     
 
     <% if medical_problem.date_closed == nil %>
-      <% if @list_all %>
+      <% if list_all %>
         <td>
           <%=h nice_date(medical_problem.date_closed) %>
         </td>
@@ -64,7 +64,7 @@
       </tr>
       <tr>
       <td></td><td></td><td></td><td></td>
-      <% if @list_all %>
+      <% if list_all %>
         <td></td>
       <% end %>
       <% if show_bat %>

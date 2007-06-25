@@ -13,7 +13,10 @@
 <div id='medical_problems'>
 <% if @bat.medical_problems.current.length > 0 %>
 <p>
-<%= render :partial=>'medical_problems/show_medical_problems', :locals=>{:medical_problems => @bat.medical_problems.current, :show_bat => false} %>
+
+<%= render :partial => 'medical_problems/show_medical_problems', :locals=>{:medical_problems => @bat.medical_problems.current, :show_bat => false, 
+				:list_all => false, :div_id => 'current_medical_problems', :sorted_by => 'medical_problem'} %>
+
 </p>
 <% else %>
 <p>No current medical problems</p>
@@ -36,7 +39,8 @@
 
 <% if @bat.medical_problems.expired.length > 0 %>
 <p>
-<%= render :partial=>'medical_problems/show_medical_problems', :locals=>{:medical_problems => @bat.medical_problems.expired, :show_bat => false} %>
+<%= render :partial => 'medical_problems/show_medical_problems', :locals=>{:medical_problems => @bat.medical_problems.expired, :show_bat => false, 
+				:list_all => true, :div_id => 'expired_medical_problems'} %>
 </p>
 <% else %>
 <p>No previous medical problems</p>

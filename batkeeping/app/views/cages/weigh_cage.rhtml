@@ -14,7 +14,7 @@
 <td align=center><b><%=h bat.weights.today.note %></b></td>
 
 <% if bat.weights.length >= 2 %>
-<td align=center><b><%= bat.weights[bat.weights.length - 1].weight %></b></td>
+<td align=center><b><%= bat.weights[1].weight %></b></td>
 <% end %>
 
 <% if bat.weights.today.weight < bat.species.lower_weight_limit %>

@@ -18,9 +18,9 @@
 <% end %>
 
 <% if bat.weights.today.weight < bat.species.lower_weight_limit %>
-	<td><warning>Warning: bat weight below species lower weight limit (<%= bat.species.lower_weight_limit %>)</warning></td>
+	<td><warning>Warning: below species lower weight limit (<%= bat.species.lower_weight_limit %>)</warning></td>
 <% elsif bat.weights.today.weight > bat.species.upper_weight_limit %>
-	<td><warning>Warning: bat weight above species upper weight limit (<%= bat.species.upper_weight_limit %>)</warning></td>
+	<td><warning>Warning: above species upper weight limit (<%= bat.species.upper_weight_limit %>)</warning></td>
 <% end %>
 
 <% end %>

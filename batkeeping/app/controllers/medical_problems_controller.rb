@@ -41,7 +41,7 @@ class MedicalProblemsController < ApplicationController
 		end
 		
 		render :partial=>'show_medical_problems', :locals=>{:medical_problems => medical_problems, :show_bat => params[:show_bat], 
-				:list_all => params[:list_all], :div_id => params[:div_id], :sorted_by => params[:sorted_by]}
+				:list_all => params[:list_all], :div_id => params[:div_id], :sorted_by => params[:sorted_by], :show_treatments => params[:show_treatments]}
 	end
 	
   def show
@@ -64,7 +64,7 @@ class MedicalProblemsController < ApplicationController
     if params[:medical_problem][:title] == ''
       flash[:note] = 'There were problems with your submission.  Please make sure all data fields are filled out.'
 			render :partial=>'show_medical_problems', :locals=>{:medical_problems => bat.medical_problems.current, :show_bat => false, 
-				:list_all => false, :div_id => 'current_medical_problem'}
+				:list_all => false, :div_id => 'current_medical_problem', :show_treatments => true}
     else
 			flash[:note] = "Medical problem was successfully created"
       @medical_problem = MedicalProblem.new(params[:medical_problem])
@@ -91,7 +91,7 @@ class MedicalProblemsController < ApplicationController
 			end
 			
       render :partial=>'show_medical_problems', :locals=>{:medical_problems => bat.medical_problems.current, :show_bat => false, 
-				:list_all => false, :div_id => 'current_medical_problem'}
+				:list_all => false, :div_id => 'current_medical_problem', :show_treatments => true}
     end
   end
   

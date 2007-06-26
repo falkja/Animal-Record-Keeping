@@ -21,7 +21,7 @@ class SpeciesController < ApplicationController
 
   def create
 		@sp = Species.new(params[:sp])
-		if params[:sp][:name] == '' || params[:sp][:lower_weight_limit] == ''
+		if params[:sp][:name] == '' || params[:sp][:lower_weight_limit] == '' || params[:sp][:upper_weight_limit] == ''
 			flash[:notice] = 'There were problems with your submission.  Please make sure all data fields are filled out.'
 			render :action => 'new'
 		else
@@ -39,10 +39,10 @@ class SpeciesController < ApplicationController
   end
 
   def update
-		@sp = Species.new(params[:sp])
-		if params[:sp][:name] == '' || params[:sp][:lower_weight_limit] == ''
+		@sp = Species.find(params[:id])
+		if params[:sp][:name] == '' || params[:sp][:lower_weight_limit] == '' || params[:sp][:upper_weight_limit] == ''
 			flash[:notice] = 'There were problems with your submission.  Please make sure all data fields are filled out.'
-			render :action => 'new'
+			render :action => 'edit'
 		else
 			if @sp.update_attributes(params[:sp])
 				flash[:notice] = 'Species was successfully updated.'

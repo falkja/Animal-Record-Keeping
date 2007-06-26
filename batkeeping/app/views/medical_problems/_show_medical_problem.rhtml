@@ -42,35 +42,37 @@
       </td>
     <% end %>
 
-    <% for medical_treatment in medical_problem.medical_treatments.current %>
-      <td>
-        <%= link_to medical_treatment.title, :controller => 'medical_treatments', :action => 'show', :id => medical_treatment%>
-      </td>
-      <td>
-        <% if medical_treatment.done_today == true %>
-          Done
-        <% elsif medical_treatment.tasks.medical_tasks_today.length > 0 %>
-          [<%= link_to 'Do', :controller => 'tasks', :action => 'do_medical_task', :id => medical_treatment.todays_task %>]
-				<% else %>
-          [<%= link_to 'Create Medical Tasks', :controller => 'medical_treatments', :action=>:show, :id=> medical_treatment %>]
-        <% end %>
-      </td>
-      <td>
-        [<%= link_to 'End', {:controller => 'medical_treatments', :action => 'destroy_medical_treatment', :id => medical_treatment}, :confirm => 'Are you sure?', :method => :post %>]
-      </td>
-			<% if medical_treatment.tasks.current.length < 7 %>
-			<td><warning>Treatment not given every day</warning></td>
+		<% if show_treatments %>
+			<% for medical_treatment in medical_problem.medical_treatments.current %>
+				<td>
+					<%= link_to medical_treatment.title, :controller => 'medical_treatments', :action => 'show', :id => medical_treatment%>
+				</td>
+				<td>
+					<% if medical_treatment.done_today == true %>
+						Done
+					<% elsif medical_treatment.tasks.medical_tasks_today.length > 0 %>
+						[<%= link_to 'Do', :controller => 'tasks', :action => 'do_medical_task', :id => medical_treatment.todays_task %>]
+					<% else %>
+						[<%= link_to 'Create Medical Tasks', :controller => 'medical_treatments', :action=>:show, :id=> medical_treatment %>]
+					<% end %>
+				</td>
+				<td>
+					[<%= link_to 'End', {:controller => 'medical_treatments', :action => 'destroy_medical_treatment', :id => medical_treatment}, :confirm => 'Are you sure?', :method => :post %>]
+				</td>
+				<% if medical_treatment.tasks.current.length < 7 %>
+				<td><warning>Treatment not given every day</warning></td>
+				<% end %>
+				</tr>
+				<tr>
+				<td></td><td></td><td></td><td></td>
+				<% if list_all %>
+					<td></td>
+				<% end %>
+				<% if show_bat %>
+					<td></td><td></td>
+				<% end %>
 			<% end %>
-      </tr>
-      <tr>
-      <td></td><td></td><td></td><td></td>
-      <% if list_all %>
-        <td></td>
-      <% end %>
-      <% if show_bat %>
-        <td></td><td></td>
-      <% end %>
-    <% end %>
+		<% end %>
     <% if medical_problem.date_closed == nil %>
       <td>[<%= link_to 'Add New Treatment', :controller => 'medical_treatments', :action => 'new', :id => medical_problem %>]</td>
     <% end %>

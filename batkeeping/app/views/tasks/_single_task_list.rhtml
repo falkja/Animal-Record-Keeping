@@ -49,7 +49,7 @@
 		<td>
 		<% if cage.bats.length > 0 %>
 			<% average = task.food / cage.bats.length %>
-			<%= (("%.0" + 1.to_s + "f") % average).to_f %> g
+			<%= ("%0.1f" % average).to_f %> g
 		<% end %>
 		</td>
 	<% end %>

@@ -80,7 +80,8 @@ INSERT INTO `bat_notes` (`id`,`bat_id`,`date`,`text`,`user_id`) VALUES
  (35,68,'2007-06-19 00:00:00','trained to station #7',5),
  (36,15,'2007-06-20 11:50:51','ben\'s bat',1),
  (37,15,'2007-06-20 11:50:57','catches mealworms',1),
- (39,15,'2007-06-20 11:51:16','groove discrimination',1);
+ (39,15,'2007-06-20 11:51:16','groove discrimination',1),
+ (40,38,'2007-06-21 11:43:32','good',6);
 /*!40000 ALTER TABLE `bat_notes` ENABLE KEYS */;
 
 
@@ -110,13 +111,13 @@ CREATE TABLE `bats` (
 
 /*!40000 ALTER TABLE `bats` DISABLE KEYS */;
 INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`gender`,`leave_date`,`leave_reason`,`band`,`vaccination_date`,`species_id`) VALUES 
- (1,1,'2005-08-15 00:00:00','Juvenile','Clinton, MD','M',NULL,NULL,'G58','2005-09-01',2),
+ (1,2,'2005-08-15 00:00:00','Juvenile','Clinton, MD','M',NULL,NULL,'G58','2005-09-01',2),
  (2,23,'2005-08-15 00:00:00','Juvenile','Clinton, MD','M',NULL,NULL,'G78','2005-09-01',2),
  (3,23,'2005-08-15 00:00:00','Juvenile','Clinton, MD','M',NULL,NULL,'G41','2005-09-01',2),
  (4,6,'2005-07-11 00:00:00','Adult','Oxon Hill','F',NULL,NULL,'G29','2005-08-01',2),
  (5,1,'2006-08-02 00:00:00','Juvenile','Clinton, MD?','F',NULL,NULL,'B89',NULL,2),
  (6,1,'2005-08-15 00:00:00','Juvenile','Clinton, MD','M',NULL,NULL,'B65','2005-09-01',2),
- (7,4,'2006-06-11 00:00:00','Juvenile','? USA','M',NULL,NULL,'B85','2006-08-14',2),
+ (7,1,'2006-06-11 00:00:00','Juvenile','? USA','M',NULL,NULL,'B85','2006-08-14',2),
  (8,4,'2006-06-11 00:00:00','Juvenile','? USA','M',NULL,NULL,'W4','2006-08-14',2),
  (9,2,'2006-06-11 00:00:00','Juvenile','? USA','M',NULL,NULL,'W5','2006-08-03',2),
  (10,2,'2005-07-11 00:00:00','Juvenile','Oxon Hill','M',NULL,NULL,'G30','2005-08-01',2),
@@ -126,10 +127,10 @@ INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collectio
  (13,4,'2006-08-03 00:00:00','Juvenile','?','F',NULL,NULL,'B86','2006-08-14',2),
  (14,4,'2005-08-15 00:00:00','Juvenile','Clinton, MD','F',NULL,NULL,'G53','2005-09-01',2),
  (15,16,'2005-07-25 00:00:00','Adult','Fort Washington','F',NULL,NULL,'G39','2007-08-01',2),
- (16,19,'2007-04-30 00:00:00','Adult','Clinton, MD','F',NULL,NULL,'OR40','2007-06-08',2),
- (17,19,'2007-05-12 00:00:00','Adult','Cindy\'s Home','M',NULL,NULL,'OR41','2007-06-08',2),
+ (16,17,'2007-04-30 00:00:00','Adult','Clinton, MD','F',NULL,NULL,'OR40','2007-06-08',2),
+ (17,17,'2007-05-12 00:00:00','Adult','Cindy\'s Home','M',NULL,NULL,'OR41','2007-06-08',2),
  (18,4,'2006-07-06 00:00:00','Juvenile','?','F',NULL,NULL,'B43','2006-08-15',2),
- (19,4,'2007-06-12 00:00:00','Juvenile','Brown University','M',NULL,NULL,'B77','2006-08-15',2),
+ (19,1,'2007-06-12 00:00:00','Juvenile','Brown University','M',NULL,NULL,'B77','2006-08-15',2),
  (20,4,'2005-08-15 00:00:00','Juvenile','Clinton, MD','M',NULL,NULL,'G66','2005-09-01',2),
  (21,1,'2005-08-15 00:00:00','Juvenile','Clinton, MD','F',NULL,NULL,'G57','2005-09-01',2),
  (22,1,'2006-08-03 00:00:00','Juvenile','?','M',NULL,NULL,'W8','2006-08-14',2);
@@ -159,11 +160,11 @@ INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collectio
  (44,12,'2005-07-11 00:00:00','Juvenile','Oxon Hill, MD','F',NULL,NULL,'G32','2005-08-01',2);
 INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`gender`,`leave_date`,`leave_reason`,`band`,`vaccination_date`,`species_id`) VALUES 
  (45,15,'2005-06-13 00:00:00','Adult','?','M',NULL,NULL,'Y31','2005-08-13',2),
- (46,18,'2007-06-13 00:00:00','Adult','Fort Washington, MD','M',NULL,NULL,'OR42',NULL,2),
+ (46,25,'2007-06-13 00:00:00','Adult','Fort Washington, MD','M',NULL,NULL,'OR42',NULL,2),
  (47,18,'2007-06-13 00:00:00','Adult','Fort Washington, MD','F',NULL,NULL,'OR43',NULL,2),
  (48,18,'2007-06-13 00:00:00','Adult','Fort Washington, MD','F',NULL,NULL,'OR44',NULL,2),
- (49,18,'2007-06-13 00:00:00','Adult','Fort Washington, MD','F',NULL,NULL,'OR46',NULL,2),
- (50,18,'2007-06-13 00:00:00','Adult','Fort Washington, MD','F',NULL,NULL,'OR47',NULL,2),
+ (49,25,'2007-06-13 00:00:00','Adult','Fort Washington, MD','F',NULL,NULL,'OR46',NULL,2),
+ (50,25,'2007-06-13 00:00:00','Adult','Fort Washington, MD','F',NULL,NULL,'OR47',NULL,2),
  (51,18,'2007-06-13 00:00:00','Adult','Fort Washington, MD','F',NULL,NULL,'OR45',NULL,2),
  (52,13,'2005-06-14 00:00:00','Adult','?','F',NULL,NULL,'G34','2005-06-14',2),
  (53,13,'2006-07-14 00:00:00','Adult','Clinton, MD','F',NULL,NULL,'B40','2006-08-14',2),
@@ -172,16 +173,16 @@ INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collectio
 INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`gender`,`leave_date`,`leave_reason`,`band`,`vaccination_date`,`species_id`) VALUES 
  (56,14,'2006-07-14 00:00:00','Adult','Clinton, MD','F',NULL,NULL,'B37','2006-08-14',2),
  (57,14,'2005-06-14 00:00:00','Adult','?','M',NULL,NULL,'GR46','2005-08-14',2),
- (58,13,'2005-06-14 00:00:00','Adult','?','F',NULL,NULL,'GR59','2005-08-14',2),
+ (58,NULL,'2005-06-14 00:00:00','Adult','?','F','2007-06-21 00:00:00','duplicate entry','GR59','2005-08-14',2),
  (59,20,'2006-07-06 00:00:00','Adult','Clinton, MD','F',NULL,NULL,'B46','2006-08-15',2),
  (60,21,'2007-06-15 00:00:00','Juvenile','Clinton, MD','F',NULL,NULL,'W3','2006-08-14',2),
  (61,22,'2007-06-15 00:00:00','Adult','Clinton, MD','F',NULL,NULL,'B64','2006-08-15',2),
  (62,18,'2007-06-14 00:00:00','Juvenile','Fort Washington, MD','F',NULL,NULL,'OR48',NULL,2),
  (63,18,'2007-06-13 00:00:00','Juvenile','Fort Washington, MD','F',NULL,NULL,'OR49',NULL,2),
- (64,18,'2007-06-13 00:00:00','Juvenile','Fort Washington, MD','M',NULL,NULL,'OR50',NULL,2),
- (65,18,'2007-06-13 00:00:00','Juvenile','Fort Washington, MD','M',NULL,NULL,'OR51',NULL,2),
- (66,18,'2007-06-13 00:00:00','Juvenile','Fort Washington, MD','M',NULL,NULL,'OR52',NULL,2);
+ (64,NULL,'2007-06-13 00:00:00','Juvenile','Fort Washington, MD','M','2007-06-20 00:00:00','died','OR50',NULL,2),
+ (65,18,'2007-06-13 00:00:00','Juvenile','Fort Washington, MD','M',NULL,NULL,'OR51',NULL,2);
 INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`gender`,`leave_date`,`leave_reason`,`band`,`vaccination_date`,`species_id`) VALUES 
+ (66,NULL,'2007-06-13 00:00:00','Juvenile','Fort Washington, MD','M','2007-06-22 00:00:00','died','OR52',NULL,2),
  (67,12,'2006-07-06 00:00:00','Adult','? USA','F',NULL,NULL,'B35','2006-08-15',2),
  (68,24,'2006-10-25 00:00:00','Adult','Biodome','F',NULL,NULL,'Pu98',NULL,4),
  (69,24,'2006-10-25 00:00:00','Adult','Biodome','M',NULL,NULL,'Pu78',NULL,4),
@@ -189,7 +190,12 @@ INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collectio
  (71,24,'2006-10-25 00:00:00','Adult','Biodome','M',NULL,NULL,'Pu81',NULL,2),
  (72,24,'2006-10-25 00:00:00','Adult','Biodome','F',NULL,NULL,'Pu93',NULL,4),
  (73,24,'2006-10-25 00:00:00','Adult','Biodome','M',NULL,NULL,'Pu96',NULL,4),
- (74,13,'2005-08-19 00:00:00','Juvenile','?','F',NULL,NULL,'G59','2005-09-19',2);
+ (74,13,'2005-08-19 00:00:00','Juvenile','?','F',NULL,NULL,'G59','2005-09-19',2),
+ (75,18,'2007-06-13 00:00:00','Juvenile','Fort Washington, MD','M',NULL,NULL,'OR53',NULL,2),
+ (76,NULL,'2005-08-20 00:00:00','Juvenile','?','M','2007-06-20 00:00:00','This is the same bat as GR61 (duplicate entry).','G61','2005-09-20',2);
+INSERT INTO `bats` (`id`,`cage_id`,`collection_date`,`collection_age`,`collection_place`,`gender`,`leave_date`,`leave_reason`,`band`,`vaccination_date`,`species_id`) VALUES 
+ (77,NULL,'2007-06-13 00:00:00','Juvenile','Fort Washington, MD','F','2007-06-24 00:00:00','dead; puncture wound on neck','OR54',NULL,2),
+ (78,NULL,'2007-06-13 00:00:00','Juvenile','Fort Washington, MD','M','2007-06-22 00:00:00','bat died','OR55',NULL,2);
 /*!40000 ALTER TABLE `bats` ENABLE KEYS */;
 
 
@@ -305,7 +311,19 @@ INSERT INTO `cage_in_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note`
  (85,71,24,'2007-06-19 14:01:15',5,'new bat'),
  (86,72,24,'2007-06-19 14:02:27',5,'new bat'),
  (87,73,24,'2007-06-19 14:03:26',5,'new bat'),
- (88,74,13,'2007-06-19 15:36:37',5,'new bat');
+ (88,74,13,'2007-06-19 15:36:37',5,'new bat'),
+ (89,75,18,'2007-06-20 13:18:14',2,'new bat'),
+ (90,76,15,'2007-06-20 17:08:00',5,'new bat'),
+ (91,77,18,'2007-06-20 18:13:20',5,'new bat'),
+ (92,78,18,'2007-06-21 09:35:56',5,'new bat'),
+ (93,1,2,'2007-06-21 15:59:54',6,''),
+ (94,46,25,'2007-06-24 14:01:41',5,'moms whose pups have died'),
+ (95,49,25,'2007-06-24 14:01:41',5,'moms whose pups have died'),
+ (96,50,25,'2007-06-24 14:01:41',5,'moms whose pups have died'),
+ (97,7,1,'2007-06-25 11:26:46',6,''),
+ (98,19,1,'2007-06-25 11:26:46',6,''),
+ (99,16,17,'2007-06-25 19:01:44',1,'more space'),
+ (100,17,17,'2007-06-25 19:01:44',1,'more space');
 /*!40000 ALTER TABLE `cage_in_histories` ENABLE KEYS */;
 
 
@@ -345,7 +363,17 @@ INSERT INTO `cage_out_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note
  (12,2,1,'2007-06-18 16:33:56',11,'',77),
  (13,3,1,'2007-06-18 16:33:56',11,'',78),
  (14,54,13,'2007-06-18 16:34:16',11,'',79),
- (15,58,14,'2007-06-18 16:34:41',11,'',80);
+ (15,58,14,'2007-06-18 16:34:41',11,'',80),
+ (16,1,1,'2007-06-21 15:59:54',6,'',93),
+ (17,77,18,'2007-06-24 13:26:07',5,'dead; puncture wound on neck',91),
+ (18,46,18,'2007-06-24 14:01:41',5,'moms whose pups have died',94),
+ (19,49,18,'2007-06-24 14:01:41',5,'moms whose pups have died',95);
+INSERT INTO `cage_out_histories` (`id`,`bat_id`,`cage_id`,`date`,`user_id`,`note`,`cage_in_history_id`) VALUES 
+ (20,50,18,'2007-06-24 14:01:41',5,'moms whose pups have died',96),
+ (21,7,4,'2007-06-25 11:26:46',6,'',97),
+ (22,19,4,'2007-06-25 11:26:46',6,'',98),
+ (23,16,19,'2007-06-25 19:01:44',1,'more space',99),
+ (24,17,19,'2007-06-25 19:01:44',1,'more space',100);
 /*!40000 ALTER TABLE `cage_out_histories` ENABLE KEYS */;
 
 
@@ -388,13 +416,14 @@ INSERT INTO `cages` (`id`,`name`,`date_created`,`date_destroyed`,`user_id`,`room
  (16,'BF','2007-06-11 00:00:00',NULL,1,1),
  (17,'Flight','2007-06-11 00:00:00',NULL,1,2),
  (18,'Quarantine Moms and Pups','2007-06-14 00:00:00',NULL,5,2),
- (19,'BF 2','2007-06-14 00:00:00',NULL,1,2),
+ (19,'BF 2','2007-06-14 00:00:00','2007-06-25 00:00:00',1,2),
  (20,'MC #1','2007-06-15 00:00:00',NULL,9,1),
  (21,'MC','2007-06-15 00:00:00',NULL,9,1);
 INSERT INTO `cages` (`id`,`name`,`date_created`,`date_destroyed`,`user_id`,`room_id`) VALUES 
  (22,'Surgery 2','2007-06-15 00:00:00',NULL,10,1),
  (23,'GSWNLRY','2007-06-18 00:00:00',NULL,5,1),
- (24,'Carollia partition','2007-06-19 00:00:00',NULL,5,3);
+ (24,'Carollia partition','2007-06-19 00:00:00',NULL,5,3),
+ (25,'Q2','2007-06-24 00:00:00',NULL,5,2);
 /*!40000 ALTER TABLE `cages` ENABLE KEYS */;
 
 
@@ -430,7 +459,13 @@ INSERT INTO `census` (`id`,`animals`,`date`,`room_id`,`bats_added`,`bats_removed
  (9,13,'2007-06-17',2,'OR52 ',NULL),
  (10,53,'2007-06-18',1,'B35 ','B50 '),
  (11,6,'2007-06-19',3,'Pu98 Pu78 Pu82 Pu81 Pu93 Pu96 ',NULL),
- (12,54,'2007-06-19',1,'G59 ',NULL);
+ (12,54,'2007-06-19',1,'G59 ',NULL),
+ (13,14,'2007-06-20',2,'OR53 OR54 ','OR50 '),
+ (14,54,'2007-06-20',1,'G61 ','G61 '),
+ (15,15,'2007-06-21',2,'OR55 ',NULL),
+ (16,53,'2007-06-21',1,NULL,'GR59 '),
+ (17,13,'2007-06-22',2,NULL,'OR55 OR52 '),
+ (18,12,'2007-06-24',2,NULL,'OR54 ');
 /*!40000 ALTER TABLE `census` ENABLE KEYS */;
 
 
@@ -467,7 +502,8 @@ INSERT INTO `medical_problems` (`id`,`bat_id`,`date_opened`,`description`,`date_
  (9,45,'2007-06-05 00:00:00','Abscess on nose-- drained it and inject Baytril on site; gave Bactrim (0.15 cc) daily for 10 days.  Nose seems fine now; treatment complete.','2007-06-14 00:00:00','Abscess on nose'),
  (10,40,'2007-06-15 00:00:00','treated with Bactrim, no current treatment. Watch abscess, drain if needed',NULL,'Abscess on face around edge of surgical site'),
  (11,30,'2007-06-15 00:00:00','Left eye horribly swollen all around eye. Eye scabbed over completely.','2007-06-16 00:00:00','Swollen/Infected Eye'),
- (12,67,'2007-06-20 00:00:00','Bat sweaty. Please clarify reason for monitoring, treatment?',NULL,'Sweaty (no entry found,??)');
+ (12,67,'2007-06-20 00:00:00','Bat sweaty. Please clarify reason for monitoring, treatment?','2007-06-22 00:00:00','Sweaty (no entry found,??)'),
+ (13,52,'2007-06-20 00:00:00','below right eye, on nostril',NULL,'Face abscess');
 /*!40000 ALTER TABLE `medical_problems` ENABLE KEYS */;
 
 
@@ -508,7 +544,8 @@ INSERT INTO `medical_treatments` (`id`,`title`,`medical_problem_id`,`date_opened
  (15,'topical antibiotics on eye and all around PM',11,'2007-06-15','2007-06-18'),
  (16,'0.15 cc Bactrim',11,'2007-06-15','2007-06-18');
 INSERT INTO `medical_treatments` (`id`,`title`,`medical_problem_id`,`date_opened`,`date_closed`) VALUES 
- (17,'0.15 cc Bactrim PM',11,'2007-06-15','2007-06-18');
+ (17,'0.15 cc Bactrim PM',11,'2007-06-15','2007-06-18'),
+ (18,'0.15 cc Bactrim',13,'2007-06-20',NULL);
 /*!40000 ALTER TABLE `medical_treatments` ENABLE KEYS */;
 
 
@@ -543,7 +580,8 @@ DROP TABLE IF EXISTS `species`;
 CREATE TABLE `species` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `name` varchar(45) NOT NULL,
-  `lower_weight_limit` float default NULL,
+  `lower_weight_limit` float NOT NULL,
+  `upper_weight_limit` float NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -552,10 +590,10 @@ CREATE TABLE `species` (
 --
 
 /*!40000 ALTER TABLE `species` DISABLE KEYS */;
-INSERT INTO `species` (`id`,`name`,`lower_weight_limit`) VALUES 
- (2,'Eptesicus fuscus',11),
- (3,'Myotis septentrionalis',5),
- (4,'Carollia perspicillata',15);
+INSERT INTO `species` (`id`,`name`,`lower_weight_limit`,`upper_weight_limit`) VALUES 
+ (2,'Eptesicus fuscus',11,19),
+ (3,'Myotis septentrionalis',5,10),
+ (4,'Carollia perspicillata',15,22);
 /*!40000 ALTER TABLE `species` ENABLE KEYS */;
 
 
@@ -613,7 +651,26 @@ INSERT INTO `task_census` (`id`,`date`,`internal_description`,`date_done`,`room_
  (32,'2007-06-19','weigh',NULL,1,40),
  (33,'2007-06-20','weigh',NULL,1,2),
  (34,'2007-06-20','weigh',NULL,1,10),
- (35,'2007-06-20','weigh',NULL,1,40);
+ (35,'2007-06-20','weigh',NULL,1,40),
+ (36,'2007-06-21','weigh',NULL,1,2),
+ (37,'2007-06-21','weigh',NULL,1,10),
+ (38,'2007-06-21','weigh',NULL,1,40),
+ (39,'2007-06-22','weigh',NULL,1,2),
+ (40,'2007-06-22','weigh',NULL,1,10),
+ (41,'2007-06-22','weigh',NULL,1,40),
+ (42,'2007-06-23','weigh',NULL,1,2),
+ (43,'2007-06-23','weigh',NULL,1,10),
+ (44,'2007-06-23','weigh',NULL,1,40),
+ (45,'2007-06-24','weigh',NULL,1,2),
+ (46,'2007-06-24','weigh',NULL,1,10),
+ (47,'2007-06-24','weigh',NULL,1,40),
+ (48,'2007-06-25','weigh',NULL,1,2),
+ (49,'2007-06-25','weigh',NULL,1,10),
+ (50,'2007-06-25','weigh',NULL,1,40),
+ (51,'2007-06-26','weigh',NULL,1,2);
+INSERT INTO `task_census` (`id`,`date`,`internal_description`,`date_done`,`room_id`,`task_id`) VALUES 
+ (52,'2007-06-26','weigh',NULL,1,10),
+ (53,'2007-06-26','weigh',NULL,1,40);
 /*!40000 ALTER TABLE `task_census` ENABLE KEYS */;
 
 
@@ -713,7 +770,60 @@ INSERT INTO `task_histories` (`id`,`task_id`,`date_done`,`remarks`,`user_id`,`fe
  (69,66,'2007-06-20 08:44:00','Whole section of wing membrane gone. A patch of dry membrane hanging from joint. Considered removing it, but I figured it might fall off on its own. I removed bat\'s band since it seemed to be aggravating the problem. Bat extremely sweaty. 0.15cc Bactrim and 0.03cc Metacam,topical antibiotics. Fed some worms while preparing treatment.',3,NULL),
  (70,73,'2007-06-20 08:54:00','',3,NULL);
 INSERT INTO `task_histories` (`id`,`task_id`,`date_done`,`remarks`,`user_id`,`fed`) VALUES 
- (71,51,'2007-06-20 09:01:00','looks good',3,NULL);
+ (71,51,'2007-06-20 09:01:00','looks good',3,NULL),
+ (72,108,'2007-06-20 16:43:00','drained today',5,NULL),
+ (73,2,'2007-06-21 11:42:28','',6,NULL),
+ (74,15,'2007-06-21 11:47:00','',6,NULL),
+ (75,7,'2007-06-21 11:50:00','ok',6,NULL),
+ (76,2,'2007-06-21 11:50:00','',6,NULL),
+ (77,80,'2007-06-21 11:53:00','',6,NULL),
+ (78,10,'2007-06-21 11:47:00','',6,NULL),
+ (79,37,'2007-06-21 11:56:00','0.15cc bactrim',6,NULL),
+ (80,30,'2007-06-21 12:00:00','same condition',6,NULL),
+ (81,45,'2007-06-21 12:04:00','worm left,brushed teeth',6,NULL),
+ (82,40,'2007-06-21 12:04:00','',6,NULL),
+ (83,52,'2007-06-21 12:08:00','good',6,NULL),
+ (84,67,'2007-06-21 12:18:00','sweaty,0.05ccbactrim,0.03cc metacam\r\ntropical ab',6,NULL),
+ (85,109,'2007-06-21 14:04:00','drained abscess; pus above left nostril, too',5,NULL),
+ (86,74,'2007-06-21 15:44:00','',1,NULL),
+ (87,110,'2007-06-22 15:51:00','very little/nothing came out when drained',5,NULL),
+ (88,8,'2007-06-22 17:01:00','still a little sweaty, scar where lesion used to be',1,NULL);
+INSERT INTO `task_histories` (`id`,`task_id`,`date_done`,`remarks`,`user_id`,`fed`) VALUES 
+ (89,2,'2007-06-22 17:01:00','',1,NULL),
+ (90,81,'2007-06-22 17:06:00','some pus drained',1,NULL),
+ (91,16,'2007-06-22 17:06:00','right eye had some gunk below it',1,NULL),
+ (92,10,'2007-06-22 17:06:00','',1,NULL),
+ (93,31,'2007-06-22 17:11:00','',1,NULL),
+ (94,38,'2007-06-22 17:12:00','drained pus',1,NULL),
+ (95,46,'2007-06-22 17:14:00','worms left, gums look horrible',1,NULL),
+ (96,40,'2007-06-22 17:14:00','',1,NULL),
+ (97,53,'2007-06-22 17:16:00','just a small bump where abscess used to be',1,NULL),
+ (98,68,'2007-06-22 17:19:00','',1,NULL),
+ (99,75,'2007-06-22 17:22:00','',1,NULL),
+ (100,17,'2007-06-23 16:41:00','',7,NULL),
+ (101,39,'2007-06-23 16:50:00','',7,NULL),
+ (102,69,'2007-06-23 16:55:00','very sweaty',7,NULL),
+ (103,76,'2007-06-23 16:59:00','',7,NULL),
+ (104,111,'2007-06-23 17:01:00','',7,NULL),
+ (105,11,'2007-06-24 08:53:00','',7,NULL),
+ (106,33,'2007-06-24 09:00:00','',7,NULL),
+ (107,65,'2007-06-24 09:05:00','very sweaty',7,NULL),
+ (108,70,'2007-06-24 09:11:00','',7,NULL);
+INSERT INTO `task_histories` (`id`,`task_id`,`date_done`,`remarks`,`user_id`,`fed`) VALUES 
+ (109,112,'2007-06-24 09:11:00','',7,NULL),
+ (110,106,'2007-06-25 16:23:00','nothing from abscess\r\n',11,NULL),
+ (111,4,'2007-06-25 16:26:00','',2,NULL),
+ (112,2,'2007-06-25 16:26:00','',2,NULL),
+ (113,12,'2007-06-25 16:30:00','drained a little',2,NULL),
+ (114,77,'2007-06-25 16:35:00','',2,NULL),
+ (115,10,'2007-06-25 16:30:00','',2,NULL),
+ (116,27,'2007-06-25 16:39:00','',2,NULL),
+ (117,34,'2007-06-25 16:40:00','drained face, gums don\'t look good',2,NULL),
+ (118,42,'2007-06-25 16:46:00','seemingly all worms left, seems unable to close mouth around worm',2,NULL),
+ (119,40,'2007-06-25 16:46:00','',2,NULL),
+ (120,49,'2007-06-25 16:59:00','looking good',2,NULL),
+ (121,63,'2007-06-25 17:03:00','wing is hanging off, very sweaty',2,NULL),
+ (122,71,'2007-06-25 17:06:00','',2,NULL);
 /*!40000 ALTER TABLE `task_histories` ENABLE KEYS */;
 
 
@@ -748,7 +858,7 @@ CREATE TABLE `tasks` (
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
 INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`,`animal_care`,`room_id`) VALUES 
  (1,0,NULL,NULL,'Water','','change_water',NULL,NULL,NULL,0,'2007-06-05 12:39:06','2007-06-13 11:10:19',1,1),
- (2,0,NULL,5,'Weigh cage Med 1','','weigh',NULL,NULL,NULL,-1,'2007-06-13 10:15:40',NULL,0,1),
+ (2,0,NULL,5,'Weigh cage Med 1','','weigh',NULL,NULL,NULL,0,'2007-06-13 10:15:40',NULL,0,1),
  (3,1,3,NULL,'Do Currently no treatment is necessary. Monitor ','','medical',NULL,NULL,NULL,0,'2007-06-13 10:17:48','2007-06-19 17:15:22',0,NULL),
  (4,2,3,NULL,'Do Currently no treatment is necessary. Monitor ','','medical',NULL,NULL,NULL,0,'2007-06-13 10:17:48',NULL,1,NULL),
  (5,3,3,NULL,'Do Currently no treatment is necessary. Monitor ','','medical',NULL,NULL,NULL,0,'2007-06-13 10:17:48',NULL,1,NULL),
@@ -757,7 +867,7 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`
  (8,6,3,NULL,'Do Currently no treatment is necessary. Monitor ','','medical',NULL,NULL,NULL,0,'2007-06-13 10:17:48',NULL,1,NULL);
 INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`,`animal_care`,`room_id`) VALUES 
  (9,7,3,NULL,'Do Currently no treatment is necessary. Monitor ','','medical',NULL,NULL,NULL,0,'2007-06-13 10:17:48','2007-06-19 17:15:24',0,NULL),
- (10,0,NULL,3,'Weigh cage Med 2','','weigh',NULL,NULL,NULL,-1,'2007-06-13 10:26:39',NULL,0,1),
+ (10,0,NULL,3,'Weigh cage Med 2','','weigh',NULL,NULL,NULL,0,'2007-06-13 10:26:39',NULL,0,1),
  (11,1,4,NULL,'Do 0.15cc Bactrim.','','medical',NULL,NULL,NULL,0,'2007-06-13 10:28:51',NULL,0,NULL),
  (12,2,4,NULL,'Do 0.15cc Bactrim.','','medical',NULL,NULL,NULL,0,'2007-06-13 10:28:51',NULL,0,NULL),
  (13,3,4,NULL,'Do 0.15cc Bactrim.','','medical',NULL,NULL,NULL,0,'2007-06-13 10:28:51',NULL,0,NULL),
@@ -782,15 +892,15 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`
  (30,5,6,NULL,'Do observation','','medical',NULL,NULL,NULL,0,'2007-06-13 10:52:21',NULL,1,NULL),
  (31,6,6,NULL,'Do observation','','medical',NULL,NULL,NULL,0,'2007-06-13 10:52:22',NULL,1,NULL),
  (32,7,6,NULL,'Do observation','','medical',NULL,NULL,NULL,0,'2007-06-13 10:52:22','2007-06-19 17:16:46',0,NULL),
- (33,1,1,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-06-13 10:53:20',NULL,0,NULL);
+ (33,1,1,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-06-13 10:53:20',NULL,1,NULL);
 INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`,`animal_care`,`room_id`) VALUES 
- (34,2,1,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-06-13 10:53:20',NULL,0,NULL),
- (35,3,1,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-06-13 10:53:20',NULL,0,NULL),
- (36,4,1,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-06-13 10:53:20',NULL,0,NULL),
- (37,5,1,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-06-13 10:53:21',NULL,0,NULL),
- (38,6,1,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-06-13 10:53:21',NULL,0,NULL),
- (39,7,1,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-06-13 10:53:21',NULL,0,NULL),
- (40,0,NULL,7,'Weigh cage Med 4','','weigh',NULL,NULL,NULL,-1,'2007-06-13 10:56:50',NULL,0,1),
+ (34,2,1,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-06-13 10:53:20',NULL,1,NULL),
+ (35,3,1,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-06-13 10:53:20',NULL,1,NULL),
+ (36,4,1,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-06-13 10:53:20',NULL,1,NULL),
+ (37,5,1,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-06-13 10:53:21',NULL,1,NULL),
+ (38,6,1,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-06-13 10:53:21',NULL,1,NULL),
+ (39,7,1,NULL,'Do 0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-06-13 10:53:21',NULL,1,NULL),
+ (40,0,NULL,7,'Weigh cage Med 4','','weigh',NULL,NULL,NULL,0,'2007-06-13 10:56:50',NULL,0,1),
  (41,1,7,NULL,'Do Monitor status. If weight drops we\'ll need to','','medical',NULL,NULL,NULL,0,'2007-06-13 10:59:05','2007-06-19 17:17:29',0,NULL),
  (42,2,7,NULL,'Do Monitor status. If weight drops we\'ll need to','','medical',NULL,NULL,NULL,0,'2007-06-13 10:59:05',NULL,1,NULL);
 INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`,`animal_care`,`room_id`) VALUES 
@@ -864,7 +974,14 @@ INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`
  (103,4,17,NULL,'Do 0.15 cc Bactrim PM','','medical',NULL,NULL,NULL,0,'2007-06-15 15:12:51','2007-06-18 19:09:18',1,NULL);
 INSERT INTO `tasks` (`id`,`repeat_code`,`medical_treatment_id`,`cage_id`,`title`,`notes`,`internal_description`,`food`,`dish_type`,`dish_num`,`jitter`,`date_started`,`date_ended`,`animal_care`,`room_id`) VALUES 
  (104,5,17,NULL,'Do 0.15 cc Bactrim PM','','medical',NULL,NULL,NULL,0,'2007-06-15 15:12:51','2007-06-18 19:09:18',1,NULL),
- (105,6,17,NULL,'Do 0.15 cc Bactrim PM','','medical',NULL,NULL,NULL,0,'2007-06-15 15:12:51','2007-06-18 19:09:18',1,NULL);
+ (105,6,17,NULL,'Do 0.15 cc Bactrim PM','','medical',NULL,NULL,NULL,0,'2007-06-15 15:12:51','2007-06-18 19:09:18',1,NULL),
+ (106,2,18,NULL,'0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-06-20 16:42:51',NULL,0,NULL),
+ (107,3,18,NULL,'0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-06-20 16:42:51',NULL,0,NULL),
+ (108,4,18,NULL,'0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-06-20 16:42:51',NULL,0,NULL),
+ (109,5,18,NULL,'0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-06-20 16:42:51',NULL,0,NULL),
+ (110,6,18,NULL,'0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-06-20 16:42:51',NULL,0,NULL),
+ (111,7,18,NULL,'0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-06-20 16:43:04',NULL,1,NULL),
+ (112,1,18,NULL,'0.15 cc Bactrim','','medical',NULL,NULL,NULL,0,'2007-06-20 16:43:04',NULL,1,NULL);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 
 
@@ -906,13 +1023,6 @@ INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES
  (1,25),
  (1,26),
  (1,32),
- (1,33),
- (1,34),
- (1,35),
- (1,36),
- (1,37),
- (1,38),
- (1,39),
  (1,40),
  (1,41),
  (1,47),
@@ -946,13 +1056,6 @@ INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES
  (2,25),
  (2,26),
  (2,32),
- (2,33),
- (2,34),
- (2,35),
- (2,36),
- (2,37),
- (2,38),
- (2,39),
  (2,40),
  (2,41),
  (2,47),
@@ -986,14 +1089,6 @@ INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES
  (3,25),
  (3,26),
  (3,32),
- (3,33),
- (3,34),
- (3,35),
- (3,36),
- (3,37),
- (3,38);
-INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES 
- (3,39),
  (3,40),
  (3,41),
  (3,47),
@@ -1006,7 +1101,13 @@ INSERT INTO `tasks_users` (`user_id`,`task_id`) VALUES
  (3,59),
  (3,60),
  (3,61),
- (5,62);
+ (5,62),
+ (5,106),
+ (5,107),
+ (5,108),
+ (5,109),
+ (5,110),
+ (8,10);
 /*!40000 ALTER TABLE `tasks_users` ENABLE KEYS */;
 
 
@@ -1036,7 +1137,7 @@ INSERT INTO `users` (`id`,`name`,`initials`,`email`,`start_date`,`end_date`,`job
  (2,'Jenny Finder','JF','jfinder@umd.edu','2007-06-11 00:00:00',NULL,'Medical Care'),
  (3,'Amaya Perez','AP','amaya.eneko@gmail.com','2007-06-11 00:00:00',NULL,'Medical Care Administrator'),
  (4,'Vanessa Reed','VR','nessareed@mindspring.com','2007-06-11 00:00:00',NULL,' Animal Care'),
- (5,'Genni Spanjer Wright','GSW','gspanjer@umd.edu','2007-06-11 00:00:00',NULL,''),
+ (5,'Genni Spanjer Wright','GSW','myotis@gmail.com','2007-06-11 00:00:00',NULL,''),
  (6,'Wei Xian','WX','wxian@psyc.umd.edu','2007-06-14 00:00:00',NULL,'Medical Care'),
  (7,'Krystal Medley','KM','klmedley@hotmail.com','2007-06-14 00:00:00',NULL,'Medical Care Weekend Care'),
  (8,'Sam McIlwain','SM','smcilwai@umd.edu','2007-06-15 00:00:00',NULL,'Medical Care'),
@@ -1079,7 +1180,11 @@ INSERT INTO `weathers` (`id`,`log_date`,`temperature`,`humidity`,`room_id`,`sig`
  (10,'2007-06-16',77,50,2,'KM'),
  (11,'2007-06-17',77,30,1,'KM'),
  (12,'2007-06-17',75.8,57,2,'KM'),
- (13,'2007-06-18',77,23,1,'VR');
+ (13,'2007-06-18',77,23,1,'VR'),
+ (14,'2007-06-23',75,25,1,'KM'),
+ (15,'2007-06-23',76.1,50,2,'KM'),
+ (16,'2007-06-24',77,26,1,'KM'),
+ (17,'2007-06-24',75.8,49,2,'KM');
 /*!40000 ALTER TABLE `weathers` ENABLE KEYS */;
 
 
@@ -1285,7 +1390,7 @@ INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user
  (168,27,'2007-06-19 13:09:41',20.5,'bt','n',12,NULL),
  (169,28,'2007-06-19 13:10:15',21,'bt','n',12,NULL),
  (170,34,'2007-06-19 13:14:22',18.5,'bt, teeth not very good','n',12,NULL),
- (171,37,'2007-06-19 13:17:45',15.6,'','n',12,NULL),
+ (171,37,'2007-06-19 13:17:45',5.6,'','n',12,NULL),
  (172,36,'2007-06-19 13:19:03',15.1,'bt','n',12,NULL),
  (173,68,'2007-06-19 13:56:45',18.6,'being trained as demonstrator for social learning experiment','n',5,NULL),
  (174,69,'2007-06-19 13:57:45',18.9,'being trained as demonstrator for social learning exp.-- station #9','n',5,NULL),
@@ -1326,7 +1431,203 @@ INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user
  (207,70,'2007-06-20 09:45:23',17.3,'','n',5,NULL),
  (208,72,'2007-06-20 09:45:42',15.5,'','n',5,NULL),
  (209,73,'2007-06-20 09:46:15',16.6,'','n',5,NULL),
- (210,68,'2007-06-20 09:46:32',17.3,'','n',5,NULL);
+ (210,68,'2007-06-20 09:46:32',17.3,'','n',5,NULL),
+ (211,17,'2007-06-20 12:52:02',13.3,'','n',1,NULL),
+ (212,75,'2007-06-20 13:18:14',3.6,'','n',2,NULL);
+INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user_id`,`task_history_id`) VALUES 
+ (213,48,'2007-06-20 13:23:17',17.1,'OR48 is attached, fed a worm or two','n',2,NULL),
+ (214,46,'2007-06-20 13:47:12',16.8,'with a pup OR 52 attached, fed worms in a dish after that they weighed 19g','n',2,NULL),
+ (215,51,'2007-06-20 13:26:44',23.7,'with 2 pups','n',2,NULL),
+ (216,49,'2007-06-20 13:51:06',21,'with 2 pups, both unbanded; 24.8g after fed extra','n',2,NULL),
+ (217,50,'2007-06-20 13:48:44',12.3,'mom alone; fed extra; reweighed after eating at 15.7','n',2,NULL),
+ (218,47,'2007-06-20 13:43:13',13.1,'mom alone; fed extra while we attached OR53 to her for nursing','n',2,NULL),
+ (219,11,'2007-06-20 14:07:28',19.8,'','n',11,NULL),
+ (220,3,'2007-06-20 14:08:14',13.3,'','n',11,NULL),
+ (221,54,'2007-06-20 14:09:04',19.4,'','n',11,NULL),
+ (222,2,'2007-06-20 14:10:07',16,'','n',11,NULL),
+ (223,74,'2007-06-20 15:20:03',14.1,'','n',11,NULL),
+ (224,52,'2007-06-20 16:43:00',13.7,'','n',5,72),
+ (225,53,'2007-06-20 15:21:25',14.9,'','n',11,NULL);
+INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user_id`,`task_history_id`) VALUES 
+ (226,15,'2007-06-20 17:01:18',14,'','n',1,NULL),
+ (227,45,'2007-06-20 17:06:17',14.9,'teeth brushed','y',5,NULL),
+ (228,76,'2007-06-20 17:08:00',16.1,'teeth brushed','y',5,NULL),
+ (230,55,'2007-06-20 17:09:11',16.1,'teeth brushed','y',5,NULL),
+ (231,57,'2007-06-20 17:11:24',16.5,'teeth brushed','y',5,NULL),
+ (232,56,'2007-06-20 17:13:16',17.5,'teeth brushed; cleaned nose','n',5,NULL),
+ (233,16,'2007-06-20 17:26:41',13.3,'','n',1,NULL),
+ (234,77,'2007-06-20 18:13:20',3.3,'','n',5,NULL),
+ (235,66,'2007-06-21 09:20:39',2.6,'','n',5,NULL),
+ (236,65,'2007-06-21 09:21:20',4.1,'','n',5,NULL),
+ (237,75,'2007-06-21 09:22:01',3.7,'','n',5,NULL),
+ (238,77,'2007-06-21 09:32:51',3.2,'','n',5,NULL),
+ (239,48,'2007-06-21 09:33:19',17.8,'OR48 attached','n',5,NULL),
+ (240,78,'2007-06-21 09:35:56',2.9,'','n',5,NULL),
+ (241,63,'2007-06-21 09:40:19',4.4,'','n',5,NULL),
+ (242,68,'2007-06-21 10:19:23',17.2,'','n',5,NULL),
+ (243,73,'2007-06-21 10:20:44',16.7,'','n',5,NULL);
+INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user_id`,`task_history_id`) VALUES 
+ (244,72,'2007-06-21 10:22:23',15.1,'','n',5,NULL),
+ (245,69,'2007-06-21 10:23:41',17.4,'','n',5,NULL),
+ (246,70,'2007-06-21 10:25:16',17.3,'','n',5,NULL),
+ (247,7,'2007-06-21 11:11:43',18.9,'','n',6,NULL),
+ (248,12,'2007-06-21 11:15:59',20.8,'','n',6,NULL),
+ (249,19,'2007-06-21 11:16:30',17.1,'','n',6,NULL),
+ (250,13,'2007-06-21 11:17:35',17.6,'','n',6,NULL),
+ (251,18,'2007-06-21 11:18:31',18.7,'','n',6,NULL),
+ (252,8,'2007-06-21 11:20:40',18,'','n',6,NULL),
+ (253,20,'2007-06-21 11:20:57',22.4,'','n',6,NULL),
+ (254,14,'2007-06-21 11:21:47',17.3,'','n',6,NULL),
+ (255,6,'2007-06-21 11:25:56',16.1,'','n',6,NULL),
+ (256,21,'2007-06-21 11:27:10',17.5,'','n',6,NULL),
+ (257,1,'2007-06-21 11:28:40',13.1,'','n',6,NULL),
+ (258,5,'2007-06-21 11:29:35',16.1,'','n',6,NULL),
+ (259,22,'2007-06-21 11:31:02',16.7,'','n',6,NULL),
+ (260,38,'2007-06-21 11:50:00',19.7,'','n',6,75),
+ (261,39,'2007-06-21 11:47:00',20.6,'','n',6,74),
+ (262,40,'2007-06-21 11:53:00',15.9,'','n',6,77);
+INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user_id`,`task_history_id`) VALUES 
+ (263,4,'2007-06-21 11:56:00',13.1,'','n',6,79),
+ (264,41,'2007-06-21 12:00:00',16.2,'','n',6,80),
+ (265,42,'2007-06-21 12:04:00',11.9,'','n',6,81),
+ (266,43,'2007-06-21 12:08:00',15,'','n',6,83),
+ (267,67,'2007-06-21 12:12:13',15.9,'','n',6,NULL),
+ (268,11,'2007-06-21 13:07:17',19.5,'','n',5,NULL),
+ (269,54,'2007-06-21 13:07:44',19.1,'','n',5,NULL),
+ (270,2,'2007-06-21 13:08:48',15.4,'','n',5,NULL),
+ (271,3,'2007-06-21 13:09:35',13.1,'','n',5,NULL),
+ (272,53,'2007-06-21 14:01:08',15,'','n',5,NULL),
+ (273,52,'2007-06-21 14:04:00',14.2,'','n',5,85),
+ (274,74,'2007-06-21 14:03:11',13.3,'','n',5,NULL),
+ (275,15,'2007-06-21 16:12:50',13.7,'','n',1,NULL),
+ (276,60,'2007-06-21 16:28:43',18.1,'','n',9,NULL),
+ (277,16,'2007-06-21 16:48:20',13.8,'','n',1,NULL),
+ (278,17,'2007-06-21 16:51:30',12.7,'','n',1,NULL),
+ (279,63,'2007-06-22 09:44:37',4.6,'','n',3,NULL),
+ (280,46,'2007-06-22 09:45:38',14.4,'mom alone','n',3,NULL),
+ (281,75,'2007-06-22 09:46:36',3.9,'','n',3,NULL);
+INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user_id`,`task_history_id`) VALUES 
+ (282,49,'2007-06-22 09:47:53',19,'Weighed with OR54 latched on','n',3,NULL),
+ (283,48,'2007-06-22 09:49:40',16.9,'OR48 attached','n',3,NULL),
+ (284,47,'2007-06-22 09:50:38',13.6,'mom alone','n',3,NULL),
+ (285,51,'2007-06-22 09:51:44',18.8,'OR51 attached','n',3,NULL),
+ (286,50,'2007-06-22 09:53:52',13.1,'','n',3,NULL),
+ (287,69,'2007-06-22 10:42:34',17.8,'','n',5,NULL),
+ (288,73,'2007-06-22 10:44:13',17.3,'','n',5,NULL),
+ (289,68,'2007-06-22 10:45:29',18.1,'','n',5,NULL),
+ (290,72,'2007-06-22 10:46:41',16.1,'','n',5,NULL),
+ (291,71,'2007-06-22 10:48:42',17.7,'not weighed on 6/21 because had escaped from partition; was put back behind partition evening of 6/21','n',5,NULL),
+ (292,70,'2007-06-22 10:50:16',18.5,'','n',5,NULL),
+ (293,29,'2007-06-22 11:53:10',17.6,'brushed teeth','n',2,NULL),
+ (294,32,'2007-06-22 11:56:14',18.1,'brushed teeth','n',2,NULL),
+ (295,26,'2007-06-22 12:00:02',18.6,'brushed teeth','n',2,NULL),
+ (296,31,'2007-06-22 12:03:54',16.9,'brushed teeth','n',2,NULL);
+INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user_id`,`task_history_id`) VALUES 
+ (297,23,'2007-06-22 12:05:52',19.6,'brushed teeth','n',2,NULL),
+ (298,27,'2007-06-22 12:08:56',20.1,'brushed teeth','n',2,NULL),
+ (299,28,'2007-06-22 12:11:08',20.7,'brushed teeth','n',2,NULL),
+ (300,35,'2007-06-22 12:15:26',24.6,'brushed teeth','n',2,NULL),
+ (301,24,'2007-06-22 12:17:37',23.4,'brushed teeth','n',2,NULL),
+ (302,34,'2007-06-22 12:20:52',18,'brushed teeth','n',2,NULL),
+ (303,25,'2007-06-22 12:30:10',19.2,'pus drained from nose, brushed teeth','n',2,NULL),
+ (304,33,'2007-06-22 12:32:19',20.1,'brushed teeth','n',2,NULL),
+ (305,37,'2007-06-22 14:22:55',5.7,'','n',2,NULL),
+ (306,36,'2007-06-22 14:27:57',15.2,'brushed teeth','n',2,NULL),
+ (307,10,'2007-06-22 14:31:54',11.7,'brushed teeth','n',2,NULL),
+ (308,2,'2007-06-22 14:34:42',15.3,'','n',2,NULL),
+ (309,54,'2007-06-22 14:35:27',18.8,'','n',2,NULL),
+ (310,11,'2007-06-22 14:36:19',19,'','n',2,NULL),
+ (311,3,'2007-06-22 14:37:18',13.3,'','n',2,NULL),
+ (312,53,'2007-06-22 14:38:25',15.2,'','n',2,NULL);
+INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user_id`,`task_history_id`) VALUES 
+ (313,52,'2007-06-22 15:51:00',14,'','n',5,87),
+ (314,74,'2007-06-22 14:39:51',13.5,'','n',2,NULL),
+ (315,1,'2007-06-22 14:43:38',12.2,'brushed teeth','n',2,NULL),
+ (316,9,'2007-06-22 14:49:15',13.9,'brushed teeth','n',2,NULL),
+ (317,62,'2007-06-22 16:54:28',4,'','n',2,NULL),
+ (318,63,'2007-06-22 16:55:31',4.5,'','n',2,NULL),
+ (319,65,'2007-06-22 16:56:07',4.1,'','n',2,NULL),
+ (320,38,'2007-06-22 17:01:00',20.6,'','y',1,88),
+ (321,40,'2007-06-22 17:06:00',16.7,'','y',1,90),
+ (322,39,'2007-06-22 17:06:00',20.8,'','y',1,91),
+ (323,41,'2007-06-22 17:11:00',18.1,'','y',1,93),
+ (324,4,'2007-06-22 17:12:00',14.4,'','y',1,94),
+ (325,42,'2007-06-22 17:14:00',14.7,'','y',1,95),
+ (326,43,'2007-06-22 17:16:00',16.2,'','y',1,97),
+ (328,39,'2007-06-23 16:43:04',20.1,'','n',7,NULL),
+ (329,4,'2007-06-23 16:50:00',12.9,'','n',7,101),
+ (330,44,'2007-06-23 16:59:00',16.4,'','n',7,103),
+ (331,52,'2007-06-23 17:01:00',14.3,'','n',7,104),
+ (332,39,'2007-06-24 08:53:00',20.3,'','n',7,105);
+INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user_id`,`task_history_id`) VALUES 
+ (333,4,'2007-06-24 09:00:00',13,'','n',7,106),
+ (334,44,'2007-06-24 09:11:00',16.5,'','n',7,108),
+ (335,52,'2007-06-24 09:11:00',14.3,'','n',7,109),
+ (336,46,'2007-06-24 13:21:26',15.9,'mom alone','y',5,NULL),
+ (337,51,'2007-06-24 13:22:47',27.6,'OR49 & OR51 attached','y',5,NULL),
+ (338,47,'2007-06-24 13:23:56',20.7,'OR53 attached :o)','y',5,NULL),
+ (339,50,'2007-06-24 13:31:14',14.3,'alone','y',5,NULL),
+ (340,49,'2007-06-24 13:31:50',19.4,'mom alone','y',5,NULL),
+ (341,62,'2007-06-24 13:30:49',4.7,'pup of OR44?','n',5,NULL),
+ (342,48,'2007-06-24 13:30:19',16.6,'mom alone','y',5,NULL),
+ (343,69,'2007-06-25 09:57:30',18.1,'','n',5,NULL),
+ (344,71,'2007-06-25 09:58:32',18,'','n',5,NULL),
+ (345,68,'2007-06-25 10:00:27',17.8,'','n',5,NULL),
+ (346,73,'2007-06-25 10:02:11',16.6,'','n',5,NULL),
+ (347,72,'2007-06-25 10:03:20',16.4,'','n',5,NULL),
+ (348,70,'2007-06-25 10:04:10',18.4,'','n',5,NULL),
+ (349,7,'2007-06-25 11:00:26',17.8,'bt','n',6,NULL);
+INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user_id`,`task_history_id`) VALUES 
+ (350,12,'2007-06-25 11:04:29',20.5,'bt','n',6,NULL),
+ (351,13,'2007-06-25 11:07:04',17,'bt','n',6,NULL),
+ (352,18,'2007-06-25 11:10:45',18.5,'bt','n',6,NULL),
+ (353,20,'2007-06-25 11:13:41',22.2,'bt','n',6,NULL),
+ (354,14,'2007-06-25 11:16:33',17,'bt','n',6,NULL),
+ (355,8,'2007-06-25 11:19:26',17.4,'bt','n',6,NULL),
+ (356,19,'2007-06-25 11:21:11',16.5,'bt','n',6,NULL),
+ (357,6,'2007-06-25 11:33:27',15.6,'bt','n',6,NULL),
+ (358,5,'2007-06-25 11:34:27',15.4,'bt','n',6,NULL),
+ (359,22,'2007-06-25 11:37:38',17.2,'bt','n',6,NULL),
+ (360,21,'2007-06-25 11:38:34',17.5,'bt','n',6,NULL),
+ (361,10,'2007-06-25 11:52:21',12.1,'','n',6,NULL),
+ (362,9,'2007-06-25 11:52:58',13.9,'','n',6,NULL),
+ (363,1,'2007-06-25 11:54:11',13,'','n',6,NULL),
+ (364,74,'2007-06-25 16:21:09',12.8,'','n',11,NULL),
+ (365,52,'2007-06-25 16:23:00',13.5,'','n',11,110),
+ (366,53,'2007-06-25 16:24:26',14.4,'','n',11,NULL),
+ (367,38,'2007-06-25 16:26:00',19.9,'','y',2,111);
+INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user_id`,`task_history_id`) VALUES 
+ (368,39,'2007-06-25 16:30:00',20.1,'','y',2,113),
+ (369,40,'2007-06-25 16:35:00',16.8,'','y',2,114),
+ (370,11,'2007-06-25 16:38:21',18.1,'','n',5,NULL),
+ (371,54,'2007-06-25 16:38:30',18.2,'','n',5,NULL),
+ (372,3,'2007-06-25 16:38:42',12.4,'','n',5,NULL),
+ (373,2,'2007-06-25 16:38:50',14.4,'','n',5,NULL),
+ (374,41,'2007-06-25 16:39:00',17.7,'','y',2,116),
+ (375,4,'2007-06-25 16:40:00',14.4,'','y',2,117),
+ (376,42,'2007-06-25 16:46:00',11.9,'','n',2,118),
+ (377,43,'2007-06-25 16:59:00',15.8,'','y',2,120),
+ (378,44,'2007-06-25 17:06:00',17.4,'','n',2,122),
+ (379,67,'2007-06-25 17:07:53',17,'very sweaty','y',2,NULL),
+ (380,60,'2007-06-25 17:19:38',18.4,'','n',9,NULL),
+ (381,59,'2007-06-25 17:20:29',17.8,'','n',9,NULL),
+ (382,15,'2007-06-25 17:38:50',13.8,'','n',1,NULL),
+ (383,16,'2007-06-25 18:09:31',13.7,'','n',1,NULL),
+ (384,17,'2007-06-25 18:10:37',12.6,'','n',1,NULL),
+ (385,61,'2007-06-25 18:55:25',17.9,'First day with Gordon back','n',10,NULL),
+ (386,75,'2007-06-25 19:21:35',4.8,'','n',5,NULL);
+INSERT INTO `weights` (`id`,`bat_id`,`date`,`weight`,`note`,`after_eating`,`user_id`,`task_history_id`) VALUES 
+ (387,63,'2007-06-25 19:22:13',5.3,'','n',5,NULL),
+ (388,65,'2007-06-25 19:22:41',4.8,'','n',5,NULL),
+ (389,69,'2007-06-26 09:37:45',18.4,'','n',5,NULL),
+ (390,73,'2007-06-26 09:39:02',17.6,'','n',5,NULL),
+ (391,72,'2007-06-26 09:41:09',16.8,'left wrist still raw; applied topical AB ointment again','n',5,NULL),
+ (392,71,'2007-06-26 09:43:53',18.3,'R wrist raw, L wrist a little raw, applied topical AB ointment to both','n',5,NULL),
+ (393,70,'2007-06-26 09:44:55',18.3,'','n',5,NULL),
+ (394,68,'2007-06-26 09:45:50',18.6,'L thumb a little swollen','n',5,NULL),
+ (395,62,'2007-06-26 11:27:36',4.7,'','n',5,NULL),
+ (396,63,'2007-06-26 11:32:52',5.5,'','n',5,NULL),
+ (397,65,'2007-06-26 11:32:59',5,'','n',5,NULL);
 /*!40000 ALTER TABLE `weights` ENABLE KEYS */;
 
 

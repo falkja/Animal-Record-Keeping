@@ -560,4 +560,23 @@ class TasksController < ApplicationController
 		render :partial => 'rooms_for_tasks', :locals=>{:show_rooms => show_rooms}
 	end
 	
+	def edit_task_history
+		@task_history = TaskHistory.find(params[:id])
+		@redirect_me = params[:redirect_me]
+	end
+	
+	def update_task_history
+		task_history = TaskHistory.find(params[:id])
+		task_history.remarks = params[:task_history][:remarks]
+		task_history.save
+		
+		if params[:redirect_me] == 'do_medical_task'
+			redirect_to :action => 'do_medical_task', :id => task_history.task
+		elsif params[:redirect_me] == 'show_task'
+			redirect_to :action => 'show', :id => task_history.task
+		elsif params[:redirect_me] == 'show_treatment'
+			redirect_to :controller => 'medical_treatments', :action => 'show', :id => task_history.task.medical_treatment
+		end
+	end
+	
 end

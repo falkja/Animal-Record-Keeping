@@ -105,7 +105,7 @@
 </p>
 <% end %>
 
-<%= render :partial => 'tasks/show_all_task_histories', :locals => {:task_histories => @task.task_histories} %>
+<%= render :partial => 'tasks/show_all_task_histories', :locals => {:task_histories => @task.task_histories, :redirect_me => 'show_task'} %>
 
 <%= link_to 'Edit', :action => 'edit', :id => @task %> |
 <%= link_to 'List Tasks', :action => 'list' %>

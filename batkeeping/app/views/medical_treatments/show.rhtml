@@ -16,4 +16,4 @@
 
 <p><%= button_to 'Done', :controller => 'medical_problems', :action => 'list_current' %></p>
 
-<p><%= render :partial => 'tasks/show_all_task_histories', :locals => {:task_histories => @task_histories} %></p>
+<p><%= render :partial => 'tasks/show_all_task_histories', :locals => {:task_histories => @task_histories, :redirect_me => 'show_treatment'} %></p>

@@ -29,6 +29,6 @@
 <%= submit_tag "Medical Treatment Done" %>
 <% end %>
 
-<p><%= render :partial => 'tasks/show_all_task_histories', :locals => {:task_histories => @task_histories} %></p>
+<p><%= render :partial => 'tasks/show_all_task_histories', :locals => {:task_histories => @task_histories, :redirect_me => 'do_medical_task'} %></p>
 
 <p><%= render :partial => 'bats/display_weights', :locals => {:bat => @medical_problem.bat} %></p>

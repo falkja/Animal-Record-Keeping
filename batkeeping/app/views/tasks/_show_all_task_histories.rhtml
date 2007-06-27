@@ -16,6 +16,7 @@
 			<b>Remarks: </b><%= task_history.remarks %><br/>
 		<% end %>
 		<b>User: </b><%=h task_history.user.name %><br/>
+		<b><%= link_to 'Edit', :controller => 'tasks', :action => 'edit_task_history', :id => task_history, :redirect_me => redirect_me %></b><br/>
 		</p>
 		<hr width = "60%" align=LEFT />
   <% end %>

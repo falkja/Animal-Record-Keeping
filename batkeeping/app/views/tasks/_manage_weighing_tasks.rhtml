@@ -6,7 +6,7 @@
 
 <p>
 <%= render :partial => 'tasks/remote_new_weigh_cage_task', :locals => {:cage => cage, :div_id => 'tasks_div', :users => User.current, :user => nil,
-                                :source => 'show_cage', :same_type_task_list => true, :quick_add => false} %>
+      :source => 'show_cage', :same_type_task_list => true, :quick_add => false, :sorted_by => 'repeat_code'} %>
 </p>
 
 </div>

@@ -5,27 +5,39 @@
 <th>Today's Weight</th>
 <th>Note</th>
 <th>Previous Weight</th>
+<th>Change</th>
+<th>Change Per Day</th>
 <% for bat in @bats %>
-<tr>
-<td><%= link_to bat.band, :controller => 'bats', :action => 'weigh_bat', :id => bat, :redirectme => bat.cage %></td>
+	<tr>
+	<td><%= link_to bat.band, :controller => 'bats', :action => 'weigh_bat', :id => bat, :redirectme => bat.cage %></td>
 
-<% if bat.weights.today %>
-<td align=center><b><%=h bat.weights.today.weight %></b></td>
-<td align=center><b><%=h bat.weights.today.note %></b></td>
+	<% if bat.weights.today %>
+		<td align=center><b><%=h bat.weights.today.weight %></b></td>
+		<td align=center><b><%=h bat.weights.today.note %></b></td>
+	<% end %>
 
-<% if bat.weights.length >= 2 %>
-<td align=center><b><%= bat.weights[1].weight %></b></td>
-<% end %>
+	<% if bat.weights.length >= 2 %>
+		<% if bat.weights.today %>
+			<td align=center><b><%= bat.weights[1].weight %> (<%= nice_date(bat.weights[1].date) %>)</b></td>
+			<% percent_change = ((bat.weights.today.weight / bat.weights[1].weight - 1) * 100) %>
+			<td align=center><%= ("%0.2f" % percent_change).to_f %> %</td>
+			<td align=center><%= ("%0.2f" % (percent_change / ((bat.weights.today.date - bat.weights[1].date) / 86400))).to_f %> %</td>
+		<% else %>
+			<td></td>
+			<td></td>
+			<td align=center><b><%= bat.weights[0].weight %> (<%= nice_date(bat.weights[1].date) %>)</b></td>
+		<% end %>
+	<% end %>
 
-<% if bat.weights.today.weight < bat.species.lower_weight_limit %>
-	<td><warning>Warning: below species lower weight limit (<%= bat.species.lower_weight_limit %>)</warning></td>
-<% elsif bat.weights.today.weight > bat.species.upper_weight_limit %>
-	<td><warning>Warning: above species upper weight limit (<%= bat.species.upper_weight_limit %>)</warning></td>
-<% end %>
+	<% if bat.weights.today %>
+		<% if bat.weights.today.weight < bat.species.lower_weight_limit %>
+			<td><warning>Warning: below species lower weight limit (<%= bat.species.lower_weight_limit %>)</warning></td>
+		<% elsif bat.weights.today.weight > bat.species.upper_weight_limit %>
+			<td><warning>Warning: above species upper weight limit (<%= bat.species.upper_weight_limit %>)</warning></td>
+		<% end %>
+	<% end %>
 
-<% end %>
-
-</tr>
+	</tr>
 <% end %>
 </table>
 

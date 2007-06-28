@@ -126,6 +126,18 @@ class TasksController < ApplicationController
   
   def show
     @task = Task.find(params[:id])
+    if @task.internal_description == 'weigh'
+      tasks = Task.find(:all, :conditions => "internal_description = 'weigh' and cage_id = #{@task.cage.id}")
+      @task_histories = Array.new
+      for task in tasks
+        for task_history in task.task_histories
+          @task_histories << task_history
+        end
+      end
+      #@task_histories = @task_histories.sort_by{|task_history| [task_history.date]}
+    else
+      @task_histories = @task.task_histories
+    end
   end
 
   def choose_new_task

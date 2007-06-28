@@ -179,7 +179,7 @@ class TasksController < ApplicationController
 			@task.room = @cage.room
       @task.title = "Weigh cage " + @cage.name    
       @task.internal_description = "weigh"
-      (@day != "0") ? @task.jitter = -1 : @task.jitter = 0
+      @task.jitter = params[:task][:jitter]
       @task.date_started = Time.now
 			@task.animal_care = params[:task][:animal_care]
       @task.save

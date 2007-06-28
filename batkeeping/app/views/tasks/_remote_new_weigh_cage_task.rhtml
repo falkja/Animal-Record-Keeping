@@ -32,11 +32,17 @@ options_for_select([
 :multiple => !quick_add) %>
 </td>
 
+<td valign=top>
+<%= check_box('task', 'jitter', {}, "-1", "0") %>
+<label for="task_jitter">This task can be done</br>one day ahead of schedule</label>
+</td>
+
 <td VALIGN=top>
 <%= submit_tag "Add task" %>
 </td>
 
 </tr>
+
 </table>
 
 <% end %>

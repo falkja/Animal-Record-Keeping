@@ -1,5 +1,4 @@
 #!/bin/sh
-date=`date -I`
 cd /mnt/raid/software/batkeeping_backups/
-mysqldump -u root -p"batlab" batkeeping | bzip2 -c > backup-$date.sql.bz2
+mysqldump -u root -p"batlab" batkeeping | bzip2 -c > batkeeping_backup.sql.bz2
 echo "batkeeping database backed up"

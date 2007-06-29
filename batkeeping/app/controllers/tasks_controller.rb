@@ -134,7 +134,9 @@ class TasksController < ApplicationController
           @task_histories << task_history
         end
       end
-      #@task_histories = @task_histories.sort_by{|task_history| [task_history.date]}
+      @task_histories = @task_histories.sort_by{|task_history| [task_history.date]}
+    elsif @task.medical_treatment
+      @task_histories = @task.medical_treatment.task_histories
     else
       @task_histories = @task.task_histories
     end

@@ -22,6 +22,11 @@ class MyMailer < ActionMailer::Base
 				if task.room
 					msg_body = msg_body + "\nRoom: " + task.room.name
 				end
+				if task.medical_treatment
+					msg_body = msg_body + "\nBat: " + task.medical_treatment.medical_problem.bat.band
+					msg_body = msg_body + "\nMedical Problem: " + task.medical_treatment.medical_problem.title
+					msg_body = msg_body + "\nMedical Problem Description: " + task.medical_treatment.medical_problem.description
+				end
 				msg_body = msg_body + "\nAssigned to: " 
         if (task.users.length > 0)
           for user in task.users

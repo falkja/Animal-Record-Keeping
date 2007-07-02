@@ -66,15 +66,26 @@
 
 </div>
 
-<% if @bat.medical_problems.current.length > 0 %>
-	<h3>Current Medical Problems:</h3>
-	<div class="left_indent">
+<h3>Current Medical Problems:</h3>
+<div class="left_indent">
+  <% if @bat.medical_problems.current.length > 0 %>
+    <div id='medical_problems'>
+      <%= render :partial => 'medical_problems/show_medical_problems', :locals=>{:medical_problems => @bat.medical_problems.current, :show_bat => false, 
+              :list_all => false, :div_id => 'current_medical_problems', :show_treatments => true} %>
+    </div>
+  <% else %>
+    No Current Medical Problems
+  <% end %>
 
-	<%= render :partial => 'medical_problems/show_medical_problems', :locals=>{:medical_problems => @bat.medical_problems.current, :show_bat => false, 
-					:list_all => false, :div_id => 'current_medical_problems', :show_treatments => true} %>
+<form>
+<%= submit_to_remote 'Quick-Add New Medical Problem', 'Quick-Add New Medical Problem', :url=>{:controller => 'medical_problems', :action => :remote_new_medical_problem, :bat => @bat},
+  :update=>'add_medical_problem'%>
+</form>
 
-	</div>
-<% end %>
+<div id='add_medical_problem'>
+</div>
+
+</div>
 
 <% if @bat.medical_problems.expired.length > 0 %>
 	<h3>Past Medical Problems:</h3>

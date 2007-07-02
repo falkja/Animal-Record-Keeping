@@ -1,5 +1,9 @@
 <h1> Weighed <%= @bat.band %> in <%= @bat.cage.name %></h1>
 
+<p>
+Weigh bat's cage: <%= link_to @bat.cage.name, :controller=>'cages', :action => 'weigh_cage', :id => @bat.cage %>
+</p>
+
 <% if @updated_tasks != nil %>
 <p>Updated the following weighing tasks:
 <div class="left_indent">

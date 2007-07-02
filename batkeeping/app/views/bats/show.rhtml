@@ -28,11 +28,7 @@
 
 <p>
 <b>Time in the lab: </b>
-<% collection_year = @bat.collection_date.strftime("%Y").to_i %>
-<% collection_month = @bat.collection_date.strftime("%m").to_i %>
-<% collection_day = @bat.collection_date.strftime("%d").to_i %>
-<% collection_date = Date.new(collection_year,collection_month,collection_day) %>
-<%= Date.today - collection_date  %> days
+<%= time_in_lab = ((Time.now - @bat.collection_date)/86400).to_i %> days
 </p>
 
 <p>
@@ -68,14 +64,14 @@
 
 <h3>Current Medical Problems:</h3>
 <div class="left_indent">
+  <div id='medical_problems'>
   <% if @bat.medical_problems.current.length > 0 %>
-    <div id='medical_problems'>
       <%= render :partial => 'medical_problems/show_medical_problems', :locals=>{:medical_problems => @bat.medical_problems.current, :show_bat => false, 
-              :list_all => false, :div_id => 'current_medical_problems', :show_treatments => true} %>
-    </div>
+        :list_all => false, :div_id => 'current_medical_problems', :show_treatments => true} %>
   <% else %>
-    No Current Medical Problems
+    <p>No Current Medical Problems</p>
   <% end %>
+  </div>
 
 <form>
 <%= submit_to_remote 'Quick-Add New Medical Problem', 'Quick-Add New Medical Problem', :url=>{:controller => 'medical_problems', :action => :remote_new_medical_problem, :bat => @bat},

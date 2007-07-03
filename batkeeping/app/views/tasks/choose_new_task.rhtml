@@ -24,7 +24,7 @@
 <tr>
 <td valign='top'><b>Medical Task</b></td>
 <td>
-<%= render :partial => 'tasks/manage_medical_treatments', :locals => {:medical_problems => @medical_problems} %>
+<%= button_to 'Managed through medical problems', :controller => 'medical_problems', :action => 'list_current' %>
 </td>
 </tr>
 

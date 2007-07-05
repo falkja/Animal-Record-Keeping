@@ -62,6 +62,13 @@ class Bat < ActiveRecord::Base
 		Bat.find(bat_ids.uniq, :order => 'band')
   end
 	
+	def self.not_weighed
+		bats = Bat.active
+		bats_not_weighed = Array.new
+		bats.each{|bat| (bat.weights.recent.date < (Time.now - 7.days)) ? bats_not_weighed << bat : ''}
+		return bats_not_weighed
+	end
+	
 	def Bat.set_user_and_comment(user, cmt)
 		@@current_user = user
 		@@comment = cmt

@@ -14,6 +14,21 @@ class MyMailer < ActionMailer::Base
     body :email_body => msg_body
   end
 	
+	def self.create_msg_for_bats_not_weighed
+		if Bat.not_weighed.length > 0
+			msg_body = "The following bats have not been weighed in at least 1 week:\n"
+			for bat in Bat.not_weighed
+				msg_body = msg_body + "\nBat: " + bat.band
+				msg_body = msg_body + "\nOwner: " + bat.cage.user.name
+				msg_body = msg_body + "\nLast weigh date: " + bat.weights.recent.date.strftime("%a, %b %d, %Y") + "\n"
+			end
+			msg_body = msg_body + "\n*******************************************\n\n"
+			return msg_body
+		else
+			return ''
+		end
+	end
+	
 	def self.create_msg_for_tasks_not_done(tasks_not_done)
 		if tasks_not_done.length > 0
       msg_body = "This is a warning email to notify you that the following tasks were not completed today (" + Time.now.strftime('%A, %B %d, %Y') + "):\n\n*******************************************\n\n"
@@ -43,7 +58,9 @@ class MyMailer < ActionMailer::Base
     else
       msg_body = "All of today's tasks completed.\n\n"
     end
+		
 		msg_body = msg_body + "*******************************************\n\n"
+		
 		return msg_body
 	end
 	
@@ -84,9 +101,15 @@ class MyMailer < ActionMailer::Base
 			
 			greeting = "Administrator(s),\n\n"
 			msg_body = MyMailer.create_msg_for_tasks_not_done(tasks_not_done)
+			msg_body = msg_body + MyMailer.create_msg_for_bats_not_weighed
 			msg_body = msg_body + "Faithfully yours, etc."
 			MyMailer.deliver_mass_mail(users_emails, "tasks not done today", greeting + msg_body)
-			
+		
+		elsif Bat.not_weighed.length > 0
+			greeting = "Administrator(s),\n\n"
+			msg_body = MyMailer.create_msg_for_bats_not_weighed
+			msg_body = msg_body + "Faithfully yours, etc."
+			MyMailer.deliver_mass_mail(users_emails, "tasks not done today", greeting + msg_body)
 		end
 	end
 end

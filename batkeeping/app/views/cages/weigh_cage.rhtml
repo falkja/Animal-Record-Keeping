@@ -21,7 +21,7 @@
 			<td align=center><b><%= bat.weights[1].weight %> (<%= nice_date(bat.weights[1].date) %>)</b></td>
 			<% percent_change = ((bat.weights.today.weight / bat.weights[1].weight - 1) * 100) %>
 			<td align=center><%= ("%0.2f" % percent_change).to_f %> %</td>
-			<td align=center><%= ("%0.2f" % (percent_change / ((bat.weights.today.date - bat.weights[1].date) / 86400))).to_f %> %</td>
+			<td align=center><%= ("%0.2f" % (percent_change / ((bat.weights.today.date - bat.weights[1].date) / 1.day))).to_f %> %</td>
 		<% else %>
 			<td></td>
 			<td></td>

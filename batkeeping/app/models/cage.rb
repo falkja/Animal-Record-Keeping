@@ -127,10 +127,12 @@ class Cage < ActiveRecord::Base
 		oldest_recent_weight = self.oldest_recent_weight
 		if oldest_recent_weight != nil
       for task in self.tasks.weighing_tasks
-        task.done_with_date(oldest_recent_weight)
-				if (task.last_done_date == oldest_recent_weight)
-					tasks << task
-				end
+        if !task.done_by_schedule
+          task.done_with_date(oldest_recent_weight)
+          if (task.last_done_date == oldest_recent_weight)
+            tasks << task
+          end
+        end
       end
     end
 		

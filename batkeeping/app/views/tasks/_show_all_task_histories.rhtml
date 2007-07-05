@@ -10,7 +10,11 @@
 			<b>Fed: </b><%= task_history.fed %> grams<br/>
 		<% end %>
 		<% if task_history.weight != nil %>
-			<b>Weight: </b><%=h task_history.weight.weight %> g <%= (task_history.weight.after_eating == 'y') ? 'After Eating' : 'Before Eating' %><br/>
+			<b>Weight: </b><%=h task_history.weight.weight %> g <%= (task_history.weight.after_eating == 'y') ? 'After Eating' : 'Before Eating' %> 
+      <% if task_history.weight.note != '' %>
+      <b>Weight note:</b> <%= task_history.weight.note%>
+      <% end %>
+      <br/>
 		<% end %>
 		<% if task_history.remarks != '' %>
 			<b>Remarks: </b><%= task_history.remarks %><br/>

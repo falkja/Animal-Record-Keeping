@@ -1,6 +1,4 @@
 <% # You need to pass a local variable called 'manage' that is true or false %>
-<% # i.e. like <%= render :partial => 'task_list', :locals => {:task_list => nil, :task => task, 'manage' => true} %> %>
-
 <% # if true, the partial will also display edit and destroy buttons %>
 
   <tr>
@@ -87,7 +85,9 @@
               [<%= link_to 'Do Treatment', :controller => 'tasks', :action => 'do_medical_task', :id => task %>]
           <% end %>
         <% else %>
-          <warning>Not done on schedule</warning>
+          <% if !(task.date_started.year == Time.now.year && task.date_started.yday > task.find_post) %>
+						<warning>Not done on schedule</warning>
+					<% end %>
         <% end %>
       <% else %>
         <warning>Not done on schedule</warning>
@@ -102,11 +102,21 @@
     <td><%= link_to 'Show', :controller => 'tasks', :action => 'show', :id => task %></td>
     
     <% if manage %>
-    <td><%= link_to 'Edit',  :controller => 'tasks', :action => 'edit', :id => task %></td>
-    <td><%= link_to_remote 'Destroy', :url => {
-				:controller => 'tasks', :action => 'destroy', :id => task, :ids => tasks, :div_id => div_id, :sorted_by => sorted_by,
-				:same_type_task_list => same_type_task_list, :sorted_by => sorted_by, :manage => manage}, 
-				:confirm => 'Are you sure?', :method => :post, :update => div_id %></td>
+			<td><%= link_to 'Edit',  :controller => 'tasks', :action => 'edit', :id => task %></td>
+			<td>
+				<% if task.medical_treatment && !same_type_task_list %>
+					<%= link_to 'Manage Treatments', :controller => 'medical_treatments', :action => 'show', :id => task.medical_treatment %>
+				<% elsif task.internal_description == 'weigh' && !same_type_task_list %>
+					<%= link_to 'Manage Weighing Tasks', :controller => 'tasks', :action => 'new_weigh_cage_task', :id => task.cage %>
+				<% elsif task.internal_description == 'feed' && !same_type_task_list %>
+					<%= link_to 'Manage Feeding Tasks', :controller => 'tasks', :action => 'manage_feeding_tasks', :id => task.cage %>
+				<% else %>
+					<%= link_to_remote 'Destroy', :url => {
+						:controller => 'tasks', :action => 'destroy', :id => task, :ids => tasks, :div_id => div_id, :sorted_by => sorted_by,
+						:same_type_task_list => same_type_task_list, :sorted_by => sorted_by, :manage => manage}, 
+						:confirm => 'Are you sure?', :method => :post, :update => div_id %>
+				<% end %>
+			</td>
     <% end %>
 
  </tr>

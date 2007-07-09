@@ -105,10 +105,11 @@ class TasksController < ApplicationController
 			tasks = Task.find(params[:tasks], :order => 'title, repeat_code')
 			tasks = tasks.sort_by{|task| [task.room_id ? task.room.name : '']}
 		elsif params[:sorted_by] == 'repeat_code'
-			tasks = Task.find(params[:tasks], :order => 'repeat_code, title')
+			tasks = Task.find(params[:tasks], :order => 'title')
+			tasks = tasks.sort_by{|task| [task.repeat_code, task.medical_treatment ? task.medical_treatment.medical_problem.bat.band : '']}
     elsif params[:sorted_by] == 'bat'
       tasks = Task.find(params[:tasks], :order => 'title, repeat_code')
-      tasks = tasks.sort_by{|task|[task.medical_treatment.medical_problem.bat.band]}
+      tasks = tasks.sort_by{|task|[task.medical_treatment.medical_problem.bat.band, task.repeat_code]}
     elsif params[:sorted_by] == 'medical_problem'
       tasks = Task.find(params[:tasks], :order => 'title, repeat_code')
       tasks = tasks.sort_by{|task|[task.medical_treatment.medical_problem.title]}
@@ -269,7 +270,6 @@ class TasksController < ApplicationController
   end
   
   def remote_new_feed_cage_task
-    sdf
     render :partial => 'remote_new_feed_cage_task', :locals => {:cage => Cage.find(params[:id]), :div_id => params[:div_id], 
         :source => params[:source], :user => params[:user], :sorted_by => params[:sorted_by],
         :same_type_task_list => params[:same_type_task_list], :users => User.current, :quick_add => params[:quick_add]}

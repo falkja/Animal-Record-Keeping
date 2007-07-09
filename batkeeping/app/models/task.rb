@@ -175,7 +175,7 @@ class Task < ActiveRecord::Base
       
   end
     
-  def find_post
+  def find_post #gives a year day for which the task needs to be completed by
     today = Time.now.yday
     today_weekday = Time.now.wday
     if repeat_code == 0 #our deadline is today for all daily tasks

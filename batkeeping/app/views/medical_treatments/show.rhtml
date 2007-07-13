@@ -2,6 +2,8 @@
 
 <p><b>Medical Problem:</b> <%= link_to @medical_treatment.medical_problem.title, :controller => :medical_problems, :action => :show, :id => @medical_treatment.medical_problem %></p>
 
+<p><b>Description:</b> <%= @medical_treatment.medical_problem.description %></p>
+
 <%= render :partial => 'medical_treatments/show_treatment', :locals => {:medical_treatment => @medical_treatment} %>
 
 <% if @medical_treatment.date_closed == nil %>

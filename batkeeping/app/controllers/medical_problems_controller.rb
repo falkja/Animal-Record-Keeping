@@ -30,7 +30,7 @@ class MedicalProblemsController < ApplicationController
 			medical_problems = MedicalProblem.find(params[:medical_problems], :order => 'title')
 		elsif params[:sorted_by] == 'cage'
 			medical_problems = MedicalProblem.find(params[:medical_problems], :order => 'title')
-			medical_problems = medical_problems.sort_by{|medical_problem| [medical_problem.bat.cage ? medical_problem.bat.cage.name : '']}
+			medical_problems = medical_problems.sort_by{|medical_problem| [medical_problem.bat.cage ? medical_problem.bat.cage.name : '', medical_problem.bat.band]}
 		elsif params[:sorted_by] == 'bat'
 			medical_problems = MedicalProblem.find(params[:medical_problems], :order => 'title')
 			medical_problems = medical_problems.sort_by{|medical_problem| [medical_problem.bat.band]}

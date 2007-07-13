@@ -47,7 +47,7 @@ class MainController < ApplicationController
       @user = User.find(params[:id])
       @cages = @user.cages.active
       @medical_problems = @user.bats_medical_problems
-			@medical_problems = @medical_problems.sort_by{|medical_problem| [medical_problem.bat.band, medical_problem.title]}
+			@medical_problems = @medical_problems.sort_by{|medical_problem| [medical_problem.bat.cage.name, medical_problem.bat.band, medical_problem.title]}
       @feeding_cages = @user.cages.has_feeding_tasks
       
       @my_medical_tasks = @user.tasks.medical_tasks

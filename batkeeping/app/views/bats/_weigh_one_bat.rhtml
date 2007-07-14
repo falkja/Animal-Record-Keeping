@@ -14,6 +14,18 @@ If the bat has too many mites to remove, create a medical problem for the bat so
 
 <% end %>
 
+<% if !initial_weight %>
+
+<p>
+  <%= link_to_remote 'Add a weight for a specific day or time', :update=> 'weigh_date', 
+    :url => {:controller => 'bats', :action => 'weigh_date'} %>
+</p>
+
+<div id='weigh_date'>
+</div>
+
+<% end %>
+
 <table>
 <% if bat.band %>
 	<th>Band</th>

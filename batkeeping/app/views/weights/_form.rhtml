@@ -14,3 +14,4 @@
 <%= text_field 'weight', 'after_eating'  %></p>
 <!--[eoform:weight]-->
 
+<%= render :partial=> 'bats/weigh_one_bat', :locals => {:bat => @bat, :initial_weight => false} %>

@@ -411,6 +411,10 @@ class BatsController < ApplicationController
 		@bat.weights.today ? @weight = @bat.weights.today : @weight = Weight.new
   end
 	
+  def weigh_date
+    render :partial => 'show_weigh_date'
+  end
+  
   def submit_weight
     @bat = Bat.find(params[:id])
 		if params[:weight][:weight] == ''
@@ -438,14 +442,14 @@ class BatsController < ApplicationController
 	def save_weight
 		@cage = @bat.cage
 		
-		if params[:weight][:new_weight]
+		if params[:weight][:new_weight] || params[:weight]["date(1i)"] 
 			weight = Weight.new
 		else
 			@bat.weights.today ? weight = @bat.weights.today : weight = Weight.new
 		end
-		
+    
 		weight.bat = @bat
-		weight.date = Time.now
+		params[:weight]["date(1i)"] ? weight.date = Time.local(params[:weight]["date(1i)"].to_i, params[:weight]["date(2i)"].to_i, params[:weight]["date(3i)"].to_i, params[:weight]["date(4i)"].to_i, params[:weight]["date(5i)"].to_i) : weight.date = Time.now
 		weight.user = session[:person]
 		weight.weight = params[:weight][:weight]
 		weight.note = params[:weight][:note]

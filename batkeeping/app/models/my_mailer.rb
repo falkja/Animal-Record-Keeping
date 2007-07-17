@@ -19,6 +19,7 @@ class MyMailer < ActionMailer::Base
 			msg_body = "The following bats have not been weighed in at least 1 week:\n"
 			for bat in Bat.not_weighed
 				msg_body = msg_body + "\nBat: " + bat.band
+        msg_body = msg_body + "\nCage: " + bat.cage.name
 				msg_body = msg_body + "\nOwner: " + bat.cage.user.name
 				msg_body = msg_body + "\nLast weigh date: " + bat.weights.recent.date.strftime("%a, %b %d, %Y") + "\n"
 			end

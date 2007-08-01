@@ -26,9 +26,12 @@
 			<td></td>
 			<td></td>
 			<td align=center><b><%= bat.weights[0].weight %> (<%= nice_date(bat.weights[0].date) %>)</b></td>
+			<td></td>
+			<td></td>
 		<% end %>
+		<td><%= link_to 'Graph Weights', :controller => 'bats', :action => 'graph_weights', :id => bat %></td>
 	<% end %>
-
+	
 	<% if bat.weights.today %>
 		<% if bat.weights.today.weight < bat.species.lower_weight_limit %>
 			<td><warning>Warning: below species lower weight limit (<%= bat.species.lower_weight_limit %>)</warning></td>

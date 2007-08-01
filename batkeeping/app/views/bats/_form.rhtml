@@ -52,10 +52,11 @@
 <% end %>
 
 <div id='vaccination'>
-
 <%= render :partial=>'form_vaccination', :locals =>{:bat => @bat, :show_vaccination_date_select=> show_vaccination_date_select, :reactivating=>@reactivating} %>
-
 </div>
+
+<p><label for='bat_monitor_weight'>Send emails if not weighed enough?</label>
+<%= check_box 'bat', 'monitor_weight', :checked => @bat.monitor_weight %></p>
 
 <% if @creating %>
 	<h3>Weight</h3>

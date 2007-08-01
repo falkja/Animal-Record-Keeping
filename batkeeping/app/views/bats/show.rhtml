@@ -46,6 +46,13 @@
 <%= @bat.vaccination_date ? nice_date(@bat.vaccination_date) : 'Not vaccinated' %>
 </p>
 
+<% if !@bat.monitor_weight %>
+<p>
+<b>Weight Monitored:</b>
+Emails will <em>not</em> be sent out if bat is not weighed often enough
+</p>
+<% end %>
+
 <% if @bat.leave_date != nil %>
 <p>
 <b>Leave Date: </b>

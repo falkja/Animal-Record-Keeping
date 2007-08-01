@@ -136,4 +136,10 @@
 
 <%= link_to 'Edit', :action => 'edit', :id => @cage %> |
 <%= link_to 'List Current Cages', :action => 'list' %> | 
-<%= link_to 'Weigh Cage', :action => 'weigh_cage', :id => @cage %>
+<%= link_to 'Weigh Cage', :action => 'weigh_cage', :id => @cage %> | 
+
+<% if @cage.date_destroyed == nil %>
+<%= link_to 'Deactivate', :controller => 'cages', :action => 'deactivate', :id => @cage %>
+<% else %>
+<%= link_to 'Reactivate', :controller => 'cages', :action => 'reactivate', :id => @cage %>
+<% end %>

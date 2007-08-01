@@ -135,9 +135,15 @@
 
 <hr />
 
-<%= link_to 'Edit', :action => 'edit', :id => @bat %> |
-<%= link_to 'List Current Bats', :action => 'list' %>
+<%= link_to 'Edit', :action => 'edit', :id => @bat %>
+| <%= link_to 'List Current Bats', :action => 'list' %>
 
 <% if @bat.cage != nil%>
  | <%= link_to 'Move Bat', :action=>'single_bat_to_move', :id=>@bat %>
+<% end %>
+
+<% if @bat.leave_date == nil %>
+| <%= link_to 'Deactivate', :controller => 'bats', :action => 'deactivate', :id => @bat %>
+<% else %>
+| <%= link_to 'Reactivate', :controller => 'bats', :action => 'reactivate', :id => @bat %>
 <% end %>

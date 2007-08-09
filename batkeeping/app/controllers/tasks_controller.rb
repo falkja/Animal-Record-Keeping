@@ -387,6 +387,7 @@ class TasksController < ApplicationController
     bat.weights.today ? @weight = bat.weights.today : @weight = Weight.new
 		@task_histories = Array.new
     @medical_problem.medical_treatments.each{|medical_treatment| medical_treatment.tasks.each{|task| task.task_histories.each{|task_history| @task_histories << task_history}}}
+    @task_histories = TaskHistory.find(@task_histories, :order => "date_done desc")
   end
 	
   def create

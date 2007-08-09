@@ -1,10 +1,14 @@
+<h4>Task Histories</h4>
+
+<div class="left_indent">
 <% if task_histories.length == 0 %>
   <p><b>This task has never been done</b></p>
+
 <% else %>
-  <h4><%=h task_histories[0].task.title %> Done:</h4>
-  <div class="left_indent">
+
   <% for task_history in task_histories %>
 		<p>
+    <b>Task: </b><%= task_history.task.title %><br/>
 		<b>Date: </b><%= nice_date_with_dow_and_time(task_history.date_done) %><br/>
 		<% if task_history.fed != nil %>
 			<b>Fed: </b><%= task_history.fed %> grams<br/>
@@ -24,5 +28,7 @@
 		</p>
 		<hr width = "60%" align=LEFT />
   <% end %>
-  </div>
+
 <% end %>
+
+</div>

@@ -385,7 +385,8 @@ class TasksController < ApplicationController
 		@medical_problem = @medical_treatment.medical_problem
     bat = @medical_problem.bat
     bat.weights.today ? @weight = bat.weights.today : @weight = Weight.new
-		@task_histories = @medical_treatment.task_histories
+		@task_histories = Array.new
+    @medical_problem.medical_treatments.each{|medical_treatment| medical_treatment.task_histories.each{|task_history| @task_histories << task_history}}
 	end
 	
   def create

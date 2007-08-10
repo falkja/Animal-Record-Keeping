@@ -9,7 +9,19 @@ You are not signed in
 </div>
 
 <ul id="nav">
-<li><%= link_to "Sign In", :controller => 'main', :action => :index %></li>
+<li><%= link_to "Main", :controller => 'main', :action => :index %>
+	<ul>
+	<li><%= link_to 'Sign-In', :controller => :main, :action => :index %></li>
+	<li><%= link_to 'List Users', :controller => :users, :action => :list %></li>
+	<li><%= link_to 'New User', :controller => :users, :action => :new %></li>
+	</ul>
+</li>
+<li><%= link_to 'Help', :controller => :help, :action => 'manual' %>
+	<ul>
+	<li><%= link_to 'Manual', :controller => :help, :action => :manual %></li>
+	<li><%= link_to 'Bug Report', :controller => :help, :action => :bug_report %></li>
+	</ul>
+</li>
 </ul>
 
 <% else %>

@@ -1,0 +1,19 @@
+<html>
+<head>
+  <META HTTP-EQUIV="Refresh" CONTENT="901">
+  <title>Batkeeping <%= controller.action_name %></title>
+  <%= stylesheet_link_tag 'scaffold' %>
+  <%= stylesheet_link_tag 'menu' %>
+  <%= stylesheet_link_tag 'print', :title => 'print', :media => 'print', :rel => 'stylesheet' %>
+  <%= javascript_include_tag "prototype" %>
+</head>
+<body>
+
+<%= render :partial => 'layouts/menubar_login' %>
+
+<p style="color: green"><%= flash[:notice] %></p>
+
+<%= yield  %>
+
+</body>
+</html>

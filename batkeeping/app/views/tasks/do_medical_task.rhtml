@@ -1,30 +1,45 @@
-<h1>Do Treatment</h1>
+<h1>Do Treatments for Medical Problem</h1>
 
-<% form_tag :action => 'medical_task_done', :id => @task do %>
+<% form_tag :action => 'medical_task_done' do %>
 
-<p>Bat<br />
+<p><b>Bat</b><br />
 <%= @medical_problem.bat.band %></p>
 
-<p>Medical Problem<br />
+<p><b>Cage</b><br />
+<%= @medical_problem.bat.cage.name %></p>
+
+<p><b>Medical Problem</b><br />
 <%= @medical_problem.title %></p>
 
-<p>Description<br />
+<p><b>Description</b><br />
 <%= @medical_problem.description %></p>
 
-<p>Treatment<br />
-<%= @medical_treatment.title %></p>
-
-<p>Weight<br />
+<p><b>Weight</b><br />
 	<div class='left_indent'>
 		<%= render :partial => 'bats/weigh_one_bat', :locals => {:bat => @medical_problem.bat, :initial_weight => true} %>
 	</div>
 </p>
 
-<p><label for="task_history_date_done">Date Treatment Given</label><br />
-<%= datetime_select 'task_history', 'date_done' %></p>
+<p><b>Treatment</b><br />
+<div class='left_indent'>
+  <% for treatment in @medical_problem.medical_treatments %>
+    <%= check_box('treatments_done', treatment.id) %><label for='treatments_done_<%= treatment.id %>'><%= treatment.title %></label><br />
+  <% end %>
+  <%= check_box('one_time_treatment', '0') %><%= text_field 'new_task', 'title', :value=> 'one time treatment' %>
+</p>
 
-<p><label for="task_history_remarks">Remarks</label><br />
+<p><%= link_to 'Add a new reoccurring treatment', :controller => 'medical_treatments', :action => 'new', :id => @medical_problem %></p>
+</div>
+
+<p><label for="task_history_date_done"><b>Date Treatment Given</b></label><br />
+<div class='left_indent'>
+<%= datetime_select 'task_history', 'date_done' %></p>
+</div>
+
+<p><label for="task_history_remarks"><b>Remarks</b></label><br />
+<div class='left_indent'>
 <%= text_area 'task_history', 'remarks', :rows => 2  %></p>
+</div>
 
 <%= submit_tag "Medical Treatment Done" %>
 <% end %>

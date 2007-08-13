@@ -464,45 +464,65 @@ class TasksController < ApplicationController
   end
   
   def medical_task_done
-		
-    task = Task.find(params[:id])
-		
-		task_history = TaskHistory.new(params[:task_history])
-		task_history.user = session[:person]
-		task_history.task = task
-		task_history.save
-    
-    if params[:weight][:weight] != ''
+    if !params[:treatments_done].has_value?('1') && !params[:one_time_treatment].has_value?('1')
+      flash[:notice] = "No treatments selected as done"
+      redirect_to :back
       
-      bat = task.medical_treatment.medical_problem.bat
-      cage = bat.cage
+    elsif params[:one_time_treatment].has_value?('1') && (params[:new_task][:title] == 'one time treatment' || params[:new_task][:title]  == '')
+      flash[:notice] = "Please enter a title for your one time treatment"
+      redirect_to :back
       
-			if params[:weight][:new_weight]
-				weight = Weight.new
-			else
-				bat.weights.today ? weight = bat.weights.today : weight = Weight.new
-			end
+    elsif params[:one_time_treatment].has_value?('0') && (params[:new_task][:title] != 'one time treatment' && params[:new_task][:title] != '')
+      flash[:notice] = "Please click the checkbox next to your one time treatment"
+      redirect_to :back
       
-      weight.bat = bat
-      weight.date = task_history.date_done
-      weight.user = session[:person]
-      weight.weight = params[:weight][:weight]
-      weight.note = params[:weight][:note]
-      if params[:checkbox][:after_eating] == '1'
-        weight.after_eating = 'y'
-      else
-        weight.after_eating =  'n'
+    else
+      
+      tasks = Array.new
+      params[:treatments_done].each{|key, value| if (value == '1') then tasks << task.find(key) end }
+      
+      for task in tasks
+        task = Task.find(params[:id])
+        
+        task_history = TaskHistory.new(params[:task_history])
+        task_history.user = session[:person]
+        task_history.task = task
+        task_history.save
       end
-      weight.save
       
-      Task::set_current_user(session[:person])
-      cage.update_weighing_tasks
+      if params[:weight][:weight] != ''
+        
+        bat = task.medical_treatment.medical_problem.bat
+        cage = bat.cage
+        
+        if params[:weight][:new_weight]
+          weight = Weight.new
+        else
+          bat.weights.today ? weight = bat.weights.today : weight = Weight.new
+        end
+        
+        weight.bat = bat
+        weight.date = task_history.date_done
+        weight.user = session[:person]
+        weight.weight = params[:weight][:weight]
+        weight.note = params[:weight][:note]
+        if params[:checkbox][:after_eating] == '1'
+          weight.after_eating = 'y'
+        else
+          weight.after_eating =  'n'
+        end
+        weight.save
+        
+        Task::set_current_user(session[:person])
+        cage.update_weighing_tasks
+        
+        task_history.weight = weight
+        
+      end
       
-      task_history.weight = weight
-      
+      redirect_to :controller => 'medical_problems', :action => 'list_current'
+    
     end
-		
-    redirect_to :controller => 'medical_problems', :action => 'list_current'
   end
   
   def destroy

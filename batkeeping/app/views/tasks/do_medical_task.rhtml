@@ -1,6 +1,6 @@
 <h1>Do Treatments for Medical Problem</h1>
 
-<% form_tag :action => 'medical_task_done' do %>
+<% form_tag :action => 'medical_task_done', :medical_problem => @medical_problem do %>
 
 <p><b>Bat</b><br />
 <%= @medical_problem.bat.band %></p>
@@ -22,7 +22,7 @@
 
 <p><b>Treatment</b><br />
 <div class='left_indent'>
-  <% for treatment in @medical_problem.medical_treatments %>
+  <% for treatment in @medical_problem.medical_treatments.current %>
     <%= check_box('treatments_done', treatment.id) %><label for='treatments_done_<%= treatment.id %>'><%= treatment.title %></label><br />
   <% end %>
   <%= check_box('one_time_treatment', '0') %><%= text_field 'new_task', 'title', :value=> 'one time treatment' %>

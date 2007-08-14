@@ -478,16 +478,41 @@ class TasksController < ApplicationController
       
     else
       
-      tasks = Array.new
-      params[:treatments_done].each{|key, value| if (value == '1') then tasks << task.find(key) end }
+      treatments = Array.new
+      params[:treatments_done].each{|key, value| if (value == '1') then treatments << MedicalTreatment.find(key) end }
       
-      for task in tasks
-        task = Task.find(params[:id])
+      tasks = Array.new
+      for treatment in treatments
+        for task in treatment.tasks
+          if task.repeat_code == Time.now.wday + 1
+            tasks << task
+          end
+        end
+      end
+      
+      if params[:one_time_treatment].has_value?('1') && (params[:new_task][:title] != 'one time treatment' && params[:new_task][:title] != '')
+        one_time_treatment = MedicalTreatment.new
+        one_time_treatment.title = params[:new_task][:title]
+        one_time_treatment.medical_problem = MedicalProblem.find(params[:medical_problem])
+        one_time_treatment.date_opened = Date.today
+        one_time_treatment.date_closed = Date.today
+        one_time_treatment.save
         
-        task_history = TaskHistory.new(params[:task_history])
-        task_history.user = session[:person]
-        task_history.task = task
-        task_history.save
+        one_time_task = Task.new
+        one_time_task.repeat_code = nil
+        one_time_task.medical_treatment = one_time_treatment
+        one_time_task.title = one_time_treatment.title
+        one_time_task.date_started = Time.now
+        one_time_task.date_ended = Time.now
+        one_time_task.animal_care = 0
+        one_time_task.internal_description = "medical"
+        one_time_task.jitter = 0
+        one_time_task.save
+        
+        users = Array.new
+        users << session[:person]
+        one_time_task.users = users
+        tasks << one_time_task
       end
       
       if params[:weight][:weight] != ''
@@ -516,8 +541,14 @@ class TasksController < ApplicationController
         Task::set_current_user(session[:person])
         cage.update_weighing_tasks
         
-        task_history.weight = weight
-        
+      end
+      
+      for task in tasks
+        task_history = TaskHistory.new(params[:task_history])
+        task_history.user = session[:person]
+        task_history.task = task
+        weight ? task_history.weight = weight : ''
+        task_history.save
       end
       
       redirect_to :controller => 'medical_problems', :action => 'list_current'

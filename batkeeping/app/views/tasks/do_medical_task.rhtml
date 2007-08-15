@@ -1,15 +1,15 @@
-<h1>Do Treatments for Medical Problem</h1>
+<h1>Do Treatments for Medical Problem: <%= @medical_problem.title %></h1>
 
 <% form_tag :action => 'medical_task_done', :medical_problem => @medical_problem do %>
 
 <p><b>Bat</b><br />
-<%= @medical_problem.bat.band %></p>
+<%= link_to @medical_problem.bat.band, :controller => 'bats', :action => 'show', :id => @medical_problem.bat %></p>
 
 <p><b>Cage</b><br />
-<%= @medical_problem.bat.cage.name %></p>
+<%= link_to @medical_problem.bat.cage.name, :controller => 'cages', :action => 'show', :id => @medical_problem.bat.cage %></p>
 
 <p><b>Medical Problem</b><br />
-<%= @medical_problem.title %></p>
+<%= link_to @medical_problem.title, :controller => 'medical_problems', :action => 'show', :id => @medical_problem %></p>
 
 <p><b>Description</b><br />
 <%= @medical_problem.description %></p>

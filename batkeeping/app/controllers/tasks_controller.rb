@@ -380,9 +380,13 @@ class TasksController < ApplicationController
 	end
 
 	def do_medical_task
-		@task = Task.find(params[:id])
-		@medical_treatment = @task.medical_treatment
-		@medical_problem = @medical_treatment.medical_problem
+		if params[:id]
+      @task = Task.find(params[:id])
+      @medical_treatment = @task.medical_treatment
+      @medical_problem = @medical_treatment.medical_problem
+    else
+      @medical_problem = MedicalProblem.find(params[:medical_problem])
+    end
     bat = @medical_problem.bat
     bat.weights.today ? @weight = bat.weights.today : @weight = Weight.new
 		@task_histories = Array.new
@@ -478,17 +482,8 @@ class TasksController < ApplicationController
       
     else
       
-      treatments = Array.new
-      params[:treatments_done].each{|key, value| if (value == '1') then treatments << MedicalTreatment.find(key) end }
-      
       tasks = Array.new
-      for treatment in treatments
-        for task in treatment.tasks
-          if task.repeat_code == Time.now.wday + 1
-            tasks << task
-          end
-        end
-      end
+      params[:treatments_done].each{|key, value| if (value == '1') then tasks << MedicalTreatment.find(key).todays_task end }
       
       if params[:one_time_treatment].has_value?('1') && (params[:new_task][:title] != 'one time treatment' && params[:new_task][:title] != '')
         one_time_treatment = MedicalTreatment.new

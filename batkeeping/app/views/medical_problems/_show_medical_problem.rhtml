@@ -74,6 +74,15 @@
 			<% end %>
 		<% end %>
     <% if medical_problem.date_closed == nil %>
+      <td>[<%= link_to 'Do one time treatment', :controller => 'tasks', :action => 'do_medical_task', :medical_problem => medical_problem %>]</td>
+      </tr>
+      <td></td><td></td><td></td><td></td>
+				<% if list_all %>
+					<td></td>
+				<% end %>
+				<% if show_bat %>
+					<td></td><td></td>
+				<% end %>
       <td>[<%= link_to 'Add New Treatment', :controller => 'medical_treatments', :action => 'new', :id => medical_problem %>]</td>
     <% end %>
 		<% if (medical_problem.medical_treatments.current.length == 0) && (medical_problem.date_closed == nil) %>

@@ -512,7 +512,7 @@ class TasksController < ApplicationController
       
       if params[:weight][:weight] != ''
         
-        bat = task.medical_treatment.medical_problem.bat
+        bat = MedicalProblem.find(params[:medical_problem]).bat
         cage = bat.cage
         
         if params[:weight][:new_weight]
@@ -522,7 +522,7 @@ class TasksController < ApplicationController
         end
         
         weight.bat = bat
-        weight.date = task_history.date_done
+        weight.date = Time.gm(params[:task_history]["date_done(1i)"], params[:task_history]["date_done(2i)"], params[:task_history]["date_done(3i)"], params[:task_history]["date_done(4i)"], params[:task_history]["date_done(5i)"], nil)
         weight.user = session[:person]
         weight.weight = params[:weight][:weight]
         weight.note = params[:weight][:note]

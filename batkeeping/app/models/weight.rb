@@ -21,4 +21,18 @@ class Weight < ActiveRecord::Base
 	def self.today
 		self.find(:first, :order => "date DESC", :conditions => "weights.date >= '#{Time.now.strftime("%Y-%m-%d")}'")
 	end
+  
+  def self.database_modification
+    weights = self.find(:all)
+    for weight in weights
+      if weight.task_history_id
+        task_history = TaskHistory.find(weight.task_history_id)
+        task_history.weight = weight
+        task_history.save
+        
+        weight.task_history_id = nil
+        weight.save
+      end
+    end
+  end
 end

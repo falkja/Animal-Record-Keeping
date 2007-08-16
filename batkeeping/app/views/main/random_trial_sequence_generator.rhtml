@@ -1,0 +1,35 @@
+<h4>Random Trial Sequence Generator</h4>
+
+<p>
+<b>Date: </b><%= nice_date(Date.today) %> <b>Bat: </b><br />
+</p>
+
+<table border=1>
+<th>Trial</th>
+<th>S+ Position</th>
+<th>Correct/Incorrect</th>
+<th>Video</th>
+<th>Audo</th>
+<th>Array</th>
+<th>Comments</th>
+
+<% i = 0 %>
+<% for rand_num in @random_numbers %>
+<% i = i + 1 %>
+<tr>
+<td><%= i %>.</td>
+<td><%= rand_num == 0 ? 'Left' : 'Right' %></td>
+<td>&nbsp</td>
+<td>&nbsp</td>
+<td>&nbsp</td>
+<td>&nbsp</td>
+<td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+</tr>
+
+<% end %>
+</table>
+
+<p>
+* note: no more than 3 the same in a row and sequence computer generated (psuedo-random)
+</p>

@@ -11,7 +11,3 @@ desc 'email_if_tasks_not_done'
 task :email_if_tasks_not_done => :environment do
 	MyMailer.email_users
 end
-
-task :update_database => :environment do
-  Weight.database_modification
-end

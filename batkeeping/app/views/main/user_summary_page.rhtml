@@ -51,7 +51,7 @@ You have no cages
 <div class="left_indent">
 <% if @medical_problems.length > 0 %>
 <%= render :partial => 'medical_problems/show_medical_problems', :locals=>{:medical_problems => @medical_problems, :show_bat => true, 
-				:list_all => false, :div_id => 'medical_problems', :show_treatments => true} %>
+				:list_all => false, :div_id => 'medical_problems', :show_treatments => true, :redirectme => 'user_summary_page', :user => @user} %>
 <% else %>
 No medical problems
 <% end %>

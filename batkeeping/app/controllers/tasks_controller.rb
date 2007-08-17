@@ -392,6 +392,8 @@ class TasksController < ApplicationController
 		@task_histories = Array.new
     @medical_problem.medical_treatments.each{|medical_treatment| medical_treatment.tasks.each{|task| task.task_histories.each{|task_history| @task_histories << task_history}}}
     @task_histories = TaskHistory.find(@task_histories, :order => "date_done desc")
+    @redirectme = params[:redirectme]
+    @user = params[:user]
   end
 	
   def create
@@ -482,6 +484,8 @@ class TasksController < ApplicationController
       
     else
       
+      bat = MedicalProblem.find(params[:medical_problem]).bat
+      
       tasks = Array.new
       params[:treatments_done].each{|key, value| if (value == '1') then tasks << MedicalTreatment.find(key).todays_task end }
       
@@ -512,7 +516,6 @@ class TasksController < ApplicationController
       
       if params[:weight][:weight] != ''
         
-        bat = MedicalProblem.find(params[:medical_problem]).bat
         cage = bat.cage
         
         if params[:weight][:new_weight]
@@ -546,7 +549,15 @@ class TasksController < ApplicationController
         task_history.save
       end
       
-      redirect_to :controller => 'medical_problems', :action => 'list_current'
+      if params[:redirectme] == 'user_summary_page'
+        redirect_to :controller => 'main', :action => 'user_summary_page', :id => User.find(params[:user])
+      elsif params[:redirectme] == 'show_bat'
+        redirect_to :controller => 'bats', :action => 'show', :id => bat
+      elsif params[:redirectme] == 'weigh_bat'
+        redirect_to :controller => 'bats', :action => 'weigh_bat', :id => bat
+      else
+        redirect_to :controller => 'medical_problems', :action => 'list_current'
+      end
     
     end
   end

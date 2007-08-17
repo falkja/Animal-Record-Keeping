@@ -15,7 +15,7 @@
 <p>
 
 <%= render :partial => 'medical_problems/show_medical_problems', :locals=>{:medical_problems => @bat.medical_problems.current, :show_bat => false, 
-				:list_all => false, :div_id => 'current_medical_problems', :sorted_by => 'medical_problem', :show_treatments => true} %>
+				:list_all => false, :div_id => 'current_medical_problems', :sorted_by => 'medical_problem', :show_treatments => true, :redirectme => 'weigh_bat'} %>
 
 </p>
 <% else %>

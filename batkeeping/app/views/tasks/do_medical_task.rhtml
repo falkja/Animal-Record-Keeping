@@ -1,6 +1,8 @@
+<%= @redirectme %>
+
 <h1>Do Treatments for Medical Problem: <%= @medical_problem.title %></h1>
 
-<% form_tag :action => 'medical_task_done', :medical_problem => @medical_problem do %>
+<% form_tag :action => 'medical_task_done', :medical_problem => @medical_problem, :redirectme => @redirectme, :user => @user do %>
 
 <p><b>Bat</b><br />
 <%= link_to @medical_problem.bat.band, :controller => 'bats', :action => 'show', :id => @medical_problem.bat %></p>

@@ -50,7 +50,7 @@
 <% end %>
 <% for medical_problem in medical_problems %>
     <%= render :partial => 'medical_problems/show_medical_problem', :locals => {:medical_problem => medical_problem, 
-			:show_bat => show_bat, :list_all => list_all, :show_treatments => show_treatments} %>
+			:show_bat => show_bat, :list_all => list_all, :show_treatments => show_treatments, :redirectme => redirectme, :user => user} %>
 <% end %>
 </table>
 

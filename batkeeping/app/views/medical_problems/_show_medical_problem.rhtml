@@ -51,7 +51,7 @@
 					<% if medical_treatment.done_today == true %>
 						Done
 					<% elsif medical_treatment.tasks.medical_tasks_today.length > 0 %>
-						[<%= link_to 'Do', :controller => 'tasks', :action => 'do_medical_task', :id => medical_treatment.todays_task %>]
+						[<%= link_to 'Do', :controller => 'tasks', :action => 'do_medical_task', :id => medical_treatment.todays_task, :redirectme => redirectme, :user => user %>]
 					<% else %>
 						[<%= link_to 'Create Medical Tasks', :controller => 'medical_treatments', :action=>:show, :id=> medical_treatment %>]
 					<% end %>
@@ -74,7 +74,7 @@
 			<% end %>
 		<% end %>
     <% if medical_problem.date_closed == nil %>
-      <td>[<%= link_to 'Do one time treatment', :controller => 'tasks', :action => 'do_medical_task', :medical_problem => medical_problem %>]</td>
+      <td>[<%= link_to 'Do one time treatment', :controller => 'tasks', :action => 'do_medical_task', :medical_problem => medical_problem, :redirectme => redirectme, :user => user %>]</td>
       </tr>
       <td></td><td></td><td></td><td></td>
 				<% if list_all %>

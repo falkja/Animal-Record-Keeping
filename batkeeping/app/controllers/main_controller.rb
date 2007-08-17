@@ -131,9 +131,9 @@ class MainController < ApplicationController
   
   def random_trial_sequence_generator
     @random_numbers = Array.new
-    for i in 1...23
+    for i in 0..22
       rand_num = rand(2)
-      if i > 3 && (rand_num == @random_numbers[i-1]) && (rand_num == @random_numbers[i-2])
+      if i >= 3 && (rand_num == @random_numbers[i-1]) && (rand_num == @random_numbers[i-2]) && (rand_num == @random_numbers[i-3])
         @random_numbers[i] = (rand_num - 1).abs
       else
         @random_numbers[i] = rand_num

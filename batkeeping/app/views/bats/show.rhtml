@@ -41,10 +41,9 @@
 <%= @bat.collection_place %>
 </p>
 
-<p>
-<b>Rabies Vaccination Date: </b>
-<%= @bat.vaccination_date ? nice_date(@bat.vaccination_date) : 'Not vaccinated' %>
-</p>
+<div id='vaccination'>
+  <%= render :partial=>'form_vaccination', :locals =>{:bat => @bat, :show_vaccination_date_select=> false, :reactivating=>@reactivating} %>
+</div>
 
 <% if !@bat.monitor_weight %>
 <p>

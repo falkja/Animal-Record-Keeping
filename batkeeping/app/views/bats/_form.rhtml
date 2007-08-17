@@ -45,16 +45,6 @@
 <p><label for="bat_collection_place">Collection place</label><br/>
 <%= text_field 'bat', 'collection_place', :disabled => @reactivating %></p>
 
-<% if @bat.vaccination_date %>
-	<% show_vaccination_date_select = true %>
-<% else %>
-  <% show_vaccination_date_select = false %>
-<% end %>
-
-<div id='vaccination'>
-<%= render :partial=>'form_vaccination', :locals =>{:bat => @bat, :show_vaccination_date_select=> show_vaccination_date_select, :reactivating=>@reactivating} %>
-</div>
-
 <p><label for='bat_monitor_weight'>Send emails if not weighed enough?</label>
 <%= check_box 'bat', 'monitor_weight', :checked => @bat.monitor_weight %></p>
 
@@ -109,4 +99,3 @@
 </div>
 
 <!--[eoform:bat]-->
-

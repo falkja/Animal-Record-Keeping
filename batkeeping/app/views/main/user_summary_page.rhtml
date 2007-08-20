@@ -21,7 +21,13 @@
 <%= (@user.administrator?) ? "Administrator<br />" : "" %>
 
 <% if (@user.animal_care_user? || @user.weekend_care_user? || @user.medical_care_user? || @user.administrator?) %>
-  <p><%= button_to('Send Email to Lab', :controller => 'main', :action => 'lab_email') %></p>
+  <p>Send Email to: 
+  <%= link_to('Entire Lab', :controller => 'main', :action => 'lab_email', :users => User.current) %> | 
+  <%= link_to('Animal Care', :controller => 'main', :action => 'lab_email', :users => User.current_animal_care) %> | 
+  <%= link_to('Medical Care', :controller => 'main', :action => 'lab_email', :users => User.current_medical_care) %> | 
+  <%= link_to('Weekend Care', :controller => 'main', :action => 'lab_email', :users => User.current_weekend_care) %> | 
+  <%= link_to('Administrators', :controller => 'main', :action => 'lab_email', :users => User.administrator) %>
+  </p>
 <% end %>
 
 </div>

@@ -102,7 +102,7 @@ class MainController < ApplicationController
   def lab_email
     @tasks_not_done = Task.tasks_not_done_today(Task.today)
     
-    @users = User.current
+    @users = User.find(params[:users])
     
     @users_emails = Array.new
     @users.each{|user| @users_emails << user.email}

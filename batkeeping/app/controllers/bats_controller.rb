@@ -213,6 +213,7 @@ class BatsController < ApplicationController
 		
     for medical_problem in @bat.medical_problems.current
       medical_problem.date_closed = date
+      medical_problem.reason_closed = params[:bat][:leave_reason]
       medical_problem.save
       for treatment in medical_problem.medical_treatments.current
         treatment.date_closed = date

@@ -2,9 +2,11 @@
 
   <p><b>Bat: </b><%= link_to @medical_problem.bat.band, :controller => 'bats', :action => 'show', :id =>  @medical_problem.bat %></p>
   <p><b>Description: </b><%=h @medical_problem.description %></p>
-	<% users_names = Array.new %>
   <p><b>Date Opened: </b><%=h nice_date @medical_problem.date_opened %></p>
-  <% if @medical_problem.date_closed %><p><b>Date Closed: </b><%=h nice_date @medical_problem.date_closed %></p><% end %>
+  <% if @medical_problem.date_closed %>
+    <p><b>Date Closed: </b><%=h nice_date @medical_problem.date_closed %></p>
+    <p><b>Reason Closed: </b><%= @medical_problem.reason_closed ? @medical_problem.reason_closed : "No Reason Listed" %></p>
+  <% end %>
 
 <%= render :partial => 'medical_problems/show_all_treatments', :locals => {:medical_problem => @medical_problem} %>
 

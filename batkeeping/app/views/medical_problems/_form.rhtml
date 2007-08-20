@@ -29,8 +29,13 @@
 </div>
 
 <%= @leave_date %>
+
 <p><label for="medical_problem_date_closed">Date closed</label><br/>
 <%= date_select 'medical_problem', 'date_closed', :disabled => @disable_leave_date %></p>
+
+<p><label for="medical_problem_reason_closed">Reason closed</label><br/>
+<%= text_field 'medical_problem', 'reason_closed', :disabled => @disable_leave_date, :maxlength => 45 %></p>
+
 </div>
 <!--[eoform:medical_problem]-->
 

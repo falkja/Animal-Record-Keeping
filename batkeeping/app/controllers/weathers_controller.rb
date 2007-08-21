@@ -8,7 +8,7 @@ class WeathersController < ApplicationController
       @weather.humidity = params['weather' + i][:humidity]
       @weather.room = Room.find(params[:room])
       @weather.log_date = Date.today
-      @weather.sig = session[:person].initials
+      @weather.sig = User.find(session[:person]).initials
       @weather.save
       
       flash[:note]='Temperature/humidity entry added.'

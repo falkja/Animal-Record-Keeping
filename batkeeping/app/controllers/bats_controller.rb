@@ -112,7 +112,7 @@ class BatsController < ApplicationController
 			@bat = Bat.new(params[:bat])
 			@bat.leave_date = nil
 			
-			Bat::set_user_and_comment(session[:person], 'new bat') #Do this before saving!
+			Bat::set_user_and_comment(User.find(session[:person]), 'new bat') #Do this before saving!
 			if @bat.save
 				
 				new_cage=Cage.find(params[:bat][:cage_id])
@@ -138,11 +138,11 @@ class BatsController < ApplicationController
   end
 
   def edit
-	@current_user = session[:person]  
-	@cages = Cage.active
-	@bat = Bat.find(params[:id])
-	@species = Species.find(:all)
-	@deactivating = false
+    @current_user = User.find(session[:person])
+    @cages = Cage.active
+    @bat = Bat.find(params[:id])
+    @species = Species.find(:all)
+    @deactivating = false
   end
 
   def update
@@ -162,7 +162,7 @@ class BatsController < ApplicationController
         note = ''
       end
       
-      Bat::set_user_and_comment(session[:person], note) #Do this before saving!
+      Bat::set_user_and_comment(User.find(session[:person]), note) #Do this before saving!
       
       if @bat.update_attributes(params[:bat])
         flash[:notice] = 'Bat was successfully updated.'
@@ -341,7 +341,7 @@ class BatsController < ApplicationController
     params[:old_cage] ? @old_cage = Cage.find(params[:old_cage]) : ''
     params[:move] ? @note = params[:move][:note] : @note = params[:note]
 
-    Bat::set_user_and_comment(session[:person],@note) #This must come before we mess with the list of bats for a cage. The moment we mess with the list, the cage and bat variables are updated. 
+    Bat::set_user_and_comment(User.find(session[:person]),@note) #This must come before we mess with the list of bats for a cage. The moment we mess with the list, the cage and bat variables are updated. 
     if (@new_cage) && (@old_cage)
       @new_cage.bats << @bats
       @new_cage.bats = @new_cage.bats.uniq #no duplicates
@@ -451,7 +451,7 @@ class BatsController < ApplicationController
     
 		weight.bat = @bat
 		params[:weight]["date(1i)"] ? weight.date = Time.local(params[:weight]["date(1i)"].to_i, params[:weight]["date(2i)"].to_i, params[:weight]["date(3i)"].to_i, params[:weight]["date(4i)"].to_i, params[:weight]["date(5i)"].to_i) : weight.date = Time.now
-		weight.user = session[:person]
+		weight.user = User.find(session[:person])
 		weight.weight = params[:weight][:weight]
 		weight.note = params[:weight][:note]
 		if params[:checkbox][:after_eating] == '1'
@@ -461,7 +461,7 @@ class BatsController < ApplicationController
 		end
 		weight.save
 		
-		Task::set_current_user(session[:person])
+		Task::set_current_user(User.find(session[:person]))
 		@updated_tasks = @cage.update_weighing_tasks
 	end
 	
@@ -500,7 +500,7 @@ class BatsController < ApplicationController
 			bat_note.bat = @bat
 			bat_note.text = params[:bat][:note]
 			bat_note.date = Time.now
-			bat_note.user = session[:person]
+			bat_note.user = User.find(session[:person])
 			bat_note.save
       render :partial => 'bats/display_bat_notes'
     end

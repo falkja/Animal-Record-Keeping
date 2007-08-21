@@ -51,7 +51,7 @@ class TasksController < ApplicationController
     if params[:user]
       @user = User.find(params[:user])
     else
-      @user = User.find(session[:person].id)
+      @user = User.find(session[:person])
     end
     
     params[:medical_tasks] ? @medical_tasks = Task.find(params[:medical_tasks]) : @medical_tasks = Array.new
@@ -462,7 +462,7 @@ class TasksController < ApplicationController
 
   def done
 		task = Task.find(params[:id])
-    Task::set_current_user(session[:person])
+    Task::set_current_user(User.find(session[:person]))
     task.done
 		params[:tasks] = params[:ids]
 		flash[:note] = "Task was successfully updated"
@@ -509,7 +509,7 @@ class TasksController < ApplicationController
         one_time_task.save
         
         users = Array.new
-        users << session[:person]
+        users << User.find(session[:person])
         one_time_task.users = users
         tasks << one_time_task
       end
@@ -526,7 +526,7 @@ class TasksController < ApplicationController
         
         weight.bat = bat
         weight.date = Time.gm(params[:task_history]["date_done(1i)"], params[:task_history]["date_done(2i)"], params[:task_history]["date_done(3i)"], params[:task_history]["date_done(4i)"], params[:task_history]["date_done(5i)"], nil)
-        weight.user = session[:person]
+        weight.user = User.find(session[:person])
         weight.weight = params[:weight][:weight]
         weight.note = params[:weight][:note]
         if params[:checkbox][:after_eating] == '1'
@@ -536,14 +536,14 @@ class TasksController < ApplicationController
         end
         weight.save
         
-        Task::set_current_user(session[:person])
+        Task::set_current_user(User.find(session[:person]))
         cage.update_weighing_tasks
         
       end
       
       for task in tasks
         task_history = TaskHistory.new(params[:task_history])
-        task_history.user = session[:person]
+        task_history.user = User.find(session[:person])
         task_history.task = task
         weight ? task_history.weight = weight : ''
         task_history.save
@@ -591,7 +591,7 @@ class TasksController < ApplicationController
   def done_tasks
 		params[:user] ? @user = User.find(params[:user]) : ''
 		find_feeding_tasks
-		Task::set_current_user(session[:person])
+		Task::set_current_user(User.find(session[:person]))
     for task in @feeding_tasks
 			task.done
     end

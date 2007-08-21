@@ -14,8 +14,8 @@ class MainController < ApplicationController
   end
   
   def login
-	  session[:person] = User.find(params[:user][:id])
-	  flash[:notice] = "Welcome " + User.find(session[:person].id).name
+	  session[:person] = params[:user][:id]
+	  flash[:notice] = "Welcome " + User.find(session[:person]).name
 	  redirect_to :action => 'user_summary_page', :id => params[:user][:id]
   end
   
@@ -107,7 +107,7 @@ class MainController < ApplicationController
     @users_emails = Array.new
     @users.each{|user| @users_emails << user.email}
     
-    @subject = "Batkeeping email from: " + session[:person].name
+    @subject = "Batkeeping email from: " + User.find(session[:person]).name
     
     @greeting = "Dear Batlab,\n\n"
     
@@ -115,7 +115,7 @@ class MainController < ApplicationController
 		
 		@msg_body = @msg_body + MyMailer.create_msg_for_bats_not_weighed
 		
-    @msg_body = @msg_body + "This message brought to you by,\n\n" + session[:person].name
+    @msg_body = @msg_body + "This message brought to you by,\n\n" + User.find(session[:person]).name
   end
   
   def send_lab_email
@@ -126,7 +126,7 @@ class MainController < ApplicationController
     MyMailer.deliver_mass_mail(recipients, subject, msg_body)
     
     flash[:notice] = 'Email Sent'
-    redirect_to :action => 'user_summary_page', :id => session[:person]
+    redirect_to :action => 'user_summary_page', :id => User.find(session[:person])
   end
   
   def random_trial_sequence_generator

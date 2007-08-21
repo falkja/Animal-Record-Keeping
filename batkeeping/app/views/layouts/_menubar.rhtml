@@ -1,7 +1,7 @@
 <ul id="nav">
-<li><%= link_to 'Main', :controller => :main, :action => :user_summary_page, :id => User.find(session[:person].id) %>
+<li><%= link_to 'Main', :controller => :main, :action => :user_summary_page, :id => User.find(session[:person]) %>
 	<ul>
-	<li><%= link_to 'My Page', :controller => :main, :action => :user_summary_page, :id => User.find(session[:person].id) %></li>
+	<li><%= link_to 'My Page', :controller => :main, :action => :user_summary_page, :id => User.find(session[:person]) %></li>
   <li><%= link_to 'Colony Status', :controller => :stats, :action => :index %></li>
   <li><%= link_to 'Animal Care Staff', :controller => :main, :action => :animal_care_staff %></li>
 	<li><b><a href="">Admin ...</a></b>

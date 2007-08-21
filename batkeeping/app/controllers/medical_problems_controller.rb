@@ -80,7 +80,7 @@ class MedicalProblemsController < ApplicationController
 				msg_body = msg_body + "Bat: " + @medical_problem.bat.band
 				msg_body = msg_body + "\nMedical problem: " + @medical_problem.title
 				msg_body = msg_body + "\nMedical problem description: " + @medical_problem.description
-				msg_body = msg_body + "\nCreated by: " + session[:person].name
+				msg_body = msg_body + "\nCreated by: " + User.find(session[:person]).name
 				msg_body = msg_body + "\n\nFaithfully yours, etc."
 				
 				medical_users_emails = Array.new
@@ -114,7 +114,7 @@ class MedicalProblemsController < ApplicationController
 					msg_body = msg_body + "Bat: " + @medical_problem.bat.band
 					msg_body = msg_body + "\nMedical problem: " + @medical_problem.title
 					msg_body = msg_body + "\nMedical problem description: " + @medical_problem.description
-					msg_body = msg_body + "\nCreated by: " + session[:person].name
+					msg_body = msg_body + "\nCreated by: " + User.find(session[:person]).name
 					msg_body = msg_body + "\n\nFaithfully yours, etc."
 					
 					medical_users_emails = Array.new

@@ -114,7 +114,7 @@ class CagesController < ApplicationController
     if @cage.update_attributes(params[:cage])
       if @deactivating
         for task in @cage.tasks
-          task.destroy
+          task.deactivate
         end
       end
       flash[:notice] = 'Cage was successfully updated.'

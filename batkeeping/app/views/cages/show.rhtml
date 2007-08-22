@@ -39,7 +39,7 @@
 <p>
 [<%= link_to_remote "Quick-add feeding task", :url => {:controller => 'tasks', :action => 'remote_new_feed_cage_task', :id => @cage, :div_id => "feeding_tasks", 
                                                           :source => 'show_cage', :same_type_task_list => true, :users => User.current, :quick_add => true},
-                                                          :update => 'add_feeding_task' %>]
+                                                          :update => 'add_feeding_task', :sorted_by => 'repeat_code' %>]
 <div id = "add_feeding_task">
 </div>
 </p>
@@ -55,7 +55,7 @@
 </p>
 <p>
   [<%= link_to_remote 'Quick-add weighing task', :url => {:controller => 'tasks', :action => 'remote_new_weigh_cage_task', :id => @cage, :div_id => 'weighing_tasks', 
-                  :same_type_task_list => true, :source => 'show_cage', :quick_add => true},
+                  :same_type_task_list => true, :source => 'show_cage', :quick_add => true, :sorted_by => 'repeat_code'},
                   :update => 'add_weighing_task' %>]
   <div id = "add_weighing_task">
   </div>

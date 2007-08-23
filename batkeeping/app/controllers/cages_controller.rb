@@ -82,7 +82,7 @@ class CagesController < ApplicationController
 
   def create
     if Cage.find(:first, :conditions => "name = '#{params[:cage][:name]}'")
-      flash[:notice] = 'There is already a cage with the same name.  Please choose a different name.'
+      flash[:notice] = 'There is already a cage with the same name.  Please choose a different name or reactivate the old cage.'
 			redirect_to :back
     elsif params[:cage][:name] == ''
 			flash[:notice] = 'There were problems with your submission.  Please make sure all data fields are filled out.'

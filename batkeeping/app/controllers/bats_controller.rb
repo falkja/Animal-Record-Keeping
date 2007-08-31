@@ -468,11 +468,17 @@ class BatsController < ApplicationController
   def graph_weights
     bat = Bat.find(params[:id])
     weight_classes = bat.weights
-    weights = Array.new
+    weights_after_eating = Array.new
+    weights_before_eating = Array.new
     dates = Hash.new
     dates_reduced = Hash.new
     n = 0
-    weight_classes.reverse_each {|weight| weights << weight.weight; dates[n] = weight.date.strftime('%m-%d-%y'); n = n + 1;}
+    weight_classes.reverse_each {
+      |weight| 
+      if (weight.after_eating == 'y') then weights_after_eating << weight.weight; weights_before_eating << nil else weights_before_eating << weight.weight; weights_after_eating <<nil end 
+      dates[n] = weight.date.strftime('%m-%d-%y');
+      n = n + 1;
+    }
     
     spacing = (dates.length/6.0).ceil
     
@@ -480,9 +486,10 @@ class BatsController < ApplicationController
     
     g = Gruff::Line.new(800)
     
-    g.title = "Bat Weights"
+    g.title = bat.band + " Weights"
     bat.species.lower_weight_limit ? g.baseline_value = bat.species.lower_weight_limit : ''
-    g.data(bat.band, weights)
+    g.data('After Eating', weights_after_eating)
+    g.data('Before Eating', weights_before_eating)
     g.minimum_value = 0
     
     g.labels = dates_reduced #this is where we will need to put the dates

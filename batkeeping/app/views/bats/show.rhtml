@@ -73,7 +73,7 @@ Emails will <em>not</em> be sent out if bat is not weighed often enough
   <div id='medical_problems'>
   <% if @bat.medical_problems.current.length > 0 %>
       <%= render :partial => 'medical_problems/show_medical_problems', :locals=>{:medical_problems => @bat.medical_problems.current, :show_bat => false, 
-        :list_all => false, :div_id => 'current_medical_problems', :show_treatments => true, :redirectme => 'show_bat'} %>
+        :list_all => false, :div_id => 'current_medical_problems', :show_treatments => true, :redirectme => 'show_bat', :user => nil} %>
   <% else %>
     <p>No Current Medical Problems</p>
   <% end %>

@@ -78,6 +78,9 @@ class UsersController < ApplicationController
 	elsif @user.tasks.current.length > 0
 		flash[:notice] = 'Deactivation failed.  User still has tasks.'
 		redirect_to :controller=> 'main', :action => 'user_summary_page', :id => @user
+  elsif @user.job_type != ''
+    flash[:notice] = 'Deactivation failed.  User still has jobs.'
+		redirect_to :controller=> 'users', :action => 'edit', :id => @user
 	end
 	
 	@deactivating = true

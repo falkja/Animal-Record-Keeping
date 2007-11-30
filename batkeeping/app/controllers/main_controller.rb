@@ -64,10 +64,6 @@ class MainController < ApplicationController
       @my_general_tasks_today = @user.tasks.general_tasks_today
       @my_general_tasks_not_today = @user.tasks.general_tasks_not_today
       
-      @my_weighing_tasks = @user.tasks.weighing_tasks
-      @my_weighing_tasks_today = @user.tasks.weighing_tasks_today
-      @my_weighing_tasks_not_today = @user.tasks.weighing_tasks_not_today
-      
       @my_feeding_tasks = @user.tasks.feeding_tasks
       @my_feeding_tasks_today = @user.tasks.feeding_tasks_today
       @my_feeding_tasks_not_today = @user.tasks.feeding_tasks_not_today
@@ -77,10 +73,6 @@ class MainController < ApplicationController
         Task.animal_care_user_general_tasks_today.each{|task| @my_general_tasks_today << task}
         Task.animal_care_user_general_tasks_not_today.each{|task| @my_general_tasks_not_today << task}
         
-        Task.animal_care_user_weighing_tasks.each{|task| @my_weighing_tasks << task}
-        Task.animal_care_user_weighing_tasks_today.each{|task| @my_weighing_tasks_today << task}
-        Task.animal_care_user_weighing_tasks_not_today.each{|task| @my_weighing_tasks_not_today << task}
-        
         Task.animal_care_user_feeding_tasks.each{|task| @my_feeding_tasks << task}
         Task.animal_care_user_feeding_tasks_today.each{|task| @my_feeding_tasks_today << task}
         Task.animal_care_user_feeding_tasks_not_today.each{|task| @my_feeding_tasks_not_today << task}
@@ -89,10 +81,6 @@ class MainController < ApplicationController
       @my_feeding_tasks = @my_feeding_tasks.sort_by{|task| [task.repeat_code, task.title, task.id]}
       @my_feeding_tasks_today = @my_feeding_tasks_today.sort_by{|task| [task.repeat_code, task.title, task.id]}
       @my_feeding_tasks_not_today = @my_feeding_tasks_not_today.sort_by{|task| [task.repeat_code, task.title, task.id]}
-      
-      @my_weighing_tasks = @my_weighing_tasks.sort_by{|task| [task.title, task.id]}
-      @my_weighing_tasks_today = @my_weighing_tasks_today.sort_by{|task| [task.title, task.id]}
-      @my_weighing_tasks_not_today = @my_weighing_tasks_not_today.sort_by{|task| [task.title, task.id]}
     
     else
       redirect_to :action => 'index'

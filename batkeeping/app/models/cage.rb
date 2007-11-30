@@ -71,18 +71,6 @@ class Cage < ActiveRecord::Base
     return false
   end
 	
-	def weighed_enough?
-		if self.tasks.weighing_tasks.length >= 2
-      return true
-    elsif self.tasks.weighing_tasks.length == 0
-			return false
-		elsif self.tasks.weighing_tasks[0].repeat_code == 0
-			return true
-		else
-			return false
-		end
-	end
-	
 	def fed_every_day?
     if self.tasks.feeding_tasks.length < 7
       return false
@@ -120,23 +108,4 @@ class Cage < ActiveRecord::Base
 			return nil
 		end
   end
-  
-  def update_weighing_tasks #marks the cage's weighing tasks as being done with the appropriate date and returns the list of tasks it updates
-    tasks = Array.new
-		
-		oldest_recent_weight = self.oldest_recent_weight
-		if oldest_recent_weight != nil
-      for task in self.tasks.weighing_tasks
-        if !task.done_by_schedule
-          task.done_with_date(oldest_recent_weight)
-          if (task.last_done_date == oldest_recent_weight)
-            tasks << task
-          end
-        end
-      end
-    end
-		
-		return tasks
-  end
-  
 end

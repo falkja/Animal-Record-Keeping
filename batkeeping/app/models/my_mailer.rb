@@ -71,7 +71,6 @@ class MyMailer < ActionMailer::Base
 			
 			if ((user.animal_care_user? && ( (Time.now.wday == 1) || (Time.now.wday == 2) || (Time.now.wday == 3) || (Time.now.wday == 4) || (Time.now.wday == 5))) || (user.weekend_care_user? && (Time.now.wday == 6 || Time.now.wday == 0)))
 				Task.animal_care_user_general_tasks_today.each{|task| users_tasks << task}
-				Task.animal_care_user_weighing_tasks_today.each{|task| users_tasks << task}
 				Task.animal_care_user_feeding_tasks_today.each{|task| users_tasks << task}
 			end
 			

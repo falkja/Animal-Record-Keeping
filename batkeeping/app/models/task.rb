@@ -35,34 +35,6 @@ class Task < ActiveRecord::Base
 		tday = Time.now.wday + 1
 		find :all, :conditions => "((repeat_code != #{tday}) and (repeat_code != 0)) and (medical_treatment_id is null) and (cage_id is null) and date_ended is null and animal_care = 1", :order => 'repeat_code'
 	end
-	
-  def self.weighing_tasks
-    find :all, :conditions => 'internal_description = "weigh" and date_ended is null', :order => 'repeat_code'
-  end
-  
-  def self.weighing_tasks_today
-		tday = Time.now.wday + 1
-		find :all, :conditions => "((repeat_code = #{tday}) or (repeat_code = 0)) and (internal_description = 'weigh') and date_ended is null", :order => 'repeat_code'
-	end
-  
-  def self.weighing_tasks_not_today
-		tday = Time.now.wday + 1   
-		find :all, :conditions => "((repeat_code != #{tday}) and (repeat_code != 0)) and (internal_description = 'weigh') and date_ended is null", :order => 'repeat_code'
-	end
-	
-	def self.animal_care_user_weighing_tasks
-		find :all, :conditions => 'internal_description = "weigh" and date_ended is null and animal_care = 1', :order => 'repeat_code'
-	end
-	
-	def self.animal_care_user_weighing_tasks_today
-		tday = Time.now.wday + 1   
-		find :all, :conditions => "((repeat_code = #{tday}) or (repeat_code = 0)) and (internal_description = 'weigh') and date_ended is null and animal_care = 1", :order => 'repeat_code'
-	end
-	
-	def self.animal_care_user_weighing_tasks_not_today
-		tday = Time.now.wday + 1   
-		find :all, :conditions => "((repeat_code != #{tday}) and (repeat_code != 0)) and (internal_description = 'weigh') and date_ended is null and animal_care = 1", :order => 'repeat_code'
-	end
 
   def self.feeding_tasks
     find :all, :conditions => 'internal_description = "feed" and date_ended is null', :order => 'repeat_code, title'

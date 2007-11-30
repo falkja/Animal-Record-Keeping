@@ -1,5 +1,0 @@
-<h1>Manage weighing tasks for <%= @cage.name %></h1>
-
-<%= render :partial=>'tasks/manage_weighing_tasks', :locals=>{:cage=>@cage} %>
-
-<%= button_to 'Done', :controller => 'cages', :action => 'show', :id => @cage %>

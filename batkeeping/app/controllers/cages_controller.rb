@@ -93,7 +93,7 @@ class CagesController < ApplicationController
 
       if @cage.save
         flash[:notice] = 'Cage was successfully created.'
-        redirect_to :controller => 'tasks', :action => 'new_weigh_cage_task', :id => @cage
+        redirect_to :controller => 'cages', :action => :show, :id => @cage
       else
         render :action => 'new'
       end

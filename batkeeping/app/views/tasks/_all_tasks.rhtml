@@ -9,15 +9,6 @@
 
 </div>
 
-<div id = 'weighing_tasks_category<%= count %>'>
-
-<%= render :partial=>'tasks/show_hide_task_category', :locals => {:tasks => weighing_tasks,
-			:div_id => 'weighing_tasks' + count, :same_type_task_list => same_type_task_list, 
-			:manage => true, :cages => cages, :source => source, :count => count, :show => show,
-			:category_div => 'weighing_tasks_category', :medical_problems => nil, :sorted_by => sorted_by, :user => user} %>
-
-</div>
-
 <div id = 'medical_tasks_category<%= count %>'>
 
 <%= render :partial=>'tasks/show_hide_task_category', :locals => {:tasks => medical_tasks,

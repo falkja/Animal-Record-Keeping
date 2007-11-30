@@ -94,7 +94,7 @@ Emails will <em>not</em> be sent out if bat is not weighed often enough
 	<div class="left_indent">
 
 	<%= render :partial => 'medical_problems/show_medical_problems', :locals=>{:medical_problems => @bat.medical_problems.expired, :show_bat => false, 
-		:list_all => true, :div_id => 'expired_medical_problems', :show_treatments => false} %>
+		:list_all => true, :div_id => 'expired_medical_problems', :show_treatments => false, :redirectme => 'show_bat', :user => nil} %>
 
 	</div>
 <% end %>

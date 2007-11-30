@@ -48,15 +48,4 @@
 There are no bats in this cage.
 <% end %>
 
-<% if @updateable_tasks != nil %>
-<p>The following weighing tasks will be updated after all bats in cage have been weighed:
-<div class="left_indent">
-<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => @updateable_tasks, :div_id => 'weighing_tasks', 
-							:same_type_task_list => false, :manage => false, :sorted_by => 'repeat_code'} %>
-</div>
-</p>
-<% else %>
-<p>No weighing tasks for this cage will be updated after all bats are weighed</p>
-<% end %>
-
 <p><%= link_to 'Back', :controller => 'cages', :action => 'choose_cage_to_weigh' %></p>

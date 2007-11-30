@@ -12,19 +12,9 @@
 </tr>
 
 <tr>
-<td valign='top'><b>Weighing Task</b></td>
-<td>
-<% form_tag :action => 'form_to_new_weigh_cage_task' do %>
-  <%= select_tag("id", options_from_collection_for_select(@cages, "id", "name")) %>
-  <%= submit_tag "Add a weighing task" %>
-  <% end %>
-</td>
-</tr>
-
-<tr>
 <td valign='top'><b>Medical Task</b></td>
 <td>
-<%= button_to 'Managed through medical problems', :controller => 'medical_problems', :action => 'list_current' %>
+<%= link_to 'Manage through medical problems', :controller => 'medical_problems', :action => 'list_current' %>
 </td>
 </tr>
 

@@ -46,23 +46,6 @@
 <p>[<%= link_to 'Manage feeding tasks', :controller => 'tasks', :action => 'manage_feeding_tasks', :id => @cage %>]</p>
 </div>
 
-<% @tasks = @cage.tasks.weighing_tasks %>
-<b>Current Weighing Tasks:</b>
-<div class="left_indent">
-<p>
-<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => @cage.tasks.weighing_tasks, :div_id => 'weighing_tasks', 
-		:same_type_task_list => true, :manage => true, :sorted_by => 'repeat_code'} %>
-</p>
-<p>
-  [<%= link_to_remote 'Quick-add weighing task', :url => {:controller => 'tasks', :action => 'remote_new_weigh_cage_task', :id => @cage, :div_id => 'weighing_tasks', 
-                  :same_type_task_list => true, :source => 'show_cage', :quick_add => true, :sorted_by => 'repeat_code'},
-                  :update => 'add_weighing_task' %>]
-  <div id = "add_weighing_task">
-  </div>
-</p>
-<p>[<%= link_to 'Manage weighing tasks', :controller => 'tasks', :action => 'new_weigh_cage_task', :id => @cage %>]</p>
-</div>
-
 <p>
 <% if @cage.bats.active.length == 0 %>
   <b>No bats are in this cage.</b>

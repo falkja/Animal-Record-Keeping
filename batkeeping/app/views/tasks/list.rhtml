@@ -1,19 +1,19 @@
 <div id='todays_tasks'>
-  <%= render :partial => 'tasks/show_tasks', :locals => {:general_tasks => @general_tasks_today, :weighing_tasks => @weighing_tasks_today,
+  <%= render :partial => 'tasks/show_tasks', :locals => {:general_tasks => @general_tasks_today,
           :feeding_tasks => @feeding_tasks_today, :medical_tasks => @medical_tasks_today, :div_id => 'todays_tasks', :source => 'task_list',
           :feeding_cages => @feeding_cages, :cages => @cages, :medical_problems => @medical_problems, :same_type_task_list => false,
 					:sorted_by => 'title'} %>
 </div>
   
 <div id='other_tasks'>
-  <%= render :partial => 'tasks/hide_tasks', :locals => {:general_tasks => @general_tasks_not_today, :weighing_tasks => @weighing_tasks_not_today,
+  <%= render :partial => 'tasks/hide_tasks', :locals => {:general_tasks => @general_tasks_not_today,
           :feeding_tasks => @feeding_tasks_not_today, :medical_tasks => @medical_tasks_not_today, :div_id => 'other_tasks', :source => 'task_list',
           :feeding_cages => @feeding_cages,:cages => @cages, :medical_problems => @medical_problems, :same_type_task_list => false,
 					:sorted_by => 'title'} %>
 </div>
 
 <div id='all_tasks'>
-  <%= render :partial => 'tasks/hide_tasks', :locals => {:general_tasks => @general_tasks, :weighing_tasks => @weighing_tasks,
+  <%= render :partial => 'tasks/hide_tasks', :locals => {:general_tasks => @general_tasks,
           :feeding_tasks => @feeding_tasks, :medical_tasks => @medical_tasks, :div_id => 'all_tasks', :source => 'task_list',
           :feeding_cages => @feeding_cages,:cages => @cages, :medical_problems => @medical_problems, :same_type_task_list => false,
 					:sorted_by => 'title'} %>

@@ -433,10 +433,6 @@ class TasksController < ApplicationController
           weight.after_eating =  'n'
         end
         weight.save
-        
-        Task::set_current_user(User.find(session[:person]))
-        cage.update_weighing_tasks
-        
       end
       
       for task in tasks

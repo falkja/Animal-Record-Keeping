@@ -460,9 +460,6 @@ class BatsController < ApplicationController
 			weight.after_eating =  'n'
 		end
 		weight.save
-		
-		Task::set_current_user(User.find(session[:person]))
-		@updated_tasks = @cage.update_weighing_tasks
 	end
 	
   def graph_weights

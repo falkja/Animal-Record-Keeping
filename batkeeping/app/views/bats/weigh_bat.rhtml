@@ -15,7 +15,7 @@
 <p>
 
 <%= render :partial => 'medical_problems/show_medical_problems', :locals=>{:medical_problems => @bat.medical_problems.current, :show_bat => false, 
-				:list_all => false, :div_id => 'current_medical_problems', :sorted_by => 'medical_problem', :show_treatments => true, :redirectme => 'weigh_bat'} %>
+				:list_all => false, :div_id => 'current_medical_problems', :sorted_by => 'medical_problem', :show_treatments => true, :redirectme => 'weigh_bat', :user => nil} %>
 
 </p>
 <% else %>
@@ -40,7 +40,7 @@
 <% if @bat.medical_problems.expired.length > 0 %>
 <p>
 <%= render :partial => 'medical_problems/show_medical_problems', :locals=>{:medical_problems => @bat.medical_problems.expired, :show_bat => false, 
-				:list_all => true, :div_id => 'expired_medical_problems', :show_treatments => false} %>
+				:list_all => true, :div_id => 'expired_medical_problems', :show_treatments => false, :redirectme => 'weigh_bat', :user => nil} %>
 </p>
 <% else %>
 <p>No previous medical problems</p>

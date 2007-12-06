@@ -99,9 +99,11 @@ class MainController < ApplicationController
     
     @greeting = "Dear Batlab,\n\n"
     
+    @greeting = @greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
+    
     @msg_body = MyMailer.create_msg_for_tasks_not_done(@tasks_not_done)
 		
-		@msg_body = @msg_body + MyMailer.create_msg_for_bats_not_weighed
+		@msg_body = @msg_body + MyMailer.create_msg_for_bats_not_weighed(Bat.not_weighed(Bat.active))
 		
     @msg_body = @msg_body + "This message brought to you by,\n\n" + User.find(session[:person]).name
   end

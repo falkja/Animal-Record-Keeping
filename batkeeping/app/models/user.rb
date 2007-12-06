@@ -65,16 +65,21 @@ class User < ActiveRecord::Base
     end
   end
 
-	def bats_medical_problems #returns the users's bat's medical problems unless the user is a medical care user, in which case it returns all the medical problems
-		if self.medical_care_user?
-			return MedicalProblem.current
-		end
-		users_bats = Array.new
-		for cage in self.cages
+  def users_bats
+    users_bats = Array.new
+    for cage in self.cages
 			for bat in cage.bats
 				users_bats << bat
 			end
 		end
+    return users_bats
+  end
+
+	def bats_medical_problems #returns the users's bat's medical problems unless the user is a medical care user, in which case it returns all the medical problems
+		if self.medical_care_user?
+			return MedicalProblem.current
+		end
+		users_bats = self.users_bats
 		medical_problems = Array.new
 		for bat in users_bats
 			for medical_problem in bat.medical_problems.current

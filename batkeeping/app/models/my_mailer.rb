@@ -86,7 +86,7 @@ class MyMailer < ActionMailer::Base
         if (users_tasks_not_done.length > 0) || (users_bats_not_weighed.length > 0)
           greeting = "Hi " + user.name + ",\n\n"
           greeting = greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
-          msg_body = MyMailer.create_msg_for_tasks_not_done(tasks_not_done)
+          msg_body = MyMailer.create_msg_for_tasks_not_done(users_tasks_not_done)
           msg_body = msg_body + MyMailer.create_msg_for_bats_not_weighed(users_bats_not_weighed)
           msg_body = msg_body + "Faithfully yours, etc."
           MyMailer.deliver_mail(user.email, "tasks not done today", greeting + msg_body)

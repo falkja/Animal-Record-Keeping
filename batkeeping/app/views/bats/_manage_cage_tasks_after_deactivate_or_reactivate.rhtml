@@ -1,36 +1,15 @@
-<h2>Step <%=h step %> of 2: 
-
-<% if step == 1 %>
+<h2>
   Manage Feeding Tasks of 
   <%= deactivating ? 'Old' : 'New' %>
   Cage: <%= cage.name %>
-<% elsif step == 2 %>
-  Manage Weighing Tasks of 
-  <%= deactivating ? 'Old' : 'New' %>
-  Cage: <%= cage.name %>
-<% end %>
 </h2>
 
 <div class='left_indent'>
 
 <% if step == 1 %>
 <%= render :partial=>'tasks/manage_feeding_tasks', :locals=>{:cage=>cage} %>
-<% elsif step == 2 %>
-<%= render :partial=>'tasks/manage_weighing_tasks', :locals=>{:cage=>cage} %>
 <% end %>
 
-<form>
-<% if step == 2 %>
-<%= submit_to_remote 'Back', 'Back', :url => {:controller => 'bats',  :action => 'manage_cage_tasks_after_deactivate_or_reactivate', :step=>(step-1).to_s,
-												:cage => cage, :deactivating=> deactivating}, :update=>'cage_tasks' %>
-<% else %>
-<%= submit_to_remote 'Next', 'Next', :url => {:controller => 'bats',  :action => 'manage_cage_tasks_after_deactivate_or_reactivate', :step=>(step+1).to_s,
-												:cage => cage, :deactivating => deactivating}, :update=>'cage_tasks' %>
-<% end %>
-</form>
-
-<% if step == 2 %>
 <p><%= button_to 'Done', :controller => 'bats', :action => 'list' %></p>
-<% end %>
 
 </div>

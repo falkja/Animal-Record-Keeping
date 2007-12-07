@@ -1,3 +1,3 @@
-cd /mnt/raid/software/batkeeping/
+cd /usr/local/batkeeping/
 rake populate_census_entries RAILS_ENV=production
 echo "task-census entries populated"

@@ -107,7 +107,7 @@ class MyMailer < ActionMailer::Base
 			msg_body = MyMailer.create_msg_for_tasks_not_done(tasks_not_done)
       msg_body = msg_body + MyMailer.create_msg_for_bats_not_weighed(bats_not_weighed)
 			msg_body = msg_body + "Faithfully yours, etc."
-			MyMailer.deliver_mass_mail(users_emails, "tasks not done today", greeting + msg_body)
+			MyMailer.deliver_mass_mail(admin_emails, "tasks not done today", greeting + msg_body)
 		end
 	end
 end

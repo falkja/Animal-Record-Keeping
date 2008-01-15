@@ -5,12 +5,15 @@
 # ENV['RAILS_ENV'] ||= 'production'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '1.2.6'
+RAILS_GEM_VERSION = '2.0.2'
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
+  config.action_controller.session = { :session_key => "_batkeeping_session", 
+  :secret => "c91cc5f73ca1e683eeb6f4b5777f55d68e9fa56fec7f73c2c95e718dd45fa59e920b256283ad443ce33c612f3067708653455c58fcab3cb8e3f322a14a88a014" }
+  
   # Settings in config/environments/* take precedence those specified here
   
   # Skip frameworks you're not going to use (only works if using vendor/rails)

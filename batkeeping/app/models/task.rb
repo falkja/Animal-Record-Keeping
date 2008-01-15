@@ -186,8 +186,10 @@ class Task < ActiveRecord::Base
     if (date_done.yday >= self.find_post) && (date_done.yday <= (self.find_post - self.jitter))
       if self.internal_description == 'change_pads' || self.internal_description == 'feed' || self.internal_description == 'change_cages' || self.internal_description == 'clean_floor' || self.internal_description == 'change_water'
 				task_census = TaskCensus.find(:first, :conditions => "task_id = #{self.id} and date = '#{date_done.year}-#{date_done.month}-#{date_done.day}'")
-				task_census.date_done = date_done
-				task_census.save
+				if task_census #if the populate_census_tasks rake didn't run
+          task_census.date_done = date_done
+          task_census.save
+        end
 			end
       
       task_history = TaskHistory.new

@@ -87,4 +87,25 @@ class StatsController < ApplicationController
 		render :partial => 'hide_medical_summary'
 	end
 	
+  def bat_changes
+    
+    earliest = Bat.earliest_addition
+    @end_year = Time.now.year
+    if earliest
+      @start_year = earliest.year			
+    else	
+      @start_year = @end_year
+    end
+    
+    if (params[:date] == nil)
+      @year = Time.now.year
+      @month = Time.now.mon
+    else
+      @year = params[:date][:year].to_i
+      @month = params[:date][:month].to_i
+    end
+    
+    @days_this_month = Date::civil(@year,@month,1)...Date::civil(@year, @month, -1)
+  end
+  
 end

@@ -1,0 +1,69 @@
+<div class='no_print'>
+<p>
+<% form_tag :controller => 'stats', :action => 'bat_changes' do %>
+	Show bat changes page for
+	
+	<%= select_year(@year, :start_year => @start_year, :end_year => @end_year) %>
+	<%= select_month(@month) %>
+
+	<%= submit_tag 'Go' %>
+<% end %>
+</p>
+</div>
+
+<H2>Bat Changes Page for <%= Date::MONTHNAMES[@month] + ' ' + @year.to_s%></H2>
+
+<TABLE>
+
+<TR>
+  <th>Band</th>
+  <TH>Day</TH>
+  <th>Weight</th>
+  <TH>Deceased</TH>
+  <TH colspan='2'>Reband</TH>
+  <TH colspan='2'>Cage</TH>
+  <TH colspan='2'>Owner</TH>
+  <TH>Medication</TH>
+  <TH>Initials</TH>
+</TR>
+
+<TR>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td>Old</td>
+  <td>New</td>
+  <td>Old</td>
+  <td>New</td>
+  <td>Old</td>
+  <td>New</td>
+  <td></td>
+  <td></td>
+</TR>
+
+<% for day in @days_this_month %>
+  <% if day <= Date.today %>
+    
+      <% for bat in Bat.moved_on(day) %>
+        <tr>
+        <td><%= link_to bat.band, :controller => :bats, :action => :show, :id => bat %></td>
+        <td><%= day.strftime("%b %d, %Y") %></td>
+        <td><%= bat.weight_on(day).weight %> g</td>
+        <td><%= bat.leave_reason ? bat.leave_reason : '' %></td>
+        <td></td>
+        <td></td>
+        <% old_cage = bat.cage_out_histories[0].cage %>
+        <td><%= link_to old_cage.name, :controller => :cages, :action => :show, :id => old_cage %></td>
+        <td><%= bat.cage ? link_to(bat.cage.name, :controller => :cages, :action => :show, :id => bat.cage) : 'NA' %></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><%= bat.cage_out_histories[0].user.initials%></td>
+        </tr>
+      <% end %>
+    
+  <% end %>
+<% end %>
+
+</TABLE>

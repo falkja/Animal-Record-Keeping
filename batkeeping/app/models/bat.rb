@@ -144,4 +144,16 @@ class Bat < ActiveRecord::Base
 		end
 	end
 	
+  def self.moved_on(date)
+    cohs = CageOutHistory.find(:all, :conditions => "YEAR(date) = #{date.year} AND MONTH(date) = #{date.month} AND DAY(date) = #{date.day}")
+    bats_moved = Array.new
+    for coh in cohs
+      bats_moved << coh.bat
+    end
+    return bats_moved
+  end
+  
+  def weight_on(date)
+    Weight.find(:first, :conditions => "bat_id = #{self.id} and YEAR(date) <= #{date.year} AND MONTH(date) <= #{date.month} AND DAY(date) <= #{date.day}")
+  end
 end

@@ -1,5 +1,5 @@
 #!/bin/bash
 date=`date +%A`
-cd /usr/local/batkeeping_backups/
+cd /mnt/raid/software/batkeeping_backups/
 mysqldump -u root -p"batlab" batkeeping | bzip2 -c > $date\_batkeeping_backup.sql.bz2
 echo "batkeeping database backed up"

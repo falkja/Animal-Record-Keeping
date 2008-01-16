@@ -144,6 +144,7 @@ class Bat < ActiveRecord::Base
 		end
 	end
 	
+  #returns the bats that were moved on date
   def self.moved_on(date)
     cohs = CageOutHistory.find(:all, :conditions => "YEAR(date) = #{date.year} AND MONTH(date) = #{date.month} AND DAY(date) = #{date.day}")
     bats_moved = Array.new
@@ -153,6 +154,26 @@ class Bat < ActiveRecord::Base
     return bats_moved
   end
   
+  #returns the bats and the medical treatments that were created on date
+  def self.medical_treatment_changed(date)
+    med_treatments = MedicalTreatment.find(:all, :conditions => "YEAR(date_opened) = #{date.year} AND MONTH(date_opened) = #{date.month} AND DAY(date_opened) = #{date.day}")
+    bats = Array.new
+    for med_treatment in med_treatments
+      bats << med_treatment.medical_problem.bat
+    end
+    bats.uniq!
+    return bats
+  end
+  
+  #returns the medical treatments created on date
+  def medical_treatment_changed_on(date)
+    med_treatments = Array.new
+    self.medical_problems.each{|medical_problem| medical_problem.medical_treatments.each{
+      |medical_treatment| (if medical_treatment.date_opened == date then med_treatments << medical_treatment end)}}
+    return med_treatments
+  end
+  
+  #returns the weight of the bat on or before date
   def weight_on(date)
     Weight.find(:first, :conditions => "bat_id = #{self.id} and YEAR(date) <= #{date.year} AND MONTH(date) <= #{date.month} AND DAY(date) <= #{date.day}")
   end

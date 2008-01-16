@@ -91,11 +91,7 @@ class StatsController < ApplicationController
     
     earliest = Bat.earliest_addition
     @end_year = Time.now.year
-    if earliest
-      @start_year = earliest.year			
-    else	
-      @start_year = @end_year
-    end
+    earliest ? @start_year = earliest.year : @start_year = @end_year
     
     if (params[:date] == nil)
       @year = Time.now.year

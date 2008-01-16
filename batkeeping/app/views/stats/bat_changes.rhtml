@@ -23,7 +23,7 @@
   <TH colspan='2'>Reband</TH>
   <TH colspan='2'>Cage</TH>
   <TH colspan='2'>Owner</TH>
-  <TH>Medication</TH>
+  <TH>New Medications</TH>
   <TH>Initials</TH>
 </TR>
 
@@ -60,6 +60,28 @@
         <td></td>
         <td></td>
         <td><%= bat.cage_out_histories[0].user.initials%></td>
+        </tr>
+      <% end %>
+      
+      <% for bat in Bat.medical_treatment_changed(day) %>
+        <tr>
+        <td><%= link_to bat.band, :controller => :bats, :action => :show, :id => bat %></td>
+        <td><%= day.strftime("%b %d, %Y") %></td>
+        <td><%= bat.weight_on(day).weight %> g</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <% treatments = bat.medical_treatment_changed_on(day) %>
+        <td>
+        <% for treatment in treatments %>
+          <%= treatment.title %><br />
+        <% end %>
+        </td>
+        <td><%=  %></td>
         </tr>
       <% end %>
     

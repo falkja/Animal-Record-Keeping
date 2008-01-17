@@ -144,29 +144,38 @@ class Bat < ActiveRecord::Base
 		end
 	end
 	
-  #returns the bats that were moved on date
-  def self.moved_on(date)
-    cohs = CageOutHistory.find(:all, :conditions => "YEAR(date) = #{date.year} AND MONTH(date) = #{date.month} AND DAY(date) = #{date.day}")
-    bats_moved = Array.new
-    for coh in cohs
-      bats_moved << coh.bat
-    end
-    return bats_moved
-  end
-  
-  #returns the bats and the medical treatments that were created on date
-  def self.medical_treatment_changed(date)
-    med_treatments = MedicalTreatment.find(:all, :conditions => "YEAR(date_opened) = #{date.year} AND MONTH(date_opened) = #{date.month} AND DAY(date_opened) = #{date.day}")
+  #returns bats that have had something change on date
+  def self.changes_on(date)
     bats = Array.new
-    for med_treatment in med_treatments
-      bats << med_treatment.medical_problem.bat
+    
+    #finding the bats that have moved
+    cohs =  CageOutHistory.find(:all, :conditions => "YEAR(date) = #{date.year} AND MONTH(date) = #{date.month} AND DAY(date) = #{date.day}")
+    for coh in cohs
+      bats << coh.bat
     end
+    
+    #finding the bats with new medical treatments
+    treatments = MedicalTreatment.find(:all, :conditions => "YEAR(date_opened) = #{date.year} AND MONTH(date_opened) = #{date.month} AND DAY(date_opened) = #{date.day}")
+    for treatment in treatments
+      bats << treatment.medical_problem.bat
+    end
+    
     bats.uniq!
+    bats = bats.sort_by{|bat| [bat.band]}
     return bats
   end
   
+  #returns true if the bat was moved on that day, returns false if it wasn't moved on date
+  def moved_on(date)
+    if self.cage_out_histories[0].date.to_date == date
+      return true
+    else
+      return false
+    end
+  end
+  
   #returns the medical treatments created on date
-  def medical_treatment_changed_on(date)
+  def medical_treatments_changed_on(date)
     med_treatments = Array.new
     self.medical_problems.each{|medical_problem| medical_problem.medical_treatments.each{
       |medical_treatment| (if medical_treatment.date_opened == date then med_treatments << medical_treatment end)}}

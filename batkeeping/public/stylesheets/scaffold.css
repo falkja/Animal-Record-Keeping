@@ -162,3 +162,7 @@ div.right_aligned {
 div.show_print_only{
 	display:none;
 }
+
+tr.striped{
+	background-color:#ddd;
+}

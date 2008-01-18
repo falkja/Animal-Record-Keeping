@@ -114,7 +114,12 @@
 			<% end %>
 		</td>
 	<% end %>
-  <td><%= link_to 'Weigh Bat', :action => 'weigh_bat', :id => bat %></td>
+  <% if bat.cage != nil %>
+    <td><%= link_to 'Move', :controller => :bats, :action=>:single_bat_to_move, :id=>bat %></td>
+  <% end %>
+  <% if bat.leave_date == nil %>
+  <td><%= show_weigh_link ? '' : (link_to 'Weigh', :action => 'weigh_bat', :id => bat) %></td>
+  <% end %>
   </tr>
 <% end %>
 

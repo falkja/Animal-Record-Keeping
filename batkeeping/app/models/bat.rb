@@ -118,7 +118,7 @@ class Bat < ActiveRecord::Base
 			coh.user = @@current_user
 			coh.note = @@comment
 			coh.date = Time.new 
-			coh.cage_in_history = cih
+			new_cage ? coh.cage_in_history = cih : ''
 			coh.save
 			
 		end
@@ -154,6 +154,11 @@ class Bat < ActiveRecord::Base
       bats << coh.bat
     end
     
+    cihs = CageInHistory.find(:all, :conditions => "YEAR(date) = #{date.year} AND MONTH(date) = #{date.month} AND DAY(date) = #{date.day}")
+    for cih in cihs
+      bats << cih.bat
+    end
+    
     #finding the bats with new medical treatments
     treatments = MedicalTreatment.find(:all, :conditions => "YEAR(date_opened) = #{date.year} AND MONTH(date_opened) = #{date.month} AND DAY(date_opened) = #{date.day}")
     for treatment in treatments
@@ -163,15 +168,6 @@ class Bat < ActiveRecord::Base
     bats.uniq!
     bats = bats.sort_by{|bat| [bat.band]}
     return bats
-  end
-  
-  #returns true if the bat was moved on that day, returns false if it wasn't moved on date
-  def moved_on(date)
-    if self.cage_out_histories[0].date.to_date == date
-      return true
-    else
-      return false
-    end
   end
   
   #returns the medical treatments created on date
@@ -186,4 +182,37 @@ class Bat < ActiveRecord::Base
   def weight_on(date)
     Weight.find(:first, :conditions => "bat_id = #{self.id} and YEAR(date) <= #{date.year} AND MONTH(date) <= #{date.month} AND DAY(date) <= #{date.day}")
   end
+  
+  #single run for populating the bat changes table in the database
+  def self.populate_bat_changes
+
+    #go through all the cihs first
+    cihs = CageInHistory.find(:all)
+    for cih in cihs
+      bat_change = BatChange.new
+      bat_change.date = cih.date
+      bat_change.bat = cih.bat
+      bat_change.new_cage_id = cih.cage.id
+      if cih.cage_out_history #might be a newly created bat which doesn't have a corresponding coh
+        bat_change.old_cage_id = cih.cage_out_history.cage.id
+      end
+      bat_change.note = cih.note
+      bat_change.user = cih.user
+      bat_change.save
+    end
+    
+    #log the cohs with no cih (deactivated bats)
+    cohs = CageOutHistory.find(:all, :conditions => "cage_in_history_id is null")
+    for coh in cohs
+      bat_change = BatChange.new
+      bat_change.date = coh.date
+      bat_change.bat = coh.bat
+      bat_change.old_cage_id = coh.cage.id
+      bat_change.note = coh.note
+      bat_change.user = coh.user
+      bat_change.save
+    end
+    
+  end
+  
 end

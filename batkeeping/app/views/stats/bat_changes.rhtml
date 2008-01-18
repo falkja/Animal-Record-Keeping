@@ -13,7 +13,7 @@
 
 <H2>Bat Changes Page for <%= Date::MONTHNAMES[@month] + ' ' + @year.to_s%></H2>
 
-<TABLE>
+<TABLE cellspacing="0">
 
 <TR>
   <TH>Day</TH>
@@ -30,56 +30,87 @@
   <td></td>
   <td></td>
   <td></td>
-  <td>Old</td>
-  <td>New</td>
+  <td><b>Old</b></td>
+  <td><b>New</b></td>
   <td></td>
   <td></td>
 </TR>
 
 
-<% odd = true %>
+<% odd = false %>
 <% for day in @days_this_month %>
   <% if day <= Date.today %>
-      <% first_days_entry = true %>
       <% for bat in Bat.changes_on(day) %>
+        <% odd = !odd %>
         <% if odd %>
           <tr class='striped'>
         <% else %>
           <tr>
         <% end %>
-        <% odd = !odd %>
-        <% if first_days_entry %>
-          <td><%= day.strftime("%b %d, %Y") %></td>
-          <% first_days_entry = false %>
-        <% else %>
-          <td></td>
-        <% end %>
+        
+        <td><%= day.strftime("%b %d, %Y") %></td>
         <td><%= link_to bat.band, :controller => :bats, :action => :show, :id => bat %></td>
-        <td><%= bat.weight_on(day).weight %> g</td>
-        <td><%= bat.leave_reason ? bat.leave_reason : '' %></td>
-        <% if bat.moved_on(day) %>
-        <% old_cage = bat.cage_out_histories[0].cage %>
-          <td><%= link_to old_cage.name, :controller => :cages, :action => :show, :id => old_cage %></td>
-          <td><%= bat.cage ? link_to(bat.cage.name, :controller => :cages, :action => :show, :id => bat.cage) : 'NA' %></td>
+        <td><%= bat.weight_on(day) ? bat.weight_on(day).weight.to_s + ' g' : 'NA' %></td>
+        
+        <% make_new_row = false %>
+        
+        <% if bat.moved_in(day) || bat.moved_out(day) %>
+          <% make_new_row = true %>
+          <td><%= (bat.leave_reason && bat.leave_date.to_date == day) ? bat.leave_reason : '' %></td>
+          <td>
+          <% for coh in bat.moved_out(day) %>
+            <%= link_to coh.cage.name, :controller => :cages, :action => :show, :id => coh.cage %><br />
+          <% end %>
+          </td>
+          <td>
+          <% for cih in bat.moved_in(day) %>
+            <%= link_to cih.cage.name, :controller => :cages, :action => :show, :id => cih.cage %><br />
+          <% end %>
+          </td>
           <td></td>
-          <td><%= bat.cage_out_histories[0].user.initials%></td>
-          </tr>
-          <tr>
+          <td>
+          <% for cih in bat.moved_in(day) %>
+            <%= link_to cih.user.initials, :controller => :users, :action => :show, :id => cih.user %><br />
+          <% end %>
+          </td>
+        <% else %> <%# no cage move, just a new medical treatment %>
           <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        <% else %>
           <td></td>
           <td></td>
         <% end %>
+        
+        <% if bat.medical_treatments_changed_on(day).length > 0 %>
+          
+          <% if make_new_row %> <%# we need to make a new row for new medical treatments because there was already a row for bat cage changes %>
+            
+            </tr>
+            <% if odd %>
+              <tr class='striped'>
+            <% else %>
+              <tr>
+            <% end %>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            
+          <% end %>
+        
         <td>
         <% for treatment in bat.medical_treatments_changed_on(day) %>
           <%= treatment.title %><br />
         <% end %>
         </td>
+        <td>NA</td>
+        
+        <% elsif !make_new_row %>
+          <td></td>
+          <td></td>
+        
+        <% end %>
+        
         </tr>
       <% end %>
     </tr>

@@ -24,7 +24,8 @@
 </div>
 
 <form>
-<%= submit_to_remote 'Quick-Add New Medical Problem', 'Quick-Add New Medical Problem', :url=>{:controller => 'medical_problems', :action => :remote_new_medical_problem, :bat => @bat},
+<%= submit_to_remote 'Quick-Add New Medical Problem', 'Quick-Add New Medical Problem', :url=>{:controller => 'medical_problems', 
+  :action => :remote_new_medical_problem, :bat => @bat, :redirectme => 'weigh_bat'},
   :update=>'add_medical_problem'%>
 </form>
 

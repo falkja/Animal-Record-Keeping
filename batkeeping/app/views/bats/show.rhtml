@@ -80,7 +80,8 @@ Emails will <em>not</em> be sent out if bat is not weighed often enough
   </div>
 
 <form>
-<%= submit_to_remote 'Quick-Add New Medical Problem', 'Quick-Add New Medical Problem', :url=>{:controller => 'medical_problems', :action => :remote_new_medical_problem, :bat => @bat},
+<%= submit_to_remote 'Quick-Add New Medical Problem', 'Quick-Add New Medical Problem', :url=>{:controller => 'medical_problems', 
+  :action => :remote_new_medical_problem, :bat => @bat, :redirectme => 'show_bat'},
   :update=>'add_medical_problem'%>
 </form>
 

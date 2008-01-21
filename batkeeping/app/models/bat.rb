@@ -6,6 +6,7 @@ class Bat < ActiveRecord::Base
 	has_many :cage_out_histories, :order => "date desc"
 	has_many :medical_problems, :order => "date_opened desc"
 	has_many :bat_notes, :order => "date desc"
+  has_many :bat_changes, :order => "date desc"
 	
 	@@current_user = nil #needed for the sig
 	@@comment = nil #needed if we wanna comment a cage move
@@ -98,18 +99,9 @@ class Bat < ActiveRecord::Base
 		#We may have to close out the last cage_in_history
 		#by creating a cage_out_history and attaching it to the cage_in_history
     unless old_cage == nil #this means we just created it
-			cih = self.cage_in_histories #a list of histories sorted by latest date
-			if cih
+			cihs = self.cage_in_histories #a list of histories sorted by latest date
+			if cihs.length > 0
 				cih = cih[0]
-			else
-				#Somebody screwed up and we gotta clean up the mess
-				cih = CageInHistory.new
-				cih.bat = self
-				cih.cage = old_bat.cage
-				cih.user = @@current_user #blame the current user #@current_user
-				cih.note = "NOTE: This cage in event was generated automatically. No one logged this bat into this cage"
-				
-				cih.save
 			end
 			
 			coh = CageOutHistory.new
@@ -120,9 +112,32 @@ class Bat < ActiveRecord::Base
 			coh.date = Time.new 
 			new_cage ? coh.cage_in_history = cih : ''
 			coh.save
-			
+      
+      if new_cage == nil #old cage is not nil but new cage is nil (deactivated bat): still need to make a bat changes entry
+        #making a bat changes entry
+        bat_change = BatChange.new
+        bat_change.date = coh.date
+        bat_change.bat = coh.bat
+        bat_change.old_cage_id = coh.cage.id
+        bat_change.note = coh.note
+        bat_change.user = coh.user
+        bat_change.save
+      end
 		end
-     
+    
+    unless new_cage == nil #will create all the bat_changes entries except when its a deactivated bat
+      #making a bat changes entry for the cih
+      bat_change = BatChange.new
+      bat_change.date = cih.date
+      bat_change.bat = cih.bat
+      bat_change.new_cage_id = cih.cage.id
+      if cih.cage_out_history #might be a newly created bat which doesn't have a corresponding coh
+        bat_change.old_cage_id = cih.cage_out_history.cage.id
+      end
+      bat_change.note = cih.note
+      bat_change.user = cih.user
+      bat_change.save
+    end
 	end
 	
 	#called just before creation
@@ -168,14 +183,6 @@ class Bat < ActiveRecord::Base
     bats.uniq!
     bats = bats.sort_by{|bat| [bat.band]}
     return bats
-  end
-  
-  #returns the medical treatments created on date
-  def medical_treatments_changed_on(date)
-    med_treatments = Array.new
-    self.medical_problems.each{|medical_problem| medical_problem.medical_treatments.each{
-      |medical_treatment| (if medical_treatment.date_opened == date then med_treatments << medical_treatment end)}}
-    return med_treatments
   end
   
   #returns the weight of the bat on or before date

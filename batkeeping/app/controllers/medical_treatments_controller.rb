@@ -34,6 +34,16 @@ class MedicalTreatmentsController < ApplicationController
       if @medical_treatment.save
         flash[:notice] = 'Medical treatment was successfully created.'
         redirect_to :action => 'show', :id=>@medical_treatment
+        
+        #making a new bat changes entry
+        bat_change = BatChange.new      
+        bat_change.date = @medical_treatment.date_opened
+        bat_change.bat = @medical_treatment.medical_problem.bat
+        bat_change.note = "STARTED: " + @medical_treatment.medical_problem.title
+        bat_change.medical_treatment = @medical_treatment
+        bat_change.user = User.find(session[:person])
+        bat_change.save
+        
       else
         render :action => 'new'
       end
@@ -55,8 +65,17 @@ class MedicalTreatmentsController < ApplicationController
   end
 	
 	def destroy_medical_treatment
-		medical_treatment = MedicalTreatment.find(params[:id])
-    medical_treatment.end_treatment
+		treatment = MedicalTreatment.find(params[:id])
+    treatment.end_treatment
+    
+    bat_change = BatChange.new      
+    bat_change.date = treatment.date_closed
+    bat_change.bat = treatment.medical_problem.bat
+    bat_change.note = "ENDED: " + treatment.medical_problem.title
+    bat_change.medical_treatment = treatment
+    bat_change.user = User.find(session[:person])
+    bat_change.save
+    
     redirect_to :controller => 'medical_problems', :action => 'list_current'
 	end
 end

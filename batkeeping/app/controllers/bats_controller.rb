@@ -122,7 +122,7 @@ class BatsController < ApplicationController
 				census.tally(1, Date.today, new_cage.room)
 				census.bats_added ? census.bats_added = census.bats_added + @bat.band + ' ' : census.bats_added = @bat.band + ' '
 				census.save
-				
+        
 				if params[:weight][:weight] != ''
 					save_weight
 				end

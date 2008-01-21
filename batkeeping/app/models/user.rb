@@ -1,9 +1,10 @@
 class User < ActiveRecord::Base
-    has_many :cages, :order => 'name'
-    has_many :cage_in_histories
-    has_many :cage_out_histories
-    has_and_belongs_to_many :tasks
-    has_many :task_histories
+  has_many :cages, :order => 'name'
+  has_many :cage_in_histories
+  has_many :cage_out_histories
+  has_and_belongs_to_many :tasks
+  has_many :task_histories
+  has_many :bat_changes, :order => "date desc"
     
   def self.current
     find :all, :conditions => 'end_date is null', :order => 'name'

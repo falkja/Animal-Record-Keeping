@@ -1,6 +1,7 @@
 class MedicalTreatment < ActiveRecord::Base
 	belongs_to :medical_problem
 	has_many :tasks
+  has_many :bat_changes, :order => "date desc"
 	
 	def self.current
 		find(:all, :conditions => 'date_closed is null')
@@ -44,4 +45,36 @@ class MedicalTreatment < ActiveRecord::Base
 		task_histories = task_histories.sort_by{|task_history| [Time.now - task_history.date_done]}
 		return task_histories
 	end
+  
+  def self.populate_bat_changes
+    all_treatments = self.find(:all)
+    for treatment in all_treatments
+      treatment_started = BatChange.new      
+      treatment_started.date = treatment.date_opened
+      treatment_started.bat = treatment.medical_problem.bat
+      treatment_started.note = "STARTED: " + treatment.medical_problem.title
+      treatment_started.medical_treatment = treatment
+      #bat_change.user = no user logging in original design
+      treatment_started.save
+      
+      if treatment.date_closed != nil
+        treatment_ended = BatChange.new      
+        treatment_ended.date = treatment.date_closed
+        treatment_ended.bat = treatment.medical_problem.bat
+        treatment_ended.note = "ENDED: " + treatment.medical_problem.title
+        treatment_ended.medical_treatment = treatment
+        #treatment_ended.user = no user logging in original design
+        treatment_ended.save
+      end
+      
+    end
+  end
+  
+  def before_save
+    
+  end
+  
+  def after_save
+    #create a bat change
+  end
 end

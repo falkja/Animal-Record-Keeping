@@ -115,14 +115,16 @@ class CagesController < ApplicationController
     if @cage.update_attributes(params[:cage])
       
       if old_owner != @cage.user #owner change requres a new bat changes entry
-        bat_change = BatChange.new      
-        bat_change.date = @bat.collection_date
-        bat_change.bat = @bat
-        bat_change.note = ''
-        bat_change.user = User.find(session[:person])
-        bat_change.owner_new_id = @cage.user
-        bat_change.owner_old_id = old_owner
-        bat_change.save
+        for bat in @cage.bats
+          bat_change = BatChange.new      
+          bat_change.date = bat.collection_date
+          bat_change.bat = bat
+          bat_change.note = ''
+          bat_change.user = User.find(session[:person])
+          bat_change.owner_new_id = @cage.user
+          bat_change.owner_old_id = old_owner
+          bat_change.save
+        end
       end
       
       if @deactivating

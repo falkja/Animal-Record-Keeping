@@ -24,14 +24,7 @@ class Bat < ActiveRecord::Base
 	end
 	
 	def average_weight
-		weights = self.weights
-		sum = 0
-		weights.each{|weight| sum=weight.weight + sum}
-    if weights.length > 0
-      return (("%.0" + 1.to_s + "f")%(sum/weights.length)).to_f
-    else
-      return 0
-    end
+		Weight.average(:weight, :conditions => "bat_id = #{self.id}")
 	end
 	
 	#From http://www.therailsway.com/tags/rails
@@ -136,6 +129,14 @@ class Bat < ActiveRecord::Base
       end
       bat_change.note = cih.note
       bat_change.user = cih.user
+      if old_cage #a true cage change
+        if (new_cage.user != old_cage.user) #owner change
+          bat_change.owner_new_id = new_cage.user.id
+          bat_change.owner_old_id = old_cage.user.id
+        end
+      else #a newly created bat
+        bat_change.owner_new_id = new_cage.user.id
+      end
       bat_change.save
     end
 	end

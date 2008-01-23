@@ -59,29 +59,19 @@
   <th>Date in</th>
   <th>Who</th>
   <th>Why</th>
-  <% for bat in @cage.bats %>
-    <% cih = bat.cage_in_histories %>
-    <% if cih %>
-    <%      @date_in = cih[0].date %>
-    <%      @sig = cih[0].user.initials %>
-    <%      @why = cih[0].note %>
-    <% else %>
-    <%      @date_in ="" %>
-    <%      @sig = "" %>  
-    <%      @why = "" %>  
-    <% end %>
+  <% for cih in @current_bats_cihs %>
     <tr>
-    <td><%= link_to bat.band, :controller => 'bats', :action => 'show', :id => bat %></td>
-    <% if bat.weights.length > 0 %></td>
-          <td><%=h bat.weights.recent.weight %></td>
-          <td><%=h nice_date(bat.weights.recent.date) %></td>
+    <td><%= link_to cih.bat.band, :controller => 'bats', :action => 'show', :id => cih.bat %></td>
+    <% if cih.bat.weights.length > 0 %></td>
+          <td><%=h cih.bat.weights.recent.weight %></td>
+          <td><%=h nice_date(cih.bat.weights.recent.date) %></td>
     <% else %>
           <td>N/A</td>
           <td>N/A</td>
     <% end %>
-    <td><%=h nice_date(@date_in) %></td>
-    <td><%=h @sig %></td>
-    <td><%=h @why %></td>
+    <td><%=h nice_date(cih.date) %></td>
+    <td><%=h cih.user.initials %></td>
+    <td><%=h cih.note %></td>
     </tr>
   <% end %>
   </table>
@@ -92,7 +82,7 @@
 <p>
 <b>Past Bats:</b><br />
 <div class="left_indent">
-<% if @cohs.length == 0 %>
+<% if @old_bats_cohs.length == 0 %>
 <b>No previous bats were in this cage.</b>
 <% else %>
   <table>
@@ -100,14 +90,17 @@
   <th>Date in</th>
   <th>Who</th>
   <th>Date out</th>
+  <th>Moved To</th>
   <th>Who</th>
-  <% for coh in @cohs %>
+  <% for coh in @old_bats_cohs %>
+    <% cih = CageInHistory.find(:first, :conditions => "bat_id = #{coh.bat.id} and cage_id = #{coh.cage.id} and date < '#{coh.date}'") %>
     <tr>
-    <td><%=link_to coh.bat.band, :controller => 'bats', :action => 'show', :id => coh.bat %></td>
-    <td><%=h nice_date(coh.cage_in_history.date) %></td>
-    <td><%=h coh.cage_in_history.user.initials %></td>
-    <td><%=h nice_date(coh.date) %></td>
-    <td><%=h coh.user.initials %></td>
+    <td><%=link_to cih.bat.band, :controller => 'bats', :action => 'show', :id => cih.bat %></td>
+    <td><%=nice_date(cih.date) %></td>
+    <td><%=cih.user.initials %></td>
+    <td><%=nice_date(coh.date) %></td>
+    <td><%= coh.cage_in_history ? (link_to coh.cage_in_history.cage.name, :controller => :cages, :action => :show, :id => coh.cage_in_history.cage) : "Deactivated" %></td>
+    <td><%=coh.user.initials %></td>
     </tr>
   <% end %>
   </table>

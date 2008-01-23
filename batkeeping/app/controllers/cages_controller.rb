@@ -67,7 +67,13 @@ class CagesController < ApplicationController
   def show
     @cage = Cage.find(params[:id])
     @tasks = @cage.tasks #should be the list of weighing tasks
-    @cohs = @cage.cage_out_histories
+    
+    @current_bats_cihs = Array.new
+    for bat in @cage.bats
+      @current_bats_cihs << bat.cage_in_histories[0]
+    end
+    
+    @old_bats_cohs = @cage.cage_out_histories
   end
 
   def new

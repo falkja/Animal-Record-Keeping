@@ -39,7 +39,7 @@ class MedicalTreatmentsController < ApplicationController
         bat_change = BatChange.new      
         bat_change.date = @medical_treatment.date_opened
         bat_change.bat = @medical_treatment.medical_problem.bat
-        bat_change.note = "STARTED: " + @medical_treatment.medical_problem.title
+        bat_change.note = "STARTED TREATMENT FOR: " + @medical_treatment.medical_problem.title
         bat_change.medical_treatment = @medical_treatment
         bat_change.user = User.find(session[:person])
         bat_change.save
@@ -71,7 +71,7 @@ class MedicalTreatmentsController < ApplicationController
     bat_change = BatChange.new      
     bat_change.date = treatment.date_closed
     bat_change.bat = treatment.medical_problem.bat
-    bat_change.note = "ENDED: " + treatment.medical_problem.title
+    bat_change.note = "ENDED TREATMENT FOR: " + treatment.medical_problem.title
     bat_change.medical_treatment = treatment
     bat_change.user = User.find(session[:person])
     bat_change.save

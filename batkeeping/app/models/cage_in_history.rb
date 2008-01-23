@@ -3,6 +3,7 @@ class CageInHistory < ActiveRecord::Base
     belongs_to :cage
     belongs_to :user
     has_one :cage_out_history
+    has_one :bat_change
     
     #From http://www.therailsway.com/tags/rails
     #Lets us do cage.cage_in_histories.recent

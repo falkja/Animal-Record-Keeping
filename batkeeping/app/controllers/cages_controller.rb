@@ -123,7 +123,7 @@ class CagesController < ApplicationController
       if old_owner != @cage.user #owner change requres a new bat changes entry
         for bat in @cage.bats
           bat_change = BatChange.new      
-          bat_change.date = bat.collection_date
+          bat_change.date = Date.today
           bat_change.bat = bat
           bat_change.note = ''
           bat_change.user = User.find(session[:person])

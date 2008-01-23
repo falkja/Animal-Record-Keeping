@@ -103,7 +103,7 @@ class StatsController < ApplicationController
     
     @days_this_month = Date::civil(@year,@month,1)...Date::civil(@year, @month, -1)
     
-    @bat_changes = BatChange.find(:all, :conditions => "date >= '#{Date::civil(@year,@month,1)}' and date <= '#{Date::civil(@year, @month, -1)}'")
+    @bat_changes = BatChange.find(:all, :conditions => "date >= '#{Date::civil(@year,@month,1)}' and date <= '#{Date::civil(@year, @month, -1)}'", :order => 'date asc')
   end
   
 end

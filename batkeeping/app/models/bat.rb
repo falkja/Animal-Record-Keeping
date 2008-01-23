@@ -107,7 +107,7 @@ class Bat < ActiveRecord::Base
 			coh.save
       
       if new_cage == nil #old cage is not nil but new cage is nil (deactivated bat): still need to make a bat changes entry
-        #making a bat changes entry
+        #making a bat changes entry for the deactivated bat
         bat_change = BatChange.new
         bat_change.date = coh.date
         bat_change.bat = coh.bat
@@ -137,6 +137,7 @@ class Bat < ActiveRecord::Base
       else #a newly created bat
         bat_change.owner_new_id = new_cage.user.id
       end
+      bat_change.cage_in_history = cih
       bat_change.save
     end
 	end
@@ -159,32 +160,6 @@ class Bat < ActiveRecord::Base
 			log_cage_change(@old_cage, @new_cage)
 		end
 	end
-	
-  #returns bats that have had something change on date
-  def self.changes_on(date)
-    bats = Array.new
-    
-    #finding the bats that have moved
-    cohs =  CageOutHistory.find(:all, :conditions => "YEAR(date) = #{date.year} AND MONTH(date) = #{date.month} AND DAY(date) = #{date.day}")
-    for coh in cohs
-      bats << coh.bat
-    end
-    
-    cihs = CageInHistory.find(:all, :conditions => "YEAR(date) = #{date.year} AND MONTH(date) = #{date.month} AND DAY(date) = #{date.day}")
-    for cih in cihs
-      bats << cih.bat
-    end
-    
-    #finding the bats with new medical treatments
-    treatments = MedicalTreatment.find(:all, :conditions => "YEAR(date_opened) = #{date.year} AND MONTH(date_opened) = #{date.month} AND DAY(date_opened) = #{date.day}")
-    for treatment in treatments
-      bats << treatment.medical_problem.bat
-    end
-    
-    bats.uniq!
-    bats = bats.sort_by{|bat| [bat.band]}
-    return bats
-  end
   
   #returns the weight of the bat on or before date
   def weight_on(date)
@@ -193,7 +168,8 @@ class Bat < ActiveRecord::Base
   
   #single run for populating the bat changes table in the database
   def self.populate_bat_changes
-
+    #logging the cage changes
+    
     #go through all the cihs first
     cihs = CageInHistory.find(:all)
     for cih in cihs
@@ -206,6 +182,7 @@ class Bat < ActiveRecord::Base
       end
       bat_change.note = cih.note
       bat_change.user = cih.user
+      bat_change.cage_in_history = cih
       bat_change.save
     end
     
@@ -221,6 +198,37 @@ class Bat < ActiveRecord::Base
       bat_change.save
     end
     
+    #logging medical_treatments
+    treatments = MedicalTreatment.find(:all)
+    for treatment in treatments
+      bat_change = BatChange.new
+      bat_change.date = treatment.date_opened
+      bat_change.bat = treatment.medical_problem.bat
+      bat_change.note = "STARTED TREATMENT FOR: " + treatment.medical_problem.title
+			bat_change.medical_treatment = treatment
+      bat_change.save
+      
+      if treatment.date_closed
+        bat_change = BatChange.new
+        bat_change.date = treatment.date_closed
+        bat_change.bat = treatment.medical_problem.bat
+        bat_change.note = "ENDED TREATMENT FOR: " + treatment.medical_problem.title
+				bat_change.medical_treatment = treatment
+        bat_change.save
+      end
+    end
+    
+    #logging owner changes
+		cohs = CageOutHistory.find(:all, :conditions => "cage_in_history_id is not null")
+    for coh in cohs
+      if (coh.cage.user != coh.cage_in_history.cage.user) #coh is not just being deactivated and cage owners are different
+				cih = coh.cage_in_history
+        bat_change = BatChange.find(:first, :conditions => "date = '#{coh.date.to_date}' and bat_id = #{coh.bat.id} and cage_in_history_id = #{cih.id} and new_cage_id = #{cih.cage.id} and old_cage_id = #{coh.cage.id} and user_id = #{coh.user.id} and note = '#{coh.note}'")
+				bat_change.owner_new_id = cih.cage.user.id
+				bat_change.owner_old_id = coh.cage.user.id
+				bat_change.save
+      end
+    end
   end
   
 end

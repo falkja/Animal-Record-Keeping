@@ -368,7 +368,7 @@ class TasksController < ApplicationController
   end
   
   def medical_task_done
-    if !params[:treatments_done].has_value?('1') && !params[:one_time_treatment].has_value?('1')
+		if !params[:treatments_done].has_value?('1') && !params[:one_time_treatment].has_value?('1')
       flash[:notice] = "No treatments selected as done"
       redirect_to :back
       
@@ -395,6 +395,14 @@ class TasksController < ApplicationController
         one_time_treatment.date_closed = Date.today
         one_time_treatment.save
         
+        bat_change = BatChange.new      
+        bat_change.date = one_time_treatment.date_opened
+        bat_change.bat = one_time_treatment.medical_problem.bat
+        bat_change.note = "ONE TIME TREATMENT FOR: " + one_time_treatment.medical_problem.title
+        bat_change.medical_treatment = one_time_treatment
+        bat_change.user = User.find(session[:person])
+        bat_change.save
+				
         one_time_task = Task.new
         one_time_task.repeat_code = nil
         one_time_task.medical_treatment = one_time_treatment

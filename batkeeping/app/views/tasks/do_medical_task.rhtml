@@ -22,7 +22,10 @@
 
 <p><b>Treatment</b><br />
 <div class='left_indent'>
-  <% for treatment in @medical_problem.medical_treatments.current %>
+  <% if @medical_problem.medical_treatments.current.length == 0 %>
+		<div class='hidden'><%= check_box('treatments_done', 0) %></div>
+	<% end %>
+	<% for treatment in @medical_problem.medical_treatments.current %>
     <%= check_box('treatments_done', treatment.id, :checked => (treatment.todays_task == @task)) %><label for='treatments_done_<%= treatment.id %>'><%= treatment.title %></label><br />
   <% end %>
   <%= check_box('one_time_treatment', '0', :checked => !@task) %><%= text_field 'new_task', 'title', :value=> 'one time treatment' %>

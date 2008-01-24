@@ -117,18 +117,19 @@ class CagesController < ApplicationController
     #we don't want the name change propagated on an edit so we remove that from the hash
     params[:cage].delete "name"
     @deactivating = params[:deactivating]
-    old_owner = User.find(params[:cage][:user])
+    old_owner_id = @cage.user_id
     if @cage.update_attributes(params[:cage])
       
-      if old_owner != @cage.user #owner change requres a new bat changes entry
+      if old_owner_id != @cage.user_id #owner change requres a new bat changes entry
         for bat in @cage.bats
           bat_change = BatChange.new      
           bat_change.date = Date.today
           bat_change.bat = bat
           bat_change.note = ''
           bat_change.user = User.find(session[:person])
-          bat_change.owner_new_id = @cage.user
-          bat_change.owner_old_id = old_owner
+          bat_change.owner_new_id = @cage.user.id
+          bat_change.owner_old_id = old_owner_id
+					bat_change.note = "Owner Change"
           bat_change.save
         end
       end

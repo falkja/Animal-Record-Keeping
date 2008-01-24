@@ -24,7 +24,11 @@ class Bat < ActiveRecord::Base
 	end
 	
 	def average_weight
-		Weight.average(:weight, :conditions => "bat_id = #{self.id}")
+		if self.weights.length > 0
+			Weight.average(:weight, :conditions => "bat_id = #{self.id}")
+		else
+			return 0.0
+		end
 	end
 	
 	#From http://www.therailsway.com/tags/rails
@@ -94,7 +98,7 @@ class Bat < ActiveRecord::Base
     unless old_cage == nil #this means we just created it
 			cihs = self.cage_in_histories #a list of histories sorted by latest date
 			if cihs.length > 0
-				cih = cih[0]
+				cih = cihs[0]
 			end
 			
 			coh = CageOutHistory.new
@@ -105,41 +109,36 @@ class Bat < ActiveRecord::Base
 			coh.date = Time.new 
 			new_cage ? coh.cage_in_history = cih : ''
 			coh.save
-      
-      if new_cage == nil #old cage is not nil but new cage is nil (deactivated bat): still need to make a bat changes entry
-        #making a bat changes entry for the deactivated bat
-        bat_change = BatChange.new
-        bat_change.date = coh.date
-        bat_change.bat = coh.bat
-        bat_change.old_cage_id = coh.cage.id
-        bat_change.note = coh.note
-        bat_change.user = coh.user
-        bat_change.save
-      end
 		end
-    
-    unless new_cage == nil #will create all the bat_changes entries except when its a deactivated bat
-      #making a bat changes entry for the cih
-      bat_change = BatChange.new
-      bat_change.date = cih.date
-      bat_change.bat = cih.bat
-      bat_change.new_cage_id = cih.cage.id
-      if cih.cage_out_history #might be a newly created bat which doesn't have a corresponding coh
-        bat_change.old_cage_id = cih.cage_out_history.cage.id
-      end
-      bat_change.note = cih.note
-      bat_change.user = cih.user
-      if old_cage #a true cage change
-        if (new_cage.user != old_cage.user) #owner change
-          bat_change.owner_new_id = new_cage.user.id
-          bat_change.owner_old_id = old_cage.user.id
-        end
-      else #a newly created bat
-        bat_change.owner_new_id = new_cage.user.id
-      end
-      bat_change.cage_in_history = cih
-      bat_change.save
-    end
+	end
+	
+	def log_bat_change(old_cage, new_cage)
+		if new_cage == nil
+			cage_history = self.cage_out_histories[0]
+		else
+			cih = self.cage_in_histories[0]
+			cage_history = cih
+		end
+		
+		bat_change = BatChange.new
+		bat_change.date = cage_history.date
+		bat_change.bat = self
+		old_cage ? bat_change.old_cage_id = old_cage.id : ''
+		new_cage ? bat_change.new_cage_id = new_cage.id : ''
+		bat_change.note = cage_history.note
+		bat_change.user = cage_history.user
+		if old_cage && new_cage #a true cage change
+			if old_cage.user != new_cage.user # with an owner change
+				bat_change.owner_new_id = new_cage.user.id
+				bat_change.owner_old_id = old_cage.user.id
+			end
+		elsif old_cage # deactivated
+			bat_change.owner_old_id = old_cage.user.id
+		elsif new_cage # new bat
+			bat_change.owner_new_id = new_cage.user.id
+		end
+		bat_change.cage_in_history = cih
+		bat_change.save
 	end
 	
 	#called just before creation
@@ -158,6 +157,7 @@ class Bat < ActiveRecord::Base
 		@new_cage = self.cage
 		unless @old_cage == @new_cage
 			log_cage_change(@old_cage, @new_cage)
+			log_bat_change(@old_cage, @new_cage)
 		end
 	end
   

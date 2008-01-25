@@ -140,7 +140,10 @@ Emails will <em>not</em> be sent out if bat is not weighed often enough
 
 <%= render :partial => 'display_weights', :locals => {:bat => @bat} %>
 
-<%= render :partial => 'show_bat_changes', :locals => {:bat_changes => @bat_changes} %>
+<h3>Bat Changes</h3>
+<div class='left_indent'>
+<%= render :partial => 'show_bat_changes', :locals => {:bat_changes => @bat_changes, :single_bat => true} %>
+</div>
 
 <hr />
 

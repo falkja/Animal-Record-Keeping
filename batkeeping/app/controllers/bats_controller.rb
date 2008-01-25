@@ -165,7 +165,19 @@ class BatsController < ApplicationController
       
       Bat::set_user_and_comment(User.find(session[:person]), note) #Do this before saving!
       
-      if @bat.update_attributes(params[:bat])
+			old_band_name = @bat.band
+      
+			if @bat.update_attributes(params[:bat])
+				if @bat.band != old_band_name
+					bat_change = BatChange.new
+					bat_change.date = Date.today
+					bat_change.bat = @bat
+					bat_change.old_band_name = old_band_name
+					bat_change.new_band_name = @bat.band
+					bat_change.user = User.find(session[:person])
+					bat_change.save
+				end
+				
         flash[:notice] = 'Bat was successfully updated.'
         if params[:redirectme] == 'list'
           redirect_to :action => 'list'

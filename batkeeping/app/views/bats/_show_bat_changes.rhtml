@@ -1,19 +1,18 @@
-<% if @bat_changes.length == 0 %>
+<% if bat_changes.length == 0 %>
 
 No bat changes.
 
 <% else %>
-<h3>Bat Changes:</h3>
-
-<div class='left_indent'>
 
 <TABLE cellspacing="0">
 
 <TR>
   <TH>Day</TH>
+	<%= single_bat ? '' : '<th>Band</th>' %>
   <th>Weight</th>
   <TH colspan='2'>Cage</TH>
 	<th colspan='2'>Owner</th>
+	<th colspan='2'>Band</th>
   <TH>Medical Treatments</TH>
   <TH>Note</TH>
   <TH>User</TH>
@@ -22,6 +21,9 @@ No bat changes.
 <TR>
   <td></td>
   <td></td>
+	<%= single_bat ? '' : '<td></td>' %>
+  <td><b>Old</b></td>
+  <td><b>New</b></td>
   <td><b>Old</b></td>
   <td><b>New</b></td>
   <td><b>Old</b></td>
@@ -39,6 +41,7 @@ No bat changes.
   <% end %>
   
   <td><%= bat_change.date.strftime("%b %d, %Y") %></td>
+	<%= single_bat ? '' : '<td>' + (link_to bat_change.bat.band, :controller => :bats, :action => :show, :id => bat_change.bat) + '</td>' %>
   <td><%= bat_change.bat.weight_on(bat_change.date) ? bat_change.bat.weight_on(bat_change.date).weight.to_s + ' g' : 'NA' %></td>
   
 	<td>
@@ -56,6 +59,14 @@ No bat changes.
 	
 	<td>
 	<%= bat_change.owner_new_id ? (link_to User.find(bat_change.owner_new_id).initials, :controller => :users, :action => :show, :id => User.find(bat_change.owner_new_id)) : '' %>
+	</td>
+	
+	<td>
+	<%= bat_change.old_band_name ? bat_change.old_band_name : '' %>
+	</td>
+	
+	<td>
+	<%= bat_change.new_band_name ? bat_change.new_band_name : '' %>
 	</td>
 	
 	<td>

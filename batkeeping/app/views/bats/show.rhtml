@@ -100,8 +100,6 @@ Emails will <em>not</em> be sent out if bat is not weighed often enough
 	</div>
 <% end %>
 
-<%= render :partial => 'display_weights', :locals => {:bat => @bat} %>
-
 <% if @cihs.length >0 %>
 <h3>Cage History:</h3>
 <div class="left_indent">
@@ -139,6 +137,10 @@ Emails will <em>not</em> be sent out if bat is not weighed often enough
   </table>
 </div>
 <% end %>
+
+<%= render :partial => 'display_weights', :locals => {:bat => @bat} %>
+
+<%= render :partial => 'show_bat_changes', :locals => {:bat_changes => @bat_changes} %>
 
 <hr />
 

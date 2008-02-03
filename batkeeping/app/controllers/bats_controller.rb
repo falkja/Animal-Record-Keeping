@@ -486,14 +486,18 @@ class BatsController < ApplicationController
     n = 0
     weight_classes.reverse_each {
       |weight| 
-      if (weight.after_eating == 'y') then weights_after_eating << weight.weight; weights_before_eating << nil else weights_before_eating << weight.weight; weights_after_eating <<nil end 
+      if (weight.after_eating == 'y') 
+				weights_after_eating << weight.weight; weights_before_eating << nil
+			else 
+				weights_before_eating << weight.weight; weights_after_eating <<nil
+			end 
       dates[n] = weight.date.strftime('%m-%d-%y');
       n = n + 1;
     }
     
     spacing = (dates.length/6.0).ceil
     
-    0.step( dates.length, spacing) {|i|  dates_reduced[i] = dates[i] }
+    0.step( dates.length-1, spacing) {|i|  dates_reduced[i] = dates[i] }
     
     g = Gruff::Line.new(800)
     

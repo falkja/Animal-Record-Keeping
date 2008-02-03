@@ -156,11 +156,6 @@ class MedicalProblemsController < ApplicationController
 		redirect_to :action => 'show', :id => @medical_problem
 	  end
   end
-
-  def destroy
-    MedicalProblem.find(params[:id]).destroy
-    redirect_to :action => 'list'
-  end
   
   def deactivate
 	@medical_problem = MedicalProblem.find(params[:id])

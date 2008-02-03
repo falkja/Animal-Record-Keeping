@@ -27,7 +27,7 @@ You are not signed in
 
 <div class="session">
 Signed in as: <br/>
-<b><%= User.find(session[:person]).name %></b>
+<b><%= link_to User.find(session[:person]).name, :controller => :users, :action => :show, :id => User.find(session[:person]) %></b>
 [ <%= link_to 'log out', :controller => 'main', :action => 'logout' %> ]
 </div>
 <%= render :partial => 'layouts/menubar' %>

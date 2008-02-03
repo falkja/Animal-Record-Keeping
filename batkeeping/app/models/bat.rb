@@ -89,7 +89,7 @@ class Bat < ActiveRecord::Base
 			cih.cage = new_cage
 			cih.user = @@current_user
 			cih.note = @@comment
-			cih.date = Time.new 
+			cih.date = Time.new
 			cih.save
 		end   
     
@@ -106,7 +106,7 @@ class Bat < ActiveRecord::Base
 			coh.cage = old_cage
 			coh.user = @@current_user
 			coh.note = @@comment
-			coh.date = Time.new 
+			coh.date = Time.new
 			new_cage ? coh.cage_in_history = cih : ''
 			coh.save
 		end
@@ -134,6 +134,7 @@ class Bat < ActiveRecord::Base
 			end
 		elsif old_cage # deactivated
 			bat_change.owner_old_id = old_cage.user.id
+			bat_change.date = bat_change.bat.leave_date
 		elsif new_cage # new bat
 			bat_change.owner_new_id = new_cage.user.id
 		end

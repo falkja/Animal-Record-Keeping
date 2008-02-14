@@ -4,17 +4,6 @@
 Weigh bat's cage: <%= link_to @bat.cage.name, :controller=>'cages', :action => 'weigh_cage', :id => @bat.cage %>
 </p>
 
-<% if @updated_tasks != nil %>
-<p>Updated the following weighing tasks:
-<div class="left_indent">
-<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks_list => nil, :tasks => @updated_tasks, :div_id => 'weighing_tasks', 
-							:same_type_task_list => false, :manage => false, :sorted_by => 'title'} %>
-</div>
-</p>
-<% else %>
-<p>No weighing tasks updated</p>
-<% end %>
-
 <% if @bat.weights.length == 0 %>
 No previous weights.
 <% else %>

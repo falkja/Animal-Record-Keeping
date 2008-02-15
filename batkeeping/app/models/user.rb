@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :tasks
   has_many :task_histories
   has_many :bat_changes, :order => "date desc"
+  has_many :trainings
     
   def self.current
     find :all, :conditions => 'end_date is null', :order => 'name'

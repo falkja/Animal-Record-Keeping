@@ -90,12 +90,7 @@ class MainController < ApplicationController
   def lab_email
     @tasks_not_done = Task.tasks_not_done_today(Task.today)
     
-    @users = User.find(params[:users])
-    
-    @users_emails = Array.new
-    @users.each{|user| @users_emails << user.email}
-    
-    @subject = "Batkeeping email from: " + User.find(session[:person]).name
+    @users = User.find(params[:users], :order => "name asc")
     
     @greeting = "Dear Batlab,\n\n"
     
@@ -105,11 +100,21 @@ class MainController < ApplicationController
 		
 		@msg_body = @msg_body + MyMailer.create_msg_for_bats_not_weighed(Bat.not_weighed(Bat.active))
 		
-    @msg_body = @msg_body + "This message brought to you by,\n\n" + User.find(session[:person]).name
+    if session[:person]
+      @subject = "Batkeeping email from: " + User.find(session[:person]).name
+      @msg_body = @msg_body + "This message brought to you by,\n\n" + User.find(session[:person]).name
+    else
+      @subject = "Batkeeping email"
+      @msg_body = @msg_body + "This message brought to you by,\n\nBatkeeping"
+    end
+    
   end
   
   def send_lab_email
-    recipients = params[:users_emails]
+    users = User.find(params[:users])
+    recipients = Array.new
+    users.each{|user| recipients << user.email}
+    
     msg_body = params[:email][:body]
     subject = params[:email][:subject]
     

@@ -50,3 +50,12 @@ Medical Care:<br/>
 <% end %>
 </div>
 </p>
+
+<h3>Send Email</h3>
+  <div class='left_indent'>
+  <%= link_to('Entire Lab', :controller => 'main', :action => 'lab_email', :users => User.current) %> <br />
+  <%= link_to('Animal Care', :controller => 'main', :action => 'lab_email', :users => User.current_animal_care) %> <br />
+  <%= link_to('Medical Care', :controller => 'main', :action => 'lab_email', :users => User.current_medical_care) %> <br />
+  <%= link_to('Weekend Care', :controller => 'main', :action => 'lab_email', :users => User.current_weekend_care) %> <br />
+  <%= link_to('Administrators', :controller => 'main', :action => 'lab_email', :users => User.administrator) %>
+  </div>

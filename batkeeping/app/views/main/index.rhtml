@@ -8,12 +8,7 @@
 
 <% end %>
 
-<div class='right_aligned'>
-
-<%= render :partial => 'main/animal_care_staff_list',
-		:locals => {:user_summary_page => false, :animal_care_users => @animal_care_users, :medical_care_users => @medical_care_users, :weekend_care_users => @weekend_care_users} %>
-
-</div>
+<%= render :partial => 'main/sidebar' %>
 
 <p><%= link_to 'List Users', :controller => 'users', :action => 'list' %> | <%= link_to 'Add User', :controller => 'users', :action => 'new' %></p>
 

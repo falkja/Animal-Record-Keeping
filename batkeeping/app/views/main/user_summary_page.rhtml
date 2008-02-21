@@ -1,11 +1,6 @@
 <h1>Summary page for <%= @user.name %></h1>
 
-<div class='right_aligned'>
-
-<%= render :partial => 'main/animal_care_staff_list',
-		:locals => {:user_summary_page => true, :animal_care_users => @animal_care_users, :medical_care_users => @medical_care_users, :weekend_care_users => @weekend_care_users} %>
-
-</div>
+<%= render :partial => 'main/sidebar' %>
 
 <h2>Temperature/Humidity for Today: <%= nice_date(Time.now) %></h2>
 

@@ -57,17 +57,3 @@ You have no cages
 <% end %>
 </div>
 </p>
-
-<% if @user.job_type != '' && @user.job_type != nil %>
-<h2>My Jobs</h2>
-<p>
-<ul>
-<%= (@user.animal_care_user?) ? "<li>Weekday Care</li>" : "" %>
-<%= (@user.weekend_care_user?) ? "<li>Weekend Care</li>" : "" %>
-<%= (@user.medical_care_user?) ? "<li>Medical Care</li>" : "" %>
-<%= (@user.administrator?) ? "<li>Administrator</li>" : "" %>
-</ul>
-
-</div>
-</p>
-<% end %>

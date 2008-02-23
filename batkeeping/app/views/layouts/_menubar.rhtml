@@ -6,15 +6,23 @@
   <li><%= link_to 'Colony Status', :controller => :stats, :action => :index %></li>
   <li><%= link_to 'Animal Care Staff', :controller => :main, :action => :animal_care_staff %></li>
 	<li><b><a href="">Admin ...</a></b>
-	<ul>
-		<li><%= link_to 'List Users', :controller => :users, :action => :list %></li>
-		<li><%= link_to 'New User', :controller => :users, :action => :new %></li>
-		<li><%= link_to 'List Species', :controller => :species, :action => :list %></li>
-    <li><%= link_to 'New Species', :controller => :species, :action => :new %></li>
-    <li><%= link_to 'List Rooms', :controller => :rooms, :action => :list %></li>
-    <li><%= link_to 'New Room', :controller => :rooms, :action => :new %></li>
-	</ul>
-  </li>
+	<% if User.find(session[:person]).administrator? %>
+		<ul>
+			<li><%= link_to 'List Users', :controller => :users, :action => :list %></li>
+			<li><%= link_to 'New User', :controller => :users, :action => :new %></li>
+			<li><%= link_to 'List Species', :controller => :species, :action => :list %></li>
+			<li><%= link_to 'New Species', :controller => :species, :action => :new %></li>
+			<li><%= link_to 'List Rooms', :controller => :rooms, :action => :list %></li>
+			<li><%= link_to 'New Room', :controller => :rooms, :action => :new %></li>
+			<li><%= link_to 'List Training Types', :controller => :training_types, :action => :list %></li>
+			<li><%= link_to 'New Training Type', :controller => :training_types, :action => :new %></li>
+		</ul>
+	<% else %>
+		<ul>
+		<li><%= link_to 'Login as an Admin', :controller => :main, :action => :index %></a></li>
+		</ul>
+	<% end %>
+	</li>
 	</ul>
 </li>
 <li><%= link_to 'Bats', :controller => :bats, :action => :list %>

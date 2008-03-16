@@ -62,7 +62,7 @@ class Bat < ActiveRecord::Base
 	
 	def self.not_weighed(bats)
 		bats_not_weighed = Array.new
-		bats.each{|bat| ( (bat.weights.recent.date < (Time.now - 7.days)) && bat.monitor_weight) ? bats_not_weighed << bat : ''}
+		bats.each{|bat| ( bat.weights.recent && (bat.weights.recent.date < (Time.now - 7.days)) && bat.monitor_weight) ? bats_not_weighed << bat : ''}
 		return bats_not_weighed
 	end
 	

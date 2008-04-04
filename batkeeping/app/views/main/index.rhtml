@@ -1,4 +1,16 @@
-<h2>Welcome to the Batkeeping Database</h2>
+<table>
+
+<tr>
+<td><%= image_tag ("bat_logo.png") %></td>
+<td></td>
+<TD VALIGN=CENTER><h2>Welcome to Batkeeping</h2>A weight and health management program for bats</td>
+</tr>
+
+</table>
+
+<div class='right_aligned'>
+
+<h3>Sign In:</h3>
 
 <% form_tag :action => 'login', :id => @user do %>
 
@@ -8,8 +20,15 @@
 
 <% end %>
 
-<%= render :partial => 'main/sidebar' %>
+</div>
+
+
+
+
+
+
+
+
+<%#= render :partial => 'main/sidebar' %>
 
 <p><%= link_to 'List Users', :controller => 'users', :action => 'list' %> | <%= link_to 'Add User', :controller => 'users', :action => 'new' %></p>
-
-<%= image_tag ("red_circle.png") %>

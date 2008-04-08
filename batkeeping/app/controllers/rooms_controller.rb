@@ -23,7 +23,7 @@ class RoomsController < ApplicationController
   def create
     @room = Room.new(params[:room])
     if @room.save
-      flash[:notice] = 'Rooms was successfully created.'
+      flash[:notice] = 'Room was successfully created.'
       redirect_to :action => 'list'
     else
       render :action => 'new'

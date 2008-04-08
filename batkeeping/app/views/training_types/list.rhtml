@@ -1,0 +1,24 @@
+<h1>Listing Training Types</h1>
+
+<table>
+  <tr>
+  <% for column in TrainingType.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+  </tr>
+  
+<% for training_type in @training_types %>
+  <tr>
+  <% for column in TrainingType.content_columns %>
+    <td><%=h training_type.send(column.name) %></td>
+  <% end %>
+    <td><%= link_to 'Show', :action => 'show', :id => training_type %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => training_type %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => training_type }, :confirm => 'Are you sure?', :method => :post %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Training Type', :action => 'new' %>

@@ -1,0 +1,28 @@
+<p>
+  <b>Training type:</b>
+  <%=h @training.training_type_id %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%=h @training.user_id %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%=h @training.date %>
+</p>
+
+<p>
+  <b>User trained by:</b>
+  <%=h @training.user_trained_by_id %>
+</p>
+
+<p>
+  <b>Note:</b>
+  <%=h @training.note %>
+</p>
+
+
+<%= link_to 'Edit', edit_training_path(@training) %> |
+<%= link_to 'Back', trainings_path %>

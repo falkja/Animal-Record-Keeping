@@ -4,7 +4,11 @@
 </p>
 <% end %>
 
-<h3>Cages in room:</h3>
+<p>
+  <b>Room Temperature and Humidity:</b> <%= link_to 'Graph', :controller => :weathers, :action => :graph_weathers, :room => @room %>
+</p>
+
+<b>Cages in room:</b>
 
 <div class='left_indent'>
 
@@ -20,6 +24,8 @@
 </table>
 
 </div>
+
+
 
 <%= link_to 'Edit', :action => 'edit', :id => @rooms %> |
 <%= link_to 'Back', :action => 'list' %>

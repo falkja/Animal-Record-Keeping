@@ -18,7 +18,7 @@
 <% for room in Room.find(:all, :order=> 'name') %>
 <% i = i + 1 %>
 <tr>
-<td><%= room.name %></td>
+<td><%= link_to room.name, :controller => :rooms, :action => :show, :id => room %></td>
 
 <% room_weather = room.weathers.today %>
 <% if room_weather == nil %>

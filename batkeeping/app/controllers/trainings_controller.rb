@@ -24,6 +24,8 @@ class TrainingsController < ApplicationController
   # GET /trainings/new
   # GET /trainings/new.xml
   def new
+    @selected_user = params[:selected_user].to_i
+    
     @training = Training.new
 
     respond_to do |format|
@@ -41,7 +43,6 @@ class TrainingsController < ApplicationController
   # POST /trainings.xml
   def create
     @training = Training.new(params[:training])
-
     respond_to do |format|
       if @training.save
         flash[:notice] = 'Training was successfully created.'

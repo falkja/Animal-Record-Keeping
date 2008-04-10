@@ -5,12 +5,12 @@
 <% form_for(@training) do |f| %>
   <p>
     <b>Training type</b><br />
-    <%= f.text_field :training_type_id %>
+    <%= select("training", "training_type_id", TrainingType.find(:all).collect {|tt| [tt.name, tt.id]}) %>
   </p>
 
   <p>
     <b>User</b><br />
-    <%= f.text_field :user_id %>
+    <%= select("training", "user_id", User.current.collect {|u| [u.name, u.id]}, {:selected => @selected_user}) %>
   </p>
 
   <p>
@@ -20,17 +20,21 @@
 
   <p>
     <b>User trained by</b><br />
-    <%= f.text_field :user_trained_by_id %>
+    <%= select_tag("training[user_trained_by_id]", options_from_collection_for_select(User.current, "id", "name")) %>
   </p>
 
   <p>
     <b>Note</b><br />
-    <%= f.text_area :note %>
+    <%= f.text_area :note, :rows => 2 %>
   </p>
 
   <p>
     <%= f.submit "Create" %>
   </p>
 <% end %>
+
+<p>
+  <%= link_to 'Create a New Training Type', :controller => :training_types, :action => :new %>
+</p>
 
 <%= link_to 'Back', trainings_path %>

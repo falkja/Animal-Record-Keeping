@@ -1,4 +1,4 @@
-<h1>Summary page for <%= @user.name %></h1>
+<h1>Summary page for <%= link_to @user.name, :controller => :users, :action => :show, :id => @user %></h1>
 
 <%= render :partial => 'main/sidebar' %>
 

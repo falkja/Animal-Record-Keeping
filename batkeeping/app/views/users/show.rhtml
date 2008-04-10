@@ -18,16 +18,18 @@
 <h3>User trained for:</h3>
 <div class='left_indent'>
 <% if @user.trainings.length > 0 %>
-<% for training in @user.trainings %>
-  <b>Name:</b> <%= training.training_type.name %>
-  <b>Description:</b> <%= training.training_type.description %>
-  <b>Date Trained:</b> <%= nice_date(training.date) %>
-  <b>Trained By:</b> <%= User.find(training.user_trained_by_id).name %>
-<% end %>
+  <% for training in @user.trainings %>
+    <b>Name:</b> <%= training.training_type.name %>
+    <b>Description:</b> <%= training.training_type.description %>
+    <b>Trained By:</b> <%= User.find(training.user_trained_by_id).name %>
+    <b>Date Trained:</b> <%= nice_date(training.date) %>
+  <% end %>
 
 <% else %>
-Untrained
+  Untrained
 <% end %>
+
+<p><%= link_to "Add training", :controller => :trainings, :action => :new, :params=>{:selected_user => @user} %></p>
 
 </div>
 

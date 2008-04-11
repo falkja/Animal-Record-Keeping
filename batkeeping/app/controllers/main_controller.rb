@@ -31,7 +31,9 @@ class MainController < ApplicationController
   end
 
 	def animal_care_staff
-		@weekend_care_users = User.current_weekend_care
+		@animal_care_staff_page = true
+    
+    @weekend_care_users = User.current_weekend_care
 		@medical_care_users = User.current_medical_care
 		@animal_care_users = User.current_animal_care
 	end
@@ -105,7 +107,7 @@ class MainController < ApplicationController
       @msg_body = @msg_body + "This message brought to you by,\n\n" + User.find(session[:person]).name
     else
       @subject = "Batkeeping email"
-      @msg_body = @msg_body + "This message brought to you by,\n\nBatkeeping"
+      @msg_body = @msg_body + "This message brought to you by,\n\nBatkeeping (no user signed in)"
     end
     
   end

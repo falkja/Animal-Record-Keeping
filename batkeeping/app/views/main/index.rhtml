@@ -8,21 +8,4 @@
 
 </table>
 
-<div class='right_aligned'>
-
-<h3 align=center>Please Sign In:</h3>
-
-<% form_tag :action => 'login', :id => @user do %>
-
-<p>User: <%= select_tag("user[id]", options_from_collection_for_select(@users, "id", "name")) %>
-<%= submit_tag 'sign in' %>
-</p>
-
-<% end %>
-
-</div>
-
-
-<%#= render :partial => 'main/sidebar' %>
-
 <p><%= link_to 'List Users', :controller => 'users', :action => 'list' %> | <%= link_to 'Add User', :controller => 'users', :action => 'new' %></p>

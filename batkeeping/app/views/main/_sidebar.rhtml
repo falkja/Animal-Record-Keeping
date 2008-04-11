@@ -1,23 +1,58 @@
 <div class='right_aligned'>
-	<% if session[:person] %>
-		<% user = User.find(session[:person]) %>
+
+  <% if !session[:person] %>
+  
+    <h3 align=center>Please Sign In:</h3>
+
+    <% form_tag :action => 'login', :id => @user do %>
+
+      <p>User: <%= select_tag("user[id]", options_from_collection_for_select(User.current, "id", "name")) %>
+      <%= submit_tag 'sign in' %>
+      </p>
+
+    <% end %>
+    
+    <% if !@animal_care_staff_page %>
+    
+    <h3>Animal Care</h3>
+		<div class='left_indent'>
+			<%= link_to 'Show Animal Care Staff', :controller => :main, :action => :animal_care_staff %>
+		</div>
+    
+    <% end %>
+  
+  <% else %>
+		
+    <% user = User.find(session[:person]) %>
+    
+    <h3>
+      <%= link_to 'Home', :controller => :main, :action => :user_summary_page, :id => user %>
+    </h3>
+    
 		<% if user.job_type != '' && user.job_type != nil %>
-			<h3>My Jobs</h2>
+			<h3>
+        <%= link_to 'My Jobs', :controller => :users, :action => :edit, :id => user %>
+      </h3>
 			<ul>
-			<%= (@user.animal_care_user?) ? "<li>Weekday Care</li>" : "" %>
-			<%= (@user.weekend_care_user?) ? "<li>Weekend Care</li>" : "" %>
-			<%= (@user.medical_care_user?) ? "<li>Medical Care</li>" : "" %>
-			<%= (@user.administrator?) ? "<li>Administrator</li>" : "" %>
+			<%= (user.animal_care_user?) ? "<li>Weekday Care</li>" : "" %>
+			<%= (user.weekend_care_user?) ? "<li>Weekend Care</li>" : "" %>
+			<%= (user.medical_care_user?) ? "<li>Medical Care</li>" : "" %>
+			<%= (user.administrator?) ? "<li>Administrator</li>" : "" %>
 			</ul>
 		<% end %>
+    
+    <%= @animal_care_staff_page ? '' : (link_to 'Show Animal Care Staff', :controller => :main, :action => :animal_care_staff) %>
 	
-	<% else %>
-		
-		<h3>Animal Care</h3>
-		<div class='left_indent'>
-			<%= link_to 'List All Jobs', :controller => :main, :action => :animal_care_staff %>
-		</div>
-	
+  <h3><%= link_to 'Trained', :controller => :trainings, :action => :new, :selected_user => user %></h3>
+    <div class='left_indent'>
+    <% if @user.trainings.length > 0 %>
+      <% for training in @user.trainings %>
+        <%= link_to training.training_type.name, :controller => :training_types, :action => :show, :id => training.training_type %><br />
+      <% end %>
+    <% end %>
+    </div>
+
+  
 	<% end %>
 
   <h3>Send Email</h3>

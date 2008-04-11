@@ -11,10 +11,10 @@
 
 <% for training in @trainings %>
   <tr>
-    <td><%=h training.training_type_id %></td>
-    <td><%=h training.user_id %></td>
+    <td><%=h TrainingType.find(training.training_type_id).name %></td>
+    <td><%=h User.find(training.user_id).name %></td>
     <td><%=h training.date %></td>
-    <td><%=h training.user_trained_by_id %></td>
+    <td><%=h User.find(training.user_trained_by_id).name %></td>
     <td><%=h training.note %></td>
     <td><%= link_to 'Show', training %></td>
     <td><%= link_to 'Edit', edit_training_path(training) %></td>

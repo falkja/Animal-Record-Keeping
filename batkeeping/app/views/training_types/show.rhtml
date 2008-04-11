@@ -4,5 +4,12 @@
 </p>
 <% end %>
 
+<b>Users trained:</b><br />
+<div class='left_indent' >
+<% for training in @training_type.trainings %>
+  <%= training.user.name %><br />
+<% end %>
+</div>
+
 <%= link_to 'Edit', :action => 'edit', :id => @training_types %> |
 <%= link_to 'Back', :action => 'list' %>

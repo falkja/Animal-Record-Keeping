@@ -37,13 +37,13 @@
 		:same_type_task_list => true, :manage => true, :sorted_by => 'repeat_code'} %>
 </p>
 <p>
-[<%= link_to_remote "Quick-add feeding task", :url => {:controller => 'tasks', :action => 'remote_new_feed_cage_task', :id => @cage, :div_id => "feeding_tasks", 
+[<%= link_to_remote "Quick-add feeding task", :url => {:controller => :tasks, :action => :remote_new_feed_cage_task, :id => @cage, :div_id => "feeding_tasks", 
                                                           :source => 'show_cage', :same_type_task_list => true, :users => User.current, :quick_add => true},
                                                           :update => 'add_feeding_task', :sorted_by => 'repeat_code' %>]
 <div id = "add_feeding_task">
 </div>
 </p>
-<p>[<%= link_to 'Manage feeding tasks', :controller => 'tasks', :action => 'manage_feeding_tasks', :id => @cage %>]</p>
+<p>[<%= link_to 'Manage feeding tasks', :controller => :tasks, :action => :manage_feeding_tasks, :id => @cage %>]</p>
 </div>
 
 <p>
@@ -61,7 +61,7 @@
   <th>Why</th>
   <% for cih in @current_bats_cihs %>
     <tr>
-    <td><%= link_to cih.bat.band, :controller => 'bats', :action => 'show', :id => cih.bat %></td>
+    <td><%= link_to cih.bat.band, :controller => :bats, :action => :show, :id => cih.bat %></td>
     <% if cih.bat.weights.length > 0 %></td>
           <td><%=h cih.bat.weights.recent.weight %></td>
           <td><%=h nice_date(cih.bat.weights.recent.date) %></td>
@@ -95,7 +95,7 @@
   <% for coh in @old_bats_cohs %>
     <% cih = CageInHistory.find(:first, :conditions => "bat_id = #{coh.bat.id} and cage_id = #{coh.cage.id} and date < '#{coh.date}'") %>
     <tr>
-    <td><%=link_to cih.bat.band, :controller => 'bats', :action => 'show', :id => cih.bat %></td>
+    <td><%=link_to cih.bat.band, :controller => :bats, :action => :show, :id => cih.bat %></td>
     <td><%=nice_date(cih.date) %></td>
     <td><%=cih.user.initials %></td>
     <td><%=nice_date(coh.date) %></td>

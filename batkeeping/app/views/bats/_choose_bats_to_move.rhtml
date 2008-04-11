@@ -15,7 +15,7 @@
 
 	<% for bat in bats %>
 		<tr>
-		<td><%= link_to_remote bat.band, :url => {:controller=>'bats', :action=>:add_bat_to_move_list, 
+		<td><%= link_to_remote bat.band, :url => {:controller=>:bats, :action=>:add_bat_to_move_list, 
 					:bat_to_add => bat, :id=>cage, :selected_bats=> selected_bats}, 
 					:update=>'bat_list' %></td>
 		<td><%=h bat.weights.recent_never_nil.weight %>g</td>
@@ -33,7 +33,7 @@
 <p><b>Bats to Move</b><br />
 <% if selected_bats.length > 0 %>
 <em>Click to De-select Bats</em></p>
-	<% form_remote_tag :url => {:controller => 'bats', :action => :choose_destination, :id => cage, 
+	<% form_remote_tag :url => {:controller => :bats, :action => :choose_destination, :id => cage, 
 							:bats=>selected_bats}, 
 							:update => 'destination_cage' do %>
 		<table>
@@ -43,7 +43,7 @@
 			
 		<% for bat in selected_bats %>
 			<tr>
-			<td><%= link_to_remote bat.band, :url => {:controller=>'bats', :action=>'remove_bat_from_move_list', 
+			<td><%= link_to_remote bat.band, :url => {:controller=>:bats, :action=>'remove_bat_from_move_list', 
 				:bat_to_remove => bat, :id=>cage, :selected_bats=> selected_bats}, 
 				:update=>'bat_list' %></td>
 			<td><%=h bat.weights.recent_never_nil.weight %>g</td>

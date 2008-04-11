@@ -452,11 +452,11 @@ class TasksController < ApplicationController
       end
       
       if params[:redirectme] == 'user_summary_page'
-        redirect_to :controller => 'main', :action => 'user_summary_page', :id => User.find(params[:user])
+        redirect_to :controller => :main, :action => :user_summary_page, :id => User.find(params[:user])
       elsif params[:redirectme] == 'show_bat'
-        redirect_to :controller => 'bats', :action => 'show', :id => bat
+        redirect_to :controller => :bats, :action => :show, :id => bat
       elsif params[:redirectme] == 'weigh_bat'
-        redirect_to :controller => 'bats', :action => 'weigh_bat', :id => bat
+        redirect_to :controller => :bats, :action => :weigh_bat, :id => bat
       else
         redirect_to :controller => 'medical_problems', :action => 'list_current'
       end

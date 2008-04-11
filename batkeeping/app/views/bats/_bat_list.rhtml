@@ -12,7 +12,7 @@
 	<th>
 	<%= link_to_remote( "Band",
 		:update => 'bats_div',
-		:url =>{ :controller => 'bats', :action => 'sort_by_band', 
+		:url =>{ :controller => :bats, :action => :sort_by_band, 
 					:ids => bat_list, 
 					:show_leave_date_and_reason => show_leave_date_and_reason,
 					:show_weigh_link => show_weigh_link}) %>
@@ -20,7 +20,7 @@
 	<th>
 	<%= link_to_remote( "Cage",
 		:update => 'bats_div',
-		:url =>{ :controller => 'bats', :action => 'sort_by_cage', 
+		:url =>{ :controller => :bats, :action => :sort_by_cage, 
 					:ids => bat_list, 
 					:show_leave_date_and_reason => show_leave_date_and_reason,
 					:show_weigh_link => show_weigh_link}) %>
@@ -28,7 +28,7 @@
 	<th>
 	<%= link_to_remote( "Species",
 		:update => 'bats_div',
-		:url =>{ :controller => 'bats', :action => 'sort_by_species', 
+		:url =>{ :controller => :bats, :action => :sort_by_species, 
 					:ids => bat_list, 
 					:show_leave_date_and_reason => show_leave_date_and_reason,
 					:show_weigh_link => show_weigh_link}) %>
@@ -37,7 +37,7 @@
 	<th>
 	<%= link_to_remote( "Gender",
 		:update => 'bats_div',
-		:url =>{ :controller => 'bats', :action => 'sort_by_gender', 
+		:url =>{ :controller => :bats, :action => :sort_by_gender, 
 					:ids => bat_list, 
 					:show_leave_date_and_reason => show_leave_date_and_reason,
 					:show_weigh_link => show_weigh_link}) %>
@@ -45,7 +45,7 @@
 	<th>
 	<%= link_to_remote( "Last Weight",
 		:update => 'bats_div',
-		:url =>{ :controller => 'bats', :action => 'sort_by_weight', 
+		:url =>{ :controller => :bats, :action => :sort_by_weight, 
 					:ids => bat_list, 
 					:show_leave_date_and_reason => show_leave_date_and_reason,
 					:show_weigh_link => show_weigh_link}) %>
@@ -53,7 +53,7 @@
 	<th>
 	<%= link_to_remote( "Collected",
 		:update => 'bats_div',
-		:url =>{ :controller => 'bats', :action => 'sort_by_collected', 
+		:url =>{ :controller => :bats, :action => :sort_by_collected, 
 					:ids => bat_list, 
 					:show_leave_date_and_reason => show_leave_date_and_reason,
 					:show_weigh_link => show_weigh_link}) %>
@@ -67,7 +67,7 @@
 <% for bat in bat_list %>
   <tr>
   <% if show_weigh_link %>
-  <td><b><%= link_to bat.band, :controller => 'bats', :action => 'weigh_bat', :id => bat %></b></td>
+  <td><b><%= link_to bat.band, :controller => :bats, :action => :weigh_bat, :id => bat %></b></td>
   <td>
 	<% if bat.cage %>
 	  <%= bat.cage.name %>
@@ -76,7 +76,7 @@
 	<% end %>
 	</td>
   <% else %>
-	<td><b><%= link_to bat.band, :controller => 'bats', :action => 'show', :id => bat %></b></td>
+	<td><b><%= link_to bat.band, :controller => :bats, :action => :show, :id => bat %></b></td>
 	<td>
 	<% if bat.cage %>
 	  <%= link_to bat.cage.name, :controller => 'cages', :action => 'show', :id => bat.cage %>

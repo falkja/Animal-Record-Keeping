@@ -11,7 +11,7 @@
 
 <% for cage in @cages %>
 <tr>
-<td><%= link_to_remote cage.name, :url => {:controller => 'bats', :action => :choose_bats, :id => cage, :selected_bats=>Array.new},
+<td><%= link_to_remote cage.name, :url => {:controller => :bats, :action => :choose_bats, :id => cage, :selected_bats=>Array.new},
                   :update => 'bat_list' %></td>
 <td><%= cage.bats.length %></td>
 <td><%= cage.average_bat_weight %></td>

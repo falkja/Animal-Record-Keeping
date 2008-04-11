@@ -147,15 +147,15 @@ Emails will <em>not</em> be sent out if bat is not weighed often enough
 
 <hr />
 
-<%= link_to 'Edit', :action => 'edit', :id => @bat %>
-| <%= link_to 'List Current Bats', :action => 'list' %>
+<%= link_to 'Edit', :controller => :bats, :action => :edit, :id => @bat %>
+| <%= link_to 'List Current Bats', :controller => :bats, :action => :list %>
 
 <% if @bat.cage != nil%>
- | <%= link_to 'Move Bat', :action=>'single_bat_to_move', :id=>@bat %>
+ | <%= link_to 'Move Bat', :controller => :bats, :action=> :single_bat_to_move, :id=>@bat %>
 <% end %>
 
 <% if @bat.leave_date == nil %>
-| <%= link_to 'Deactivate', :controller => 'bats', :action => 'deactivate', :id => @bat %>
+| <%= link_to 'Deactivate', :controller => :bats, :action => :deactivate, :id => @bat %>
 <% else %>
-| <%= link_to 'Reactivate', :controller => 'bats', :action => 'reactivate', :id => @bat %>
+| <%= link_to 'Reactivate', :controller => :bats, :action => :reactivate, :id => @bat %>
 <% end %>

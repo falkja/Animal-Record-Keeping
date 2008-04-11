@@ -26,14 +26,14 @@ No bats.
 </div>
 <br />
 
-<%= link_to 'New Bat', :action => 'new' %>
+<%= link_to 'New Bat', :controller => :bats, :action => :new %>
 <% if @list == "all" %>
-<%= link_to 'List Current Bats', :controller => 'bats', :action => 'list' %>
-<%= link_to 'List Deactivated Bats', :controller => 'bats', :action => 'list_deactivated' %>
+<%= link_to 'List Current Bats', :controller => :bats, :action => :list %>
+<%= link_to 'List Deactivated Bats', :controller => :bats, :action => :list_deactivated %>
 <% elsif @list == "current" %>
-<%= link_to 'List All Bats', :controller => 'bats', :action => 'list_all' %>
-<%= link_to 'List Deactivated Bats', :controller => 'bats', :action => 'list_deactivated' %>
+<%= link_to 'List All Bats', :controller => :bats, :action => :list_all %>
+<%= link_to 'List Deactivated Bats', :controller => :bats, :action => :list_deactivated %>
 <% else %>
-<%= link_to 'List All Bats', :controller => 'bats', :action => 'list_all' %>
-<%= link_to 'List Current Bats', :controller => 'bats', :action => 'list' %>
+<%= link_to 'List All Bats', :controller => :bats, :action => :list_all %>
+<%= link_to 'List Current Bats', :controller => :bats, :action => :list %>
 <% end %>

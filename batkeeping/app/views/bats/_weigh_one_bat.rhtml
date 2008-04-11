@@ -14,7 +14,7 @@ If the bat has too many mites to remove, create a medical problem for the bat so
 
 <p>
   <%= link_to_remote 'Add a weight for a specific day or time', :update=> 'weigh_date', 
-    :url => {:controller => 'bats', :action => 'weigh_date'} %>
+    :url => {:controller => :bats, :action => :weigh_date} %>
 </p>
 
 <div id='weigh_date'>
@@ -33,7 +33,7 @@ If the bat has too many mites to remove, create a medical problem for the bat so
 <tr>
 
 <% if bat.band %>
-	<td><%= link_to bat.band, :controller => 'bats', :action => 'show', :id => bat %></td>
+	<td><%= link_to bat.band, :controller => :bats, :action => :show, :id => bat %></td>
 <% end %>
 
 <td><%= text_field 'weight', 'weight', :size => 4, :autocomplete => 'off', :focus => @creating ? false : true %> g</td>
@@ -62,12 +62,12 @@ If the bat has too many mites to remove, create a medical problem for the bat so
 <% if @weight.weight %>
 <p>
 <%= link_to_remote 'Add a new weight for today', :update => 'weigh_one_bat', :url =>{
-		:controller => 'bats', :action => 'todays_weight_exists', :id => bat, :new_weight => true, :initial_weight => initial_weight } %>
+		:controller => :bats, :action => :todays_weight_exists, :id => bat, :new_weight => true, :initial_weight => initial_weight } %>
 </p>
 <% elsif bat.weights.today %>
 <p>
 <%= link_to_remote 'Edit today\'s weight', :update => 'weigh_one_bat', :url =>{
-		:controller => 'bats', :action => 'todays_weight_exists', :id => bat, :initial_weight => initial_weight } %>
+		:controller => :bats, :action => :todays_weight_exists, :id => bat, :initial_weight => initial_weight } %>
 <div class="hidden">
 <%= text_field 'weight', 'new_weight', :value => 'true' %>
 </div>

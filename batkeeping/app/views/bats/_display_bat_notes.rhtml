@@ -29,7 +29,7 @@
 
 <p>
 <% form_remote_tag(:update => "bat_notes",
-                       :url => { :controller => 'bats', :action => 'add_bat_note', 
+                       :url => { :controller => :bats, :action => :add_bat_note, 
 					   :id => @bat }) do %>
 	<b><label for="bat_note">Add note:</label></b>
 	<%= text_field 'bat', 'note', :value => '', :autocomplete => 'off', :focus => true %>

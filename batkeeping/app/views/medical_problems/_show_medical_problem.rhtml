@@ -1,6 +1,6 @@
 <tr>
     <% if show_bat %>
-    <td><%= link_to medical_problem.bat.band, :controller => 'bats', :action => 'show', :id => medical_problem.bat %></td>
+    <td><%= link_to medical_problem.bat.band, :controller => :bats, :action => :show, :id => medical_problem.bat %></td>
     <td>
       <% if medical_problem.bat.cage %>
         <%= link_to medical_problem.bat.cage.name, :controller => 'cages', :action => :show, :id => medical_problem.bat.cage %></td>

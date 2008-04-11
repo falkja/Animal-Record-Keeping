@@ -4,7 +4,7 @@
   <tr>
   
   <% if task.internal_description == 'medical' && (!same_type_task_list) %>
-		<td><%= link_to task.medical_treatment.medical_problem.bat.band, :controller => 'bats', :action => 'show', :id => task.medical_treatment.medical_problem.bat %></td>
+		<td><%= link_to task.medical_treatment.medical_problem.bat.band, :controller => :bats, :action => :show, :id => task.medical_treatment.medical_problem.bat %></td>
     <td>
     <% if task.medical_treatment.medical_problem.bat.cage %>
       <%= link_to task.medical_treatment.medical_problem.bat.cage.name, :controller => 'cages', :action => :show, :id => task.medical_treatment.medical_problem.bat.cage %>

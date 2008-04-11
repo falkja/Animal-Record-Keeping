@@ -4,12 +4,12 @@
 
 <div class="left_indent">
 
-<%= link_to 'Weigh Bat', :controller => 'bats', :action => :weigh_bat, :id => bat %>
+<%= link_to 'Weigh Bat', :controller => :bats, :action => :weigh_bat, :id => bat %>
 
 <% if bat.weights.length == 0 %>
 	No weights
 <% else %>
-| <%= link_to 'Graph Weights', :controller => 'bats', :action => :graph_weights, :id => bat %>
+| <%= link_to 'Graph Weights', :controller => :bats, :action => :graph_weights, :id => bat %>
 <p>
 <table>
   <th>Date</th>
@@ -25,7 +25,7 @@
 		<td><%= weight.note %></td>
 		<td><%= weight.user.initials %></td>
 		<td>
-			<%= link_to_remote 'Destroy', :update => 'display_weights', :url => {
+			<%= link_to_remote 'Destroy', :update => :display_weights, :url => {
 				:controller => 'weights', :action => 'destroy', :id => weight, :bat => bat}, :confirm => 'Are you sure?', :method => :post %>
 		</td>
 		<% if weight.weight < bat.species.lower_weight_limit %>

@@ -10,6 +10,6 @@
 <%= render :partial=>'tasks/manage_feeding_tasks', :locals=>{:cage=>cage} %>
 <% end %>
 
-<p><%= button_to 'Done', :controller => 'bats', :action => 'list' %></p>
+<p><%= button_to 'Done', :controller => :bats, :action => :list %></p>
 
 </div>

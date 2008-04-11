@@ -1,6 +1,6 @@
 <h1>Medical Problem: <%=@medical_problem.title%> </h1>
 
-  <p><b>Bat: </b><%= link_to @medical_problem.bat.band, :controller => 'bats', :action => 'show', :id =>  @medical_problem.bat %></p>
+  <p><b>Bat: </b><%= link_to @medical_problem.bat.band, :controller => :bats, :action => :show, :id =>  @medical_problem.bat %></p>
   <p><b>Description: </b><%=h @medical_problem.description %></p>
   <p><b>Date Opened: </b><%=h nice_date @medical_problem.date_opened %></p>
   <% if @medical_problem.date_closed %>

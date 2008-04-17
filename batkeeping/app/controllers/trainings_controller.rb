@@ -24,14 +24,19 @@ class TrainingsController < ApplicationController
   # GET /trainings/new
   # GET /trainings/new.xml
   def new
-    @selected_user = params[:selected_user].to_i
-    
-    @training = Training.new
+    if TrainingType.find(:all).length == 0
+			flash[:notice] = 'You must create a training type first'
+			redirect_to :controller => :Training_Types, :action => :new
+		else
+			@selected_user = params[:selected_user].to_i
+			
+			@training = Training.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @training }
-    end
+			respond_to do |format|
+				format.html # new.html.erb
+				format.xml  { render :xml => @training }
+			end
+		end
   end
 
   # GET /trainings/1/edit

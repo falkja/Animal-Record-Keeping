@@ -1,4 +1,4 @@
-<div class='right_aligned'>
+<div class='sidebar'>
 
   <% if !session[:person] %>
   
@@ -45,8 +45,8 @@
 	
   <h3><%= link_to 'Trained', :controller => :trainings, :action => :new, :selected_user => user %></h3>
     <div class='left_indent'>
-    <% if @user.trainings.length > 0 %>
-      <% for training in @user.trainings %>
+    <% if user.trainings.length > 0 %>
+      <% for training in user.trainings %>
         <%= link_to training.training_type.name, :controller => :training_types, :action => :show, :id => training.training_type %><br />
       <% end %>
     <% end %>

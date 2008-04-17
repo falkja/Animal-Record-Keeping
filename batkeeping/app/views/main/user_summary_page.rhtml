@@ -1,7 +1,5 @@
 <h1>Summary page for <%= link_to @user.name, :controller => :users, :action => :show, :id => @user %></h1>
 
-<%= render :partial => 'main/sidebar' %>
-
 <h2>Temperature/Humidity for Today: <%= nice_date(Time.now) %></h2>
 
 <%= render :partial => 'weathers/enter_weathers' %>

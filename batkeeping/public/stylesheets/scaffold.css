@@ -159,6 +159,14 @@ div.right_aligned {
 	color:#000;
 }
 
+div.sidebar{
+	float:right;
+	border:1px solid #000;
+	background-color:#eee; 
+	color:#000;
+	width:170;
+}
+
 div.show_print_only{
 	display:none;
 }

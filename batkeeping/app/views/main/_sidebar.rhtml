@@ -1,38 +1,32 @@
 <div class='sidebar'>
 
-  <% if !session[:person] %>
+  <ul>
+	<% if !session[:person] %>
   
-    <h3 align=center>Please Sign In:</h3>
+    <li><h4>Please Sign In:</h3></li>
 
     <% form_tag :action => 'login', :id => @user do %>
 
-      <p>User: <%= select_tag("user[id]", options_from_collection_for_select(User.current, "id", "name")) %>
-      <%= submit_tag 'sign in' %>
-      </p>
+      <ul>
+			<li>User: <%= select_tag("user[id]", options_from_collection_for_select(User.current, "id", "name")) %>
+      <%= submit_tag 'sign in' %></li>
+			</ul>
 
-    <% end %>
-    
-    <% if !@animal_care_staff_page %>
-    
-    <h3>Animal Care</h3>
-		<div class='left_indent'>
-			<%= link_to 'Show Animal Care Staff', :controller => :main, :action => :animal_care_staff %>
-		</div>
-    
     <% end %>
   
   <% else %>
 		
     <% user = User.find(session[:person]) %>
     
-    <h3>
+    <h2>
       <%= link_to 'Home', :controller => :main, :action => :user_summary_page, :id => user %>
-    </h3>
+    </h2>
+		
     
 		<% if user.job_type != '' && user.job_type != nil %>
-			<h3>
-        <%= link_to 'My Jobs', :controller => :users, :action => :edit, :id => user %>
-      </h3>
+			<h4>
+        <li><%= link_to 'My Jobs', :controller => :users, :action => :edit, :id => user %></li>
+      </h4>
 			<ul>
 			<%= (user.animal_care_user?) ? "<li>Weekday Care</li>" : "" %>
 			<%= (user.weekend_care_user?) ? "<li>Weekend Care</li>" : "" %>
@@ -40,22 +34,26 @@
 			<%= (user.administrator?) ? "<li>Administrator</li>" : "" %>
 			</ul>
 		<% end %>
-    
-    <%= @animal_care_staff_page ? '' : (link_to 'Show Animal Care Staff', :controller => :main, :action => :animal_care_staff) %>
 	
-  <h3><%= link_to 'Trained', :controller => :trainings, :action => :new, :selected_user => user %></h3>
-    <div class='left_indent'>
+  <li><h4><%= link_to 'Training', :controller => :trainings, :action => :new, :selected_user => user %></h4></li>
+    <ul>
     <% if user.trainings.length > 0 %>
       <% for training in user.trainings %>
-        <%= link_to training.training_type.name, :controller => :training_types, :action => :show, :id => training.training_type %><br />
+        <li><%= link_to training.training_type.name, :controller => :training_types, :action => :show, :id => training.training_type %></li>
       <% end %>
     <% end %>
-    </div>
+    </ul>
 
   
 	<% end %>
 
-  <h3>Send Email</h3>
+    <% if !@animal_care_staff_page %>
+    
+			<li><h4><%= link_to 'Animal Care Staff', :controller => :main, :action => :animal_care_staff %></h3></li>
+    
+    <% end %>
+
+  <li><h4>Send Email</h4></li>
 	<ul>
   <li><%= link_to('Entire Lab', :controller => 'main', :action => 'lab_email', :users => User.current) %></li>
   <li><%= link_to('Animal Care', :controller => 'main', :action => 'lab_email', :users => User.current_animal_care) %></li>
@@ -63,4 +61,5 @@
   <li><%= link_to('Weekend Care', :controller => 'main', :action => 'lab_email', :users => User.current_weekend_care) %></li>
   <li><%= link_to('Administrators', :controller => 'main', :action => 'lab_email', :users => User.administrator) %></li>
 	
+</ul>
 </div>

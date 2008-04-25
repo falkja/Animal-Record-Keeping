@@ -1,4 +1,12 @@
-<h1>Summary page for <%= link_to @user.name, :controller => :users, :action => :show, :id => @user %></h1>
+<table>
+
+<tr>
+<td><%= image_tag ("bat_logo.png"), :width=> "48" %></td>
+<td></td>
+<TD VALIGN=BOTTOM><h1>Summary page for <%= link_to @user.name, :controller => :users, :action => :show, :id => @user %></h1></td>
+</tr>
+
+</table>
 
 <h2>Temperature/Humidity for Today: <%= nice_date(Time.now) %></h2>
 

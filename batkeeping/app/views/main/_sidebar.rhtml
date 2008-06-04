@@ -41,6 +41,8 @@
       <% for training in user.trainings %>
         <li><%= link_to training.training_type.name, :controller => :training_types, :action => :show, :id => training.training_type %></li>
       <% end %>
+		<% else %>
+			<li>Not trained</li>
     <% end %>
     </ul>
 

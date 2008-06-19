@@ -1,20 +1,7 @@
 <div class='sidebar'>
 
   <ul>
-	<% if !session[:person] %>
-  
-    <li><h4>Please Sign In:</h3></li>
-
-    <% form_tag :action => 'login', :id => @user do %>
-
-      <ul>
-			<li>User: <%= select_tag("user[id]", options_from_collection_for_select(User.current, "id", "name")) %>
-      <%= submit_tag 'sign in' %></li>
-			</ul>
-
-    <% end %>
-  
-  <% else %>
+	<% if session[:person] %>
 		
     <% user = User.find(session[:person]) %>
     
@@ -35,7 +22,7 @@
 			</ul>
 		<% end %>
 	
-  <li><h4><%= link_to 'Training', :controller => :trainings, :action => :new, :selected_user => user %></h4></li>
+  <li><h4><%= link_to 'Trainings', :controller => :trainings, :action => :index, :selected_user => user %></h4></li>
     <ul>
     <% if user.trainings.length > 0 %>
       <% for training in user.trainings %>
@@ -44,16 +31,17 @@
 		<% else %>
 			<li>Not trained</li>
     <% end %>
+			<li><%= link_to 'Add training', :controller => :trainings, :action => :new, :selected_user => user %></li>
     </ul>
-
-  
-	<% end %>
 
     <% if !@animal_care_staff_page %>
     
 			<li><h4><%= link_to 'Animal Care Staff', :controller => :main, :action => :animal_care_staff %></h3></li>
     
     <% end %>
+  
+	<% end %>
+
 
   <li><h4>Send Email</h4></li>
 	<ul>

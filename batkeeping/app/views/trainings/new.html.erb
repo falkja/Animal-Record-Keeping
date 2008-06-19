@@ -7,6 +7,15 @@
     <b>Training type</b><br />
     <%= select("training", "training_type_id", TrainingType.find(:all).collect {|tt| [tt.name, tt.id]}) %>
   </p>
+	
+	<warning>
+		1. Show training type description as you select different training types<br />
+	  2. Allow user to create a new training type without going to the other page (ajax)
+	</warning>
+	
+	<p>
+  <%= link_to 'Create a New Training Type', :controller => :training_types, :action => :new %>
+	</p>
 
   <p>
     <b>User</b><br />
@@ -32,9 +41,5 @@
     <%= f.submit "Create" %>
   </p>
 <% end %>
-
-<p>
-  <%= link_to 'Create a New Training Type', :controller => :training_types, :action => :new %>
-</p>
 
 <%= link_to 'Back', trainings_path %>

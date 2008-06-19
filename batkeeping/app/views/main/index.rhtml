@@ -7,3 +7,22 @@
 </tr>
 
 </table>
+
+<br />
+
+<% if !session[:person] %>
+
+<div class='left_indent'; style='background-color:#eee; width:400px; border:1px; border-style:solid;border-width:1px;'>
+    
+		<h4>Please Sign In:</h4>
+
+    <% form_tag :action => 'login', :id => @user do %>
+
+      <ul>
+			User: <%= select_tag("user[id]", options_from_collection_for_select(User.current, "id", "name")) %>
+      <%= submit_tag 'sign in' %>
+
+    <% end %>
+</div>
+
+<% end %>

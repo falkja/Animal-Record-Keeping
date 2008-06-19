@@ -2,7 +2,7 @@ class TrainingsController < ApplicationController
   # GET /trainings
   # GET /trainings.xml
   def index
-    @trainings = Training.find(:all)
+		params[:selected_user] ? @trainings = Training.find(:all, :conditions => "user_id = #{User.find(params[:selected_user]).id}") : @trainings = Training.find(:all)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +13,8 @@ class TrainingsController < ApplicationController
   # GET /trainings/1
   # GET /trainings/1.xml
   def show
-    @training = Training.find(params[:id])
+		
+		@training = Training.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -28,7 +29,9 @@ class TrainingsController < ApplicationController
 			flash[:notice] = 'You must create a training type first'
 			redirect_to :controller => :Training_Types, :action => :new
 		else
-			@selected_user = params[:selected_user].to_i
+			if params[:selected_user]
+				@selected_user = params[:selected_user].to_i
+			end
 			
 			@training = Training.new
 

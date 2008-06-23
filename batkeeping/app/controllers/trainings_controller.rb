@@ -2,12 +2,12 @@ class TrainingsController < ApplicationController
   # GET /trainings
   # GET /trainings.xml
   def index
-		params[:selected_user] ? @trainings = Training.find(:all, :conditions => "user_id = #{User.find(params[:selected_user]).id}") : @trainings = Training.find(:all)
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @trainings }
-    end
+		if params[:selected_user]
+			@selected_user = User.find(params[:selected_user])
+			@trainings = Training.find(:all, :conditions => "user_id = #{User.find(params[:selected_user]).id}")
+		else
+			@trainings = Training.find(:all)
+		end
   end
 
   # GET /trainings/1
@@ -50,17 +50,20 @@ class TrainingsController < ApplicationController
   # POST /trainings
   # POST /trainings.xml
   def create
-    @training = Training.new(params[:training])
-    respond_to do |format|
-      if @training.save
-        flash[:notice] = 'Training was successfully created.'
-        format.html { redirect_to(@training) }
-        format.xml  { render :xml => @training, :status => :created, :location => @training }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @training.errors, :status => :unprocessable_entity }
-      end
-    end
+		#error check to make sure user doesn't have duplicate entries of the same training
+		if Training.find(:first, :conditions => "user_id = #{params[:training][:user_id]} and training_type_id = #{params[:training][:training_type_id]}")
+			flash[:notice] = "User #{User.find(params[:training][:user_id]).name} is already trained with this training type."
+			redirect_to :back
+		else
+			@training = Training.new(params[:training])
+			if @training.save
+				flash[:notice] = 'Training was successfully created.'
+				redirect_to :controller => :trainings, :action => :index, :selected_user => @training.user.id
+			else
+				format.html { render :action => "new" }
+				format.xml  { render :xml => @training.errors, :status => :unprocessable_entity }
+			end
+		end
   end
 
   # PUT /trainings/1

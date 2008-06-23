@@ -1,4 +1,8 @@
+<% if @selected_user %>
+<h1>Listing trainings for <%= @selected_user.name %></h1>
+<% else %>
 <h1>Listing trainings</h1>
+<% end %>
 
 <table>
   <tr>

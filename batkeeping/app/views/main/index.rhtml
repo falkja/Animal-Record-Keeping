@@ -3,7 +3,7 @@
 <tr>
 <td><%= image_tag ("bat_logo.png") %></td>
 <td></td>
-<TD VALIGN=CENTER><h2>Batkeeping</h2>A weight and health management program for bats</td>
+<TD VALIGN=CENTER><h2>Batkeeping</h2>A weight and health management tracking application for bats</td>
 </tr>
 
 </table>
@@ -12,8 +12,8 @@
 
 <% if !session[:person] %>
 
-<div class='left_indent'; style='background-color:#eee; width:400px; border:1px; border-style:solid;border-width:1px;'>
-    
+<div style='background-color:#eee; width:400px; border-style:dashed;border-width:1px;'>
+    <div align=center>
 		<h4>Please Sign In:</h4>
 
     <% form_tag :action => 'login', :id => @user do %>
@@ -23,6 +23,8 @@
       <%= submit_tag 'sign in' %>
 
     <% end %>
+		
+		</div>
 </div>
 
 <% end %>

@@ -6,17 +6,18 @@
   <p>
     <b>Training type</b><br />
     <%= select("training", "training_type_id", TrainingType.find(:all).collect {|tt| [tt.name, tt.id]}) %>
+		Or <%= link_to 'Create a New Training Type', :controller => :training_types, :action => :new %>
   </p>
-	
-	<warning>
-		1. Show training type description as you select different training types<br />
-	  2. Allow user to create a new training type without going to the other page (ajax)
-	</warning>
-	
-	<p>
-  <%= link_to 'Create a New Training Type', :controller => :training_types, :action => :new %>
-	</p>
 
+	<div id='description'>
+		<%= render :partial => 'training_types/remote_display_description', :locals => {:training_type => TrainingType.find(:all).first} %>
+	</div>
+	
+	<%= observe_field 'training_training_type_id',
+    :url => {:controller => :training_types, :action => :remote_display_description},
+    :with => 'training_type_id',
+		:update => "description" %>
+	
   <p>
     <b>User</b><br />
     <%= select("training", "user_id", User.current.collect {|u| [u.name, u.id]}, {:selected => @selected_user}) %>
@@ -41,5 +42,3 @@
     <%= f.submit "Create" %>
   </p>
 <% end %>
-
-<%= link_to 'Back', trainings_path %>

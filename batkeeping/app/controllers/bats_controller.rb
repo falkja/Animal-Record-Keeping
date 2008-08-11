@@ -110,33 +110,53 @@ class BatsController < ApplicationController
     elsif Bat.find(:first, :conditions => "band = '#{params[:bat][:band]}'")
       flash[:notice] = 'There is already a bat with the same band.  Please choose a different band.'
 			redirect_to :back
+    elsif (params[:bat][:cage_id] == '0') && (params[:move][:note] == '')
+      flash[:notice] = 'Please fill in the leave reason for this bat.'
+			redirect_to :back
 		else
 			@bat = Bat.new(params[:bat])
-			@bat.leave_date = nil
+			params[:bat][:cage_id] != '0' ? @bat.leave_date = nil : ''
 			
 			Bat::set_user_and_comment(User.find(session[:person]), 'new bat') #Do this before saving!
 			if @bat.save
 				
-				new_cage=Cage.find(params[:bat][:cage_id])
-				
-				#census stuff
-				census = Census.find_or_create_by_date_and_room_id(Date.today, new_cage.room)
-				census.tally(1, Date.today, new_cage.room)
-				census.bats_added ? census.bats_added = census.bats_added + @bat.band + ' ' : census.bats_added = @bat.band + ' '
-				census.save
-        
-				if params[:weight][:weight] != ''
+        if params[:weight][:weight] != ''
 					save_weight
 				end
-				
+        
+        if @bat.cage_id == 0
+          new_cage=nil
+          @bat.cage_id = nil
+          @bat.leave_reason = params[:move][:note]
+          @bat.save
+        else
+          new_cage=Cage.find(params[:bat][:cage_id])
+          
+          #census stuff
+          census = Census.find_or_create_by_date_and_room_id(Date.today, new_cage.room)
+          census.tally(1, Date.today, new_cage.room)
+          census.bats_added ? census.bats_added = census.bats_added + @bat.band + ' ' : census.bats_added = @bat.band + ' '
+          census.save
+        end
+        
 				flash[:notice] = 'Bat was successfully created.'
-				@bats = Array.new
-				@bats << @bat
-				redirect_to :action => 'move', :bats => @bats, :new_cage => new_cage, :old_cage => nil, :note => 'new bat'
+				
+        if new_cage
+          @bats = Array.new
+          @bats << @bat
+          redirect_to :action => 'move', :bats => @bats, :new_cage => new_cage, :old_cage => nil, :note => 'new bat'
+        else
+          redirect_to :action => :list_deactivated
+        end
 			else
 				render :action => 'new'
 			end
 		end
+  end
+
+  def adding_deactivated_bat
+    params[:bat][:cage_id]== '0' ? @deactivated_bat = true : @deactivated_bat = false
+    render :partial => 'adding_deactivated_bat'
   end
 
   def edit

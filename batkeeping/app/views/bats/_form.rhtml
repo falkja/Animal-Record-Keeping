@@ -81,11 +81,28 @@
 </tr>
 <% end %>
 
+<%# Bat already deactivated %>
+<tr>
+<td><%=radio_button :bat, :cage_id, 0, :checked => false %></td>
+<td>DEACTIVATED</td>
+<td>NA</td>
+<td>NA</td>
+</tr>
+
 </table>
+
+ <%= observe_form 'new_bat_form', :url => { :action => :adding_deactivated_bat },
+      :update => 'adding_deactivated_bat'
+      %>
 
 </div>
 
 </p>
+
+
+<div id='adding_deactivated_bat'>
+</div>
+
 <% end %>
 
 </div>

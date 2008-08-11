@@ -1,6 +1,6 @@
 <h1>New bat</h1>
 
-<% form_tag :action => 'create' do %>
+<% form_tag ({:action => 'create'}, :id => 'new_bat_form') do %>
   <%= render :partial => 'form' %>
   <%= submit_tag "New Bat" %>
 <% end %>

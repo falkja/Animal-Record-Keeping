@@ -1,0 +1,12 @@
+<% if @deactivated_bat %>
+
+<p><label for="bat_leave_date">Leave date</label><br/>
+<%= date_select 'bat', 'leave_date'%></p>
+
+<p><label for="bat_leave_reason">Leave reason</label><br/>
+<%= text_field 'move', 'note'%></p>
+
+<% else %>
+
+
+<% end %>

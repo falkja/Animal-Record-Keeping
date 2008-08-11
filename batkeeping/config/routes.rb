@@ -1,4 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :flight_objects
+
+  map.resources :flight_trials
+
+  map.resources :flight_logs
+
   map.resources :trainings
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -1,0 +1,78 @@
+<p>
+  <b>Flight log:</b>
+  <%=h @flight_trials.flight_log_id %>
+</p>
+
+<p>
+  <b>Time:</b>
+  <%=h @flight_trials.time %>
+</p>
+
+<p>
+  <b>Number:</b>
+  <%=h @flight_trials.number %>
+</p>
+
+<p>
+  <b>Target location:</b>
+  <%=h @flight_trials.target_location %>
+</p>
+
+<p>
+  <b>Distracter location:</b>
+  <%=h @flight_trials.distracter_location %>
+</p>
+
+<p>
+  <b>Target height:</b>
+  <%=h @flight_trials.target_height %>
+</p>
+
+<p>
+  <b>Distracter height:</b>
+  <%=h @flight_trials.distracter_height %>
+</p>
+
+<p>
+  <b>Note:</b>
+  <%=h @flight_trials.note %>
+</p>
+
+<p>
+  <b>Video num:</b>
+  <%=h @flight_trials.video_num %>
+</p>
+
+<p>
+  <b>Audio num:</b>
+  <%=h @flight_trials.audio_num %>
+</p>
+
+<p>
+  <b>Array num:</b>
+  <%=h @flight_trials.array_num %>
+</p>
+
+<p>
+  <b>Performance:</b>
+  <%=h @flight_trials.performance %>
+</p>
+
+<p>
+  <b>Trial sequence:</b>
+  <%=h @flight_trials.trial_sequence %>
+</p>
+
+<p>
+  <b>Trial duration:</b>
+  <%=h @flight_trials.trial_duration %>
+</p>
+
+<p>
+  <b>Ammount fed:</b>
+  <%=h @flight_trials.ammount_fed %>
+</p>
+
+
+<%= link_to 'Edit', edit_flight_trials_path(@flight_trials) %> |
+<%= link_to 'Back', flight_trials_path %>

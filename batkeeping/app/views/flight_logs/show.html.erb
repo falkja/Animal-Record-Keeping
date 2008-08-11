@@ -1,0 +1,28 @@
+<p>
+  <b>Bat:</b>
+  <%=h @flight_logs.bat_id %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%=h @flight_logs.date %>
+</p>
+
+<p>
+  <b>Note:</b>
+  <%=h @flight_logs.note %>
+</p>
+
+<p>
+  <b>Temperature:</b>
+  <%=h @flight_logs.temperature %>
+</p>
+
+<p>
+  <b>Humidity:</b>
+  <%=h @flight_logs.humidity %>
+</p>
+
+
+<%= link_to 'Edit', edit_flight_logs_path(@flight_logs) %> |
+<%= link_to 'Back', flight_logs_path %>

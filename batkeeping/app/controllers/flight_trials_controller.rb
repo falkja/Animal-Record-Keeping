@@ -24,7 +24,9 @@ class FlightTrialsController < ApplicationController
   # GET /flight_trials/new
   # GET /flight_trials/new.xml
   def new
+    @flight_logs = FlightLogs.find(params[:flight_log_id])
     @flight_trials = FlightTrials.new
+    
 
     respond_to do |format|
       format.html # new.html.erb
@@ -40,6 +42,7 @@ class FlightTrialsController < ApplicationController
   # POST /flight_trials
   # POST /flight_trials.xml
   def create
+    sdf
     @flight_trials = FlightTrials.new(params[:flight_trials])
 
     respond_to do |format|

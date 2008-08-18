@@ -44,9 +44,8 @@ class FlightLogsController < ApplicationController
 
     respond_to do |format|
       if @flight_logs.save
-        flash[:notice] = 'FlightLogs was successfully created.'
-        format.html { redirect_to(@flight_logs) }
-        format.xml  { render :xml => @flight_logs, :status => :created, :location => @flight_logs }
+        flash[:notice] = 'Flight Log was successfully created.'
+        format.html {redirect_to :controller => :flight_trials, :action => :new, :flight_log_id => @flight_logs}
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @flight_logs.errors, :status => :unprocessable_entity }

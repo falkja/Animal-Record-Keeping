@@ -5,16 +5,12 @@
 
   <p>
     <%= f.label :bat_id %><br />
-    <%= select_tag "bat", options_from_collection_for_select(Bat.find(:all), "id", "band") %>
+    <%= select_tag "flight_logs[bat_id]", options_from_collection_for_select(Bat.find(:all), "id", "band") %>
     <%= link_to 'Add bat', :controller => :bats, :action => :new %>
   </p>
   <p>
     <%= f.label :date %><br />
     <%= f.datetime_select :date %>
-  </p>
-  <p>
-    <%= f.label :note %><br />
-    <%= f.text_area :note %>
   </p>
   <p>
     <%= f.label :temperature %><br />
@@ -23,6 +19,11 @@
   <p>
     <%= f.label :humidity %><br />
     <%= f.text_field :humidity %>
+  </p>
+  <p>
+    <%= f.label :note %><br />
+    <em>eg. any array microphones out?</em><br />
+    <%= f.text_area :note, 'rows' => "3" %>
   </p>
   <p>
     <%= f.submit "Create" %>

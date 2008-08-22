@@ -172,7 +172,7 @@ class CagesController < ApplicationController
     @cage = Cage.find(params[:id])
     @cage.date_destroyed = nil
     @cage.save
-    redirect_to :controller => 'tasks', :action => 'new_weigh_cage_task', :id => @cage
+    redirect_to :controller => :cages, :action => :list
   end
 
   def choose_cage_to_weigh

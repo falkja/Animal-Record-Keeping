@@ -106,8 +106,6 @@
 			<td>
 				<% if task.medical_treatment && !same_type_task_list %>
 					<%= link_to 'Manage Treatments', :controller => 'medical_treatments', :action => 'show', :id => task.medical_treatment %>
-				<% elsif task.internal_description == 'weigh' && !same_type_task_list %>
-					<%= link_to 'Manage Weighing Tasks', :controller => 'tasks', :action => 'new_weigh_cage_task', :id => task.cage %>
 				<% elsif task.internal_description == 'feed' && !same_type_task_list %>
 					<%= link_to 'Manage Feeding Tasks', :controller => 'tasks', :action => 'manage_feeding_tasks', :id => task.cage %>
 				<% else %>

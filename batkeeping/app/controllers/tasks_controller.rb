@@ -514,7 +514,7 @@ class TasksController < ApplicationController
 	
   def show_hide_users
     users = User.current
-    if params[:task] != ''
+    if params[:task] && params[:task] != ''
       task = Task.find(params[:task])
       user_ids = Array.new
       task.users.each {|user| user_ids << user.id }

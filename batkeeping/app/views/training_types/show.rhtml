@@ -7,9 +7,9 @@
 <b>Users trained:</b><br />
 <div class='left_indent' >
 <% for training in @training_type.trainings %>
-  <%= training.user.name %><br />
+  <%= link_to training.user.name, :controller=>:trainings, :selected_user=>training.user %><br />
 <% end %>
 </div>
 
-<%= link_to 'Edit', :action => 'edit', :id => @training_types %> |
-<%= link_to 'Back', :action => 'list' %>
+<%= link_to 'Edit', :action => 'edit', :id => @training_type %> |
+<%= link_to 'List Training Types', :action => 'list' %>

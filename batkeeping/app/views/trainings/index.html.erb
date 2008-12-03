@@ -1,3 +1,7 @@
+<% if @trainings.length == 0 %>
+<p>Not trained</p>
+<% else %>
+
 <% if @selected_user %>
 <h1>Listing trainings for <%= @selected_user.name %></h1>
 <% else %>
@@ -6,27 +10,34 @@
 
 <table>
   <tr>
+    <%= @selected_user ? '' : '<th>User</th>' %>
     <th>Training type</th>
-    <th>User</th>
-    <th>Date</th>
-    <th>User trained by</th>
+    <th>Date Trained</th>
+    <th>Trained by</th>
     <th>Note</th>
   </tr>
 
 <% for training in @trainings %>
   <tr>
-    <td><%=h TrainingType.find(training.training_type_id).name %></td>
-    <td><%=h User.find(training.user_id).name %></td>
+    <%= @selected_user ? '' : '<td>'+User.find(training.user_id).name+'</td>' %>
+    <td><%= link_to TrainingType.find(training.training_type_id).name, :controller => :training_types, :action => :show, :id => training.training_type_id %></td>
     <td><%=h training.date %></td>
     <td><%=h User.find(training.user_trained_by_id).name %></td>
     <td><%=h training.note %></td>
-    <td><%= link_to 'Show', training %></td>
-    <td><%= link_to 'Edit', edit_training_path(training) %></td>
-    <td><%= link_to 'Destroy', training, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Un-train', training, :confirm => 'Are you sure?', :method => :delete, :selected_user => @selected_user %></td>
   </tr>
 <% end %>
 </table>
 
+<% end %>
+
 <br />
 
+<% if @selected_user %>
+<%= link_to 'New training', :controller => :trainings, :action => :new, :selected_user => @selected_user %>
+<% else %>
 <%= link_to 'New training', new_training_path %>
+<% end %>
+<% if @selected_user %>
+| <%= link_to 'List All Trainings', :controller=>:trainings %>
+<% end %>

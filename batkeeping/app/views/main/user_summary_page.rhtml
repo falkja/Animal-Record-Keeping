@@ -29,6 +29,20 @@ No medical problems
 </div>
 </p>
 
+<h2>My Cages</h2>
+<p>
+<div class= "left_indent">
+<% if @cages.length == 0 %> 
+You have no cages
+<% else %>
+<div id= "my_cages">
+<% @div_id = "my_cages" %>
+<%= render :partial => 'cages/cage_list', :locals => {:cage_list => @cages} %>
+</div>
+<% end %>
+</div>
+</p>
+
 <div id='todays_tasks'>
   <%= render :partial => 'tasks/show_tasks', :locals => {:general_tasks => @my_general_tasks_today, :weighing_tasks => @my_weighing_tasks_today,
                 :feeding_tasks => @my_feeding_tasks_today, :medical_tasks => @my_medical_tasks_today, :div_id => 'todays_tasks', :source => 'user_summary',
@@ -49,17 +63,3 @@ No medical problems
                 :feeding_cages => @feeding_cages, :cages => @cages, :medical_problems => @medical_problems, :same_type_task_list => false, :user => @user,
 								:sorted_by =>'title'} %>
 </div>
-
-<h2>My Cages</h2>
-<p>
-<div class= "left_indent">
-<% if @cages.length == 0 %> 
-You have no cages
-<% else %>
-<div id= "my_cages">
-<% @div_id = "my_cages" %>
-<%= render :partial => 'cages/cage_list', :locals => {:cage_list => @cages} %>
-</div>
-<% end %>
-</div>
-</p>

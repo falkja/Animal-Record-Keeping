@@ -4,9 +4,9 @@ class TrainingsController < ApplicationController
   def index
 		if params[:selected_user]
 			@selected_user = User.find(params[:selected_user])
-			@trainings = Training.find(:all, :conditions => "user_id = #{User.find(params[:selected_user]).id}")
+			@trainings = Training.find(:all, :conditions => "user_id = #{User.find(params[:selected_user]).id}", :order => 'date')
 		else
-			@trainings = Training.find(:all)
+			@trainings = Training.find(:all, :order => 'user_id, date')
 		end
   end
 

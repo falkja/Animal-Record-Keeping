@@ -16,6 +16,7 @@
 	<%= observe_field 'training_training_type_id',
     :url => {:controller => :training_types, :action => :remote_display_description},
     :with => 'training_type_id',
+    :frequency => 0.25,
 		:update => "description" %>
 	
   <p>

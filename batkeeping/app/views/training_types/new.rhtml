@@ -4,3 +4,16 @@
   <%= render :partial => 'form' %>
   <%= submit_tag "Create" %>
 <% end %>
+
+<h3>List of Existing Training Types:</h3>
+<table>
+<th>Training</th>
+<th>Description</th>
+<% for training_type in @training_types %>
+<tr>
+<td><%= link_to training_type.name, :controller => :training_types, :action => :show, :id => training_type %></td>
+<td><%= training_type.description %></td>
+<td><%= link_to 'Edit', :controller => :training_types, :action => :edit, :id => training_type %></td>
+</tr>
+<% end %>
+</table>

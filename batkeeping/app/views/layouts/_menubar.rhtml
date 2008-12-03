@@ -16,10 +16,12 @@
 			<li><%= link_to 'New Room', :controller => :rooms, :action => :new %></li>
 			<li><%= link_to 'List Training Types', :controller => :training_types, :action => :list %></li>
 			<li><%= link_to 'New Training Type', :controller => :training_types, :action => :new %></li>
+			<li><%= link_to 'List Trainings', :controller => :trainings, :action => :list %></li>
+			<li><%= link_to 'New Training', :controller => :trainings, :action => :new %></li>
 		</ul>
 	<% else %>
 		<ul>
-		<li><%= link_to 'Login as an Admin', :controller => :main, :action => :index %></a></li>
+		<li><%= link_to 'Login as an Admin', :controller => :main, :action => :logout %></a></li>
 		</ul>
 	<% end %>
 	</li>

@@ -10,6 +10,7 @@ class TrainingTypesController < ApplicationController
 	
 	def new
 		@training_type = TrainingType.new
+    @training_types = TrainingType.find(:all)
 	end
   
   def show

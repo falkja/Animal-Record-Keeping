@@ -31,7 +31,7 @@
 		<% else %>
 			<li>Not trained</li>
     <% end %>
-			<li><%= link_to 'Add training', :controller => :trainings, :action => :new, :selected_user => user %></li>
+			<li><em><%= link_to 'Add training', :controller => :trainings, :action => :new, :selected_user => user %></em></li>
     </ul>
 
     <% if !@animal_care_staff_page %>

@@ -161,10 +161,11 @@ div.right_aligned {
 
 div.sidebar{
 	float:right;
-	border:1px solid #000;
-	background-color:#eee; 
+	background-color:#eee;
 	color:#000;
 	padding-right: 5px;
+	border-style:dashed;
+	border-width:1px;
 }
 
 div.sidebar ul {

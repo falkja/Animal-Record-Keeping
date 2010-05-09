@@ -2,7 +2,7 @@
 
 <%= error_messages_for :training %>
 
-<% form_for(@training) do |f| %>
+<% form_for :training, @training, :url => {:action => "create_mult_users"} do |f| %>
   <p>
     <b>Training type</b><br />
     <%= select("training", "training_type_id", TrainingType.find(:all).collect {|tt| [tt.name, tt.id]}) %>
@@ -20,13 +20,18 @@
 		:update => "description" %>
 	
   <p>
-    <b>User</b><br />
-    <%= select("training", "user_id", User.current.collect {|u| [u.name, u.id]}, {:selected => @selected_user}) %>
+    <b>Users</b><br />
 	
-	<% if @selected_user %>
-	<%= link_to 'Multiple Users Trained', :controller => :trainings, :action => :new_mult_users, :selected_user => @selected_user%>
+	<%= select_tag("user_id[]", options_from_collection_for_select(@users, "id", "name", @selected_user), :multiple => true, :size => 10) %>
+	
+  </p>
+  
+  <p>
+  
+    <% if @selected_user %>
+	<%= link_to 'Single User Trained', :controller => :trainings, :action => :new, :selected_user => @selected_user %>
 	<% else %>
-	<%= link_to 'Multiple Users Trained', :controller => :trainings, :action => :new_mult_users %>
+	<%= link_to 'Single User Trained', new_training_path %>
 	<% end %>
   
   </p>
@@ -47,12 +52,10 @@
   </p>
 
   <p>
-    <%= f.submit "Create" %>
+    <%= f.submit "Create Multiple Trainings" %>
   </p>
 <% end %>
 
 <%= render :partial => 'trainings/trainings_list', :locals => { 
-		:selected_user => @selected_user ? User.find(@selected_user) : nil,
-		:trainings =>  @selected_user ? Training.find(:all, :conditions => "user_id = #{@selected_user}") : Training.find(:all) } %>
-		
-<%= link_to 'List All Trainings', :controller=>:trainings %>
+		:selected_user => nil,
+		:trainings =>  Training.find(:all) } %>

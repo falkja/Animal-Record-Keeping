@@ -1,12 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :flight_objects
 
-  map.resources :flight_trials
-
-  map.resources :flight_logs
-
+  
+  map.connect '/trainings/new_mult_users', :controller => 'trainings', :action => 'new_mult_users'
+  map.connect '/trainings/create_mult_users', :controller => 'trainings', :action => 'create_mult_users'
   map.resources :trainings
-
   # The priority is based upon order of creation: first created -> highest priority.
   
   # Sample of regular route:

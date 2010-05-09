@@ -1,35 +1,7 @@
-<% if @trainings.length == 0 %>
-<p>Not trained</p>
-<% else %>
-
-<% if @selected_user %>
-<h1>Listing trainings for <%= @selected_user.name %></h1>
-<% else %>
-<h1>Listing trainings</h1>
-<% end %>
-
-<table>
-  <tr>
-    <%= @selected_user ? '' : '<th>User</th>' %>
-    <th>Training type</th>
-    <th>Date Trained</th>
-    <th>Trained by</th>
-    <th>Note</th>
-  </tr>
-
-<% for training in @trainings %>
-  <tr>
-    <%= @selected_user ? '' : '<td>'+User.find(training.user_id).name+'</td>' %>
-    <td><%= link_to TrainingType.find(training.training_type_id).name, :controller => :training_types, :action => :show, :id => training.training_type_id %></td>
-    <td><%=h training.date %></td>
-    <td><%=h User.find(training.user_trained_by_id).name %></td>
-    <td><%=h training.note %></td>
-    <td><%= link_to 'Un-train', training, :confirm => 'Are you sure?', :method => :delete, :selected_user => @selected_user %></td>
-  </tr>
-<% end %>
-</table>
-
-<% end %>
+<%= render :partial => 'trainings/trainings_list', :locals => { 
+		:selected_user => @selected_user ? User.find(@selected_user) : nil,
+		:trainings =>  @selected_user ? Training.find(:all, :conditions => 'user_id = @selected_user') : Training.find(:all) } %>
+		
 
 <br />
 

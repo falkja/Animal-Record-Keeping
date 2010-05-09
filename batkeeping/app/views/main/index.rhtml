@@ -12,19 +12,22 @@
 
 <% if !session[:person] %>
 
-<div style='background-color:#eee; width:400px; border-style:dashed;border-width:1px;'>
-    <div align=center>
-		<h4>Please Sign In:</h4>
+<div class='left_indent' style='background-color:#eee; width:380px; border-style:dashed;border-width:1px;'>
+    
+	<div class='left_indent'>
+	
+	<h4>Please Sign In:</h4>
 
     <% form_tag :action => 'login', :id => @user do %>
 
-      <ul>
-			User: <%= select_tag("user[id]", options_from_collection_for_select(User.current, "id", "name")) %>
-      <%= submit_tag 'sign in' %>
+      
+		User: <%= select_tag("user[id]", options_from_collection_for_select(User.current, "id", "name")) %>
+		<%= submit_tag 'sign in' %>
 
     <% end %>
-		
-		</div>
+	
+	</div>
+	
 </div>
 
 <% end %>

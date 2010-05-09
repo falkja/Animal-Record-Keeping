@@ -6,26 +6,25 @@ class User < ActiveRecord::Base
   has_many :task_histories
   has_many :bat_changes, :order => "date desc"
   has_many :trainings
-  has_and_belongs_to_many :flight_logs
     
   def self.current
     find :all, :conditions => 'end_date is null', :order => 'name'
   end
 	
 	def self.current_weekend_care
-		find :all, :conditions => "end_date is null and job_type REGEXP 'Weekend Care'", :order => 'name'
+		find :all, :conditions => "end_date is null and job_type regexp 'Weekend'", :order => 'name'
 	end
 	
 	def self.current_medical_care
-		find :all, :conditions => "end_date is null and job_type REGEXP 'Medical Care'", :order => 'name'
+		find :all, :conditions => "end_date is null and job_type regexp 'Medic'", :order => 'name'
 	end
 	
 	def self.current_animal_care
-		find :all, :conditions => "end_date is null and job_type REGEXP 'Animal Care'", :order => 'name'
+		find :all, :conditions => "end_date is null and job_type regexp 'Anim'", :order => 'name'
 	end
 	
   def self.administrator
-    find :all, :conditions => "end_date is null and job_type REGEXP 'Administrator'", :order => 'name'
+    find :all, :conditions => "end_date is null and job_type regexp 'Admin'", :order => 'name'
   end
   
 	def medical_care_user?

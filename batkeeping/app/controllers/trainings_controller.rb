@@ -13,7 +13,6 @@ class TrainingsController < ApplicationController
   # GET /trainings/1
   # GET /trainings/1.xml
   def show
-		
 		@training = Training.find(params[:id])
 
     respond_to do |format|
@@ -42,6 +41,27 @@ class TrainingsController < ApplicationController
 		end
   end
 
+
+  def new_mult_users
+  @users = User.current
+      if TrainingType.find(:all).length == 0
+			flash[:notice] = 'You must create a training type first'
+			redirect_to :controller => :Training_Types, :action => :new
+	else
+		if params[:selected_user]
+			@selected_user = params[:selected_user].to_i
+		end
+			
+		@training = Training.new
+
+		respond_to do |format|
+			format.html # new_mult_users.html.erb
+			format.xml  { render :xml => @training }
+		end
+	end
+  end
+  
+  
   # GET /trainings/1/edit
   def edit
     @training = Training.find(params[:id])
@@ -53,6 +73,10 @@ class TrainingsController < ApplicationController
 		#error check to make sure user doesn't have duplicate entries of the same training
 		if Training.find(:first, :conditions => "user_id = #{params[:training][:user_id]} and training_type_id = #{params[:training][:training_type_id]}")
 			flash[:notice] = "User #{User.find(params[:training][:user_id]).name} is already trained with this training type."
+			redirect_to :back
+		#error check to make sure user doesn't train himself
+		elsif params[:training][:user_id] == params[:training][:user_trained_by_id]
+			flash[:notice] = "User cannot be trained by him/herself."
 			redirect_to :back
 		else
 			@training = Training.new(params[:training])
@@ -66,6 +90,28 @@ class TrainingsController < ApplicationController
 		end
   end
 
+  def create_mult_users
+	
+	@users = params[:user_id]
+	warn = false
+	
+	for user in @users
+		if (Training.find(:first, :conditions => "user_id = #{user} and training_type_id = #{params[:training][:training_type_id]}")) or (user == params[:training][:user_trained_by_id])
+			flash[:notice] = 'One or more trainings not successfully created.'
+			warn = true
+		else
+			new_training = Training.new(params[:training])
+			new_training.user_id = user
+			new_training.save
+			if !warn
+				flash[:notice] = 'Training(s) successfully created.'
+			end
+		end
+	end
+	redirect_to :controller => :trainings, :action => :index
+  end
+  
+  
   # PUT /trainings/1
   # PUT /trainings/1.xml
   def update

@@ -1,9 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
 
   
-  map.connect '/trainings/new_mult_users', :controller => 'trainings', :action => 'new_mult_users'
-  map.connect '/trainings/create_mult_users', :controller => 'trainings', :action => 'create_mult_users'
-  map.resources :trainings
+  #map.connect '/trainings/new_mult_users', :controller => 'trainings', :action => 'new_mult_users'
+  #map.connect '/trainings/create_mult_users', :controller => 'trainings', :action => 'create_mult_users'
+  map.resources :trainings, :new => { :new_mult_users => :get }, :member => { :create_mult_users => :post }
   # The priority is based upon order of creation: first created -> highest priority.
   
   # Sample of regular route:
@@ -24,4 +24,5 @@ ActionController::Routing::Routes.draw do |map|
 
   # Install the default route as the lowest priority.
   map.connect ':controller/:action/:id'
+  #map.connect ':controller/:action/:id.:format'
 end

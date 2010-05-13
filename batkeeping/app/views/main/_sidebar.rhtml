@@ -45,11 +45,11 @@
 
   <li><h4>Send Email</h4></li>
 	<ul>
-  <li><%= link_to('Entire Lab', :controller => 'main', :action => 'lab_email', :users => User.current) %></li>
-  <li><%= link_to('Animal Care', :controller => 'main', :action => 'lab_email', :users => User.current_animal_care) %></li>
-  <li><%= link_to('Medical Care', :controller => 'main', :action => 'lab_email', :users => User.current_medical_care) %></li>
-  <li><%= link_to('Weekend Care', :controller => 'main', :action => 'lab_email', :users => User.current_weekend_care) %></li>
-  <li><%= link_to('Administrators', :controller => 'main', :action => 'lab_email', :users => User.administrator) %></li>
+  <li><%= link_to('Entire Lab', {:controller => 'main', :action => 'lab_email', :users => User.current}, {:title => User.current.collect{|u| [u.name+" \n"]}}) %></li>
+  <li><%= link_to('Animal Care', {:controller => 'main', :action => 'lab_email', :users => User.current_animal_care}, {:title => User.current_animal_care.collect{|u| [u.name+" \n"]}}) %></li>
+  <li><%= link_to('Medical Care', {:controller => 'main', :action => 'lab_email', :users => User.current_medical_care}, {:title => User.current_medical_care.collect{|u| [u.name+" \n"]}}) %></li>
+  <li><%= link_to('Weekend Care', {:controller => 'main', :action => 'lab_email', :users => User.current_weekend_care}, {:title => User.current_weekend_care.collect{|u| [u.name+" \n"]}}) %></li>
+  <li><%= link_to('Administrators', {:controller => 'main', :action => 'lab_email', :users => User.administrator}, {:title => User.administrator.collect{|u| [u.name+" \n"]}}) %></li>
 	
 </ul>
 </div>

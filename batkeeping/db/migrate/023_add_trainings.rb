@@ -13,6 +13,8 @@ class AddTrainings < ActiveRecord::Migration
       table.column :description, :text
     end
     
+	change_column("users", "job_type", "varchar(100)")
+	
   end
 
   def self.down

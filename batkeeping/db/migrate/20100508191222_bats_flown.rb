@@ -6,8 +6,6 @@ class BatsFlown < ActiveRecord::Migration
 		t.column :user_id, :integer, :null => false
 		t.column :note, :text
 	end
-	
-	change_column("users", "job_type", "varchar(100)")
   end
 
   def self.down

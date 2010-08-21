@@ -14,7 +14,7 @@
 <%= @everything_else %>
 
 <p><label for="cage_name">Name</label><br/>
-<%= text_field 'cage', 'name', :disabled => @disable_cage_name_change, :focus => true %></p>
+<%= text_field 'cage', 'name', :disabled => @disable_cage_name_change %></p>
 
 <p><label for="cage_date_created">Date created</label><br/>
 <%= date_select 'cage', 'date_created', :disabled => @disable_cage_name_change %></p>
@@ -34,3 +34,4 @@ User.find(:all, :conditions => "end_date is null", :order => "name"), "id", "nam
 </div>
 <!--[eoform:cage]-->
 
+<%= set_focus_to_id 'cage_name' %>

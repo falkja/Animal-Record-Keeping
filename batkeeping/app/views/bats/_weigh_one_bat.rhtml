@@ -36,7 +36,7 @@ If the bat has too many mites to remove, create a medical problem for the bat so
 	<td><%= link_to bat.band, :controller => :bats, :action => :show, :id => bat %></td>
 <% end %>
 
-<td><%= text_field 'weight', 'weight', :size => 4, :autocomplete => 'off', :focus => @creating ? false : true %> g</td>
+<td><%= text_field 'weight', 'weight', :size => 4, :autocomplete => 'off' %> g</td>
 
 <td><label for='checkbox_after_eating'>After Eating?</label>
 <% if bat.cage && bat.cage.fed_today? %>
@@ -75,3 +75,6 @@ If the bat has too many mites to remove, create a medical problem for the bat so
 <% end %>
 
 </div>
+<% if !@creating %>
+	<%= set_focus_to_id 'weight_weight' %>
+<% end %>

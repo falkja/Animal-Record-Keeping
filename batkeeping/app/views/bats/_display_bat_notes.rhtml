@@ -32,8 +32,9 @@
                        :url => { :controller => :bats, :action => :add_bat_note, 
 					   :id => @bat }) do %>
 	<b><label for="bat_note">Add note:</label></b>
-	<%= text_field 'bat', 'note', :value => '', :autocomplete => 'off', :focus => true %>
+	<%= text_field 'bat', 'note', :value => '', :autocomplete => 'off' %>
 	<%= submit_tag "Add note on bat" %>
 <% end %>
+<%= set_focus_to_id 'bat_note' %>
 </p>
 </div>

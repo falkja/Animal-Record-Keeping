@@ -20,6 +20,15 @@ module ApplicationHelper
     end
   end
   
+  # Produces -> May 25
+  def nice_date_no_year(date)
+    if (date != nil)
+      date.strftime("%b %d")
+    else
+      'N/A'
+    end
+  end
+  
   # Produces -> May 25, 2006, 04:16 PM
   def nice_date_with_time(date)
     if (date != nil)

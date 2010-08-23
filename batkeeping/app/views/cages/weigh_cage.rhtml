@@ -48,4 +48,4 @@
 There are no bats in this cage.
 <% end %>
 
-<p><%= link_to 'Back', :controller => 'cages', :action => 'choose_cage_to_weigh' %></p>
+<p><%= link_to 'List My Cages', :controller => 'cages', :action => 'choose_cage_to_weigh', :cages => User.find(session[:person]).cages.active %></p>

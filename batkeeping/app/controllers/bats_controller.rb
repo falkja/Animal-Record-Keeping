@@ -48,12 +48,21 @@ class BatsController < ApplicationController
 	def sort_by_weight
 		bat_list = Bat.find(params[:ids])
 		bat_list = bat_list.sort_by{|bat| [bat.weights.recent_never_nil.weight, bat.band]}
-    render :partial => 'bat_list', :locals => {
+		render :partial => 'bat_list', :locals => {
 					:bat_list => bat_list, :div_id => params[:div_id],
 					:show_leave_date_and_reason => params[:show_leave_date_and_reason],
 					:show_weigh_link => params[:show_weigh_link]}
 	end
 
+	def sort_by_weigh_date
+		bat_list = Bat.find(params[:ids])
+		bat_list = bat_list.sort_by{|bat| [bat.weights.recent_never_nil.date.to_f, bat.band]}
+		render :partial => 'bat_list', :locals => {
+					:bat_list => bat_list, :div_id => params[:div_id],
+					:show_leave_date_and_reason => params[:show_leave_date_and_reason],
+					:show_weigh_link => params[:show_weigh_link]}
+	end
+	
   def sort_by_band
     bat_list = Bat.find(params[:ids], :order => 'band')
     render :partial => 'bat_list', :locals => {

@@ -51,6 +51,14 @@
 					:show_weigh_link => show_weigh_link}) %>
 	</th>
 	<th>
+	<%= link_to_remote( "Weigh Date",
+		:update => 'bats_div',
+		:url =>{ :controller => :bats, :action => :sort_by_weigh_date, 
+					:ids => bat_list, 
+					:show_leave_date_and_reason => show_leave_date_and_reason,
+					:show_weigh_link => show_weigh_link}) %>
+	</th>
+	<th>
 	<%= link_to_remote( "Collected",
 		:update => 'bats_div',
 		:url =>{ :controller => :bats, :action => :sort_by_collected, 
@@ -87,15 +95,24 @@
   <% end %>
   
   <td><% if bat.species %><%=h bat.species.name %><% end %></td>
-  <td><%=h bat.gender %></td>
+  <td align=center><%=h bat.gender %></td>
     
     <% if bat.weights.length > 0 %></td>
-          <td><%=h bat.weights.recent.weight %> g</td>
+          <td align=center><%=h bat.weights.recent.weight %> g </td>
+		  <td align=center>
+		  <% if bat.monitor_weight && Date.parse(bat.weights.recent.date.strftime('%Y/%m/%d')) <= Date.today - 6.days %>
+		  <font color=red>
+		  <% else %>
+		  <font>
+		  <% end %>
+		  <%= nice_date_no_year bat.weights.recent.date %></td>
+		  </font>
     <% else %>
-          <td>N/A</td>
+          <td align=center>N/A</td>
+          <td align=center>N/A</td>
     <% end %>
     
-    <td><%=h bat.collection_date.strftime("%Y") %></td>
+    <td align=center><%=h bat.collection_date.strftime("%Y") %></td>
 	<% if show_leave_date_and_reason %>
 	  <td>
 		<%=h nice_date_no_day(bat.leave_date) %>
@@ -105,20 +122,20 @@
 	  </td>
 	<% end %>
 	<% if !show_weigh_link %>
-		<td><%= link_to 'Edit', :action => 'edit', :id => bat %></td>
+		<td><%= button_to 'Edit', :controller=>:bats, :action => 'edit', :id => bat %></td>
 		<td>
 			<% if bat.leave_date == nil %>
-				<%= link_to 'Deactivate', { :action => 'deactivate', :id => bat } %>
+				<%= button_to 'Deactivate', {:controller=>:bats, :action => 'deactivate', :id => bat } %>
 			<% else %>
-				<%=  link_to 'Reactivate', { :action => 'reactivate', :id => bat } %>
+				<%=  button_to 'Reactivate', {:controller=>:bats, :action => 'reactivate', :id => bat } %>
 			<% end %>
 		</td>
 	<% end %>
   <% if bat.cage != nil %>
-    <td><%= link_to 'Move', :controller => :bats, :action=>:single_bat_to_move, :id=>bat %></td>
+    <td><%= button_to 'Move', :controller => :bats, :action=>:single_bat_to_move, :id=>bat %></td>
   <% end %>
   <% if bat.leave_date == nil %>
-  <td><%= show_weigh_link ? '' : (link_to 'Weigh', :action => 'weigh_bat', :id => bat) %></td>
+  <td><%= show_weigh_link ? '' : (button_to 'Weigh', :controller => :bats, :action => 'weigh_bat', :id => bat) %></td>
   <% end %>
   </tr>
 <% end %>

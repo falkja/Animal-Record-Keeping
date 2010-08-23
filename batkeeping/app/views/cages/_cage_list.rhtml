@@ -8,9 +8,13 @@
     <th><%= link_to_remote "Bats",
         :update => @div_id,
         :url =>{ :controller => 'cages', :action => 'list_by_bats', :ids => cage_list, :div => @div_id, :weighing => @weighing, :list_all => @list_all } %></th>
-    <th><%= link_to_remote "Average Weight",
+    <th><%= link_to_remote "Avg Weight",
         :update => @div_id,
         :url =>{ :controller => 'cages', :action => 'list_by_bat_weight', :ids => cage_list, :div => @div_id, :weighing => @weighing, :list_all => @list_all } %></th>
+    </th>
+	<th><%= link_to_remote "Weigh Date",
+        :update => @div_id,
+        :url =>{ :controller => 'cages', :action => 'list_by_weigh_date', :ids => cage_list, :div => @div_id, :weighing => @weighing, :list_all => @list_all } %></th>
     </th>
     <th>
     <%= link_to_remote "Owner",
@@ -32,11 +36,19 @@
 	<% end %>
 	</td>
 	<td><%= cage.room.name %></td>
-	<td><%=h cage.bats.count %></td>
-  <td><%=h cage.average_bat_weight %></td>
+	<td align=center><%=h cage.bats.count %></td>
+	<td align=center><%=h cage.average_bat_weight %></td>
+	<td align=center>
+	<% if (cage.last_weigh_date != 0) && cage.any_bats_monitored && Date.parse(cage.last_weigh_date.strftime('%Y/%m/%d')) <= Date.today - 6.days %>
+	  <font color=red>
+    <% else %>
+	  <font>
+    <% end %>
+	<%= cage.last_weigh_date!=0 ? nice_date_no_year(cage.last_weigh_date) : 'NA' %></td>
+	</font>
 	<td><%=h cage.user ? cage.user.name : 'None' %></td>
 	<% feeding = cage.tasks.feeding_tasks.length %>
-	<td>
+	<td align=center>
 		<% if cage.fed_every_day? %>
 			<%= feeding %>
 		<% else %>
@@ -47,16 +59,16 @@
 		<td><%=h nice_date(cage.date_destroyed) %></td>
 	<% end %>
 	<% if !@weighing %>
-		<td><%= link_to 'Edit', :controller => 'cages', :action => 'edit', :id => cage %></td>
+		<td><%= button_to 'Edit', :controller => 'cages', :action => 'edit', :id => cage %></td>
 		<td>
 		  <% if cage.date_destroyed == nil %>
-			<%= link_to 'Deactivate', { :controller => 'cages', :action => 'deactivate', :id => cage }, :confirm => 'Are you sure?', :method => :post %>
+			<%= button_to 'Deactivate', { :controller => 'cages', :action => 'deactivate', :id => cage }, :confirm => 'Are you sure?', :method => :post %>
 		  <% else %>
-			<%=  link_to 'Reactivate', { :controller => 'cages', :action => 'reactivate', :id => cage }, :confirm => 'Are you sure?', :method => :post %>
+			<%=  button_to 'Reactivate', { :controller => 'cages', :action => 'reactivate', :id => cage }, :confirm => 'Are you sure?', :method => :post %>
 		  <% end %>
 		</td>
 	<% end %>
-	<td><%= link_to 'Weigh Cage', :controller => 'cages', :action => 'weigh_cage', :id => cage %></td>
+	<td><%= !@weighing ? button_to('Weigh', :controller => 'cages', :action => 'weigh_cage', :id => cage) : '' %></td>
   </tr>
 <% end %>
 </table>

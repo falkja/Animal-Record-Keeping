@@ -34,11 +34,6 @@
 			<li><em><%= link_to 'Add training', :controller => :trainings, :action => :new, :selected_user => user %></em></li>
     </ul>
 
-    <% if !@animal_care_staff_page %>
-    
-			<li><h4><%= link_to 'Animal Care Staff', :controller => :main, :action => :animal_care_staff %></h3></li>
-    
-    <% end %>
   
 	<% end %>
 

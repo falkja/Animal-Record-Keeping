@@ -49,6 +49,37 @@ class Cage < ActiveRecord::Base
     end
   end
   
+  def last_weigh_date
+    if self.bats.length > 0
+      bats_with_weights = 0
+	  dates = Array.new
+      for bat in self.bats
+        if bat.weights.length > 0
+          dates << bat.weights.recent.date
+		  bats_with_weights = 1;
+        end
+      end
+      if bats_with_weights > 0 
+		last_date = dates.min
+        return last_date
+      else
+        return 0
+      end
+    else 
+      return 0
+    end
+  end
+  
+  def any_bats_monitored
+  any_monitored = false
+	for bat in self.bats
+		if bat.monitor_weight
+			any_monitored = true
+		end
+	end
+	return any_monitored
+  end
+  
   def food_today
     food = 0
     self.tasks.feeding_tasks_today.each {|task| task.food ? food = food + task.food : food }

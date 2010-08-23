@@ -14,6 +14,7 @@ class Weight < ActiveRecord::Base
 		else	
 			weight = Weight.new
 			weight.weight = 0
+			weight.date = 0
 			return weight 
 		end
 	end

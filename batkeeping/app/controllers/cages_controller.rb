@@ -63,7 +63,17 @@ class CagesController < ApplicationController
     @list_all = params[:list_all]
     render :partial => 'cage_list', :locals => {:cage_list => @cages}
   end
-
+  
+  def list_by_weigh_date
+	@cages = Cage.find(params[:ids], :order => 'user_id, name')
+	
+    @cages = @cages.sort_by{|cage| [cage.last_weigh_date.to_f, cage.name]}
+    @div_id = params[:div]
+    @weighing = params[:weighing]
+    @list_all = params[:list_all]
+    render :partial => 'cage_list', :locals => {:cage_list => @cages}
+  end
+  
   def show
     @cage = Cage.find(params[:id])
     @tasks = @cage.tasks #should be the list of weighing tasks
@@ -176,11 +186,15 @@ class CagesController < ApplicationController
   end
 
   def choose_cage_to_weigh
-    @all_cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name")
-    @cages = Array.new
-    for cage in @all_cages
-      (cage.bats.count > 0) ? @cages << cage : ''
-    end
+	if params[:cages]
+		@cages = Cage.find(params[:cages])
+	else
+		@all_cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name")
+		@cages = Array.new
+		for cage in @all_cages
+		  (cage.bats.count > 0) ? @cages << cage : ''
+		end
+	end
   end
 
   def weigh_cage

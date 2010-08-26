@@ -1,0 +1,27 @@
+<% form_for(@protocol) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :number %><br />
+    <%= f.text_field :number %>
+  </p>
+  <p>
+    <%= f.label :start_date %><br />
+    <%= f.date_select :start_date, :end_year=> Time.now.year %>
+  </p>
+  <p>
+    <%= f.label :end_date %><br />
+    <em>[[3 years after start date]]</em>
+  </p>
+  <p>
+    <%= f.label :husbandry, "Husbandry Protocol" %><br />
+    <%= f.check_box :husbandry %>
+  </p>
+  <p>
+    <%= f.submit 'Save' %>
+  </p>
+<% end %>

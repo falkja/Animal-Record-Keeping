@@ -1,88 +1,45 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'protocols_controller'
+require 'test_helper'
 
-# Re-raise errors caught by the controller.
-class ProtocolsController; def rescue_action(e) raise e end; end
-
-class ProtocolsControllerTest < Test::Unit::TestCase
-  fixtures :protocols
-
-  def setup
-    @controller = ProtocolsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
-
-  def test_index
+class ProtocolsControllerTest < ActionController::TestCase
+  test "should get index" do
     get :index
     assert_response :success
-    assert_template 'list'
-  end
-
-  def test_list
-    get :list
-
-    assert_response :success
-    assert_template 'list'
-
     assert_not_nil assigns(:protocols)
   end
 
-  def test_show
-    get :show, :id => 1
-
-    assert_response :success
-    assert_template 'show'
-
-    assert_not_nil assigns(:protocol)
-    assert assigns(:protocol).valid?
-  end
-
-  def test_new
+  test "should get new" do
     get :new
-
     assert_response :success
-    assert_template 'new'
-
-    assert_not_nil assigns(:protocol)
   end
 
-  def test_create
-    num_protocols = Protocol.count
+  test "should create protocol" do
+    assert_difference('Protocol.count') do
+      post :create, :protocol => { }
+    end
 
-    post :create, :protocol => {}
-
-    assert_response :redirect
-    assert_redirected_to :action => 'list'
-
-    assert_equal num_protocols + 1, Protocol.count
+    assert_redirected_to protocol_path(assigns(:protocol))
   end
 
-  def test_edit
-    get :edit, :id => 1
-
+  test "should show protocol" do
+    get :show, :id => protocols(:one).to_param
     assert_response :success
-    assert_template 'edit'
-
-    assert_not_nil assigns(:protocol)
-    assert assigns(:protocol).valid?
   end
 
-  def test_update
-    post :update, :id => 1
-    assert_response :redirect
-    assert_redirected_to :action => 'show', :id => 1
+  test "should get edit" do
+    get :edit, :id => protocols(:one).to_param
+    assert_response :success
   end
 
-  def test_destroy
-    assert_not_nil Protocol.find(1)
+  test "should update protocol" do
+    put :update, :id => protocols(:one).to_param, :protocol => { }
+    assert_redirected_to protocol_path(assigns(:protocol))
+  end
 
-    post :destroy, :id => 1
-    assert_response :redirect
-    assert_redirected_to :action => 'list'
+  test "should destroy protocol" do
+    assert_difference('Protocol.count', -1) do
+      delete :destroy, :id => protocols(:one).to_param
+    end
 
-    assert_raise(ActiveRecord::RecordNotFound) {
-      Protocol.find(1)
-    }
+    assert_redirected_to protocols_path
   end
 end

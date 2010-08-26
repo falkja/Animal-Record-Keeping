@@ -1,0 +1,36 @@
+<h1>Listing protocols</h1>
+
+<% if @protocols.length == 0 %>
+
+<p>No Protocols.</p>
+
+<% else %>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Number</th>
+    <th>Start date</th>
+    <th>End date</th>
+    <th>Husbandry</th>
+  </tr>
+
+<% @protocols.each do |protocol| %>
+  <tr>
+    <td><%=h protocol.title %></td>
+    <td><%=h protocol.number %></td>
+    <td><%=h protocol.start_date %></td>
+    <td><%=h protocol.end_date %></td>
+    <td><%=h protocol.husbandry %></td>
+    <td><%= link_to 'Show', protocol %></td>
+    <td><%= link_to 'Edit', edit_protocol_path(protocol) %></td>
+    <td><%= link_to 'Destroy', protocol, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<% end %>
+
+<br />
+
+<%= link_to 'New protocol', new_protocol_path %>

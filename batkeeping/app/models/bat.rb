@@ -6,7 +6,8 @@ class Bat < ActiveRecord::Base
 	has_many :cage_out_histories, :order => "date desc"
 	has_many :medical_problems, :order => "date_opened desc"
 	has_many :bat_notes, :order => "date desc"
-  has_many :bat_changes, :order => "date desc"
+	has_many :bat_changes, :order => "date desc"
+	has_and_belongs_to_many :protocols
 	
 	@@current_user = nil #needed for the sig
 	@@comment = nil #needed if we wanna comment a cage move

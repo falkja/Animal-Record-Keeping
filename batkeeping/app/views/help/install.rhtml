@@ -1,11 +1,16 @@
 <h1>Instructions for setting up Batkeeping</h1>
 <h4>After completing these steps, you will be able to run the batkeeping application.  You will also have a development environment in which you will be able to make changes to the database or to the application and commit your changes to the project hosted at rubyforge.</h4>
 
+<h4>You will be following the installation procedures for setting up a ruby on rails application.  You can find these general procedures <a href=http://rubyonrails.org/download/>here</a>.</h4>
+
 <h3>Download:</h3>
+
+First download the following.
+
 <ol>
-<li><a href="http://dev.mysql.com/downloads/mysql/5.0.html#downloads">MySQL 5.0 Community Server (Essentials 16.8MB)</a></li>
-<li><a href="http://dev.mysql.com/downloads/gui-tools/5.0.html">MySQL GUI tools</a></li>
-<li><a href="http://rubyforge.org/frs/?group_id=167">Ruby</a></li>
+<li><a href="http://www.mysql.com/downloads/mysql/">MySQL Community Server (Essentials)</a></li>
+<li><a href="http://www.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+<li><a href="http://rubyforge.org/frs/?group_id=167">Ruby 1.87</a></li>
 <li><a href="http://rubyforge.org/frs/?group_id=126">RubyGems</a></li>
 <li><a href="http://tortoisesvn.net/downloads">Tortoise SVN</a></li>
 <li><a href="http://rubyforge.org/projects/rmagick">RMagick</a></li>
@@ -17,9 +22,11 @@
 
 <h3>Installation:</h3>
 
+These installation procedures assume a Microsoft Windows environment.
+
 <ol>
 <p>
-<li>Install MySQL Server 5.0</li>
+<li>Install MySQL Server</li>
 <ol type="a">
 <li>Choose Typical</li>
 <li>Skip Sign-Up</li>
@@ -117,28 +124,24 @@
 <p>
 <li>Setup the MySQL database</li>
 <ol type="a">
-<li>go to start - programs - MySQL Server 5.0 - MySQL Command Line Client</li>
+<li>go to start - programs - MySQL Server - MySQL Command Line Client</li>
 <li>enter your mysql root password</li>
 <li>type "create database batkeeping;" and then "exit"</li>
-<li>now open the MySQL Administrator</li>
-<li>Click Restore (along the left panel)</li>
-<li>Click Open Backup File, then navigate to the newly created batkeeping directory you just got from the SVN download, then into "db", then open the most recent db_data.sql file</li>
-<li>Now click Start Restore</li>
-<li>You can now close the MySQL Admintrator.  Your database was created!</li>
+<li>Then populate the database by starting a command line prompt and entering mysql -u root -p batkeeping < #dump_file#, where with your password after the prompt and specify the dump file, which you can get from pushkin in /mnt/raid/software/batkeeping_backups.</li>
 </ol>
-</p>
 
 <p>
-<li>Adding a "batlab" user to the MySQL database</li>
+<li>Set up the batlab user account to allow an interface with the database without having to use the root account</li>
 <ol type="a">
-<li>Start the MySQL Administrator</li>
-<li>Click User Administration on the left panel</li>
-<li>Click Add New User on the bottom panel</li>
-<li>Enter the user name: batlab and password: batlab</li>
+<li>Start MySQL Workbench</li>
+<li>Select your server under Server Administration.</li>
+<li>Go to accounts and add account.  Under login name, enter batlab.  Under password, enter batlab.</li>
+<li>Then go to schema privaledges, still under accounts.  Select batlab and then select Add Entry.</li>
+<li>Choose selected schema, choose batkeeping, and then click okay.  Highlight that entry and then click select all and then click save changes.</li>
 </ol>
 </p>
 
-If you have problems with rails reporting the bundled mysql.rb driver has been removed, follow these instructions: http://forums.mysql.com/read.php?116,279110,280899#msg-280899
+If you have problems with rails reporting the bundled mysql.rb driver has been removed, follow these instructions: <a href=http://forums.mysql.com/read.php?116,279110,280899#msg-280899>http://forums.mysql.com/read.php?116,279110,280899#msg-280899</a>
 
 
 <p>

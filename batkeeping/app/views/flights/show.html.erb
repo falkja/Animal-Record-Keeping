@@ -1,0 +1,6 @@
+<h1>Flight Log for <%=h @bat.band %></h1>
+
+<br>
+
+<%= render :partial => 'flights/remote_show', :locals => { 
+		:bat => @bat, :month => @month, :year => @year, :flight_dates => @flight_dates, :highlight_today => true, :flights => @flights} %>

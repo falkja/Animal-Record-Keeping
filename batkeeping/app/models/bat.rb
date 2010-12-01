@@ -8,6 +8,7 @@ class Bat < ActiveRecord::Base
 	has_many :bat_notes, :order => "date desc"
 	has_many :bat_changes, :order => "date desc"
 	has_and_belongs_to_many :protocols
+	has_many :flights, :order => "date desc"
 	
 	@@current_user = nil #needed for the sig
 	@@comment = nil #needed if we wanna comment a cage move
@@ -167,6 +168,19 @@ class Bat < ActiveRecord::Base
   def weight_on(date)
     Weight.find(:first, :conditions => "bat_id = #{self.id} and YEAR(date) <= #{date.year} AND MONTH(date) <= #{date.month} AND DAY(date) <= #{date.day}")
   end
+  
+  def flown_on(date)
+	Flight.find(:first, :conditions => "bat_id = #{self.id} and YEAR(date) <= #{date.year} AND MONTH(date) <= #{date.month} AND DAY(date) <= #{date.day}")
+  end
+  
+  def flight_dates(year,month)
+	flights = Flight.find(:all, :conditions => "bat_id = #{self.id} and YEAR(date) = #{year} AND MONTH(date) = #{month}", :order => "date ASC")
+	dates = Array.new
+	flights.each{|flight| dates << flight.date.day }
+	return dates, flights
+  end
+
+
   
   #single run for populating the bat changes table in the database
   def self.populate_bat_changes

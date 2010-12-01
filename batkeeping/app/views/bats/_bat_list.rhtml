@@ -33,7 +33,6 @@
 					:show_leave_date_and_reason => show_leave_date_and_reason,
 					:show_weigh_link => show_weigh_link}) %>
 	</th>
-	</th>
 	<th>
 	<%= link_to_remote( "Gender",
 		:update => 'bats_div',
@@ -100,7 +99,7 @@
     <% if bat.weights.length > 0 %></td>
           <td align=center><%=h bat.weights.recent.weight %> g </td>
 		  <td align=center>
-		  <% if bat.monitor_weight && Date.parse(bat.weights.recent.date.strftime('%Y/%m/%d')) <= Date.today - 6.days %>
+		  <% if bat.monitor_weight && Date.parse(bat.weights.recent.date.strftime('%Y/%m/%d')) <= (Date.today - 7.days) %>
 		  <font color=red>
 		  <% else %>
 		  <font>

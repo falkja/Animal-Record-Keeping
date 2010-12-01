@@ -28,6 +28,7 @@ If the bat has too many mites to remove, create a medical problem for the bat so
 <% end %>
 <th>Weight</th>
 <th>Already Fed</th>
+<th>Flown</th>
 <th align='left'>Weight Note</th>
 
 <tr>
@@ -46,6 +47,16 @@ If the bat has too many mites to remove, create a medical problem for the bat so
 <% end %>
 </td>
 
+
+<td>
+<label for='checkbox_bat_flown'>Bat Flown?</label>
+<% if (bat.cage && bat.cage.flight_cage) || (bat.flown_on(Date.today)) %>
+<%= check_box 'checkbox', 'bat_flown', :checked=> 'checked' %>
+<%else%>
+<%= check_box 'checkbox', 'bat_flown' %>
+<% end %>
+</td>
+
 <td><%= text_field 'weight', 'note' %></td>
 
 <% if !initial_weight %>
@@ -57,7 +68,6 @@ If the bat has too many mites to remove, create a medical problem for the bat so
 
 </tr>
 </table>
-
 
 <% if @weight.weight %>
 <p>
@@ -73,6 +83,10 @@ If the bat has too many mites to remove, create a medical problem for the bat so
 </div>
 </p>
 <% end %>
+
+
+
+
 
 </div>
 <% if !@creating %>

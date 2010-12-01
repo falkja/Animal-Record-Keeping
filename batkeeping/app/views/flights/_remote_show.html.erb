@@ -1,0 +1,43 @@
+<div id="calendar" style="border:1px solid gray; width:500px; margin-right:auto; margin-left:auto">
+
+<table style="width:300px; margin-right:auto; margin-left:auto">
+<tr>
+<td style="text-align: left">
+   <% form_remote_tag :url => {:controller => :flights, :action => :remote_show, :id => bat, :month => month.to_i-1, :year => year}, :update => "calendar" do %>
+	<%= submit_tag 'Prev. Month' %>
+   <% end %>
+</td>
+<td style="text-align: right">
+   <% form_remote_tag :url => {:controller => :flights, :action => :remote_show, :id => bat, :month => month.to_i+1, :year => year}, :update => "calendar" do %>
+	<%= submit_tag 'Next Month' %>
+   <% end %>
+</td>
+</tr>
+</table>
+
+<%= show_calendar :month => month, :year => year, :highlight_today => false, :highlight_dates => flight_dates %>
+
+<br>
+
+<% if flights.length > 0 %>
+
+<br>
+
+<table style="width:400px; margin-right:auto; margin-left:auto">
+<th>Day</th>
+<th>User</th>
+<th>Note</th>
+
+<% for flight in flights %>
+	<tr>
+	<td><%=h flight.date.strftime("%d")  %></td>
+	<td><%=h flight.user.initials %></td>
+	<td><%=h flight.note %></td>
+	</tr>
+<% end %>
+
+</table>
+
+<% end %>
+
+</div>

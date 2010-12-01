@@ -1,0 +1,24 @@
+<!-- 
+	This partial displays a list of bats for showing the bats flight log
+		:bat_list - the list of bats
+-->
+
+<% if bat_list %>
+
+<table>
+<th>Band</th>
+
+<% for bat in bat_list %>
+  <tr>
+  
+  <td><b><%= link_to bat.band, :controller => :flights, :action => :show, :id => bat %></b></td>
+  
+  </tr>
+
+<% end %>
+  
+</table>
+
+<% else %>
+	No bats
+<% end %>

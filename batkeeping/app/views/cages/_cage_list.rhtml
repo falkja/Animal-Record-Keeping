@@ -39,7 +39,7 @@
 	<td align=center><%=h cage.bats.count %></td>
 	<td align=center><%=h cage.average_bat_weight %></td>
 	<td align=center>
-	<% if (cage.last_weigh_date != 0) && cage.any_bats_monitored && Date.parse(cage.last_weigh_date.strftime('%Y/%m/%d')) <= Date.today - 6.days %>
+	<% if (cage.last_weigh_date != 0) && cage.any_bats_monitored && Date.parse(cage.last_weigh_date.strftime('%Y/%m/%d')) <= Date.today - 7.days %>
 	  <font color=red>
     <% else %>
 	  <font>

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100508191222) do
+ActiveRecord::Schema.define(:version => 20101130204420) do
 
   create_table "bat_changes", :force => true do |t|
     t.integer "bat_id",               :null => false
@@ -47,6 +47,11 @@ ActiveRecord::Schema.define(:version => 20100508191222) do
     t.boolean "monitor_weight",                  :default => true, :null => false
   end
 
+  create_table "bats_protocols", :id => false, :force => true do |t|
+    t.integer "bat_id"
+    t.integer "protocol_id"
+  end
+
   create_table "cage_in_histories", :force => true do |t|
     t.integer  "bat_id",  :null => false
     t.integer  "cage_id", :null => false
@@ -65,11 +70,12 @@ ActiveRecord::Schema.define(:version => 20100508191222) do
   end
 
   create_table "cages", :force => true do |t|
-    t.string  "name",           :limit => 45, :null => false
+    t.string  "name",           :limit => 45,                    :null => false
     t.date    "date_created"
     t.date    "date_destroyed"
     t.integer "user_id"
-    t.integer "room_id",                      :null => false
+    t.integer "room_id",                                         :null => false
+    t.boolean "flight_cage",                  :default => false, :null => false
   end
 
   create_table "census", :force => true do |t|
@@ -101,6 +107,16 @@ ActiveRecord::Schema.define(:version => 20100508191222) do
     t.integer "medical_problem_id"
     t.date    "date_opened",                      :null => false
     t.date    "date_closed"
+  end
+
+  create_table "protocols", :force => true do |t|
+    t.string   "title"
+    t.string   "number"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.boolean  "husbandry"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "rooms", :force => true do |t|

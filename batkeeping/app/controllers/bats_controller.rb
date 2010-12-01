@@ -461,17 +461,30 @@ class BatsController < ApplicationController
   
   def submit_weight
     @bat = Bat.find(params[:id])
-		if params[:weight][:weight] == ''
-      flash[:notice] = 'Submission failed. No weight entered.'
-			redirect_to :back
-			return false
+	if params[:weight][:weight] == ''
+		flash[:notice] = 'Submission failed. No weight entered.'
+		redirect_to :back
+		return false
     else
-			save_weight
-			if params[:redirectme]
-				redirect_to :controller => 'cages', :action => 'weigh_cage', :id => params[:redirectme]
-			end
+		save_weight
+		if params[:checkbox][:bat_flown] == '1'
+			save_flight
 		end
+		if params[:redirectme]
+			redirect_to :controller => 'cages', :action => 'weigh_cage', :id => params[:redirectme]
+		end
+	end
   end
+	def save_flight
+		flight=Flight.new
+		
+		flight.bat = @bat
+		flight.user = User.find(session[:person])
+		flight.date = Date.today
+		flight.note = params[:weight][:note]
+		
+		flight.save
+	end
   
 	def todays_weight_exists
 		bat = Bat.find(params[:id])

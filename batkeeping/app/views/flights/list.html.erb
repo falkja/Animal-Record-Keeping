@@ -1,0 +1,38 @@
+<h1>Flight log</h1>
+
+<h2>
+<% if @list == "all" %>
+Listing all bats
+<% elsif @list == "current" %>
+Listing current bats
+<% else %>
+Listing deactivated bats
+<% end %>
+</h2>
+
+<div class="left_indent">
+
+<% if @bats.length == 0 %>
+
+No bats.
+
+<% else %>
+
+<%= render :partial => 'flights/bat_list', :locals => { 
+		:bat_list => @bats} %>
+
+<% end %>
+
+</div>
+<br />
+
+<% if @list == "all" %>
+<%= link_to 'List Current Bats', :controller => :flights, :action => :list %>
+<%= link_to 'List Deactivated Bats', :controller => :flights, :action => :list_deactivated %>
+<% elsif @list == "current" %>
+<%= link_to 'List All Bats', :controller => :flights, :action => :list_all %>
+<%= link_to 'List Deactivated Bats', :controller => :flights, :action => :list_deactivated %>
+<% else %>
+<%= link_to 'List All Bats', :controller => :flights, :action => :list_all %>
+<%= link_to 'List Current Bats', :controller => :flights, :action => :list %>
+<% end %>

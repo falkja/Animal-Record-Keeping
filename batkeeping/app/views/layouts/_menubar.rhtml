@@ -4,7 +4,7 @@
 	<li><%= link_to 'My Page', :controller => :main, :action => :user_summary_page, :id => User.find(session[:person]) %></li>
   <li><%= link_to 'Bat Changes', :controller => :stats, :action => :bat_changes %></li>
   <li><%= link_to 'Colony Status', :controller => :stats, :action => :index %></li>
-  <li><%= link_to 'Flight Log', :controller => :flights, :action => :index %></li>
+  <li><%= link_to 'Flight Logs', :controller => :flights, :action => :index %></li>
   <li><%= link_to 'Animal Care Staff', :controller => :main, :action => :animal_care_staff %></li>
   <li><b><a href="">Admin ...</a></b>
 	<% if User.find(session[:person]).administrator? %>

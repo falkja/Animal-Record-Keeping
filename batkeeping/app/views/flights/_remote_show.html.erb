@@ -31,7 +31,7 @@
 <% for flight in flights %>
 	<tr>
 	<td><%=h flight.date.strftime("%d")  %></td>
-	<td><%=h flight.user.initials %></td>
+	<td><%= link_to flight.user.initials, :controller => :users, :action=>:show, :id => flight.user %></td>
 	<td><%=h flight.note %></td>
 	</tr>
 <% end %>

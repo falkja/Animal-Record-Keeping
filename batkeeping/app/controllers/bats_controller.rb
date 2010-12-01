@@ -480,7 +480,9 @@ class BatsController < ApplicationController
 		
 		flight.bat = @bat
 		flight.user = User.find(session[:person])
-		flight.date = Date.today
+		
+		params[:weight]["date(1i)"] ? flight.date = Date.civil(params[:weight]["date(1i)"].to_i,params[:weight]["date(2i)"].to_i, params[:weight]["date(3i)"].to_i) : flight.date = Date.today
+		
 		flight.note = params[:weight][:note]
 		
 		flight.save

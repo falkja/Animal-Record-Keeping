@@ -22,6 +22,10 @@
 <b>Date Created: </b><%= nice_date @cage.date_created %>
 </p>
 
+<p>
+<b>Flight Cage: </b><%= @cage.flight_cage.to_s.capitalize %>
+</p>
+
 <% if @cage.date_destroyed != nil %>
 <p>
 <b>Date Destroyed: </b><%= nice_date @cage.date_destroyed %>

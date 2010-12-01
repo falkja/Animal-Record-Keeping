@@ -90,20 +90,13 @@ class CagesController < ApplicationController
     @cage = Cage.new
     @deactivating = false
     @rooms = Room.find(:all, :order => 'name')
-		if @rooms.length == 0
-			flash[:notice] = 'New cages need a room.  Create a room before creating a cage.'
-			redirect_to :controller => 'rooms', :action => :new
-		end
+	if @rooms.length == 0
+		flash[:notice] = 'New cages need a room.  Create a room before creating a cage.'
+		redirect_to :controller => 'rooms', :action => :new
+	end
   end
 
   def create
-    if Cage.find(:first, :conditions => "name = '#{params[:cage][:name]}'")
-      flash[:notice] = 'There is already a cage with the same name.  Please choose a different name or reactivate the old cage.'
-			redirect_to :back
-    elsif params[:cage][:name] == ''
-			flash[:notice] = 'There were problems with your submission.  Please make sure all data fields are filled out.'
-			redirect_to :back
-    else
       @cage = Cage.new(params[:cage])
       @cage.date_destroyed = nil
 
@@ -113,7 +106,6 @@ class CagesController < ApplicationController
       else
         render :action => 'new'
       end
-    end
   end
 
   def edit

@@ -26,3 +26,7 @@ end
 task :populate_bat_changes => :environment do
   Bat.populate_bat_changes
 end
+
+task :populate_daily_flight_logs => :environment do
+  Flight.populate_daily_flight_logs
+end

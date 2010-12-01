@@ -180,6 +180,13 @@ class Bat < ActiveRecord::Base
 	return dates, flights
   end
 
+  def exempt_from_flight
+	if self.medical_problems.length > 0 || self.species.hibernating
+		return true
+	else
+		return false
+	end
+  end
 
   
   #single run for populating the bat changes table in the database

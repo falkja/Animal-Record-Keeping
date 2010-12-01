@@ -5,7 +5,10 @@ class Cage < ActiveRecord::Base
     has_many :cage_out_histories, :order => "date desc"
     has_many :tasks, :order => "repeat_code"
     belongs_to :room
-  
+	
+	validates_presence_of :name
+	validates_uniqueness_of :name
+	
   def self.active
     find :all, :conditions => 'date_destroyed is null', :order => 'name'
   end

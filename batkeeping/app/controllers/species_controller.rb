@@ -21,16 +21,11 @@ class SpeciesController < ApplicationController
 
   def create
 		@sp = Species.new(params[:sp])
-		if params[:sp][:name] == '' || params[:sp][:lower_weight_limit] == '' || params[:sp][:upper_weight_limit] == ''
-			flash[:notice] = 'There were problems with your submission.  Please make sure all data fields are filled out.'
-			render :action => 'new'
+		if @sp.save
+			flash[:notice] = 'Species was successfully created.'
+			redirect_to :action => 'list'
 		else
-			if @sp.save
-				flash[:notice] = 'Species was successfully created.'
-				redirect_to :action => 'list'
-			else
-				render :action => 'new'
-			end
+			render :action => 'new'
 		end
   end
 
@@ -40,16 +35,11 @@ class SpeciesController < ApplicationController
 
   def update
 		@sp = Species.find(params[:id])
-		if params[:sp][:name] == '' || params[:sp][:lower_weight_limit] == '' || params[:sp][:upper_weight_limit] == ''
-			flash[:notice] = 'There were problems with your submission.  Please make sure all data fields are filled out.'
-			render :action => 'edit'
+		if @sp.update_attributes(params[:sp])
+			flash[:notice] = 'Species was successfully updated.'
+			redirect_to :action => 'show', :id => @sp
 		else
-			if @sp.update_attributes(params[:sp])
-				flash[:notice] = 'Species was successfully updated.'
-				redirect_to :action => 'show', :id => @sp
-			else
-				render :action => 'edit'
-			end
+			render :action => 'edit'
 		end
   end
 

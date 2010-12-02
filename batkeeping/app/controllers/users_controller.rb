@@ -30,38 +30,27 @@ class UsersController < ApplicationController
   end
 
   def create
-    if (params[:user][:name] == '') || (params[:user][:initials] == '') || (params[:user][:email] == '')
-			flash[:notice] = 'There were problems with your submission.  Please make sure all data fields are filled out.'
-			redirect_to :back
-    elsif User.find(:first, :conditions => "name = '#{params[:user][:name]}'")
-      flash[:notice] = 'There is already a user with the same name.  Please choose a different name.'
-			redirect_to :back
-    elsif User.find(:first, :conditions => "initials = '#{params[:user][:initials]}'")
-      flash[:notice] = 'There is already a user with the same initials.  Please choose different initials.'
-			redirect_to :back
-    else
-      @user = User.new(params[:user])
-      		@user.job_type = ''
-      if params[:medical][:checked] == '1'
-        @user.job_type = "Medical Care"
-      end
-      if params[:animal][:checked] == '1'
-        @user.job_type = @user.job_type + ' ' + "Animal Care"
-      end
-      if params[:weekend][:checked] == '1'
-        @user.job_type = @user.job_type + ' ' + "Weekend Care"
-      end
-      if params[:administrator][:checked] == '1'
-        @user.job_type = @user.job_type + ' ' + "Administrator"
-      end
-      @user.end_date = nil
-      if @user.save
-        flash[:notice] = 'User was successfully created.'
-        redirect_to :action => 'list'
-      else
-        render :action => 'new'
-      end
-    end
+	  @user = User.new(params[:user])
+	  @user.job_type = ''
+	  if params[:medical][:checked] == '1'
+		@user.job_type = "Medical Care"
+	  end
+	  if params[:animal][:checked] == '1'
+		@user.job_type = @user.job_type + ' ' + "Animal Care"
+	  end
+	  if params[:weekend][:checked] == '1'
+		@user.job_type = @user.job_type + ' ' + "Weekend Care"
+	  end
+	  if params[:administrator][:checked] == '1'
+		@user.job_type = @user.job_type + ' ' + "Administrator"
+	  end
+	  @user.end_date = nil
+	  if @user.save
+		flash[:notice] = 'User was successfully created.'
+		redirect_to :action => 'list'
+	  else
+		render :action => 'new'
+	  end
   end
 
   def edit

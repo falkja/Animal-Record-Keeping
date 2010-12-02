@@ -22,7 +22,7 @@ class BatsController < ApplicationController
   end
 
 	def list_deactivated
-		@bats = Bat.find(:all, :conditions => 'leave_date is not null', :order => 'band')
+		@bats = Bat.not_active
 		@list = "deactivated"
 		@show_leave_date_and_reason = true
 		render :action => 'list'
@@ -476,16 +476,18 @@ class BatsController < ApplicationController
 	end
   end
 	def save_flight
-		flight=Flight.new
-		
-		flight.bat = @bat
-		flight.user = User.find(session[:person])
-		
-		params[:weight]["date(1i)"] ? flight.date = Date.civil(params[:weight]["date(1i)"].to_i,params[:weight]["date(2i)"].to_i, params[:weight]["date(3i)"].to_i) : flight.date = Date.today
-		
-		flight.note = params[:weight][:note]
-		
-		flight.save
+		if !@bat.flown_on(Date.today)
+			flight=Flight.new
+			
+			flight.bat = @bat
+			flight.user = User.find(session[:person])
+			
+			params[:weight]["date(1i)"] ? flight.date = Date.civil(params[:weight]["date(1i)"].to_i,params[:weight]["date(2i)"].to_i, params[:weight]["date(3i)"].to_i) : flight.date = Date.today
+			
+			flight.note = params[:weight][:note]
+			
+			flight.save
+		end
 	end
   
 	def todays_weight_exists

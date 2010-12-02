@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101201035214) do
+ActiveRecord::Schema.define(:version => 20101202002659) do
 
   create_table "bat_changes", :force => true do |t|
     t.integer "bat_id",               :null => false
@@ -87,12 +87,15 @@ ActiveRecord::Schema.define(:version => 20101201035214) do
   end
 
   create_table "flights", :force => true do |t|
-    t.integer "bat_id",      :null => false
+    t.integer "bat_id",             :null => false
     t.date    "date"
-    t.integer "user_id",     :null => false
+    t.integer "user_id",            :null => false
     t.text    "note"
     t.boolean "exempt"
-    t.string  "exempt_type"
+    t.integer "medical_problem_id"
+    t.integer "protocol_id"
+    t.integer "cage_id"
+    t.integer "species_id"
   end
 
   create_table "medical_problems", :force => true do |t|
@@ -126,11 +129,12 @@ ActiveRecord::Schema.define(:version => 20101201035214) do
   end
 
   create_table "species", :force => true do |t|
-    t.string  "name",                    :limit => 45, :null => false
-    t.float   "lower_weight_limit",                    :null => false
-    t.float   "upper_weight_limit",                    :null => false
+    t.string  "name",                    :limit => 45,                    :null => false
+    t.float   "lower_weight_limit",                                       :null => false
+    t.float   "upper_weight_limit",                                       :null => false
     t.integer "hibernating_start_month"
     t.integer "hibernating_end_month"
+    t.boolean "requires_vaccination",                  :default => false
   end
 
   create_table "task_census", :force => true do |t|

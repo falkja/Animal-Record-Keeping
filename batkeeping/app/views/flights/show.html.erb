@@ -3,4 +3,4 @@
 <br>
 
 <%= render :partial => 'flights/remote_show', :locals => { 
-		:bat => @bat, :month => @month, :year => @year, :flight_dates => @flight_dates, :highlight_today => true, :flights => @flights} %>
+		:bat => @bat, :this_month => Date.today, :flight_dates => @flight_dates, :highlight_today => true, :flights => @flights} %>

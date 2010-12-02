@@ -1,0 +1,16 @@
+<span id="bat_select">
+<%= collection_select(:flight, :bat_id, bats, :id, :band) %>
+
+<%= link_to_remote "My Bats", :url => {:action => :remote_bat_list, :bats => User.find(session[:person]).users_bats}, :update => "bat_select" %> | 
+
+<%= link_to_remote "Non-exempt Bats", :url => {:action => :remote_bat_list, :bats => Bat.not_exempt_from_flight}, :update => "bat_select" %> | 
+
+<%= link_to_remote "In Flight Cages", :url => {:action => :remote_bat_list, :bats => Bat.in_flight_cage}, :update => "bat_select" %> | 
+
+<%= link_to_remote "Current Bats", :url => {:action => :remote_bat_list, :bats => Bat.active}, :update => "bat_select" %> | 
+
+<%= link_to_remote "All Bats", :url => {:action => :remote_bat_list, :bats => Bat.find(:all)}, :update => "bat_select" %> | 
+
+<%= link_to_remote "Deactivated Bats", :url => {:action => :remote_bat_list, :bats => Bat.not_active}, :update => "bat_select" %>
+
+</span>

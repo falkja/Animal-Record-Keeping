@@ -1,21 +1,32 @@
-<div id="calendar" style="border:1px solid gray; width:500px; margin-right:auto; margin-left:auto">
+<div id="calendar" style="border:1px solid gray; width:650px; margin-right:auto; margin-left:auto">
 
-<table style="width:300px; margin-right:auto; margin-left:auto">
+<table style="width:350px; margin-right:auto; margin-left:auto">
 <tr>
 <td style="text-align: left">
-   <% form_remote_tag :url => {:controller => :flights, :action => :remote_show, :id => bat, :month => month.to_i-1, :year => year}, :update => "calendar" do %>
-	<%= submit_tag 'Prev. Month' %>
+   <% form_remote_tag :url => {:controller => :flights, :action => :remote_show, :id => bat, :this_month => (this_month-1.month)}, :update => "calendar" do %>
+	<%= submit_tag "<" %>
    <% end %>
 </td>
-<td style="text-align: right">
-   <% form_remote_tag :url => {:controller => :flights, :action => :remote_show, :id => bat, :month => month.to_i+1, :year => year}, :update => "calendar" do %>
-	<%= submit_tag 'Next Month' %>
+
+<td style="text-align: middle">
+<% if Date.today.year > this_month.year || Date.today.mon != this_month.mon %>
+   <% form_remote_tag :url => {:controller => :flights, :action => :remote_show, :id => bat, :this_month => Date.today}, :update => "calendar" do %>
+	<%= submit_tag "Today" %>
    <% end %>
+<% end %>
+</td>
+
+<td style="text-align: right">
+<% if Date.today.year > this_month.year || Date.today.mon > this_month.mon %>
+   <% form_remote_tag :url => {:controller => :flights, :action => :remote_show, :id => bat, :this_month => (this_month+1.month)}, :update => "calendar" do %>
+	<%= submit_tag ">" %>
+   <% end %>
+<% end %>
 </td>
 </tr>
 </table>
 
-<%= show_calendar :month => month, :year => year, :highlight_today => false, :highlight_dates => flight_dates %>
+<%= show_calendar :month => this_month.mon, :year => this_month.year, :highlight_today => false, :highlight_dates => flight_dates %>
 
 <br>
 
@@ -23,21 +34,56 @@
 
 <br>
 
-<table style="width:400px; margin-right:auto; margin-left:auto">
+<table style="width:625px; margin-right:auto; margin-left:auto">
 <th>Day</th>
 <th>User</th>
+<th>Reason</th>
 <th>Note</th>
 
 <% for flight in flights %>
 	<tr>
 	<td><%=h flight.date.strftime("%d")  %></td>
 	<td><%= link_to flight.user.initials, :controller => :users, :action=>:show, :id => flight.user %></td>
+	
+	<td>
+	<% if !flight.cage && !flight.medical_problem && !flight.species %>
+		User entry
+	<% else %>
+		<% if flight.cage %>
+			Flight cage: <%= link_to flight.cage.name, :controller => :cages, :action => :show, :id => flight.cage %><br>
+		<% end %>
+		
+		<% if flight.medical_problem %>
+			Med. prob.: <%= link_to flight.medical_problem.title, :controller => :medical_problems, :action => :show, :id => flight.medical_problem %><br>
+		<% end %>
+		
+		<% if flight.species %>
+			Sp. <em><%= link_to flight.species.name, :controller => :species, :action => :show, :id => flight.species %></em> hibernating<br>
+		<% end %>
+		
+		<% if (flight.bat.species.requires_vaccination && !flight.bat.vaccination_date) %>
+			Quarantine<br>
+		<% end %>
+	<% end %>
+	
+	</td>
+	
 	<td><%=h flight.note %></td>
+	
+	<td>
+	<%= link_to 'Destroy', { :action => 'destroy', :id => flight, :bat => flight.bat }, :confirm => 'Are you sure?', :method => :post %>
+	</td>
+	
+	
 	</tr>
 <% end %>
 
 </table>
 
 <% end %>
+
+<p style="text-align:center;">
+<%= link_to 'Add flight log', :action => :new %>
+</p>
 
 </div>

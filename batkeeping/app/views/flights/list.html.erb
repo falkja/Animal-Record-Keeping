@@ -1,11 +1,13 @@
 <h1>Flight logs</h1>
 
 <h2>
-<% if @list == "all" %>
+<% if @list =="mine" %>
+Listing your bats
+<% elsif @list == "all" %>
 Listing all bats
 <% elsif @list == "current" %>
 Listing current bats
-<% else %>
+<% elsif @list == "deactivated" %>
 Listing deactivated bats
 <% end %>
 </h2>
@@ -26,13 +28,9 @@ No bats.
 </div>
 <br />
 
-<% if @list == "all" %>
-<%= link_to 'List Current Bats', :controller => :flights, :action => :list %>
-<%= link_to 'List Deactivated Bats', :controller => :flights, :action => :list_deactivated %>
-<% elsif @list == "current" %>
+<hr>
+
+<%= link_to 'List My Bats', :controller => :flights, :action => :list %> | 
+<%= link_to 'List Current Bats', :controller => :flights, :action => :list_current %> | 
+<%= link_to 'List Deactivated Bats', :controller => :flights, :action => :list_deactivated %> | 
 <%= link_to 'List All Bats', :controller => :flights, :action => :list_all %>
-<%= link_to 'List Deactivated Bats', :controller => :flights, :action => :list_deactivated %>
-<% else %>
-<%= link_to 'List All Bats', :controller => :flights, :action => :list_all %>
-<%= link_to 'List Current Bats', :controller => :flights, :action => :list %>
-<% end %>

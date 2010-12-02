@@ -50,7 +50,7 @@ If the bat has too many mites to remove, create a medical problem for the bat so
 
 <td>
 <label for='checkbox_bat_flown'>Bat Flown?</label>
-<% if (bat.cage && bat.cage.flight_cage) || (bat.flown_on(Date.today)) %>
+<% if (bat.cage && bat.cage.flight_cage) || (bat.id && bat.flown_on(Date.today)) %>
 <%= check_box 'checkbox', 'bat_flown', :checked=> 'checked' %>
 <%else%>
 <%= check_box 'checkbox', 'bat_flown' %>

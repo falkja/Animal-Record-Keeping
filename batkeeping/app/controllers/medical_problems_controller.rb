@@ -50,7 +50,7 @@ class MedicalProblemsController < ApplicationController
 
   def new
     @medical_problem = MedicalProblem.new
-    @bats = Bat.find(:all, :conditions => "leave_date is null", :order => "band")
+    @bats = Bat.active
     @deactivating = false
   end
 
@@ -132,7 +132,7 @@ class MedicalProblemsController < ApplicationController
   end
 
   def edit
-    @bats = Bat.find(:all, :conditions => "leave_date is null", :order => "band")
+    @bats = Bat.active
     @medical_problem = MedicalProblem.find(params[:id])
     @deactivating = false
   end
@@ -159,7 +159,7 @@ class MedicalProblemsController < ApplicationController
   
   def deactivate
 	@medical_problem = MedicalProblem.find(params[:id])
-  @bats = Bat.find(:all, :conditions => "leave_date is null", :order => "band")
+  @bats = Bat.active
   @deactivating = true
   end
   

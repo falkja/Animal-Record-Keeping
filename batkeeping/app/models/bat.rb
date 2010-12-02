@@ -179,15 +179,43 @@ class Bat < ActiveRecord::Base
 	flights.each{|flight| dates << flight.date.day }
 	return dates, flights
   end
-
+	
+  def self.not_exempt_from_flight
+	@curr_bats = Bat.active
+	
+	non_ex_bats = Array.new
+	for bat in @curr_bats
+		if !bat.exempt_from_flight
+			non_ex_bats << bat
+		end
+	end
+	return non_ex_bats
+  end
+	
+  def self.in_flight_cage
+	@curr_bats = Bat.active
+	
+	bats_flight_cage = Array.new
+	for bat in @curr_bats
+		if bat.cage.flight_cage
+			bats_flight_cage << bat
+		end
+	end
+	return bats_flight_cage
+  end
+	
   def exempt_from_flight
-	if self.medical_problems.length > 0 || self.species.hibernating
+	if (self.medical_problems.current.length > 0) || self.species.hibernating || (self.species.requires_vaccination && !self.vaccination_date)
 		return true
 	else
 		return false
 	end
   end
-
+  
+  def med_problem_current_first_one_only
+	med_problem = MedicalProblem.find(:first, :conditions=>{:bat_id => self.id, :date_closed => nil})
+	return med_problem
+  end
   
   #single run for populating the bat changes table in the database
   def self.populate_bat_changes

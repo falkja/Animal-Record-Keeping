@@ -1,0 +1,15 @@
+<%= error_messages_for :flight %>
+
+<!--[form:flight]-->
+
+<p><label for='flight_bat_id'>Bat</label><br/>
+<%= render :partial => 'bat_select', :locals => {:bats => Bat.active } %>
+</p>
+
+<p><label for='flight_date'>Date</label><br/>
+<%= date_select("flight", "date", :end_year => Time.now.year) %></p>
+
+<p><label for='flight_note'>Note</label><br/>
+<%= text_field("flight", "note") %></p>
+
+<!--[eoform:user]-->

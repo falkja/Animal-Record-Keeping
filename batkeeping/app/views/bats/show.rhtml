@@ -64,6 +64,11 @@ Emails will <em>not</em> be sent out if bat is not weighed often enough
 </p>
 <% end %>
 
+<p>
+<b>Flight Log:</b>
+<%= link_to 'Show Flight Log', :controller => :flights, :action => :show, :id => @bat %>
+</p>
+
 <%= render :partial => 'bats/display_bat_notes' %>
 
 </div>

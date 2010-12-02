@@ -7,6 +7,9 @@ class User < ActiveRecord::Base
   has_many :bat_changes, :order => "date desc"
   has_many :trainings
     
+  validates_presence_of :name, :initials, :email
+  validates_uniqueness_of :name, :initials
+	
   def self.current
     find :all, :conditions => 'end_date is null', :order => 'name'
   end
@@ -68,13 +71,9 @@ class User < ActiveRecord::Base
   end
 
   def users_bats
-    users_bats = Array.new
-    for cage in self.cages
-			for bat in cage.bats
-				users_bats << bat
-			end
-		end
-    return users_bats
+	users_cages = self.cages
+	
+	users_bats = Bat.find(:all, :conditions => ["cage_id in (?) and leave_date is null", users_cages], :order => 'band')
   end
 
 	def bats_medical_problems #returns the users's bat's medical problems unless the user is a medical care user, in which case it returns all the medical problems

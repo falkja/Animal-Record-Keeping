@@ -1,0 +1,8 @@
+<h2>Listing all flight logs for <%= @bat.band %> between months <%= @start_date.strftime("%B %Y") %> and <%= @end_date.strftime("%B %Y") %></h2>
+
+<%= render :partial => 'flights_listing', :locals => {:flights => @flights} %>
+
+<br>
+<div style="width:625px; margin-right:auto; margin-left:auto">
+<%= render :partial => 'form_to_show_all_flight_logs', :locals =>{:bat=>@bat} %>
+</div>

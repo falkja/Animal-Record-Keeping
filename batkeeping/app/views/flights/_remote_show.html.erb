@@ -1,4 +1,4 @@
-<div id="calendar" style="border:1px solid gray; width:650px; margin-right:auto; margin-left:auto">
+
 
 <table style="width:350px; margin-right:auto; margin-left:auto">
 <tr>
@@ -30,60 +30,4 @@
 
 <br>
 
-<% if flights.length > 0 %>
-
-<br>
-
-<table style="width:625px; margin-right:auto; margin-left:auto">
-<th>Day</th>
-<th>User</th>
-<th>Reason</th>
-<th>Note</th>
-
-<% for flight in flights %>
-	<tr>
-	<td><%=h flight.date.strftime("%d")  %></td>
-	<td><%= link_to flight.user.initials, :controller => :users, :action=>:show, :id => flight.user %></td>
-	
-	<td>
-	<% if !flight.cage && !flight.medical_problem && !flight.species %>
-		User entry
-	<% else %>
-		<% if flight.cage %>
-			Flight cage: <%= link_to flight.cage.name, :controller => :cages, :action => :show, :id => flight.cage %><br>
-		<% end %>
-		
-		<% if flight.medical_problem %>
-			Med. prob.: <%= link_to flight.medical_problem.title, :controller => :medical_problems, :action => :show, :id => flight.medical_problem %><br>
-		<% end %>
-		
-		<% if flight.species %>
-			Sp. <em><%= link_to flight.species.name, :controller => :species, :action => :show, :id => flight.species %></em> hibernating<br>
-		<% end %>
-		
-		<% if (flight.bat.species.requires_vaccination && !flight.bat.vaccination_date) %>
-			Quarantine<br>
-		<% end %>
-	<% end %>
-	
-	</td>
-	
-	<td><%=h flight.note %></td>
-	
-	<td>
-	<%= link_to 'Destroy', { :action => 'destroy', :id => flight, :bat => flight.bat }, :confirm => 'Are you sure?', :method => :post %>
-	</td>
-	
-	
-	</tr>
-<% end %>
-
-</table>
-
-<% end %>
-
-<p style="text-align:center;">
-<%= link_to 'Add flight log', :action => :new %>
-</p>
-
-</div>
+<%= render :partial => 'flights/flights_listing', :locals => { :flights => flights } %>

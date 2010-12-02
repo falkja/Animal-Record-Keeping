@@ -1,0 +1,8 @@
+<% form_tag :action => :list_flight_logs_dates, :id => bat do %>
+Show all flight logs in between:
+  <%= date_select("post","start_date", :start_year => bat.flights[0].date.year, :end_year => Time.now.year, :discard_day => true, :use_short_month => true, :default=> bat.flights[0].date) %>
+  and
+  <%= date_select("post","end_date", :start_year => bat.flights[0].date.year, :end_year => Time.now.year, :discard_day => true, :use_short_month => true, :default=> bat.flights[-1].date) %>
+  
+  <%= submit_tag "Go" %>
+<% end %>

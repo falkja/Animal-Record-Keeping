@@ -8,7 +8,7 @@ class Bat < ActiveRecord::Base
 	has_many :bat_notes, :order => "date desc"
 	has_many :bat_changes, :order => "date desc"
 	has_and_belongs_to_many :protocols
-	has_many :flights, :order => "date desc"
+	has_many :flights, :order => "date asc"
 	
 	@@current_user = nil #needed for the sig
 	@@comment = nil #needed if we wanna comment a cage move

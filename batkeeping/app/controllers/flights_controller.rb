@@ -74,4 +74,17 @@ class FlightsController < ApplicationController
 	Flight.find(params[:id]).destroy
     redirect_to :action => 'show', :id => params[:bat]
   end
+  
+  def list_flight_logs_dates
+	@start_date = Date.civil(params[:post][:"start_date(1i)"].to_i,params[:post][:"start_date(2i)"].to_i,params[:post][:"start_date(3i)"].to_i)
+	@end_date = Date.civil(params[:post][:"end_date(1i)"].to_i,params[:post][:"end_date(2i)"].to_i,params[:post][:"end_date(3i)"].to_i)
+	@bat = Bat.find(params[:id])
+	
+	if @start_date > @end_date
+		flash[:notice] = 'Dates do not overlap'
+		redirect_to :action => :show, :id => @bat
+	else
+		@flights = Flight.find(:all, :conditions => "bat_id = #{@bat.id} and YEAR(date) >= #{@start_date.year} AND MONTH(date) >= #{@start_date.mon} and YEAR(date) <= #{@end_date.year} AND MONTH(date) <= #{@end_date.mon}", :order => "date ASC")
+	end
+  end
 end

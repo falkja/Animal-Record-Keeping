@@ -20,9 +20,31 @@
 
 <p>
   <b>Husbandry:</b>
-  <%=h @protocol.husbandry %>
+  <%=h @protocol.husbandry.to_s.capitalize %>
 </p>
 
+<p>
+  <b>Exempt from flight:</b>
+  <%=h @protocol.flight_exempt.to_s.capitalize %>
+</p>
+
+<p>
+  <b>Current bats:</b>
+  <% for bat in @protocol.bats %>
+	<br><%= link_to bat.band, :controller => :bats, :action => :edit, :id => bat %>
+	Added on: <%= nice_date bat.date_added_to_protocol(@protocol) %>
+  <% end %>
+</p>
+
+<p>
+  <b>Past bats:</b>
+  <% i = 0 %>
+  <% for bat in @past_bats %>
+	<br><%= link_to bat.band, :controller => :bats, :action => :edit, :id => bat %>
+	Removed on: <%= nice_date @hists[i].date_removed %>
+    <% i = i + 1 %>
+  <% end %>
+</p>
 
 <%= link_to 'Edit', edit_protocol_path(@protocol) %> |
 <%= link_to 'List Protocols', protocols_path %>

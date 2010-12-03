@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101202002659) do
+ActiveRecord::Schema.define(:version => 20101202234157) do
 
   create_table "bat_changes", :force => true do |t|
     t.integer "bat_id",               :null => false
@@ -87,15 +87,15 @@ ActiveRecord::Schema.define(:version => 20101202002659) do
   end
 
   create_table "flights", :force => true do |t|
-    t.integer "bat_id",             :null => false
+    t.integer "bat_id",                                :null => false
     t.date    "date"
-    t.integer "user_id",            :null => false
+    t.integer "user_id",                               :null => false
     t.text    "note"
     t.boolean "exempt"
     t.integer "medical_problem_id"
-    t.integer "protocol_id"
     t.integer "cage_id"
     t.integer "species_id"
+    t.boolean "protocol_exempt",    :default => false
   end
 
   create_table "medical_problems", :force => true do |t|
@@ -114,6 +114,15 @@ ActiveRecord::Schema.define(:version => 20101202002659) do
     t.date    "date_closed"
   end
 
+  create_table "protocol_histories", :force => true do |t|
+    t.integer  "bat_id"
+    t.integer  "protocol_id"
+    t.datetime "date_removed"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "date_added"
+  end
+
   create_table "protocols", :force => true do |t|
     t.string   "title"
     t.string   "number"
@@ -122,6 +131,7 @@ ActiveRecord::Schema.define(:version => 20101202002659) do
     t.boolean  "husbandry"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "flight_exempt", :default => false
   end
 
   create_table "rooms", :force => true do |t|

@@ -45,19 +45,37 @@
 <p><label for="bat_collection_place">Collection place</label><br/>
 <%= text_field 'bat', 'collection_place', :disabled => @reactivating %></p>
 
-<p><label for='bat_monitor_weight'>Send emails if not weighed enough?</label>
-<%= check_box 'bat', 'monitor_weight', :checked => @bat.monitor_weight %></p>
+<p><%= check_box 'bat', 'monitor_weight', :checked => @bat.monitor_weight %><label for='bat_monitor_weight'>Send emails if not weighed enough?</label></p>
+
+<% bat_for_weight = @bat %>
+<% bat_for_weight.band = nil %> 
 
 <% if @creating %>
 	<h3>Weight</h3>
 	<div class='left_indent'>
-		<%= render :partial => 'weigh_one_bat', :locals => {:bat => @bat, :initial_weight => true} %>
+		<%= render :partial => 'weigh_one_bat', :locals => {:bat => bat_for_weight, :initial_weight => true} %>
 	</div>
 <% end %>
 <%= set_focus_to_id 'bat_band' %>
-<% if (@reactivating == true) || (@creating == true) %>
 
-<p>
+
+<h3>Choose Protocols</h3>
+<table style="width:600px">
+<th></th>
+<th>Title</th>
+<th>Number</th>
+<th>Start Date</th>
+<% for protocol in @protocols %>
+<tr style="text-align:center">
+<td style="text-align:right"><%=check_box :bat_protocol_id, protocol.id , :checked => @bat.protocols.include?(protocol) %></td>
+<td style="text-align:left"><label for="bat_protocol_id_<%=protocol.id %>" ><%= protocol.title %></label></td>
+<td><label for="bat_protocol_id_<%=protocol.id %>"><%= protocol.number %></label></td>
+<td><label for="bat_protocol_id_<%=protocol.id %>"><%= nice_date protocol.start_date %></label></td>
+</tr>
+<% end %>
+</table>
+
+<% if (@reactivating == true) || (@creating == true) %>
 
 <h3>Choose Cage</h3>
 
@@ -66,7 +84,7 @@
 <% if @reactivating %> 
 (previous cage: <%=h @bat.cage_out_histories[0].cage.name %>)
 <% end %>
-<table>
+<table style="width:700px">
 <th></th>
 <th>Cage</th>
 <th>Number of bats</th>
@@ -75,18 +93,18 @@
 <% for cage in Cage.active %>
 <tr>
 <td><%=radio_button :bat, :cage_id, cage.id %></td>
-<td><%= cage.name %></td>
-<td><%= cage.bats.length %></td>
-<td><%= cage.average_bat_weight %></td>
+<td><label for="bat_cage_id_<%= cage.id %>"><%= cage.name %></label></td>
+<td style="text-align:center"><%= cage.bats.length %></td>
+<td style="text-align:center"><%= cage.average_bat_weight %></td>
 </tr>
 <% end %>
 
 <%# Bat already deactivated %>
 <tr>
 <td><%=radio_button :bat, :cage_id, 0, :checked => false %></td>
-<td>DEACTIVATED BAT (FOR RECORD KEEPING)</td>
-<td>NA</td>
-<td>NA</td>
+<td><label for="bat_cage_id_0">DEACTIVATED BAT (record keeping)</td>
+<td style="text-align:center">NA</td>
+<td style="text-align:center">NA</td>
 </tr>
 
 </table>

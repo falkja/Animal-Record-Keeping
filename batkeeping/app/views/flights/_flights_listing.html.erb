@@ -25,8 +25,12 @@
 			Med. prob.: <%= link_to flight.medical_problem.title, :controller => :medical_problems, :action => :show, :id => flight.medical_problem %><br>
 		<% end %>
 		
+		<% if flight.protocol_exempt %>
+			Exempt by protocol<br>
+		<% end %>
+		
 		<% if flight.species %>
-			Sp. <em><%= link_to flight.species.name, :controller => :species, :action => :show, :id => flight.species %></em> hibernating<br>
+			<em><%= link_to flight.species.name, :controller => :species, :action => :show, :id => flight.species %></em> hibernating<br>
 		<% end %>
 		
 		<% if (flight.bat.species.requires_vaccination && !flight.bat.vaccination_date) %>

@@ -1,6 +1,6 @@
 <h1>Editing bat</h1>
 
-<% form_tag :action => 'update', :id => @bat, :redirectme => 'list' do %>
+<% form_tag :action => 'update', :id => @bat, :redirectme => 'show' do %>
 	<%=	render :partial => 'form' %>
 	<%=	submit_tag 'Edit' %>
 <% end %>

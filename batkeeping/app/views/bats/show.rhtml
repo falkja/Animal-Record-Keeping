@@ -17,6 +17,18 @@
 </p>
 
 <p>
+<b>Protocols: </b>
+<% for protocol in @bat.protocols %>
+<br><%= link_to protocol.title, :controller => :protocols, :action => :show, :id => protocol %>
+<% end %>
+</p>
+
+<p>
+<b>Exempt from Flight: </b>
+<%= @bat.exempt_from_flight.to_s.capitalize %>
+</p>
+
+<p>
 <b>Gender: </b>
 <%= @bat.gender %>
 </p>

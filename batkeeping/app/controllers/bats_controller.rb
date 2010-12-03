@@ -95,10 +95,15 @@ class BatsController < ApplicationController
 	@time_in_lab = (Date.today - @bat.collection_date).to_i
   end
 
-  def new
-		@cages = Cage.active
+	def new
 		@bat = Bat.new
+		instance_vars_for_new_bat
+	end
+
+	def instance_vars_for_new_bat
+		@cages = Cage.active
 		@species = Species.find(:all)
+		@protocols = Protocol.current
 		@reactivating = false
 		@deactivating = false
 		@creating = true
@@ -108,59 +113,69 @@ class BatsController < ApplicationController
 		elsif @species.length == 0
 			flash[:notice] = 'New bats need a species.  Create a species before creating a bat.'
 			redirect_to :controller => 'species', :action => :new
+		elsif @protocols.length == 0
+			flash[:notice] = 'New bats need a current protocol.  Create a current protocol before creating a bat.'
+			redirect_to :controller => :protocols, :action => :new
 		end
 		@weight = Weight.new
 	end
-
+	
   def create
-		if (params[:bat][:cage_id] == nil) || (params[:bat][:band] == '') || (params[:bat][:collection_place] == '')
-			flash[:notice] = 'There were problems with your submission.  Please make sure all data fields are filled out.'
-			redirect_to :back
-    elsif Bat.find(:first, :conditions => "band = '#{params[:bat][:band]}'")
-      flash[:notice] = 'There is already a bat with the same band.  Please choose a different band.'
-			redirect_to :back
-    elsif (params[:bat][:cage_id] == '0') && (params[:move][:note] == '')
-      flash[:notice] = 'Please fill in the leave reason for this bat.'
-			redirect_to :back
-		else
-			@bat = Bat.new(params[:bat])
-			params[:bat][:cage_id] != '0' ? @bat.leave_date = nil : ''
-			
-			Bat::set_user_and_comment(User.find(session[:person]), 'new bat') #Do this before saving!
-			if @bat.save
+	@bat = Bat.new(params[:bat])
+	
+	protocol_ids = params["bat_protocol_id"]
+	protocols=Array.new
+	protocol_ids.each {|key,value| value !="0" ? protocols << Protocol.find(key) : ''}
+	
+	if protocols.length == 0
+		flash[:notice] = 'Select a protocol.'
+		instance_vars_for_new_bat
+		render :action => :new
+	elsif ((params[:bat][:cage_id] == '0') && (params[:move][:note] == ''))
+		flash[:notice] = 'Enter leave reason.'
+		instance_vars_for_new_bat
+		render :action => :new
+	else
+		params[:bat][:cage_id] != '0' ? @bat.leave_date = nil : ''
+
+		Bat::set_user_and_comment(User.find(session[:person]), 'new bat') #Do this before saving!
+		if @bat.save
 				
-        if params[:weight][:weight] != ''
-					save_weight
-				end
-        
-        if @bat.cage_id == 0
-          new_cage=nil
-          @bat.cage_id = nil
-          @bat.leave_reason = params[:move][:note]
-          @bat.save
-        else
-          new_cage=Cage.find(params[:bat][:cage_id])
-          
-          #census stuff
-          census = Census.find_or_create_by_date_and_room_id(Date.today, new_cage.room)
-          census.tally(1, Date.today, new_cage.room)
-          census.bats_added ? census.bats_added = census.bats_added + @bat.band + ' ' : census.bats_added = @bat.band + ' '
-          census.save
-        end
-        
-				flash[:notice] = 'Bat was successfully created.'
-				
-        if new_cage
-          @bats = Array.new
-          @bats << @bat
-          redirect_to :action => 'move', :bats => @bats, :new_cage => new_cage, :old_cage => nil, :note => 'new bat'
-        else
-          redirect_to :action => :list_deactivated
-        end
-			else
-				render :action => 'new'
+			if params[:weight][:weight] != ''
+				save_weight
 			end
+			
+			@bat.save_protocols(protocols)
+			
+			if @bat.cage_id == 0
+				new_cage=nil
+				@bat.cage_id = nil
+				@bat.leave_reason = params[:move][:note]
+				@bat.save
+			else
+				new_cage=Cage.find(params[:bat][:cage_id])
+
+				#census stuff
+				census = Census.find_or_create_by_date_and_room_id(Date.today, new_cage.room)
+				census.tally(1, Date.today, new_cage.room)
+				census.bats_added ? census.bats_added = census.bats_added + @bat.band + ' ' : census.bats_added = @bat.band + ' '
+				census.save
+			end
+
+			flash[:notice] = 'Bat was successfully created.'
+			
+			if new_cage
+				@bats = Array.new
+				@bats << @bat
+				redirect_to :action => 'move', :bats => @bats, :new_cage => new_cage, :old_cage => nil, :note => 'new bat'
+			else
+				redirect_to :action => :list_deactivated
+			end
+		else
+			instance_vars_for_new_bat
+			render :action => :new
 		end
+	end
   end
 
   def adding_deactivated_bat
@@ -173,16 +188,21 @@ class BatsController < ApplicationController
     @cages = Cage.active
     @bat = Bat.find(params[:id])
     @species = Species.find(:all)
+	@protocols = Protocol.current
     @deactivating = false
   end
 
   def update
-    if ( (params[:bat][:band] == '') || (params[:bat][:collection_place] == '') ) && !@deactivating && !@reactivating
-      flash[:notice] = 'There were problems with your submission.  Please make sure all data fields are filled out.'
+	
+	protocol_ids = params["bat_protocol_id"]
+	protocols=Array.new
+	protocol_ids.each {|key,value| value !="0" ? protocols << Protocol.find(key) : ''}
+	
+
+	
+    if protocols.length == 0
+      flash[:notice] = 'Need to select a protocol'
       redirect_to :back
-    elsif !@deactivating && !@reactivating && (Bat.find(:all, :conditions => "band = '#{params[:bat][:band]}'").length > 1)
-      flash[:notice] = 'There is already a bat with the same band.  Please choose a different band.'
-			redirect_to :back
     else 
       @bat = Bat.find(params[:id])
       if @reactivating
@@ -208,9 +228,13 @@ class BatsController < ApplicationController
 					bat_change.save
 				end
 				
+				@bat.save_protocols(protocols)
+				
         flash[:notice] = 'Bat was successfully updated.'
         if params[:redirectme] == 'list'
-          redirect_to :action => 'list'
+			redirect_to :action => :list
+		elsif params[:redirectme] == 'show'
+          redirect_to :action => :show, :id => @bat
         elsif params[:redirectme] == 'move'
           @bats = Array.new
           @bats << @bat

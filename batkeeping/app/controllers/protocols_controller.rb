@@ -14,7 +14,8 @@ class ProtocolsController < ApplicationController
   # GET /protocols/1.xml
   def show
     @protocol = Protocol.find(params[:id])
-
+	
+	@past_bats, @hists = @protocol.past_bats
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @protocol }

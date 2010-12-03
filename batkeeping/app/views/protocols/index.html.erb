@@ -13,6 +13,7 @@
     <th>Start date</th>
     <th>End date</th>
     <th>Husbandry</th>
+	<th>Flight Exempt</th>
   </tr>
 
 <% @protocols.each do |protocol| %>
@@ -21,7 +22,8 @@
     <td><%=h protocol.number %></td>
     <td><%=h protocol.start_date %></td>
     <td><%=h protocol.end_date %></td>
-    <td><%=h protocol.husbandry %></td>
+    <td><%=h protocol.husbandry.to_s.capitalize %></td>
+	<td><%=h protocol.flight_exempt.to_s.capitalize %></td>
     <td><%= link_to 'Show', protocol %></td>
     <td><%= link_to 'Edit', edit_protocol_path(protocol) %></td>
     <td><%= link_to 'Destroy', protocol, :confirm => 'Are you sure?', :method => :delete %></td>

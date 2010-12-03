@@ -9,9 +9,14 @@ class Bat < ActiveRecord::Base
 	has_many :bat_changes, :order => "date desc"
 	has_and_belongs_to_many :protocols
 	has_many :flights, :order => "date asc"
+	has_many :protocol_histories, :order => "date desc"
+	
+	validates_presence_of :band, :collection_place, :cage_id
+	validates_uniqueness_of :band
 	
 	@@current_user = nil #needed for the sig
 	@@comment = nil #needed if we wanna comment a cage move
+	
 	
 	#returns an empty string for the cage.name instead of a nil for sorting
 	def cage_never_nil
@@ -169,8 +174,14 @@ class Bat < ActiveRecord::Base
     Weight.find(:first, :conditions => "bat_id = #{self.id} and YEAR(date) <= #{date.year} AND MONTH(date) <= #{date.month} AND DAY(date) <= #{date.day}")
   end
   
+  #returns true if the bat has a flight log on date
   def flown_on(date)
-	Flight.find(:first, :conditions => "bat_id = #{self.id} and YEAR(date) <= #{date.year} AND MONTH(date) <= #{date.month} AND DAY(date) <= #{date.day}")
+	f = Flight.find(:first, :conditions => ["bat_id = #{self.id} and date = ?", date])
+	if f
+		return true
+	else
+		return false
+	end
   end
   
   def flight_dates(year,month)
@@ -204,8 +215,18 @@ class Bat < ActiveRecord::Base
 	return bats_flight_cage
   end
 	
+	def protocol_exempt
+		for p in self.protocols
+			if p.flight_exempt
+				return true
+			end
+		end
+		return false
+	end
+	
   def exempt_from_flight
-	if (self.medical_problems.current.length > 0) || self.species.hibernating || (self.species.requires_vaccination && !self.vaccination_date)
+  
+	if (self.medical_problems.current.length > 0) || self.species.hibernating || (self.species.requires_vaccination && !self.vaccination_date) || self.protocol_exempt
 		return true
 	else
 		return false
@@ -282,4 +303,34 @@ class Bat < ActiveRecord::Base
     end
   end
   
+	def save_protocols(protocols)	
+		#saving history of protocols removed
+		for protocol in (protocols - self.protocols)
+			#create a protocol history
+			p_hist = ProtocolHistory.new
+			p_hist.bat = self
+			p_hist.protocol = protocol
+			p_hist.date_removed = nil
+			p_hist.date_added = Time.now
+			p_hist.save
+		end
+		
+		#saving history of protocols added
+		for protocol in (self.protocols - protocols)
+			#create a protocol history
+			p_hist = ProtocolHistory.new
+			p_hist.bat = self
+			p_hist.protocol = protocol
+			p_hist.date_removed = Time.now
+			p_hist.date_added = nil
+			p_hist.save
+		end
+		
+		self.protocols = protocols
+	end
+	
+	def date_added_to_protocol(protocol)
+		hist = ProtocolHistory.find(:first, :conditions => ["protocol_id = ? and bat_id = ? and date_added is not null", protocol.id, self.id], :order => "date_added desc")
+		return hist.date_added
+	end
 end

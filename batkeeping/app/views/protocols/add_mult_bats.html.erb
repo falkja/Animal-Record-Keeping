@@ -1,0 +1,41 @@
+<div style="margin-right:auto; margin-left:auto; text-align:center; width:650px">
+
+<h2>Add Multiple Bats to Protocols</h2>
+
+<%= link_to_remote "My Bats", :url => {:action => :change_bat_list, :bats => User.find(session[:person]).users_bats}, :update => "bat_list" %> | 
+
+<%= link_to_remote "Current Bats", :url => {:action => :change_bat_list, :bats => Bat.active}, :update => "bat_list" %> | 
+
+<%= link_to_remote "Deactivated Bats", :url => {:action => :change_bat_list, :bats => Bat.not_active}, :update => "bat_list" %> | 
+
+<%= link_to_remote "All Bats", :url => {:action => :change_bat_list, :bats => Bat.find(:all)}, :update => "bat_list" %><p>
+
+<%= collection_select("cage","id", @cages, "id", "name", {:prompt => 'Bats in Cage'}, {:onchange => remote_function(:update => "bat_list", :url => {:action => :change_bat_list} ,:with => 'Form.Element.serialize(this)' ) } ) %>
+
+<%= collection_select("room","id", @rooms, "id", "name", {:prompt => 'Bats in Room'}, {:onchange => remote_function(:update => "bat_list", :url => {:action => :change_bat_list} ,:with => 'Form.Element.serialize(this)' ) } ) %>
+
+<%= collection_select("protocol","id", @protocols, "id", "title", {:prompt => 'Bats on Protocol'}, {:onchange => remote_function(:update => "bat_list", :url => {:action => :change_bat_list} ,:with => 'Form.Element.serialize(this)' ) } ) %>
+
+</div>
+
+<p>
+<% form_tag 'create_mult_prots_mult_bats', :id => 'my_form' do -%>
+
+	<div id="bat_list" style="border:1px solid gray; position:absolute; left:60px; width:150px;">
+	<%= render :partial => 'bat_checkbox_list', :locals => {:bats => @bats} %>
+	</div>
+
+	<div style="border:1px solid gray; position:absolute;left:260px;width:600px;">
+	<h3 style="text-align:center">Protocols</h3>
+	<%= render :partial => 'choose_protocols', :locals => {:protocols => @protocols, :bat => @bats[0]} %>
+
+	<div style="width:400px; margin-right:auto; margin-left:auto;text-align:center">
+	<p><%= submit_tag "Add bats to protocols" %></p>
+	</div>
+	</div>
+<% end -%>
+</p>
+
+
+
+</div>

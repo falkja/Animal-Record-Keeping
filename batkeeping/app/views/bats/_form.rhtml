@@ -60,20 +60,7 @@
 
 
 <h3>Choose Protocols</h3>
-<table style="width:600px">
-<th></th>
-<th>Title</th>
-<th>Number</th>
-<th>Start Date</th>
-<% for protocol in @protocols %>
-<tr style="text-align:center">
-<td style="text-align:right"><%=check_box :bat_protocol_id, protocol.id , :checked => @bat.protocols.include?(protocol) %></td>
-<td style="text-align:left"><label for="bat_protocol_id_<%=protocol.id %>" ><%= protocol.title %></label></td>
-<td><label for="bat_protocol_id_<%=protocol.id %>"><%= protocol.number %></label></td>
-<td><label for="bat_protocol_id_<%=protocol.id %>"><%= nice_date protocol.start_date %></label></td>
-</tr>
-<% end %>
-</table>
+<%= render :partial => 'protocols/choose_protocols', :locals => {:protocols => @protocols, :bat => @bat} %>
 
 <% if (@reactivating == true) || (@creating == true) %>
 

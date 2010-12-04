@@ -81,4 +81,40 @@ class ProtocolsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def add_mult_bats
+	@cages=Cage.active
+	@rooms = Room.find(:all)
+	@bats = Bat.active
+	@protocols = Protocol.current
+  end
+  
+  def change_bat_list
+	if params[:cage] && params[:cage][:id] != ""
+		@bats = Cage.find(params[:cage][:id]).bats
+	elsif params[:room] && params[:room][:id] != ""
+		@bats = Room.find(params[:room][:id]).bats
+	elsif params[:protocol] && params[:protocol][:id] != ""
+		@bats = Protocol.find(params[:protocol][:id]).bats
+	elsif params[:bats]
+		@bats = Bat.find(params[:bats], :order => 'band')
+	else 
+		render :partial => 'bat_checkbox_list', :locals => {:bats => Array.new}
+		return
+	end
+	render :partial => 'bat_checkbox_list', :locals => {:bats => @bats}
+  end
+  
+  def create_mult_prots_mult_bats
+	bats = Array.new
+	params[:bat_id].each{|id, checked| checked=='1' ? bats << Bat.find(id) : '' }
+	protocols = Array.new
+	params[:bat_protocol_id].each{|id, checked| checked=='1' ? protocols << Protocol.find(id) : ''}
+	for bat in bats
+		b_prot = (bat.protocols + protocols).uniq
+		bat.save_protocols(b_prot)
+	end
+	
+	redirect_to :action=> :add_mult_bats
+  end
 end

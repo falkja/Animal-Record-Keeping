@@ -1,0 +1,14 @@
+<h3 style="text-align:center;">Bats</h3>
+
+<% if bats.length > 0 %>
+
+<p><label for="toggle">Toggle all</label>
+<%= check_box_tag 'toggle' , 'toggle', false, :onclick => "toggleAll('bat_checkbox');return true;"%>
+</p>
+
+<% for bat in bats %>
+<%=check_box :bat_id, bat.id, :class => 'bat_checkbox' %>
+<label for="bat_id_<%=bat.id %>" ><%= bat.band %></label><br>
+<% end %>
+
+<% end %>

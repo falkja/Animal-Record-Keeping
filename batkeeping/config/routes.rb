@@ -1,6 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
+  
+  map.connect '/protocols/add_mult_bats', :controller => 'protocols', :action => 'add_mult_bats'
   map.resources :protocols
-
 
   
   #map.connect '/trainings/new_mult_users', :controller => 'trainings', :action => 'new_mult_users'

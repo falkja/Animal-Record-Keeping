@@ -1,6 +1,7 @@
 class Bat < ActiveRecord::Base
 	belongs_to :cage
 	belongs_to :species
+	belongs_to :room
 	has_many :weights, :order => "date desc"
 	has_many :cage_in_histories, :order => "date desc"
 	has_many :cage_out_histories, :order => "date desc"
@@ -303,7 +304,8 @@ class Bat < ActiveRecord::Base
     end
   end
   
-	def save_protocols(protocols)	
+    #prtocols passed in are the entire protocols that you'd like the bat to have (not just the additions to what the bat already has)
+	def save_protocols(protocols)
 		#saving history of protocols removed
 		for protocol in (protocols - self.protocols)
 			#create a protocol history
@@ -318,6 +320,7 @@ class Bat < ActiveRecord::Base
 		#saving history of protocols added
 		for protocol in (self.protocols - protocols)
 			#create a protocol history
+			sdf
 			p_hist = ProtocolHistory.new
 			p_hist.bat = self
 			p_hist.protocol = protocol

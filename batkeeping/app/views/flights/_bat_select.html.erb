@@ -7,7 +7,9 @@
 
 <%= link_to_remote "In Flight Cages", :url => {:action => :remote_bat_list, :bats => Bat.in_flight_cage}, :update => "bat_select" %> | 
 
+<div style="position:absolute;left:60px;width:150px;">
 <%= link_to_remote "Current Bats", :url => {:action => :remote_bat_list, :bats => Bat.active}, :update => "bat_select" %> | 
+</div>
 
 <%= link_to_remote "All Bats", :url => {:action => :remote_bat_list, :bats => Bat.find(:all)}, :update => "bat_select" %> | 
 

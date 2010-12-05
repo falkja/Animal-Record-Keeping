@@ -83,6 +83,18 @@ class ProtocolsController < ApplicationController
   end
   
   def add_mult_bats
+	prepare_mult_bats
+	@act = 'add'
+	render :action => :mult_bats_form
+  end
+  
+  def rem_mult_bats
+	prepare_mult_bats
+	@act = 'remove'
+	render :action => :mult_bats_form
+  end
+  
+  def prepare_mult_bats
 	@cages=Cage.active
 	@rooms = Room.find(:all)
 	@bats = Bat.active
@@ -111,10 +123,13 @@ class ProtocolsController < ApplicationController
 	protocols = Array.new
 	params[:bat_protocol_id].each{|id, checked| checked=='1' ? protocols << Protocol.find(id) : ''}
 	for bat in bats
-		b_prot = (bat.protocols + protocols).uniq
+		if params[:act]=='add'
+			b_prot = (bat.protocols + protocols).uniq
+		else
+			b_prot = (bat.protocols - protocols).uniq
+		end
 		bat.save_protocols(b_prot)
 	end
-	
-	redirect_to :action=> :add_mult_bats
+	redirect_to :action=> :list
   end
 end

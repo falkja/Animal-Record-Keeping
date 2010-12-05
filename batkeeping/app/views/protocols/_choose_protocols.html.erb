@@ -6,7 +6,13 @@
 <% for protocol in protocols %>
 <tr style="text-align:center">
 <td style="text-align:right"><%=check_box :bat_protocol_id, protocol.id , :checked => bat.protocols.include?(protocol) %></td>
-<td style="text-align:left"><label for="bat_protocol_id_<%=protocol.id %>" ><%= protocol.title %></label></td>
+<td style="text-align:left"><label for="bat_protocol_id_<%=protocol.id %>" >
+<span title='Bats: 
+<% for b in protocol.bats %><%=b.band%>
+<% end %>'>
+
+<%= protocol.title %></label></td>
+
 <td><label for="bat_protocol_id_<%=protocol.id %>"><%= protocol.number %></label></td>
 <td><label for="bat_protocol_id_<%=protocol.id %>"><%= nice_date protocol.start_date %></label></td>
 </tr>

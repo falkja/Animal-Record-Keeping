@@ -8,7 +8,7 @@ class Bat < ActiveRecord::Base
 	has_many :medical_problems, :order => "date_opened desc"
 	has_many :bat_notes, :order => "date desc"
 	has_many :bat_changes, :order => "date desc"
-	has_and_belongs_to_many :protocols
+	has_and_belongs_to_many :protocols, :order => "number"
 	has_many :flights, :order => "date asc"
 	has_many :protocol_histories, :order => "date desc"
 	
@@ -320,7 +320,6 @@ class Bat < ActiveRecord::Base
 		#saving history of protocols added
 		for protocol in (self.protocols - protocols)
 			#create a protocol history
-			sdf
 			p_hist = ProtocolHistory.new
 			p_hist.bat = self
 			p_hist.protocol = protocol

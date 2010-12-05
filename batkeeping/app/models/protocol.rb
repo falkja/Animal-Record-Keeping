@@ -1,5 +1,5 @@
 class Protocol < ActiveRecord::Base
-	has_and_belongs_to_many :bats
+	has_and_belongs_to_many :bats, :order => "band"
 	has_many :protocol_histories
 	
 	

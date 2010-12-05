@@ -15,8 +15,6 @@
 		<ul>
 			<li><%= link_to 'List Users', :controller => :users, :action => :list %></li>
 			<li><%= link_to 'New User', :controller => :users, :action => :new %></li>
-			<li><%= link_to 'List Protocols', :controller => :protocols, :action => :index %></li>
-			<li><%= link_to 'New Protocol', :controller => :protocols, :action => :new %></li>
 			<li><%= link_to 'List Species', :controller => :species, :action => :list %></li>
 			<li><%= link_to 'New Species', :controller => :species, :action => :new %></li>
 			<li><%= link_to 'List Rooms', :controller => :rooms, :action => :list %></li>
@@ -36,31 +34,40 @@
 </li>
 <li><%= link_to 'Bats', :controller => :bats, :action => :list %>
 	<ul>
-	<li><%= link_to 'List Bats', :controller => :bats, :action => :list %></li>
-	<li><%= link_to 'New Bat', :controller => :bats, :action => :new %></li>
-  <li><%= link_to 'Weigh Bat', :controller => :bats, :action => :choose_bat_to_weigh %></li>
-	<li><%= link_to 'Move Bat', :controller => :bats, :action => :choose_cage %></li>
-	<li><%= link_to 'Add to Protocol', :controller => :protocols, :action => :add_mult_bats %></li>
+	<li><%= link_to 'List', :controller => :bats, :action => :list %></li>
+	<li><%= link_to 'New', :controller => :bats, :action => :new %></li>
+  <li><%= link_to 'Weigh', :controller => :bats, :action => :choose_bat_to_weigh %></li>
+	<li><%= link_to 'Move', :controller => :bats, :action => :choose_cage %></li>
 	</ul>
 </li>
 <li><%= link_to 'Cages', :controller => :cages, :action => :list %>
 	<ul>
-	<li><%= link_to 'List Cages', :controller => :cages, :action => :list %></li>
-	<li><%= link_to 'New Cage', :controller => :cages, :action => :new %></li>
-	<li><%= link_to 'Weigh Cage', :controller => :cages, :action => :choose_cage_to_weigh %></li>
-	<li><%= link_to 'Move Cage', :controller => :cages, :action => :move_cage %></li>
+	<li><%= link_to 'List', :controller => :cages, :action => :list %></li>
+	<li><%= link_to 'New', :controller => :cages, :action => :new %></li>
+	<li><%= link_to 'Weigh', :controller => :cages, :action => :choose_cage_to_weigh %></li>
+	<li><%= link_to 'Move', :controller => :cages, :action => :move_cage %></li>
 	</ul>
 </li>
-<li><%= link_to 'Medical Problems', :controller => :medical_problems, :action => :list_current %>
+<li><%= link_to 'Med. Problems', :controller => :medical_problems, :action => :list_current %>
 	<ul>
-	<li><%= link_to 'List Medical Problems', :controller => :medical_problems, :action => :list_current %></li>
-	<li><%= link_to 'New Medical Problem', :controller => :medical_problems, :action => :new %></li>
+	<li><%= link_to 'List', :controller => :medical_problems, :action => :list_current %></li>
+	<li><%= link_to 'New', :controller => :medical_problems, :action => :new %></li>
 	</ul>
 </li>
+
+<li><%= link_to 'Protocols', :protocols %>
+	<ul>
+	<li><%= link_to 'List', :protocols %></li>
+	<li><%= link_to 'New', :new_protocol %></li>
+	<li><%= link_to 'Add Bats', :controller => :protocols, :action => :add_mult_bats %></li>
+	<li><%= link_to 'Remove Bats', :controller => :protocols, :action => :rem_mult_bats %></li>
+	</ul>
+</li>
+
 <li><%= link_to 'Tasks', :controller => :tasks, :action => :list %>
 	<ul>
-	<li><%= link_to 'List Tasks', :controller => :tasks, :action => :list %></li>
-	<li><%= link_to 'New Task', :controller => :tasks, :action => :choose_new_task %></li>
+	<li><%= link_to 'List', :controller => :tasks, :action => :list %></li>
+	<li><%= link_to 'New', :controller => :tasks, :action => :choose_new_task %></li>
 	</ul>
 </li>
 <li><%= link_to 'Help', :controller => :help, :action => 'manual' %>

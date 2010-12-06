@@ -29,7 +29,7 @@ function setAll(name,state)
 <% end %>
 
 
-<%= link_to_remote "My Bats", :url => {:action => :change_bat_list, :bats => User.find(session[:person]).users_bats}, :update => "bat_list" %> | 
+<%= link_to_remote "My Bats", :url => {:action => :change_bat_list, :bats => User.find(session[:person]).bats}, :update => "bat_list" %> | 
 
 <%= link_to_remote "Current Bats", :url => {:action => :change_bat_list, :bats => Bat.active}, :update => "bat_list" %> | 
 
@@ -46,13 +46,15 @@ function setAll(name,state)
 </div>
 
 <p>
+<table style="margin-right:auto; margin-left:auto;">
 <% form_tag :action => 'create_mult_prots_mult_bats', :act => @act, :id => 'my_form' do -%>
-
-	<div id="bat_list" style="border:1px solid gray; position:absolute; left:60px; width:150px;">
+<tr><td>
+	<div id="bat_list" style="border:1px solid gray; width:150px;">
 	<%= render :partial => 'bat_checkbox_list', :locals => {:bats => @bats} %>
 	</div>
-
-	<div style="border:1px solid gray; position:absolute;left:260px;width:600px;">
+</td>
+<td style="vertical-align:top">
+	<div style="border:1px solid gray; width:600px; text">
 	<h3 style="text-align:center">Protocols</h3>
 	<%= render :partial => 'choose_protocols', :locals => {:protocols => @protocols, :bat => @bats[0]} %>
 
@@ -60,6 +62,8 @@ function setAll(name,state)
 	<p><%= submit_tag @act.capitalize.concat(" bats") %></p>
 	</div>
 	</div>
+</td>	
+</tr>
 <% end -%>
 </p>
 

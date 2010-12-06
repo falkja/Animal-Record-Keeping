@@ -121,7 +121,7 @@
 	  </td>
 	<% end %>
 	<% if !show_weigh_link %>
-		<td><%= button_to 'Edit', :controller=>:bats, :action => 'edit', :id => bat %></td>
+		<td><%= button_to 'Edit', {:controller=>:bats, :action => 'edit', :id => bat} %></td>
 		<td>
 			<% if bat.leave_date == nil %>
 				<%= button_to 'Deactivate', {:controller=>:bats, :action => 'deactivate', :id => bat } %>
@@ -130,11 +130,11 @@
 			<% end %>
 		</td>
 	<% end %>
-  <% if bat.cage != nil %>
-    <td><%= button_to 'Move', :controller => :bats, :action=>:single_bat_to_move, :id=>bat %></td>
+  <% if bat.cage != nil && !show_weigh_link %>
+    <td><%= button_to 'Move', {:controller => :bats, :action=>:single_bat_to_move, :id=>bat} %></td>
   <% end %>
   <% if bat.leave_date == nil %>
-  <td><%= show_weigh_link ? '' : (button_to 'Weigh', :controller => :bats, :action => 'weigh_bat', :id => bat) %></td>
+  <td><%= show_weigh_link ? '' : (button_to 'Weigh', {:controller => :bats, :action => 'weigh_bat', :id => bat}) %></td>
   <% end %>
   </tr>
 <% end %>

@@ -34,17 +34,17 @@
 </li>
 <li><%= link_to 'Bats', :controller => :bats, :action => :list %>
 	<ul>
-	<li><%= link_to 'List', :controller => :bats, :action => :list %></li>
+	<li><%= link_to 'List', :controller => :bats, :action => :list, :bats => User.find(session[:person]).bats %></li>
 	<li><%= link_to 'New', :controller => :bats, :action => :new %></li>
-  <li><%= link_to 'Weigh', :controller => :bats, :action => :choose_bat_to_weigh %></li>
+  <li><%= link_to 'Weigh', :controller => :bats, :action => :choose_bat_to_weigh, :bats => User.find(session[:person]).bats %></li>
 	<li><%= link_to 'Move', :controller => :bats, :action => :choose_cage %></li>
 	</ul>
 </li>
 <li><%= link_to 'Cages', :controller => :cages, :action => :list %>
 	<ul>
-	<li><%= link_to 'List', :controller => :cages, :action => :list %></li>
+	<li><%= link_to 'List', :controller => :cages, :action => :list, :cages => User.find(session[:person]).cages.active %></li>
 	<li><%= link_to 'New', :controller => :cages, :action => :new %></li>
-	<li><%= link_to 'Weigh', :controller => :cages, :action => :choose_cage_to_weigh %></li>
+	<li><%= link_to 'Weigh', :controller => :cages, :action => :choose_cage_to_weigh, :cages => User.find(session[:person]).cages.active %></li>
 	<li><%= link_to 'Move', :controller => :cages, :action => :move_cage %></li>
 	</ul>
 </li>
@@ -59,8 +59,8 @@
 	<ul>
 	<li><%= link_to 'List', :protocols %></li>
 	<li><%= link_to 'New', :new_protocol %></li>
-	<li><%= link_to 'Add Bats', :controller => :protocols, :action => :add_mult_bats %></li>
-	<li><%= link_to 'Remove Bats', :controller => :protocols, :action => :rem_mult_bats %></li>
+	<li><%= link_to 'Add Bats', :controller => :protocols, :action => :update_mult_bats, :act => 'add' %></li>
+	<li><%= link_to 'Remove Bats', :controller => :protocols, :action => :update_mult_bats, :act => 'remove' %></li>
 	</ul>
 </li>
 

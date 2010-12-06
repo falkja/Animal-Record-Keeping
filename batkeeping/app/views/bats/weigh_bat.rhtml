@@ -6,7 +6,15 @@
 
 <% end %>
 
-<h4>Current Medical Problems for <%= @bat.band%></h4>
+<h3>Switch Protocol</h3>
+ <% form_remote_tag :url => {:controller => :bats, :action => :remote_save_protocol, :bat => @bat}, :update => 'choose_protocols' do %>
+	<div id="choose_protocols">
+	<%= render :partial => 'protocols/choose_protocols', :locals => {:protocols => Protocol.current, :bat => @bat} %>
+	</div>
+   <div><%= submit_tag 'Save' %></div>
+ <% end %>
+
+<h3>Current Medical Problems for <%= @bat.band%></h3>
 
 <div class='left_indent'>
 
@@ -34,7 +42,7 @@
 
 </div>
 
-<h4>Previous Medical Problems for <%= @bat.band%></h4>
+<h3>Previous Medical Problems for <%= @bat.band%></h3>
 
 <div class='left_indent'>
 
@@ -49,7 +57,7 @@
 
 </div>
 
-<h4>Previous Weights for <%= @bat.band%></h4>
+<h3>Previous Weights for <%= @bat.band%></h3>
 
 <div class='left_indent'>
 

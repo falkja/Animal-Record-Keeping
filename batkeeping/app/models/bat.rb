@@ -12,7 +12,7 @@ class Bat < ActiveRecord::Base
 	has_many :flights, :order => "date asc"
 	has_many :protocol_histories, :order => "date desc"
 	
-	validates_presence_of :band, :collection_place, :cage_id
+	validates_presence_of :band, :collection_place
 	validates_uniqueness_of :band
 	
 	@@current_user = nil #needed for the sig
@@ -213,6 +213,7 @@ class Bat < ActiveRecord::Base
 			bats_flight_cage << bat
 		end
 	end
+	bats_flight_cage = bats_flight_cage.sort_by{|b| b.band}
 	return bats_flight_cage
   end
 	

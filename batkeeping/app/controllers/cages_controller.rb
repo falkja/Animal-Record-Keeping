@@ -8,7 +8,11 @@ class CagesController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @cages = Cage.find(:all, :conditions => 'date_destroyed is null', :order => 'name')
+	if params[:cages]
+		@cages = Cage.find(params[:cages])
+	else
+		@cages = Cage.find(:all, :conditions => 'date_destroyed is null', :order => 'name')
+	end
     @list_all = false
     @div_id = 'cages_div'
   end
@@ -181,7 +185,7 @@ class CagesController < ApplicationController
 	if params[:cages]
 		@cages = Cage.find(params[:cages])
 	else
-		@all_cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name")
+		@all_cages = Cage.active
 		@cages = Array.new
 		for cage in @all_cages
 		  (cage.bats.count > 0) ? @cages << cage : ''

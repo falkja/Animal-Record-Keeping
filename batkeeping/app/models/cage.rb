@@ -18,7 +18,7 @@ class Cage < ActiveRecord::Base
     for cage in @cages
       @cages.delete_if{|cage| cage.bats.length == 0}
     end
-		@cages = @cages.sort_by{|cage| [cage.name]}
+	@cages = @cages.sort_by{|cage| [cage.name]}
     return @cages
   end
   

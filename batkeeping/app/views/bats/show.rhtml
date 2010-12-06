@@ -1,5 +1,20 @@
 <h1>Dossier on <%=h @bat.band %></h1>
 
+<%= link_to 'List Current Bats', :controller => :bats, :action => :list %> | 
+<%= button_to 'Edit', :controller => :bats, :action => :edit, :id => @bat %> | 
+
+<% if @bat.cage != nil%>
+<%= button_to 'Move Bat', {:controller => :bats, :action=> :single_bat_to_move, :id=>@bat}, {:style=>"display:inline"} %> | 
+<% end %>
+
+<% if @bat.leave_date == nil %>
+<%= button_to 'Deactivate', :controller => :bats, :action => :deactivate, :id => @bat %>
+<% else %>
+<%= button_to 'Reactivate', :controller => :bats, :action => :reactivate, :id => @bat %>
+<% end %>
+
+<hr />
+
 <div class="left_indent">
 
 <p>
@@ -18,9 +33,14 @@
 
 <p>
 <b>Protocols: </b>
+<table>
 <% for protocol in @bat.protocols %>
-<br><%= link_to protocol.title, :controller => :protocols, :action => :show, :id => protocol %>
+<tr>
+<td><%= link_to protocol.title, :controller => :protocols, :action => :show, :id => protocol %></td>
+<td>Added on: <%= nice_date @bat.date_added_to_protocol(protocol) %></td>
+</tr>
 <% end %>
+</table>
 </p>
 
 <p>
@@ -155,24 +175,9 @@ Emails will <em>not</em> be sent out if bat is not weighed often enough
 </div>
 <% end %>
 
-<%= render :partial => 'display_weights', :locals => {:bat => @bat} %>
-
 <h3>Bat Changes</h3>
 <div class='left_indent'>
 <%= render :partial => 'show_bat_changes', :locals => {:bat_changes => @bat_changes, :single_bat => true} %>
 </div>
 
-<hr />
-
-<%= link_to 'Edit', :controller => :bats, :action => :edit, :id => @bat %>
-| <%= link_to 'List Current Bats', :controller => :bats, :action => :list %>
-
-<% if @bat.cage != nil%>
- | <%= link_to 'Move Bat', :controller => :bats, :action=> :single_bat_to_move, :id=>@bat %>
-<% end %>
-
-<% if @bat.leave_date == nil %>
-| <%= link_to 'Deactivate', :controller => :bats, :action => :deactivate, :id => @bat %>
-<% else %>
-| <%= link_to 'Reactivate', :controller => :bats, :action => :reactivate, :id => @bat %>
-<% end %>
+<%= render :partial => 'display_weights', :locals => {:bat => @bat} %>

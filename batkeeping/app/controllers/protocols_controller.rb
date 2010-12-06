@@ -82,23 +82,13 @@ class ProtocolsController < ApplicationController
     end
   end
   
-  def add_mult_bats
-	prepare_mult_bats
-	@act = 'add'
-	render :action => :mult_bats_form
-  end
-  
-  def rem_mult_bats
-	prepare_mult_bats
-	@act = 'remove'
-	render :action => :mult_bats_form
-  end
-  
-  def prepare_mult_bats
+  def update_mult_bats
 	@cages=Cage.active
 	@rooms = Room.find(:all)
 	@bats = Bat.active
 	@protocols = Protocol.current
+	@act = params[:act]
+	render :action => :mult_bats_form
   end
   
   def change_bat_list

@@ -5,7 +5,7 @@ class FlightsController < ApplicationController
   
   def list
     user = User.find(session[:person])
-	@bats = user.users_bats
+	@bats = user.bats
 	@list = "mine"
   end
 
@@ -66,7 +66,17 @@ class FlightsController < ApplicationController
   end
   
   def remote_bat_list
-	bats = Bat.find(params[:bats], :order => 'band')
+	if params[:sort_by]=='leave_date'
+		bats = Bat.find(params[:bats], :order => "-leave_date asc, band")
+	else
+		bats = Bat.find(params[:bats], :order => "band")
+	end
+	
+	render :partial => 'bat_list', :locals => {:bat_list => bats}
+  end
+  
+  def remote_bat_select
+	bats = Bat.find(params[:bats])
 	render :partial => 'bat_select', :locals => {:bats => bats}
   end
   

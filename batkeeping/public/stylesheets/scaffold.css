@@ -182,3 +182,13 @@ div.show_print_only{
 tr.striped{
 	background-color:#ddd;
 }
+
+form.button-to { display:inline;}
+
+input[type="submit"] {
+ display:inline; height:21px;
+}
+
+.button-to div {
+  display: inline;
+}

@@ -1,5 +1,17 @@
 <h1>Dossier on <%= @cage.name%></h1>
 
+<%= link_to 'List Current Cages', :action => 'list' %> | 
+<%= button_to 'Edit', :action => 'edit', :id => @cage %> |
+<%= button_to 'Weigh Cage', :action => 'weigh_cage', :id => @cage %> | 
+
+<% if @cage.date_destroyed == nil %>
+<%= button_to 'Deactivate', :controller => 'cages', :action => 'deactivate', :id => @cage %>
+<% else %>
+<%= button_to 'Reactivate', :controller => 'cages', :action => 'reactivate', :id => @cage %>
+<% end %>
+
+<hr />
+
 <div class="left_indent">
 <p>
 <b>Owner: </b><%= @cage.user ? @cage.user.name : 'NP' %>
@@ -111,15 +123,3 @@
 <% end %>
 </div>
 </p>
-
-<hr />
-
-<%= link_to 'Edit', :action => 'edit', :id => @cage %> |
-<%= link_to 'List Current Cages', :action => 'list' %> | 
-<%= link_to 'Weigh Cage', :action => 'weigh_cage', :id => @cage %> | 
-
-<% if @cage.date_destroyed == nil %>
-<%= link_to 'Deactivate', :controller => 'cages', :action => 'deactivate', :id => @cage %>
-<% else %>
-<%= link_to 'Reactivate', :controller => 'cages', :action => 'reactivate', :id => @cage %>
-<% end %>

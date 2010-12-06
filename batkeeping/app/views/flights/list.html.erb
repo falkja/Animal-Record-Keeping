@@ -12,6 +12,14 @@ Listing deactivated bats
 <% end %>
 </h2>
 
+<%= link_to 'List My Bats', :controller => :flights, :action => :list %> | 
+<%= link_to 'List Current Bats', :controller => :flights, :action => :list_current %> | 
+<%= link_to 'List Deactivated Bats', :controller => :flights, :action => :list_deactivated %> | 
+<%= link_to 'List All Bats', :controller => :flights, :action => :list_all %>
+
+<hr>
+
+
 <div class="left_indent">
 
 <% if @bats.length == 0 %>
@@ -20,17 +28,10 @@ No bats.
 
 <% else %>
 
+<div id="bat_list">
 <%= render :partial => 'flights/bat_list', :locals => { 
 		:bat_list => @bats} %>
-
+</div>
 <% end %>
 
 </div>
-<br />
-
-<hr>
-
-<%= link_to 'List My Bats', :controller => :flights, :action => :list %> | 
-<%= link_to 'List Current Bats', :controller => :flights, :action => :list_current %> | 
-<%= link_to 'List Deactivated Bats', :controller => :flights, :action => :list_deactivated %> | 
-<%= link_to 'List All Bats', :controller => :flights, :action => :list_all %>

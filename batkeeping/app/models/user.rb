@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_many :task_histories
   has_many :bat_changes, :order => "date desc"
   has_many :trainings
+  has_many :bats, :through => :cages, :order => "band"
     
   validates_presence_of :name, :initials, :email
   validates_uniqueness_of :name, :initials
@@ -70,17 +71,11 @@ class User < ActiveRecord::Base
     end
   end
 
-  def users_bats
-	users_cages = self.cages
-	
-	users_bats = Bat.find(:all, :conditions => ["cage_id in (?) and leave_date is null", users_cages], :order => 'band')
-  end
-
 	def bats_medical_problems #returns the users's bat's medical problems unless the user is a medical care user, in which case it returns all the medical problems
 		if self.medical_care_user?
 			return MedicalProblem.current
 		end
-		users_bats = self.users_bats
+		users_bats = self.bats
 		medical_problems = Array.new
 		for bat in users_bats
 			for medical_problem in bat.medical_problems.current

@@ -81,7 +81,7 @@ class MyMailer < ActionMailer::Base
         end
         
         users_tasks_not_done = Task.tasks_not_done_today(users_tasks)
-        users_bats_not_weighed = Bat.not_weighed(user.users_bats)
+        users_bats_not_weighed = Bat.not_weighed(user.bats)
         
         if (users_tasks_not_done.length > 0) || (users_bats_not_weighed.length > 0)
           greeting = "Hi " + user.name + ",\n\n"

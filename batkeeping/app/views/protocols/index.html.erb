@@ -6,6 +6,7 @@
 
 <% else %>
 
+<p>
 <table>
   <tr>
     <th>Title</th>
@@ -18,18 +19,17 @@
 
 <% @protocols.each do |protocol| %>
   <tr>
-    <td><%=h protocol.title %></td>
+    <td><b><%=link_to protocol.title, protocol %></b></td>
     <td><%=h protocol.number %></td>
     <td><%=h protocol.start_date %></td>
     <td><%=h protocol.end_date %></td>
     <td><%=h protocol.husbandry.to_s.capitalize %></td>
 	<td><%=h protocol.flight_exempt.to_s.capitalize %></td>
-    <td><%= link_to 'Show', protocol %></td>
-    <td><%= link_to 'Edit', edit_protocol_path(protocol) %></td>
-    <td><%= link_to 'Destroy', protocol, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+    <td><%= button_to 'Edit', edit_protocol_path(protocol), {:method => :get} %></td>
+    </tr>
 <% end %>
 </table>
+</p>
 
 <% end %>
 

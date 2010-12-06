@@ -87,12 +87,14 @@
 <% end %>
 
 <%# Bat already deactivated %>
+<% if !@reactivating %>
 <tr>
 <td><%=radio_button :bat, :cage_id, 0, :checked => false %></td>
 <td><label for="bat_cage_id_0">DEACTIVATED BAT (record keeping)</td>
 <td style="text-align:center">NA</td>
 <td style="text-align:center">NA</td>
 </tr>
+<% end %>
 
 </table>
 

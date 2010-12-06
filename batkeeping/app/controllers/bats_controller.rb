@@ -10,14 +10,18 @@ class BatsController < ApplicationController
 
 	#Only list the active bats
   def list
-    @bats = Bat.active
+	if params[:bats]
+		@bats = Bat.find(params[:bats])
+	else
+		@bats = Bat.active
+	end
     @list = "current"
   end
   
   def list_all
     @bats = Bat.find(:all, :order => 'band')
     @list = "all"
-		@show_leave_date_and_reason = true
+	@show_leave_date_and_reason = true
     render :action => 'list'
   end
 
@@ -193,59 +197,66 @@ class BatsController < ApplicationController
   end
 
   def update
+    if (params[:bat][:cage_id] == '') && !@deactivating && !@reactivating
+      flash[:notice] = 'Need to select a cage.'
+	  redirect_to :back
+	  return
+    end
 	
-	protocol_ids = params["bat_protocol_id"]
-	protocols=Array.new
-	protocol_ids.each {|key,value| value !="0" ? protocols << Protocol.find(key) : ''}
-	
+	if !@deactivating
+		protocol_ids = params["bat_protocol_id"]
+		protocols=Array.new
+		protocol_ids.each {|key,value| value !="0" ? protocols << Protocol.find(key) : ''}
+	else
+		protocols=Array.new
+	end
 
-	
-    if protocols.length == 0
+    if protocols.length == 0 && !@deactivating
       flash[:notice] = 'Need to select a protocol'
       redirect_to :back
-    else 
-      @bat = Bat.find(params[:id])
-      if @reactivating
-        note = 'reactivated'
-      elsif (params[:move] != nil)
-        note = params[:move][:note]
-      else
-        note = ''
-      end
-      
-      Bat::set_user_and_comment(User.find(session[:person]), note) #Do this before saving!
-      
-			old_band_name = @bat.band
-      
-			if @bat.update_attributes(params[:bat])
-				if @bat.band != old_band_name
-					bat_change = BatChange.new
-					bat_change.date = Date.today
-					bat_change.bat = @bat
-					bat_change.old_band_name = old_band_name
-					bat_change.new_band_name = @bat.band
-					bat_change.user = User.find(session[:person])
-					bat_change.save
-				end
-				
-				@bat.save_protocols(protocols)
-				
-        flash[:notice] = 'Bat was successfully updated.'
-        if params[:redirectme] == 'list'
+	  return
+    end
+  @bat = Bat.find(params[:id])
+  if @reactivating
+	note = 'reactivated'
+  elsif (params[:move] != nil)
+	note = params[:move][:note]
+  else
+	note = ''
+  end
+  
+	Bat::set_user_and_comment(User.find(session[:person]), note) #Do this before saving!
+  
+	old_band_name = @bat.band
+
+	if @bat.update_attributes(params[:bat])
+		if @bat.band != old_band_name
+			bat_change = BatChange.new
+			bat_change.date = Date.today
+			bat_change.bat = @bat
+			bat_change.old_band_name = old_band_name
+			bat_change.new_band_name = @bat.band
+			bat_change.user = User.find(session[:person])
+			bat_change.save
+		end
+		
+		@bat.save_protocols(protocols)
+			
+		flash[:notice] = 'Bat was successfully updated.'
+		if params[:redirectme] == 'list'
 			redirect_to :action => :list
 		elsif params[:redirectme] == 'show'
-          redirect_to :action => :show, :id => @bat
-        elsif params[:redirectme] == 'move'
-          @bats = Array.new
-          @bats << @bat
-          redirect_to :action => 'move', :bats => @bats, :new_cage => @bat.cage, :old_cage => @cage, :note => note
-        else
-          redirect_to :action => 'show', :id => @bat
-        end
-      else
-        render :action => 'edit'
-      end
-    end
+		  redirect_to :action => :show, :id => @bat
+		elsif params[:redirectme] == 'move'
+		  @bats = Array.new
+		  @bats << @bat
+		  redirect_to :action => 'move', :bats => @bats, :new_cage => @bat.cage, :old_cage => @cage, :note => note
+		else
+		  redirect_to :action => 'show', :id => @bat
+		end
+	else
+		render :action => 'edit'
+	end
   end
 
   def destroy
@@ -257,27 +268,28 @@ class BatsController < ApplicationController
 	@cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name" )
 	@bat = Bat.find(params[:id])
 	@species = Species.find(:all)
+	@protocols = Protocol.current
 	@deactivating = true
   end
   
   #the simplest way to handle cage leave event is like this
   def deactivate_bat
-		@bat = Bat.find(params[:id])
-		@cage = Cage.find(@bat.cage)
-		params[:bat][:leave_reason] = params[:move][:note]
-		params[:bat][:cage_id] = nil
-		@deactivating = true
-		
-		date = Date.civil(params[:bat]["leave_date(1i)"].to_i, params[:bat]["leave_date(2i)"].to_i, params[:bat]["leave_date(3i)"].to_i)
-		
-		#census stuff
-		census = Census.find_or_create_by_date_and_room_id(date, @cage.room)
-		census.tally(-1, date, @cage.room)
-		census.bats_removed ? census.bats_removed = census.bats_removed + @bat.band + ' ' : census.bats_removed = @bat.band + ' '
-		census.save
-		
-		Census.update_after(-1, date, @cage.room)
-		
+	@bat = Bat.find(params[:id])
+	@cage = Cage.find(@bat.cage)
+	params[:bat][:leave_reason] = params[:move][:note]
+	params[:bat][:cage_id] = nil
+	@deactivating = true
+	
+	date = Date.civil(params[:bat]["leave_date(1i)"].to_i, params[:bat]["leave_date(2i)"].to_i, params[:bat]["leave_date(3i)"].to_i)
+	
+	#census stuff
+	census = Census.find_or_create_by_date_and_room_id(date, @cage.room)
+	census.tally(-1, date, @cage.room)
+	census.bats_removed ? census.bats_removed = census.bats_removed + @bat.band + ' ' : census.bats_removed = @bat.band + ' '
+	census.save
+	
+	Census.update_after(-1, date, @cage.room)
+	
     for medical_problem in @bat.medical_problems.current
       medical_problem.date_closed = date
       medical_problem.reason_closed = params[:bat][:leave_reason]
@@ -292,19 +304,20 @@ class BatsController < ApplicationController
       end
     end
     
-		update
+	update
   end
   
   def reactivate
     @bat = Bat.find(params[:id])
-		@species = Species.find(:all)
+	@species = Species.find(:all)
     @cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name" )
+	@protocols = Protocol.current
     @reactivating = true
   end
   
   #because now we need to choose a cage for the zombie bat!
   def reactivate_bat
-    if params[:bat] == nil
+    if params[:bat][:cage_id] == nil
       flash[:notice] = "Reactivation failed.  Choose a cage for your reactivated bat."
       redirect_to :back
     else
@@ -471,7 +484,11 @@ class BatsController < ApplicationController
 	end
 
   def choose_bat_to_weigh
-    @bats = Bat.active
+  	if params[:bats]
+		@bats = Bat.find(params[:bats])
+	else
+		@bats = Bat.active
+	end
   end
   
   def weigh_bat
@@ -616,5 +633,23 @@ class BatsController < ApplicationController
 				:reactivating=>params[:reactivating]}
 	end
 	
+	def remote_save_protocol
+		@bat = Bat.find(params[:bat])
+		
+		protocol_ids = params["bat_protocol_id"]
+		protocols=Array.new
+		protocol_ids.each {|key,value| value !="0" ? protocols << Protocol.find(key) : ''}
+		
+		protocols = protocols.sort_by{|p| p.number}
+		
+		if protocols != @bat.protocols
+			@bat.save_protocols(protocols)
+			flash[:prot_notice] = 'Protocols saved'
+		else
+			flash[:prot_notice] = 'Protocols did not change'
+		end
+		
+		render :partial => 'protocols/choose_protocols', :locals => {:protocols => Protocol.current, :bat => @bat}
+	end
 
 end

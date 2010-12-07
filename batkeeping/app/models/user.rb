@@ -2,11 +2,12 @@ class User < ActiveRecord::Base
   has_many :cages, :order => 'name'
   has_many :cage_in_histories
   has_many :cage_out_histories
-  has_and_belongs_to_many :tasks
+  has_and_belongs_to_many :tasks, :order => "repeat_code, title"
   has_many :task_histories
   has_many :bat_changes, :order => "date desc"
   has_many :trainings
   has_many :bats, :through => :cages, :order => "band"
+  
     
   validates_presence_of :name, :initials, :email
   validates_uniqueness_of :name, :initials

@@ -48,15 +48,10 @@ class MainController < ApplicationController
       
       @user = User.find(params[:id])
       @cages = @user.cages.active
-	  @bats = Array.new
-	  for cage in @cages
-		for bat in cage.bats
-			@bats << bat
-		end
-	  end
-	  @bats = @bats.sort_by{|bat| [bat.band]}
+	  @bats = @user.bats
+	  	  
       @medical_problems = @user.bats_medical_problems
-			@medical_problems = @medical_problems.sort_by{|medical_problem| [medical_problem.bat.cage.name, medical_problem.bat.band, medical_problem.title]}
+	  @medical_problems = @medical_problems.sort_by{|medical_problem| [medical_problem.bat.cage.name, medical_problem.bat.band, medical_problem.title]}
       @feeding_cages = @user.cages.has_feeding_tasks
       
       @my_medical_tasks = @user.tasks.medical_tasks
@@ -86,10 +81,6 @@ class MainController < ApplicationController
         Task.animal_care_user_feeding_tasks_today.each{|task| @my_feeding_tasks_today << task}
         Task.animal_care_user_feeding_tasks_not_today.each{|task| @my_feeding_tasks_not_today << task}
       end
-      
-      @my_feeding_tasks = @my_feeding_tasks.sort_by{|task| [task.repeat_code, task.title, task.id]}
-      @my_feeding_tasks_today = @my_feeding_tasks_today.sort_by{|task| [task.repeat_code, task.title, task.id]}
-      @my_feeding_tasks_not_today = @my_feeding_tasks_not_today.sort_by{|task| [task.repeat_code, task.title, task.id]}
     
     else
       redirect_to :action => 'index'

@@ -149,7 +149,7 @@ class BatsController < ApplicationController
 				save_weight
 			end
 			
-			@bat.save_protocols(protocols)
+			@bat.save_protocols(protocols,Time.now)
 			
 			if @bat.cage_id == 0
 				new_cage=nil
@@ -240,7 +240,7 @@ class BatsController < ApplicationController
 			bat_change.save
 		end
 		
-		@bat.save_protocols(protocols)
+		@bat.save_protocols(protocols,Time.now)
 			
 		flash[:notice] = 'Bat was successfully updated.'
 		if params[:redirectme] == 'list'
@@ -643,7 +643,7 @@ class BatsController < ApplicationController
 		protocols = protocols.sort_by{|p| p.number}
 		
 		if protocols != @bat.protocols
-			@bat.save_protocols(protocols)
+			@bat.save_protocols(protocols,Time.now)
 			flash[:prot_notice] = 'Protocols saved'
 		else
 			flash[:prot_notice] = 'Protocols did not change'

@@ -1,5 +1,9 @@
 <div style="color:green"><%= flash[:prot_notice] %></div>
 
+<div class="left_indent">
+
+<% if protocols.length > 0 %>
+
 <table style="width:600px">
 <th></th>
 <th>Title</th>
@@ -20,3 +24,12 @@
 </tr>
 <% end %>
 </table>
+
+<% else %>
+<p>
+No protocols.
+<%= link_to 'Add Protocol', :new_protocol %>
+</p>
+<% end %>
+
+</div>

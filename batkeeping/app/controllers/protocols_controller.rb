@@ -118,7 +118,7 @@ class ProtocolsController < ApplicationController
 		else
 			b_prot = (bat.protocols - protocols).uniq
 		end
-		bat.save_protocols(b_prot)
+		bat.save_protocols(b_prot,Time.now)
 	end
 	redirect_to :action=> :list
   end

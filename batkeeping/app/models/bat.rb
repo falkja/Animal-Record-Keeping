@@ -306,7 +306,7 @@ class Bat < ActiveRecord::Base
   end
   
     #prtocols passed in are the entire protocols that you'd like the bat to have (not just the additions to what the bat already has)
-	def save_protocols(protocols)
+	def save_protocols(protocols,time_altered)
 		#saving history of protocols removed
 		for protocol in (protocols - self.protocols)
 			#create a protocol history
@@ -314,7 +314,7 @@ class Bat < ActiveRecord::Base
 			p_hist.bat = self
 			p_hist.protocol = protocol
 			p_hist.date_removed = nil
-			p_hist.date_added = Time.now
+			p_hist.date_added = time_altered
 			p_hist.save
 		end
 		
@@ -324,7 +324,7 @@ class Bat < ActiveRecord::Base
 			p_hist = ProtocolHistory.new
 			p_hist.bat = self
 			p_hist.protocol = protocol
-			p_hist.date_removed = Time.now
+			p_hist.date_removed = time_altered
 			p_hist.date_added = nil
 			p_hist.save
 		end

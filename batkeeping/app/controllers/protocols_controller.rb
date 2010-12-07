@@ -122,4 +122,19 @@ class ProtocolsController < ApplicationController
 	end
 	redirect_to :action=> :list
   end
+  
+  def list_bats_dates
+	@start_date = Date.civil(params[:post][:"start_date(1i)"].to_i,params[:post][:"start_date(2i)"].to_i,params[:post][:"start_date(3i)"].to_i)
+	@end_date = Date.civil(params[:post][:"end_date(1i)"].to_i,params[:post][:"end_date(2i)"].to_i,params[:post][:"end_date(3i)"].to_i)
+	
+	@protocol = Protocol.find(params[:id])
+	
+	if @start_date > @end_date
+		flash[:notice] = 'Dates do not overlap'
+		redirect_to :action => :show, :id => @bat
+	else
+		@p_hist = @protocol.find_hist_btw(@start_date,@end_date)
+	end
+	
+  end
 end

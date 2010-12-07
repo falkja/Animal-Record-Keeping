@@ -2,13 +2,14 @@
 
 <table style="width:350px; margin-right:auto; margin-left:auto">
 <tr>
-<td style="text-align: left">
+<td width="77px" style="text-align: left;vertical-align:bottom">
    <% form_remote_tag :url => {:controller => :flights, :action => :remote_show, :id => bat, :this_month => (this_month-1.month)}, :update => "calendar" do %>
 	<%= submit_tag "<" %>
    <% end %>
 </td>
 
-<td style="text-align: middle">
+<td width="194px" height="63px" style="text-align: middle;vertical-align:top">
+<%= bat.band %>
 <% if Date.today.year > this_month.year || Date.today.mon != this_month.mon %>
    <% form_remote_tag :url => {:controller => :flights, :action => :remote_show, :id => bat, :this_month => Date.today}, :update => "calendar" do %>
 	<%= submit_tag "Today" %>
@@ -16,7 +17,7 @@
 <% end %>
 </td>
 
-<td style="text-align: right">
+<td width="77px" style="text-align: right;vertical-align:bottom">
 <% if Date.today.year > this_month.year || Date.today.mon > this_month.mon %>
    <% form_remote_tag :url => {:controller => :flights, :action => :remote_show, :id => bat, :this_month => (this_month+1.month)}, :update => "calendar" do %>
 	<%= submit_tag ">" %>

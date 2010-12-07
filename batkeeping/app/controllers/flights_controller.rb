@@ -39,8 +39,12 @@ class FlightsController < ApplicationController
 	else
 		@highlight_today = false
 	end
-	@bat = Bat.find(params[:id])
-	@flight_dates, @flights  = @bat.flight_dates(@this_month.year,@this_month.mon)
+	if params[:id]
+		@bat = Bat.find(params[:id])
+	elsif params[:bat_id]#too lazy to fix this
+		@bat = Bat.find(params[:bat_id])
+	end
+		@flight_dates, @flights  = @bat.flight_dates(@this_month.year,@this_month.mon)
 	render :partial => 'remote_show', :locals=>{:bat=>@bat, :highlight_today=>@highlight_today, :this_month => @this_month, :flight_dates => @flight_dates, :flights =>@flights}
   end
   
@@ -49,18 +53,22 @@ class FlightsController < ApplicationController
   end
   
   def create
-	@flight = Flight.new(params[:flight])
-	
-	if @flight.date > Date.today
-		flash[:notice] = 'Flight date cannot be in the future.'
-		render :action => :new
+	if params[:showing_only]
+		redirect_to :action => :show, :id => params[:id]
 	else
-		@flight.user = User.find(session[:person])
-		if @flight.save
-			flash[:notice] = 'Flight was successfully created.'
-			redirect_to :action => :show, :id => @flight.bat
-		else
+		@flight = Flight.new(params[:flight])
+		
+		if @flight.date > Date.today
+			flash[:notice] = 'Flight date cannot be in the future.'
 			render :action => :new
+		else
+			@flight.user = User.find(session[:person])
+			if @flight.save
+				flash[:notice] = 'Flight was successfully created.'
+				redirect_to :action => :show, :id => @flight.bat
+			else
+				render :action => :new
+			end
 		end
 	end
   end
@@ -76,8 +84,12 @@ class FlightsController < ApplicationController
   end
   
   def remote_bat_select
-	bats = Bat.find(params[:bats])
-	render :partial => 'bat_select', :locals => {:bats => bats}
+	  if params[:bats]
+		bats = Bat.find(params[:bats], :order => "band")
+	  else
+		bats = Array.new
+	  end
+	  render :partial => 'bat_select', :locals => {:bats => bats}
   end
   
   def destroy

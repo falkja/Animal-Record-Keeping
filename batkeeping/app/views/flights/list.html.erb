@@ -12,6 +12,7 @@ Listing deactivated bats
 <% end %>
 </h2>
 
+<%= button_to 'New Flight Log', :controller => :flights, :action => :new %>
 <%= link_to 'List My Bats', :controller => :flights, :action => :list %> | 
 <%= link_to 'List Current Bats', :controller => :flights, :action => :list_current %> | 
 <%= link_to 'List Deactivated Bats', :controller => :flights, :action => :list_deactivated %> | 

@@ -1,5 +1,10 @@
 <span id="bat_select">
-<%= collection_select(:flight, :bat_id, bats, :id, :band) %>
+<%= collection_select(:flight, :bat_id, bats, :id, :band, {:prompt => 'Select a bat'}) %>
+
+<%= observe_field "flight_bat_id",
+    :url => {:action => :remote_show, :this_month => Date.today},
+    :with => :bat_id,
+	:update => "calendar" %>
 
 <%= link_to_remote "My Bats", :url => {:action => :remote_bat_select, :bats => User.find(session[:person]).bats}, :update => "bat_select" %> | 
 
@@ -7,9 +12,7 @@
 
 <%= link_to_remote "In Flight Cages", :url => {:action => :remote_bat_select, :bats => Bat.in_flight_cage}, :update => "bat_select" %> | 
 
-<div style="position:absolute;left:60px;width:150px;">
 <%= link_to_remote "Current Bats", :url => {:action => :remote_bat_select, :bats => Bat.active}, :update => "bat_select" %> | 
-</div>
 
 <%= link_to_remote "All Bats", :url => {:action => :remote_bat_select, :bats => Bat.find(:all, :order=>"band")}, :update => "bat_select" %> | 
 

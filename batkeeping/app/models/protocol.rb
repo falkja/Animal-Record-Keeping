@@ -20,4 +20,9 @@ class Protocol < ActiveRecord::Base
 		return bats, hists
 	end
 	
+	def find_hist_btw(start_date,end_date)
+		#looks for histories added to protocol between start and end dates
+		hists_bats_added_removed = ProtocolHistory.find(:all, :conditions =>["protocol_id = ? and (date_added is not null and date_added >= ? and date_added <= ?) or (date_removed is not null and date_removed >= ? and date_removed <= ?)", self.id,start_date,end_date,start_date,end_date], :order => "date_removed")
+	end
+	
 end

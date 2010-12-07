@@ -1,0 +1,16 @@
+<h2>Listing bats added to protocol between "<%= @protocol.title %>" between: <br>
+<%= @start_date.strftime("%B %Y") %> and <%= @end_date.strftime("%B %Y") %></h2>
+
+<% for hist in @p_hist %>
+<%= link_to hist.bat.band, :controller => :bats, :action => :show, :id => hist.bat %><br>
+<% end %>
+
+<p>
+note: does not include bats that were added to protocol before these dates and not removed within the time frame (or bats that were added before these dates and never removed)
+</p>
+
+<br>
+<div style="width:625px; margin-right:auto; margin-left:auto">
+<%= render :partial => 'form_to_show_bats_on_protocol_when', :locals =>{:protocol=>@protocol} %>
+</div>
+

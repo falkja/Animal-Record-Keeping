@@ -3,7 +3,7 @@
 <!--[form:flight]-->
 
 <p><label for='flight_bat_id'>Bat</label><br/>
-<%= render :partial => 'bat_select', :locals => {:bats => Bat.active } %>
+<%= render :partial => 'bat_select', :locals => {:bats => User.find(session[:person]).bats } %>
 </p>
 
 <p><label for='flight_date'>Date</label><br/>

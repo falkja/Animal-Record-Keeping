@@ -54,5 +54,9 @@
   </table>
 </p>
 
+<p>
+<%= render :partial => 'form_to_show_bats_on_protocol_when', :locals =>{:protocol=>@protocol} %>
+</p>
+
 <%= link_to 'Edit', edit_protocol_path(@protocol) %> |
 <%= link_to 'List Protocols', protocols_path %>

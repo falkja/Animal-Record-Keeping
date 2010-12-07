@@ -1,4 +1,5 @@
-<h2>Listing all flight logs for <%= @bat.band %> between months <%= @start_date.strftime("%B %Y") %> and <%= @end_date.strftime("%B %Y") %></h2>
+<h2>Listing flight logs for <%= @bat.band %> between:<br>
+<%= @start_date.strftime("%B %Y") %> and <%= @end_date.strftime("%B %Y") %></h2>
 
 <%= render :partial => 'flights_listing', :locals => {:flights => @flights} %>
 

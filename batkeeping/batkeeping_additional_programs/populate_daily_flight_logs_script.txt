@@ -1,0 +1,3 @@
+cd /usr/local/batkeeping/
+rake populate_daily_flight_logs RAILS_ENV=production
+echo "populated automatic flight logs"

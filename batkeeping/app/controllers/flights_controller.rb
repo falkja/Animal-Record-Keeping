@@ -41,11 +41,15 @@ class FlightsController < ApplicationController
 	end
 	if params[:id]
 		@bat = Bat.find(params[:id])
-	elsif params[:bat_id]#too lazy to fix this
+	elsif params[:bat_id] && params[:bat_id]!=""#too lazy to fix this
 		@bat = Bat.find(params[:bat_id])
 	end
+	if @bat
 		@flight_dates, @flights  = @bat.flight_dates(@this_month.year,@this_month.mon)
 	render :partial => 'remote_show', :locals=>{:bat=>@bat, :highlight_today=>@highlight_today, :this_month => @this_month, :flight_dates => @flight_dates, :flights =>@flights}
+	else
+		render :nothing => true
+	end
   end
   
   def new

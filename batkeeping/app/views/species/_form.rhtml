@@ -16,7 +16,7 @@
 <p><label for="sp_hibernating_end_month">Hibernation End Month</label><br/>
 <%= select_month(@sp.hibernating_end_month,:prompt => '', :field_name => 'hibernating_end_month', :prefix => 'sp') %>Leave empty for no hibernation</p>
 
-<p><%= check_box 'sp', 'requires_vaccination'  %><label for="sp_requires_vaccination">Species Requires Vaccination</label><br>i.e. there is a quarantine period</p>
+<p><%= check_box 'sp', 'requires_vaccination'  %><label for="sp_requires_vaccination">Species Requires Vaccination</label><br><em>i.e.</em> there is a quarantine period, which exempts bats from flight until they are vaccinated</p>
 
 <!--[eoform:species]-->
 

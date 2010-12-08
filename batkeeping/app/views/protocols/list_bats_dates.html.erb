@@ -1,4 +1,4 @@
-<h2>Listing bats added to protocol between "<%= @protocol.title %>" between: <br>
+<h2>Listing bats added/removed to protocol <em>"<%= @protocol.title %>"</em> between: <br>
 <%= @start_date.strftime("%B %Y") %> and <%= @end_date.strftime("%B %Y") %></h2>
 
 <% for hist in @p_hist %>
@@ -6,11 +6,14 @@
 <% end %>
 
 <p>
-note: does not include bats that were added to protocol before these dates and not removed within the time frame (or bats that were added before these dates and never removed)
+note: does <b>not</b> include bats that were added to protocol before these dates and removed after these dates
 </p>
 
 <br>
-<div style="width:625px; margin-right:auto; margin-left:auto">
+<div style="width:700px; margin-right:auto; margin-left:auto">
 <%= render :partial => 'form_to_show_bats_on_protocol_when', :locals =>{:protocol=>@protocol} %>
 </div>
 
+<%= render :partial => 'curr_bats_on_protocol', :locals => {:protocol => @protocol} %>
+
+<%= nice_date @end_date %>

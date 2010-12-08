@@ -1,0 +1,9 @@
+<b>Current bats on protocol:</b>
+<table>
+<% for bat in protocol.bats %>
+	<tr>
+	<td><%= link_to bat.band, :controller => :bats, :action => :edit, :id => bat %></td>
+	<td>Added on: <%= nice_date bat.date_added_to_protocol(protocol) %></td>
+	</tr>
+<% end %>
+</table>

@@ -29,15 +29,7 @@
 </p>
 
 <p>
-  <b>Current bats:</b>
-  <table>
-  <% for bat in @protocol.bats %>
-	<tr>
-	<td><%= link_to bat.band, :controller => :bats, :action => :edit, :id => bat %></td>
-	<td>Added on: <%= nice_date bat.date_added_to_protocol(@protocol) %></td>
-	</tr>
-  <% end %>
-  </table>
+<%= render :partial => 'curr_bats_on_protocol', :locals => {:protocol => @protocol} %>
 </p>
 
 <p>

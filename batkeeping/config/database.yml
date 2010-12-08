@@ -28,4 +28,8 @@ test:
   host: localhost
 
 production:
-  development
+  adapter: mysql
+  database: batkeeping
+  username: batlab
+  password: batlab
+  host: localhost

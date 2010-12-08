@@ -23,8 +23,6 @@
 
 <hr />
 
-<div class="left_indent">
-
 <p>
 <b>Cage: </b>
 <% if @bat.cage %>
@@ -36,7 +34,7 @@
 
 <p>
 <b>Species: </b>
-<em><% if @bat.species %><%= @bat.species.name %><% end %></em>
+<em><% if @bat.species %><%= link_to @bat.species.name, :controller => :species, :action => :show, :id => @bat.species %><% end %></em>
 </p>
 
 <p>
@@ -111,7 +109,6 @@ Emails will <em>not</em> be sent out if bat is not weighed often enough
 
 <%= render :partial => 'bats/display_bat_notes' %>
 
-</div>
 
 <h3>Current Medical Problems:</h3>
 <div class="left_indent">

@@ -23,6 +23,7 @@
     </th>
     <th>Feed Tasks</th>
 	<th>Flight Cage</th>
+	<th>Species</th>
     <% if @list_all %>
       <th>Destroyed</th>
     <% end %>
@@ -58,6 +59,14 @@
 	</td>
 	<td align=center>
 		<%= cage.flight_cage.to_s.capitalize %>
+	</td>
+	<td align=center>
+		<em>
+		<% for species in cage.species.uniq %>
+			<%= link_to species.name[0].chr + ". " + species.name.split(" ")[1], :controller => :species,
+			:action => :show, :id => species %><br>
+		<% end %>
+		</em>
 	</td>
 	
 	<% if @list_all %>

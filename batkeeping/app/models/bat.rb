@@ -1,7 +1,6 @@
 class Bat < ActiveRecord::Base
 	belongs_to :cage
 	belongs_to :species
-	belongs_to :room
 	has_many :weights, :order => "date desc"
 	has_many :cage_in_histories, :order => "date desc"
 	has_many :cage_out_histories, :order => "date desc"

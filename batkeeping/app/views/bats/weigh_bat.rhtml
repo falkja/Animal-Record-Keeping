@@ -8,7 +8,7 @@
 
 <h3>Switch Protocol</h3>
  <% form_remote_tag :url => {:controller => :bats, :action => :remote_save_protocol, :bat => @bat}, :update => 'choose_protocols' do %>
-	<div id="choose_protocols">
+	<div id="choose_protocols" style="width:750px">
 	<%= render :partial => 'protocols/choose_protocols', :locals => {:protocols => Protocol.current, :bat => @bat} %>
 	</div>
    <div><%= submit_tag 'Save' %></div>

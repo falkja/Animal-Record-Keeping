@@ -1,0 +1,21 @@
+<table style="margin-right:auto; margin-left:auto;">
+<% form_tag :action => 'create_mult_prots_mult_bats', :act => act do -%>
+<tr>
+  <td>
+	<div id="bat_list" style="border:1px solid gray; width:150px;">
+	<%= render :partial => 'bat_checkbox_list', :locals => {:bats => bats} %>
+	</div>
+  </td>
+  <td style="vertical-align:top">
+        <div style="border:1px solid gray; width:750px;" >
+          <h3 style="text-align:center">Protocols</h3>
+          <%= render :partial => 'choose_protocols', :locals => {:protocols => protocols, :bat => nil} %>
+
+          <div style="width:750px; margin-right:auto; margin-left:auto;text-align:center">
+          <p><%= submit_tag act.capitalize.concat(" bats") %></p>
+          </div>
+        </div>
+</td>
+</tr>
+<% end -%>
+</table>

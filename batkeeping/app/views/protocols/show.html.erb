@@ -1,3 +1,12 @@
+<h3>Showing Protocol</h3>
+
+<%= button_to 'Edit', edit_protocol_path(@protocol), :method => :get %> |
+<%= button_to 'Add bats to protocol', :action => :update_mult_bats, :act => 'add' %> |
+<%= button_to 'Remove bats from protocol', :action => :update_mult_bats, :act => 'remove' %> | 
+<%= link_to 'List Protocols', protocols_path %>
+
+<hr />
+
 <p>
   <b>Title:</b>
   <%=h @protocol.title %>
@@ -49,6 +58,3 @@
 <p>
 <%= render :partial => 'form_to_show_bats_on_protocol_when', :locals =>{:protocol=>@protocol} %>
 </p>
-
-<%= link_to 'Edit', edit_protocol_path(@protocol) %> |
-<%= link_to 'List Protocols', protocols_path %>

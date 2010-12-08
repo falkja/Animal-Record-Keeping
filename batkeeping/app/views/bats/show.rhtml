@@ -12,6 +12,14 @@
 <% else %>
 <%= button_to 'Reactivate', :controller => :bats, :action => :reactivate, :id => @bat %>
 <% end %>
+| 
+<%= button_to 'Weigh Bat', :controller => :bats, :action => :weigh_bat, :id => @bat %>
+
+<% if @bat.weights.length != 0 %>
+| <%= link_to 'Graph Weights', :controller => :bats, :action => :graph_weights, :id => @bat %>
+<% end %>
+
+
 
 <hr />
 

@@ -92,35 +92,46 @@ class ProtocolsController < ApplicationController
   end
   
   def change_bat_list
-	if params[:cage] && params[:cage][:id] != ""
-		@bats = Cage.find(params[:cage][:id]).bats
-	elsif params[:room] && params[:room][:id] != ""
-		@bats = Room.find(params[:room][:id]).bats
-	elsif params[:protocol] && params[:protocol][:id] != ""
-		@bats = Protocol.find(params[:protocol][:id]).bats
-	elsif params[:bats]
-		@bats = Bat.find(params[:bats], :order => 'band')
-	else 
-		render :partial => 'bat_checkbox_list', :locals => {:bats => Array.new}
-		return
-	end
-	render :partial => 'bat_checkbox_list', :locals => {:bats => @bats}
+    @protocols = Protocol.current
+    @act = params[:act]
+    if params[:cage] && params[:cage][:id] != ""
+      @bats = Cage.find(params[:cage][:id]).bats
+    elsif params[:room] && params[:room][:id] != ""
+      @bats = Room.find(params[:room][:id]).bats
+    elsif params[:protocol] && params[:protocol][:id] != ""
+      @bats = Protocol.find(params[:protocol][:id]).bats
+    elsif params[:bats]
+      @bats = Bat.find(params[:bats], :order => 'band')
+    else
+      @bats = [];
+    end
+    render :partial => 'form_bats_protocols',
+      :locals => {:bats => @bats, :protocols => @protocols, :act => @act}
   end
   
   def create_mult_prots_mult_bats
-	bats = Array.new
-	params[:bat_id].each{|id, checked| checked=='1' ? bats << Bat.find(id) : '' }
-	protocols = Array.new
-	params[:bat_protocol_id].each{|id, checked| checked=='1' ? protocols << Protocol.find(id) : ''}
-	for bat in bats
-		if params[:act]=='add'
-			b_prot = (bat.protocols + protocols).uniq
-		else
-			b_prot = (bat.protocols - protocols).uniq
-		end
-		bat.save_protocols(b_prot,Time.now)
-	end
-	redirect_to :action=> :index
+    bats = Array.new
+    if params[:bat_id]
+      params[:bat_id].each{|id, checked| checked=='1' ? bats << Bat.find(id) : '' }
+    end
+    protocols = Array.new
+    params[:bat_protocol_id].each{|id, checked| checked=='1' ? protocols << Protocol.find(id) : ''}
+    if protocols.length > 0
+      for bat in bats
+        if params[:act]=='add'
+          b_prot = (bat.protocols + protocols).uniq
+        else
+          b_prot = (bat.protocols - protocols).uniq
+        end
+        bat.save_protocols(b_prot,Time.now)
+      end
+      flash[:notice] = 'Bats/Protocols updated'
+      redirect_to :action=> :index
+    else
+      flash[:notice] = 'No protocols selected'
+      redirect_to :back
+    end
+	
   end
   
   def list_bats_dates

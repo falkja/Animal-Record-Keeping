@@ -120,7 +120,7 @@ class ProtocolsController < ApplicationController
 		end
 		bat.save_protocols(b_prot,Time.now)
 	end
-	redirect_to :action=> :list
+	redirect_to :action=> :index
   end
   
   def list_bats_dates

@@ -1,5 +1,9 @@
 <h1>Listing protocols</h1>
 
+<%= button_to 'New protocol', new_protocol_path %> |
+<%= button_to 'Add bats to protocol', :action => :update_mult_bats, :act => 'add' %> | 
+<%= button_to 'Remove bats from protocol', :action => :update_mult_bats, :act => 'remove' %>
+
 <% if @protocols.length == 0 %>
 
 <p>No Protocols.</p>
@@ -34,5 +38,3 @@
 <% end %>
 
 <br />
-
-<%= link_to 'New protocol', new_protocol_path %>

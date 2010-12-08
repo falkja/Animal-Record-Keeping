@@ -35,13 +35,16 @@ function setAll(name,state)
 
 <%= link_to_remote "Deactivated Bats", :url => {:action => :change_bat_list, :bats => Bat.not_active}, :update => "bat_list" %> | 
 
-<%= link_to_remote "All Bats", :url => {:action => :change_bat_list, :bats => Bat.find(:all)}, :update => "bat_list" %><p>
+<%= link_to_remote "All Bats", :url => {:action => :change_bat_list, :bats => Bat.find(:all)}, :update => "bat_list" %>
+
+<p>
 
 <%= collection_select("cage","id", @cages, "id", "name", {:prompt => 'Bats in Cage'}, {:onchange => remote_function(:update => "bat_list", :url => {:action => :change_bat_list} ,:with => 'Form.Element.serialize(this)' ) } ) %>
 
 <%= collection_select("room","id", @rooms, "id", "name", {:prompt => 'Bats in Room'}, {:onchange => remote_function(:update => "bat_list", :url => {:action => :change_bat_list} ,:with => 'Form.Element.serialize(this)' ) } ) %>
 
 <%= collection_select("protocol","id", @protocols, "id", "title", {:prompt => 'Bats on Protocol'}, {:onchange => remote_function(:update => "bat_list", :url => {:action => :change_bat_list} ,:with => 'Form.Element.serialize(this)' ) } ) %>
+</p>
 
 </div>
 
@@ -54,7 +57,7 @@ function setAll(name,state)
 	</div>
 </td>
 <td style="vertical-align:top">
-	<div style="border:1px solid gray; width:600px; text">
+	<div style="border:1px solid gray; width:600px;" >
 	<h3 style="text-align:center">Protocols</h3>
 	<%= render :partial => 'choose_protocols', :locals => {:protocols => @protocols, :bat => @bats[0]} %>
 
@@ -65,8 +68,7 @@ function setAll(name,state)
 </td>	
 </tr>
 <% end -%>
+</table>
 </p>
 
 
-
-</div>

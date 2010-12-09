@@ -183,7 +183,7 @@ class CagesController < ApplicationController
 
   def choose_cage_to_weigh
 	if params[:cages]
-		@cages = Cage.find(params[:cages])
+		@cages = Cage.find(params[:cages], :order => "name")
 	else
 		@all_cages = Cage.active
 		@cages = Array.new

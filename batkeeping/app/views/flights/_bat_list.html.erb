@@ -4,6 +4,9 @@
 -->
 
 <% if bat_list %>
+<table>
+<tr>
+<td style="vertical-align:top">
 
 <table>
 <th>
@@ -16,7 +19,10 @@
 <% for bat in bat_list %>
   <tr>
   
-  <td><b><%= link_to bat.band, :controller => :flights, :action => :show, :id => bat %></b></td>
+  <td><b>
+    <%= link_to bat.band, {:controller => :flights, :action => :show, :id => bat},
+      :onmouseover => remote_function(:update => "cal",
+      :url => {:action => :remote_show, :id => bat, :this_month => Date.today}) %></b></td>
   <td>
   <% if bat.leave_date != nil %>
   <%= nice_date bat.leave_date %>
@@ -25,7 +31,18 @@
   </tr>
 
 <% end %>
+
+</table>
+
+</td>
+<td style="width:100px"></td>
+<td style="vertical-align:top;width:350px">
+  <h3 style="text-align: center">Flight log</h3>
+<div id="cal">
   
+</div>
+</td>
+</tr>
 </table>
 
 <% else %>

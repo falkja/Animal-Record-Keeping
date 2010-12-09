@@ -4,7 +4,7 @@
 <%= observe_field "flight_bat_id",
     :url => {:action => :remote_show, :this_month => Date.today},
     :with => :bat_id,
-	:update => "calendar" %>
+	:update => "cal" %>
 
 <%= link_to_remote "My Bats", :url => {:action => :remote_bat_select, :bats => User.find(session[:person]).bats}, :update => "bat_select" %> | 
 

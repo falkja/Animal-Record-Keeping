@@ -27,8 +27,15 @@
 </tr>
 </table>
 
-<%= show_calendar :month => this_month.mon, :year => this_month.year, :highlight_today => false, :highlight_dates => flight_dates %>
+<%= show_calendar :month => this_month.mon, :year => this_month.year, :highlight_today => false, :highlight_dates => flight_dates, :dates => dates %>
 
 <br />
 
+<% if flights.length > 0 %>
+<div style="width:625px;margin-left:auto;margin-right:auto;text-align: center">
+  <%= link_to_remote "Show Full Month Listing", :url => {:action => :remote_flights_entry_list, :flights => flights}, :update => "f_entry_display" %>
+</div>
+<% end %>
+<div id="f_entry_display">
 <%= render :partial => 'flights/flights_listing', :locals => { :flights => flights } %>
+</div>

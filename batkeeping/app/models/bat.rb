@@ -191,6 +191,19 @@ class Bat < ActiveRecord::Base
 	return dates, flights
   end
 	
+  def self.exempt_from_flight
+	curr_bats = Bat.active
+	
+	ex_bats = Array.new
+	for bat in curr_bats
+		if bat.exempt_from_flight
+			ex_bats << bat
+		end
+	end
+	return ex_bats
+  end
+	
+	
   def self.not_exempt_from_flight
 	@curr_bats = Bat.active
 	

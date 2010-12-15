@@ -8,6 +8,8 @@
 
 <%= link_to_remote "My Bats", :url => {:action => :remote_bat_select, :bats => User.find(session[:person]).bats}, :update => "bat_select" %> | 
 
+<%= link_to_remote "Exempt Bats", :url => {:action => :remote_bat_select, :bats => Bat.exempt_from_flight}, :update => "bat_select" %> | 
+
 <%= link_to_remote "Non-exempt Bats", :url => {:action => :remote_bat_select, :bats => Bat.not_exempt_from_flight}, :update => "bat_select" %> | 
 
 <%= link_to_remote "In Flight Cages", :url => {:action => :remote_bat_select, :bats => Bat.in_flight_cage}, :update => "bat_select" %> | 

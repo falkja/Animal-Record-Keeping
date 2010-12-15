@@ -6,21 +6,28 @@ class FlightsController < ApplicationController
   def list
     user = User.find(session[:person])
 	@bats = user.bats
-	@list = "mine"
   end
 
   def list_current
 	@bats = Bat.active
-	@list = "current"
 	render :action => :list
   end
   
   def list_all
     @bats = Bat.find(:all, :order => 'band')
-	@list = "all"
+    render :action => 'list'
+  end
+  
+  def list_exempt
+    @bats = Bat.exempt_from_flight
     render :action => 'list'
   end
 
+  def list_non_exempt
+    @bats = Bat.not_exempt_from_flight
+    render :action => 'list'
+  end
+  
   def list_deactivated
 	@bats = Bat.not_active
 	@list = "deactivated"

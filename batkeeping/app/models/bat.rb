@@ -176,57 +176,57 @@ class Bat < ActiveRecord::Base
   
   #returns true if the bat has a flight log on date
   def flown_on(date)
-	f = Flight.find(:first, :conditions => ["bat_id = #{self.id} and date = ?", date])
-	if f
-		return true
-	else
-		return false
-	end
+    f = Flight.find(:first, :conditions => ["bat_id = #{self.id} and date = ?", date])
+    if f
+      return true
+    else
+      return false
+    end
   end
   
   def flight_dates(year,month)
-	flights = Flight.find(:all, :conditions => "bat_id = #{self.id} and YEAR(date) = #{year} AND MONTH(date) = #{month}", :order => "date ASC")
-	dates = Array.new
-	flights.each{|flight| dates << flight.date.day }
-	return dates, flights
+    flights = Flight.find(:all, :conditions => "bat_id = #{self.id} and YEAR(date) = #{year} AND MONTH(date) = #{month}", :order => "date ASC")
+    dates = Array.new
+    flights.each{|flight| dates << flight.date.day }
+    return dates, flights
   end
 	
   def self.exempt_from_flight
-	curr_bats = Bat.active
+    curr_bats = Bat.active
 	
-	ex_bats = Array.new
-	for bat in curr_bats
-		if bat.exempt_from_flight
-			ex_bats << bat
-		end
-	end
-	return ex_bats
+    ex_bats = Array.new
+    for bat in curr_bats
+      if bat.exempt_from_flight
+        ex_bats << bat
+      end
+    end
+    return ex_bats
   end
 	
 	
   def self.not_exempt_from_flight
-	@curr_bats = Bat.active
+    @curr_bats = Bat.active
 	
-	non_ex_bats = Array.new
-	for bat in @curr_bats
-		if !bat.exempt_from_flight
-			non_ex_bats << bat
-		end
-	end
-	return non_ex_bats
+    non_ex_bats = Array.new
+    for bat in @curr_bats
+      if !bat.exempt_from_flight
+        non_ex_bats << bat
+      end
+    end
+    return non_ex_bats
   end
 	
   def self.in_flight_cage
-	@curr_bats = Bat.active
+    @curr_bats = Bat.active
 	
-	bats_flight_cage = Array.new
-	for bat in @curr_bats
-		if bat.cage.flight_cage
-			bats_flight_cage << bat
-		end
-	end
-	bats_flight_cage = bats_flight_cage.sort_by{|b| b.band}
-	return bats_flight_cage
+    bats_flight_cage = Array.new
+    for bat in @curr_bats
+      if bat.cage.flight_cage
+        bats_flight_cage << bat
+      end
+    end
+    bats_flight_cage = bats_flight_cage.sort_by{|b| b.band}
+    return bats_flight_cage
   end
 	
 	def protocol_exempt
@@ -240,16 +240,16 @@ class Bat < ActiveRecord::Base
 	
   def exempt_from_flight
   
-	if (self.medical_problems.current.length > 0) || self.species.hibernating || (self.species.requires_vaccination && !self.vaccination_date) || self.protocol_exempt
-		return true
-	else
-		return false
-	end
+    if (self.medical_problems.current.length > 0) || self.species.hibernating || (self.species.requires_vaccination && !self.vaccination_date) || self.protocol_exempt
+      return true
+    else
+      return false
+    end
   end
   
   def med_problem_current_first_one_only
-	med_problem = MedicalProblem.find(:first, :conditions=>{:bat_id => self.id, :date_closed => nil})
-	return med_problem
+    med_problem = MedicalProblem.find(:first, :conditions=>{:bat_id => self.id, :date_closed => nil})
+    return med_problem
   end
   
   #single run for populating the bat changes table in the database
@@ -317,7 +317,7 @@ class Bat < ActiveRecord::Base
     end
   end
   
-    #prtocols passed in are the entire protocols that you'd like the bat to have (not just the additions to what the bat already has)
+  #protocols passed in are the entire protocols that you'd like the bat to have (not just the additions to what the bat already has)
 	def save_protocols(protocols,time_altered)
 		#saving history of protocols removed
 		for protocol in (protocols - self.protocols)

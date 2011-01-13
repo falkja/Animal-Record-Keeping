@@ -1,5 +1,12 @@
 #!/bin/bash
 date=`date +%A`
 cd /mnt/raid/software/batkeeping_backups/
-mysqldump -u root -p"batlab" batkeeping | bzip2 -c > $date\_batkeeping_backup.sql.bz2
+fname=$date\_batkeeping_backup.sql
+
+mysqldump -u root -p"batlab" batkeeping > $fname
+
+sed "7i\USE 'batkeeping';"  $fname > temp.txt
+mv temp.txt $fname
+bzip2 -f $fname
+
 echo "batkeeping database backed up"

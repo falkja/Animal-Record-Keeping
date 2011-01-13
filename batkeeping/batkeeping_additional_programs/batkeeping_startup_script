@@ -1,2 +1,2 @@
 cd /usr/local/batkeeping
-ruby script/server -e production -d
+passenger start -e production -d

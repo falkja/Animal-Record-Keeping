@@ -265,7 +265,7 @@ class BatsController < ApplicationController
   end
   
   def deactivate
-	@cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name" )
+	@cages = Cage.active
 	@bat = Bat.find(params[:id])
 	@species = Species.find(:all)
 	@protocols = Protocol.current
@@ -310,7 +310,7 @@ class BatsController < ApplicationController
   def reactivate
     @bat = Bat.find(params[:id])
 	@species = Species.find(:all)
-    @cages = Cage.find(:all, :conditions => "date_destroyed is null", :order => "name" )
+    @cages = Cage.active
 	@protocols = Protocol.current
     @reactivating = true
   end

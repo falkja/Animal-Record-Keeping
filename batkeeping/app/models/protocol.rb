@@ -1,6 +1,7 @@
 class Protocol < ActiveRecord::Base
 	has_and_belongs_to_many :bats, :order => "band"
 	has_many :protocol_histories
+  has_and_belongs_to_many :users, :order => "name"
 	
 	
 	validates_presence_of :title, :number

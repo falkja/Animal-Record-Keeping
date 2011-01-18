@@ -5,6 +5,15 @@ Listing all users
 Listing current users
 <% end %></h1>
 
+<%= button_to 'New User', :action => 'new', :method => :get %> |
+<% if @list_all %>
+<%= link_to 'List Current Members', :action => 'list' %>
+<% else %>
+<%= link_to 'List All Members', :action => 'list_all' %>
+<% end %>
+
+<hr></hr>
+
 <div class="left_indent">
 <table>
   <tr>
@@ -43,12 +52,3 @@ Listing current users
 <% end %>
 </table>
 </div>
-
-<br />
-
-<%= link_to 'New User', :action => 'new' %> | 
-<% if @list_all %>
-<%= link_to 'List Current Members', :action => 'list' %>
-<% else %>
-<%= link_to 'List All Members', :action => 'list_all' %>
-<% end %>

@@ -1,0 +1,16 @@
+<%#
+# checkboxes for users on protocol
+%>
+
+<div class="centered">
+  <table>
+    <th></th>
+    <th>Name</th>
+  <% for u in users %>
+    <tr>
+      <td><%= check_box :user_id, u.id, :checked => protocol.users.include?(u)  %></td>
+      <td><label for='user_id_<%=u.id %>' ><%= u.name %></label></td>
+    </tr>
+  <% end %>
+  </table>
+</div>

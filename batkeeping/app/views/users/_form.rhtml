@@ -25,8 +25,8 @@
 <p><label for="user_start_date">Start date</label><br/>
 <%= date_select 'user', 'start_date' %></p>
 
-<p>Job Type<br/>
-
+<p>Job Type</p>
+<div class="left_indent">
 <%= check_box('animal', 'checked', :checked => @user.animal_care_user?) %>
 <label for="animal_checked">Weekday Care Staff</label><br/>
 
@@ -38,8 +38,15 @@
 
 <%= check_box('administrator', 'checked', :checked => @user.administrator?) %>
 <label for="administrator_checked">Administrator</label><br/>
+</div>
 
+<p>
+  Edit protocols for user:
 </p>
+<div class="left_indent">
+  <%= render :partial => 'protocols/protocols_on_user_form', :locals =>{:protocols => Protocol.current, :user => @user} %>
+</div>
+
 
 </div>
 

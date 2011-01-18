@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
   verify :method => :post, :only => [ :destroy, :create, :update ],
-         :redirect_to => { :action => :list }
+    :redirect_to => { :action => :list }
 
   def list
     @users = User.find(:all, :conditions => 'end_date is null', :order => 'name')
@@ -29,27 +29,34 @@ class UsersController < ApplicationController
     @deactivating = false
   end
 
+  def set_protocols_user(user)
+    protocols = Array.new
+    params[:protocol_id].each{|id, checked| checked=='1' ? protocols << Protocol.find(id) : ''}
+    user.protocols = protocols
+  end
+
   def create
 	  @user = User.new(params[:user])
 	  @user.job_type = ''
 	  if params[:medical][:checked] == '1'
-		@user.job_type = "Medical Care"
+      @user.job_type = "Medical Care"
 	  end
 	  if params[:animal][:checked] == '1'
-		@user.job_type = @user.job_type + ' ' + "Animal Care"
+      @user.job_type = @user.job_type + ' ' + "Animal Care"
 	  end
 	  if params[:weekend][:checked] == '1'
-		@user.job_type = @user.job_type + ' ' + "Weekend Care"
+      @user.job_type = @user.job_type + ' ' + "Weekend Care"
 	  end
 	  if params[:administrator][:checked] == '1'
-		@user.job_type = @user.job_type + ' ' + "Administrator"
+      @user.job_type = @user.job_type + ' ' + "Administrator"
 	  end
 	  @user.end_date = nil
 	  if @user.save
-		flash[:notice] = 'User was successfully created.'
-		redirect_to :action => 'list'
+      set_protocols_user(@user)
+      flash[:notice] = 'User was successfully created.'
+      redirect_to :action => 'list'
 	  else
-		render :action => 'new'
+      render :action => 'new'
 	  end
   end
 
@@ -59,27 +66,27 @@ class UsersController < ApplicationController
   end
 
   def deactivate
-	@user = User.find(params[:id])
+    @user = User.find(params[:id])
 	
-	if @user.cages.active.length > 0
-		flash[:notice] = 'Deactivation failed.  User still owns cages.'
-		redirect_to :controller=> 'main', :action => 'user_summary_page', :id => @user
-	elsif @user.tasks.current.length > 0
-		flash[:notice] = 'Deactivation failed.  User still has tasks.'
-		redirect_to :controller=> 'main', :action => 'user_summary_page', :id => @user
-  elsif @user.job_type != ''
-    flash[:notice] = 'Deactivation failed.  User still has jobs.'
-		redirect_to :controller=> 'users', :action => 'edit', :id => @user
-	end
+    if @user.cages.active.length > 0
+      flash[:notice] = 'Deactivation failed.  User still owns cages.'
+      redirect_to :controller=> 'main', :action => 'user_summary_page', :id => @user
+    elsif @user.tasks.current.length > 0
+      flash[:notice] = 'Deactivation failed.  User still has tasks.'
+      redirect_to :controller=> 'main', :action => 'user_summary_page', :id => @user
+    elsif @user.job_type != ''
+      flash[:notice] = 'Deactivation failed.  User still has jobs.'
+      redirect_to :controller=> 'users', :action => 'edit', :id => @user
+    end
 	
-	@deactivating = true
+    @deactivating = true
   end
   
   def reactivate
-	@user = User.find(params[:id])
-	@user.end_date = nil	
-	@user.save
-	redirect_to :action => 'list'
+    @user = User.find(params[:id])
+    @user.end_date = nil
+    @user.save
+    redirect_to :action => 'list'
   end
   
   def update
@@ -100,12 +107,13 @@ class UsersController < ApplicationController
     end
     
 		if @user.update_attributes(params[:user])
+      set_protocols_user(@user)
       flash[:notice] = 'User was successfully updated.'
-	  if params[:redirectme] == 'list'
-	    redirect_to :action => 'list'
-	  else
+      if params[:redirectme] == 'list'
+        redirect_to :action => 'list'
+      else
         redirect_to :action => 'show', :id => @user
-	  end
+      end
     else
       render :action => 'edit'
     end

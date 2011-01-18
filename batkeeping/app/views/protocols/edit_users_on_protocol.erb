@@ -1,0 +1,15 @@
+<%#
+Add and remove associated users for a particular protocol
+%>
+
+<h2>Edit users for protocol: <%= @protocol.title %></h2>
+
+<h3>Users:</h3>
+
+<% form_tag :action => 'update_users_on_protocol', :id => @protocol do -%>
+
+<%= render :partial => 'protocols/users_on_protocol_form', :locals =>{:protocol => @protocol, :users => @users} %>
+
+<p><%= submit_tag "Update" %></p>
+
+<% end -%>

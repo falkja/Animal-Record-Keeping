@@ -2,7 +2,8 @@
 
 <%= button_to 'Edit', edit_protocol_path(@protocol), :method => :get %> |
 <%= button_to 'Add bats to protocol', :action => :update_mult_bats, :act => 'add' %> |
-<%= button_to 'Remove bats from protocol', :action => :update_mult_bats, :act => 'remove' %> | 
+<%= button_to 'Remove bats from protocol', :action => :update_mult_bats, :act => 'remove' %> |
+<%= button_to 'Add/remove users from protocol', :action => :edit_users_on_protocol, :id => @protocol %> |
 <%= link_to 'List Protocols', protocols_path %>
 
 <hr />
@@ -35,6 +36,13 @@
 <p>
   <b>Exempt from flight:</b>
   <%=h @protocol.flight_exempt.to_s.capitalize %>
+</p>
+
+<p>
+  <b>Users:</b><br>
+  <% for u in @protocol.users %>
+    <%= u.name %><br>
+  <% end %>
 </p>
 
 <p>

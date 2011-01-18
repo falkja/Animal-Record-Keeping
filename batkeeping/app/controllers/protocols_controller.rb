@@ -15,7 +15,7 @@ class ProtocolsController < ApplicationController
   def show
     @protocol = Protocol.find(params[:id])
 	
-	@past_bats, @hists = @protocol.past_bats
+    @past_bats, @hists = @protocol.past_bats
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @protocol }
@@ -42,9 +42,10 @@ class ProtocolsController < ApplicationController
   # POST /protocols.xml
   def create
     @protocol = Protocol.new(params[:protocol])
-	@protocol.end_date = Date.civil(params[:protocol]["start_date(1i)"].to_i, params[:protocol]["start_date(2i)"].to_i, params[:protocol]["start_date(3i)"].to_i) + 3.years
+    @protocol.end_date = Date.civil(params[:protocol]["start_date(1i)"].to_i, params[:protocol]["start_date(2i)"].to_i, params[:protocol]["start_date(3i)"].to_i) + 3.years
     respond_to do |format|
       if @protocol.save
+        set_users_protocol(@protocol)
         format.html { redirect_to(@protocol, :notice => 'Protocol was successfully created.') }
         format.xml  { render :xml => @protocol, :status => :created, :location => @protocol }
       else
@@ -58,9 +59,10 @@ class ProtocolsController < ApplicationController
   # PUT /protocols/1.xml
   def update
     @protocol = Protocol.find(params[:id])
-	@protocol.end_date = Date.civil(params[:protocol]["start_date(1i)"].to_i, params[:protocol]["start_date(2i)"].to_i, params[:protocol]["start_date(3i)"].to_i) + 3.years
+    @protocol.end_date = Date.civil(params[:protocol]["start_date(1i)"].to_i, params[:protocol]["start_date(2i)"].to_i, params[:protocol]["start_date(3i)"].to_i) + 3.years
     respond_to do |format|
       if @protocol.update_attributes(params[:protocol])
+        set_users_protocol(@protocol)
         format.html { redirect_to(@protocol, :notice => 'Protocol was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -83,12 +85,12 @@ class ProtocolsController < ApplicationController
   end
   
   def update_mult_bats
-	@cages=Cage.active
-	@rooms = Room.find(:all)
-	@bats = Bat.active
-	@protocols = Protocol.current
-	@act = params[:act]
-	render :action => :mult_bats_form
+    @cages=Cage.active
+    @rooms = Room.find(:all)
+    @bats = Bat.active
+    @protocols = Protocol.current
+    @act = params[:act]
+    render :action => :mult_bats_form
   end
   
   def change_bat_list
@@ -135,17 +137,48 @@ class ProtocolsController < ApplicationController
   end
   
   def list_bats_dates
-	@start_date = Date.civil(params[:post][:"start_date(1i)"].to_i,params[:post][:"start_date(2i)"].to_i,params[:post][:"start_date(3i)"].to_i)
-	@end_date = (Date.civil(params[:post][:"end_date(1i)"].to_i,params[:post][:"end_date(2i)"].to_i,params[:post][:"end_date(3i)"].to_i) >> 1) - 1.day
+    @start_date = Date.civil(params[:post][:"start_date(1i)"].to_i,params[:post][:"start_date(2i)"].to_i,params[:post][:"start_date(3i)"].to_i)
+    @end_date = (Date.civil(params[:post][:"end_date(1i)"].to_i,params[:post][:"end_date(2i)"].to_i,params[:post][:"end_date(3i)"].to_i) >> 1) - 1.day
 	
-	@protocol = Protocol.find(params[:id])
+    @protocol = Protocol.find(params[:id])
 	
-	if @start_date > @end_date
-		flash[:notice] = 'Dates do not overlap'
-		redirect_to :action => :show, :id => @protocol
-	else
-		@p_hist = @protocol.find_hist_btw(@start_date,@end_date)
-	end
+    if @start_date > @end_date
+      flash[:notice] = 'Dates do not overlap'
+      redirect_to :action => :show, :id => @protocol
+    else
+      @p_hist = @protocol.find_hist_btw(@start_date,@end_date)
+    end
 	
+  end
+
+  def edit_users_on_protocol
+    @users = User.current
+    @protocol = Protocol.find(params[:id])
+  end
+
+  def set_users_protocol(protocol)
+    users = Array.new
+    params[:user_id].each{|id, checked| checked=='1' ? users << User.find(id) : ''}
+    protocol.users = users
+  end
+
+  def update_users_on_protocol
+    protocol = Protocol.find(params[:id])
+    set_users_protocol(protocol)
+    redirect_to :controller => :protocols, :action => :show, :id => protocol
+  end
+
+
+  def edit_protocols_on_user
+    @user = User.find(params[:id])
+    @protocols = Protocol.current
+  end
+
+  def update_protocols_on_user
+    user = User.find(params[:id])
+    protocols = Array.new
+    params[:protocol_id].each{|id, checked| checked=='1' ? protocols << Protocol.find(id) : ''}
+    user.protocols = protocols
+    redirect_to :controller => :users, :action => :show, :id => user
   end
 end

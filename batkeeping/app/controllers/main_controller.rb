@@ -9,8 +9,8 @@ class MainController < ApplicationController
   
   #just show all cage changes
   def cage_change_histories
-	@cih = CageInHistory.find(:all, :order => "date")
-	@coh = CageOutHistory.find(:all, :order => "date")
+    @cih = CageInHistory.find(:all, :order => "date")
+    @coh = CageOutHistory.find(:all, :order => "date")
   end
   
   def login
@@ -20,14 +20,14 @@ class MainController < ApplicationController
   end
   
   def logout
-	session[:person] = nil
-	redirect_to :action => 'index'
+    session[:person] = nil
+    redirect_to :action => 'index'
   end
   
   def timeout
-	session[:person] = nil
-	flash[:notice] = "Session timed out."
-	redirect_to :action => 'index'
+    session[:person] = nil
+    flash[:notice] = "Session timed out."
+    redirect_to :action => 'index'
   end
 
 	def animal_care_staff
@@ -48,10 +48,10 @@ class MainController < ApplicationController
       
       @user = User.find(params[:id])
       @cages = @user.cages.active
-	  @bats = @user.bats
+      @bats = @user.bats
 	  	  
       @medical_problems = @user.bats_medical_problems
-	  @medical_problems = @medical_problems.sort_by{|medical_problem| [medical_problem.bat.cage.name, medical_problem.bat.band, medical_problem.title]}
+      @medical_problems = @medical_problems.sort_by{|medical_problem| [medical_problem.bat.cage.name, medical_problem.bat.band, medical_problem.title]}
       @feeding_cages = @user.cages.has_feeding_tasks
       
       @my_medical_tasks = @user.tasks.medical_tasks

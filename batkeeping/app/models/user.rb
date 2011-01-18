@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_many :bat_changes, :order => "date desc"
   has_many :trainings
   has_many :bats, :through => :cages, :order => "band"
+  has_and_belongs_to_many :protocols, :order => "number"
   
     
   validates_presence_of :name, :initials, :email
@@ -72,7 +73,7 @@ class User < ActiveRecord::Base
     end
   end
 
-	def bats_medical_problems #returns the users's bat's medical problems unless the user is a medical care user, in which case it returns all the medical problems
+	def bats_medical_problems #returns the user's bat's medical problems unless the user is a medical care user, in which case it returns all the medical problems
 		if self.medical_care_user?
 			return MedicalProblem.current
 		end

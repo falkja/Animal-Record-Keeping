@@ -2,6 +2,8 @@
 
 <!--[form:flight]-->
 
+<%= render :partial => 'flight_log_info' %>
+
 <p><label for='flight_bat_id'>Bat</label><br/>
 <%= render :partial => 'bat_select', :locals => {:bats => User.find(session[:person]).bats } %>
 </p>

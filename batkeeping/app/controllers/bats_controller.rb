@@ -645,15 +645,18 @@ class BatsController < ApplicationController
 		@bat = Bat.find(params[:bat])
 		
 		protocols = grab_protocols
-		
-		protocols = protocols.sort_by{|p| p.number}
-		
-		if protocols != @bat.protocols
-			@bat.save_protocols(protocols,Time.now)
-			flash[:prot_notice] = 'Protocols saved'
-		else
-			flash[:prot_notice] = 'Protocols did not change'
-		end
+		if protocols.length > 0
+      protocols = protocols.sort_by{|p| p.number}
+
+      if protocols != @bat.protocols
+        @bat.save_protocols(protocols,Time.now)
+        flash.now[:prot_notice] = 'Protocols saved'
+      else
+        flash.now[:prot_notice] = 'Protocols did not change'
+      end
+    else
+      flash.now[:prot_notice] = 'Bat must always have a protocol'
+    end
 		
 		render :partial => 'protocols/choose_protocols', :locals => {:protocols => Protocol.current, :bat => @bat}
 	end

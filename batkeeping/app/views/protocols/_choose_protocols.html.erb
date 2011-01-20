@@ -2,10 +2,11 @@
 
 <% if protocols.length > 0 %>
 
-<table style="width:700px;margin-right:auto; margin-left:auto;">
+<table>
 <th></th>
 <th>Title</th>
 <th>Number</th>
+<th>Summary</th>
 <th>Start Date</th>
 <th>Flight Exempt</th>
 <th>Husbandry</th>
@@ -20,6 +21,7 @@
 <%= protocol.title %></span></label></td>
 
 <td><label for="bat_protocol_id_<%=protocol.id %>"><%= protocol.number %></label></td>
+<td style="text-align:left;width:350px"><label for="bat_protocol_id_<%=protocol.id %>"><%= protocol.summary %></label></td>
 <td><label for="bat_protocol_id_<%=protocol.id %>"><%= nice_date protocol.start_date %></label></td>
 <td><label for="bat_protocol_id_<%=protocol.id %>"><%= protocol.flight_exempt.to_s.capitalize %></label></td>
 <td><label for="bat_protocol_id_<%=protocol.id %>"><%= protocol.husbandry.to_s.capitalize %></label></td>

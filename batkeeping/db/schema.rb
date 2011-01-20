@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110118201157) do
+ActiveRecord::Schema.define(:version => 20110119222732) do
 
   create_table "bat_changes", :force => true do |t|
     t.integer "bat_id",               :null => false
@@ -132,6 +132,7 @@ ActiveRecord::Schema.define(:version => 20110118201157) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "flight_exempt", :default => false
+    t.text     "summary"
   end
 
   create_table "protocols_users", :id => false, :force => true do |t|

@@ -141,9 +141,10 @@ div.scrollingdiv {
 }
 
 warning {
-    color: red;
+    background-color: red;
+    color: #fff;
     font-weight: bold;
-    font-style: italic;
+    display: table;
 }
 
 div.left_indent {

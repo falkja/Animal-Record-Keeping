@@ -1,21 +1,31 @@
 <table style="margin-right:auto; margin-left:auto;">
-<% form_tag :action => 'create_mult_prots_mult_bats', :act => act do -%>
-<tr>
-  <td>
-	<div id="bat_list" style="border:1px solid gray; width:150px;">
-	<%= render :partial => 'bat_checkbox_list', :locals => {:bats => bats} %>
-	</div>
-  </td>
-  <td style="vertical-align:top">
-        <div style="border:1px solid gray; width:750px;" >
-          <h3 style="text-align:center">Protocols</h3>
-          <%= render :partial => 'choose_protocols', :locals => {:protocols => protocols, :bat => nil} %>
+  <% form_tag :action => 'create_mult_prots_mult_bats', :act => act do -%>
+    <th>Select From:</th>
+    <th>Bats:</th>
+    <th>Protocols:</th>
+
+    <tr>
+      <td style="vertical-align:top;text-align: center;">
+        <div id="bat_list" style="border:1px solid gray;padding-left: 10px;padding-right: 10px;padding-top: 10px">
+          <%= render :partial => 'bats_as_options', :locals => {:act => act,
+            :cages => cages, :rooms => rooms, :protocols => protocols} %>
+        </div>
+      </td>
+      <td>
+        <div id="bat_list" style="border:1px solid gray;padding-left: 10px;padding-right: 10px">
+          <%= render :partial => 'bat_checkbox_list', :locals => {:bats => bats} %>
+        </div>
+      </td>
+      <td style="vertical-align:top">
+        <div style="border:1px solid gray;padding-left: 10px;padding-right: 10px;padding-top: 10px" >
+          <%= render :partial => 'choose_protocols',
+            :locals => {:protocols => protocols, :bat => nil} %>
 
           <div style="width:750px; margin-right:auto; margin-left:auto;text-align:center">
-          <p><%= submit_tag act.capitalize.concat(" bats") %></p>
+            <p><%= submit_tag act.capitalize.concat(" bats") %></p>
           </div>
         </div>
-</td>
-</tr>
-<% end -%>
+      </td>
+    </tr>
+  <% end -%>
 </table>

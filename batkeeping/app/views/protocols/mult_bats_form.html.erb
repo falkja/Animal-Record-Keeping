@@ -16,10 +16,6 @@ function setAll(name,state)
 }
 </script> 
 
-
-
-
-
 <div style="margin-right:auto; margin-left:auto; text-align:center; width:650px">
 
 <% if @act.include?('remove') %>
@@ -28,52 +24,10 @@ function setAll(name,state)
 <h2 style="color:blue">Add Multiple Bats to Protocols</h2>
 <% end %>
 
-
-<%= link_to_remote "My Bats", 
-  :url => {:action => :change_bat_list, 
-  :bats => User.find(session[:person]).bats,
-  :act => @act},
-  :update => "form_bats_protocols" %> |
-
-<%= link_to_remote "Current Bats", 
-  :url => {:action => :change_bat_list, :bats => Bat.active,
-  :act => @act},
-  :update => "form_bats_protocols" %> |
-
-<%= link_to_remote "Deactivated Bats",
-  :url => {:action => :change_bat_list, :bats => Bat.not_active,
-  :act => @act},
-  :update => "form_bats_protocols" %> |
-
-<%= link_to_remote "All Bats", 
-  :url => {:action => :change_bat_list, :bats => Bat.find(:all),
-  :act => @act},
-  :update => "form_bats_protocols" %>
-
-<p>
-
-<%= collection_select("cage","id", @cages, "id", "name",
-  {:prompt => 'Bats in Cage'},
-  {:onchange => remote_function(:update => "form_bats_protocols",
-      :url => {:action => :change_bat_list, :act => @act},
-      :with => 'Form.Element.serialize(this)' ) } ) %>
-
-<%= collection_select("room","id", @rooms, "id", "name",
-  {:prompt => 'Bats in Room'},
-  {:onchange => remote_function(:update => "form_bats_protocols",
-      :url => {:action => :change_bat_list, :act => @act},
-      :with => 'Form.Element.serialize(this)' ) } ) %>
-
-<%= collection_select("protocol","id", @protocols, "id", "title",
-  {:prompt => 'Bats on Protocol'},
-  {:onchange => remote_function(:update => "form_bats_protocols",
-      :url => {:action => :change_bat_list, :act => @act} ,
-      :with => 'Form.Element.serialize(this)' ) } ) %>
-</p>
-
 </div>
 
 <div id="form_bats_protocols">
 <%= render :partial => 'form_bats_protocols',
-  :locals => {:bats => @bats, :protocols => @protocols, :act => @act} %>
+  :locals => {:bats => @bats, :protocols => @protocols, :act => @act, 
+  :cages => @cages, :rooms => @rooms} %>
 </div>

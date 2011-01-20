@@ -2,7 +2,7 @@ class ProtocolsController < ApplicationController
   # GET /protocols
   # GET /protocols.xml
   def index
-    @protocols = Protocol.all
+    @protocols = Protocol.all(:order => 'number')
 
     respond_to do |format|
       format.html # index.html.erb
@@ -108,7 +108,8 @@ class ProtocolsController < ApplicationController
       @bats = [];
     end
     render :partial => 'form_bats_protocols',
-      :locals => {:bats => @bats, :protocols => @protocols, :act => @act}
+      :locals => {:bats => @bats, :protocols => @protocols, :act => @act,
+      :cages => Cage.active, :rooms => Room.find(:all)}
   end
   
   def create_mult_prots_mult_bats

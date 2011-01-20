@@ -1,0 +1,20 @@
+<%#
+# Lists the active bats between the given dates
+%>
+
+<h3>Listing bats active on protocol <em>"<%= @protocol.title %>"</em> between: <br>
+  <%= @start_date.strftime("%B %Y") %> and <%= @end_date.strftime("%B %Y") %></h3>
+
+<% if @bats.length > 0 %>
+  <% for bat in @bats %>
+    <%=link_to bat.band, :controller => :bats, :action => :show, :id => bat %><br>
+  <% end %>
+<% else %>
+  No bats on protocol for selected dates.
+<% end %>
+
+<p>
+  <%= render :partial => 'form_to_show_bats_on_protocol_when', :locals =>{:protocol=>@protocol} %>
+</p>
+
+<%= render :partial => 'curr_bats_on_protocol', :locals => {:protocol => @protocol} %>

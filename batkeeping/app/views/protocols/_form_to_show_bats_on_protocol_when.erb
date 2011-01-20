@@ -1,0 +1,16 @@
+<%#
+# Form that allows user to choose date range to display bats active on protocol
+%>
+
+<% if protocol.protocol_histories.length >0 %>
+
+  <% form_tag :action => :list_bats_active_between, :id => protocol do %>
+    Show bats active on protocol in between:
+    <%= date_select("post","start_date", :start_year => protocol.start_date.year, :end_year => Time.now.year, :discard_day => true, :use_short_month => true, :default=> protocol.start_date) %>
+    and
+    <%= date_select("post","end_date", :start_year => protocol.start_date.year, :end_year => protocol.end_date.year, :discard_day => true, :use_short_month => true, :default=> Date.today) %>
+
+    <%= submit_tag "Go" %>
+  <% end %>
+
+<% end %>

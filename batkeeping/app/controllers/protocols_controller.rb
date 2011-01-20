@@ -149,7 +149,21 @@ class ProtocolsController < ApplicationController
     else
       @p_hist = @protocol.find_hist_btw(@start_date,@end_date)
     end
-	
+  end
+
+  def list_bats_active_between
+    @start_date = Date.civil(params[:post][:"start_date(1i)"].to_i,params[:post][:"start_date(2i)"].to_i,params[:post][:"start_date(3i)"].to_i)
+    #we >> 1 to increase the date by one month and we subtract one day from the end date because we want the last day of the month
+    @end_date = (Date.civil(params[:post][:"end_date(1i)"].to_i,params[:post][:"end_date(2i)"].to_i,params[:post][:"end_date(3i)"].to_i) >> 1) - 1.day
+
+    @protocol = Protocol.find(params[:id])
+
+    if @start_date > @end_date
+      flash[:notice] = 'Dates do not overlap'
+      redirect_to :action => :show, :id => @protocol
+    else
+      @bats = @protocol.find_active_btw(@start_date,@end_date)
+    end
   end
 
   def edit_users_on_protocol

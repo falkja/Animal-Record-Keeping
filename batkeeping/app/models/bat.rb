@@ -343,9 +343,12 @@ class Bat < ActiveRecord::Base
 		
 		self.protocols = protocols
 	end
-	
+
+  #date bat was LAST added to protocol
 	def date_added_to_protocol(protocol)
-		hist = ProtocolHistory.find(:first, :conditions => ["protocol_id = ? and bat_id = ? and date_added is not null", protocol.id, self.id], :order => "date_added desc")
+		hist = ProtocolHistory.find(:last, 
+      :conditions => ["protocol_id = ? and bat_id = ? and date_added is not null", protocol.id, self.id],
+      :order => "date_added")
 		return hist.date_added
 	end
 end

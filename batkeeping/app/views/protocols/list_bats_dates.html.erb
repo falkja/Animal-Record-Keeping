@@ -1,19 +1,20 @@
-<h2>Listing bats added/removed to protocol <em>"<%= @protocol.title %>"</em> between: <br>
-<%= @start_date.strftime("%B %Y") %> and <%= @end_date.strftime("%B %Y") %></h2>
+<h3>Listing bats added/removed to protocol <em>"<%= @protocol.title %>"</em> between: <br>
+  <%= @start_date.strftime("%B %Y") %> and <%= @end_date.strftime("%B %Y") %></h3>
 
-<% for hist in @p_hist %>
-<%= link_to hist.bat.band, :controller => :bats, :action => :show, :id => hist.bat %><br>
-<% end %>
+<% if @p_hist.length > 0 %>
+  <% for hist in @p_hist %>
+    <%= link_to hist.bat.band, :controller => :bats, :action => :show, :id => hist.bat %><br>
+  <% end %>
+<% else %>
+  No bats on protocol for selected dates.
+<%  end %>
 
 <p>
-note: does <b>not</b> include bats that were added to protocol before these dates and removed after these dates
+  note: does <b>not</b> include bats that were added to protocol before these dates and removed after these dates
+</p>
+<br>
+<p>
+  <%= render :partial => 'form_to_show_bats_added_removed_to_protocol_when', :locals =>{:protocol=>@protocol} %>
 </p>
 
-<br>
-<div style="width:700px; margin-right:auto; margin-left:auto">
-<%= render :partial => 'form_to_show_bats_on_protocol_when', :locals =>{:protocol=>@protocol} %>
-</div>
-
 <%= render :partial => 'curr_bats_on_protocol', :locals => {:protocol => @protocol} %>
-
-<%= nice_date @end_date %>

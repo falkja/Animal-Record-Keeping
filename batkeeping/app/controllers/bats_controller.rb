@@ -125,7 +125,7 @@ class BatsController < ApplicationController
 	end
 
   def grab_protocols
-    protocol_ids = params["bat_protocol_id"]
+    protocol_ids = params["protocol_id"]
     protocols=Array.new
     if protocol_ids
       protocol_ids.each {|key,value| value !="0" ? protocols << Protocol.find(key) : ''}
@@ -326,7 +326,7 @@ class BatsController < ApplicationController
     if params[:bat][:cage_id] == nil
       flash[:notice] = "Reactivation failed.  Choose a cage for your reactivated bat."
       redirect_to :back
-    elsif params["bat_protocol_id"] == nil
+    elsif params["protocol_id"] == nil
       flash[:notice] = "Reactivation failed.  Choose a protocol for your reactivated bat."
       redirect_to :back
     else

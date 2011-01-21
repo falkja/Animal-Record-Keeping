@@ -2,34 +2,12 @@
 
 <% if protocols.length > 0 %>
 
-<table>
-<th></th>
-<th>Title</th>
-<th>Number</th>
-<th>Summary</th>
-<th>Start Date</th>
-<th>Flight Exempt</th>
-<% for protocol in protocols %>
-<tr style="text-align:center">
-<td style="text-align:right"><%=check_box :bat_protocol_id, protocol.id , :checked => bat && bat.protocols.include?(protocol) %></td>
-<td style="text-align:left"><label for="bat_protocol_id_<%=protocol.id %>" >
-<span title='Bats: 
-<% for b in protocol.bats %><%=b.band%>
-<% end %>'>
-
-<%= protocol.title %></span></label></td>
-
-<td><label for="bat_protocol_id_<%=protocol.id %>"><%= protocol.number %></label></td>
-<td style="text-align:left;width:250px"><label for="bat_protocol_id_<%=protocol.id %>"><%= protocol.summary %></label></td>
-<td><label for="bat_protocol_id_<%=protocol.id %>"><%= nice_date protocol.start_date %></label></td>
-<td><label for="bat_protocol_id_<%=protocol.id %>"><%= protocol.flight_exempt.to_s.capitalize %></label></td>
-</tr>
-<% end %>
-</table>
+  <%= render :partial => 'protocols/protocols_table_list',
+    :locals =>{:protocols => Protocol.current, :selecting => true, :user => nil, :bat => bat} %>
 
 <% else %>
-<div style="text-align:center;">
-No protocols.
-<%= link_to 'Add Protocol', :new_protocol %>
-</div>
+  <div style="text-align:center;">
+    No protocols.
+    <%= link_to 'New Protocol', new_protocol_path %>
+  </div>
 <% end %>

@@ -118,7 +118,7 @@ class ProtocolsController < ApplicationController
       params[:bat_id].each{|id, checked| checked=='1' ? bats << Bat.find(id) : '' }
     end
     protocols = Array.new
-    params[:bat_protocol_id].each{|id, checked| checked=='1' ? protocols << Protocol.find(id) : ''}
+    params[:protocol_id].each{|id, checked| checked=='1' ? protocols << Protocol.find(id) : ''}
     if protocols.length > 0
       for bat in bats
         if params[:act]=='add'

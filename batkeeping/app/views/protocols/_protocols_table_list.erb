@@ -1,0 +1,45 @@
+<%#
+# Lists the attributes of protocols
+%>
+
+
+<table>
+  <tr>
+    <% if selecting %>
+      <th></th>
+    <% end  %>
+    <th>Title</th>
+    <th>Number</th>
+    <th>Summary</th>
+    <th>Current # Bats</th>
+    <th>Start date</th>
+    <th>End date</th>
+    <th>Flight Exempt</th>
+  </tr>
+
+  <% protocols.each do |protocol| %>
+    <tr style="text-align:center">
+      <% if selecting %>
+        <td style="text-align:right">
+          <%= check_box :protocol_id, protocol.id,
+            :checked => user ? user.protocols.include?(protocol) : (bat && bat.protocols.include?(protocol)) %>
+        </td>
+      <% end %>
+      <td style="text-align:left"><b><label for='protocol_id_<%=protocol.id %>' ><%=h protocol.title %></label></b></td>
+      <td><%= link_to protocol.number, protocol %></td>
+      <td style="text-align: left;width:250px"><label for='protocol_id_<%=protocol.id %>' ><%=h simple_format protocol.summary %></label></td>
+      <td>
+        <label for='protocol_id_<%=protocol.id %>' >
+          <span title='Bats: <% for b in protocol.bats %>&#13; <%=b.band%><% end %>'>
+            <%=h protocol.bats.length %></span>
+        </label>
+      </td>
+      <td><label for='protocol_id_<%=protocol.id %>' ><%=nice_date_no_day protocol.start_date %></label></td>
+      <td><label for='protocol_id_<%=protocol.id %>' ><%=nice_date_no_day protocol.end_date %></label></td>
+      <td><label for='protocol_id_<%=protocol.id %>' ><%=h protocol.flight_exempt.to_s.capitalize %></label></td>
+      <% unless selecting%>
+        <td><%= button_to 'Edit', edit_protocol_path(protocol), {:method => :get} %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>

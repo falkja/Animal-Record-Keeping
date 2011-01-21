@@ -44,7 +44,8 @@
   Edit protocols for user:
 </p>
 <div class="left_indent">
-  <%= render :partial => 'protocols/protocols_on_user_form', :locals =>{:protocols => Protocol.current, :user => @user} %>
+  <%= render :partial => 'protocols/protocols_table_list', 
+    :locals =>{:protocols => Protocol.current, :selecting => true, :user => @user} %>
 </div>
 
 

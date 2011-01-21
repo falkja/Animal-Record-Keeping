@@ -14,7 +14,7 @@ module ApplicationHelper
   # Produces -> May 2006
   def nice_date_no_day(date)
     if (date != nil)
-      date.strftime("%B %Y")
+      date.strftime("%b %Y")
     else
       'N/A'
     end

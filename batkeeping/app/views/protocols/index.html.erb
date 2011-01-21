@@ -6,42 +6,17 @@
 
 <hr />
 <div class="left_indent">
-<% if @protocols.length == 0 %>
+  <% if @protocols.length == 0 %>
 
-  <p>No Protocols.</p>
+    <p>No Protocols.</p>
 
-<% else %>
+  <% else %>
 
-  <p>
-  <table>
-    <tr>
-      <th>Title</th>
-      <th>Number</th>
-      <th>Summary</th>
-      <th>Current # Bats</th>
-      <th>Start date</th>
-      <th>End date</th>
-      <th>Flight Exempt</th>
-    </tr>
+    <p>
+      <%= render :partial => 'protocols/protocols_table_list', 
+        :locals =>{:protocols => @protocols, :selecting => false, :user => nil} %>
+    </p>
 
-    <% @protocols.each do |protocol| %>
-      <tr style="text-align:center">
-        <td><b><%=link_to protocol.title, protocol %></b></td>
-        <td><%=h protocol.number %></td>
-        <td style="text-align: left;width:250px"><%=h protocol.summary %></td>
-        <td>
-          <span title='Bats: <% for b in protocol.bats %>&#13; <%=b.band%><% end %>'>
-          <%=h protocol.bats.length %></span>
-        </td>
-        <td><%=h protocol.start_date %></td>
-        <td><%=h protocol.end_date %></td>
-        <td><%=h protocol.flight_exempt.to_s.capitalize %></td>
-        <td><%= button_to 'Edit', edit_protocol_path(protocol), {:method => :get} %></td>
-      </tr>
-    <% end %>
-  </table>
-  </p>
-
-<% end %>
+  <% end %>
 
 </div>

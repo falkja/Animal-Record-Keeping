@@ -8,7 +8,8 @@ Add and remove associated protocols for a particular user
 
 <% form_tag :action => 'update_protocols_on_user', :id => @user do -%>
 
-<%= render :partial => 'protocols/protocols_on_user_form', :locals =>{:protocols => @protocols, :user => @user} %>
+<%= render :partial => 'protocols/protocols_table_list',
+    :locals =>{:protocols => Protocol.current, :selecting => true, :user => @user} %>
 
 <p><%= submit_tag "Update" %></p>
 

@@ -9,7 +9,6 @@
 <th>Summary</th>
 <th>Start Date</th>
 <th>Flight Exempt</th>
-<th>Husbandry</th>
 <% for protocol in protocols %>
 <tr style="text-align:center">
 <td style="text-align:right"><%=check_box :bat_protocol_id, protocol.id , :checked => bat && bat.protocols.include?(protocol) %></td>
@@ -24,7 +23,6 @@
 <td style="text-align:left;width:250px"><label for="bat_protocol_id_<%=protocol.id %>"><%= protocol.summary %></label></td>
 <td><label for="bat_protocol_id_<%=protocol.id %>"><%= nice_date protocol.start_date %></label></td>
 <td><label for="bat_protocol_id_<%=protocol.id %>"><%= protocol.flight_exempt.to_s.capitalize %></label></td>
-<td><label for="bat_protocol_id_<%=protocol.id %>"><%= protocol.husbandry.to_s.capitalize %></label></td>
 </tr>
 <% end %>
 </table>

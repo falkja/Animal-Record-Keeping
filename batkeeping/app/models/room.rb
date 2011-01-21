@@ -1,10 +1,16 @@
 class Room < ActiveRecord::Base
-    has_many :cages
-    has_many :weathers
+  has_many :cages
+  has_many :weathers
 	has_many :bats, :through => :cages, :order => 'band'
 	has_many :tasks
 	has_many :task_census
-    
+
+  def self.has_bats
+    rooms = find :all, :order => :name
+    rooms.delete_if{|room| room.bats.length == 0}
+    return rooms
+  end
+
   #returns the number of bats at any day for a given room
 	def num_bats_when(day, month, year)
     recent_census = Census.find(:first, :conditions => "(date <= '" + year.to_s + "-"+ month.to_s + "-" + day.to_s + "') and room_id = " + self.id.to_s, :order => 'date desc')

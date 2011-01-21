@@ -11,14 +11,16 @@ class Protocol < ActiveRecord::Base
 		date = Date.today
 		protocols = find(:all, :conditions => ["end_date >= ?",date], :order => "number")
 	end
-	
+
+  def self.has_bats
+    prots = find :all, :order => :number
+    prots.delete_if{|prot| prot.bats.length == 0}
+    return prots
+  end
+
 	def past_bats
 		hists = ProtocolHistory.find(:all, :conditions =>["protocol_id = ? and date_removed is not null", self.id], :order => "date_removed")
-		bats = Array.new
-		for hist in hists
-		  bats << hist.bat
-		end
-		return bats, hists
+		return hists
 	end
 	
 	#looks for histories added to protocol between start and end dates

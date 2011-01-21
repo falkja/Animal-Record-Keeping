@@ -1,18 +1,17 @@
 <% if bats.length > 0 %>
 
-<p><label for="toggle">Toggle all</label>
-<%= check_box_tag 'toggle' , 'toggle', false, :onclick => "toggleAll('bat_checkbox');return true;"%>
-</p>
+  <p><label for="toggle">Toggle all</label>
+    <%= check_box_tag 'toggle' , 'toggle', false, :onclick => "toggleAll('bat_checkbox');return true;"%>
+  </p>
 
 
-<% for bat in bats %>
-	<%=check_box :bat_id, bat.id, :class => 'bat_checkbox' %>
-	
-	<label for="bat_id_<%=bat.id %>" ><span title='Protocols: 
-<% for p in bat.protocols %><%=p.title%>
-<% end %>'>
-	<%= bat.band %></span></label><br>
+  <% for bat in bats %>
+    <%=check_box :bat_id, bat.id, :class => 'bat_checkbox' %>
 
-<% end %>
+    <label for="bat_id_<%=bat.id %>" ><span title='Protocols:
+  <% for p in bat.protocols %><%=p.number%><% end %>'>
+  <%= bat.band %></span></label><br>
+
+  <% end %>
 
 <% end %>

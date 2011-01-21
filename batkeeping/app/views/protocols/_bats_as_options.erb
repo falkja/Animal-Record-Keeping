@@ -41,7 +41,7 @@
       :with => 'Form.Element.serialize(this)' ) } ) %>
 <br>
 
-<%= collection_select("protocol","id", protocols, "id", "title",
+<%= collection_select("protocol","id", protocols, "id", "number",
   {:prompt => 'Bats on Protocol'},
   {:onchange => remote_function(:update => "form_bats_protocols",
       :url => {:action => :change_bat_list, :act => act} ,

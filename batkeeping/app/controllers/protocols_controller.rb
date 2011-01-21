@@ -14,8 +14,7 @@ class ProtocolsController < ApplicationController
   # GET /protocols/1.xml
   def show
     @protocol = Protocol.find(params[:id])
-	
-    @past_bats, @hists = @protocol.past_bats
+    @hists = @protocol.past_bats
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @protocol }
@@ -85,16 +84,16 @@ class ProtocolsController < ApplicationController
   end
   
   def update_mult_bats
-    @cages=Cage.active
-    @rooms = Room.find(:all)
-    @bats = Bat.active
-    @protocols = Protocol.current
+    @cages=Cage.has_bats
+    @rooms = Room.has_bats
+    @bats = User.find(session[:person]).bats
+    @protocols = Protocol.has_bats
     @act = params[:act]
     render :action => :mult_bats_form
   end
   
   def change_bat_list
-    @protocols = Protocol.current
+    @protocols = Protocol.has_bats
     @act = params[:act]
     if params[:cage] && params[:cage][:id] != ""
       @bats = Cage.find(params[:cage][:id]).bats
@@ -109,7 +108,7 @@ class ProtocolsController < ApplicationController
     end
     render :partial => 'form_bats_protocols',
       :locals => {:bats => @bats, :protocols => @protocols, :act => @act,
-      :cages => Cage.active, :rooms => Room.find(:all)}
+      :cages => Cage.has_bats, :rooms => Room.has_bats}
   end
   
   def create_mult_prots_mult_bats

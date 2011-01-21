@@ -18,14 +18,16 @@
   </tr>
 
   <% protocols.each do |protocol| %>
-    <tr style="text-align:center">
+    <tr style="text-align:center;vertical-align:top;">
       <% if selecting %>
         <td style="text-align:right">
           <%= check_box :protocol_id, protocol.id,
             :checked => user ? user.protocols.include?(protocol) : (bat && bat.protocols.include?(protocol)) %>
         </td>
       <% end %>
-      <td style="text-align:left"><b><label for='protocol_id_<%=protocol.id %>' ><%=h protocol.title %></label></b></td>
+      <td style="text-align:left;width:250px"><b><label for='protocol_id_<%=protocol.id %>' >
+        <span title='Bats: <% for b in protocol.bats %>&#13; <%=b.band%><% end %>'>
+            <%=h protocol.title %></span></label></b></td>
       <td><%= link_to protocol.number, protocol %></td>
       <td style="text-align: left;width:250px"><label for='protocol_id_<%=protocol.id %>' ><%=h simple_format protocol.summary %></label></td>
       <td>

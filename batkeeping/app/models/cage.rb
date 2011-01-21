@@ -1,10 +1,10 @@
 class Cage < ActiveRecord::Base
-    belongs_to  :user
-    has_many :bats, :order => 'band'
-    has_many :cage_in_histories, :order => "date desc"
-    has_many :cage_out_histories, :order => "date desc"
-    has_many :tasks, :order => "repeat_code"
-    belongs_to :room
+  belongs_to  :user
+  has_many :bats, :order => 'band'
+  has_many :cage_in_histories, :order => "date desc"
+  has_many :cage_out_histories, :order => "date desc"
+  has_many :tasks, :order => "repeat_code"
+  belongs_to :room
 	has_many :species, :through => :bats, :order => "name"
 	
 	validates_presence_of :name
@@ -15,21 +15,15 @@ class Cage < ActiveRecord::Base
   end
   
   def self.has_bats
-    @cages = find :all, :order => "name"
-    for cage in @cages
-      @cages.delete_if{|cage| cage.bats.length == 0}
-    end
-	@cages = @cages.sort_by{|cage| [cage.name]}
-    return @cages
+    cages = find :all, :order => "name"
+    cages.delete_if{|cage| cage.bats.length == 0}
+    return cages
   end
   
   def self.has_feeding_tasks
-		@cages = find :all, :order => "name"
-		for cage in @cages
-			@cages.delete_if{|cage| cage.tasks.feeding_tasks.length == 0}
-		end
-		@cages = @cages.sort_by{|cage| [cage.name]}
-		return @cages
+		cages = find :all, :order => "name"
+    cages.delete_if{|cage| cage.tasks.feeding_tasks.length == 0}
+		return cages
   end
   
   def average_bat_weight
@@ -56,15 +50,15 @@ class Cage < ActiveRecord::Base
   def last_weigh_date
     if self.bats.length > 0
       bats_with_weights = 0
-	  dates = Array.new
+      dates = Array.new
       for bat in self.bats
         if bat.weights.length > 0
           dates << bat.weights.recent.date
-		  bats_with_weights = 1;
+          bats_with_weights = 1;
         end
       end
       if bats_with_weights > 0 
-		last_date = dates.min
+        last_date = dates.min
         return last_date
       else
         return 0
@@ -75,13 +69,13 @@ class Cage < ActiveRecord::Base
   end
   
   def any_bats_monitored
-  any_monitored = false
-	for bat in self.bats
-		if bat.monitor_weight
-			any_monitored = true
-		end
-	end
-	return any_monitored
+    any_monitored = false
+    for bat in self.bats
+      if bat.monitor_weight
+        any_monitored = true
+      end
+    end
+    return any_monitored
   end
   
   def food_today

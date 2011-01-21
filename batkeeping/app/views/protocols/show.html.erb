@@ -39,34 +39,36 @@
 </p>
 
 <p>
-  <b>Users:</b><br>
-  <% for u in @protocol.users %>
-    <%= u.name %><br>
+  <b>Users:</b>
+  <% if @protocol.users.length == 0 %>
+    No users on protocol
+  <% else %>
+    <% for u in @protocol.users %>
+      <br><%= u.name %>
+    <% end %>
   <% end %>
 </p>
 
 <p>
-<%= render :partial => 'curr_bats_on_protocol', :locals => {:protocol => @protocol} %>
+  <%= render :partial => 'curr_bats_on_protocol', :locals => {:protocol => @protocol} %>
 </p>
 
 <p>
   <b>Past bats:</b>
-  <table>
-  <% i = 0 %>
-  <% for bat in @past_bats %>
-  <tr>
-	<td><%= link_to bat.band, :controller => :bats, :action => :edit, :id => bat %></td>
-	<td>Removed on: <%= nice_date @hists[i].date_removed %></td>
-    <% i = i + 1 %>
-  </tr>
+<table>
+  <% for hist in @hists %>
+    <tr>
+      <td><%= link_to hist.bat.band, :controller => :bats, :action => :edit, :id => hist.bat %></td>
+      <td>Removed on: <%= nice_date hist.date_removed %></td>
+    </tr>
   <% end %>
-  </table>
+</table>
 </p>
 
 <p>
-<%= render :partial => 'form_to_show_bats_on_protocol_when', :locals =>{:protocol=>@protocol} %>
+  <%= render :partial => 'form_to_show_bats_on_protocol_when', :locals =>{:protocol=>@protocol} %>
 </p>
 
 <p>
-<%= render :partial => 'form_to_show_bats_added_removed_to_protocol_when', :locals =>{:protocol=>@protocol} %>
+  <%= render :partial => 'form_to_show_bats_added_removed_to_protocol_when', :locals =>{:protocol=>@protocol} %>
 </p>

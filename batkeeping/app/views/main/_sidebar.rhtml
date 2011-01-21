@@ -7,7 +7,7 @@
         <%= link_to 'Home', :controller => :main, :action => :user_summary_page, :id => user %>
       </h2>
 
-
+    <ul>
       <% if user.job_type != '' && user.job_type != nil %>
         <h4>
           <li><%= link_to 'My Jobs', :controller => :users, :action => :edit, :id => user %></li>
@@ -24,12 +24,12 @@
       <ul>
         <% if user.protocols.length > 0 %>
           <% for protocol in user.protocols %>
-            <li><%= link_to protocol.title, :controller => :protocols, :action => :show, :id => protocol %></li>
+            <li><%= link_to protocol.number, :controller => :protocols, :action => :show, :id => protocol %></li>
           <% end %>
         <% else %>
           <li>No protocols</li>
         <% end %>
-        <li><em><%= link_to 'Add/remove from protocol', :controller => :protocols, :action => :edit_protocols_on_user, :id => user %></em></li>
+        <li><em><%= link_to 'Add/remove', :controller => :protocols, :action => :edit_protocols_on_user, :id => user %></em></li>
       </ul>
 
       <li><h4><%= link_to 'Trainings', :controller => :trainings, :action => :index, :selected_user => user %></h4></li>
@@ -56,4 +56,5 @@
       <li><%= link_to('Administrators', {:controller => 'main', :action => 'lab_email', :users => User.administrator}, {:title => User.administrator.collect{|u| [u.name+" \n"]}}) %></li>
 
     </ul>
+  </ul>
 </div>

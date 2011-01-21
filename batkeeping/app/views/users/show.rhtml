@@ -28,7 +28,7 @@
     <% for p in @user.protocols %>
       <p>
         <b>Title:</b> <%= p.title %><br>
-        <b>Number:</b> <%= p.number %><br>
+        <b>Number:</b> <%= link_to p.number, p %><br>
         <b>Start Date:</b> <%= nice_date p.start_date %><br>
         <b>End Date:</b> <%= nice_date p.end_date %><br>
         <b>Flight Exempt:</b> <%= p.flight_exempt %><br>

@@ -136,6 +136,7 @@
   <% if bat.leave_date == nil %>
   <td><%= show_weigh_link ? '' : (button_to 'Weigh', {:controller => :bats, :action => 'weigh_bat', :id => bat}) %></td>
   <% end %>
+  <td><%= bat.quarantine? %></td>
   </tr>
 <% end %>
 

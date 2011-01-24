@@ -38,6 +38,9 @@ class Flight < ActiveRecord::Base
 					if bat.protocol_exempt
 						flight.protocol_exempt = 1
 					end
+          if bat.quarantine?
+            flight.quarantine = true
+          end
 					flight.save
 				end
 			end

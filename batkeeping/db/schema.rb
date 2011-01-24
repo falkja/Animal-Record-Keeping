@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110121212247) do
+ActiveRecord::Schema.define(:version => 20110124193934) do
 
   create_table "bat_changes", :force => true do |t|
     t.integer "bat_id",               :null => false
@@ -96,6 +96,7 @@ ActiveRecord::Schema.define(:version => 20110121212247) do
     t.integer "cage_id"
     t.integer "species_id"
     t.boolean "protocol_exempt",    :default => false
+    t.boolean "quarantine"
   end
 
   create_table "medical_problems", :force => true do |t|

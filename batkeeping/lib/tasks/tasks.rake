@@ -30,3 +30,19 @@ end
 task :populate_daily_flight_logs => :environment do
   Flight.populate_daily_flight_logs
 end
+
+#one time use task
+#fixes database for quarantine bats that weren't having their history of
+#quarantine stored in database for flight logs
+desc 'quarantine_bats_flight_logs'
+task :quarantine_bats_flight_logs => :environment do
+  bats = Bat.active
+  for b in bats
+    if b.quarantine?
+      for f in b.flights
+        f.quarantine = true;
+        f.save
+      end
+    end
+  end
+end

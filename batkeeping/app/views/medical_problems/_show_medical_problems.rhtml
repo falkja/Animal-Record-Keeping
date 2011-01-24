@@ -1,57 +1,47 @@
 <div id=<%= div_id %>>
 
-<p style="color: green"><%= flash[:note] %></p>
-<% flash[:note] = nil %>
+  <p style="color: green"><%= flash[:note] %></p>
+  <% flash[:note] = nil %>
 
-<table>
-<% if show_bat %>
-<th>
-
-<%= link_to_remote 'Bat', :update => div_id, :url => {:controller => 'medical_problems', 
-		:action => 'sort_by', :show_bat => show_bat, :list_all => list_all, :div_id => div_id, 
-		:sorted_by => 'bat', :medical_problems => medical_problems, :show_treatments => show_treatments} %>
-
-</th>
-<th>
-
-<%= link_to_remote 'Cage', :update => div_id, :url => {:controller => 'medical_problems', 
-		:action => 'sort_by', :show_bat => show_bat, :list_all => list_all, :div_id => div_id, 
-		:sorted_by => 'cage', :medical_problems => medical_problems, :show_treatments => show_treatments} %>
-
-</th>
-<% end %>
-<th>
-
-<%= link_to_remote 'Medical Problem', :update => div_id, :url => {:controller => 'medical_problems', 
-		:action => 'sort_by', :show_bat => show_bat, :list_all => list_all, :div_id => div_id, 
-		:sorted_by => 'medical_problem', :medical_problems => medical_problems, :show_treatments => show_treatments} %>
-
-</th>
-<th>
-
-<%= link_to_remote 'Date Opened', :update => div_id, :url => {:controller => 'medical_problems', 
-		:action => 'sort_by', :show_bat => show_bat, :list_all => list_all, :div_id => div_id, 
-		:sorted_by => 'date_opened', :medical_problems => medical_problems, :show_treatments => show_treatments} %>
-
-</th>
-<% if list_all %>
-  <th>
-	
-	<%= link_to_remote 'Date Closed', :update => div_id, :url => {:controller => 'medical_problems', 
-		:action => 'sort_by', :show_bat => show_bat, :list_all => list_all, :div_id => div_id, 
-		:sorted_by => 'date_closed', :medical_problems => medical_problems, :show_treatments => show_treatments} %>
-	
-	</th>
-<% end %>
-<th></th>
-<th></th>
-<% if show_treatments %>
-	<th>Treatment</th>
-<% end %>
-<% for medical_problem in medical_problems %>
-    <%= render :partial => 'medical_problems/show_medical_problem', :locals => {:medical_problem => medical_problem, 
-			:show_bat => show_bat, :list_all => list_all, :show_treatments => show_treatments, :redirectme => redirectme, :user => user} %>
-<% end %>
-</table>
+  <table>
+    <% if show_bat %>
+      <th>
+        <%= link_to_remote 'Bat', :update => div_id, :url => {:controller => 'medical_problems',
+          :action => 'sort_by', :show_bat => show_bat, :list_all => list_all, :div_id => div_id,
+          :sorted_by => 'bat', :medical_problems => medical_problems, :show_treatments => show_treatments} %>
+      </th>
+      <th>
+        <%= link_to_remote 'Cage', :update => div_id, :url => {:controller => 'medical_problems',
+          :action => 'sort_by', :show_bat => show_bat, :list_all => list_all, :div_id => div_id,
+          :sorted_by => 'cage', :medical_problems => medical_problems, :show_treatments => show_treatments} %>
+      </th>
+    <% end %>
+    <th>
+      <%= link_to_remote 'Medical Problem', :update => div_id, :url => {:controller => 'medical_problems',
+        :action => 'sort_by', :show_bat => show_bat, :list_all => list_all, :div_id => div_id,
+        :sorted_by => 'medical_problem', :medical_problems => medical_problems, :show_treatments => show_treatments} %>
+    </th>
+    <th>
+      <%= link_to_remote 'Date Opened', :update => div_id, :url => {:controller => 'medical_problems',
+        :action => 'sort_by', :show_bat => show_bat, :list_all => list_all, :div_id => div_id,
+        :sorted_by => 'date_opened', :medical_problems => medical_problems, :show_treatments => show_treatments} %>
+    </th>
+    <% if list_all %>
+      <th>
+        <%= link_to_remote 'Date Closed', :update => div_id, :url => {:controller => 'medical_problems',
+          :action => 'sort_by', :show_bat => show_bat, :list_all => list_all, :div_id => div_id,
+          :sorted_by => 'date_closed', :medical_problems => medical_problems, :show_treatments => show_treatments} %>
+      </th>
+    <% end %>
+    <th></th>
+    <th></th>
+    <% if show_treatments %>
+      <th>Treatment</th>
+    <% end %>
+    <% for medical_problem in medical_problems %>
+      <%= render :partial => 'medical_problems/show_medical_problem', :locals => {:medical_problem => medical_problem,
+        :show_bat => show_bat, :list_all => list_all, :show_treatments => show_treatments, :redirectme => redirectme, :user => user} %>
+    <% end %>
+  </table>
 
 </div>

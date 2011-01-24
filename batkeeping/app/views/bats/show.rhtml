@@ -4,19 +4,19 @@
 <%= button_to 'Edit', :controller => :bats, :action => :edit, :id => @bat %> | 
 
 <% if @bat.cage != nil%>
-<%= button_to 'Move Bat', {:controller => :bats, :action=> :single_bat_to_move, :id=>@bat}, {:style=>"display:inline"} %> | 
+  <%= button_to 'Move Bat', {:controller => :bats, :action=> :single_bat_to_move, :id=>@bat}, {:style=>"display:inline"} %> |
 <% end %>
 
 <% if @bat.leave_date == nil %>
-<%= button_to 'Deactivate', :controller => :bats, :action => :deactivate, :id => @bat %>
+  <%= button_to 'Deactivate', :controller => :bats, :action => :deactivate, :id => @bat %>
 <% else %>
-<%= button_to 'Reactivate', :controller => :bats, :action => :reactivate, :id => @bat %>
+  <%= button_to 'Reactivate', :controller => :bats, :action => :reactivate, :id => @bat %>
 <% end %>
 | 
 <%= button_to 'Weigh Bat', :controller => :bats, :action => :weigh_bat, :id => @bat %>
 
 <% if @bat.weights.length != 0 %>
-| <%= link_to 'Graph Weights', :controller => :bats, :action => :graph_weights, :id => @bat %>
+  | <%= link_to 'Graph Weights', :controller => :bats, :action => :graph_weights, :id => @bat %>
 <% end %>
 
 
@@ -24,34 +24,34 @@
 <hr />
 
 <p>
-<b>Cage: </b>
-<% if @bat.cage %>
-<%= link_to @bat.cage.name, :controller => 'cages', :action => 'show', :id => @bat.cage %>
-<% else %>
-<%= 'Inactive' %>
-<% end %>
+  <b>Cage: </b>
+  <% if @bat.cage %>
+    <%= link_to @bat.cage.name, :controller => 'cages', :action => 'show', :id => @bat.cage %>
+  <% else %>
+    <%= 'Inactive' %>
+  <% end %>
 </p>
 
 <p>
-<b>Species: </b>
-<em><% if @bat.species %><%= link_to @bat.species.name, :controller => :species, :action => :show, :id => @bat.species %><% end %></em>
+  <b>Species: </b>
+  <em><% if @bat.species %><%= link_to @bat.species.name, :controller => :species, :action => :show, :id => @bat.species %><% end %></em>
 </p>
 
 <p>
-<b>Protocols: </b>
+  <b>Protocols: </b>
 <table>
-<% for protocol in @bat.protocols %>
-<tr>
-<td><%= link_to protocol.title, :controller => :protocols, :action => :show, :id => protocol %></td>
-<td>Added on: <%= nice_date @bat.date_added_to_protocol(protocol) %></td>
-</tr>
-<% end %>
+  <% for protocol in @bat.protocols %>
+    <tr>
+      <td><%= link_to protocol.title, :controller => :protocols, :action => :show, :id => protocol %></td>
+      <td>Added on: <%= nice_date @bat.date_added_to_protocol(protocol) %></td>
+    </tr>
+  <% end %>
 </table>
 </p>
 
 <p>
-<b>Exempt from Flight: </b>
-<%= @bat.exempt_from_flight.to_s.capitalize %>
+  <b>Exempt from Flight: </b>
+  <%= @bat.exempt_from_flight.to_s.capitalize %>
 </p>
 
 <p>
@@ -60,28 +60,28 @@
 </p>
 
 <p>
-<b>Gender: </b>
-<%= @bat.gender %>
+  <b>Gender: </b>
+  <%= @bat.gender %>
 </p>
 
 <p>
-<b>Collection Date: </b>
-<%= nice_date @bat.collection_date %>
+  <b>Collection Date: </b>
+  <%= nice_date @bat.collection_date %>
 </p>
 
 <p>
-<b>Time in the lab: </b>
-<%= @time_in_lab %> days
+  <b>Time in the lab: </b>
+  <%= @time_in_lab %> days
 </p>
 
 <p>
-<b>Collection Age: </b>
-<%= @bat.collection_age %>
+  <b>Collection Age: </b>
+  <%= @bat.collection_age %>
 </p>
 
 <p>
-<b>Collection Place: </b>
-<%= @bat.collection_place %>
+  <b>Collection Place: </b>
+  <%= @bat.collection_place %>
 </p>
 
 <div id='vaccination'>
@@ -89,27 +89,27 @@
 </div>
 
 <% if !@bat.monitor_weight %>
-<p>
-<b>Weight Monitored:</b>
-Emails will <em>not</em> be sent out if bat is not weighed often enough
-</p>
+  <p>
+    <b>Weight Monitored:</b>
+    Emails will <em>not</em> be sent out if bat is not weighed often enough
+  </p>
 <% end %>
 
 <% if @bat.leave_date != nil %>
-<p>
-<b>Leave Date: </b>
-<%= nice_date @bat.leave_date %>
-</p>
+  <p>
+    <b>Leave Date: </b>
+    <%= nice_date @bat.leave_date %>
+  </p>
 
-<p>
-<b>Leave Reason: </b>
-<%= @bat.leave_reason %>
-</p>
+  <p>
+    <b>Leave Reason: </b>
+    <%= @bat.leave_reason %>
+  </p>
 <% end %>
 
 <p>
-<b>Flight Log:</b>
-<%= link_to 'Show Flight Log', :controller => :flights, :action => :show, :id => @bat %>
+  <b>Flight Log:</b>
+  <%= link_to 'Show Flight Log', :controller => :flights, :action => :show, :id => @bat %>
 </p>
 
 <%= render :partial => 'bats/display_bat_notes' %>
@@ -118,76 +118,76 @@ Emails will <em>not</em> be sent out if bat is not weighed often enough
 <h3>Current Medical Problems:</h3>
 <div class="left_indent">
   <div id='medical_problems'>
-  <% if @bat.medical_problems.current.length > 0 %>
-      <%= render :partial => 'medical_problems/show_medical_problems', :locals=>{:medical_problems => @bat.medical_problems.current, :show_bat => false, 
+    <% if @bat.medical_problems.current.length > 0 %>
+      <%= render :partial => 'medical_problems/show_medical_problems', :locals=>{:medical_problems => @bat.medical_problems.current, :show_bat => false,
         :list_all => false, :div_id => 'current_medical_problems', :show_treatments => true, :redirectme => 'show_bat', :user => nil} %>
-  <% else %>
-    <p>No Current Medical Problems</p>
-  <% end %>
+    <% else %>
+      <p>No Current Medical Problems</p>
+    <% end %>
   </div>
 
-<form>
-<%= submit_to_remote 'Quick-Add New Medical Problem', 'Quick-Add New Medical Problem', :url=>{:controller => 'medical_problems', 
-  :action => :remote_new_medical_problem, :bat => @bat, :redirectme => 'show_bat'},
-  :update=>'add_medical_problem'%>
-</form>
+  <form>
+    <%= submit_to_remote 'Quick-Add New Medical Problem', 'Quick-Add New Medical Problem', :url=>{:controller => 'medical_problems',
+      :action => :remote_new_medical_problem, :bat => @bat, :redirectme => 'show_bat'},
+      :update=>'add_medical_problem'%>
+  </form>
 
-<div id='add_medical_problem'>
-</div>
+  <div id='add_medical_problem'>
+  </div>
 
 </div>
 
 <% if @bat.medical_problems.expired.length > 0 %>
-	<h3>Past Medical Problems:</h3>
-	<div class="left_indent">
+  <h3>Past Medical Problems:</h3>
+  <div class="left_indent">
 
-	<%= render :partial => 'medical_problems/show_medical_problems', :locals=>{:medical_problems => @bat.medical_problems.expired, :show_bat => false, 
-		:list_all => true, :div_id => 'expired_medical_problems', :show_treatments => false, :redirectme => 'show_bat', :user => nil} %>
+    <%= render :partial => 'medical_problems/show_medical_problems', :locals=>{:medical_problems => @bat.medical_problems.expired, :show_bat => false,
+      :list_all => true, :div_id => 'expired_medical_problems', :show_treatments => false, :redirectme => 'show_bat', :user => nil} %>
 
-	</div>
+  </div>
 <% end %>
 
 <% if @cihs.length >0 %>
-<h3>Cage History:</h3>
-<div class="left_indent">
+  <h3>Cage History:</h3>
+  <div class="left_indent">
 
-  <table border='0'>
-  <th>New Cage</th>
-  <th>Old Cage</th>
-  <th>Date</th>
-  <th>Why</th>
-  <th>Who</th>
-  
-  <% if @bat.cage == nil %>
-  <tr>
-  <td>Deactivated Bat</td>
-  <td><%=h @bat.cage_out_histories[0].cage.name %></td>
-  <td><%=h nice_date @bat.cage_out_histories[0].date %></td>
-  <td><%=h @bat.cage_out_histories[0].note %></td>
-  <td><%=h @bat.cage_out_histories[0].user.initials %></td>
-  </tr>
-  <% end %>
-  
-  <% for cih in @cihs %>
-    <tr>
-    <td><%=h cih.cage.name %></td>
-    <% if cih.cage_out_history %>
-    <td><%=h cih.cage_out_history.cage.name %></td>
-    <% else %>
-    <td>-</td>
-    <% end %>
-    <td><%=h nice_date cih.date %></td>
-    <td><%=h cih.note %></td>
-    <td><%=h cih.user.initials %></td>
-    </tr>
-  <% end %>
-  </table>
-</div>
+    <table border='0'>
+      <th>New Cage</th>
+      <th>Old Cage</th>
+      <th>Date</th>
+      <th>Why</th>
+      <th>Who</th>
+
+      <% if @bat.cage == nil %>
+        <tr>
+          <td>Deactivated Bat</td>
+          <td><%=h @bat.cage_out_histories[0].cage.name %></td>
+          <td><%=h nice_date @bat.cage_out_histories[0].date %></td>
+          <td><%=h @bat.cage_out_histories[0].note %></td>
+          <td><%=h @bat.cage_out_histories[0].user.initials %></td>
+        </tr>
+      <% end %>
+
+      <% for cih in @cihs %>
+        <tr>
+          <td><%=h cih.cage.name %></td>
+          <% if cih.cage_out_history %>
+            <td><%=h cih.cage_out_history.cage.name %></td>
+          <% else %>
+            <td>-</td>
+          <% end %>
+          <td><%=h nice_date cih.date %></td>
+          <td><%=h cih.note %></td>
+          <td><%=h cih.user.initials %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
 <% end %>
 
 <h3>Bat Changes</h3>
 <div class='left_indent'>
-<%= render :partial => 'show_bat_changes', :locals => {:bat_changes => @bat_changes, :single_bat => true} %>
+  <%= render :partial => 'show_bat_changes', :locals => {:bat_changes => @bat_changes, :single_bat => true} %>
 </div>
 
 <%= render :partial => 'display_weights', :locals => {:bat => @bat} %>

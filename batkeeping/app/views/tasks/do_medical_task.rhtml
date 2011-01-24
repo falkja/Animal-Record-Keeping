@@ -2,49 +2,49 @@
 
 <% form_tag :action => 'medical_task_done', :medical_problem => @medical_problem, :redirectme => @redirectme, :user => @user do %>
 
-<p><b>Bat</b><br />
-<%= link_to @medical_problem.bat.band, :controller => 'bats', :action => 'show', :id => @medical_problem.bat %></p>
+  <p><b>Bat</b><br />
+    <%= link_to @medical_problem.bat.band, :controller => 'bats', :action => 'show', :id => @medical_problem.bat %></p>
 
-<p><b>Cage</b><br />
-<%= link_to @medical_problem.bat.cage.name, :controller => 'cages', :action => 'show', :id => @medical_problem.bat.cage %></p>
+  <p><b>Cage</b><br />
+    <%= link_to @medical_problem.bat.cage.name, :controller => 'cages', :action => 'show', :id => @medical_problem.bat.cage %></p>
 
-<p><b>Medical Problem</b><br />
-<%= link_to @medical_problem.title, :controller => 'medical_problems', :action => 'show', :id => @medical_problem %></p>
+  <p><b>Medical Problem</b><br />
+    <%= link_to @medical_problem.title, :controller => 'medical_problems', :action => 'show', :id => @medical_problem %></p>
 
-<p><b>Description</b><br />
-<%= @medical_problem.description %></p>
+  <p><b>Description</b><br />
+    <%= @medical_problem.description %></p>
 
-<p><b>Weight</b><br />
-	<div class='left_indent'>
-		<%= render :partial => 'bats/weigh_one_bat', :locals => {:bat => @medical_problem.bat, :initial_weight => true} %>
-	</div>
-</p>
+  <p><b>Weight</b><br />
+  <div class='left_indent'>
+    <%= render :partial => 'bats/weigh_one_bat', :locals => {:bat => @medical_problem.bat, :initial_weight => true} %>
+  </div>
+  </p>
 
-<p><b>Treatment</b><br />
-<div class='left_indent'>
-  <% if @medical_problem.medical_treatments.current.length == 0 %>
-		<div class='hidden'><%= check_box('treatments_done', 0) %></div>
-	<% end %>
-	<% for treatment in @medical_problem.medical_treatments.current %>
-    <%= check_box('treatments_done', treatment.id, :checked => (treatment.todays_task == @task)) %><label for='treatments_done_<%= treatment.id %>'><%= treatment.title %></label><br />
-  <% end %>
-  <%= check_box('one_time_treatment', '0', :checked => !@task) %><%= text_field 'new_task', 'title', :value=> 'one time treatment' %>
-</p>
+  <p><b>Treatment</b><br />
+  <div class='left_indent'>
+    <% if @medical_problem.medical_treatments.current.length == 0 %>
+      <div class='hidden'><%= check_box('treatments_done', 0) %></div>
+    <% end %>
+    <% for treatment in @medical_problem.medical_treatments.current %>
+      <%= check_box('treatments_done', treatment.id, :checked => (treatment.todays_task == @task)) %><label for='treatments_done_<%= treatment.id %>'><%= treatment.title %></label><br />
+    <% end %>
+    <%= check_box('one_time_treatment', '0', :checked => !@task) %><%= text_field 'new_task', 'title', :value=> 'one time treatment' %>
+  </p>
 
-<p><%= link_to 'Add a new reoccurring treatment', :controller => 'medical_treatments', :action => 'new', :id => @medical_problem %></p>
-</div>
+  <p><%= link_to 'Add a new reoccurring treatment', :controller => 'medical_treatments', :action => 'new', :id => @medical_problem %></p>
+  </div>
 
-<p><label for="task_history_date_done"><b>Date Treatment Given</b></label><br />
-<div class='left_indent'>
-<%= datetime_select 'task_history', 'date_done' %></p>
-</div>
+  <p><label for="task_history_date_done"><b>Date Treatment Given</b></label><br />
+  <div class='left_indent'>
+    <%= datetime_select 'task_history', 'date_done' %></p>
+  </div>
 
-<p><label for="task_history_remarks"><b>Remarks</b></label><br />
-<div class='left_indent'>
-<%= text_area 'task_history', 'remarks', :rows => 2  %></p>
-</div>
+  <p><label for="task_history_remarks"><b>Remarks</b></label><br />
+  <div class='left_indent'>
+    <%= text_area 'task_history', 'remarks', :rows => 2  %></p>
+  </div>
 
-<%= submit_tag "Medical Treatment Done" %>
+  <%= submit_tag "Medical Treatment Done" %>
 <% end %>
 
 <p><%= render :partial => 'tasks/show_all_task_histories', :locals => {:task_histories => @task_histories, :redirect_me => 'do_medical_task'} %></p>

@@ -1,17 +1,17 @@
-<% form_remote_tag :url=>{:controller=>'medical_problems', :action=>'remote_create', :bat => bat},
-            :update=>'medical_problems' do %>
+<% form_remote_tag :url=>{:controller=>'medical_problems', :action=>'remote_create', :bat => bat, :redirectme => redirectme},
+  :update=>'medical_problems' do %>
 
-<table>
+  <table>
 
-<th>Medical Problem</th>
-<th>Detailed Description</th>
+    <th>Medical Problem</th>
+    <th>Detailed Description</th>
 
-<tr>
-<td valign='top'><%= text_field 'medical_problem', 'title' %></td>
-<td valign='top'><%= text_area 'medical_problem', 'description', 'rows' => "3" %></td>
-<td valign='top'><%= submit_tag 'Add Medical Problem' %></td>
-</tr>
+    <tr>
+      <td valign='top'><%= text_field 'medical_problem', 'title' %></td>
+      <td valign='top'><%= text_area 'medical_problem', 'description', 'rows' => "3" %></td>
+      <td valign='top'><%= submit_tag 'Add Medical Problem' %></td>
+    </tr>
 
-</table>
+  </table>
 
 <% end %>

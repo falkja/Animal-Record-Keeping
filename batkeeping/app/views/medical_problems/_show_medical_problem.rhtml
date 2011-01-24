@@ -1,94 +1,94 @@
 <tr>
-    <% if show_bat %>
+  <% if show_bat %>
     <td><%= link_to medical_problem.bat.band, :controller => :bats, :action => :show, :id => medical_problem.bat %></td>
     <td>
       <% if medical_problem.bat.cage %>
         <%= link_to medical_problem.bat.cage.name, :controller => 'cages', :action => :show, :id => medical_problem.bat.cage %></td>
-      <% else %>
-        -
-      <% end %>
-    <% end %>
-    
-    <td>
-      <%= link_to medical_problem.title, :controller => 'medical_problems', :action => 'show', :id => medical_problem %>
-    </td>
-
-    <td>
-      <%=h nice_date(medical_problem.date_opened) %>
-    </td>
-    
-
-    <% if medical_problem.date_closed == nil %>
-      <% if list_all %>
-        <td>
-          <%=h nice_date(medical_problem.date_closed) %>
-        </td>
-      <% end %>
-      <td>
-        <%= link_to 'Edit', :controller => 'medical_problems', :action => 'edit', :id => medical_problem %>
-      </td>
-      <td>
-        <%= link_to 'Close', :controller => 'medical_problems', :action => 'deactivate', :id => medical_problem %>
-      </td>
     <% else %>
+      -
+    <% end %>
+  <% end %>
+
+  <td>
+    <%= link_to medical_problem.title, :controller => 'medical_problems', :action => 'show', :id => medical_problem %>
+  </td>
+
+  <td>
+    <%=h nice_date(medical_problem.date_opened) %>
+  </td>
+
+
+  <% if medical_problem.date_closed == nil %>
+    <% if list_all %>
       <td>
         <%=h nice_date(medical_problem.date_closed) %>
       </td>
-      <td></td>
+    <% end %>
+    <td>
+      <%= link_to 'Edit', :controller => 'medical_problems', :action => 'edit', :id => medical_problem %>
+    </td>
+    <td>
+      <%= link_to 'Close', :controller => 'medical_problems', :action => 'deactivate', :id => medical_problem %>
+    </td>
+  <% else %>
+    <td>
+      <%=h nice_date(medical_problem.date_closed) %>
+    </td>
+    <td></td>
+    <td>
+      <% if medical_problem.bat.leave_date == nil %>
+        <%= link_to 'Reactivate', :controller => 'medical_problems', :action => 'reactivate', :id => medical_problem %>
+      <% end %>
+    </td>
+  <% end %>
+
+  <% if show_treatments %>
+    <% for medical_treatment in medical_problem.medical_treatments.current %>
       <td>
-        <% if medical_problem.bat.leave_date == nil %>
-          <%= link_to 'Reactivate', :controller => 'medical_problems', :action => 'reactivate', :id => medical_problem %>
+        <%= link_to medical_treatment.title, :controller => 'medical_treatments', :action => 'show', :id => medical_treatment%>
+      </td>
+      <td>
+        <% if medical_treatment.done_today == true %>
+          Done
+        <% elsif medical_treatment.tasks.medical_tasks_today.length > 0 %>
+          [<%= link_to 'Do', :controller => 'tasks', :action => 'do_medical_task', :id => medical_treatment.todays_task, :redirectme => redirectme, :user => user %>]
+        <% else %>
+          [<%= link_to 'Create Medical Tasks', :controller => 'medical_treatments', :action=>:show, :id=> medical_treatment %>]
         <% end %>
       </td>
+      <td>
+        [<%= link_to 'End', {:controller => 'medical_treatments', :action => 'destroy_medical_treatment', :id => medical_treatment}, :confirm => 'Are you sure?', :method => :post %>]
+      </td>
+      <% if medical_treatment.tasks.current.length < 7 %>
+        <td><warning>Treatment not given every day</warning></td>
     <% end %>
-
-		<% if show_treatments %>
-			<% for medical_treatment in medical_problem.medical_treatments.current %>
-				<td>
-					<%= link_to medical_treatment.title, :controller => 'medical_treatments', :action => 'show', :id => medical_treatment%>
-				</td>
-				<td>
-					<% if medical_treatment.done_today == true %>
-						Done
-					<% elsif medical_treatment.tasks.medical_tasks_today.length > 0 %>
-						[<%= link_to 'Do', :controller => 'tasks', :action => 'do_medical_task', :id => medical_treatment.todays_task, :redirectme => redirectme, :user => user %>]
-					<% else %>
-						[<%= link_to 'Create Medical Tasks', :controller => 'medical_treatments', :action=>:show, :id=> medical_treatment %>]
-					<% end %>
-				</td>
-				<td>
-					[<%= link_to 'End', {:controller => 'medical_treatments', :action => 'destroy_medical_treatment', :id => medical_treatment}, :confirm => 'Are you sure?', :method => :post %>]
-				</td>
-				<% if medical_treatment.tasks.current.length < 7 %>
-				<td><warning>Treatment not given every day</warning></td>
-				<% end %>
-				</tr>
-				<tr>
-				<td></td><td></td><td></td><td></td>
-				<% if list_all %>
-					<td></td>
-				<% end %>
-				<% if show_bat %>
-					<td></td><td></td>
-				<% end %>
-			<% end %>
-		<% end %>
-    <% if medical_problem.date_closed == nil %>
-      <td>[<%= link_to 'Do one time treatment', :controller => 'tasks', :action => 'do_medical_task', :medical_problem => medical_problem, :redirectme => redirectme, :user => user %>]</td>
-      </tr>
-      <td></td><td></td><td></td><td></td>
-				<% if list_all %>
-					<td></td>
-				<% end %>
-				<% if show_bat %>
-					<td></td><td></td>
-				<% end %>
-      <td>[<%= link_to 'Add New Treatment', :controller => 'medical_treatments', :action => 'new', :id => medical_problem %>]</td>
-    <% end %>
-		<% if (medical_problem.medical_treatments.current.length == 0) && (medical_problem.date_closed == nil) %>
-			<td></td>
-			<td></td>
-			<td><warning>No treatment</warning></td>
-		<% end %>
     </tr>
+    <tr>
+      <td></td><td></td><td></td><td></td>
+      <% if list_all %>
+        <td></td>
+      <% end %>
+      <% if show_bat %>
+        <td></td><td></td>
+      <% end %>
+    <% end %>
+  <% end %>
+  <% if medical_problem.date_closed == nil %>
+    <td>[<%= link_to 'Do one time treatment', :controller => 'tasks', :action => 'do_medical_task', :medical_problem => medical_problem, :redirectme => redirectme, :user => user %>]</td>
+  </tr>
+  <td></td><td></td><td></td><td></td>
+  <% if list_all %>
+    <td></td>
+  <% end %>
+  <% if show_bat %>
+    <td></td><td></td>
+  <% end %>
+  <td>[<%= link_to 'Add New Treatment', :controller => 'medical_treatments', :action => 'new', :id => medical_problem %>]</td>
+<% end %>
+<% if (medical_problem.medical_treatments.current.length == 0) && (medical_problem.date_closed == nil) %>
+  <td></td>
+  <td></td>
+  <td><warning>No treatment</warning></td>
+<% end %>
+</tr>
 <tr><td colspan = 10><hr /></td></tr>

@@ -5,7 +5,7 @@ class MedicalProblemsController < ApplicationController
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
   verify :method => :post, :only => [ :destroy, :create, :update ],
-         :redirect_to => { :action => :list }
+    :redirect_to => { :action => :list }
 
   def list
     render :action => 'list'
@@ -40,8 +40,11 @@ class MedicalProblemsController < ApplicationController
 			medical_problems = MedicalProblem.find(params[:medical_problems], :order => 'date_closed, title')
 		end
 		
-		render :partial=>'show_medical_problems', :locals=>{:medical_problems => medical_problems, :show_bat => params[:show_bat], 
-				:list_all => params[:list_all], :div_id => params[:div_id], :sorted_by => params[:sorted_by], :show_treatments => params[:show_treatments]}
+		render :partial=>'show_medical_problems', :locals=>{:medical_problems => medical_problems, 
+      :show_bat => params[:show_bat], :list_all => params[:list_all],
+      :div_id => params[:div_id], :sorted_by => params[:sorted_by],
+      :show_treatments => params[:show_treatments], :redirectme => params[:redirectme],
+      :user => nil}
 	end
 	
   def show
@@ -56,7 +59,7 @@ class MedicalProblemsController < ApplicationController
 
   def remote_new_medical_problem
     @users = User.find(:all, :conditions => "end_date is null and id != 1 and id != 3", :order => "name")
-    render :partial=>'remote_new_medical_problem', :locals=>{:bat=>Bat.find(params[:bat])}
+    render :partial=>'remote_new_medical_problem', :locals=>{:bat=>Bat.find(params[:bat]), :redirectme => params[:redirectme]}
   end
 
   def remote_create
@@ -91,7 +94,8 @@ class MedicalProblemsController < ApplicationController
 			end
 			
       render :partial=>'show_medical_problems', :locals=>{:medical_problems => bat.medical_problems.current, :show_bat => false, 
-				:list_all => false, :div_id => 'current_medical_problem', :show_treatments => true}
+				:list_all => false, :div_id => 'current_medical_problem', :show_treatments => true, 
+        :redirectme => params[:redirectme],:user => nil}
     end
   end
   
@@ -142,25 +146,25 @@ class MedicalProblemsController < ApplicationController
     @deactivating = params[:deactivating]
     if @medical_problem.update_attributes(params[:medical_problem])
       if @deactivating
-          for treatment in @medical_problem.medical_treatments.current
-            treatment.end_treatment
-          end
+        for treatment in @medical_problem.medical_treatments.current
+          treatment.end_treatment
+        end
       end
       flash[:notice] = 'Medical Problem was successfully updated.'
     else
       render :action => 'edit'
     end
 	  if params[:redirectme] == 'list_current'
-		redirect_to :action => 'list_current'
+      redirect_to :action => 'list_current'
 	  else
-		redirect_to :action => 'show', :id => @medical_problem
+      redirect_to :action => 'show', :id => @medical_problem
 	  end
   end
   
   def deactivate
-	@medical_problem = MedicalProblem.find(params[:id])
-  @bats = Bat.active
-  @deactivating = true
+    @medical_problem = MedicalProblem.find(params[:id])
+    @bats = Bat.active
+    @deactivating = true
   end
   
   def reactivate

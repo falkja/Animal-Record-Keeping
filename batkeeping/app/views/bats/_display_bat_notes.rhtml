@@ -12,8 +12,8 @@
 
 <% for note in @bat.bat_notes %>
 <tr>
-<td><%= note.text %></td>
-<td><%= note.user.initials %></td>
+<td style="width: 700px"><%=h simple_format note.text %></td>
+<td><%= link_to note.user.initials, :controller => :users, :action => :show, :id => note.user %></td>
 <td><%= nice_date(note.date) %></td>
 <td>
 	<%= link_to_remote 'Delete', :update => 'bat_notes', :url => {

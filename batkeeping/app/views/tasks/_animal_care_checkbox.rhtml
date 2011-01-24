@@ -1,4 +1,4 @@
-<p><%= check_box :task, :animal_care %>Assign To Animal Care Staff</p>
+<p><%= check_box :task, :animal_care %><label for="task_animal_care"> Assign To Animal Care Staff</label></p>
 
 <%= observe_field("task_animal_care",
      :url => {:controller => "tasks", :action => :show_hide_users, :task => @task, :quick_add => quick_add, :show_medical => show_medical, :div_id => div_id},

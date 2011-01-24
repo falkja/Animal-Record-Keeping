@@ -4,14 +4,14 @@
 
 <%= render :partial => 'flight_log_info' %>
 
-<p><label for='flight_bat_id'>Bat</label><br/>
+<p><label for='flight_bat_id'><b>Bat</b></label><br/>
 <%= render :partial => 'bat_select', :locals => {:bats => User.find(session[:person]).bats } %>
 </p>
 
-<p><label for='flight_date'>Date</label><br/>
+<p><label for='flight_date'><b>Date</b></label><br/>
 <%= date_select("flight", "date", :end_year => Time.now.year) %></p>
 
-<p><label for='flight_note'>Note</label><br/>
+<p><label for='flight_note'><b>Note</b></label><br/>
 <%= text_field("flight", "note") %></p>
 
 <!--[eoform:user]-->

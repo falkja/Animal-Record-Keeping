@@ -257,7 +257,7 @@ class Bat < ActiveRecord::Base
   end
   
   def med_problem_current_first_one_only
-    med_problem = MedicalProblem.find(:first, :conditions=>{:bat_id => self.id, :date_closed => nil})
+    med_problem = MedicalProblem.find(:first, :conditions=>{:bat_id => self.id, :date_closed => nil}, :order => "date_opened")
     return med_problem
   end
   

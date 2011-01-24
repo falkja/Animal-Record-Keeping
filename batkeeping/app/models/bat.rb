@@ -237,10 +237,19 @@ class Bat < ActiveRecord::Base
 		end
 		return false
 	end
-	
+
+  #bat is in quarantine if the species requires vaccination and the bat either
+  #hasn't been vaccinated or the bat's vaccination date was within 30 days of today
+  def quarantine?
+    if self.species.requires_vaccination && (!self.vaccination_date || self.vaccination_date >= (Date.today - 30.days))
+      return true
+    else
+      return false
+    end
+  end
+
   def exempt_from_flight
-  
-    if (self.medical_problems.current.length > 0) || self.species.hibernating || (self.species.requires_vaccination && !self.vaccination_date) || self.protocol_exempt
+    if (self.medical_problems.current.length > 0) || self.species.hibernating || self.quarantine? || self.protocol_exempt
       return true
     else
       return false

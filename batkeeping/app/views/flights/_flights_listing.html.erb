@@ -33,7 +33,7 @@
 			<em><%= link_to flight.species.name, :controller => :species, :action => :show, :id => flight.species %></em> hibernating<br>
 		<% end %>
 		
-		<% if (flight.bat.species.requires_vaccination && !flight.bat.vaccination_date) %>
+		<% if flight.bat.quarantine? %>
 			Quarantine<br>
 		<% end %>
 	<% end %>

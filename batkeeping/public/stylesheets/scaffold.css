@@ -198,3 +198,34 @@ input[type="submit"] {
 div.centered table {
     text-align: center;
 }
+
+/* Autocomplete Popup Styling, Notice I changed the color of li.selected to red? */ 
+div.auto_complete { 
+width: 350px; 
+background: #fff; 
+}
+
+div.auto_complete ul { 
+border:1px solid #888; 
+margin:0; 
+padding:0; 
+width:100%; 
+list-style-type:none; 
+}
+
+div.auto_complete ul li { 
+margin:0; 
+padding:3px; 
+}
+
+div.auto_complete ul li.selected { 
+background-color: #eedd82;
+color: #000;
+}
+
+div.auto_complete ul strong.highlight { 
+color: #800; 
+margin:0; 
+padding:0; 
+}
+

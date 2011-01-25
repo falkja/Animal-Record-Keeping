@@ -1,4 +1,5 @@
 class MedicalTreatmentsController < ApplicationController
+  
   def index
     list
     render :action => 'list'
@@ -18,8 +19,17 @@ class MedicalTreatmentsController < ApplicationController
 		@task_histories = @medical_treatment.task_histories
   end
 
+  def auto_complete_treatments
+    @medical_treatments = MedicalTreatment.find(:all, 
+      :conditions => ['title LIKE ?', "%#{params[:search]}%"],
+      :select => 'DISTINCT medical_treatments.title',
+      :limit => 10)
+    render :partial => 'auto_complete_treatments'
+  end
+
   def new
-    @medical_treatments = MedicalTreatment.new
+    @medical_treatments = MedicalTreatment.find(:all)
+    @medical_treatment = MedicalTreatment.new
 		@medical_problem = MedicalProblem.find(params[:id])
   end
 

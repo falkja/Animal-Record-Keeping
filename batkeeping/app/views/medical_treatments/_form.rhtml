@@ -1,5 +1,4 @@
-<%= error_messages_for 'medical_treatments' %>
-
+<%= error_messages_for 'medical_treatment' %>
 <!--[form:medical_treatments]-->
 
 <p><b>Bat</b>
@@ -15,6 +14,10 @@
 <%= date_select 'medical_treatment', 'date_opened'  %></p>
 
 <p><label for="medical_treatment_title">Treatment (include medications, dosages, suggested end date, etc.)</label><br/>
-<%= text_field 'medical_treatment', 'title', :maxlength => 45 %></p>
+</p>
+
+<%= text_field_with_auto_complete :medical_treatment, :title, {:size => 50},
+  {:skip_style => true, :url => url_for(:controller => :medical_treatments, :action => :auto_complete_treatments, :escape => false),
+  :method => :get, :param_name => 'search'} %>
 
 <!--[eoform:medical_treatments]-->

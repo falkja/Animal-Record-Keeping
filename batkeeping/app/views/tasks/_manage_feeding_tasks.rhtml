@@ -4,8 +4,7 @@
 <em>This will change all feeding tasks to match the parameters below</em>
 <div class="left_indent">
 <% form_remote_tag(:update => "tasks_div",
-                       :url => { :controller => 'tasks', :action => 'update_multiple_feeding_tasks', :id => cage },
-                       :position => "replace") do %>
+                       :url => { :controller => 'tasks', :action => 'update_multiple_feeding_tasks', :id => cage }) do %>
 
 <%= render :partial => 'tasks/tasks_common_feeding_form', :locals=>{:cage=>cage} %>
 

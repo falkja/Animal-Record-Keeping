@@ -499,7 +499,10 @@ class TasksController < ApplicationController
 			task.done
     end
     flash[:note] = "All feeding tasks marked done"
-    render :partial => 'tasks_list', :locals => {:tasks => @feeding_tasks, :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => params[:manage]}
+    render :partial => 'tasks_list', :locals => {:tasks => @feeding_tasks, 
+      :div_id => params[:div_id],
+      :same_type_task_list => params[:same_type_task_list],
+      :manage => params[:manage],:sorted_by => params[:sorted_by]}
   end
 	
 	def show_hide_task_categories

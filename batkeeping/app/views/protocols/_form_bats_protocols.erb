@@ -12,7 +12,11 @@
         </div>
       </td>
       <td style="vertical-align:top">
-        <% max_bat_band_length = bats.collect{|b| b.band.length}.max > 7 ? bats.collect{|b| b.band.length}.max : 7 %>
+        <% if bats.length > 0 %>
+          <% max_bat_band_length = bats.collect{|b| b.band.length}.max > 7 ? bats.collect{|b| b.band.length}.max : 7 %>
+        <% else %>
+          <% max_bat_band_length = 7 %>
+        <% end %>
         <div id="bat_list" style="border:1px solid gray;padding-left: 5px;padding-right: 5px;width:<%= max_bat_band_length + 6 %>ex">
           <%= render :partial => 'bat_checkbox_list', :locals => {:bats => bats} %>
         </div>

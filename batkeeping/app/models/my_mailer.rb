@@ -128,7 +128,7 @@ class MyMailer < ActionMailer::Base
     bats_not_weighed = Bat.not_weighed(Bat.active)
     protocol_changes = ProtocolHistory.todays_histories
     
-		if (tasks_not_done.length > 0) || (bats_not_weighed.length > 0)
+		if (tasks_not_done.length > 0) || (bats_not_weighed.length > 0) || (protocol_changes.length > 0)
 			greeting = "Administrator(s),\n\n"
       greeting = greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
 			msg_body = MyMailer.create_msg_for_tasks_not_done(tasks_not_done)

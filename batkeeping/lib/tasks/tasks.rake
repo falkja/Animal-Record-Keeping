@@ -1,15 +1,29 @@
+#order in which they are done:
+
+#1 (populate_daily_flight_logs)
+task :populate_daily_flight_logs => :environment do
+  Flight.populate_daily_flight_logs
+end
+
+#2 (daily_task_check)
+desc 'email_if_tasks_not_done'
+task :email_if_tasks_not_done => :environment do
+	MyMailer.email_users
+end
+
+#3 (batkeeping_daily_tasks) - done at start of day
 desc 'populate_census_entries'
 task :populate_census_entries => :environment do
   TaskCensus.populate_todays_tasks
 end
 
+
+###########################################
+#one time use tasks:
+###########################################
+
 task :test_email => :environment do
   MyMailer.deliver_mail("bfalk@umd.edu", "test_email", "let ben know if you get this")
-end
-
-desc 'email_if_tasks_not_done'
-task :email_if_tasks_not_done => :environment do
-	MyMailer.email_users
 end
 
 task :nil_out_cohs => :environment do
@@ -25,10 +39,6 @@ end
 
 task :populate_bat_changes => :environment do
   Bat.populate_bat_changes
-end
-
-task :populate_daily_flight_logs => :environment do
-  Flight.populate_daily_flight_logs
 end
 
 #one time use task

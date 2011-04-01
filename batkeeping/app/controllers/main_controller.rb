@@ -88,7 +88,6 @@ class MainController < ApplicationController
   end
   
   def lab_email
-    @tasks_not_done = Task.tasks_not_done_today(Task.today)
     
     @users = User.find(params[:users], :order => "name asc")
     
@@ -96,9 +95,11 @@ class MainController < ApplicationController
     
     @greeting = @greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
     
-    @msg_body = MyMailer.create_msg_for_tasks_not_done(@tasks_not_done)
+    @msg_body = MyMailer.create_msg_for_tasks_not_done(Task.tasks_not_done_today(Task.today))
 		
 		@msg_body = @msg_body + MyMailer.create_msg_for_bats_not_weighed(Bat.not_weighed(Bat.active))
+
+    @msg_body = @msg_body + MyMailer.create_msg_for_protocol_changes(ProtocolHistory.todays_histories)
 		
     if session[:person]
       @subject = "Batkeeping email from: " + User.find(session[:person]).name

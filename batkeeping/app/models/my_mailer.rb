@@ -29,6 +29,32 @@ class MyMailer < ActionMailer::Base
 			return ''
 		end
 	end
+
+  def self.create_msg_for_protocol_changes(phs)
+    if phs.length > 0
+      msg_body = "The following protocol changes were made:\n"
+      for ph in phs
+        bat = ph.bat
+        if ph.date_removed != nil
+          rel_text = "Removed from protocol:"
+        else
+          rel_text = "Added to protocol:"
+        end
+        msg_body = msg_body + "\n#{rel_text}"
+        msg_body = msg_body + "\nBat: " + bat.band
+        if bat.cage != nil
+          msg_body = msg_body + "\nCage: " + bat.cage.name
+          msg_body = msg_body + "\nOwner: " + bat.cage.user.name
+        end
+        msg_body = msg_body + "\n Title: " + ph.protocol.title
+        msg_body = msg_body + "\n Number: " + ph.protocol.number + "\n"
+      end
+      msg_body = msg_body + "\n*******************************************\n\n"
+			return msg_body
+    else
+			return ''
+		end
+  end
 	
 	def self.create_msg_for_tasks_not_done(tasks_not_done)
 		if tasks_not_done.length > 0
@@ -100,12 +126,14 @@ class MyMailer < ActionMailer::Base
 		
 		tasks_not_done = Task.tasks_not_done_today(Task.today)
     bats_not_weighed = Bat.not_weighed(Bat.active)
+    protocol_changes = ProtocolHistory.todays_histories
     
 		if (tasks_not_done.length > 0) || (bats_not_weighed.length > 0)
 			greeting = "Administrator(s),\n\n"
       greeting = greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
 			msg_body = MyMailer.create_msg_for_tasks_not_done(tasks_not_done)
       msg_body = msg_body + MyMailer.create_msg_for_bats_not_weighed(bats_not_weighed)
+      msg_body = msg_body + MyMailer.create_msg_for_protocol_changes(protocol_changes)
 			msg_body = msg_body + "Faithfully yours, etc."
 			MyMailer.deliver_mass_mail(admin_emails, "tasks not done today", greeting + msg_body)
 		end

@@ -1,0 +1,9 @@
+#!/bin/bash
+cd /usr/local/batkeeping/
+set +e
+
+echo "populating automatic flight logs"
+rake populate_daily_flight_logs RAILS_ENV=production
+
+echo "checking tasks due today"
+rake email_if_tasks_not_done RAILS_ENV=production

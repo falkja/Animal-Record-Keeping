@@ -1,11 +1,4 @@
 #!/bin/bash
-set +e
 cd /usr/local/batkeeping/
 rake populate_census_entries RAILS_ENV=production
 echo "task-census entries populated"
-
-rake email_if_tasks_not_done RAILS_ENV=production
-echo "checked tasks due today"
-
-rake email_protocol_changes RAILS_ENV=production
-echo "protocol changes emailed"

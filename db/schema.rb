@@ -9,7 +9,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110124193934) do
+ActiveRecord::Schema.define(:version => 20110408223306) do
+
+  create_table "allowed_bats", :force => true do |t|
+    t.integer  "protocol_id"
+    t.integer  "species_id"
+    t.integer  "number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "bat_changes", :force => true do |t|
     t.integer "bat_id",               :null => false

@@ -1,6 +1,8 @@
 class Protocol < ActiveRecord::Base
 	has_and_belongs_to_many :bats, :order => "band"
 	has_many :protocol_histories
+  has_many :allowed_bats
+  accepts_nested_attributes_for :allowed_bats
   has_and_belongs_to_many :users, :order => "name"
 	
 	
@@ -74,5 +76,15 @@ class Protocol < ActiveRecord::Base
       end
     end
     return active_bats
+  end
+
+  def allowed_bats(species)
+    allowed_bat = AllowedBat.find(:first, :conditions =>
+        ["protocol_id = ? and species_id = ?",self.id,species.id])
+    if allowed_bat
+      return allowed_bat.number
+    else
+      return 0
+    end
   end
 end

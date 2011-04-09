@@ -11,8 +11,18 @@
   </p>
   <p>
     <%= f.label :summary %> <em>(as succinct as possible)</em><br />
-    <%= f.text_area :summary, :rows => 5 %>
+    <%= f.text_area :summary, :rows => 7 %>
   </p>
+
+  <p>
+    Number of bats allowed on protocol:
+  </p>
+  <% f.fields_for :allowed_bats, Species.all do |a| %>
+    <%= a.text_field :name, :disabled => true %>
+    <%= a.text_field :number, :value => @protocol.allowed_bats(a), :size=> 4 %>
+    <br />
+  <% end %>
+
   <p>
     <%= f.label :start_date %><br />
     <%= f.date_select :start_date, :end_year=> Time.now.year %>
@@ -27,7 +37,7 @@
   </p>
 
   <p>
-    Edit users for protocol:
+    Users on protocol:
   </p>
   <div class="left_indent">
     <%= render :partial => 'protocols/users_on_protocol_form', :locals =>{:protocol => @protocol, :users => User.current} %>

@@ -45,6 +45,7 @@ class ProtocolsController < ApplicationController
     respond_to do |format|
       if @protocol.save
         set_users_protocol(@protocol)
+        set_allowed_bats(@protocol)
         format.html { redirect_to(@protocol, :notice => 'Protocol was successfully created.') }
         format.xml  { render :xml => @protocol, :status => :created, :location => @protocol }
       else
@@ -62,6 +63,7 @@ class ProtocolsController < ApplicationController
     respond_to do |format|
       if @protocol.update_attributes(params[:protocol])
         set_users_protocol(@protocol)
+        set_allowed_bats(@protocol)
         format.html { redirect_to(@protocol, :notice => 'Protocol was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -184,7 +186,6 @@ class ProtocolsController < ApplicationController
     redirect_to :controller => :protocols, :action => :show, :id => protocol
   end
 
-
   def edit_protocols_on_user
     @user = User.find(params[:id])
     @protocols = Protocol.current
@@ -196,5 +197,11 @@ class ProtocolsController < ApplicationController
     params[:protocol_id].each{|id, checked| checked=='1' ? protocols << Protocol.find(id) : ''}
     user.protocols = protocols
     redirect_to :controller => :users, :action => :show, :id => user
+  end
+
+  def set_allowed_bats(protocol)
+    sdf
+    params[:allowed_bats_5].each{|id, checked| checked=='1' ? users << User.find(id) : ''}
+    protocol.users = users
   end
 end

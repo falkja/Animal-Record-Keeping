@@ -15,15 +15,6 @@
   </p>
 
   <p>
-    Number of bats allowed on protocol:
-  </p>
-  <% f.fields_for :allowed_bats, Species.all do |a| %>
-    <%= a.text_field :name, :disabled => true %>
-    <%= a.text_field :number, :value => @protocol.allowed_bats(a), :size=> 4 %>
-    <br />
-  <% end %>
-
-  <p>
     <%= f.label :start_date %><br />
     <%= f.date_select :start_date, :end_year=> Time.now.year %>
   </p>
@@ -35,6 +26,21 @@
     <%= f.check_box :flight_exempt %>
     <%= f.label :flight_exempt, "Exempt from flight (<em>e.g.</em> surgery protocol)" %>
   </p>
+
+  <p>
+    Number of bats allowed on protocol:
+  </p>
+  <div class="left_indent">
+    <table>
+      <% f.fields_for :allowed_bats, Species.all do |a| %>
+      <tr>
+        <td><i><%= a.object[:name] %></i></td>
+        <td><%= a.text_field :number, :value => @protocol.allowed_bats(a), :size=>2 %></td>
+        <%= a.text_field :species_id, :value => a.object[:id], :hidden => true %>
+      </tr>
+      <% end %>
+    </table>
+  </div>
 
   <p>
     Users on protocol:

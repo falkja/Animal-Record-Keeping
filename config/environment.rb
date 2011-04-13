@@ -11,7 +11,7 @@ RAILS_GEM_VERSION = '2.3.11'
 require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
-  config.action_controller.session = { :session_key => "_batkeeping_session", 
+  config.action_controller.session = { :key => "_batkeeping_session", 
   :secret => "c91cc5f73ca1e683eeb6f4b5777f55d68e9fa56fec7f73c2c95e718dd45fa59e920b256283ad443ce33c612f3067708653455c58fcab3cb8e3f322a14a88a014" }
   
   # Settings in config/environments/* take precedence those specified here

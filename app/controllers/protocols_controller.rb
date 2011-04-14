@@ -25,6 +25,7 @@ class ProtocolsController < ApplicationController
   # GET /protocols/new.xml
   def new
     @protocol = Protocol.new
+    @protocol.build_allowed_bats
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @protocol }

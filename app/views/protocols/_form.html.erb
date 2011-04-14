@@ -32,12 +32,12 @@
   </p>
   <div class="left_indent">
     <table>
-      <% f.fields_for :allowed_bats, Species.all do |a| %>
-      <tr>
-        <td><i><%= a.object[:name] %></i></td>
-        <td><%= a.text_field :number, :value => @protocol.allowed_bats(a), :size=>2 %></td>
-        <%= a.text_field :species_id, :value => a.object[:id], :hidden => true %>
-      </tr>
+      <% f.fields_for :allowed_bats do |ab_form| %>
+        <tr>
+          <td><i><%= ab_form.object.species.name %></i></td>
+          <td><%= ab_form.text_field :number, :value => @protocol.determine_allowed_bats(ab_form.object.species), :size=>2 %></td>
+          <%= ab_form.text_field :species_id, :value => ab_form.object.species.id, :hidden => true %>
+        </tr>
       <% end %>
     </table>
   </div>

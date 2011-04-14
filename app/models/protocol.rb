@@ -78,7 +78,7 @@ class Protocol < ActiveRecord::Base
     return active_bats
   end
 
-  def allowed_bats(species)
+  def determine_allowed_bats(species)
     allowed_bat = AllowedBat.find(:first, :conditions =>
         ["protocol_id = ? and species_id = ?",self.id,species.id])
     if allowed_bat
@@ -86,5 +86,16 @@ class Protocol < ActiveRecord::Base
     else
       return 0
     end
+  end
+
+  def build_allowed_bats
+    abs = Array.new
+    for sp in Species.all
+      ab = AllowedBat.new
+      ab.species = sp
+      ab.number = 0
+      abs << ab
+    end
+    self.allowed_bats = abs
   end
 end

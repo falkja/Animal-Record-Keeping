@@ -39,6 +39,18 @@
 </p>
 
 <p>
+  <b>Allowed Bats:</b>
+  <% if @protocol.allowed_bats.length == 0 %>
+    No allowed bats
+  <% else %>
+    <% for ab in @protocol.allowed_bats %>
+      <br><%= ab.species.name %>
+      <%= ab.number %>
+    <% end %>
+  <% end %>
+</p>
+
+<p>
   <b>Users:</b>
   <% if @protocol.users.length == 0 %>
     No users on protocol

@@ -1,5 +1,5 @@
 class AllowedBat < ActiveRecord::Base
   belongs_to :protocol
-  has_one :species
+  belongs_to :species
 
 end

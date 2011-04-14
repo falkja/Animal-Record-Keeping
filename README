@@ -15,10 +15,10 @@ It is our hope that others will get some benefit to having this software availab
 
 Requirements:
 
-MySQL "http://www.mysql.com/downloads/mysql/" 
-Ruby 1.87 "http://rubyforge.org/frs/?group_id167" 
-RubyGems "http://rubyforge.org/frs/?group_id126" 
-Ruby on Rails "http://rubyonrails.org/"
-RMagick "http://rmagick.rubyforge.org/" 
-gruff graphs "http://rubyforge.org/projects/gruff" 
-git "http://git-scm.com/"
+MySQL http://www.mysql.com/downloads/mysql/
+Ruby 1.87 http://rubyforge.org/frs/?group_id167
+RubyGems http://rubyforge.org/frs/?group_id126
+Ruby on Rails http://rubyonrails.org/
+RMagick http://rmagick.rubyforge.org/
+gruff graphs http://rubyforge.org/projects/gruff
+git http://git-scm.com/

@@ -1,6 +1,7 @@
 class Species < ActiveRecord::Base
 	has_many :bats, :order => "band"
-	
+	has_many :allowed_bats
+  
 	validates_presence_of :name, :lower_weight_limit, :upper_weight_limit
 	
 	def hibernating

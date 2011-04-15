@@ -8,6 +8,8 @@ class CreateAllowedBats < ActiveRecord::Migration
 
       t.timestamps
     end
+	
+	Rake::Task['add_allowed_bats_to_existing_protocols'].invoke
   end
 
   def self.down

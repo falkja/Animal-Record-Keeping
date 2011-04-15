@@ -56,3 +56,14 @@ task :quarantine_bats_flight_logs => :environment do
     end
   end
 end
+
+#one time use for populating allowed bat entries for existing protocols
+desc 'add_allowed_bats_to_existing_protocols'
+task :add_allowed_bats_to_existing_protocols => :environment do
+  for p in Protocol.all
+    for sp in Species.all
+      ab = AllowedBat.new(:species => sp, :number => 0, :protocol => p)
+      ab.save
+    end
+  end
+end

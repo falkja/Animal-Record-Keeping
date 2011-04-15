@@ -43,11 +43,15 @@
   <% if @protocol.allowed_bats.length == 0 %>
     No allowed bats
   <% else %>
+  <table>
     <% for ab in @protocol.allowed_bats %>
-      <br><%= ab.species.name %>
-      <%= ab.number %>
+      <tr>
+        <td><%= link_to ab.species.name, :controller => :species, :action => :show, :id => ab.species %></td>
+        <td><%= ab.number %></td>
+      </tr>
     <% end %>
-  <% end %>
+  </table>
+<% end %>
 </p>
 
 <p>

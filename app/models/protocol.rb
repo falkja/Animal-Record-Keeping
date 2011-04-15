@@ -87,15 +87,4 @@ class Protocol < ActiveRecord::Base
       return 0
     end
   end
-
-  def build_allowed_bats
-    abs = Array.new
-    for sp in Species.all
-      ab = AllowedBat.new
-      ab.species = sp
-      ab.number = 0
-      abs << ab
-    end
-    self.allowed_bats = abs
-  end
 end

@@ -12,4 +12,16 @@ class Species < ActiveRecord::Base
 			return false
 		end
 	end
+
+  def after_create
+    for p in Protocol.all
+      allowed_bat = AllowedBat.new(:protocol => p, :species => self, :number => 0)
+      allowed_bat.save
+    end
+  end
+
+  def before_destroy
+    allowed_bats = AllowedBat.find(:all, :conditions => ["species_id = ?",self])
+    allowed_bats.each{|ab| ab.destroy}
+  end
 end

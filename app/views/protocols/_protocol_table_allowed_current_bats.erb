@@ -1,0 +1,21 @@
+<table>
+  <th style="font-size: 12px">Species</th>
+  <th style="font-size: 12px">Current</th>
+  <th style="font-size: 12px">Allowed</th>
+  <% for sp in Species.all %>
+    <tr>
+      <td><%=h sp.name %></td>
+      <td style="text-align: center">
+        <% species_prot_bats = protocol.bats.find(:all, :conditions => "species_id = #{sp.id}" ) %>
+        <label for='protocol_id_<%=protocol.id %>' >
+          <span title='Bats: <% for b in species_prot_bats %>&#13; <%=b.band%><% end %>'>
+            <%=h link_to species_prot_bats.length, :controller => :bats, :action => :list, :bats => species_prot_bats %>
+          </span>
+        </label>
+      </td>
+      <td style="text-align: center">
+        <%=h protocol.allowed_bats.find(:first, :conditions => "species_id = #{sp.id}" ).number %>
+      </td>
+    </tr>
+  <% end %>
+</table>

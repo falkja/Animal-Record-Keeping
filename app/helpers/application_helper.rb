@@ -46,14 +46,6 @@ module ApplicationHelper
       'N/A'
     end
 	end
-	
-  #given an array of cages, returns number of bats in them
-  def bats_in_cages(cages)
-    bats = Array.new
-    cages.each {|cage| bats << cage.bats}
-    bats.flatten!
-    return bats.length
-  end
   
   #from http://neoarch.wordpress.com/2008/02/29/setting-focus-in-rails-with-prototype/
   def set_focus_to_id(id)

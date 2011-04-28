@@ -1,115 +1,115 @@
 <div id = "<%= div_id %>">
 
-<p style="color: green"><%= flash[:note] %></p>
-<% flash[:note] = nil %>
+  <p style="color: green"><%= flash[:note] %></p>
+  <% flash[:note] = nil %>
 
-<% if tasks.length == 0 %>
-No tasks
-<% else %>
-<table>
-  <thead>
-  <% if tasks[0].internal_description == 'medical' && (!same_type_task_list) %>
-    <th>
-    <%= link_to_remote( "Bat",
-		:update => div_id,
-		:url =>{ :controller => 'tasks', :action => 'sort_by', 
-					:tasks => tasks, :div_id => div_id, :same_type_task_list => same_type_task_list,
-          :manage => manage, :sorted_by => 'bat'}) %>
-    </th>
-    <th>
-    <%= link_to_remote( "Cage",
-		:update => div_id,
-		:url =>{ :controller => 'tasks', :action => 'sort_by', 
-					:tasks => tasks, :div_id => div_id, :same_type_task_list => same_type_task_list,
-          :manage => manage, :sorted_by => 'cage'}) %>
-    </th>
-    <th>
-    <%= link_to_remote( "Medical Problem",
-		:update => div_id,
-		:url =>{ :controller => 'tasks', :action => 'sort_by', 
-					:tasks => tasks, :div_id => div_id, :same_type_task_list => same_type_task_list,
-          :manage => manage, :sorted_by => 'medical_problem'}) %>
-    </th>
-  <% end %>
-  <% if !same_type_task_list %>
-    <th>
-    <%= link_to_remote( "Title",
-		:update => div_id,
-		:url =>{ :controller => 'tasks', :action => 'sort_by', 
-					:tasks => tasks, :div_id => div_id, :same_type_task_list => same_type_task_list,
-          :manage => manage, :sorted_by => 'title'}) %>
-    </th>
-  <% end %>
-	<% if tasks[0].room_id || tasks[0].general_task? %>
-		<th>
-    <%= link_to_remote( "Room",
-		:update => div_id,
-		:url =>{ :controller => 'tasks', :action => 'sort_by', 
-					:tasks => tasks, :div_id => div_id, :same_type_task_list => same_type_task_list,
-          :manage => manage, :sorted_by => 'room'}) %>
-    </th>
-	<% end %>
-		<th>User(s)</th>
-	<% if tasks[0].internal_description == 'feed' %>
-		<th>Food</th>
-		<th>Dishes</th>
-		<th>Food/Bat</th>
-	<% end %>
-    <th>
-    <%= link_to_remote( "Frequency",
-		:update => div_id,
-		:url =>{ :controller => 'tasks', :action => 'sort_by', 
-					:tasks => tasks, :div_id => div_id, :same_type_task_list => same_type_task_list,
-          :manage => manage, :sorted_by => 'repeat_code'}) %>
-    </th>
-    <th>Last Done</th>
-	<% if tasks[0].internal_description != 'medical' %>
-    <th>Notes</th>
-	<% end %>
-  </thead>
- 
- <tbody>  
-  
-<% for task in tasks %>
- <% if task.current? %>
- <%= render :partial => 'tasks/single_task_list', 
-                  :locals => {:single_task_list => nil, :task => task, :manage => manage, :tasks => tasks, 
-                  :div_id => div_id, :same_type_task_list => same_type_task_list, :sorted_by => sorted_by} %>
- <% end %>
-<% end %>
+  <% if tasks.length == 0 %>
+    No tasks
+  <% else %>
+    <table>
+      <thead>
+        <% if tasks[0].internal_description == 'medical' && (!same_type_task_list) %>
+        <th>
+          <%= link_to_remote( "Bat",
+            :update => div_id,
+            :url =>{ :controller => 'tasks', :action => 'sort_by',
+              :tasks => tasks, :div_id => div_id, :same_type_task_list => same_type_task_list,
+              :manage => manage, :sorted_by => 'bat'}) %>
+        </th>
+        <th>
+          <%= link_to_remote( "Cage",
+            :update => div_id,
+            :url =>{ :controller => 'tasks', :action => 'sort_by',
+              :tasks => tasks, :div_id => div_id, :same_type_task_list => same_type_task_list,
+              :manage => manage, :sorted_by => 'cage'}) %>
+        </th>
+        <th>
+          <%= link_to_remote( "Medical Problem",
+            :update => div_id,
+            :url =>{ :controller => 'tasks', :action => 'sort_by',
+              :tasks => tasks, :div_id => div_id, :same_type_task_list => same_type_task_list,
+              :manage => manage, :sorted_by => 'medical_problem'}) %>
+        </th>
+      <% end %>
+      <% if !same_type_task_list %>
+        <th>
+          <%= link_to_remote( "Title",
+            :update => div_id,
+            :url =>{ :controller => 'tasks', :action => 'sort_by',
+              :tasks => tasks, :div_id => div_id, :same_type_task_list => same_type_task_list,
+              :manage => manage, :sorted_by => 'title'}) %>
+        </th>
+      <% end %>
+      <% if tasks[0].room_id || tasks[0].general_task? %>
+        <th>
+          <%= link_to_remote( "Room",
+            :update => div_id,
+            :url =>{ :controller => 'tasks', :action => 'sort_by',
+              :tasks => tasks, :div_id => div_id, :same_type_task_list => same_type_task_list,
+              :manage => manage, :sorted_by => 'room'}) %>
+        </th>
+      <% end %>
+      <th>User(s)</th>
+      <% if tasks[0].internal_description == 'feed' %>
+        <th>Food</th>
+        <th>Dishes</th>
+        <th>Food/Bat</th>
+      <% end %>
+      <th>
+        <%= link_to_remote( "Frequency",
+          :update => div_id,
+          :url =>{ :controller => 'tasks', :action => 'sort_by',
+            :tasks => tasks, :div_id => div_id, :same_type_task_list => same_type_task_list,
+            :manage => manage, :sorted_by => 'repeat_code'}) %>
+      </th>
+      <th>Last Done</th>
+      <% if tasks[0].internal_description != 'medical' %>
+        <th>Notes</th>
+      <% end %>
+      </thead>
 
- </tbody>
-</table>
-<% if same_type_task_list %>
-	<% if tasks.length > 0 %>
-		<p>
-		[<%= link_to_remote "Remove existing tasks",
-			:url => {:controller => "tasks", :action => "clear_tasks", :tasks => tasks, :div_id => div_id, 
-			:same_type_task_list => true, :manage => manage}, :update => div_id %>]
-		</p>
-		<% if tasks[0].internal_description == 'feed' %>
-			<% if tasks[0].cage.fed_every_day? == false && task.cage.bats.length > 0 %>
-				<p><warning>Warning: this occupied cage is not fed every day of the week</warning></p>
-			<% elsif tasks[0].cage.tasks.feeding_tasks.length > 0 && task.cage.bats.length == 0 %>
-				<p><warning>Warning: this empty cage still has feeding tasks</warning></p>
-			<% end %>
-		
-		<% elsif tasks[0].internal_description == 'weigh' %>
-			<% if tasks[0].cage.weighed_enough? == false && task.cage.bats.length > 0 %>
-				<p><warning>Warning: this occupied cage is not weighed enough</warning></p>
-			<% end %>
-			<% if tasks[0].cage.tasks.weighing_tasks.length > 0 && task.cage.bats.length == 0 %>
-				<p><warning>Warning: this empty cage still has weighing tasks</warning></p>
-			<% end %>
-		
-		<% elsif tasks[0].internal_description == 'medical' %>
-      <% if tasks.length < 7 %>
-				<p><warning>Warning: this medical treatment is not treated every day of the week</warning></p>
-			<% end %>
-		<% end %>
-		
-	<% end %>
-<% end %>
+      <tbody>
+
+        <% for task in tasks %>
+          <% if task.current? %>
+            <%= render :partial => 'tasks/single_task_list',
+              :locals => {:single_task_list => nil, :task => task, :manage => manage, :tasks => tasks,
+              :div_id => div_id, :same_type_task_list => same_type_task_list, :sorted_by => sorted_by} %>
+          <% end %>
+        <% end %>
+
+      </tbody>
+    </table>
+    <% if same_type_task_list %>
+      <% if tasks.length > 0 %>
+        <p>
+                      [<%= link_to_remote "Remove existing tasks",
+            :url => {:controller => "tasks", :action => "clear_tasks", :tasks => tasks, :div_id => div_id,
+            :same_type_task_list => true, :manage => manage}, :update => div_id %>]
+        </p>
+        <% if tasks[0].internal_description == 'feed' %>
+          <% if tasks[0].cage.fed_every_day? == false && task.cage.bats.length > 0 %>
+            <p><warning>Warning: this occupied cage is not fed every day of the week</warning></p>
+        <% elsif tasks[0].cage.tasks.feeding_tasks.length > 0 && task.cage.bats.length == 0 %>
+          <p><warning>Warning: this empty cage still has feeding tasks</warning></p>
+        <% end %>
+
+      <% elsif tasks[0].internal_description == 'weigh' %>
+        <% if tasks[0].cage.weighed_enough? == false && task.cage.bats.length > 0 %>
+          <p><warning>Warning: this occupied cage is not weighed enough</warning></p>
+        <% end %>
+        <% if tasks[0].cage.tasks.weighing_tasks.length > 0 && task.cage.bats.length == 0 %>
+          <p><warning>Warning: this empty cage still has weighing tasks</warning></p>
+        <% end %>
+
+      <% elsif tasks[0].internal_description == 'medical' %>
+        <% if tasks.length < 7 %>
+          <p><warning>Warning: this medical treatment is not treated every day of the week</warning></p>
+        <% end %>
+      <% end %>
+
+    <% end %>
+  <% end %>
 
 <% end %>
 </div>

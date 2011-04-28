@@ -6,7 +6,7 @@ class TasksController < ApplicationController
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
   verify :method => :post, :only => [ :destroy, :create, :update ],
-         :redirect_to => { :action => :list }
+    :redirect_to => { :action => :list }
 
   def list
     @general_tasks_today = Task.general_tasks_today
@@ -28,20 +28,20 @@ class TasksController < ApplicationController
 		show_hide_tasks
 		
 	  render :partial => 'hide_tasks', :locals => {:general_tasks => @general_tasks,
-                  :feeding_tasks => @feeding_tasks, :user => @user, :source => params[:source],
-									:medical_tasks => @medical_tasks, :div_id => params[:div_id], :feeding_cages => @feeding_cages,
-									:cages => @cages, :medical_problems => @medical_problems, :same_type_task_list => params[:same_type_task_list],
-									:sorted_by => params[:sorted_by]}
+      :feeding_tasks => @feeding_tasks, :user => @user, :source => params[:source],
+      :medical_tasks => @medical_tasks, :div_id => params[:div_id], :feeding_cages => @feeding_cages,
+      :cages => @cages, :medical_problems => @medical_problems, :same_type_task_list => params[:same_type_task_list],
+      :sorted_by => params[:sorted_by]}
   end
   
   def show_tasks
     show_hide_tasks
 		
 	  render :partial => 'show_tasks', :locals => {:general_tasks => @general_tasks,
-                  :feeding_tasks => @feeding_tasks, :user => @user, :source => params[:source],
-									:medical_tasks => @medical_tasks, :div_id => params[:div_id], :feeding_cages => @feeding_cages,
-									:cages => @cages, :medical_problems => @medical_problems, :same_type_task_list => params[:same_type_task_list],
-									:sorted_by => params[:sorted_by]}
+      :feeding_tasks => @feeding_tasks, :user => @user, :source => params[:source],
+      :medical_tasks => @medical_tasks, :div_id => params[:div_id], :feeding_cages => @feeding_cages,
+      :cages => @cages, :medical_problems => @medical_problems, :same_type_task_list => params[:same_type_task_list],
+      :sorted_by => params[:sorted_by]}
   end
 
   def show_hide_tasks
@@ -107,9 +107,11 @@ class TasksController < ApplicationController
 			tasks = Task.find(params[:tasks], :order => 'title, repeat_code')
 		end
 		
-    render :partial => 'tasks_list', :locals => {:tasks => tasks, 
-      :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => params[:manage],
-			:sorted_by => params[:sorted_by]}
+    if tasks.length > 0
+      render :partial => 'tasks_list', :locals => {:tasks => tasks,
+        :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => params[:manage],
+        :sorted_by => params[:sorted_by]}
+    end
   end
   
   def show
@@ -157,10 +159,10 @@ class TasksController < ApplicationController
 				:same_type_task_list => true, :manage => true, :sorted_by => params[:sorted_by]}
     else
       for task in @cage.tasks.feeding_tasks
-          task.food = params[:task][:food]
-          task.dish_type = params[:task][:dish_type]
-          task.dish_num = params[:task][:dish_num]
-          task.save
+        task.food = params[:task][:food]
+        task.dish_type = params[:task][:dish_type]
+        task.dish_num = params[:task][:dish_num]
+        task.save
       end
       render :partial => 'tasks_list', :locals => {:tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', 
 				:same_type_task_list => true, :manage => true, :sorted_by => params[:sorted_by]}
@@ -169,8 +171,8 @@ class TasksController < ApplicationController
   
   def remote_new_feed_cage_task
     render :partial => 'remote_new_feed_cage_task', :locals => {:cage => Cage.find(params[:id]), :div_id => params[:div_id], 
-        :source => params[:source], :user => params[:user], :sorted_by => params[:sorted_by],
-        :same_type_task_list => params[:same_type_task_list], :users => User.current, :quick_add => params[:quick_add]}
+      :source => params[:source], :user => params[:user], :sorted_by => params[:sorted_by],
+      :same_type_task_list => params[:same_type_task_list], :users => User.current, :quick_add => params[:quick_add]}
   end
 
   def create_feed_cage_task #called from new_feed_cage_task page
@@ -180,8 +182,8 @@ class TasksController < ApplicationController
       @days = params[:days]
       
       if @days.include?("0")  #need to convert to multiple tasks
-          @days.clear
-          @days = ["1","2","3","4","5","6","7"]
+        @days.clear
+        @days = ["1","2","3","4","5","6","7"]
       end
       
       for day in @days
@@ -216,7 +218,7 @@ class TasksController < ApplicationController
 		@feeding_tasks = @feeding_tasks.sort_by{|task| [task.repeat_code, task.title]}
     
     render :partial => 'tasks_list', :locals => {:tasks => @feeding_tasks, :sorted_by => params[:sorted_by],
-                                      :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => true}
+      :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => true}
   end
 
 	def find_feeding_tasks
@@ -249,31 +251,31 @@ class TasksController < ApplicationController
   def create_medical_task
     if ( (params[:users] != nil) || (params[:task][:animal_care] == '1') ) && (params[:days] != nil) #error checking
 		
-		medical_treatment = MedicalTreatment.find(params[:id])
+      medical_treatment = MedicalTreatment.find(params[:id])
 		
-		params[:users] ? users = User.find(params[:users]) : users = Array.new
-    days = params[:days]
+      params[:users] ? users = User.find(params[:users]) : users = Array.new
+      days = params[:days]
 		
-		if days.include?("0")  #need to convert to multiple tasks
-			days.clear
-			days = ["1","2","3","4","5","6","7"]
-    end
+      if days.include?("0")  #need to convert to multiple tasks
+        days.clear
+        days = ["1","2","3","4","5","6","7"]
+      end
 		
-		all_tasks_created_successfully = true
-		for day in days
+      all_tasks_created_successfully = true
+      for day in days
 				task = Task.find_by_medical_treatment_id_and_repeat_code(medical_treatment, day) || Task.create(:medical_treatment => medical_treatment, :repeat_code => day, :jitter => 0, :date_started => Time.now, :title => medical_treatment.title, :internal_description => "medical", :notes => '')
         task.date_ended = nil
 				task.animal_care = params[:task][:animal_care]
 				task.save
 				task.users = users
-		end
+      end
 		
-    flash[:note] = 'All tasks created successfully.  If some tasks already existed for the day, they were overwritten.'
+      flash[:note] = 'All tasks created successfully.  If some tasks already existed for the day, they were overwritten.'
 		
-    medical_tasks = medical_treatment.tasks.current.sort_by{|task| [task.repeat_code, task.title]}
+      medical_tasks = medical_treatment.tasks.current.sort_by{|task| [task.repeat_code, task.title]}
     
-		render :partial => 'tasks_list', :locals => {:tasks => medical_tasks, :sorted_by => params[:sorted_by],
-			:div_id => params[:div_id], :same_type_task_list => true, :manage => true}
+      render :partial => 'tasks_list', :locals => {:tasks => medical_tasks, :sorted_by => params[:sorted_by],
+        :div_id => params[:div_id], :same_type_task_list => true, :manage => true}
 		
 		end
 	end
@@ -510,9 +512,9 @@ class TasksController < ApplicationController
 		params[:medical_problems] ? medical_problems = MedicalProblem.find(params[:medical_problems]) : medical_problems = Array.new
 		params[:cages] ? cages = Cage.find(params[:cages]) : cages = Array.new
 		render :partial => 'show_hide_task_category', :locals => {:tasks => tasks, :div_id => params[:div_id],
-				:same_type_task_list => params[:same_type_task_list], :manage => params[:manage], :cages => cages,
-				:source => params[:source], :count => params[:count], :show => params[:show], :category_div => params[:category_div],
-				:medical_problems => medical_problems, :sorted_by => params[:sorted_by], :user => User.find(session[:person])}
+      :same_type_task_list => params[:same_type_task_list], :manage => params[:manage], :cages => cages,
+      :source => params[:source], :count => params[:count], :show => params[:show], :category_div => params[:category_div],
+      :medical_problems => medical_problems, :sorted_by => params[:sorted_by], :user => User.find(session[:person])}
 	end
 	
   def show_hide_users
@@ -524,9 +526,9 @@ class TasksController < ApplicationController
     end
     (params[:show_users] == "1") ? show_users = false : show_users = true
     render :partial => 'users_for_tasks', 
-				:locals=>{:show_users => show_users, :users => users, :user_ids => user_ids, 
-				:quick_add => params[:quick_add], :show_medical => params[:show_medical], 
-				:div_id => params[:div_id]}
+      :locals=>{:show_users => show_users, :users => users, :user_ids => user_ids,
+      :quick_add => params[:quick_add], :show_medical => params[:show_medical],
+      :div_id => params[:div_id]}
   end
   
 	

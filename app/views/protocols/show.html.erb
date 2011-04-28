@@ -43,14 +43,10 @@
   <% if @protocol.allowed_bats.length == 0 %>
     No allowed bats
   <% else %>
-  <table>
-    <% for ab in @protocol.allowed_bats %>
-      <tr>
-        <td><%= link_to ab.species.name, :controller => :species, :action => :show, :id => ab.species %></td>
-        <td><%= ab.number %></td>
-      </tr>
-    <% end %>
-  </table>
+  <div class="left_indent">
+    <%= render :partial => 'protocols/protocol_table_allowed_current_bats',
+      :locals =>{:protocol => @protocol} %>
+  </div>
 <% end %>
 </p>
 

@@ -1,37 +1,45 @@
 <% if @average != nil %>
-	<% if (@average < 20) && (@average > 14) %>
-		<% suggested_amount = 1.5 * cage.bats.length %>
-	<% elsif @average > 20 %>
-		<% suggested_amount = 1.0 * cage.bats.length %>
-	<% else %>
-		<% suggested_amount = 2.0 * cage.bats.length %>
-	<% end %>
+  <% if (@average < 20) && (@average > 14) %>
+    <% suggested_amount = 1.5 * cage.bats.length %>
+  <% elsif @average > 20 %>
+    <% suggested_amount = 1.0 * cage.bats.length %>
+  <% else %>
+    <% suggested_amount = 2.0 * cage.bats.length %>
+  <% end %>
 <% end %>
 
 <table>
 
-<tr>
-<td><b>Food</b></td>
-<td><b>Dish Type</b></td>
-<td><b>Number of dishes</b></td>
-</tr>
+  <tr>
+    <td><b>Food</b></td>
+    <td><b>Dish Type</b></td>
+    <td><b>Number of dishes</b></td>
+  </tr>
 
-<tr>
+  <tr>
 
-<td><%= text_field 'task', 'food', :size => 1, :autocomplete => 'off', :value => suggested_amount %> g</td>
+    <td><%= text_field 'task', 'food', :size => 1, :autocomplete => 'off', :value => suggested_amount %> g</td>
+    <td>
+<%= radio_button_tag 'task[dish_type]', 'Small' %>
+      <%= label_tag "task[dish_type][small]", 'Small' %><br>
+      <%= radio_button_tag 'task[dish_type]', 'Medium' %>
+      <%= label_tag "task[dish_type][medium]", 'Medium' %><br>
+      <%= radio_button_tag 'task[dish_type]', 'Long' %>
+      <%= label_tag "task[dish_type][long]", 'Long' %><br>
+      <%= radio_button_tag 'task[dish_type]', 'Tray' %>
+      <%= label_tag "task[dish_type][tray]", 'Tray' %><br>
+      <%#= select_tag("task[dish_type]", options_for_select([["Small","Small"],["Medium","Medium"], ["Long","Long"],["Metal tray","Metal tray"]])) %>
+    </td>
+    <td><%= text_field 'task', 'dish_num', :size => 1, :autocomplete => 'off' %></td>
+    <td><%= submit_tag "Edit all feeding tasks for " + cage.name %></td>
 
-<td><%= select_tag("task[dish_type]", options_for_select([["Small","Small"],["Medium","Medium"], ["Long","Long"],["Metal tray","Metal tray"]])) %></td>
-
-<td><%= text_field 'task', 'dish_num', :size => 1, :autocomplete => 'off' %></td>
-
-<td><%= submit_tag "Edit all feeding tasks for " + cage.name %></td>
-
-</tr>
+  </tr>
 
 </table>
 
 <% if @average != nil %>
-<p>
-<em>Suggested amount (E. fuscus): <%=h suggested_amount %> g (<%=h suggested_amount/cage.bats.length %> g per bat) based on average weight of bats in cage.</em>
-</p>
+  <p>
+    <em>Suggested amount (E. fuscus): <%=h suggested_amount %> g
+      (<%=h suggested_amount/cage.bats.length %> g per bat) based on average weight of bats in cage.</em>
+  </p>
 <% end %>

@@ -10,11 +10,13 @@
 <p><label for="sp_upper_weight_limit">Upper Weight Warning Level</label><br/>
 <%= text_field 'sp', 'upper_weight_limit', :maxlength => 4 %>g</p>
 
-<p><label for="sp_hibernation_start_month">Hibernation Start Month</label><br/>
-<%= select_month(@sp.hibernating_start_month,:prompt => '', :field_name => 'hibernating_start_month', :prefix => 'sp') %>Leave empty for no hibernation</p>
+<p><label for="sp_hibernation_start_month">Hibernation Start Month (begins on first day of month)</label><br/>
+<%= select_month(@sp.hibernating_start_month,:prompt => '', :field_name => 'hibernating_start_month', :prefix => 'sp') %>
+  Set empty for no hibernation</p>
 
-<p><label for="sp_hibernating_end_month">Hibernation End Month</label><br/>
-<%= select_month(@sp.hibernating_end_month,:prompt => '', :field_name => 'hibernating_end_month', :prefix => 'sp') %>Leave empty for no hibernation</p>
+<p><label for="sp_hibernating_end_month">Hibernation End Month (goes until last day of month)</label><br/>
+<%= select_month(@sp.hibernating_end_month,:prompt => '', :field_name => 'hibernating_end_month', :prefix => 'sp') %>
+  Set empty for no hibernation</p>
 
 <p><%= check_box 'sp', 'requires_vaccination'  %><label for="sp_requires_vaccination">Species Requires Vaccination</label><br><em>i.e.</em> there is a quarantine period, which exempts bats from flight until they are vaccinated</p>
 

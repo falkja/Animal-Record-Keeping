@@ -1,121 +1,119 @@
 <% # You need to pass a local variable called 'manage' that is true or false %>
 <% # if true, the partial will also display edit and destroy buttons %>
 
-  <tr>
-  
+<tr>
+
   <% if task.internal_description == 'medical' && (!same_type_task_list) %>
-		<td><%= link_to task.medical_treatment.medical_problem.bat.band, :controller => :bats, :action => :show, :id => task.medical_treatment.medical_problem.bat %></td>
+    <td><%= link_to task.medical_treatment.medical_problem.bat.band, :controller => :bats, :action => :show, :id => task.medical_treatment.medical_problem.bat %></td>
     <td>
-    <% if task.medical_treatment.medical_problem.bat.cage %>
-      <%= link_to task.medical_treatment.medical_problem.bat.cage.name, :controller => 'cages', :action => :show, :id => task.medical_treatment.medical_problem.bat.cage %>
-    <% else %>
-      -
-    <% end %>
+      <% if task.medical_treatment.medical_problem.bat.cage %>
+        <%= link_to task.medical_treatment.medical_problem.bat.cage.name, :controller => 'cages', :action => :show, :id => task.medical_treatment.medical_problem.bat.cage %>
+      <% else %>
+        -
+      <% end %>
     </td>
     <td><%= link_to task.medical_treatment.medical_problem.title, :controller => 'medical_problems', :action => 'show', :id => task.medical_treatment.medical_problem %></td>
   <% end %>
-  
+
   <% if !same_type_task_list %>
     <td>
-    <b>
-      <%= task.title %>
-    </b>
+      <b>
+        <%= task.title %>
+      </b>
     </td>
   <% end %>
-	
-	<% if task.room_id %>
-		<td><%= task.room.name %></td>
-	<% elsif task.general_task? %>
-		<td></td>
-	<% end %>
-	
-	
-    <td>
-			<% if task.animal_care == true %>
-				Animal Care
-			<% else %>
-				<% for user in task.users %>
-					<%= user.initials %><%= (user != task.users.last) ? "," : "" %>
-				<% end %>
-			<% end %>
+
+  <% if task.room_id %>
+    <td><%= task.room.name %></td>
+  <% elsif task.general_task? %>
+    <td></td>
+  <% end %>
+
+
+  <td>
+    <% if task.animal_care == true %>
+                                  Animal Care
+    <% else %>
+      <% for user in task.users %>
+        <%= user.initials %><%= (user != task.users.last) ? "," : "" %>
+      <% end %>
+    <% end %>
+  </td>
+
+  <% if task.internal_description == 'feed' %>
+    <td style="text-align: center"><%=h task.food %>g</td>
+    <td style="text-align: center"><%=h task.dish_num.to_s + " " + task.dish_type.to_s %></td>
+    <td style="text-align: center">
+      <% if task.cage.bats.length > 0 %>
+        <% average = task.food / task.cage.bats.length %>
+        <%= ("%0.1f" % average).to_f %> g
+      <% end %>
     </td>
-  
-	<% if task.internal_description == 'feed' %>
-		<td><%=h task.food %>g</td>
-		<td><%=h task.dish_num.to_s + " " + task.dish_type.to_s %></td>
-		<% cage = Cage.find(task.cage_id) %>
-		<td>
-		<% if cage.bats.length > 0 %>
-			<% average = task.food / cage.bats.length %>
-			<%= ("%0.1f" % average).to_f %> g
-		<% end %>
-		</td>
-	<% end %>
-    <td>
-      <%= task.repeat_code == 0 ? "Daily" : '' %>
-      <%= task.repeat_code == 1 ? "Every Sunday" : '' %>
-      <%= task.repeat_code == 2 ? "Every Monday" : '' %>
-      <%= task.repeat_code == 3 ? "Every Tuesday" : '' %>
-      <%= task.repeat_code == 4 ? "Every Wednesday" : '' %>
-      <%= task.repeat_code == 5 ? "Every Thursday" : '' %>
-      <%= task.repeat_code == 6 ? "Every Friday" : '' %>
-      <%= task.repeat_code == 7 ? "Every Saturday" : '' %>
-    </td>
-    <td>
-    <% if task.done_by_schedule %> 
-       <%= nice_date(task.last_done_date) %>
+  <% end %>
+  <td>
+    <%= task.repeat_code == 0 ? "Daily" : '' %>
+    <%= task.repeat_code == 1 ? "Every Sunday" : '' %>
+    <%= task.repeat_code == 2 ? "Every Monday" : '' %>
+    <%= task.repeat_code == 3 ? "Every Tuesday" : '' %>
+    <%= task.repeat_code == 4 ? "Every Wednesday" : '' %>
+    <%= task.repeat_code == 5 ? "Every Thursday" : '' %>
+    <%= task.repeat_code == 6 ? "Every Friday" : '' %>
+    <%= task.repeat_code == 7 ? "Every Saturday" : '' %>
+  </td>
+  <td>
+    <% if task.done_by_schedule %>
+      <%= nice_date(task.last_done_date) %>
     <% else %>
       <% if manage %>
         <% if task.doable %>
           <% if task.internal_description == "feed" %>
             [<%= link_to_remote 'Just Fed', :url => {
-            :controller => 'tasks', :action => 'done', :id => task, :sorted_by => sorted_by,
-            :ids => tasks, :div_id => div_id,  :same_type_task_list => same_type_task_list,
-						:manage => manage, :sorted_by => sorted_by},
-            :update => div_id%>]
+              :controller => 'tasks', :action => 'done', :id => task, :sorted_by => sorted_by,
+              :ids => tasks, :div_id => div_id,  :same_type_task_list => same_type_task_list,
+              :manage => manage, :sorted_by => sorted_by},
+              :update => div_id%>]
           <% elsif task.cage_id == nil && task.medical_treatment_id == nil %>
-						[<%= link_to_remote 'Just Done', :url => {
-            :controller => 'tasks', :action => 'done', :id => task, :sorted_by => sorted_by,
-            :ids => tasks, :div_id => div_id,  :same_type_task_list => same_type_task_list,
-						:manage => manage, :sorted_by => sorted_by},
-            :update => div_id %>]
+                                                        [<%= link_to_remote 'Just Done', :url => {
+              :controller => 'tasks', :action => 'done', :id => task, :sorted_by => sorted_by,
+              :ids => tasks, :div_id => div_id,  :same_type_task_list => same_type_task_list,
+              :manage => manage, :sorted_by => sorted_by},
+              :update => div_id %>]
           <% elsif task.internal_description == "weigh" %>
-              [<%= link_to 'Weigh Cage', :controller => 'cages', :action => 'weigh_cage', :id => task.cage %>]
+            [<%= link_to 'Weigh Cage', :controller => 'cages', :action => 'weigh_cage', :id => task.cage %>]
           <% elsif task.internal_description == "medical" %>
-              [<%= link_to 'Do Treatment', :controller => 'tasks', :action => 'do_medical_task', :id => task %>]
+            [<%= link_to 'Do Treatment', :controller => 'tasks', :action => 'do_medical_task', :id => task %>]
           <% end %>
         <% else %>
           <% if !(task.date_started.year == Time.now.year && task.date_started.yday > task.find_post) %>
-						<warning>Not done on schedule</warning>
-					<% end %>
-        <% end %>
-      <% else %>
         <warning>Not done on schedule</warning>
       <% end %>
     <% end %>
-    </td>
-    
-		<% if (task.internal_description != 'medical') %>
-		<td><%=h task.notes %></td>
-		<% end %>
-    
-    <td><%= link_to 'Show', :controller => 'tasks', :action => 'show', :id => task %></td>
-    
-    <% if manage %>
-			<td><%= link_to 'Edit',  :controller => 'tasks', :action => 'edit', :id => task %></td>
-			<td>
-				<% if task.medical_treatment && !same_type_task_list %>
-					<%= link_to 'Manage Treatments', :controller => 'medical_treatments', :action => 'show', :id => task.medical_treatment %>
-				<% elsif task.internal_description == 'feed' && !same_type_task_list %>
-					<%= link_to 'Manage Feeding Tasks', :controller => 'tasks', :action => 'manage_feeding_tasks', :id => task.cage %>
-				<% else %>
-					<%= link_to_remote 'Destroy', :url => {
-						:controller => 'tasks', :action => 'destroy', :id => task, :ids => tasks, :div_id => div_id, :sorted_by => sorted_by,
-						:same_type_task_list => same_type_task_list, :sorted_by => sorted_by, :manage => manage}, 
-						:confirm => 'Are you sure?', :method => :post, :update => div_id %>
-				<% end %>
-			</td>
-    <% end %>
+  <% else %>
+    <warning>Not done on schedule</warning>
+  <% end %>
+<% end %>
+</td>
 
- </tr>
-    
+<% if (task.internal_description != 'medical') %>
+  <td><%=h task.notes %></td>
+<% end %>
+
+<td><%= link_to 'Show', :controller => 'tasks', :action => 'show', :id => task %></td>
+
+<% if manage %>
+  <td><%= link_to 'Edit',  :controller => 'tasks', :action => 'edit', :id => task %></td>
+  <td>
+    <% if task.medical_treatment && !same_type_task_list %>
+      <%= link_to 'Manage Treatments', :controller => 'medical_treatments', :action => 'show', :id => task.medical_treatment %>
+    <% elsif task.internal_description == 'feed' && !same_type_task_list %>
+      <%= link_to 'Manage Feeding Tasks', :controller => 'tasks', :action => 'manage_feeding_tasks', :id => task.cage %>
+    <% else %>
+      <%= link_to_remote 'Destroy', :url => {
+        :controller => 'tasks', :action => 'destroy', :id => task, :ids => tasks, :div_id => div_id, :sorted_by => sorted_by,
+        :same_type_task_list => same_type_task_list, :sorted_by => sorted_by, :manage => manage},
+        :confirm => 'Are you sure?', :method => :post, :update => div_id %>
+    <% end %>
+  </td>
+<% end %>
+
+</tr>

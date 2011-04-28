@@ -6,24 +6,43 @@
 <hr />
 
 <% for column in Species.content_columns %>
-<p>
-  <b><%= column.human_name %>:</b> <%=h @sp.send(column.name) %>
-</p>
+  <p>
+    <b><%= column.human_name %>:</b> <%=h @sp.send(column.name) %>
+  </p>
 <% end %>
 
-<h3>Species' Bats:</h3>
+<h3>Species' Active Bats:</h3>
 
 <div class='left_indent'>
 
-<table>
-<th>Bat</th>
-<th>Cage</th>
-<% for bat in @sp.bats.active %>
-<tr>
-<td><%= link_to bat.band, :controller=>'bats', :action =>'show', :id => bat %></td>
-<td><%= bat.cage.name %></td>
-</tr>
-<% end %>
-</table>
+  <table>
+    <th>Bat</th>
+    <th>Cage</th>
+    <% for bat in @sp.bats.active %>
+      <tr>
+        <td><%= link_to bat.band, :controller=>'bats', :action =>'show', :id => bat %></td>
+        <td><%= bat.cage.name %></td>
+      </tr>
+    <% end %>
+  </table>
+
+</div>
+
+<h3>Species' Deactivated Bats:</h3>
+
+<div class='left_indent'>
+
+  <table>
+    <th>Bat</th>
+    <th>Last Cage</th>
+    <th>Date Deactivated</th>
+    <% for bat in @sp.bats.not_active %>
+      <tr>
+        <td><%= link_to bat.band, :controller=>'bats', :action =>'show', :id => bat %></td>
+        <td><%= bat.cage_out_histories[0].cage.name %></td>
+        <td><%= nice_date bat.leave_date %></td>
+      </tr>
+    <% end %>
+  </table>
 
 </div>

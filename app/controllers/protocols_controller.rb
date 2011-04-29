@@ -120,7 +120,15 @@ class ProtocolsController < ApplicationController
     if params[:protocol_id]
       params[:protocol_id].each{|id, checked| checked=='1' ? protocols << Protocol.find(id) : ''}
     end
-    if protocols.length > 0
+    if protocols.length > 0 and bats.length > 0
+      #check to make sure # bats isn't over the limit of what's allowed
+      for p in protocols
+        if p.check_allowed_bats(bats) == false
+          flash[:notice] = 'Over the allowed bats limit'
+          redirect_to :action => :index and return
+        end
+      end
+
       for bat in bats
         if params[:act]=='add'
           b_prot = (bat.protocols + protocols).uniq
@@ -132,7 +140,7 @@ class ProtocolsController < ApplicationController
       flash[:notice] = 'Bats/Protocols updated'
       redirect_to :action=> :index
     else
-      flash[:notice] = 'No protocols selected'
+      flash[:notice] = 'No protocols or bats selected'
       redirect_to :back
     end
 	

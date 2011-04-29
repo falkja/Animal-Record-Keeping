@@ -20,7 +20,7 @@
 
     <td><%= text_field 'task', 'food', :size => 1, :autocomplete => 'off', :value => suggested_amount %> g</td>
     <td>
-<%= radio_button_tag 'task[dish_type]', 'Small' %>
+      <%= radio_button_tag 'task[dish_type]', 'Small' %>
       <%= label_tag "task[dish_type][small]", 'Small' %><br>
       <%= radio_button_tag 'task[dish_type]', 'Medium' %>
       <%= label_tag "task[dish_type][medium]", 'Medium' %><br>

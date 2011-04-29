@@ -8,9 +8,8 @@
   <% for bat in bats %>
     <%=check_box :bat_id, bat.id, :class => 'bat_checkbox' %>
 
-    <label for="bat_id_<%=bat.id %>" ><span title='Protocols:
-  <% for p in bat.protocols %><%=p.number%><% end %>'>
-  <%= bat.band %></span></label><br>
+    <label for="bat_id_<%=bat.id %>" ><span title='Protocols:<% for p in bat.protocols %>&#13; <%=p.number%><% end %>'>
+<%= bat.band %></span></label><br>
 
   <% end %>
 

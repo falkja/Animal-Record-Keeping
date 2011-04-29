@@ -20,6 +20,22 @@ class Protocol < ActiveRecord::Base
     return prots
   end
 
+  def allowed_bats_by_species(species)
+    self.allowed_bats.find(:first, :conditions => "species_id = #{species.id}")
+  end
+
+  def check_allowed_bats(adding_bats)
+    species = adding_bats.collect(&:species).uniq
+    for sp in species
+      ab = allowed_bats_by_species(sp)
+      tot_bats = Bat.bats_on_species(((self.bats + adding_bats).uniq),sp)
+      if ab.number < tot_bats.length
+        return false
+      end
+    end
+    return true
+  end
+
 	def past_bats
 		hists = ProtocolHistory.find(:all, :conditions =>["protocol_id = ? and date_removed is not null", self.id], :order => "date_removed")
 		return hists

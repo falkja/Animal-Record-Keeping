@@ -23,6 +23,10 @@
       </td>
       <td style="vertical-align:top">
         <div style="border:1px solid gray;padding-left: 10px;padding-right: 5px;padding-top: 5px" >
+          <div style="width:750px; margin-right:auto; margin-left:auto;text-align:center">
+            <p><%= submit_tag act.capitalize.concat(" bats") %></p>
+          </div>
+
           <%= render :partial => 'choose_protocols',
             :locals => {:protocols => Protocol.current, :bat => nil} %>
 

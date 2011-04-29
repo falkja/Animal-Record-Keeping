@@ -328,7 +328,10 @@ class Bat < ActiveRecord::Base
   
   #protocols passed in are the entire protocols that you'd like the bat to have (not just the additions to what the bat already has)
 	def save_protocols(protocols,time_altered)
-		#saving history of protocols removed
+		#try to stop saving the protocols if the number of bats would be greater than allowed
+
+
+    #saving history of protocols removed
 		for protocol in (protocols - self.protocols)
 			#create a protocol history
 			p_hist = ProtocolHistory.new
@@ -360,4 +363,8 @@ class Bat < ActiveRecord::Base
       :order => "date_added")
 		return hist.date_added
 	end
+
+  def self.bats_on_species(bats,species)
+    Bat.all(:conditions => {:id => bats, :species_id => species.id} )
+  end
 end

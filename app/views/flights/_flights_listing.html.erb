@@ -1,55 +1,55 @@
 <% if flights.length > 0 %>
 
-<br>
+  <br>
 
-<table style="width:625px; margin-right:auto; margin-left:auto">
-<th>Day</th>
-<th>User</th>
-<th>Reason</th>
-<th>Note</th>
+  <table style="width:625px; margin-right:auto; margin-left:auto">
+    <th>Day</th>
+    <th>User</th>
+    <th>Reason</th>
+    <th>Note</th>
 
-<% for flight in flights %>
-	<tr>
-	<td><%= flight.date.strftime("%b %d, %Y") %></td>
-	<td><%= link_to flight.user.initials, :controller => :users, :action=>:show, :id => flight.user %></td>
-	
-	<td>
-	<% if !flight.cage && !flight.medical_problem && !flight.species %>
-		User entry
-	<% else %>
-		<% if flight.cage %>
-			Flight cage: <%= link_to flight.cage.name, :controller => :cages, :action => :show, :id => flight.cage %><br>
-		<% end %>
-		
-		<% if flight.medical_problem %>
-			Med. prob.: <%= link_to flight.medical_problem.title, :controller => :medical_problems, :action => :show, :id => flight.medical_problem %><br>
-		<% end %>
-		
-		<% if flight.protocol_exempt %>
-			Exempt by protocol<br>
-		<% end %>
-		
-		<% if flight.species %>
-			<em><%= link_to flight.species.name, :controller => :species, :action => :show, :id => flight.species %></em> hibernating<br>
-		<% end %>
-		
-		<% if flight.quarantine %>
-			Quarantine<br>
-		<% end %>
-	<% end %>
-	
-	</td>
-	
-	<td><%=h flight.note %></td>
-	
-	<td>
-	<%= link_to 'Destroy', { :action => 'destroy', :id => flight, :bat => flight.bat }, :confirm => 'Are you sure?', :method => :post %>
-	</td>
-	
-	
-	</tr>
-<% end %>
+    <% for flight in flights %>
+      <tr>
+        <td><%= flight.date.strftime("%b %d, %Y") %></td>
+        <td><%= link_to flight.user.initials, :controller => :users, :action=>:show, :id => flight.user %></td>
 
-</table>
+        <td>
+          <% if !flight.cage && !flight.medical_problem && !flight.species %>
+            User entry
+          <% else %>
+            <% if flight.cage %>
+              Flight cage: <%= link_to flight.cage.name, :controller => :cages, :action => :show, :id => flight.cage %><br>
+            <% end %>
+
+            <% if flight.medical_problem %>
+              Med. prob.: <%= link_to flight.medical_problem.title, :controller => :medical_problems, :action => :show, :id => flight.medical_problem %><br>
+            <% end %>
+
+            <% if flight.protocol_exempt %>
+              Exempt by protocol<br>
+            <% end %>
+
+            <% if flight.species %>
+              <em><%= link_to flight.species.name, :controller => :species, :action => :show, :id => flight.species %></em> hibernating<br>
+            <% end %>
+
+            <% if flight.quarantine %>
+              Quarantine<br>
+            <% end %>
+          <% end %>
+
+        </td>
+
+        <td><%=h flight.note %></td>
+
+        <td>
+          <%= link_to 'Destroy', { :action => 'destroy', :id => flight, :bat => flight.bat }, :confirm => 'Are you sure?', :method => :post %>
+        </td>
+
+
+      </tr>
+    <% end %>
+
+  </table>
 
 <% end %>

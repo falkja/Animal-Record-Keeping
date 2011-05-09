@@ -7,6 +7,10 @@
   <%= button_to 'Move Bat', {:controller => :bats, :action=> :single_bat_to_move, :id=>@bat}, {:style=>"display:inline"} %> |
 <% end %>
 
+<% if @bat.flown_on(Date.today) == false%>
+  <%= button_to 'Fly Bat', {:controller => :flights, :action=> :new, :bat=>@bat}, {:style=>"display:inline"} %> |
+<% end %>
+
 <% if @bat.leave_date == nil %>
   <%= button_to 'Deactivate', :controller => :bats, :action => :deactivate, :id => @bat %>
 <% else %>

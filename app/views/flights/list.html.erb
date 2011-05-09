@@ -16,16 +16,16 @@
 
 <div class="left_indent">
 
-<% if @bats.length == 0 %>
+  <% if @bats.length == 0 %>
 
-No bats.
+    No bats.
 
-<% else %>
+  <% else %>
 
-<div id="bat_list">
-<%= render :partial => 'flights/bat_list', :locals => { 
-		:bat_list => @bats} %>
-</div>
-<% end %>
+    <div id="bat_list">
+      <%= render :partial => 'flights/bat_list', :locals => {
+        :bat_list => @bats} %>
+    </div>
+  <% end %>
 
 </div>

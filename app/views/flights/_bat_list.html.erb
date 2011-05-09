@@ -5,43 +5,43 @@
 
 <% if bat_list %>
 
-<table>
-<th>
-<%= link_to_remote "Band", :url => {:action => :remote_bat_list, :bats => bat_list, :sort_by => 'band'}, :update => "bat_list" %>
-</th>
-<th>
-<%= link_to_remote "Leave Date", :url => {:action => :remote_bat_list, :bats => bat_list, :sort_by => 'leave_date'}, :update => "bat_list" %>
-</th>
+  <table>
+    <th>
+      <%= link_to_remote "Band", :url => {:action => :remote_bat_list, :bats => bat_list, :sort_by => 'band'}, :update => "bat_list" %>
+    </th>
+    <th>
+      <%= link_to_remote "Leave Date", :url => {:action => :remote_bat_list, :bats => bat_list, :sort_by => 'leave_date'}, :update => "bat_list" %>
+    </th>
 
-<% for bat in bat_list %>
-  <tr>
-  
-  <td><b>
-    <%= link_to bat.band, {:controller => :flights, :action => :show, :id => bat},
-      :onmouseover => remote_function(:update => "cal",
-      :url => {:action => :remote_show, :id => bat, :this_month => Date.today}) %></b></td>
-  <td>
-  <% if bat.leave_date != nil %>
-  <%= nice_date bat.leave_date %>
-  <% end %>
-  </td>
-  </tr>
+    <% for bat in bat_list %>
+      <tr>
 
-<% end %>
+        <td><b>
+            <%= link_to bat.band, {:controller => :flights, :action => :show, :id => bat},
+              :onmouseover => remote_function(:update => "cal",
+              :url => {:action => :remote_show, :id => bat, :this_month => Date.today}) %></b></td>
+        <td>
+          <% if bat.leave_date != nil %>
+            <%= nice_date bat.leave_date %>
+          <% end %>
+        </td>
+      </tr>
 
-</table>
+    <% end %>
+
+  </table>
 
 
 
-<div style="position:fixed;top:120px;left:400px;width:625px">
+  <div style="position:fixed;top:120px;left:400px;width:625px">
 
-<h3 style="text-align: center">Flight log</h3>
-<div id="cal">
-  
-</div>
+    <h3 style="text-align: center">Flight log</h3>
+    <div id="cal">
 
-</div>
+    </div>
+
+  </div>
 
 <% else %>
-	No bats
+  No bats
 <% end %>

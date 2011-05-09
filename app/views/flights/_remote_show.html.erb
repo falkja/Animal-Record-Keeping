@@ -1,30 +1,28 @@
-
-
 <table style="width:350px; margin-right:auto; margin-left:auto">
-<tr>
-<td width="77px" style="text-align: left;vertical-align:bottom">
-   <% form_remote_tag :url => {:controller => :flights, :action => :remote_show, :id => bat, :this_month => (this_month-1.month)}, :update => "cal" do %>
-	<%= submit_tag "<" %>
-   <% end %>
-</td>
+  <tr>
+    <td width="77px" style="text-align: left;vertical-align:bottom">
+      <% form_remote_tag :url => {:controller => :flights, :action => :remote_show, :id => bat, :this_month => (this_month-1.month)}, :update => "cal" do %>
+        <%= submit_tag "<" %>
+      <% end %>
+    </td>
 
-<td width="194px" height="63px" style="text-align:center;vertical-align:top">
-<%= bat.band %>
-<% if Date.today.year > this_month.year || Date.today.mon != this_month.mon %>
-   <% form_remote_tag :url => {:controller => :flights, :action => :remote_show, :id => bat, :this_month => Date.today}, :update => "cal" do %>
-	<%= submit_tag "This Month" %>
-   <% end %>
-<% end %>
-</td>
+    <td width="194px" height="63px" style="text-align:center;vertical-align:top">
+      <%= bat.band %>
+      <% if Date.today.year > this_month.year || Date.today.mon != this_month.mon %>
+        <% form_remote_tag :url => {:controller => :flights, :action => :remote_show, :id => bat, :this_month => Date.today}, :update => "cal" do %>
+          <%= submit_tag "This Month" %>
+        <% end %>
+      <% end %>
+    </td>
 
-<td width="77px" style="text-align: right;vertical-align:bottom">
-<% if Date.today.year > this_month.year || Date.today.mon > this_month.mon %>
-   <% form_remote_tag :url => {:controller => :flights, :action => :remote_show, :id => bat, :this_month => (this_month+1.month)}, :update => "cal" do %>
-	<%= submit_tag ">" %>
-   <% end %>
-<% end %>
-</td>
-</tr>
+    <td width="77px" style="text-align: right;vertical-align:bottom">
+      <% if Date.today.year > this_month.year || Date.today.mon > this_month.mon %>
+        <% form_remote_tag :url => {:controller => :flights, :action => :remote_show, :id => bat, :this_month => (this_month+1.month)}, :update => "cal" do %>
+          <%= submit_tag ">" %>
+        <% end %>
+      <% end %>
+    </td>
+  </tr>
 </table>
 
 <%= show_calendar :month => this_month.mon, :year => this_month.year, :highlight_today => false, :highlight_dates => flight_dates, :dates => dates %>
@@ -32,10 +30,14 @@
 <br />
 
 <% if flights.length > 0 %>
-<div style="width:625px;margin-left:auto;margin-right:auto;text-align: center">
-  <%= link_to_remote "Show Full Month Listing", :url => {:action => :remote_flights_entry_list, :flights => flights}, :update => "f_entry_display" %>
-</div>
+  <div style="width:625px;margin-left:auto;margin-right:auto;text-align: center">
+    <%= link_to "Show Full Month Listing", :controller => :flights, :action => :list_flight_logs_dates,
+      :post => {"start_date(1i)" => this_month.year,
+        "start_date(2i)" => this_month.mon, "start_date(3i)" => 1,
+      "end_date(1i)" => this_month.year, "end_date(2i)" => this_month.mon },
+      :id => bat %>
+  </div>
 <% end %>
 <div id="f_entry_display">
-<%= render :partial => 'flights/flights_listing', :locals => { :flights => flights } %>
+  <%= render :partial => 'flights/flights_listing', :locals => { :flights => flights } %>
 </div>

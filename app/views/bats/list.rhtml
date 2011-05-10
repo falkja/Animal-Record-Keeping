@@ -9,7 +9,7 @@ Listing deactivated bats
 </h1>
 
 <%= button_to 'New Bat', :controller => :bats, :action => :new %> | 
-<%= link_to 'List My Bats', :controller => :bats, :action => :list, :bats => User.find(session[:person]).bats %>
+<%= link_to 'List My Bats', :controller => :bats, :action => :list, :bats => User.find(session[:person]).bats %> | 
 <%= link_to 'List Current Bats', :controller => :bats, :action => :list %> | 
 <%= link_to 'List Deactivated Bats', :controller => :bats, :action => :list_deactivated %> | 
 <%= link_to 'List All Bats', :controller => :bats, :action => :list_all %>

@@ -1,6 +1,7 @@
 <h1>Dossier on <%=h @bat.band %></h1>
 
-<%= link_to 'List Current Bats', :controller => :bats, :action => :list %> | 
+<%= link_to 'List My Bats', :controller => :bats, :action => :list, :bats => User.find(session[:person]).bats %> |
+<%= link_to 'List Current Bats', :controller => :bats, :action => :list %> |
 <%= button_to 'Edit', :controller => :bats, :action => :edit, :id => @bat %> | 
 
 <% if @bat.cage != nil%>

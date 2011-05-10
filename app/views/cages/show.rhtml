@@ -1,5 +1,6 @@
 <h1>Dossier on <%= @cage.name%></h1>
 
+<%= link_to 'List My Cages', :action => 'list', :cages => User.find(session[:person]).cages.active %> |
 <%= link_to 'List Current Cages', :action => 'list' %> | 
 <%= button_to 'Edit', :action => 'edit', :id => @cage %> |
 <%= button_to 'Weigh Cage', :action => 'weigh_cage', :id => @cage %> | 

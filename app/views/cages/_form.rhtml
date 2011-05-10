@@ -26,8 +26,8 @@
 <%= collection_select("cage", "user_id" , 
 User.find(:all, :conditions => "end_date is null", :order => "name"), "id", "name") %></p>
 
-<p><label for="cage_flight_cage">Flight Cage</label><%= check_box 'cage', 'flight_cage', :checked => @cage.flight_cage%><br>
-For populating flight logs</p>
+<p><%= check_box 'cage', 'flight_cage', :checked => @cage.flight_cage%><label for="cage_flight_cage">Flight Cage</label><br>
+  <i>For populating flight logs</i></p>
 
 
 </div>

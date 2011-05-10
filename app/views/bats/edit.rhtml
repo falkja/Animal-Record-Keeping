@@ -1,10 +1,8 @@
 <h1>Editing bat</h1>
 
-<% form_tag :action => 'update', :id => @bat, :redirectme => 'show' do %>
-	<%=	render :partial => 'form' %>
-	<%=	submit_tag 'Edit' %>
-<% end %>
-
 <%= link_to 'Show', :action => 'show', :id => @bat %> |
 <%= link_to 'List Current Bats', :action => 'list' %>
+
+<%= render :partial => "form" %>
+
 <%#= link_to 'Deactivate Bat', { :action => 'deactivate', :id => @bat }, :confirm => 'Are you sure?', :method => :post %>

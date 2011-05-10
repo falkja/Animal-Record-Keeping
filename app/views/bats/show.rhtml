@@ -89,8 +89,10 @@
   <%= @bat.collection_place %>
 </p>
 
+
+<b>Rabies Vaccination:</b>
 <div id='vaccination'>
-  <%= render :partial=>'form_vaccination', :locals =>{:bat => @bat, 
+  <%= render :partial=>'form_vaccination', :locals =>{:bat => @bat,
     :show_vaccination_date_select=> false, :reactivating=>@reactivating,
     :show_submit_button => true} %>
 </div>
@@ -107,13 +109,11 @@
   <%= link_to 'Show Flight Log', :controller => :flights, :action => :show, :id => @bat %>
 </p>
 
-<p>
-  <b>Surgery:</b><br>
-  <div class="left_indent">
-    Time: <%= nice_date_with_time @bat.surgery_time %><br>
-    Note: <%= @bat.surgery_note %><br>
-  </div>
-</p>
+<b>Surgery:</b>
+<div id='surgery'>
+  <%= render :partial=>'form_surgery', :locals =>{:bat => @bat,
+    :show_surgery_form=> false, :show_submit_button => true} %>
+</div>
 
 <% if @bat.leave_date != nil %>
   <p>

@@ -1,0 +1,43 @@
+<div style="color:green"><%= flash[:surgery_notice] %></div>
+<% if show_surgery_form %>
+
+  <% form_remote_tag(:url => {:action => 'remote_save_surgery', :id => bat,
+      :show_submit_button => true},
+    :update => 'surgery') do %>
+
+      [<%= link_to_remote 'Clear Form', :url => {:controller => :bats,
+        :action => :show_or_hide_surgery_form, :bat => bat,
+        :show_surgery_form=>false, :show_submit_button => show_submit_button},
+        :update => 'surgery' %>]
+      <br />
+      <label for="bat_surgery_type">Type: </label><%= text_field :bat, :surgery_type %><br />
+      <label for="bat_surgery_time">Time: </label><%= datetime_select :bat, :surgery_time %><br />
+      <label for="surgery_note">Notes: </label><%= text_field :bat, :surgery_note %><br />
+
+    <% if show_submit_button %>
+      <%= submit_tag "Save surgery" %>
+    <% end %>
+  <% end %>
+
+<% else %>
+
+    <% if bat and bat.surgery_time %>
+      Type: <%=h bat.surgery_type %><br />
+      Time: <%=h nice_date_with_time bat.surgery_time %><br />
+      Notes: <%=h bat.surgery_note %><br />
+        <%= button_to_remote 'Delete', :url =>
+          {:controller => :bats, :action => :clear_surgery, :bat => bat,
+          :show_surgery_form=>false, :show_submit_button => show_submit_button},
+          :update => 'surgery' %>
+    <% else %>
+      No surgery
+    <% end %>
+
+    <br />
+
+    [<%= link_to_remote 'Enter surgery', :url =>
+      {:controller => :bats, :action => :show_or_hide_surgery_form, :bat => bat,
+      :show_surgery_form=>true, :show_submit_button => show_submit_button},
+      :update => 'surgery' %>]
+
+<% end %>

@@ -1,143 +1,156 @@
-<%= error_messages_for 'bat' %>
+<% form_for :bat, :url => {:action => @action, :id => @bat} do |f| %>
 
-<% if @deactivating == true %>
-  <%   @disable_leave_date = false %>
-  <%   @disable_cage = true %>
-  <%   @everything_else = '<div class="hidden">' %>
-  <%   @leave_date = '<div>' %>
-<% else %>
-  <% if @reactivating == true %>
-    <%   @disable_leave_date = true %>
-    <%   @disable_cage = false %>
-    <%   @everything_else = '<div>' %>
-    <%   @leave_date = '<div class="hidden">' %>
+  <%= f.error_messages %>
+
+  <% if @deactivating == true %>
+    <%   @disable_leave_date = false %>
+    <%   @disable_cage = true %>
+    <%   @everything_else = '<div class="hidden">' %>
+    <%   @leave_date = '<div>' %>
   <% else %>
-    <%   @disable_leave_date = true %>
-    <%   @disable_cage = false %>
-    <%   @everything_else = '<div>' %>
-    <%   @leave_date = '<div class="hidden">' %>
-  <% end %>
-<% end %>
-
-<!--[form:bat]-->
-<%= @everything_else %>
-
-<p><label for="bat_band">Band</label><br/>
-  <%= text_field 'bat', 'band', :disabled => @reactivating, :maxlength => 10 %>
-</p>
-
-<p><label for="bat_species">Species</label><br/>
-  <%= select_tag("bat[species_id]", options_from_collection_for_select(@species, "id", "name", (@bat.species ? @bat.species.id : '')), {:disabled => @reactivating}) %>
-</p>
-
-<p><label for="bat_gender">Gender</label><br/>
-  <%= select_tag("bat[gender]", options_for_select([["Male","M"],["Female","F"]],@bat.gender), :disabled => @reactivating) %>
-</p>
-
-<p><label for="bat_collection_date">Collection date</label><br/>
-  <%= date_select 'bat', 'collection_date', :disabled => @reactivating %>
-</p>
-
-<p><label for="bat_collection_age">Collection age</label><br/>
-  <%= select_tag("bat[collection_age]", options_for_select([["Juvenile","Juvenile"],["Adult", "Adult"]], @bat.collection_age), :disabled => @reactivating) %>
-</p>
-
-<p><label for="bat_collection_place">Collection place</label><br/>
-  <%= text_field 'bat', 'collection_place', :disabled => @reactivating %></p>
-
-<div id='vaccination'>
-  <%= render :partial=>'form_vaccination', :locals =>{:bat => @bat, 
-    :show_vaccination_date_select=> false, :reactivating=>@reactivating,
-    :show_submit_button => false} %>
-</div>
-
-<p>
-  <label for="bat_surgery_time">Surgery</label><br/>
-  <%= datetime_select 'bat', 'surgery_time', :disabled => @reactivating %>
-</p>
-
-<p>
-  <label for="bat_surgery_note">Surgery Note</label><br/>
-  <%= text_field 'bat', 'surgery_note', :disabled => @reactivating %>
-</p>
-
-<p><%= check_box 'bat', 'monitor_weight', :checked => @bat.monitor_weight %><label for='bat_monitor_weight'>Send emails if not weighed enough?</label></p>
-
-<% bat_for_weight = @bat %>
-<% bat_for_weight.band = nil %> 
-
-<% if @creating %>
-  <h3>Weight</h3>
-  <div class='left_indent'>
-    <%= render :partial => 'weigh_one_bat', :locals => {:bat => bat_for_weight, :initial_weight => true} %>
-  </div>
-<% end %>
-<%= set_focus_to_id 'bat_band' %>
-
-
-<h3>Choose Protocols</h3>
-<div id="choose_protocols" class="left_indent">
-  <%= render :partial => 'protocols/choose_protocols', :locals => {:protocols => @protocols, :bat => @bat} %>
-</div>
-
-
-<% if (@reactivating == true) || (@creating == true) %>
-  <h3>Choose Cage</h3>
-
-  <div class='left_indent'>
-
-    <% if @reactivating %>
-      (previous cage: <%=h @bat.cage_out_histories[0].cage.name %>)
+    <% if @reactivating == true %>
+      <%   @disable_leave_date = true %>
+      <%   @disable_cage = false %>
+      <%   @everything_else = '<div>' %>
+      <%   @leave_date = '<div class="hidden">' %>
+    <% else %>
+      <%   @disable_leave_date = true %>
+      <%   @disable_cage = false %>
+      <%   @everything_else = '<div>' %>
+      <%   @leave_date = '<div class="hidden">' %>
     <% end %>
-    <table style="width:700px">
-      <th></th>
-      <th>Cage</th>
-      <th>Number of bats</th>
-      <th>Average current weight</th>
+  <% end %>
 
-      <% for cage in Cage.active %>
-        <tr>
-          <td><%=radio_button :bat, :cage_id, cage.id %></td>
-          <td><label for="bat_cage_id_<%= cage.id %>"><%= cage.name %></label></td>
-          <td style="text-align:center"><%= cage.bats.length %></td>
-          <td style="text-align:center"><%= cage.average_bat_weight %></td>
-        </tr>
-      <% end %>
+  <%= @everything_else %>
 
-  <%# Bat already deactivated %>
-      <% if !@reactivating %>
-        <tr>
-          <td><%=radio_button :bat, :cage_id, 0, :checked => false %></td>
-          <td><label for="bat_cage_id_0">DEACTIVATED BAT (record keeping)</td>
-          <td style="text-align:center">NA</td>
-          <td style="text-align:center">NA</td>
-        </tr>
-      <% end %>
-
-    </table>
-
-    <%= observe_form 'new_bat_form', :url => { :action => :adding_deactivated_bat },
-      :update => 'adding_deactivated_bat'
-  %>
-
-  </div>
-
+  <p>
+    <%= f.label :band %><br />
+    <%= f.text_field :band, :disabled => @reactivating, :maxlength => 10 %>
   </p>
 
+  <p>
+    <%= f.label :species %><br />
+    <%= f.select(:species_id, options_from_collection_for_select(@species, 'id', 'name', (@bat.species ? @bat.species.id.to_s : '')), {:disabled => @reactivating}) %>
+  </p>
 
-  <div id='adding_deactivated_bat'>
+  <p>
+    <%= f.label :gender %><br />
+    <%= f.select(:gender, options_for_select([["Male","M"],["Female","F"]],@bat.gender), :disabled => @reactivating) %>
+  </p>
+
+  <p>
+    <%= f.label :collection_date  %><br />
+    <%= f.date_select :collection_date, :disabled => @reactivating %>
+  </p>
+
+  <p>
+    <%= f.label :collection_age  %><br />
+    <%= f.select(:collection_age, options_for_select([["Juvenile","Juvenile"],["Adult", "Adult"]], @bat.collection_age), :disabled => @reactivating) %>
+  </p>
+
+  <p>
+    <%= f.label :collection_place  %><br />
+    <%= f.text_field(:collection_place, :disabled => @reactivating) %>
+  </p>
+
+  Rabies Vaccination:
+  <div id='vaccination'>
+    <%= render :partial=>'form_vaccination', :locals =>{:bat => @bat,
+      :show_vaccination_date_select=> false, :reactivating=>@reactivating,
+      :show_submit_button => false} %>
   </div>
 
+  <br />
+  Surgery:
+  <div id='surgery'>
+    <%= render :partial=>'form_surgery', :locals =>{:bat => @bat,
+      :show_surgery_form=> false, :show_submit_button => false} %>
+  </div>
+
+  <p>
+    <%= f.check_box :monitor_weight, :checked => @bat.monitor_weight %>
+    <%= f.label :monitor_weight, "Send emails if not weighed enough?" %>
+  </p>
+
+  <% bat_for_weight = @bat %>
+  <% bat_for_weight.band = nil %>
+
+  <% if @creating %>
+    <h3>Weight</h3>
+    <div class='left_indent'>
+      <%= render :partial => 'weigh_one_bat', :locals => {:bat => bat_for_weight, :initial_weight => true} %>
+    </div>
+  <% end %>
+  <%= set_focus_to_id 'bat_band' %>
+
+
+  <h3>Choose Protocols</h3>
+  <div id="choose_protocols" class="left_indent">
+    <%= render :partial => 'protocols/choose_protocols', :locals => {:protocols => @protocols, :bat => @bat} %>
+  </div>
+
+
+  <% if (@reactivating == true) || (@creating == true) %>
+    <h3>Choose Cage</h3>
+
+    <div class='left_indent'>
+
+      <% if @reactivating %>
+        (previous cage: <%=h @bat.cage_out_histories[0].cage.name %>)
+      <% end %>
+      <table style="width:700px">
+        <th></th>
+        <th>Cage</th>
+        <th>Number of bats</th>
+        <th>Average current weight</th>
+
+        <% for cage in Cage.active %>
+          <tr>
+            <td><%=radio_button :bat, :cage_id, cage.id %></td>
+            <td><label for="bat_cage_id_<%= cage.id %>"><%= cage.name %></label></td>
+            <td style="text-align:center"><%= cage.bats.length %></td>
+            <td style="text-align:center"><%= cage.average_bat_weight %></td>
+          </tr>
+        <% end %>
+
+    <%# Bat already deactivated %>
+        <% if !@reactivating %>
+          <tr>
+            <td><%=radio_button :bat, :cage_id, 0, :checked => false %></td>
+            <td><label for="bat_cage_id_0">DEACTIVATED BAT (record keeping)</td>
+            <td style="text-align:center">NA</td>
+            <td style="text-align:center">NA</td>
+          </tr>
+        <% end %>
+
+      </table>
+
+      <%= observe_form 'new_bat_form', :url => { :action => :adding_deactivated_bat },
+        :update => 'adding_deactivated_bat'
+    %>
+
+    </div>
+
+    </p>
+
+
+    <div id='adding_deactivated_bat'>
+    </div>
+
+  <% end %>
+
+  </div>
+
+  <%= @leave_date %>
+  <p><label for="bat_leave_date">Leave date</label><br/>
+    <%= date_select 'bat', 'leave_date',  :disabled => @disable_leave_date%></p>
+
+  <p><label for="bat_leave_reason">Leave reason</label><br/>
+    <%= text_field 'move', 'note',  :disabled => @disable_leave_date%></p>
+  </div>
+
+  <p>
+    <%= f.submit 'Save' %>
+  </p>
+
 <% end %>
-
-</div>
-
-<%= @leave_date %>
-<p><label for="bat_leave_date">Leave date</label><br/>
-  <%= date_select 'bat', 'leave_date',  :disabled => @disable_leave_date%></p>
-
-<p><label for="bat_leave_reason">Leave reason</label><br/>
-  <%= text_field 'move', 'note',  :disabled => @disable_leave_date%></p>
-</div>
-
-<!--[eoform:bat]-->

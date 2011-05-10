@@ -1,12 +1,9 @@
 <% if show_vaccination_date_select %>
 
-  <% form_tag :action => 'update', :id => bat do %>
-
-    <p>
-      <label for="bat_vaccination_date"><b>Rabies Vaccination:</b></label>
-
-      <br />
-
+  <% form_remote_tag(:url => {:action => 'remote_save_vaccination', :id => bat,
+      :reactivating=>reactivating, :show_submit_button => true},
+    :update => 'vaccination') do %>
+    
       [<%= link_to_remote 'Clear Form', :url => {:controller => :bats,
         :action => :show_or_hide_vaccination_date, :bat => bat,
         :show_vaccination_date_select=>false, :reactivating=>reactivating,
@@ -15,13 +12,6 @@
       <br />
       <%= date_select 'bat', 'vaccination_date', :disabled => (reactivating) %>
 
-    <div class="hidden">
-      <% for protocol in bat.protocols %>
-        <%= check_box :protocol_id, protocol.id, :checked => true %>
-      <% end %>
-    </div>
-    </p>
-
     <% if show_submit_button %>
       <%= submit_tag "Enter Vaccination Date" %>
     <% end %>
@@ -29,9 +19,7 @@
 
 <% else %>
 
-  <p>
-    <b>Rabies Vaccination:</b>
-
+  
     <% if bat.vaccination_date %>
       <%= nice_date(bat.vaccination_date) %>
       <% if !reactivating %>
@@ -52,6 +40,5 @@
       :show_vaccination_date_select=>true, :reactivating=>reactivating,
       :show_submit_button => show_submit_button},
       :update => 'vaccination' %>]
-  </p>
 
 <% end %>

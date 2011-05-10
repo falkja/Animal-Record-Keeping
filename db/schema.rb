@@ -53,9 +53,9 @@ ActiveRecord::Schema.define(:version => 20110510030848) do
     t.date     "vaccination_date"
     t.integer  "species_id"
     t.boolean  "monitor_weight",                  :default => true, :null => false
-    t.text     "sugery_note"
     t.datetime "surgery_time"
     t.text     "surgery_note"
+    t.string   "surgery_type"
   end
 
   create_table "bats_protocols", :id => false, :force => true do |t|

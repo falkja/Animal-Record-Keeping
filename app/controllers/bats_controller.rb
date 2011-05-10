@@ -102,6 +102,7 @@ class BatsController < ApplicationController
 	def new
 		@bat = Bat.new
 		instance_vars_for_new_bat
+    @action = "create"
 	end
 
 	def instance_vars_for_new_bat
@@ -144,6 +145,10 @@ class BatsController < ApplicationController
       render :action => :new
     elsif ((params[:bat][:cage_id] == '0') && (params[:move][:note] == ''))
       flash[:notice] = 'Enter leave reason.'
+      instance_vars_for_new_bat
+      render :action => :new
+    elsif params[:bat][:surgery_type] == '' and params[:bat]["surgery_time(1i)"] != nil
+      flash[:notice] = 'Need to enter a surgery type'
       instance_vars_for_new_bat
       render :action => :new
     else
@@ -201,6 +206,7 @@ class BatsController < ApplicationController
     @species = Species.find(:all)
     @protocols = Protocol.current
     @deactivating = false
+    @action = "update"
   end
 
   def update
@@ -217,6 +223,12 @@ class BatsController < ApplicationController
     end
     if protocols.length == 0 && !@deactivating
       flash[:notice] = 'Need to select a protocol'
+      redirect_to :back
+      return
+    end
+
+    if params[:bat][:surgery_type] == '' and params[:bat]["surgery_time(1i)"] != nil
+      flash[:notice] = 'Need to enter a surgery type'
       redirect_to :back
       return
     end
@@ -624,7 +636,7 @@ class BatsController < ApplicationController
 	end
 
 	def show_or_hide_vaccination_date
-    if params[:bat]
+    if params[:bat] and params[:bat] != ''
       bat = Bat.find(params[:bat])
     else
       bat = nil
@@ -640,6 +652,60 @@ class BatsController < ApplicationController
 		render :partial => 'form_vaccination', :locals=>{:bat=>bat, :show_vaccination_date_select=>false, 
       :reactivating=>params[:reactivating], :show_submit_button => params[:show_submit_button]}
 	end
+
+  def remote_save_vaccination
+    bat = Bat.find(params[:id])
+    bat.vaccination_date =
+      Date.civil(params[:bat]["vaccination_date(1i)"].to_i,
+      params[:bat]["vaccination_date(2i)"].to_i,
+      params[:bat]["vaccination_date(3i)"].to_i)
+    bat.save
+    render :partial => 'form_vaccination', :locals=>{:bat=>bat, :show_vaccination_date_select=>false,
+      :reactivating=>params[:reactivating], :show_submit_button => params[:show_submit_button]}
+  end
+
+  def show_or_hide_surgery_form
+    if params[:bat] and params[:bat] != ''
+      bat = Bat.find(params[:bat])
+    else
+      bat = nil
+    end
+		render :partial => 'form_surgery', :locals=>{:bat=>bat,
+      :show_submit_button => params[:show_submit_button],
+      :show_surgery_form => params[:show_surgery_form]}
+	end
+
+	def clear_surgery
+		bat = Bat.find(params[:bat])
+		bat.surgery_time = nil
+    bat.surgery_type = nil
+    bat.surgery_note = nil
+		bat.save
+		render :partial => 'form_surgery', :locals=>{:bat=>bat,
+      :show_submit_button => params[:show_submit_button], :show_surgery_form => false}
+	end
+
+  def remote_save_surgery
+    bat = Bat.find(params[:id])
+    if params[:bat][:surgery_type] == ''
+      flash.now[:surgery_notice]='Enter a surgery type'
+      render :partial => 'form_surgery', :locals=>{:bat=>bat, :show_surgery_form => true,
+      :show_submit_button => params[:show_submit_button]}
+    else
+      bat.surgery_time =
+        DateTime.civil(params[:bat]["surgery_time(1i)"].to_i,
+        params[:bat]["surgery_time(2i)"].to_i,
+        params[:bat]["surgery_time(3i)"].to_i,
+        params[:bat]["surgery_time(4i)"].to_i,
+        params[:bat]["surgery_time(5i)"].to_i)
+      bat.surgery_note = params[:bat][:surgery_note]
+      bat.surgery_type = params[:bat][:surgery_type]
+      bat.save
+      flash.now[:surgery_notice]='Surgery saved'
+      render :partial => 'form_surgery', :locals=>{:bat=>bat, :show_surgery_form => false,
+        :show_submit_button => params[:show_submit_button]}
+    end
+  end
 	
 	def remote_save_protocol
 		@bat = Bat.find(params[:bat])

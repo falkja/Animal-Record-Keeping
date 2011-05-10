@@ -20,6 +20,17 @@ class Protocol < ActiveRecord::Base
     return prots
   end
 
+  def build_allowed_bats
+    self.allowed_bats = Array.new
+    for sp in Species.all
+      ab = AllowedBat.new
+      ab.number = 0
+      ab.species = sp
+      ab.protocol = self
+      self.allowed_bats << ab
+    end
+  end
+
   def allowed_bats_by_species(species)
     self.allowed_bats.find(:first, :conditions => "species_id = #{species.id}")
   end

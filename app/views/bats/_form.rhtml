@@ -45,6 +45,22 @@
 <p><label for="bat_collection_place">Collection place</label><br/>
   <%= text_field 'bat', 'collection_place', :disabled => @reactivating %></p>
 
+<div id='vaccination'>
+  <%= render :partial=>'form_vaccination', :locals =>{:bat => @bat, 
+    :show_vaccination_date_select=> false, :reactivating=>@reactivating,
+    :show_submit_button => false} %>
+</div>
+
+<p>
+  <label for="bat_surgery_time">Surgery</label><br/>
+  <%= datetime_select 'bat', 'surgery_time', :disabled => @reactivating %>
+</p>
+
+<p>
+  <label for="bat_surgery_note">Surgery Note</label><br/>
+  <%= text_field 'bat', 'surgery_note', :disabled => @reactivating %>
+</p>
+
 <p><%= check_box 'bat', 'monitor_weight', :checked => @bat.monitor_weight %><label for='bat_monitor_weight'>Send emails if not weighed enough?</label></p>
 
 <% bat_for_weight = @bat %>

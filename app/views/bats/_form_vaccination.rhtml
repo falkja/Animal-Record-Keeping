@@ -7,7 +7,10 @@
 
       <br />
 
-      [<%= link_to_remote 'Clear Form', :url => {:controller => :bats, :action => :show_or_hide_vaccination_date, :bat => bat, :show_vaccination_date_select=>false, :reactivating=>reactivating},
+      [<%= link_to_remote 'Clear Form', :url => {:controller => :bats,
+        :action => :show_or_hide_vaccination_date, :bat => bat,
+        :show_vaccination_date_select=>false, :reactivating=>reactivating,
+        :show_submit_button => show_submit_button},
         :update => 'vaccination' %>]
       <br />
       <%= date_select 'bat', 'vaccination_date', :disabled => (reactivating) %>
@@ -19,8 +22,9 @@
     </div>
     </p>
 
-    <%= submit_tag "Enter Vaccination Date" %>
-
+    <% if show_submit_button %>
+      <%= submit_tag "Enter Vaccination Date" %>
+    <% end %>
   <% end %>
 
 <% else %>
@@ -30,15 +34,23 @@
 
     <% if bat.vaccination_date %>
       <%= nice_date(bat.vaccination_date) %>
-      <%= link_to_remote 'Delete', :url => {:controller => :bats, :action => :clear_vaccination_date, :bat => bat, :show_vaccination_date_select=>false, :reactivating=>reactivating},
-        :update => 'vaccination' %>
+      <% if !reactivating %>
+        <%= link_to_remote 'Delete', :url =>
+          {:controller => :bats, :action => :clear_vaccination_date, :bat => bat,
+          :show_vaccination_date_select=>false, :reactivating=>reactivating,
+          :show_submit_button => show_submit_button},
+          :update => 'vaccination' %>
+      <% end %>
     <% else %>
       Not vaccinated
     <% end %>
 
     <br />
 
-    [<%= link_to_remote 'Enter new vaccination date', :url => {:controller => :bats, :action => :show_or_hide_vaccination_date, :bat => bat, :show_vaccination_date_select=>true, :reactivating=>reactivating},
+    [<%= link_to_remote 'Enter new vaccination date', :url =>
+      {:controller => :bats, :action => :show_or_hide_vaccination_date, :bat => bat,
+      :show_vaccination_date_select=>true, :reactivating=>reactivating,
+      :show_submit_button => show_submit_button},
       :update => 'vaccination' %>]
   </p>
 

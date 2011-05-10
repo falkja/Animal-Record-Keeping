@@ -630,7 +630,7 @@ class BatsController < ApplicationController
       bat = nil
     end
 		render :partial => 'form_vaccination', :locals=>{:bat=>bat, :show_vaccination_date_select=>params[:show_vaccination_date_select], 
-      :reactivating=>params[:reactivating]}
+      :reactivating=>params[:reactivating], :show_submit_button => params[:show_submit_button]}
 	end
 	
 	def clear_vaccination_date
@@ -638,7 +638,7 @@ class BatsController < ApplicationController
 		bat.vaccination_date = nil
 		bat.save
 		render :partial => 'form_vaccination', :locals=>{:bat=>bat, :show_vaccination_date_select=>false, 
-      :reactivating=>params[:reactivating]}
+      :reactivating=>params[:reactivating], :show_submit_button => params[:show_submit_button]}
 	end
 	
 	def remote_save_protocol

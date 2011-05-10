@@ -135,7 +135,7 @@ This partial displays the summary for a list of bats
               <% if bat.leave_date == nil %>
                 <td><%= show_weigh_link ? '' : (button_to 'Weigh', {:controller => :bats, :action => 'weigh_bat', :id => bat}) %></td>
               <% end %>
-              <% if bat.flown_on(Date.today) == false %>
+              <% if bat.flown_on(Date.today) == false and bat.leave_date == nil %>
                 <td><%= button_to 'Fly', {:controller => :flights, :action=>:new, :bat=>bat} %></td>
               <% end %>
         </tr>

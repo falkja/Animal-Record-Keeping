@@ -8,7 +8,7 @@
   <%= button_to 'Move Bat', {:controller => :bats, :action=> :single_bat_to_move, :id=>@bat}, {:style=>"display:inline"} %> |
 <% end %>
 
-<% if @bat.flown_on(Date.today) == false%>
+<% if @bat.flown_on(Date.today) == false and @bat.leave_date == nil%>
   <%= button_to 'Fly Bat', {:controller => :flights, :action=> :new, :bat=>@bat}, {:style=>"display:inline"} %> |
 <% end %>
 
@@ -90,7 +90,9 @@
 </p>
 
 <div id='vaccination'>
-  <%= render :partial=>'form_vaccination', :locals =>{:bat => @bat, :show_vaccination_date_select=> false, :reactivating=>@reactivating} %>
+  <%= render :partial=>'form_vaccination', :locals =>{:bat => @bat, 
+    :show_vaccination_date_select=> false, :reactivating=>@reactivating,
+    :show_submit_button => true} %>
 </div>
 
 <% if !@bat.monitor_weight %>
@@ -99,6 +101,19 @@
     Emails will <em>not</em> be sent out if bat is not weighed often enough
   </p>
 <% end %>
+
+<p>
+  <b>Flight Log:</b>
+  <%= link_to 'Show Flight Log', :controller => :flights, :action => :show, :id => @bat %>
+</p>
+
+<p>
+  <b>Surgery:</b><br>
+  <div class="left_indent">
+    Time: <%= nice_date_with_time @bat.surgery_time %><br>
+    Note: <%= @bat.surgery_note %><br>
+  </div>
+</p>
 
 <% if @bat.leave_date != nil %>
   <p>
@@ -111,11 +126,6 @@
     <%= @bat.leave_reason %>
   </p>
 <% end %>
-
-<p>
-  <b>Flight Log:</b>
-  <%= link_to 'Show Flight Log', :controller => :flights, :action => :show, :id => @bat %>
-</p>
 
 <%= render :partial => 'bats/display_bat_notes' %>
 

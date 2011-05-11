@@ -102,7 +102,7 @@ class Task < ActiveRecord::Base
 
 	def self.today
 		tday = Time.now.wday + 1   
-		find :all, :conditions => "(repeat_code = #{tday} or repeat_code = 0) and date_ended is null", :order => 'repeat_code'
+		find :all, :conditions => "(repeat_code = #{tday} or repeat_code = 0) and date_ended is null", :order => 'repeat_code, internal_description'
 	end
 	
 	def general_task?

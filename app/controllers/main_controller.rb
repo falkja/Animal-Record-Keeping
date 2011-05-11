@@ -94,13 +94,10 @@ class MainController < ApplicationController
     @greeting = "Dear Batlab,\n\n"
     
     @greeting = @greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
-    
-    @msg_body = MyMailer.create_msg_for_tasks_not_done(Task.tasks_not_done_today(Task.today))
-		
-		@msg_body = @msg_body + MyMailer.create_msg_for_bats_not_weighed(Bat.not_weighed(Bat.active))
 
-    @msg_body = @msg_body + MyMailer.create_msg_for_protocol_changes(ProtocolHistory.todays_histories)
-		
+    @msg_body = MyMailer.create_msg_body(Task.tasks_not_done_today(Task.today),
+      Bat.not_weighed(Bat.active),Bat.not_flown(Bat.active),ProtocolHistory.todays_histories)
+
     if session[:person]
       @subject = "Batkeeping email from: " + User.find(session[:person]).name
       @msg_body = @msg_body + "This message brought to you by,\n\n" + User.find(session[:person]).name

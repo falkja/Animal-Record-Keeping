@@ -30,6 +30,47 @@ class MyMailer < ActionMailer::Base
 		end
 	end
 
+  def self.create_msg_for_bats_not_flown(bats)
+		if bats.length > 0
+			msg_body = "The following bats have not been flown at least 3 times in the last week:\n"
+			for bat in bats
+				msg_body = msg_body + "\nBat: " + bat.band
+        msg_body = msg_body + "\nCage: " + bat.cage.name
+				msg_body = msg_body + "\nOwner: " + bat.cage.user.name
+				msg_body = msg_body + "\nLast 3 flight dates: \n"
+        if bat.flights.length > 3
+          for flight in bat.flights[-3..-1].reverse
+            msg_body = msg_body + "  " + flight.date.strftime("%a, %b %d, %Y") + "\n"
+            if flight.exempt
+              if flight.medical_problem
+                msg_body = msg_body + "    Med. Problem: " + flight.medical_problem.title + "\n"
+              end
+              if flight.cage
+                msg_body = msg_body + "    Flight Cage: " + flight.cage.name + "\n"
+              end
+              if flight.species
+                msg_body = msg_body + "    Hibernating: " + flight.species.name + "\n"
+              end
+              if flight.protocol
+                msg_body = msg_body + "    Protocol Exempt: " + flight.protocol.title + "\n"
+              end
+              if flight.quarantine
+                msg_body = msg_body + "    In quarantine\n"
+              end
+            elsif flight.note
+              msg_body = msg_body + "    Note: " + flight.note + "\n"
+            end
+          end
+        end
+			end
+			msg_body = msg_body + "\n*******************************************\n\n"
+			return msg_body
+		else
+			return ''
+		end
+	end
+
+
   def self.create_msg_for_protocol_changes(phs)
     if phs.length > 0
       msg_body = "The following protocol changes were made:\n"
@@ -64,6 +105,9 @@ class MyMailer < ActionMailer::Base
 				if task.room
 					msg_body = msg_body + "\nRoom: " + task.room.name
 				end
+        if task.cage
+          msg_body = msg_body + "\nCage owner: " + task.cage.user.name
+        end
 				if task.medical_treatment
 					msg_body = msg_body + "\nBat: " + task.medical_treatment.medical_problem.bat.band
 					msg_body = msg_body + "\nMedical Problem: " + task.medical_treatment.medical_problem.title
@@ -105,17 +149,25 @@ class MyMailer < ActionMailer::Base
         if user.medical_care_user?
           Task.medical_user_tasks_today.each{|task| users_tasks << task}
         end
+
+        if user.cages.active.length > 0
+          user.cages.active.each{|c| c.tasks.today.length > 0 ? c.tasks.today.each{|t| users_tasks << t} : ''}
+        end
         
         users_tasks_not_done = Task.tasks_not_done_today(users_tasks)
         users_bats_not_weighed = Bat.not_weighed(user.bats)
+        users_bats_not_flown = Bat.not_flown(user.bats)
+
+        users_protocol_changes = Array.new
+        user.protocols.each{|p| p.protocol_histories.todays_histories.length > 0 ? users_protocol_changes << p.protocol_histories.todays_histories : ''}
         
         if (users_tasks_not_done.length > 0) || (users_bats_not_weighed.length > 0)
           greeting = "Hi " + user.name + ",\n\n"
           greeting = greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
-          msg_body = MyMailer.create_msg_for_tasks_not_done(users_tasks_not_done)
-          msg_body = msg_body + MyMailer.create_msg_for_bats_not_weighed(users_bats_not_weighed)
-          msg_body = msg_body + "Faithfully yours, etc."
-          MyMailer.deliver_mail(user.email, "tasks not done today", greeting + msg_body)
+          msg_body = MyMailer.create_msg_body(users_tasks_not_done,
+            users_bats_not_weighed,users_bats_not_flown,users_protocol_changes)
+          salutation = "Faithfully yours, etc."
+          MyMailer.deliver_mail(user.email, "tasks not done today", greeting + msg_body + salutation)
         end
 			end
 		end
@@ -127,15 +179,22 @@ class MyMailer < ActionMailer::Base
 		tasks_not_done = Task.tasks_not_done_today(Task.today)
     bats_not_weighed = Bat.not_weighed(Bat.active)
     protocol_changes = ProtocolHistory.todays_histories
+    bats_not_flown = Bat.not_flown(Bat.active)
     
 		if (tasks_not_done.length > 0) || (bats_not_weighed.length > 0) || (protocol_changes.length > 0)
 			greeting = "Administrator(s),\n\n"
       greeting = greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
-			msg_body = MyMailer.create_msg_for_tasks_not_done(tasks_not_done)
-      msg_body = msg_body + MyMailer.create_msg_for_bats_not_weighed(bats_not_weighed)
-      msg_body = msg_body + MyMailer.create_msg_for_protocol_changes(protocol_changes)
-			msg_body = msg_body + "Faithfully yours, etc."
-			MyMailer.deliver_mass_mail(admin_emails, "tasks not done today", greeting + msg_body)
+      msg_body = MyMailer.create_msg_body(tasks_not_done,bats_not_weighed,bats_not_flown,protocol_changes)
+			salutation = "Faithfully yours, etc."
+			MyMailer.deliver_mass_mail(admin_emails, "tasks not done today", greeting + msg_body + salutation)
 		end
 	end
+
+  def self.create_msg_body(tasks_not_done,bats_not_weighed,bats_not_flown,protocol_changes)
+    msg_body = MyMailer.create_msg_for_tasks_not_done(tasks_not_done)
+    msg_body = msg_body + MyMailer.create_msg_for_bats_not_weighed(bats_not_weighed)
+    msg_body = msg_body + MyMailer.create_msg_for_bats_not_flown(bats_not_flown)
+    msg_body = msg_body + MyMailer.create_msg_for_protocol_changes(protocol_changes)
+    return msg_body
+  end
 end

@@ -6,6 +6,7 @@ class Flight < ActiveRecord::Base
 	belongs_to :cage
 	belongs_to :medical_problem
 	belongs_to :species
+  belongs_to :protocol
 	
 	validates_presence_of :bat, :date
 	

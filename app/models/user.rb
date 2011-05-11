@@ -87,4 +87,9 @@ class User < ActiveRecord::Base
 		medical_problems.sort_by{|medical_problem| [medical_problem.bat.band, medical_problem.title]}
 	end
 
+#  def protocol_histories
+#    ProtocolHistory.find(:all, ["protocol_id = ?", self.protocols],
+#      :order => 'date_added')
+#  end
+
 end

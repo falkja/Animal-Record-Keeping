@@ -39,7 +39,7 @@ class Bat < ActiveRecord::Base
 	end
 	
 	#From http://www.therailsway.com/tags/rails
-	#This lets us do Bats.active AS WELL AS cage.bats.active !
+	#This lets us do Bat.active AS WELL AS cage.bats.active !
 	def self.active
 		find :all, :conditions => 'leave_date is null', :order => 'band'
 	end
@@ -190,10 +190,18 @@ class Bat < ActiveRecord::Base
     flights.each{|flight| dates << flight.date.day }
     return dates, flights
   end
-	
+
+  def exempt_from_flight
+    if (self.medical_problems.current.length > 0) || self.species.hibernating || self.quarantine? || self.protocol_exempt
+      return true
+    else
+      return false
+    end
+  end
+
   def self.exempt_from_flight
     curr_bats = Bat.active
-	
+
     ex_bats = Array.new
     for bat in curr_bats
       if bat.exempt_from_flight
@@ -228,7 +236,17 @@ class Bat < ActiveRecord::Base
     bats_flight_cage = bats_flight_cage.sort_by{|b| b.band}
     return bats_flight_cage
   end
-	
+
+  def self.not_flown(bats)
+    bats_not_flown = Array.new
+    bats.each{|bat| 
+      (bat.flights.length >= 3 &&
+          ( bat.flights[-3].date < (Date.today - 7.days) && !bat.exempt_from_flight) ?
+          bats_not_flown << bat : '')}
+    bats_not_flown = bats_not_flown.sort_by{|b| [b.cage.user_id, b.cage.name, b.band]}
+    return bats_not_flown
+  end
+
 	def protocol_exempt
 		for p in self.protocols
 			if p.flight_exempt
@@ -242,14 +260,6 @@ class Bat < ActiveRecord::Base
   #hasn't been vaccinated or the bat's vaccination date was within 30 days of today
   def quarantine?
     if self.species.requires_vaccination && (!self.vaccination_date || self.vaccination_date >= (Date.today - 30.days))
-      return true
-    else
-      return false
-    end
-  end
-
-  def exempt_from_flight
-    if (self.medical_problems.current.length > 0) || self.species.hibernating || self.quarantine? || self.protocol_exempt
       return true
     else
       return false

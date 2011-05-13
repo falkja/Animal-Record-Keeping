@@ -39,7 +39,7 @@ class Protocol < ActiveRecord::Base
     species = adding_bats.collect(&:species).uniq
     for sp in species
       ab = allowed_bats_by_species(sp)
-      tot_bats = Bat.bats_on_species(((self.bats + adding_bats).uniq),sp)
+      tot_bats = Bat.bats_on_species(((self.all_past_bats + adding_bats).uniq),sp)
       if ab.number < tot_bats.length
         return false
       end
@@ -47,7 +47,14 @@ class Protocol < ActiveRecord::Base
     return true
   end
 
-	def past_bats
+  def all_past_bats
+    Bat.find(:all, :joins=> :protocol_histories,
+      :conditions => ["protocol_histories.protocol_id = ?",self.id],
+      :select => 'DISTINCT bats.*',
+      :order => 'band')
+  end
+
+	def past_hists
 		hists = ProtocolHistory.find(:all, :conditions =>["protocol_id = ? and date_removed is not null", self.id], :order => "date_removed")
 		return hists
 	end

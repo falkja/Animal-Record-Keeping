@@ -14,7 +14,7 @@ class ProtocolsController < ApplicationController
   # GET /protocols/1.xml
   def show
     @protocol = Protocol.find(params[:id])
-    @hists = @protocol.past_bats
+    @hists = @protocol.past_hists
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @protocol }
@@ -121,11 +121,14 @@ class ProtocolsController < ApplicationController
       params[:protocol_id].each{|id, checked| checked=='1' ? protocols << Protocol.find(id) : ''}
     end
     if protocols.length > 0 and bats.length > 0
+
       #check to make sure # bats isn't over the limit of what's allowed
-      for p in protocols
-        if p.check_allowed_bats(bats) == false
-          flash[:notice] = 'Over the allowed bats limit'
-          redirect_to :action => :index and return
+      if params[:act]=='add'
+        for p in protocols
+          if p.check_allowed_bats(bats) == false
+            flash[:notice] = 'Over the allowed bats limit'
+            redirect_to :action => :edit, :id => p and return
+          end
         end
       end
 

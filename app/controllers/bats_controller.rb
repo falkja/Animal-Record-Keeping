@@ -102,7 +102,6 @@ class BatsController < ApplicationController
 	def new
 		@bat = Bat.new
 		instance_vars_for_new_bat
-    @action = "create"
 	end
 
 	def instance_vars_for_new_bat
@@ -123,6 +122,7 @@ class BatsController < ApplicationController
 			redirect_to :controller => :protocols, :action => :new
 		end
 		@weight = Weight.new
+    @action = "create"
 	end
 
   def grab_protocols
@@ -138,9 +138,21 @@ class BatsController < ApplicationController
     @bat = Bat.new(params[:bat])
 	
     protocols = grab_protocols
-	
+
+    #check if protocols over the allowed limit before saving the bat
+    for p_added in protocols
+      sp = Species.find(@bat.species)
+      if Bat.bats_on_species(p_added.all_past_bats,sp).length >= p_added.allowed_bats_by_species(sp).number
+        over_allowed = true
+      end
+    end
+
     if protocols.length == 0
       flash[:notice] = 'Select a protocol.'
+      instance_vars_for_new_bat
+      render :action => :new
+    elsif over_allowed
+      flash[:notice] = 'Over allowed limit on protocol.'
       instance_vars_for_new_bat
       render :action => :new
     elsif ((params[:bat][:cage_id] == '0') && (params[:move][:note] == ''))
@@ -162,7 +174,11 @@ class BatsController < ApplicationController
         end
 			
         @bat.save_protocols(protocols,Time.now)
-			
+        if @bat.protocols != protocols
+          #flash.now[:prot_notice] = 'Over the allowed bats limit on a protocol'
+        end
+
+
         if @bat.cage_id == 0
           new_cage=nil
           @bat.cage_id = nil
@@ -216,15 +232,32 @@ class BatsController < ApplicationController
       return
     end
 
+    @bat = Bat.find(params[:id])
+
     if !@deactivating
       protocols = grab_protocols
+
+      #check if protocols over the allowed limit before saving the bat
+      for p_added in (protocols - @bat.protocols)
+        if !p_added.check_allowed_bats(Array.new(1,@bat))
+          over_allowed = true
+        end
+      end
+
     else
       protocols=Array.new
     end
-    if protocols.length == 0 && !@deactivating
-      flash[:notice] = 'Need to select a protocol'
-      redirect_to :back
-      return
+    
+    if !@deactivating
+      if protocols.length == 0
+        flash[:notice] = 'Need to select a protocol'
+        redirect_to :back
+        return
+      elsif over_allowed
+        flash[:notice] = 'Over allowed limit on protocol.'
+        redirect_to :back
+        return
+      end
     end
 
     if params[:bat][:surgery_type] == '' and params[:bat]["surgery_time(1i)"] != nil
@@ -233,7 +266,6 @@ class BatsController < ApplicationController
       return
     end
 
-    @bat = Bat.find(params[:id])
     if @reactivating
       note = 'reactivated'
       @cage = nil
@@ -259,7 +291,7 @@ class BatsController < ApplicationController
       end
 
       @bat.save_protocols(protocols,Time.now)
-			
+
       flash[:notice] = 'Bat was successfully updated.'
       if params[:redirectme] == 'list'
         redirect_to :action => :list
@@ -273,6 +305,7 @@ class BatsController < ApplicationController
         redirect_to :action => 'show', :id => @bat
       end
     else
+      @action = "update"
       render :action => 'edit'
     end
   end
@@ -711,19 +744,29 @@ class BatsController < ApplicationController
 		@bat = Bat.find(params[:bat])
 		
 		protocols = grab_protocols
-		if protocols.length > 0
-      protocols = protocols.sort_by{|p| p.number}
 
-      if protocols != @bat.protocols
+    #check if protocols over the allowed limit before saving
+    for p_added in (protocols - @bat.protocols)
+      if !p_added.check_allowed_bats(Array.new(1,@bat))
+        over_allowed = true
+      end
+    end
+
+		if protocols.length == 0
+      flash.now[:prot_notice] = 'Bat must always have a protocol'
+    elsif over_allowed
+      flash.now[:prot_notice] = 'Over the allowed bats limit on a protocol'
+    else
+      protocols = protocols.sort_by{|p| p.number}
+      unless protocols == @bat.protocols
         @bat.save_protocols(protocols,Time.now)
-        flash.now[:prot_notice] = 'Protocols saved'
+        if (@bat.protocols - protocols).length == 0
+          flash.now[:prot_notice] = 'Protocols saved'
+        end
       else
         flash.now[:prot_notice] = 'Protocols did not change'
       end
-    else
-      flash.now[:prot_notice] = 'Bat must always have a protocol'
     end
-		
 		render :partial => 'protocols/choose_protocols', :locals => {:protocols => Protocol.current, :bat => @bat}
 	end
 

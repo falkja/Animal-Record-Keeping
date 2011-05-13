@@ -338,33 +338,36 @@ class Bat < ActiveRecord::Base
   
   #protocols passed in are the entire protocols that you'd like the bat to have (not just the additions to what the bat already has)
 	def save_protocols(protocols,time_altered)
-		#try to stop saving the protocols if the number of bats would be greater than allowed
-
 
     #saving history of protocols removed
-		for protocol in (protocols - self.protocols)
-			#create a protocol history
-			p_hist = ProtocolHistory.new
-			p_hist.bat = self
-			p_hist.protocol = protocol
-			p_hist.date_removed = nil
-			p_hist.date_added = time_altered
-			p_hist.save
+		for p_removed in (self.protocols - protocols)
+        #create a protocol history
+        p_hist = ProtocolHistory.new
+        p_hist.bat = self
+        p_hist.protocol = p_removed
+        p_hist.date_removed = time_altered
+        p_hist.date_added = nil
+        p_hist.save
+		end
+
+    #saving history of protocols added
+		for p_added in (protocols - self.protocols)
+      #only make p_hist if under the protocol allowed bats
+			if p_added.check_allowed_bats(Array.new(1,self))
+        #create a protocol history
+        p_hist = ProtocolHistory.new
+        p_hist.bat = self
+        p_hist.protocol = p_added
+        p_hist.date_removed = nil
+        p_hist.date_added = time_altered
+        p_hist.save
+      else
+        protocols = protocols - Array.new(1,p_added)
+      end
 		end
 		
-		#saving history of protocols added
-		for protocol in (self.protocols - protocols)
-			#create a protocol history
-			p_hist = ProtocolHistory.new
-			p_hist.bat = self
-			p_hist.protocol = protocol
-			p_hist.date_removed = time_altered
-			p_hist.date_added = nil
-			p_hist.save
-		end
-		
-		self.protocols = protocols
-	end
+    self.protocols = protocols
+  end
 
   #date bat was LAST added to protocol
 	def date_added_to_protocol(protocol)

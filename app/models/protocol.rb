@@ -2,10 +2,11 @@ class Protocol < ActiveRecord::Base
 	has_and_belongs_to_many :bats, :order => "band"
 	has_many :protocol_histories
   has_many :allowed_bats
-  accepts_nested_attributes_for :allowed_bats
+  has_and_belongs_to_many :data, :order => "name"
   has_and_belongs_to_many :users, :order => "name"
-	
-	
+  
+  accepts_nested_attributes_for :allowed_bats
+		
 	validates_presence_of :title, :number
 	validates_uniqueness_of :number
 	

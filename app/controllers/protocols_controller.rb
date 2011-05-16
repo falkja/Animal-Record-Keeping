@@ -45,6 +45,7 @@ class ProtocolsController < ApplicationController
     respond_to do |format|
       if @protocol.save
         set_users_protocol(@protocol)
+        set_data_protocol(@protocol)
         format.html { redirect_to(@protocol, :notice => 'Protocol was successfully created.') }
         format.xml  { render :xml => @protocol, :status => :created, :location => @protocol }
       else
@@ -62,6 +63,7 @@ class ProtocolsController < ApplicationController
     respond_to do |format|
       if @protocol.update_attributes(params[:protocol])
         set_users_protocol(@protocol)
+        set_data_protocol(@protocol)
         format.html { redirect_to(@protocol, :notice => 'Protocol was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -188,6 +190,12 @@ class ProtocolsController < ApplicationController
     params[:user_id].each{|id, checked| checked=='1' ? users << User.find(id) : ''}
     protocol.users = users
   end
+  
+  def set_data_protocol(protocol)
+    data = Array.new
+    params[:datum_id].each{|id, checked| checked=='1' ? data << Datum.find(id) : ''}
+    protocol.data = data
+  end
 
   def update_users_on_protocol
     protocol = Protocol.find(params[:id])
@@ -206,5 +214,39 @@ class ProtocolsController < ApplicationController
     params[:protocol_id].each{|id, checked| checked=='1' ? protocols << Protocol.find(id) : ''}
     user.protocols = protocols
     redirect_to :controller => :users, :action => :show, :id => user
+  end
+  
+  def remote_add_data
+    if params[:id] && params[:prot] != ''
+      protocol = Protocol.find(params[:id])
+    else
+      protocol = nil
+    end
+    
+    d = Datum.new
+    d.name = params[:name]
+    d.save
+    
+    render :partial => "data_on_protocol_form", :locals => {:protocol => protocol,
+      :data => Datum.all}
+  end
+  
+  def delete_data
+    if params[:prot] && params[:prot] != ''
+      protocol = Protocol.find(params[:prot])
+    else
+      protocol = nil
+    end
+    
+    d = Datum.find(params[:data])
+    
+    if d.protocols.length > 0
+      flash.now[:data_notice]='Data associated with a protocol, cannot delete'
+    else
+      d.destroy
+    end
+    
+    render :partial => "data_on_protocol_form", :locals => {:protocol => protocol,
+      :data => Datum.all}
   end
 end

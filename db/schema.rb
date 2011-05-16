@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110510030848) do
+ActiveRecord::Schema.define(:version => 20110516153635) do
 
   create_table "allowed_bats", :force => true do |t|
     t.integer  "protocol_id"
@@ -95,6 +95,17 @@ ActiveRecord::Schema.define(:version => 20110510030848) do
     t.integer "room_id",                      :null => false
     t.string  "bats_added",   :limit => 2000
     t.string  "bats_removed", :limit => 2000
+  end
+
+  create_table "data", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "data_protocols", :id => false, :force => true do |t|
+    t.integer "datum_id"
+    t.integer "protocol_id"
   end
 
   create_table "flights", :force => true do |t|

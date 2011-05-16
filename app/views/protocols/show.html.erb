@@ -24,6 +24,13 @@
 </p>
 
 <p>
+  <b>Data Collected:</b>
+    <% for datum in @protocol.data %>
+      <br /><%=h datum.name %>
+    <% end %>
+</p>
+
+<p>
   <b>Start date:</b>
   <%=h @protocol.start_date %>
 </p>

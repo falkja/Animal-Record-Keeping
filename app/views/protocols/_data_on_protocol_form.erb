@@ -1,0 +1,35 @@
+<%# :locals => {:protocol => @protocol, :data => Datum.all} %>
+<div style="color:green"><%= flash[:data_notice] %></div>
+
+<div id ="data_list" class="centered">
+  <% if data.length > 0 %>
+    <table>
+      <th></th>
+      <th style="font-size:10pt;width: 150px">Data Type</th>
+      <% for d in data %>
+        <tr>
+          <td><%= check_box :datum_id, d.id, :checked => protocol ? protocol.data.include?(d) : ''  %></td>
+          <td>
+            <label for='datum_id_<%=d.id %>' >
+              <span title='On protocols: <% for p in d.protocols %>&#13; <%=h p.number %><% end %>'>
+                <%= d.name %>
+              </span>
+            </label>
+          </td>
+          <td>
+            <%= link_to_remote 'Delete', :url =>
+              {:controller => :protocols, :action => 'delete_data', :data => d, 
+              :prot => protocol},
+              :update => 'data_list' %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+  <label for="data_name">Name: </label>
+  <%= text_field :data, :name %>
+  <%= button_to_remote "Add Data", :url => {:controller => :protocols, 
+    :action => 'remote_add_data', :id => protocol},
+    :with => "'name='+encodeURIComponent($F('data_name'))", 
+    :update => 'data_list' %>
+</div>

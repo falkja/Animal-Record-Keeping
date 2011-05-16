@@ -1,3 +1,6 @@
+<h3><i>As specified in the IACUC approved protocol</i></h3>
+
+
 <% form_for(@protocol) do |f| %>
   <%= f.error_messages %>
 
@@ -15,6 +18,13 @@
   </p>
 
   <p>
+    Data allowed to be collected :<br />
+  </p>
+  <%= render :partial => 'protocols/data_on_protocol_form', :locals => 
+    {:protocol => @protocol, :data => Datum.all, :show_submit => true} %>
+  
+  
+  <p>
     <%= f.label :start_date %><br />
     <%= f.date_select :start_date, :end_year=> Time.now.year %>
   </p>
@@ -29,7 +39,6 @@
 
   <p>
     Number of bats allowed on protocol:<br />
-    <i><b>specified in the IACUC approved protocol</b></i>
   </p>
   <div class="left_indent">
     <table>

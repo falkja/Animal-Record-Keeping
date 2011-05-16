@@ -76,7 +76,7 @@ class MyMailer < ActionMailer::Base
       msg_body = "The following protocol changes were made:\n"
       for ph in phs
         bat = ph.bat
-        if ph.date_removed != nil
+        if ph.added == false
           rel_text = "Removed from protocol:"
         else
           rel_text = "Added to protocol:"

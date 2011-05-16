@@ -54,6 +54,12 @@
 </table>
 </p>
 
+<h3>Protocol Histories</h3>
+<div class='left_indent'>
+  <%= render :partial => 'show_bat_protocol_histories', 
+    :locals => {:histories => @bat.protocol_histories } %>
+</div>
+
 <p>
   <b>Exempt from Flight: </b>
   <%= @bat.exempt_from_flight.to_s.capitalize %>

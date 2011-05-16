@@ -67,3 +67,27 @@ task :add_allowed_bats_to_existing_protocols => :environment do
     end
   end
 end
+
+task :ChangeDateAddedRemovedToSingleDateProtocolHistories => :environment do
+  for p in ProtocolHistory.all
+    if p.date_added
+      p.added = true
+      p.date = p.date_added
+    else
+      p.added = false
+      p.date = p.date_removed
+    end
+    p.save
+  end
+end
+
+task :ChangeDateAddedRemovedToMultDateProtocolHistories => :environment do
+  for p in ProtocolHistory.all
+    if p.added
+      p.date_added = p.date
+    else
+      p.date_removed = p.date
+    end
+    p.save
+  end
+end

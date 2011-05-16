@@ -1,0 +1,18 @@
+<% if histories.length > 0 %>
+  <table>
+    <th></th>
+    <th style="font-size: 10pt">Title</th>
+    <th style="font-size: 10pt">Number</th>
+    <th style="font-size: 10pt">Date</th>
+    <% for hist in (histories) %>
+      <tr>
+        <td><%= hist.added ? "Added to: " : "Removed from: " %></td>
+        <td><%=h hist.protocol.title %></td>
+        <td><%= link_to hist.protocol.number, hist.protocol %></td>
+        <td><%= nice_date(hist.date) %></td>
+      </tr>  
+    <% end %>
+  </table>
+<% else %>
+No protocol histories
+<% end %>

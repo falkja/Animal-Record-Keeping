@@ -7,7 +7,7 @@ class Bat < ActiveRecord::Base
 	has_many :medical_problems, :order => "date_opened desc"
 	has_many :bat_notes, :order => "date desc"
 	has_many :bat_changes, :order => "date desc"
-	has_and_belongs_to_many :protocols, :order => "number"
+	has_and_belongs_to_many :protocols, :order => "number, title"
 	has_many :flights, :order => "date asc"
 	has_many :protocol_histories, :order => "date desc"
 	
@@ -345,8 +345,8 @@ class Bat < ActiveRecord::Base
         p_hist = ProtocolHistory.new
         p_hist.bat = self
         p_hist.protocol = p_removed
-        p_hist.date_removed = time_altered
-        p_hist.date_added = nil
+        p_hist.added = false
+        p_hist.date = time_altered
         p_hist.save
 		end
 
@@ -358,8 +358,8 @@ class Bat < ActiveRecord::Base
         p_hist = ProtocolHistory.new
         p_hist.bat = self
         p_hist.protocol = p_added
-        p_hist.date_removed = nil
-        p_hist.date_added = time_altered
+        p_hist.added = true
+        p_hist.date = time_altered
         p_hist.save
       else
         protocols = protocols - Array.new(1,p_added)
@@ -372,9 +372,9 @@ class Bat < ActiveRecord::Base
   #date bat was LAST added to protocol
 	def date_added_to_protocol(protocol)
 		hist = ProtocolHistory.find(:last, 
-      :conditions => ["protocol_id = ? and bat_id = ? and date_added is not null", protocol.id, self.id],
-      :order => "date_added")
-		return hist.date_added
+      :conditions => ["protocol_id = ? and bat_id = ? and added is true", protocol.id, self.id],
+      :order => "date")
+		return hist.date
 	end
 
   def self.bats_on_species(bats,species)

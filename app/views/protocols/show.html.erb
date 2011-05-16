@@ -74,14 +74,16 @@
 
 <p>
   <b>Past bats:</b>
-<table>
-  <% for hist in @hists %>
-    <tr>
-      <td><%= link_to hist.bat.band, :controller => :bats, :action => :edit, :id => hist.bat %></td>
-      <td>Removed on: <%= nice_date hist.date_removed %></td>
-    </tr>
-  <% end %>
-</table>
+  <table>
+    <% for bat in @past_bats %>
+      <tr>
+        <td><%= link_to bat.band, :controller => :bats, :action => :edit, :id => bat %></td>
+        <td>
+          Removed on: <%= (bat.protocol_histories.removed.length > 0) ? nice_date(bat.protocol_histories.removed[0].date) : "" %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
 </p>
 
 <p>

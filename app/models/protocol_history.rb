@@ -6,8 +6,13 @@ class ProtocolHistory < ActiveRecord::Base
     start_date=Date.today
     end_date=Date.today + 1.day
     hists = find(:all,
-      :conditions => ["((date_added is not null and date_added >= ? and date_added < ?) or (date_removed is not null and date_removed >= ? and date_removed < ?))",start_date,end_date,start_date,end_date])
+      :conditions => ["((add is true and date >= ? and date < ?) or (added is false and date >= ? and date < ?))",start_date,end_date,start_date,end_date])
     hists = hists.sort_by{|h| h.bat.band}
     return hists
   end
+  
+  def self.removed
+    find :all, :conditions => 'added is false'
+  end
+  
 end

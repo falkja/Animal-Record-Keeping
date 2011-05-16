@@ -15,7 +15,15 @@
         </label>
       </td>
       <td style="text-align: center">
-        <%=h Bat.bats_on_species(protocol.all_past_bats,sp).length %>
+        <% if protocol.allowed_bats.find(:first, :conditions => "species_id = #{sp.id}" ).number < Bat.bats_on_species(protocol.all_past_bats,sp).length %>
+          <font size="4">
+        <% else %>
+          <font>
+        <% end %>
+        <span title='Bats: <% for b in Bat.bats_on_species(protocol.all_past_bats,sp) %>&#13; <%=b.band%><% end %>'>
+          <%=h link_to Bat.bats_on_species(protocol.all_past_bats,sp).length, :controller => :bats, :action => :list, :bats => Bat.bats_on_species(protocol.all_past_bats,sp) %>
+        </span>
+        </font>
       </td>
       <td style="text-align: center">
         <%=h protocol.allowed_bats.find(:first, :conditions => "species_id = #{sp.id}" ).number %>

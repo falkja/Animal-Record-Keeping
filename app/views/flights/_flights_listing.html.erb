@@ -20,32 +20,40 @@
 
     <% for flight in flights %>
       <tr>
-        <td><%= flight.date.strftime("%b %d, %Y") %></td>
+        <td style="background-color:rgb(150,150,150)">
+          <% if flight.exempt %>
+            <span style="color:blue">
+          <% else %>
+            <span style="color:yellow">
+          <% end %>
+          <%= flight.date.strftime("%b %d, %Y") %>
+          </span>
+        </td>
         <td><%= link_to flight.user.initials, :controller => :users, :action=>:show, :id => flight.user %></td>
 
         <td>
           <% if !flight.cage && !flight.medical_problem && !flight.species %>
             User entry
           <% else %>
-            <% if flight.cage %>
-              Flight cage: <%= link_to flight.cage.name, :controller => :cages, :action => :show, :id => flight.cage %><br>
-            <% end %>
+              <% if flight.cage %>
+                Flight cage: <%= link_to flight.cage.name, :controller => :cages, :action => :show, :id => flight.cage %><br>
+              <% end %>
 
-            <% if flight.medical_problem %>
-              Med. prob.: <%= link_to flight.medical_problem.title, :controller => :medical_problems, :action => :show, :id => flight.medical_problem %><br>
-            <% end %>
+              <% if flight.medical_problem %>
+                Med. prob.: <%= link_to flight.medical_problem.title, :controller => :medical_problems, :action => :show, :id => flight.medical_problem %><br>
+              <% end %>
 
-            <% if flight.protocol_exempt %>
-              Exempt by protocol<br>
-            <% end %>
+              <% if flight.protocol_exempt %>
+                Exempt by protocol<br>
+              <% end %>
 
-            <% if flight.species %>
-              <em><%= link_to flight.species.name, :controller => :species, :action => :show, :id => flight.species %></em> hibernating<br>
-            <% end %>
+              <% if flight.species %>
+                <em><%= link_to flight.species.name, :controller => :species, :action => :show, :id => flight.species %></em> hibernating<br>
+              <% end %>
 
-            <% if flight.quarantine %>
-              Quarantine<br>
-            <% end %>
+              <% if flight.quarantine %>
+                Quarantine<br>
+              <% end %>
           <% end %>
 
         </td>

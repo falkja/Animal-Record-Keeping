@@ -96,7 +96,6 @@ class BatsController < ApplicationController
     @bat = Bat.find(params[:id])
     @cihs = @bat.cage_in_histories
     @bat_changes = BatChange.find(:all, :conditions => "bat_id = #{@bat.id}", :order => 'date desc')
-    @time_in_lab = (Date.today - @bat.collection_date).to_i
   end
 
 	def new

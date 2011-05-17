@@ -1,6 +1,10 @@
 <h1>Flight Log for <%= link_to @bat.band, :controller => :bats, :action => :show, :id => @bat %></h1>
 
-<br>
+<div style="text-align: center; font-size: 18">
+<%= button_to 'Choose a different bat', :action => :list %>
+</div>
+
+<br />
 
 <div id="cal" style="border:1px solid gray; width:650px; margin-right:auto; margin-left:auto">
 
@@ -10,10 +14,7 @@
 </div>
 
 <div style="margin-right:auto; margin-left:auto; width:800px; text-align:center">
-
-<%= button_to 'Add flight log', :action => :new, :bat => @bat %><br />
-<%= link_to 'Choose a different bat', :action => :list %><br>
-
+  
 <p>
 <%= render :partial => 'form_to_show_all_flight_logs', :locals =>{:bat=>@bat} %>
 </p>

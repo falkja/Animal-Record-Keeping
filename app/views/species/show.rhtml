@@ -39,7 +39,9 @@
     <% for bat in @sp.bats.not_active %>
       <tr>
         <td><%= link_to bat.band, :controller=>'bats', :action =>'show', :id => bat %></td>
-        <td><%= bat.cage_out_histories[0].cage.name %></td>
+        <td><%= bat.cage_out_histories[0] ? 
+          link_to(bat.cage_out_histories[0].cage.name, :controller => :cages, :action => :show, 
+          :id => bat.cage_out_histories[0].cage) : "[Missing Entry]" %></td>
         <td><%= nice_date bat.leave_date %></td>
       </tr>
     <% end %>

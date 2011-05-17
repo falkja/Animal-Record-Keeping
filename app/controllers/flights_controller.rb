@@ -38,7 +38,10 @@ class FlightsController < ApplicationController
     @bat = Bat.find(params[:id])
     @flight_dates, @flights  = @bat.flight_dates(Date.today.year,Date.today.mon)
     @dates = Hash.new
-    @flights.each{|f| @dates[ f.date.strftime("%d").to_i ] = "<a href=\"#\" onclick=\"new Ajax.Updater(\'f_entry_display\', \'/flights/remote_flights_entry_list?flight=" + f.id.to_s + "\', {asynchronous:true, evalScripts:true}); return false;\">" + f.date.strftime("%d").to_i.to_s + "</a>"}
+    @flights.each{|f| @dates[ f.date.strftime("%d").to_i ] = !f.exempt ?
+        "<a style='color:yellow' href=\"#\" onclick=\"new Ajax.Updater(\'f_entry_display\', \'/flights/remote_flights_entry_list?flight=" + f.id.to_s + "\', {asynchronous:true, evalScripts:true}); return false;\">" + f.date.strftime("%d").to_i.to_s + "</a>" : 
+        "<a style='color:blue ' href=\"#\" onclick=\"new Ajax.Updater(\'f_entry_display\', \'/flights/remote_flights_entry_list?flight=" + f.id.to_s + "\', {asynchronous:true, evalScripts:true}); return false;\">" + f.date.strftime("%d").to_i.to_s + "</a>"
+        }
   end
   
   def remote_show
@@ -57,7 +60,11 @@ class FlightsController < ApplicationController
       @flight_dates, @flights  = @bat.flight_dates(@this_month.year,@this_month.mon)
 
       dates = Hash.new
-      @flights.each{|f| dates[ f.date.strftime("%d").to_i ] = "<a href=\"#\" onclick=\"new Ajax.Updater(\'f_entry_display\', \'/flights/remote_flights_entry_list?flight=" + f.id.to_s + "\', {asynchronous:true, evalScripts:true}); return false;\">" + f.date.strftime("%d").to_i.to_s + "</a>"}
+      
+      @flights.each{|f| dates[ f.date.strftime("%d").to_i ] = !f.exempt ?
+        "<a style='color:yellow' href=\"#\" onclick=\"new Ajax.Updater(\'f_entry_display\', \'/flights/remote_flights_entry_list?flight=" + f.id.to_s + "\', {asynchronous:true, evalScripts:true}); return false;\">" + f.date.strftime("%d").to_i.to_s + "</a>" : 
+        "<a style='color:blue ' href=\"#\" onclick=\"new Ajax.Updater(\'f_entry_display\', \'/flights/remote_flights_entry_list?flight=" + f.id.to_s + "\', {asynchronous:true, evalScripts:true}); return false;\">" + f.date.strftime("%d").to_i.to_s + "</a>"
+        }
 
       render :partial => 'remote_show', :locals=>{:bat=>@bat, 
         :highlight_today=>@highlight_today, :this_month => @this_month, 

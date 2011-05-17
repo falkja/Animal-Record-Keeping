@@ -47,7 +47,7 @@
 }
 
 #calendar .highlight {
-	background: red;
+	background: gray;
 }
 
 #calendar a { color: #0f0; font-weight:bold; }

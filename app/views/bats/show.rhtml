@@ -31,8 +31,10 @@
 <p>
   <b>Cage: </b>
   <% if @bat.cage %>
-    <%= link_to @bat.cage.name, :controller => 'cages', :action => 'show', :id => @bat.cage %>
-  <% else %>
+    <%= link_to @bat.cage.name, :controller => 'cages', :action => 'show', :id => @bat.cage %> | 
+    <b>Owner: </b>
+    <%= link_to @bat.user.name, :controller => :users, :action => :show, :id => @bat.user %>
+    <% else %>
     <%= 'Inactive' %>
   <% end %>
 </p>
@@ -40,9 +42,57 @@
 <p>
   <b>Species: </b>
   <em><% if @bat.species %><%= link_to @bat.species.name, :controller => :species, :action => :show, :id => @bat.species %><% end %></em>
+
+  |
+
+  <b>Gender: </b>
+  <%= @bat.gender %>
+
+  |
+
+  <b>Collection Age: </b>
+  <%= @bat.collection_age %>
 </p>
 
 <p>
+  <b>Collection Date: </b>
+  <%= nice_date @bat.collection_date %>
+
+  |
+  
+  <b>Collection Place: </b>
+  <a href="http://maps.google.com/maps?q=<%=h @bat.collection_place %>" target="_blank"><%=h @bat.collection_place %></a>
+
+  |
+  
+  <b>Time in the lab: </b>
+  <%= @bat.time_in_lab %> days
+</p>
+
+<p>
+  <b>Exempt from Flight: </b>
+  <%= @bat.exempt_from_flight.to_s.capitalize %>
+</p>
+
+
+<b>Rabies Vaccination:</b>
+<div id='vaccination'>
+  <%= render :partial=>'form_vaccination', :locals =>{:bat => @bat,
+    :show_vaccination_date_select=> false, :reactivating=>@reactivating,
+    :show_submit_button => true} %>
+</div>
+
+<p>
+  <b>Quarantine:</b>
+  <%= @bat.quarantine?.to_s.capitalize %>
+</p>
+
+<% if !@bat.monitor_weight %>
+  <p>
+    <b>Weight Monitored:</b>
+    Emails will <em>not</em> be sent out if bat is not weighed often enough
+  </p>
+<% end %><p>
   <b>Protocols: </b>
 <table>
   <% for protocol in @bat.protocols %>
@@ -59,56 +109,6 @@
   <%= render :partial => 'show_bat_protocol_histories', 
     :locals => {:histories => @bat.protocol_histories } %>
 </div>
-
-<p>
-  <b>Exempt from Flight: </b>
-  <%= @bat.exempt_from_flight.to_s.capitalize %>
-</p>
-
-<p>
-  <b>Quarantine:</b>
-  <%= @bat.quarantine?.to_s.capitalize %>
-</p>
-
-<p>
-  <b>Gender: </b>
-  <%= @bat.gender %>
-</p>
-
-<p>
-  <b>Collection Date: </b>
-  <%= nice_date @bat.collection_date %>
-</p>
-
-<p>
-  <b>Time in the lab: </b>
-  <%= @time_in_lab %> days
-</p>
-
-<p>
-  <b>Collection Age: </b>
-  <%= @bat.collection_age %>
-</p>
-
-<p>
-  <b>Collection Place: </b>
-  <%= @bat.collection_place %>
-</p>
-
-
-<b>Rabies Vaccination:</b>
-<div id='vaccination'>
-  <%= render :partial=>'form_vaccination', :locals =>{:bat => @bat,
-    :show_vaccination_date_select=> false, :reactivating=>@reactivating,
-    :show_submit_button => true} %>
-</div>
-
-<% if !@bat.monitor_weight %>
-  <p>
-    <b>Weight Monitored:</b>
-    Emails will <em>not</em> be sent out if bat is not weighed often enough
-  </p>
-<% end %>
 
 <p>
   <b>Flight Log:</b>
@@ -182,18 +182,22 @@
       <% if @bat.cage == nil %>
         <tr>
           <td>Deactivated Bat</td>
+          <% if @bat.cage_out_histories[0] %>
           <td><%=h @bat.cage_out_histories[0].cage.name %></td>
           <td><%=h nice_date @bat.cage_out_histories[0].date %></td>
           <td><%=h @bat.cage_out_histories[0].note %></td>
           <td><%=h @bat.cage_out_histories[0].user.initials %></td>
+          <% end %>
         </tr>
       <% end %>
 
       <% for cih in @cihs %>
         <tr>
-          <td><%=h cih.cage.name %></td>
+          <td><%= link_to cih.cage.name, :controller => :cages,
+              :action => :show, :id => cih.cage %></td>
           <% if cih.cage_out_history %>
-            <td><%=h cih.cage_out_history.cage.name %></td>
+            <td><%= link_to cih.cage_out_history.cage.name, :controller => :cages,
+              :action => :show, :id => cih.cage_out_history.cage %></td>
           <% else %>
             <td>-</td>
           <% end %>

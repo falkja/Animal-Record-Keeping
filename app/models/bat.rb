@@ -1,6 +1,7 @@
 class Bat < ActiveRecord::Base
 	belongs_to :cage
 	belongs_to :species
+  has_one :user, :through => :cage
 	has_many :weights, :order => "date desc"
 	has_many :cage_in_histories, :order => "date desc"
 	has_many :cage_out_histories, :order => "date desc"
@@ -84,6 +85,14 @@ class Bat < ActiveRecord::Base
 		bat ? yoda = bat.collection_date : yoda = nil 
 		return yoda
 	end
+  
+  def time_in_lab
+    if self.leave_date
+      (leave_date - self.collection_date).to_i
+    else
+      (Date.today - self.collection_date).to_i
+    end
+  end
 	
 	#call this whenever you think the bat's cage could have changed
 	#it updates both the cage out and cage in histories as required
@@ -192,7 +201,8 @@ class Bat < ActiveRecord::Base
   end
 
   def exempt_from_flight
-    if (self.medical_problems.current.length > 0) || self.species.hibernating || self.quarantine? || self.protocol_exempt
+    if (self.medical_problems.current.length > 0) || self.species.hibernating || 
+        self.quarantine? || self.protocol_exempt || self.leave_date
       return true
     else
       return false
@@ -214,14 +224,7 @@ class Bat < ActiveRecord::Base
 	
   def self.not_exempt_from_flight
     @curr_bats = Bat.active
-	
-    non_ex_bats = Array.new
-    for bat in @curr_bats
-      if !bat.exempt_from_flight
-        non_ex_bats << bat
-      end
-    end
-    return non_ex_bats
+    @curr_bats - Bat.exempt_from_flight
   end
 	
   def self.in_flight_cage
@@ -258,8 +261,9 @@ class Bat < ActiveRecord::Base
 
   #bat is in quarantine if the species requires vaccination and the bat either
   #hasn't been vaccinated or the bat's vaccination date was within 30 days of today
+  #and the bat isn't deactivated
   def quarantine?
-    if self.species.requires_vaccination && (!self.vaccination_date || self.vaccination_date >= (Date.today - 30.days))
+    if self.leave_date == nil && self.species.requires_vaccination && (!self.vaccination_date || self.vaccination_date >= (Date.today - 30.days))
       return true
     else
       return false

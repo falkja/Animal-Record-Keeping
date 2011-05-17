@@ -7,9 +7,13 @@
     </td>
 
     <td width="194px" height="63px" style="text-align:center;vertical-align:top">
-      <%= bat.band %>
+      <span style="font-size:12pt">
+        <%=link_to bat.band, :controller => :flights, :action => :show, :id => bat %>
+      </span><br />
       <% if Date.today.year > this_month.year || Date.today.mon != this_month.mon %>
-        <% form_remote_tag :url => {:controller => :flights, :action => :remote_show, :id => bat, :this_month => Date.today}, :update => "cal" do %>
+        <% form_remote_tag :url => {:controller => :flights, 
+            :action => :remote_show, :id => bat, :this_month => Date.today}, 
+            :update => "cal" do %>
           <%= submit_tag "This Month" %>
         <% end %>
       <% end %>
@@ -29,15 +33,8 @@
 
 <br />
 
-<% if flights.length > 0 %>
-  <div style="width:625px;margin-left:auto;margin-right:auto;text-align: center">
-    <%= link_to "Show Full Month Listing", :controller => :flights, :action => :list_flight_logs_dates,
-      :post => {"start_date(1i)" => this_month.year,
-        "start_date(2i)" => this_month.mon, "start_date(3i)" => 1,
-      "end_date(1i)" => this_month.year, "end_date(2i)" => this_month.mon },
-      :id => bat %>
-  </div>
-<% end %>
-<div id="f_entry_display">
-  <%= render :partial => 'flights/flights_listing', :locals => { :flights => flights } %>
+<div style="margin-right:auto; margin-left:auto; text-align:center">
+<%= button_to 'Add flight log', :action => :new, :bat => @bat %>
 </div>
+
+<%= render :partial => 'flights/flights_listing', :locals => { :flights => flights } %>

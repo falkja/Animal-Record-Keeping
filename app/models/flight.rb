@@ -9,7 +9,8 @@ class Flight < ActiveRecord::Base
   belongs_to :protocol
 	
 	validates_presence_of :bat, :date
-	
+  
+  #run automatically through cron job
 	def self.populate_daily_flight_logs
 		today = Date.today
 		

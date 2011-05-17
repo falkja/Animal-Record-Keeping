@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110516204113) do
+ActiveRecord::Schema.define(:version => 20110517193808) do
 
   create_table "allowed_bats", :force => true do |t|
     t.integer  "protocol_id"
@@ -42,20 +42,17 @@ ActiveRecord::Schema.define(:version => 20110516204113) do
   end
 
   create_table "bats", :force => true do |t|
-    t.integer  "cage_id"
-    t.date     "collection_date"
-    t.string   "collection_age",   :limit => 45,                    :null => false
-    t.string   "collection_place", :limit => 100,                   :null => false
-    t.string   "gender",           :limit => 1,                     :null => false
-    t.date     "leave_date"
-    t.text     "leave_reason"
-    t.string   "band",             :limit => 10
-    t.date     "vaccination_date"
-    t.integer  "species_id"
-    t.boolean  "monitor_weight",                  :default => true, :null => false
-    t.datetime "surgery_time"
-    t.text     "surgery_note"
-    t.string   "surgery_type"
+    t.integer "cage_id"
+    t.date    "collection_date"
+    t.string  "collection_age",   :limit => 45,                    :null => false
+    t.string  "collection_place", :limit => 100,                   :null => false
+    t.string  "gender",           :limit => 1,                     :null => false
+    t.date    "leave_date"
+    t.text    "leave_reason"
+    t.string  "band",             :limit => 10
+    t.date    "vaccination_date"
+    t.integer "species_id"
+    t.boolean "monitor_weight",                  :default => true, :null => false
   end
 
   create_table "bats_protocols", :id => false, :force => true do |t|
@@ -175,6 +172,22 @@ ActiveRecord::Schema.define(:version => 20110516204113) do
     t.integer "hibernating_start_month"
     t.integer "hibernating_end_month"
     t.boolean "requires_vaccination",                  :default => false
+  end
+
+  create_table "surgeries", :force => true do |t|
+    t.integer  "surgery_type_id"
+    t.integer  "bat_id"
+    t.datetime "time"
+    t.text     "note"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "surgery_types", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "task_census", :force => true do |t|

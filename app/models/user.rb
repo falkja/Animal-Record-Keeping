@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :trainings
   has_many :bats, :through => :cages, :order => "band"
   has_and_belongs_to_many :protocols, :order => "number"
+  has_many :surgeries
   
     
   validates_presence_of :name, :initials, :email

@@ -14,9 +14,9 @@
 
   <table style="width:625px; margin-right:auto; margin-left:auto">
     <th>Day</th>
-    <th>User</th>
     <th>Reason</th>
     <th>Note</th>
+    <th>User</th>
 
     <% for flight in flights %>
       <tr>
@@ -29,11 +29,9 @@
           <%= flight.date.strftime("%b %d, %Y") %>
           </span>
         </td>
-        <td><%= link_to flight.user.initials, :controller => :users, :action=>:show, :id => flight.user %></td>
-
         <td>
-          <% if !flight.cage && !flight.medical_problem && !flight.species %>
-            User entry
+          <% if !flight.exempt %>
+            Bat flown
           <% else %>
               <% if flight.cage %>
                 Flight cage: <%= link_to flight.cage.name, :controller => :cages, :action => :show, :id => flight.cage %><br>
@@ -59,7 +57,7 @@
         </td>
 
         <td><%=h flight.note %></td>
-
+        <td><%= link_to flight.user.initials, :controller => :users, :action=>:show, :id => flight.user %></td>
         <td>
           <%= button_to 'Destroy', { :action => 'destroy', :id => flight, :bat => flight.bat }, :confirm => 'Are you sure?', :method => :post %>
         </td>

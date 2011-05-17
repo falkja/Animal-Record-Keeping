@@ -42,14 +42,10 @@
 <p>
   <b>Species: </b>
   <em><% if @bat.species %><%= link_to @bat.species.name, :controller => :species, :action => :show, :id => @bat.species %><% end %></em>
-
   |
-
   <b>Gender: </b>
   <%= @bat.gender %>
-
   |
-
   <b>Collection Age: </b>
   <%= @bat.collection_age %>
 </p>
@@ -57,20 +53,19 @@
 <p>
   <b>Collection Date: </b>
   <%= nice_date @bat.collection_date %>
-
   |
-  
   <b>Collection Place: </b>
   <a href="http://maps.google.com/maps?q=<%=h @bat.collection_place %>" target="_blank"><%=h @bat.collection_place %></a>
-
   |
-  
   <b>Time in the lab: </b>
   <%= @bat.time_in_lab %> days
 </p>
 
 <p>
-  <b>Exempt from Flight: </b>
+  <b>Flight Log:</b>
+  <%= link_to 'Show', :controller => :flights, :action => :show, :id => @bat %>
+  |
+  <b>Exempt: </b>
   <%= @bat.exempt_from_flight.to_s.capitalize %>
 </p>
 
@@ -83,9 +78,13 @@
 </div>
 
 <p>
-  <b>Quarantine:</b>
+  <b>Under quarantine:</b>
   <%= @bat.quarantine?.to_s.capitalize %>
 </p>
+
+<b>Surgery:</b>
+<%= render :partial=>'form_surgery', :locals =>{:bat => @bat,
+  :show_surgery_form=> false, :show_submit_button => true} %>
 
 <% if !@bat.monitor_weight %>
   <p>
@@ -108,17 +107,6 @@
 <div class='left_indent'>
   <%= render :partial => 'show_bat_protocol_histories', 
     :locals => {:histories => @bat.protocol_histories } %>
-</div>
-
-<p>
-  <b>Flight Log:</b>
-  <%= link_to 'Show Flight Log', :controller => :flights, :action => :show, :id => @bat %>
-</p>
-
-<b>Surgery:</b>
-<div id='surgery'>
-  <%= render :partial=>'form_surgery', :locals =>{:bat => @bat,
-    :show_surgery_form=> false, :show_submit_button => true} %>
 </div>
 
 <% if @bat.leave_date != nil %>

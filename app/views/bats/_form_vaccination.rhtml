@@ -20,7 +20,7 @@
 <% else %>
 
   
-    <% if bat.vaccination_date %>
+    <% if bat && bat.vaccination_date %>
       <%= nice_date(bat.vaccination_date) %>
       <% if !reactivating %>
         <%= link_to_remote 'Delete', :url =>

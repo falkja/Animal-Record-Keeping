@@ -11,6 +11,7 @@ class Bat < ActiveRecord::Base
 	has_and_belongs_to_many :protocols, :order => "number, title"
 	has_many :flights, :order => "date asc"
 	has_many :protocol_histories, :order => "date desc"
+  has_many :surgeries, :order => "time desc"
 	
 	validates_presence_of :band, :collection_place
 	validates_uniqueness_of :band

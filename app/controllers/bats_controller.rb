@@ -158,7 +158,7 @@ class BatsController < ApplicationController
       flash[:notice] = 'Enter leave reason.'
       instance_vars_for_new_bat
       render :action => :new
-    elsif params[:bat][:surgery_type] == '' and params[:bat]["surgery_time(1i)"] != nil
+    elsif params[:surgery] && params[:surgery_type] == nil
       flash[:notice] = 'Need to enter a surgery type'
       instance_vars_for_new_bat
       render :action => :new
@@ -176,7 +176,10 @@ class BatsController < ApplicationController
         if @bat.protocols != protocols
           #flash.now[:prot_notice] = 'Over the allowed bats limit on a protocol'
         end
-
+        
+        if params[:surgery]
+          save_surgery
+        end
 
         if @bat.cage_id == 0
           new_cage=nil
@@ -227,6 +230,10 @@ class BatsController < ApplicationController
   def update
     if (params[:bat][:cage_id] == '') && !@deactivating && !@reactivating
       flash[:notice] = 'Need to select a cage.'
+      redirect_to :back
+      return
+    elsif params[:surgery] && params[:surgery_type] == nil
+      flash[:notice] = 'Select a surgery type'
       redirect_to :back
       return
     end
@@ -290,6 +297,10 @@ class BatsController < ApplicationController
       end
 
       @bat.save_protocols(protocols,Time.now)
+      
+      if params[:surgery]
+        save_surgery
+      end
 
       flash[:notice] = 'Bat was successfully updated.'
       if params[:redirectme] == 'list'
@@ -696,6 +707,53 @@ class BatsController < ApplicationController
       :reactivating=>params[:reactivating], :show_submit_button => params[:show_submit_button]}
   end
 
+  def show_add_surgery_type_form
+    if params[:bat] and params[:bat] != ''
+      bat = Bat.find(params[:bat])
+    else
+      bat = nil
+    end
+    
+    render :partial => 'surgery_type_form', :locals => {:bat => bat,
+        :show_submit_button => params[:show_submit_button], :show_surgery_type_form => !params[:show_surgery_type_form]} 
+  end
+  
+  def delete_surgery_type
+    if params[:bat] and params[:bat] != ''
+      bat = Bat.find(params[:bat])
+    else
+      bat = nil
+    end
+    
+    sg_type = SurgeryType.find(params[:id])
+    if sg_type.surgeries.length > 0
+      flash.now[:surgery_notice]='Surgery Type Already Has Surgeries'
+    else
+      sg_type.destroy
+      flash.now[:surgery_notice]='Surgery Type Removed'
+    end
+    
+    render :partial => 'form_surgery', :locals=>{:bat=>bat,
+      :show_submit_button => params[:show_submit_button],
+      :show_surgery_form => true}
+  end
+  
+  def new_surgery_type
+    sg_type = SurgeryType.new
+    sg_type.name = params[:name]
+    sg_type.save
+    
+    if params[:bat] and params[:bat] != ''
+      bat = Bat.find(params[:bat])
+    else
+      bat = nil
+    end
+    
+    render :partial => 'form_surgery', :locals=>{:bat=>bat,
+      :show_submit_button => params[:show_submit_button],
+      :show_surgery_form => true}
+  end
+  
   def show_or_hide_surgery_form
     if params[:bat] and params[:bat] != ''
       bat = Bat.find(params[:bat])
@@ -707,39 +765,62 @@ class BatsController < ApplicationController
       :show_surgery_form => params[:show_surgery_form]}
 	end
 
-	def clear_surgery
-		bat = Bat.find(params[:bat])
-		bat.surgery_time = nil
-    bat.surgery_type = nil
-    bat.surgery_note = nil
-		bat.save
-		render :partial => 'form_surgery', :locals=>{:bat=>bat,
-      :show_submit_button => params[:show_submit_button], :show_surgery_form => false}
-	end
-
-  def remote_save_surgery
-    bat = Bat.find(params[:id])
-    if params[:bat][:surgery_type] == ''
-      flash.now[:surgery_notice]='Enter a surgery type'
-      render :partial => 'form_surgery', :locals=>{:bat=>bat, :show_surgery_form => true,
+	def remote_save_surgery
+    bat = Bat.find(params[:bat])
+    if params[:surgery_type] == nil
+      flash.now[:surgery_notice]='Select a surgery type'
+      render :partial => 'form_surgery', :locals=>{:bat=>bat,
+      :show_surgery_form => true, 
       :show_submit_button => params[:show_submit_button]}
     else
-      bat.surgery_time =
-        DateTime.civil(params[:bat]["surgery_time(1i)"].to_i,
-        params[:bat]["surgery_time(2i)"].to_i,
-        params[:bat]["surgery_time(3i)"].to_i,
-        params[:bat]["surgery_time(4i)"].to_i,
-        params[:bat]["surgery_time(5i)"].to_i)
-      bat.surgery_note = params[:bat][:surgery_note]
-      bat.surgery_type = params[:bat][:surgery_type]
-      bat.save
+      surgery = Surgery.new
+      surgery.bat = bat
+      surgery.surgery_type = SurgeryType.find(params[:surgery_type][:id])
+      surgery.time =
+        DateTime.civil(params[:surgery]["time(1i)"].to_i,
+        params[:surgery]["time(2i)"].to_i,
+        params[:surgery]["time(3i)"].to_i,
+        params[:surgery]["time(4i)"].to_i,
+        params[:surgery]["time(5i)"].to_i)
+      surgery.note = params[:surgery][:note]
+      surgery.user = User.find(session[:person])
+      surgery.save
       flash.now[:surgery_notice]='Surgery saved'
       render :partial => 'form_surgery', :locals=>{:bat=>bat, :show_surgery_form => false,
         :show_submit_button => params[:show_submit_button]}
     end
   end
-	
-	def remote_save_protocol
+  
+  #called from create and update
+  def save_surgery
+    surgery = Surgery.new
+    surgery.bat = @bat
+    surgery.surgery_type = SurgeryType.find(params[:surgery_type][:id])
+    surgery.time =
+      DateTime.civil(params[:surgery]["time(1i)"].to_i,
+      params[:surgery]["time(2i)"].to_i,
+      params[:surgery]["time(3i)"].to_i,
+      params[:surgery]["time(4i)"].to_i,
+      params[:surgery]["time(5i)"].to_i)
+    surgery.note = params[:surgery][:note]
+    surgery.user = User.find(session[:person])
+    surgery.save
+  end
+  
+  def clear_surgery
+		if params[:bat] and params[:bat] != ''
+      bat = Bat.find(params[:bat])
+    else
+      bat = nil
+    end
+    surgery = Surgery.find(params[:id])
+		surgery.destroy
+    flash.now[:surgery_notice]='Surgery deleted'
+		render :partial => 'form_surgery', :locals=>{:bat=>bat,
+      :show_submit_button => params[:show_submit_button], :show_surgery_form => false}
+	end
+
+  def remote_save_protocol
 		@bat = Bat.find(params[:bat])
 		
 		protocols = grab_protocols

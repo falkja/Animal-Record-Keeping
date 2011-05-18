@@ -14,7 +14,6 @@
     <th>Bats</th>
     <th>Start date</th>
     <th>End date</th>
-    <th>Flight Exempt</th>
   </tr>
 
   <% protocols.each do |protocol| %>
@@ -36,7 +35,6 @@
       </td>
       <td><label for='protocol_id_<%=protocol.id %>' ><%=nice_date_no_day protocol.start_date %></label></td>
       <td><label for='protocol_id_<%=protocol.id %>' ><%=nice_date_no_day protocol.end_date %></label></td>
-      <td><label for='protocol_id_<%=protocol.id %>' ><%=h protocol.flight_exempt.to_s.capitalize %></label></td>
       <% unless selecting%>
         <td><%= button_to 'Edit', edit_protocol_path(protocol), {:method => :get} %></td>
       <% end %>

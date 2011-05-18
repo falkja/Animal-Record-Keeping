@@ -1,0 +1,39 @@
+<%# :locals => {:protocol => @protocol, :surgery_types => SurgeryType.all} %>
+<div style="color:green"><%= flash[:surgery_notice] %></div>
+
+<div id ="surgery" class="centered">
+  <% if !surgery_types.empty? %>
+    <table>
+      <th></th>
+      <th style="font-size:10pt;width: 150px">Data Type</th>
+      <% for sg in surgery_types %>
+        <tr>
+          <td><%= check_box :surgery_type_id, sg.id, :checked => protocol ? protocol.surgery_types.include?(sg) : ''  %></td>
+          <td>
+            <label for='surgery_type_id_<%=sg.id %>' >
+              <span title='On protocols: <% for p in sg.protocols %>&#13; <%=h p.number %><% end %>'>
+                <%= sg.name %>
+              </span>
+            </label>
+          </td>
+          <td>
+            <%= link_to_remote 'Delete', :url =>
+              {:controller => :protocols, :action => 'delete_surgery_type', :surgery_type => sg,
+              :prot => protocol},
+              :update => 'surgery' %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    No surgery types.
+  <% end %>
+
+  <br />
+  <label for="surgery_type_name">Name: </label>
+  <%= text_field :type, :name %>
+  <%= button_to_remote "Add", :url => {:controller => :protocols, 
+    :action => :remote_add_surgery_type, :prot => protocol},
+    :with => "'name='+encodeURIComponent($F('type_name'))", 
+    :update => 'surgery' %><br />
+</div>

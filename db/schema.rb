@@ -101,8 +101,8 @@ ActiveRecord::Schema.define(:version => 20110517193808) do
   end
 
   create_table "data_protocols", :id => false, :force => true do |t|
-    t.integer "datum_id"
-    t.integer "protocol_id"
+    t.integer "datum_id",    :null => false
+    t.integer "protocol_id", :null => false
   end
 
   create_table "flights", :force => true do |t|
@@ -114,8 +114,13 @@ ActiveRecord::Schema.define(:version => 20110517193808) do
     t.integer "medical_problem_id"
     t.integer "cage_id"
     t.integer "species_id"
-    t.boolean "protocol_exempt",    :default => false
     t.boolean "quarantine"
+    t.boolean "has_surgery",        :default => false
+  end
+
+  create_table "flights_surgeries", :id => false, :force => true do |t|
+    t.integer "surgery_id"
+    t.integer "flight_id"
   end
 
   create_table "medical_problems", :force => true do |t|
@@ -150,8 +155,17 @@ ActiveRecord::Schema.define(:version => 20110517193808) do
     t.date     "end_date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "flight_exempt", :default => false
     t.text     "summary"
+  end
+
+  create_table "protocols_surgeries", :id => false, :force => true do |t|
+    t.integer "surgery_id"
+    t.integer "protocol_id"
+  end
+
+  create_table "protocols_surgery_types", :id => false, :force => true do |t|
+    t.integer "surgery_type_id"
+    t.integer "protocol_id"
   end
 
   create_table "protocols_users", :id => false, :force => true do |t|

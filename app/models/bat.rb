@@ -203,7 +203,7 @@ class Bat < ActiveRecord::Base
 
   def exempt_from_flight
     if (self.medical_problems.current.length > 0) || self.species.hibernating || 
-        self.quarantine? || self.protocol_exempt || self.leave_date
+        self.quarantine? || self.has_surgeries || self.leave_date
       return true
     else
       return false
@@ -251,13 +251,8 @@ class Bat < ActiveRecord::Base
     return bats_not_flown
   end
 
-	def protocol_exempt
-		for p in self.protocols
-			if p.flight_exempt
-				return true
-			end
-		end
-		return false
+	def has_surgeries
+		!self.surgeries.empty?
 	end
 
   #bat is in quarantine if the species requires vaccination and the bat either

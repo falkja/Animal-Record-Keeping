@@ -4,6 +4,8 @@ class Protocol < ActiveRecord::Base
   has_many :allowed_bats
   has_and_belongs_to_many :data, :order => "name"
   has_and_belongs_to_many :users, :order => "name"
+  has_and_belongs_to_many :surgery_types, :order => "name"
+  has_and_belongs_to_many :surgeries, :order => "time desc"
   
   accepts_nested_attributes_for :allowed_bats
 		

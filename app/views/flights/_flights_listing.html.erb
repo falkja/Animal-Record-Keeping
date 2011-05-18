@@ -1,48 +1,53 @@
 <div id="f_entry_display">
-  
-<% if flights.length > 0 %>
 
-<% if flights.length != flights[0].bat.flight_dates(flights[0].date.year,flights[0].date.mon)[0].length %>
-  <div style="width:625px;margin-left:auto;margin-right:auto;text-align: center">
-    <%= link_to_remote "Show Full Month Listing", :url => 
-      {:action => :remote_flights_entry_list, :flights => flights[0].bat.flight_dates(flights[0].date.year,flights[0].date.mon)[1]}, 
-      :update => "f_entry_display" %>
-  </div>
-<% end %>
+  <% if flights.length > 0 %>
 
-<br />
+    <% if flights.length != flights[0].bat.flight_dates(flights[0].date.year,flights[0].date.mon)[0].length %>
+      <div style="width:625px;margin-left:auto;margin-right:auto;text-align: center">
+        <%= link_to_remote "Show Full Month Listing", :url => 
+          {:action => :remote_flights_entry_list, :flights => flights[0].bat.flight_dates(flights[0].date.year,flights[0].date.mon)[1]}, 
+          :update => "f_entry_display" %>
+      </div>
+    <% end %>
 
-  <table style="width:625px; margin-right:auto; margin-left:auto">
-    <th>Day</th>
-    <th>Reason</th>
-    <th>Note</th>
-    <th>User</th>
+    <br />
 
-    <% for flight in flights %>
-      <tr>
-        <td style="background-color:rgb(150,150,150)">
-          <% if flight.exempt %>
-            <span style="color:blue">
-          <% else %>
-            <span style="color:yellow">
-          <% end %>
-          <%= flight.date.strftime("%b %d, %Y") %>
-          </span>
-        </td>
-        <td>
-          <% if !flight.exempt %>
-            Bat flown
-          <% else %>
+    <table style="width:625px; margin-right:auto; margin-left:auto">
+      <th>Day</th>
+      <th>Reason</th>
+      <th>Note</th>
+      <th>User</th>
+
+      <% for flight in flights %>
+        <tr>
+          <td style="background-color:rgb(150,150,150)">
+            <% if flight.exempt %>
+              <span style="color:blue">
+              <% else %>
+                <span style="color:yellow">
+                <% end %>
+                <%= flight.date.strftime("%b %d, %Y") %>
+              </span>
+          </td>
+          <td>
+            <% if !flight.exempt %>
+              Bat flown
               <% if flight.cage %>
-                Flight cage: <%= link_to flight.cage.name, :controller => :cages, :action => :show, :id => flight.cage %><br>
+                <br />Flight cage: <%= link_to flight.cage.name, :controller => :cages, :action => :show, :id => flight.cage %><br>
               <% end %>
-
+            <% else %>
               <% if flight.medical_problem %>
                 Med. prob.: <%= link_to flight.medical_problem.title, :controller => :medical_problems, :action => :show, :id => flight.medical_problem %><br>
               <% end %>
 
-              <% if flight.protocol_exempt %>
-                Exempt by protocol<br>
+              <% if flight.has_surgery %>
+                Exempt by surgery <br>
+                <% for sg in flight.surgeries %>
+                  <%=h sg.surgery_type.name %>
+                  at <%=h sg.time %>
+                  by <%=h sg.user.initials %>
+                  <br />
+                <% end %>
               <% end %>
 
               <% if flight.species %>
@@ -52,22 +57,22 @@
               <% if flight.quarantine %>
                 Quarantine<br>
               <% end %>
-          <% end %>
+            <% end %>
 
-        </td>
+          </td>
 
-        <td><%=h flight.note %></td>
-        <td><%= link_to flight.user.initials, :controller => :users, :action=>:show, :id => flight.user %></td>
-        <td>
-          <%= button_to 'Destroy', { :action => 'destroy', :id => flight, :bat => flight.bat }, :confirm => 'Are you sure?', :method => :post %>
-        </td>
+          <td><%=h flight.note %></td>
+          <td><%= link_to flight.user.initials, :controller => :users, :action=>:show, :id => flight.user %></td>
+          <td>
+            <%= button_to 'Destroy', { :action => 'destroy', :id => flight, :bat => flight.bat }, :confirm => 'Are you sure?', :method => :post %>
+          </td>
 
 
-      </tr>
-    <% end %>
+        </tr>
+      <% end %>
 
-  </table>
+    </table>
 
-<% end %>
+  <% end %>
 
 </div>

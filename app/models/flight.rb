@@ -6,7 +6,7 @@ class Flight < ActiveRecord::Base
 	belongs_to :cage
 	belongs_to :medical_problem
 	belongs_to :species
-  belongs_to :protocol
+  has_and_belongs_to_many :surgeries, :order => "time desc"
 	
 	validates_presence_of :bat, :date
   
@@ -37,8 +37,10 @@ class Flight < ActiveRecord::Base
 					if bat.medical_problems.current.length > 0
 						flight.medical_problem = bat.med_problem_current_first_one_only
 					end
-					if bat.protocol_exempt
-						flight.protocol_exempt = 1
+					if bat.has_surgeries
+            print "bat.band"
+						flight.has_surgery = true
+            flight.surgeries = bat.surgeries
 					end
           if bat.quarantine?
             flight.quarantine = true
@@ -47,5 +49,6 @@ class Flight < ActiveRecord::Base
 				end
 			end
 		end
+    return
 	end
 end

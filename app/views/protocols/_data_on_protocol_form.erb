@@ -25,11 +25,15 @@
         </tr>
       <% end %>
     </table>
+  <% else %>
+    No data allowed on protocol.
   <% end %>
+
+  <br />
   <label for="data_name">Name: </label>
   <%= text_field :data, :name %>
   <%= button_to_remote "Add Data", :url => {:controller => :protocols, 
-    :action => 'remote_add_data', :id => protocol},
+    :action => 'remote_add_data', :prot => protocol},
     :with => "'name='+encodeURIComponent($F('data_name'))", 
     :update => 'data_list' %>
 </div>

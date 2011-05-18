@@ -25,10 +25,41 @@
 
 <p>
   <b>Data Collected:</b>
-    <% for datum in @protocol.data %>
-      <br /><%=h datum.name %>
-    <% end %>
+  <% for datum in @protocol.data %>
+    <br /><%=h datum.name %>
+  <% end %>
 </p>
+
+<p>
+  <b>Surgeries Associated with Protocol:</b>
+  <% for sg_t in @protocol.surgery_types %>
+    <br /><%=h sg_t.name %>
+  <% end %>
+</p>
+
+<% if !@protocol.surgery_types.empty? %>
+  <p>
+    <b>Surgeries Performed on Protocol:</b>
+    <% if @protocol.surgeries.empty? %>
+      No surgeries performed.
+    <% else %>
+    <table>
+      <th style="font-size: 10pt">Type</th>
+      <th style="font-size: 10pt">Bat</th>
+      <th style="font-size: 10pt">Time</th>
+      <th style="font-size: 10pt">User</th>
+      <% for sg in @protocol.surgeries %>
+        <tr>
+          <td><%=h sg.surgery_type.name %></td>
+          <td><%=h sg.bat.band %></td>
+          <td><%= nice_date_with_time sg.time %></td>
+          <td><%=h sg.user.name %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+  </p>
+<% end %>
 
 <p>
   <b>Start date:</b>
@@ -38,11 +69,6 @@
 <p>
   <b>End date:</b>
   <%=h @protocol.end_date %>
-</p>
-
-<p>
-  <b>Exempt from flight:</b>
-  <%=h @protocol.flight_exempt.to_s.capitalize %>
 </p>
 
 <p>
@@ -74,16 +100,16 @@
 
 <p>
   <b>Past bats:</b>
-  <table>
-    <% for bat in @past_bats %>
-      <tr>
-        <td><%= link_to bat.band, :controller => :bats, :action => :edit, :id => bat %></td>
-        <td>
-          Removed on: <%= (bat.protocol_histories.removed.length > 0) ? nice_date(bat.protocol_histories.removed[0].date) : "" %>
-        </td>
-      </tr>
-    <% end %>
-  </table>
+<table>
+  <% for bat in @past_bats %>
+    <tr>
+      <td><%= link_to bat.band, :controller => :bats, :action => :edit, :id => bat %></td>
+      <td>
+        Removed on: <%= (bat.protocol_histories.removed.length > 0) ? nice_date(bat.protocol_histories.removed[0].date) : "" %>
+      </td>
+    </tr>
+  <% end %>
+</table>
 </p>
 
 <p>

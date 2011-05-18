@@ -44,8 +44,7 @@ class ProtocolsController < ApplicationController
     @protocol.end_date = Date.civil(params[:protocol]["start_date(1i)"].to_i, params[:protocol]["start_date(2i)"].to_i, params[:protocol]["start_date(3i)"].to_i) + 3.years
     respond_to do |format|
       if @protocol.save
-        set_users_protocol(@protocol)
-        set_data_protocol(@protocol)
+        set_many_to_many_relationships(@protocol)
         format.html { redirect_to(@protocol, :notice => 'Protocol was successfully created.') }
         format.xml  { render :xml => @protocol, :status => :created, :location => @protocol }
       else
@@ -62,8 +61,7 @@ class ProtocolsController < ApplicationController
     @protocol.end_date = Date.civil(params[:protocol]["start_date(1i)"].to_i, params[:protocol]["start_date(2i)"].to_i, params[:protocol]["start_date(3i)"].to_i) + 3.years
     respond_to do |format|
       if @protocol.update_attributes(params[:protocol])
-        set_users_protocol(@protocol)
-        set_data_protocol(@protocol)
+        set_many_to_many_relationships(@protocol)
         format.html { redirect_to(@protocol, :notice => 'Protocol was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -185,6 +183,12 @@ class ProtocolsController < ApplicationController
     @protocol = Protocol.find(params[:id])
   end
 
+  def set_many_to_many_relationships(protocol)
+    set_users_protocol(protocol)
+    set_data_protocol(protocol)
+    set_surgery_types_protocol(protocol)
+  end
+  
   def set_users_protocol(protocol)
     users = Array.new
     params[:user_id].each{|id, checked| checked=='1' ? users << User.find(id) : ''}
@@ -195,6 +199,12 @@ class ProtocolsController < ApplicationController
     data = Array.new
     params[:datum_id].each{|id, checked| checked=='1' ? data << Datum.find(id) : ''}
     protocol.data = data
+  end
+  
+  def set_surgery_types_protocol(protocol)
+    surgery_types = Array.new
+    params[:surgery_type_id].each{|id, checked| checked=='1' ? surgery_types << SurgeryType.find(id) : ''}
+    protocol.surgery_types = surgery_types
   end
 
   def update_users_on_protocol
@@ -217,8 +227,8 @@ class ProtocolsController < ApplicationController
   end
   
   def remote_add_data
-    if params[:id] && params[:prot] != ''
-      protocol = Protocol.find(params[:id])
+    if params[:prot] && params[:prot] != ''
+      protocol = Protocol.find(params[:prot])
     else
       protocol = nil
     end
@@ -248,5 +258,43 @@ class ProtocolsController < ApplicationController
     
     render :partial => "data_on_protocol_form", :locals => {:protocol => protocol,
       :data => Datum.all}
+  end
+  
+  def remote_add_surgery_type
+    if params[:prot] && params[:prot] != ''
+      protocol = Protocol.find(params[:prot])
+    else
+      protocol = nil
+    end
+    
+    sg_t = SurgeryType.new
+    sg_t.name = params[:name]
+    sg_t.save
+    
+    flash.now[:surgery_notice]=
+        'Surgery type created'
+    
+    render :partial => "surgeries_on_protocol_form", :locals => 
+      {:protocol => protocol, :surgery_types => SurgeryType.all}
+  end
+  
+  def delete_surgery_type
+    if params[:prot] && params[:prot] != ''
+      protocol = Protocol.find(params[:prot])
+    else
+      protocol = nil
+    end
+    
+    sg_t = SurgeryType.find(params[:surgery_type])
+    
+    if !sg_t.protocols.empty? || !sg_t.surgeries.empty?
+      flash.now[:surgery_notice]=
+        'Surgery type associated with a protocol or surgeries, cannot delete'
+    else
+      sg_t.destroy
+    end
+    
+    render :partial => "surgeries_on_protocol_form", :locals => 
+      {:protocol => protocol, :surgery_types => SurgeryType.all}
   end
 end

@@ -162,6 +162,11 @@ class BatsController < ApplicationController
       flash[:notice] = 'Need to enter a surgery type'
       instance_vars_for_new_bat
       render :action => :new
+    elsif params[:surgery_type] && (SurgeryType.find(params[:surgery_type][:id]).protocols & 
+        bat.protocols).empty?
+      flash[:notice] = 'Add surgery type to the protocol of this bat'
+      instance_vars_for_new_bat
+      render :action => :new
     else
       params[:bat][:cage_id] != '0' ? @bat.leave_date = nil : ''
 
@@ -234,6 +239,11 @@ class BatsController < ApplicationController
       return
     elsif params[:surgery] && params[:surgery_type] == nil
       flash[:notice] = 'Select a surgery type'
+      redirect_to :back
+      return
+    elsif params[:surgery_type] && (SurgeryType.find(params[:surgery_type][:id]).protocols & 
+        Bat.find(params[:id]).protocols).empty?
+      flash[:notice] = 'Add surgery type to the protocol of this bat'
       redirect_to :back
       return
     end
@@ -714,8 +724,9 @@ class BatsController < ApplicationController
       bat = nil
     end
     
-    render :partial => 'surgery_type_form', :locals => {:bat => bat,
-        :show_submit_button => params[:show_submit_button], :show_surgery_type_form => !params[:show_surgery_type_form]} 
+    render :partial => 'surgery_type_form', :locals => {:bat => bat, 
+        :show_submit_button => params[:show_submit_button], 
+        :show_surgery_type_form => !params[:show_surgery_type_form]} 
   end
   
   def delete_surgery_type
@@ -726,8 +737,8 @@ class BatsController < ApplicationController
     end
     
     sg_type = SurgeryType.find(params[:id])
-    if sg_type.surgeries.length > 0
-      flash.now[:surgery_notice]='Surgery Type Already Has Surgeries'
+    if !sg_type.surgeries.empty? || !sg_type.protocols.empty?
+      flash.now[:surgery_notice]='Surgery type has surgeries or protocols, cannot delete'
     else
       sg_type.destroy
       flash.now[:surgery_notice]='Surgery Type Removed'
@@ -772,6 +783,12 @@ class BatsController < ApplicationController
       render :partial => 'form_surgery', :locals=>{:bat=>bat,
       :show_surgery_form => true, 
       :show_submit_button => params[:show_submit_button]}
+    elsif (SurgeryType.find(params[:surgery_type][:id]).protocols & 
+      bat.protocols).empty?
+      flash.now[:surgery_notice]='Add surgery type to the protocol of this bat'
+      render :partial => 'form_surgery', :locals=>{:bat=>bat,
+      :show_surgery_form => true, 
+      :show_submit_button => params[:show_submit_button]}
     else
       surgery = Surgery.new
       surgery.bat = bat
@@ -784,6 +801,7 @@ class BatsController < ApplicationController
         params[:surgery]["time(5i)"].to_i)
       surgery.note = params[:surgery][:note]
       surgery.user = User.find(session[:person])
+      surgery.protocols = surgery.surgery_type.protocols & bat.protocols
       surgery.save
       flash.now[:surgery_notice]='Surgery saved'
       render :partial => 'form_surgery', :locals=>{:bat=>bat, :show_surgery_form => false,
@@ -804,6 +822,7 @@ class BatsController < ApplicationController
       params[:surgery]["time(5i)"].to_i)
     surgery.note = params[:surgery][:note]
     surgery.user = User.find(session[:person])
+    surgery.protocols = surgery.surgery_type.protocols & @bat.protocols
     surgery.save
   end
   

@@ -18,10 +18,16 @@
   </p>
 
   <p>
-    Data allowed to be collected :<br />
+    Data allowed to be collected:<br />
   </p>
   <%= render :partial => 'protocols/data_on_protocol_form', :locals => 
     {:protocol => @protocol, :data => Datum.all, :show_submit => true} %>
+  
+  <p>
+    Surgery types allowed on protocol:
+  </p>
+    <%= render :partial => 'protocols/surgeries_on_protocol_form', :locals => 
+    {:protocol => @protocol, :surgery_types => SurgeryType.all, :show_submit => true} %>
   
   
   <p>
@@ -31,10 +37,6 @@
   <p>
     <%= f.label :end_date %><br />
     <em>[[3 years after start date]]</em>
-  </p>
-  <p>
-    <%= f.check_box :flight_exempt %>
-    <%= f.label :flight_exempt, "Exempt from flight (<em>e.g.</em> surgery protocol)" %>
   </p>
 
   <p>

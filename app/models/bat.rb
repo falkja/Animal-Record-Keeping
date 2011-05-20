@@ -184,7 +184,7 @@ class Bat < ActiveRecord::Base
   #returns the weight of the bat on or before date
   def weight_on(date)
     Weight.find(:first, :conditions => 
-        "bat_id = #{self.id} and YEAR(date) <= #{date.year} AND MONTH(date) <= #{date.month} AND DAY(date) <= #{date.day}")
+        ["bat_id = ? and date <= ?",self.id,date], :order => "date desc")
   end
   
   #returns true if the bat has a flight log on date

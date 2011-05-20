@@ -51,8 +51,14 @@ class MyMailer < ActionMailer::Base
               if flight.species
                 msg_body = msg_body + "    Hibernating: " + flight.species.name + "\n"
               end
-              if flight.protocol
-                msg_body = msg_body + "    Protocol Exempt: " + flight.protocol.title + "\n"
+              if flight.has_surgery
+                msg_body = msg_body + "    Surgery Exempt\n"
+                if !flight.surgeries.empty?
+                  for surgery in flight.surgeries
+                    msg_body = msg_body + "      " + surgery.surgery_type.name + " at " 
+                      + surgery.time + " by " + surgery.user.name + "\n"
+                  end
+                end
               end
               if flight.quarantine
                 msg_body = msg_body + "    In quarantine\n"

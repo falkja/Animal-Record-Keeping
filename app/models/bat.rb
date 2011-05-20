@@ -71,7 +71,9 @@ class Bat < ActiveRecord::Base
 	
 	def self.not_weighed(bats)
 		bats_not_weighed = Array.new
-		bats.each{|bat| ( bat.weights.recent && (bat.weights.recent.date < (Time.now - 7.days)) && bat.monitor_weight) ? bats_not_weighed << bat : ''}
+		bats.each{|bat| ( bat.weights.recent && (bat.weights.recent.date < 
+            (Time.now - 7.days)) && bat.monitor_weight) ? 
+            bats_not_weighed << bat : ''}
 		return bats_not_weighed
 	end
 	
@@ -181,12 +183,14 @@ class Bat < ActiveRecord::Base
   
   #returns the weight of the bat on or before date
   def weight_on(date)
-    Weight.find(:first, :conditions => "bat_id = #{self.id} and YEAR(date) <= #{date.year} AND MONTH(date) <= #{date.month} AND DAY(date) <= #{date.day}")
+    Weight.find(:first, :conditions => 
+        "bat_id = #{self.id} and YEAR(date) <= #{date.year} AND MONTH(date) <= #{date.month} AND DAY(date) <= #{date.day}")
   end
   
   #returns true if the bat has a flight log on date
   def flown_on(date)
-    f = Flight.find(:first, :conditions => ["bat_id = #{self.id} and date = ?", date])
+    f = Flight.find(:first, :conditions => ["bat_id = #{self.id} and date = ?", 
+        date])
     if f
       return true
     else
@@ -240,14 +244,17 @@ class Bat < ActiveRecord::Base
     bats_flight_cage = bats_flight_cage.sort_by{|b| b.band}
     return bats_flight_cage
   end
+  
+  def flown_enough?(date)
+    return self.exempt_from_flight || (self.flights.length >= 3 && 
+      ( self.flights[-3].date >= (date - 7.days) ) )
+  end
 
   def self.not_flown(bats)
     bats_not_flown = Array.new
-    bats.each{|bat| 
-      (bat.flights.length >= 3 &&
-          ( bat.flights[-3].date < (Date.today - 7.days) && !bat.exempt_from_flight) ?
-          bats_not_flown << bat : '')}
-    bats_not_flown = bats_not_flown.sort_by{|b| [b.cage.user_id, b.cage.name, b.band]}
+    bats.each{|bat| bat.flown_enough?(Date.today) ? '' : bats_not_flown << bat}
+    bats_not_flown = bats_not_flown.sort_by{|b| 
+      [b.cage.user_id, b.cage.name, b.band]}
     return bats_not_flown
   end
 
@@ -259,7 +266,8 @@ class Bat < ActiveRecord::Base
   #hasn't been vaccinated or the bat's vaccination date was within 30 days of today
   #and the bat isn't deactivated
   def quarantine?
-    if self.leave_date == nil && self.species.requires_vaccination && (!self.vaccination_date || self.vaccination_date >= (Date.today - 30.days))
+    if self.leave_date == nil && self.species.requires_vaccination && 
+        (!self.vaccination_date || self.vaccination_date >= (Date.today - 30.days))
       return true
     else
       return false
@@ -267,7 +275,8 @@ class Bat < ActiveRecord::Base
   end
   
   def med_problem_current_first_one_only
-    med_problem = MedicalProblem.find(:first, :conditions=>{:bat_id => self.id, :date_closed => nil}, :order => "date_opened")
+    med_problem = MedicalProblem.find(:first, :conditions=>{:bat_id => self.id, 
+        :date_closed => nil}, :order => "date_opened")
     return med_problem
   end
   
@@ -341,13 +350,13 @@ class Bat < ActiveRecord::Base
 
     #saving history of protocols removed
 		for p_removed in (self.protocols - protocols)
-        #create a protocol history
-        p_hist = ProtocolHistory.new
-        p_hist.bat = self
-        p_hist.protocol = p_removed
-        p_hist.added = false
-        p_hist.date = time_altered
-        p_hist.save
+      #create a protocol history
+      p_hist = ProtocolHistory.new
+      p_hist.bat = self
+      p_hist.protocol = p_removed
+      p_hist.added = false
+      p_hist.date = time_altered
+      p_hist.save
 		end
 
     #saving history of protocols added

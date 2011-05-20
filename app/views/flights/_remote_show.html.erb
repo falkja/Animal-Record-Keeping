@@ -29,7 +29,9 @@
   </tr>
 </table>
 
-<%= show_calendar :month => this_month.mon, :year => this_month.year, :highlight_today => false, :highlight_dates => flight_dates, :dates => dates %>
+<% dates = set_calendar_date_format(flights) %>
+
+<%= show_calendar :month => this_month.mon, :year => this_month.year, :highlight_today => highlight_today, :highlight_dates => flight_dates, :dates => dates %>
 
 <br />
 

@@ -66,6 +66,15 @@ class BatsController < ApplicationController
       :show_leave_date_and_reason => params[:show_leave_date_and_reason],
       :show_weigh_link => params[:show_weigh_link]}
 	end
+  
+  def sort_by_last_flown
+		bat_list = Bat.find(params[:ids])
+		bat_list = bat_list.sort_by{|bat| [bat.flights[-1].date, bat.band]}
+		render :partial => 'bat_list', :locals => {
+      :bat_list => bat_list, :div_id => params[:div_id],
+      :show_leave_date_and_reason => params[:show_leave_date_and_reason],
+      :show_weigh_link => params[:show_weigh_link]}
+	end
 	
   def sort_by_band
     bat_list = Bat.find(params[:ids], :order => 'band')

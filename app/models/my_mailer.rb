@@ -21,7 +21,8 @@ class MyMailer < ActionMailer::Base
 				msg_body = msg_body + "\nBat: " + bat.band
         msg_body = msg_body + "\nCage: " + bat.cage.name
 				msg_body = msg_body + "\nOwner: " + bat.cage.user.name
-				msg_body = msg_body + "\nLast weigh date: " + bat.weights.recent.date.strftime("%a, %b %d, %Y") + "\n"
+				msg_body = msg_body + "\nLast weigh date: " + 
+          bat.weights.recent.date.strftime("%a, %b %d, %Y") + "\n"
 			end
 			msg_body = msg_body + "\n*******************************************\n\n"
 			return msg_body
@@ -38,7 +39,7 @@ class MyMailer < ActionMailer::Base
         msg_body = msg_body + "\nCage: " + bat.cage.name
 				msg_body = msg_body + "\nOwner: " + bat.cage.user.name
 				msg_body = msg_body + "\nLast 3 flight dates: \n"
-        if bat.flights.length > 3
+        if bat.flights.length >= 3
           for flight in bat.flights[-3..-1].reverse
             msg_body = msg_body + "  " + flight.date.strftime("%a, %b %d, %Y") + "\n"
             if flight.exempt
@@ -55,8 +56,8 @@ class MyMailer < ActionMailer::Base
                 msg_body = msg_body + "    Surgery Exempt\n"
                 if !flight.surgeries.empty?
                   for surgery in flight.surgeries
-                    msg_body = msg_body + "      " + surgery.surgery_type.name + " at " 
-                      + surgery.time + " by " + surgery.user.name + "\n"
+                    msg_body = msg_body + "      " + surgery.surgery_type.name + " at " +
+                      nice_date_with_time(surgery.time) + " by " + surgery.user.name + "\n"
                   end
                 end
               end
@@ -115,9 +116,12 @@ class MyMailer < ActionMailer::Base
           msg_body = msg_body + "\nCage owner: " + task.cage.user.name
         end
 				if task.medical_treatment
-					msg_body = msg_body + "\nBat: " + task.medical_treatment.medical_problem.bat.band
-					msg_body = msg_body + "\nMedical Problem: " + task.medical_treatment.medical_problem.title
-					msg_body = msg_body + "\nMedical Problem Description: " + task.medical_treatment.medical_problem.description
+					msg_body = msg_body + "\nBat: " + 
+            task.medical_treatment.medical_problem.bat.band
+					msg_body = msg_body + "\nMedical Problem: " + 
+            task.medical_treatment.medical_problem.title
+					msg_body = msg_body + "\nMedical Problem Description: " + 
+            task.medical_treatment.medical_problem.description
 				end
 				msg_body = msg_body + "\nAssigned to: " 
         if (task.users.length > 0)

@@ -1,24 +1,47 @@
-
 <h3>Current Treatments:</h3>
 <div class="left_indent">
-<% if medical_problem.medical_treatments.current.length == 0 %>
-  <p>No treatments</p>
-	<%= link_to 'Add Treatment', :controller => :medical_treatments, :action => :new, :id => medical_problem %>
-<% else %>
-	<% for treatment in medical_problem.medical_treatments.current %>
-		<%= render :partial => 'medical_treatments/show_treatment', :locals => {:medical_treatment => treatment} %>
-	<% end %>
-<% end %>
+  <% if medical_problem.medical_treatments.current.length == 0 %>
+    <p>No treatments</p>
+    <%= link_to 'Add Treatment', :controller => :medical_treatments, :action => :new, :id => medical_problem %>
+  <% else %>
+    <table>
+      <th style="font-size: 11pt">Name</th>
+      <th style="font-size: 11pt">Start Date</th>
+      <th style="font-size: 11pt">End Date</th>
+      <% for treatment in medical_problem.medical_treatments.current %>
+        <tr>
+          <td>
+            <%= link_to treatment.title, :controller => 'medical_treatments', 
+              :action => 'show', :id => treatment %>
+          </td>
+          <td><%=h nice_date(treatment.date_opened) %></td>
+          <td><%=h nice_date(treatment.date_closed) %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
 </div>
 
 
 <h3>Expired Treatments:</h3>
-	<div class="left_indent">
-<% if medical_problem.medical_treatments.expired.length == 0 %>
-  <p>No treatments</p>
-<% else %>
-	<% for treatment in medical_problem.medical_treatments.expired %>
-		<%= render :partial => 'medical_treatments/show_treatment', :locals => {:medical_treatment => treatment} %>
-	<% end %>
-<% end %>
+<div class="left_indent">
+  <% if medical_problem.medical_treatments.expired.length == 0 %>
+    <p>No treatments</p>
+  <% else %>
+    <table>
+      <th style="font-size: 11pt">Name</th>
+      <th style="font-size: 11pt">Start Date</th>
+      <th style="font-size: 11pt">End Date</th>
+      <% for treatment in medical_problem.medical_treatments.expired %>
+        <tr>
+          <td>
+            <%= link_to treatment.title, :controller => 'medical_treatments', 
+              :action => 'show', :id => treatment %>
+          </td>
+          <td><%=h nice_date(treatment.date_opened) %></td>
+          <td><%=h nice_date(treatment.date_closed) %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
 </div>

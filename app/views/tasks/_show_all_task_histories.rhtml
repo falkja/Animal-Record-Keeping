@@ -1,34 +1,45 @@
 <h4>Task Histories</h4>
 
 <div class="left_indent">
-<% if task_histories.length == 0 %>
-  <p><b>This task has never been done</b></p>
+  <% if task_histories.length == 0 %>
+    <p><b>This task has never been done</b></p>
 
-<% else %>
-
-  <% for task_history in task_histories %>
-		<p>
-    <b>Task: </b><%= task_history.task.title %><br/>
-		<b>Date: </b><%= nice_date_with_dow_and_time(task_history.date_done) %><br/>
-		<% if task_history.fed != nil %>
-			<b>Fed: </b><%= task_history.fed %> grams<br/>
-		<% end %>
-		<% if task_history.weight != nil %>
-			<b>Weight: </b><%=h task_history.weight.weight %> g <%= (task_history.weight.after_eating == 'y') ? 'After Eating' : 'Before Eating' %> 
-      <% if task_history.weight.note != '' %>
-      <b>Weight note:</b> <%= task_history.weight.note%>
+  <% else %>
+    <table>
+      <th style="font-size: 11pt">Task</th>
+      <th style="font-size: 11pt">Date</th>
+      <th style="font-size: 11pt">Fed</th>
+      <th style="font-size: 11pt">Weight</th>
+      <th style="font-size: 11pt">Notes</th>
+      <th style="font-size: 11pt">User</th>
+      <% for task_history in task_histories %>
+        <tr>
+          <td><%=h task_history.task.title %></td>
+          <td><%= nice_date_with_dow_and_time(task_history.date_done) %></td>
+          <td>
+            <% if task_history.fed %>
+              <%= task_history.fed %> g
+            <% end %>
+          </td>
+          <td>
+            <% if task_history.weight != nil %>
+              <%=h task_history.weight.weight %> g <%= (task_history.weight.after_eating == 'y') ? 'After Eating' : 'Before Eating' %>
+              <% if task_history.weight.note != '' %>
+                <b>Weight note:</b> <%=h task_history.weight.note%>
+              <% end %>
+            <% end %>
+          </td>
+          <td>
+            <% if task_history.remarks != '' %>
+              <%=h task_history.remarks %><br/>
+            <% end %>
+          </td>
+          <td><%=h task_history.user.name %></td>
+          <td><%= link_to 'Edit', :controller => 'tasks', :action => 'edit_task_history', :id => task_history, :redirect_me => redirect_me %></td>
+        </tr>
       <% end %>
-      <br/>
-		<% end %>
-		<% if task_history.remarks != '' %>
-			<b>Remarks: </b><%= task_history.remarks %><br/>
-		<% end %>
-		<b>User: </b><%=h task_history.user.name %><br/>
-		<b><%= link_to 'Edit', :controller => 'tasks', :action => 'edit_task_history', :id => task_history, :redirect_me => redirect_me %></b><br/>
-		</p>
-		<hr width = "60%" align=LEFT />
-  <% end %>
+    </table>
 
-<% end %>
+  <% end %>
 
 </div>

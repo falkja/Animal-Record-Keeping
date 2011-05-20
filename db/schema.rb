@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110517193808) do
+ActiveRecord::Schema.define(:version => 20110520214438) do
 
   create_table "allowed_bats", :force => true do |t|
     t.integer  "protocol_id"
@@ -217,7 +217,7 @@ ActiveRecord::Schema.define(:version => 20110517193808) do
     t.datetime "date_done", :null => false
     t.text     "remarks",   :null => false
     t.integer  "user_id",   :null => false
-    t.integer  "fed"
+    t.float    "fed"
     t.integer  "weight_id"
   end
 

@@ -7,9 +7,10 @@
 <p><b>User:</b> <%= @task_history.user.name %></p>
 
 <% form_tag :action => 'update_task_history', :id => @task_history, :redirect_me => @redirect_me do %>
-	
-	<p><label for="task_history_remarks">Remarks</label><br />
-	<%= text_area 'task_history', 'remarks', :rows => 2  %></p>
-	
-	<%= submit_tag 'Edit' %>
+
+  <p><b><label for="task_history_remarks">Remarks:</label></b><br />
+    <%= text_area 'task_history', 'remarks', :rows => 3, :cols => 60  %>
+  </p>
+
+  <%= submit_tag 'Edit' %>
 <% end %>

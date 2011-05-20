@@ -20,14 +20,11 @@
 
     <td><%= text_field 'task', 'food', :size => 1, :autocomplete => 'off', :value => suggested_amount %> g</td>
     <td>
-      <%= radio_button_tag 'task[dish_type]', 'Small' %>
-      <%= label_tag "task[dish_type][small]", 'Small' %><br>
-      <%= radio_button_tag 'task[dish_type]', 'Medium' %>
-      <%= label_tag "task[dish_type][medium]", 'Medium' %><br>
-      <%= radio_button_tag 'task[dish_type]', 'Long' %>
-      <%= label_tag "task[dish_type][long]", 'Long' %><br>
-      <%= radio_button_tag 'task[dish_type]', 'Tray' %>
-      <%= label_tag "task[dish_type][tray]", 'Tray' %><br>
+      <% dish_types = Array.[]('Small','Medium','Long','Tray') %>
+      <% for dish_type in dish_types %>
+        <%= radio_button_tag 'task[dish_type]', dish_type %>
+        <%= label_tag "task[dish_type][#{dish_type.downcase}]", dish_type %><br />
+      <% end %>
       <%#= select_tag("task[dish_type]", options_for_select([["Small","Small"],["Medium","Medium"], ["Long","Long"],["Metal tray","Metal tray"]])) %>
     </td>
     <td><%= text_field 'task', 'dish_num', :size => 1, :autocomplete => 'off' %></td>

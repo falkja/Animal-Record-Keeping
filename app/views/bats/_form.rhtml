@@ -1,4 +1,5 @@
-<% form_for :bat, :url => {:action => @action, :id => @bat} do |f| %>
+<% form_for :bat, :url => {:action => @action, :id => @bat, 
+  :redirectme => redirectme} do |f| %>
 
   <%= f.error_messages %>
 

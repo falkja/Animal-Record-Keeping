@@ -350,6 +350,7 @@ class BatsController < ApplicationController
     @species = Species.find(:all)
     @protocols = Protocol.current
     @deactivating = true
+    @action = "deactivate_bat"
   end
   
   #the simplest way to handle cage leave event is like this
@@ -393,6 +394,7 @@ class BatsController < ApplicationController
     @cages = Cage.active
     @protocols = Protocol.current
     @reactivating = true
+    @action = "reactivate_bat"
   end
   
   #because now we need to choose a cage for the zombie bat!

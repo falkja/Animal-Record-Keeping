@@ -48,8 +48,9 @@ options_for_select([
 <%= text_field 'task', 'food', :size => 1, :autocomplete => 'off', :value => suggested_amount %> g
 </td>
 
-<td VALIGN=top><label for="dish_type"><b>Dish Type</b></label><br/>
-<%= select_tag("task[dish_type]", options_for_select([["Small","Small"],["Medium","Medium"], ["Long","Long"],["Metal tray","Metal tray"]])) %>
+<td VALIGN=top>
+  <label for="dish_type"><b>Dish Type</b></label><br/>
+  <%= select_tag("task[dish_type]", options_for_select([["Small","Small"],["Medium","Medium"], ["Long","Long"],["Tray","Tray"]])) %>
 </td>
 
 <td VALIGN=top><label for="dish_num"><b>Number of dishes</b></label><br/>

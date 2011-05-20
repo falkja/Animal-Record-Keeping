@@ -68,6 +68,28 @@ class Cage < ActiveRecord::Base
     end
   end
   
+  def flown_enough?
+    if self.bats.empty?
+      return true
+    else
+      flown_enoughs = self.bats.collect{|b| b.flown_enough?(Date.today + 1.day)}
+      if flown_enoughs.include?(false)
+        return false
+      end
+    end
+    return true
+  end
+  
+  def last_flown
+    if self.bats.empty?
+      return nil
+    else
+      dates = self.bats.collect{|b| b.flights.empty? ? nil : b.flights[-1].date}
+      dates.sort
+      return dates[0]
+    end
+  end
+  
   def any_bats_monitored
     any_monitored = false
     for bat in self.bats

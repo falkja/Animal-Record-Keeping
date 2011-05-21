@@ -54,8 +54,8 @@ module ApplicationHelper
   
   def set_calendar_date_format(flights)
     dates = Hash.new
-    flights.each{|f| dates[ f.date.strftime("%d").to_i ] = !f.exempt ?
-      "<a style='color:yellow' href=\"#\" onclick=\"new Ajax.Updater(\'f_entry_display\', \'/flights/remote_flights_entry_list?flight=" + f.id.to_s + "\', {asynchronous:true, evalScripts:true}); return false;\">" + f.date.strftime("%d").to_i.to_s + "</a>" : 
+    flights.each{|f| dates[ f.date.strftime("%d").to_i ] = f.exempt ?
+      "<a style='color:yellow' href=\"#\" onclick=\"new Ajax.Updater(\'f_entry_display\', \'/flights/remote_flights_entry_list?flight=" + f.id.to_s + "\', {asynchronous:true, evalScripts:true}); return false;\">" + f.date.strftime("%d").to_i.to_s + "</a>" :
       "<a style='color:blue ' href=\"#\" onclick=\"new Ajax.Updater(\'f_entry_display\', \'/flights/remote_flights_entry_list?flight=" + f.id.to_s + "\', {asynchronous:true, evalScripts:true}); return false;\">" + f.date.strftime("%d").to_i.to_s + "</a>"
     }
     return dates

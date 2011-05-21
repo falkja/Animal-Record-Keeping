@@ -17,9 +17,15 @@
       <tr>
 
         <td><b>
-            <%= link_to bat.band, {:controller => :flights, :action => :show, :id => bat},
-              :onmouseover => remote_function(:update => "cal",
-              :url => {:action => :remote_show, :id => bat, :this_month => Date.today}) %></b></td>
+            <span style="<%= bat.flown_enough?(Date.today) ? "" : "color:red" %>">
+              [
+              <%= link_to bat.band, {:controller => :flights, :action => :show, :id => bat},
+                :onmouseover => remote_function(:update => "cal",
+                :url => {:action => :remote_show, :id => bat, :this_month => Date.today}) %>
+              ]
+            </span>
+          </b>
+        </td>
         <td>
           <% if bat.leave_date != nil %>
             <%= nice_date bat.leave_date %>

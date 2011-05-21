@@ -12,7 +12,7 @@
     <th>Number</th>
     <th>Summary</th>
     <th>Bats</th>
-    <th>Start date</th>
+    <th>Surgeries</th>
     <th>End date</th>
   </tr>
 
@@ -25,15 +25,23 @@
         </td>
       <% end %>
       <td style="text-align:left;width:250px"><b><label for='protocol_id_<%=protocol.id %>' >
-        <span title='Bats: <% for b in protocol.bats %>&#13; <%=b.band%><% end %>'>
-            <%=h protocol.title %></span></label></b></td>
+            <span title='Bats: <% for b in protocol.bats %>&#13; <%=b.band%><% end %>'>
+              <%=h protocol.title %></span></label></b></td>
       <td><%= link_to protocol.number, protocol %></td>
       <td style="text-align: left;width:250px"><label for='protocol_id_<%=protocol.id %>' ><%=h simple_format protocol.summary %></label></td>
       <td>
         <%= render :partial => 'protocols/protocol_table_allowed_current_bats',
-        :locals =>{:protocol => protocol} %>
+          :locals =>{:protocol => protocol} %>
       </td>
-      <td><label for='protocol_id_<%=protocol.id %>' ><%=nice_date_no_day protocol.start_date %></label></td>
+      <td>
+        <% if protocol.surgery_types.empty? %>
+          NA
+        <% else %>
+          <% for s in protocol.surgery_types %>
+            <%= s.name %><br />
+          <% end %>
+        <% end %>
+      </td>
       <td><label for='protocol_id_<%=protocol.id %>' ><%=nice_date_no_day protocol.end_date %></label></td>
       <% unless selecting%>
         <td><%= button_to 'Edit', edit_protocol_path(protocol), {:method => :get} %></td>

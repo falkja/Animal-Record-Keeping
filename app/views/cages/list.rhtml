@@ -9,6 +9,7 @@ Listing current cages
 <%= button_to 'New Cage', :action => 'new' %> | 
 <%= link_to "List My Cages", :controller => :cages, :action => :list, :cages => User.find(session[:person]).cages.active %> | 
 <%= link_to "List Current Cages", :controller => 'cages', :action => 'list' %> | 
+<%= link_to "List Deactivated Cages", :controller => 'cages', :action => 'list_deactivated' %> | 
 <%= link_to "List All Cages", :controller => 'cages', :action => 'list_all' %>
 
 <hr />

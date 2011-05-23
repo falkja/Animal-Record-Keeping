@@ -17,7 +17,9 @@
       :url =>{ :controller => 'cages', :action => 'list_by_weigh_date', :ids => cage_list, :div => @div_id, :weighing => @weighing, :list_all => @list_all } %>
   </th>
   <th>
-    Flown
+    <%= link_to_remote "Flown",
+      :update => @div_id,
+      :url =>{ :controller => 'cages', :action => 'list_by_flown', :ids => cage_list, :div => @div_id, :weighing => @weighing, :list_all => @list_all } %>
   </th>
   <th>
     <%= link_to_remote "Owner",

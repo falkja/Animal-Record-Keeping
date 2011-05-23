@@ -84,9 +84,14 @@ class Cage < ActiveRecord::Base
     if self.bats.empty?
       return nil
     else
-      dates = self.bats.collect{|b| b.flights.empty? ? nil : b.flights[-1].date}
-      dates.sort
-      return dates[0]
+      dates = Array.new
+      self.bats.each{|b| b.flights.empty? ? '' : dates << b.flights[-1].date}
+      if dates.length > 0
+        sorted_dates = dates.sort
+        return sorted_dates[0]
+      else
+        return nil
+      end
     end
   end
   

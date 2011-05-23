@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110520214438) do
+ActiveRecord::Schema.define(:version => 20110523180507) do
 
   create_table "allowed_bats", :force => true do |t|
     t.integer  "protocol_id"
@@ -20,18 +20,20 @@ ActiveRecord::Schema.define(:version => 20110520214438) do
   end
 
   create_table "bat_changes", :force => true do |t|
-    t.integer "bat_id",               :null => false
-    t.date    "date",                 :null => false
-    t.integer "user_id"
-    t.integer "new_cage_id"
-    t.integer "old_cage_id"
-    t.integer "owner_old_id"
-    t.integer "owner_new_id"
-    t.integer "cage_in_history_id"
-    t.integer "medical_treatment_id"
-    t.text    "note"
-    t.string  "old_band_name"
-    t.string  "new_band_name"
+    t.integer  "bat_id",               :null => false
+    t.date     "date",                 :null => false
+    t.integer  "user_id"
+    t.integer  "new_cage_id"
+    t.integer  "old_cage_id"
+    t.integer  "owner_old_id"
+    t.integer  "owner_new_id"
+    t.integer  "cage_in_history_id"
+    t.integer  "medical_treatment_id"
+    t.text     "note"
+    t.string   "old_band_name"
+    t.string   "new_band_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "bat_notes", :force => true do |t|

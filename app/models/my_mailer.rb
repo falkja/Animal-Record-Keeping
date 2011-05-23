@@ -104,6 +104,35 @@ class MyMailer < ActionMailer::Base
 		end
   end
 	
+  def self.create_msg_for_bats_added_removed(bats)
+    #use bat changes instead by looking at the timestamps...
+    todays_changes = BatChange.find(:all, :conditions => ['(updated_at >= ? AND updated_at < ?) AND (bat_id IN (?)) AND ((new_cage_id is null and old_cage_id is not null) OR (new_cage_id is not null and old_cage_id is null) )',
+        Date.today.to_time, (Date.today + 1.day).to_time, bats])
+    todays_changes.sort_by{|ch| ch.bat.band}
+    if todays_changes.empty?
+      return ''
+    else
+      msg_body = "The following bats have been added or removed:\n"
+      for ch in todays_changes
+        if ch.old_cage_id
+          rel_text = "Removed: "
+          cage = Cage.find(ch.old_cage_id)
+        end
+        if ch.new_cage_id
+          rel_text = "Added: "
+          cage = Cage.find(ch.new_cage_id)
+        end
+        msg_body = msg_body + "\n#{rel_text}" + ch.bat.band
+        msg_body = msg_body + "\n  Cage: " + cage.name
+        msg_body = msg_body + "\n  Owner: " + cage.user.name
+        msg_body = msg_body + "\n  Date Actually Removed: " + ch.date.strftime("%b %d, %Y")
+        msg_body = msg_body + "\n  Action by: " + ch.user.name
+      end
+      msg_body = msg_body + "\n*******************************************\n\n"
+			return msg_body
+		end
+  end
+     
 	def self.create_msg_for_tasks_not_done(tasks_not_done)
 		if tasks_not_done.length > 0
       msg_body = "This is a warning email to notify you that the following tasks were not completed:\n\n"
@@ -175,7 +204,7 @@ class MyMailer < ActionMailer::Base
           greeting = "Hi " + user.name + ",\n\n"
           greeting = greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
           msg_body = MyMailer.create_msg_body(users_tasks_not_done,
-            users_bats_not_weighed,users_bats_not_flown,users_protocol_changes)
+            users_bats_not_weighed,users_bats_not_flown,users_protocol_changes,user.bats)
           salutation = "Faithfully yours, etc."
           MyMailer.deliver_mail(user.email, "tasks not done today", greeting + msg_body + salutation)
         end
@@ -194,17 +223,18 @@ class MyMailer < ActionMailer::Base
 		if (tasks_not_done.length > 0) || (bats_not_weighed.length > 0) || (protocol_changes.length > 0)
 			greeting = "Administrator(s),\n\n"
       greeting = greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
-      msg_body = MyMailer.create_msg_body(tasks_not_done,bats_not_weighed,bats_not_flown,protocol_changes)
+      msg_body = MyMailer.create_msg_body(tasks_not_done,bats_not_weighed,bats_not_flown,protocol_changes,Bat.all)
 			salutation = "Faithfully yours, etc."
 			MyMailer.deliver_mass_mail(admin_emails, "tasks not done today", greeting + msg_body + salutation)
 		end
 	end
 
-  def self.create_msg_body(tasks_not_done,bats_not_weighed,bats_not_flown,protocol_changes)
+  def self.create_msg_body(tasks_not_done,bats_not_weighed,bats_not_flown,protocol_changes,bats)
     msg_body = MyMailer.create_msg_for_tasks_not_done(tasks_not_done)
     msg_body = msg_body + MyMailer.create_msg_for_bats_not_weighed(bats_not_weighed)
     msg_body = msg_body + MyMailer.create_msg_for_bats_not_flown(bats_not_flown)
     msg_body = msg_body + MyMailer.create_msg_for_protocol_changes(protocol_changes)
+    msg_body = msg_body + MyMailer.create_msg_for_bats_added_removed(bats)
     return msg_body
   end
 end

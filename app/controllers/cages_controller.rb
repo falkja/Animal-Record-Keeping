@@ -5,16 +5,23 @@ class CagesController < ApplicationController
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
   verify :method => :post, :only => [ :destroy, :create, :update ],
-         :redirect_to => { :action => :list }
+    :redirect_to => { :action => :list }
 
   def list
-	if params[:cages]
-		@cages = Cage.find(params[:cages])
-	else
-		@cages = Cage.find(:all, :conditions => 'date_destroyed is null', :order => 'name')
-	end
+    if params[:cages]
+      @cages = Cage.find(params[:cages])
+    else
+      @cages = Cage.find(:all, :conditions => 'date_destroyed is null', :order => 'name')
+    end
     @list_all = false
     @div_id = 'cages_div'
+  end
+  
+  def list_deactivated
+    @cages = Cage.find(:all, :conditions => 'date_destroyed is not null', :order => 'name')
+    @list_all = false
+    @div_id = 'cages_div'
+    render :action => 'list'
   end
   
   def list_all
@@ -24,57 +31,58 @@ class CagesController < ApplicationController
     render :action => 'list'
   end
   
-  def list_by_name
-    @cages = Cage.find(params[:ids], :order => 'name')
+  def initialize_values_for_list
     @div_id = params[:div]
     @weighing = params[:weighing]
     @list_all = params[:list_all]
+  end
+  
+  def list_by_name
+    @cages = Cage.find(params[:ids], :order => 'name')
+    initialize_values_for_list
     render :partial => 'cage_list', :locals => {:cage_list => @cages}
   end
   
   def list_by_room
     @cages = Cage.find(params[:ids])
     @cages = @cages.sort_by{|cage| [cage.room.name, cage.name]}
-    @div_id = params[:div]
-    @weighing = params[:weighing]
-    @list_all = params[:list_all]
+    initialize_values_for_list
     render :partial => 'cage_list', :locals => {:cage_list => @cages}
   end
   
   def list_by_owner
     @cages = Cage.find(params[:ids])
     @cages = @cages.sort_by{|cage| [cage.user.name, cage.name]}
-    @div_id = params[:div]
-    @weighing = params[:weighing]
-    @list_all = params[:list_all]
+    initialize_values_for_list
     render :partial => 'cage_list', :locals => {:cage_list => @cages}
   end
   
   def list_by_bats
     @cages = Cage.find(params[:ids], :order => 'user_id, name')
     @cages = @cages.sort_by{|cage| [-cage.bats.count, cage.name]}
-    @div_id = params[:div]
-    @weighing = params[:weighing]
-    @list_all = params[:list_all]
+    initialize_values_for_list
     render :partial => 'cage_list', :locals => {:cage_list => @cages}
   end
 
   def list_by_bat_weight
     @cages = Cage.find(params[:ids], :order => 'user_id, name')
     @cages = @cages.sort_by{|cage| [cage.average_bat_weight, cage.name]}
-    @div_id = params[:div]
-    @weighing = params[:weighing]
-    @list_all = params[:list_all]
+    initialize_values_for_list
     render :partial => 'cage_list', :locals => {:cage_list => @cages}
   end
   
   def list_by_weigh_date
-	@cages = Cage.find(params[:ids], :order => 'user_id, name')
-	
-    @cages = @cages.sort_by{|cage| [cage.last_weigh_date.to_f, cage.name]}
-    @div_id = params[:div]
-    @weighing = params[:weighing]
-    @list_all = params[:list_all]
+    @cages = Cage.find(params[:ids], :order => 'user_id, name')
+	  @cages = @cages.sort_by{|cage| [cage.last_weigh_date.to_f, cage.name]}
+    initialize_values_for_list
+    render :partial => 'cage_list', :locals => {:cage_list => @cages}
+  end
+  
+  def list_by_flown
+    @cages = Cage.find(params[:ids], :order => 'user_id, name')
+    @cages = @cages.sort_by{|cage| 
+      [(cage.last_flown == nil ? 0 : cage.last_flown.to_time.to_f), cage.name]}
+    initialize_values_for_list
     render :partial => 'cage_list', :locals => {:cage_list => @cages}
   end
   
@@ -94,22 +102,22 @@ class CagesController < ApplicationController
     @cage = Cage.new
     @deactivating = false
     @rooms = Room.find(:all, :order => 'name')
-	if @rooms.length == 0
-		flash[:notice] = 'New cages need a room.  Create a room before creating a cage.'
-		redirect_to :controller => 'rooms', :action => :new
-	end
+    if @rooms.length == 0
+      flash[:notice] = 'New cages need a room.  Create a room before creating a cage.'
+      redirect_to :controller => 'rooms', :action => :new
+    end
   end
 
   def create
-      @cage = Cage.new(params[:cage])
-      @cage.date_destroyed = nil
+    @cage = Cage.new(params[:cage])
+    @cage.date_destroyed = nil
 
-      if @cage.save
-        flash[:notice] = 'Cage was successfully created.'
-        redirect_to :controller => 'cages', :action => :show, :id => @cage
-      else
-        render :action => 'new'
-      end
+    if @cage.save
+      flash[:notice] = 'Cage was successfully created.'
+      redirect_to :controller => 'cages', :action => :show, :id => @cage
+    else
+      render :action => 'new'
+    end
   end
 
   def edit
@@ -182,15 +190,15 @@ class CagesController < ApplicationController
   end
 
   def choose_cage_to_weigh
-	if params[:cages]
-		@cages = Cage.find(params[:cages], :order => "name")
-	else
-		@all_cages = Cage.active
-		@cages = Array.new
-		for cage in @all_cages
-		  (cage.bats.count > 0) ? @cages << cage : ''
-		end
-	end
+    if params[:cages]
+      @cages = Cage.find(params[:cages], :order => "name")
+    else
+      @all_cages = Cage.active
+      @cages = Array.new
+      for cage in @all_cages
+        (cage.bats.count > 0) ? @cages << cage : ''
+      end
+    end
   end
 
   def weigh_cage

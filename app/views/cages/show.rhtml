@@ -14,38 +14,33 @@
 <hr />
 
 <p>
-  <b>Owner: </b><%= @cage.user ? @cage.user.name : 'NP' %>
-</p>
-
-<p>
-  <b>Room: </b><%= @cage.room.name %>
-</p>
-
-<p>
-  <b>Bats: </b><%= @cage.bats.count %>
-</p>
-
-<% average_bat_weight = @cage.average_bat_weight %>
-<p>
-  <b>Average Weight: </b><%= average_bat_weight %> g
-</p>
-
-<p>
+  <b>Owner: </b><%= @cage.user ? 
+    link_to(@cage.user.name, :controller => :users, :action => :show, :id => @cage.user) :
+    'NP' %>
+  |
+  <b>Room: </b><%= link_to @cage.room.name, :controller => :rooms, :action => :show, :id => @cage.room %>
+  |
   <b>Date Created: </b><%= nice_date @cage.date_created %>
-</p>
-
-<p>
+  |
   <b>Flight Cage: </b><%= @cage.flight_cage.to_s.capitalize %>
 </p>
 
 <p>
+  <b>Bats: </b><%= link_to @cage.bats.count, :controller => :bats, :action => :list, :bats => @cage.bats %>
+  |
   <b>Species: </b>
   <em>
     <% for species in @cage.species.uniq %>
       <%= link_to species.name, :controller => :species, :action => :show, :id => species %>
     <% end %>
   </em>
+
+  |
+  <% average_bat_weight = @cage.average_bat_weight %>
+
+  <b>Average Weight: </b><%= average_bat_weight %> g
 </p>
+
 
 
 <% if @cage.date_destroyed != nil %>

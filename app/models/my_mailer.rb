@@ -31,6 +31,33 @@ class MyMailer < ActionMailer::Base
 		end
 	end
 
+  #gives one week to vaccinate, then sends emails listing each bat that
+  #isn't vaccinated
+  def self.create_msg_for_bats_not_vaccinated(bats)
+		vacc_species = Species.find(:all, :conditions => {:requires_vaccination => true})
+    b_not_vacc = Bat.find(:all,
+      :conditions => ['id IN (?) AND vaccination_date is null AND species_id IN (?) AND collection_date < ? AND monitor_vaccination is true',
+        bats,vacc_species,(Date.today - 1.week)])
+    if b_not_vacc.empty?
+      return ''
+    else
+			msg_body = "The following bats have not been vaccinated:\n"
+			for bat in b_not_vacc
+				msg_body = msg_body + "\nBat: " + bat.band
+        if bat.cage
+          msg_body = msg_body + "\nCage: " + bat.cage.name
+          msg_body = msg_body + "\nOwner: " + bat.cage.user.name
+        end
+				msg_body = msg_body + "\nCollected: " +
+          bat.collection_date.strftime("%b %d, %Y")
+        msg_body = msg_body + "\nVaccination overdue by: " +
+          (Date.today - bat.collection_date - 7).to_s + " days\n"
+			end
+			msg_body = msg_body + "\n*******************************************\n\n"
+			return msg_body
+		end
+	end
+
   def self.create_msg_for_bats_not_flown(bats)
 		if bats.length > 0
 			msg_body = "The following bats have not been flown at least 3 times in the last week:\n"
@@ -223,7 +250,7 @@ class MyMailer < ActionMailer::Base
 		if (tasks_not_done.length > 0) || (bats_not_weighed.length > 0) || (protocol_changes.length > 0)
 			greeting = "Administrator(s),\n\n"
       greeting = greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
-      msg_body = MyMailer.create_msg_body(tasks_not_done,bats_not_weighed,bats_not_flown,protocol_changes,Bat.all)
+      msg_body = MyMailer.create_msg_body(tasks_not_done,bats_not_weighed,bats_not_flown,protocol_changes,Bat.active)
 			salutation = "Faithfully yours, etc."
 			MyMailer.deliver_mass_mail(admin_emails, "tasks not done today", greeting + msg_body + salutation)
 		end
@@ -233,6 +260,7 @@ class MyMailer < ActionMailer::Base
     msg_body = MyMailer.create_msg_for_tasks_not_done(tasks_not_done)
     msg_body = msg_body + MyMailer.create_msg_for_bats_not_weighed(bats_not_weighed)
     msg_body = msg_body + MyMailer.create_msg_for_bats_not_flown(bats_not_flown)
+    msg_body = msg_body + MyMailer.create_msg_for_bats_not_vaccinated(bats)
     msg_body = msg_body + MyMailer.create_msg_for_protocol_changes(protocol_changes)
     msg_body = msg_body + MyMailer.create_msg_for_bats_added_removed(bats)
     return msg_body

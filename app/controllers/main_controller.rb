@@ -97,7 +97,7 @@ class MainController < ApplicationController
 
     @msg_body = MyMailer.create_msg_body(Task.tasks_not_done_today(Task.today),
       Bat.not_weighed(Bat.active),Bat.not_flown(Bat.active),ProtocolHistory.todays_histories,
-      Bat.all)
+      Bat.active)
 
     if session[:person]
       @subject = "Batkeeping email from: " + User.find(session[:person]).name

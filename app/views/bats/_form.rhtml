@@ -61,7 +61,11 @@
       :show_submit_button => false} %>
   </div>
 
-  <br />
+  <p>
+    <%= f.check_box :monitor_vaccination, :checked => @bat.monitor_vaccination %>
+    <%= f.label :monitor_vaccination, "Send emails if not vaccinated in time?" %>
+  </p>
+
   Surgery:
   <%= render :partial=>'form_surgery', :locals =>{:bat => @bat,
     :show_surgery_form=> false, :show_submit_button => false} %>

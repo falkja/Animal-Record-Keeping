@@ -31,10 +31,10 @@
 <p>
   <b>Cage: </b>
   <% if @bat.cage %>
-    <%= link_to @bat.cage.name, :controller => 'cages', :action => 'show', :id => @bat.cage %> | 
+    <%= link_to @bat.cage.name, :controller => 'cages', :action => 'show', :id => @bat.cage %> |
     <b>Owner: </b>
     <%= link_to @bat.user.name, :controller => :users, :action => :show, :id => @bat.user %>
-    <% else %>
+  <% else %>
     <%= 'Inactive' %>
   <% end %>
 </p>
@@ -91,7 +91,16 @@
     <b>Weight Monitored:</b>
     Emails will <em>not</em> be sent out if bat is not weighed often enough
   </p>
-<% end %><p>
+<% end %>
+
+<% if !@bat.monitor_vaccination %>
+  <p>
+    <b>Vaccination Monitored:</b>
+    Emails will <em>not</em> be sent out if bat is not vaccinated
+  </p>
+<% end %>
+
+<p>
   <b>Protocols: </b>
 <table>
   <% for protocol in @bat.protocols %>
@@ -105,7 +114,7 @@
 
 <h3>Protocol Histories</h3>
 <div class='left_indent'>
-  <%= render :partial => 'show_bat_protocol_histories', 
+  <%= render :partial => 'show_bat_protocol_histories',
     :locals => {:histories => @bat.protocol_histories } %>
 </div>
 
@@ -171,10 +180,10 @@
         <tr>
           <td>Deactivated Bat</td>
           <% if @bat.cage_out_histories[0] %>
-          <td><%=h @bat.cage_out_histories[0].cage.name %></td>
-          <td><%=h nice_date @bat.cage_out_histories[0].date %></td>
-          <td><%=h @bat.cage_out_histories[0].note %></td>
-          <td><%=h @bat.cage_out_histories[0].user.initials %></td>
+            <td><%=h @bat.cage_out_histories[0].cage.name %></td>
+            <td><%=h nice_date @bat.cage_out_histories[0].date %></td>
+            <td><%=h @bat.cage_out_histories[0].note %></td>
+            <td><%=h @bat.cage_out_histories[0].user.initials %></td>
           <% end %>
         </tr>
       <% end %>
@@ -185,7 +194,7 @@
               :action => :show, :id => cih.cage %></td>
           <% if cih.cage_out_history %>
             <td><%= link_to cih.cage_out_history.cage.name, :controller => :cages,
-              :action => :show, :id => cih.cage_out_history.cage %></td>
+                :action => :show, :id => cih.cage_out_history.cage %></td>
           <% else %>
             <td>-</td>
           <% end %>

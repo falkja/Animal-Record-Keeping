@@ -122,17 +122,5 @@ class MainController < ApplicationController
     flash[:notice] = 'Email Sent'
     redirect_to :action => 'user_summary_page', :id => User.find(session[:person])
   end
-    
-  def random_trial_sequence_generator
-    @random_numbers = Array.new
-    for i in 0..22
-      rand_num = rand(2)
-      if i >= 3 && (rand_num == @random_numbers[i-1]) && (rand_num == @random_numbers[i-2]) && (rand_num == @random_numbers[i-3])
-        @random_numbers[i] = (rand_num - 1).abs
-      else
-        @random_numbers[i] = rand_num
-      end
-    end
-  end
   
 end

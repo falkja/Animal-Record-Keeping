@@ -17,6 +17,8 @@
 No bat changes this month
 <% else %>
 
-<%= render :partial => 'bats/show_bat_changes', :locals => {:bat_changes => @bat_changes, :single_bat => false} %>
+<%= render :partial => 'bats/show_bat_changes', 
+  :locals => {:bat_changes => @bat_changes, :protocol_histories => @protocol_histories,
+  :single_bat => false} %>
 
 <% end %>

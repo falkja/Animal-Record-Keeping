@@ -209,7 +209,8 @@
 
 <h3>Bat Changes</h3>
 <div class='left_indent'>
-  <%= render :partial => 'show_bat_changes', :locals => {:bat_changes => @bat_changes, :single_bat => true} %>
+  <%= render :partial => 'show_bat_changes', :locals => {:bat_changes => @bat_changes,
+    :protocol_histories => @protocol_histories, :single_bat => true} %>
 </div>
 
 <%= render :partial => 'display_weights', :locals => {:bat => @bat} %>

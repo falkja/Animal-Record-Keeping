@@ -32,65 +32,69 @@
 
 
     <% odd = false %>
-    <% for bat_change in bat_changes %>
+    <% bcdates = bat_changes.collect{|bc| bc.date} %>
+    <% prhistdates = protocol_histories.collect{|ph| ph.date.to_date} %>
+    <% dates = ((bcdates + prhistdates).uniq).sort %>
+    <% for date in dates %>
+      <% bcdates.index(date) == nil ? bat_change = nil : bat_change = bat_changes[bcdates.index(date)] %>
       <% odd = !odd %>
-      <% if odd %>
-        <tr class='striped'>
-      <% else %>
-        <tr>
-      <% end %>
+      <% odd ? str ='striped' : str='' %>
+        <tr class="<%=h str%>">
+        <% if bat_change %>
 
-      <td><%= bat_change.date.strftime("%b %d, %Y") %></td>
-      <%= single_bat ? '' : '<td>' + (link_to bat_change.bat.band, :controller => :bats, :action => :show, :id => bat_change.bat) + '</td>' %>
-      <td><%= bat_change.bat.weight_on(bat_change.date) ? bat_change.bat.weight_on(bat_change.date).weight.to_s + ' g' : 'NA' %></td>
+          <td><%= bat_change.date.strftime("%b %d, %Y") %></td>
+          <%= single_bat ? '' : '<td>' + (link_to bat_change.bat.band, :controller => :bats, :action => :show, :id => bat_change.bat) + '</td>' %>
+          <td><%= bat_change.bat.weight_on(bat_change.date) ? bat_change.bat.weight_on(bat_change.date).weight.to_s + ' g' : 'NA' %></td>
 
-      <td>
-        <%= bat_change.old_cage_id ? (link_to Cage.find(bat_change.old_cage_id).name, :controller => :cages, :action => :show, :id => bat_change.old_cage_id) : 
-          (bat_change.new_cage_id ? 'New Bat' : '') %>
-      </td>
-      <td>
-        <%= bat_change.new_cage_id ? (link_to Cage.find(bat_change.new_cage_id).name, :controller => :cages, :action => :show, :id => bat_change.new_cage_id) : 
-          (bat_change.old_cage_id ? 'Deactivated' : '') %>
-      </td>
+          <td>
+            <%= bat_change.old_cage_id ? (link_to Cage.find(bat_change.old_cage_id).name, :controller => :cages, :action => :show, :id => bat_change.old_cage_id) :
+              (bat_change.new_cage_id ? 'New Bat' : '') %>
+          </td>
+          <td>
+            <%= bat_change.new_cage_id ? (link_to Cage.find(bat_change.new_cage_id).name, :controller => :cages, :action => :show, :id => bat_change.new_cage_id) :
+              (bat_change.old_cage_id ? 'Deactivated' : '') %>
+          </td>
 
-      <td>
-        <%= bat_change.owner_old_id ? (link_to User.find(bat_change.owner_old_id).initials, :controller => :users, :action => :show, :id => User.find(bat_change.owner_old_id)) : '' %>
-      </td>
+          <td>
+            <%= bat_change.owner_old_id ? (link_to User.find(bat_change.owner_old_id).initials, :controller => :users, :action => :show, :id => User.find(bat_change.owner_old_id)) : '' %>
+          </td>
 
-      <td>
-        <%= bat_change.owner_new_id ? (link_to User.find(bat_change.owner_new_id).initials, :controller => :users, :action => :show, :id => User.find(bat_change.owner_new_id)) : '' %>
-      </td>
+          <td>
+            <%= bat_change.owner_new_id ? (link_to User.find(bat_change.owner_new_id).initials, :controller => :users, :action => :show, :id => User.find(bat_change.owner_new_id)) : '' %>
+          </td>
 
-      <td>
-        <%= bat_change.old_band_name ? bat_change.old_band_name : '' %>
-      </td>
+          <td>
+            <%= bat_change.old_band_name ? bat_change.old_band_name : '' %>
+          </td>
 
-      <td>
-        <%= bat_change.new_band_name ? bat_change.new_band_name : '' %>
-      </td>
+          <td>
+            <%= bat_change.new_band_name ? bat_change.new_band_name : '' %>
+          </td>
 
-      <td>
-        <%= bat_change.medical_treatment_id ? (link_to MedicalTreatment.find(bat_change.medical_treatment_id).title, :controller => :medical_treatments, :action => :show, :id => bat_change.medical_treatment_id) : '' %>
-      </td>
+          <td>
+            <%= bat_change.medical_treatment_id ? (link_to MedicalTreatment.find(bat_change.medical_treatment_id).title, :controller => :medical_treatments, :action => :show, :id => bat_change.medical_treatment_id) : '' %>
+          </td>
 
-      <td>
-        <% if bat_change.new_cage_id == nil && bat_change.old_cage_id != nil %>
-          <%= bat_change.bat.leave_reason %>
-        <% elsif bat_change.medical_treatment %>
-          <%= bat_change.note %>
+          <td>
+            <% if bat_change.new_cage_id == nil && bat_change.old_cage_id != nil %>
+              <%= bat_change.bat.leave_reason %>
+            <% elsif bat_change.medical_treatment %>
+              <%= bat_change.note %>
+            <% else %>
+              <%= bat_change.note %>
+            <% end %>
+          </td>
+
+          <td>
+            <%= bat_change.user ? (link_to bat_change.user.name, :controller => :users, :action => :show, :id => bat_change.user) : '' %>
+          </td>
+
         <% else %>
-          <%= bat_change.note %>
+          <%= "<td>Protocol Change</td>"*12 %>
         <% end %>
-      </td>
-
-      <td>
-        <%= bat_change.user ? (link_to bat_change.user.name, :controller => :users, :action => :show, :id => bat_change.user) : '' %>
-      </td>
-    </tr>
-  <% end %>
+      </tr>
+    <% end %>
 
   </TABLE>
-
-  </div>
 
 <% end %>

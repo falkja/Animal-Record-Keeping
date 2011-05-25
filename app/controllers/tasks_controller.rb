@@ -152,20 +152,24 @@ class TasksController < ApplicationController
   end
 	  
   def update_multiple_feeding_tasks
-    @cage = Cage.find(params[:id])
+    cage = Cage.find(params[:id])
     if (params[:task][:food] == '') || (params[:task][:dish_num] == '')
-      flash[:note] = 'There were problems with your submission.  Please make sure all data fields are filled out.'
-      render :partial => 'tasks_list', :locals => {:tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', 
-				:same_type_task_list => true, :manage => true, :sorted_by => params[:sorted_by]}
+      flash.now[:note] = 'There were problems with your submission.  Please make sure all data fields are filled out.'
+      render :partial => 'tasks_list', :locals =>
+        {:tasks => cage.tasks.feeding_tasks, :div_id => 'feeding_tasks',
+				:same_type_task_list => true, :manage => true, :sorted_by => params[:sorted_by],
+        :task_type => 'Feeding', :cage => cage}
     else
-      for task in @cage.tasks.feeding_tasks
+      for task in cage.tasks.feeding_tasks
         task.food = params[:task][:food]
         task.dish_type = params[:task][:dish_type]
         task.dish_num = params[:task][:dish_num]
         task.save
       end
-      render :partial => 'tasks_list', :locals => {:tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks', 
-				:same_type_task_list => true, :manage => true, :sorted_by => params[:sorted_by]}
+      render :partial => 'tasks_list', :locals =>
+        {:tasks => cage.tasks.feeding_tasks, :div_id => 'feeding_tasks',
+				:same_type_task_list => true, :manage => true, :sorted_by => params[:sorted_by],
+        :task_type => 'Feeding', :cage => cage}
     end
   end
   
@@ -207,7 +211,7 @@ class TasksController < ApplicationController
         task_census.create_task_census(@cage.room, @task)
       end
       
-      flash[:note] = 'Feed cage task(s) successfully created. If the task does not appear below, it could be for a different day or for a different user (if on user summary page)'
+      flash.now[:note] = 'Feed cage task(s) successfully created. If the task does not appear below, it could be for a different day or for a different user (if on user summary page)'
       
     end
     
@@ -217,8 +221,10 @@ class TasksController < ApplicationController
 		
 		@feeding_tasks = @feeding_tasks.sort_by{|task| [task.repeat_code, task.title]}
     
-    render :partial => 'tasks_list', :locals => {:tasks => @feeding_tasks, :sorted_by => params[:sorted_by],
-      :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => true}
+    render :partial => 'tasks_list',
+      :locals => {:tasks => @feeding_tasks, :sorted_by => params[:sorted_by],
+      :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list],
+      :manage => true, :task_type => 'Feeding', :cage => @cage}
   end
 
 	def find_feeding_tasks
@@ -260,8 +266,6 @@ class TasksController < ApplicationController
         days.clear
         days = ["1","2","3","4","5","6","7"]
       end
-		
-      all_tasks_created_successfully = true
       for day in days
 				task = Task.find_by_medical_treatment_id_and_repeat_code(medical_treatment, day) || Task.create(:medical_treatment => medical_treatment, :repeat_code => day, :jitter => 0, :date_started => Time.now, :title => medical_treatment.title, :internal_description => "medical", :notes => '')
         task.date_ended = nil
@@ -270,12 +274,13 @@ class TasksController < ApplicationController
 				task.users = users
       end
 		
-      flash[:note] = 'All tasks created successfully.  If some tasks already existed for the day, they were overwritten.'
+      flash.now[:note] = 'All tasks created successfully.  If some tasks already existed for the day, they were overwritten.'
 		
-      medical_tasks = medical_treatment.tasks.current.sort_by{|task| [task.repeat_code, task.title]}
+      medical_tasks = medical_treatment.tasks.current.sort_by{|t| [t.repeat_code, t.title]}
     
-      render :partial => 'tasks_list', :locals => {:tasks => medical_tasks, :sorted_by => params[:sorted_by],
-        :div_id => params[:div_id], :same_type_task_list => true, :manage => true}
+      render :partial => 'tasks_list', :locals => {:tasks => medical_tasks, 
+        :sorted_by => params[:sorted_by], :div_id => params[:div_id],
+        :same_type_task_list => true, :manage => true}
 		
 		end
 	end
@@ -366,7 +371,7 @@ class TasksController < ApplicationController
     Task::set_current_user(User.find(session[:person]))
     task.done
 		params[:tasks] = params[:ids]
-		flash[:note] = "Task was successfully updated"
+		flash.now[:note] = "Task was successfully updated"
 		sort_by
   end
   
@@ -474,7 +479,7 @@ class TasksController < ApplicationController
 		
 		params[:tasks] = params[:ids]
 		
-    flash[:note] = "Task destroyed"
+    flash.now[:note] = "Task destroyed"
     
     sort_by
   end
@@ -490,7 +495,9 @@ class TasksController < ApplicationController
 	    task.date_ended = Time.now
       task.save
     end
-    render :partial => 'tasks_list', :locals => {:tasks => [], :div_id => params[:div_id], :same_type_task_list => params[:same_type_task_list], :manage => params[:manage]}
+    render :partial => 'tasks_list', :locals => {:tasks => [], :div_id => params[:div_id], 
+      :same_type_task_list => params[:same_type_task_list], :manage => params[:manage],
+      :task_type => params[:task_type], :cage => (params[:cage] ? Cage.find(params[:cage]) : nil)}
   end
 	
   def done_tasks
@@ -500,7 +507,7 @@ class TasksController < ApplicationController
     for task in @feeding_tasks
 			task.done
     end
-    flash[:note] = "All feeding tasks marked done"
+    flash.now[:note] = "All feeding tasks marked done"
     render :partial => 'tasks_list', :locals => {:tasks => @feeding_tasks, 
       :div_id => params[:div_id],
       :same_type_task_list => params[:same_type_task_list],

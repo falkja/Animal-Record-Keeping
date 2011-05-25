@@ -1,6 +1,6 @@
 class MedicalProblem < ActiveRecord::Base
 	belongs_to :bat
-	has_many :medical_treatments
+	has_many :medical_treatments, :order => 'title'
   has_many :flights
   
   def self.current

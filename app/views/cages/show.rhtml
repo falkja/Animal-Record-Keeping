@@ -3,9 +3,13 @@
 <%= link_to 'List My Cages', :action => 'list', :cages => User.find(session[:person]).cages.active %> |
 <%= link_to 'List Current Cages', :action => 'list' %> | 
 <%= button_to 'Edit', :action => 'edit', :id => @cage %> |
-<%= button_to 'Weigh Cage', :action => 'weigh_cage', :id => @cage %> | 
 
 <% if @cage.date_destroyed == nil %>
+  <% if !@cage.bats.empty? %>
+    <%= button_to('Weigh Cage', :action => 'weigh_cage', :id => @cage) %> |
+    <%= button_to('Move Bats', :controller => :bats,
+      :action => :move_bats_from_cage, :id => @cage) %> |
+  <% end %>
   <%= button_to 'Deactivate', :controller => 'cages', :action => 'deactivate', :id => @cage %>
 <% else %>
   <%= button_to 'Reactivate', :controller => 'cages', :action => 'reactivate', :id => @cage %>
@@ -53,8 +57,10 @@
 <b>Current Feeding Tasks:</b>
 <div class="left_indent">
   <p>
-    <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks',
-      :same_type_task_list => true, :manage => true, :sorted_by => 'repeat_code'} %>
+    <%= render :partial => 'tasks/tasks_list', :locals =>
+      {:tasks => @cage.tasks.feeding_tasks, :div_id => 'feeding_tasks',
+      :same_type_task_list => true, :manage => true, :sorted_by => 'repeat_code',
+      :task_type => 'Feeding', :cage => @cage} %>
   </p>
   <p>
     [<%= link_to_remote "Quick-add feeding task", :url => {:controller => :tasks, :action => :remote_new_feed_cage_task, :id => @cage, :div_id => "feeding_tasks",

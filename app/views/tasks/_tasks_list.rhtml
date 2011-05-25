@@ -1,10 +1,12 @@
 <div id = "<%= div_id %>">
 
   <p style="color: green"><%= flash[:note] %></p>
-  <% flash[:note] = nil %>
 
-  <% if tasks.length == 0 %>
+  <% if tasks.empty? %>
     No tasks
+    <% if (defined? task_type) && task_type == 'Feeding' && !cage.bats.empty? %>
+      <p><warning>Warning: this occupied cage is not fed every day of the week</warning></p>
+    <% end %>
   <% else %>
     <table>
       <thead>
@@ -67,9 +69,7 @@
         <th>Notes</th>
       <% end %>
       </thead>
-
       <tbody>
-
         <% for task in tasks %>
           <% if task.current? %>
             <%= render :partial => 'tasks/single_task_list',
@@ -77,39 +77,39 @@
               :div_id => div_id, :same_type_task_list => same_type_task_list, :sorted_by => sorted_by} %>
           <% end %>
         <% end %>
-
       </tbody>
     </table>
+    
     <% if same_type_task_list %>
       <% if tasks.length > 0 %>
         <p>
-                      [<%= link_to_remote "Remove existing tasks",
+          [<%= link_to_remote "Remove existing tasks",
             :url => {:controller => "tasks", :action => "clear_tasks", :tasks => tasks, :div_id => div_id,
-            :same_type_task_list => true, :manage => manage}, :update => div_id %>]
+            :same_type_task_list => true, :manage => manage, 
+            :task_type => ((defined? task_type) ? task_type : nil ), :cage => ((defined? cage) ? cage : nil ) },
+            :update => div_id%>]
         </p>
         <% if tasks[0].internal_description == 'feed' %>
           <% if tasks[0].cage.fed_every_day? == false && task.cage.bats.length > 0 %>
             <p><warning>Warning: this occupied cage is not fed every day of the week</warning></p>
-        <% elsif tasks[0].cage.tasks.feeding_tasks.length > 0 && task.cage.bats.length == 0 %>
-          <p><warning>Warning: this empty cage still has feeding tasks</warning></p>
-        <% end %>
+          <% elsif tasks[0].cage.tasks.feeding_tasks.length > 0 && task.cage.bats.length == 0 %>
+            <p><warning>Warning: this empty cage still has feeding tasks</warning></p>
+          <% end %>
 
-      <% elsif tasks[0].internal_description == 'weigh' %>
-        <% if tasks[0].cage.weighed_enough? == false && task.cage.bats.length > 0 %>
-          <p><warning>Warning: this occupied cage is not weighed enough</warning></p>
-        <% end %>
-        <% if tasks[0].cage.tasks.weighing_tasks.length > 0 && task.cage.bats.length == 0 %>
-          <p><warning>Warning: this empty cage still has weighing tasks</warning></p>
-        <% end %>
+        <% elsif tasks[0].internal_description == 'weigh' %>
+          <% if tasks[0].cage.weighed_enough? == false && task.cage.bats.length > 0 %>
+            <p><warning>Warning: this occupied cage is not weighed enough</warning></p>
+          <% end %>
+          <% if tasks[0].cage.tasks.weighing_tasks.length > 0 && task.cage.bats.length == 0 %>
+            <p><warning>Warning: this empty cage still has weighing tasks</warning></p>
+          <% end %>
 
-      <% elsif tasks[0].internal_description == 'medical' %>
-        <% if tasks.length < 7 %>
-          <p><warning>Warning: this medical treatment is not treated every day of the week</warning></p>
+        <% elsif tasks[0].internal_description == 'medical' %>
+          <% if tasks.length < 7 %>
+            <p><warning>Warning: this medical treatment is not treated every day of the week</warning></p>
+          <% end %>
         <% end %>
       <% end %>
-
     <% end %>
   <% end %>
-
-<% end %>
 </div>

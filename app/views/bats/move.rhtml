@@ -1,38 +1,34 @@
 <h1>Move Summary</h1>
 
 <table>
+  <th>Bats</th>
+  <th>Old Cage</th>
+  <th>New Cage</th>
+  <th>Note</th>
 
-<th>Bats</th>
-<th>Old Cage</th>
-<th>New Cage</th>
-<th>Note</th>
-
-<tr>
-
-<td>
-<% for bat in @bats %>
-<%= bat.band %><br />
-<% end %>
-</td>
-
-<td valign=top><%= @old_cage ? @old_cage.name : 'Inactive' %></td>
-
-<td valign=top><%= @new_cage ? @new_cage.name : 'Inactive' %></td>
-
-<td valign=top><%= @note %></td>
-
-</tr>
+  <tr>
+    <td>
+      <% for bat in @bats %>
+        <%= bat.band %><br />
+      <% end %>
+    </td>
+    <td valign=top><%= @old_cage ? @old_cage.name : 'Inactive' %></td>
+    <td valign=top><%= @new_cage ? @new_cage.name : 'Inactive' %></td>
+    <td valign=top><%= @note %></td>
+  </tr>
 </table>
 
 <div id='cage_tasks'>
-<% if (@old_cage != nil) && (@new_cage != nil) %>
-<%= render :partial => 'bats/manage_cage_tasks_after_move', :locals => {:step=>1, :old_cage=>@old_cage,
-										:new_cage=>@new_cage} %>
-<% else %>
-<% if @old_cage != nil %>
-<%= render :partial => 'bats/manage_cage_tasks_after_deactivate_or_reactivate', :locals => {:step=>1, :cage=>@old_cage, :deactivating => true} %>
-<% elsif @new_cage != nil %>
-<%= render :partial => 'bats/manage_cage_tasks_after_deactivate_or_reactivate', :locals => {:step=>1, :cage=>@new_cage, :deactivating => false} %>
-<% end %>
-<% end %>
+  <% if (@old_cage != nil) && (@new_cage != nil) %>
+    <%= render :partial => 'bats/manage_cage_tasks_after_move',
+      :locals => {:step=>1, :old_cage=>@old_cage, :new_cage=>@new_cage} %>
+  <% else %>
+    <% if @old_cage != nil %>
+      <%= render :partial => 'bats/manage_cage_tasks_after_deactivate_or_reactivate',
+        :locals => {:step=>1, :cage=>@old_cage, :deactivating => true} %>
+    <% elsif @new_cage != nil %>
+      <%= render :partial => 'bats/manage_cage_tasks_after_deactivate_or_reactivate',
+        :locals => {:step=>1, :cage=>@new_cage, :deactivating => false} %>
+    <% end %>
+  <% end %>
 </div>

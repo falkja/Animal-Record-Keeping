@@ -1,0 +1,28 @@
+<h1>Move Bats</h1>
+
+<div id='move_bats'>
+
+  <h2>From what cage is the bat coming?</h2>
+
+  <table>
+    <th></th>
+    <th>Cage</th>
+    <th># of bats</th>
+    <th>Avg weight</th>
+    <th>Room</th>
+
+    <% for cage in @cages %>
+      <tr>
+        <td><b><%= (cage.user == User.find(session[:person]) ? '>' : '')  %></b></td>
+        <td><%= link_to_remote cage.name,
+            :url => {:controller => :bats, :action => :choose_bats, :id => cage,
+            :selected_bats=>Array.new}, :update => 'move_bats' %></td>
+        <td style="text-align: center"><%= cage.bats.length %></td>
+        <td style="text-align: center"><%= cage.average_bat_weight %></td>
+        <td style="text-align: center"><%=h cage.room.name %></td>
+      </tr>
+    <% end %>
+
+  </table>
+
+</div>

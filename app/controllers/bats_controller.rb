@@ -414,7 +414,7 @@ class BatsController < ApplicationController
   end
 
   #choose a cage to move bats from
-  def choose_cage
+  def move_bats
     @cages = Cage.has_bats
   end
 
@@ -433,15 +433,13 @@ class BatsController < ApplicationController
 		else
 			selected_bats = Array.new
 		end
-    render :partial => 'choose_bats_to_move', :locals => {:cage => cage, :bats => bats, :selected_bats => selected_bats}
+    render :partial => 'choose_bats_to_move',
+      :locals => {:cage => cage, :bats => bats, :selected_bats => selected_bats}
   end
 
 	def add_bat_to_move_list
     cage = Cage.find(params[:id])
-		bats = Array.new
-		for bat in cage.bats
-			bats << bat
-		end
+		bats = Array.new(cage.bats)
 		bat_to_add = Bat.find(params[:bat_to_add])
 		if params[:selected_bats] != nil
 			selected_bats = Bat.find(params[:selected_bats])
@@ -460,24 +458,21 @@ class BatsController < ApplicationController
 
 	def remove_bat_from_move_list
     cage = Cage.find(params[:id])
-		bats = Array.new
-		for bat in cage.bats
-			bats << bat
-		end
+		bats = Array.new(cage.bats)
 		bat_to_remove = Bat.find(params[:bat_to_remove])
 		selected_bats = Bat.find(params[:selected_bats])
-		selected_bats.delete(bat_to_remove)
-		for bat in selected_bats
-			bats.delete(bat)
-		end
-		render :partial => 'choose_bats_to_move', :locals => {:cage => cage, :bats => bats, :selected_bats => selected_bats}
+    selected_bats = selected_bats - Array.new(1,bat_to_remove)
+    bats = bats - selected_bats
+		render :partial => 'choose_bats_to_move',
+      :locals => {:cage => cage, :bats => bats, :selected_bats => selected_bats}
 	end
 
   def choose_destination
     bats = Bat.find(params[:bats], :order => 'band')
     cage = Cage.find(params[:id])
-    cages = Cage.find(:all, :conditions => "date_destroyed is null and id != " + cage.id.to_s, :order => "name")
-    render :partial => 'choose_destination_cage', :locals => {:old_cage => cage, :bats => bats, :cages => cages}
+    cages = Cage.active - Array.new(1,cage)
+    render :partial => 'choose_destination_cage',
+      :locals => {:old_cage => cage, :bats => bats, :cages => cages}
   end
 
   #move a set of bats from one cage to another
@@ -544,8 +539,12 @@ class BatsController < ApplicationController
     bat = Bat.find(params[:id])
     @bats = Array.new
     @bats << bat
-    @cages = Cage.find(:all, :conditions => "date_destroyed is null and id != " + bat.cage.id.to_s, :order => "name")
     @cage = bat.cage
+    @cages = Cage.active - @cage
+  end
+
+  def move_bats_from_cage
+    @cage = Cage.find(params[:id])
   end
   
 	def manage_cage_tasks_after_move		

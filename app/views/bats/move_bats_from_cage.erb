@@ -1,0 +1,8 @@
+<h2>Move Bats</h2>
+
+<div id="move_bats">
+
+  <%= render :partial => 'choose_bats_to_move', :locals =>
+    {:cage => @cage, :bats => @cage.bats, :selected_bats => Array.new} %>
+
+</div>

@@ -1,30 +1,50 @@
-<h2>Select destination cage for bats:
+<%= button_to_remote 'Back', :url => {:controller=>:bats, :action=>:choose_bats,
+  :id=>bats[0].cage, :selected_bats=> bats},
+  :update=>'move_bats' %>
 
-<% for bat in bats %>
-<%= bat.band %>
-<% end %>
+<table border="1">
+  <tr>
+    <td style="vertical-align: top">
+      <h2>Selected bat(s):</h2>
 
-</h2>
+      <table>
+        <th style="font-size: 11pt">Band</th>
+        <th style="font-size: 11pt">Weight</th>
+        <th style="font-size: 11pt">Cage</th>
+        <% for bat in bats %>
+          <tr>
+            <td><%=h bat.band %></td>
+            <td><%=h bat.weights[0].weight %></td>
+            <td><%=h bat.cage.name %></td>
+          </tr>
+        <% end %>
+      </table>
+    </td>
 
-<div class='left_indent'>
+    <td style="vertical-align: top;border-style:solid">
+      <h2>Choose destination cage:</h2>
+      <em>Click to select cage</em>
 
-<table>
-<th>Cage</th>
-<th>Number of bats</th>
-<th>Average current weight</th>
+      <table>
+        <th></th>
+        <th>Cage</th>
+        <th># of bats</th>
+        <th>Avg weight</th>
+        <th>Room</th>
+        <% for cage in cages %>
+          <tr>
+            <td><b><%= (cage.user == User.find(session[:person]) ? '>' : '')  %></b></td>
+            <td><%= link_to_remote cage.name,
+                :url => {:controller => :bats, :action => :display_move,
+                :new_cage => cage, :old_cage => old_cage, :bats => bats},
+                :update => 'move_bats' %></td>
+            <td style="text-align: center"><%= cage.bats.length %></td>
+            <td style="text-align: center"><%= cage.average_bat_weight %></td>
+            <td style="text-align: center"><%= cage.room.name %></td>
+          </tr>
+        <% end %>
+      </table>
 
-<% for cage in cages %>
-<tr>
-<td><%= link_to_remote cage.name, :url => {:controller => :bats, :action => :display_move, :new_cage => cage, :old_cage => old_cage, :bats => bats}, 
-                            :update => 'move' %></td>
-<td><%= cage.bats.length %></td>
-<td><%= cage.average_bat_weight %></td>
-</tr>
-<% end %>
-
+    </td>
+  </tr>
 </table>
-
-</div>
-
-<div id='move'>
-</div>

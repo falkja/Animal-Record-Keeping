@@ -1,70 +1,66 @@
+<%= button_to 'Back', :controller => :bats, :action => :move_bats %>
+
 <h2>Select bat(s) to move from <%= cage.name %></h2>
 
-<div class='left_indent'>
-
 <table border=1>
-<tr>
-<td valign='top'>
-<p><b>Unselected Bats</b><br />
-<% if bats.length > 0 %>
-<em>Click to Select Bats</em></p>
-	<table>
-	<th>Bat</th>
-	<th>Last Weight</th>
-	<th>Average Weight</th>
+  <tr>
+    <td style="vertical-align: top;width:300px">
+        <b>Unselected Bats</b><br />
+        <% if bats.length > 0 %>
+          <em>Click to select bats</em>
+        <table style="border-style: solid;margin-left: auto;margin-right: auto">
+          <th>Bat</th>
+          <th>Last Weight</th>
+          <th>Average Weight</th>
 
-	<% for bat in bats %>
-		<tr>
-		<td><%= link_to_remote bat.band, :url => {:controller=>:bats, :action=>:add_bat_to_move_list, 
-					:bat_to_add => bat, :id=>cage, :selected_bats=> selected_bats}, 
-					:update=>'bat_list' %></td>
-		<td><%=h bat.weights.recent_never_nil.weight %>g</td>
-		<td><%=h bat.average_weight.round(1) %>g</td>
-		</tr>
-	<% end %>
+          <% for bat in bats %>
+            <tr>
+              <td><%= link_to_remote bat.band, :url => {:controller=>:bats, :action=>:add_bat_to_move_list,
+                  :bat_to_add => bat, :id=>cage, :selected_bats=> selected_bats},
+                  :update=>'move_bats' %></td>
+              <td style="text-align: center"><%=h bat.weights.recent_never_nil.weight %>g</td>
+              <td style="text-align: center"><%=h bat.average_weight.round(1) %>g</td>
+            </tr>
+          <% end %>
 
-	</table>
-<% else %>
-	<em>No more bats to select.</em>
-<% end %>
-</td>
+        </table>
+      <% else %>
+        <em>No more bats to select</em>
+      <% end %>
+    </td>
 
-<td valign='top'>
-<p><b>Bats to Move</b><br />
-<% if selected_bats.length > 0 %>
-<em>Click to De-select Bats</em></p>
-	<% form_remote_tag :url => {:controller => :bats, :action => :choose_destination, :id => cage, 
-							:bats=>selected_bats}, 
-							:update => 'destination_cage' do %>
-		<table>
-		<th>Bat</th>
-		<th>Last Weight</th>
-		<th>Average Weight</th>
-			
-		<% for bat in selected_bats %>
-			<tr>
-			<td><%= link_to_remote bat.band, :url => {:controller=>:bats, :action=>'remove_bat_from_move_list', 
-				:bat_to_remove => bat, :id=>cage, :selected_bats=> selected_bats}, 
-				:update=>'bat_list' %></td>
-			<td><%=h bat.weights.recent_never_nil.weight %>g</td>
-			<td><%=h bat.average_weight.round(1) %>g</td>
-			</tr>
-		<% end %>
-		</table>
-		
-		
-		<p align=center><%= submit_tag 'Select Bats' %></p>
-		
-	<% end %>
-<% else %>
-	<em>No bats selected.</em>
-<% end %>
-</td>
-</tr>
+    <td style="vertical-align: top;width:300px">
+      <b>Bats to Move</b><br />
+      <% if selected_bats.length > 0 %>
+        <em>Click to de-select bats</em>
+        <% form_remote_tag :url =>
+          {:controller => :bats, :action => :choose_destination, :id => cage,
+          :bats=>selected_bats}, :update => 'move_bats' do %>
+          <table style="border-style: solid;margin-left: auto;margin-right: auto">
+            <th>Bat</th>
+            <th>Last Weight</th>
+            <th>Average Weight</th>
+
+            <% for bat in selected_bats %>
+              <tr>
+                <td><%= link_to_remote bat.band,
+                    :url => {:controller=>:bats, :action=>'remove_bat_from_move_list',
+                    :bat_to_remove => bat, :id=>cage, :selected_bats=> selected_bats},
+                    :update=>'move_bats' %></td>
+                <td><%=h bat.weights.recent_never_nil.weight %>g</td>
+                <td><%=h bat.average_weight.round(1) %>g</td>
+              </tr>
+            <% end %>
+          </table>
+
+          <p style="text-align: center">
+            <%= submit_tag 'Select Bats' %>
+          </p>
+
+        <% end %>
+      <% else %>
+        <em>No bats selected</em>
+      <% end %>
+    </td>
+  </tr>
 </table>
-
-
-</div>
-
-<div id='destination_cage'>
-</div>

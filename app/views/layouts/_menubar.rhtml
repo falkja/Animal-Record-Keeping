@@ -32,7 +32,7 @@
 	<li><%= link_to 'List', :controller => :bats, :action => :list, :bats => User.find(session[:person]).bats %></li>
 	<li><%= link_to 'New', :controller => :bats, :action => :new %></li>
   <li><%= link_to 'Weigh', :controller => :bats, :action => :choose_bat_to_weigh, :bats => User.find(session[:person]).bats %></li>
-	<li><%= link_to 'Move', :controller => :bats, :action => :choose_cage %></li>
+	<li><%= link_to 'Move', :controller => :bats, :action => :move_bats %></li>
 	</ul>
 </li>
 <li><%= link_to 'Cages', :controller => :cages, :action => :list %>

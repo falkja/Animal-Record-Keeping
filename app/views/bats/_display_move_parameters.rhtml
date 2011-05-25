@@ -1,36 +1,33 @@
-<h2>Summary</h2>
+<%= button_to_remote 'Back', :url => {:controller=>:bats, :action=>:choose_destination,
+  :id=>bats[0].cage, :bats=> bats},
+  :update=>'move_bats' %>
 
-<div class='left_indent'>
+<h2>Set move note</h2>
 
 <% form_tag :controller => :bats, :action => :move, :old_cage => old_cage, :bats => bats,
-                            :new_cage => new_cage do %>
+  :new_cage => new_cage do %>
 
-<table>
+  <table>
 
-<th>Bats</th>
-<th>Old Cage</th>
-<th>New Cage</th>
-<th>Note</th>
+    <th>Bats</th>
+    <th>Old Cage</th>
+    <th>New Cage</th>
+    <th>Note</th>
 
-<tr>
+    <tr>
 
-<td>
-<% for bat in bats %>
-<%= bat.band %><br />
-<% end %>
-</td>
+      <td valign=top>
+        <% for bat in bats %>
+          <%= bat.band %><br />
+        <% end %>
+      </td>
 
-<td valign=top><%= old_cage.name %></td>
+      <td valign=top><%= old_cage.name %></td>
+      <td valign=top><%= new_cage.name %></td>
+      <td valign=top><%= text_field 'move', 'note' %></td>
+      <td valign=top><%= submit_tag 'Move Bat(s)' %></td>
 
-<td valign=top><%= new_cage.name %></td>
-
-<td valign=top><%= text_field 'move', 'note' %></td>
-
-<td valign=top><%= submit_tag 'Click to Move Bats' %></td>
-
-</tr>
-</table>
+    </tr>
+  </table>
 
 <% end %>
-
-</div>

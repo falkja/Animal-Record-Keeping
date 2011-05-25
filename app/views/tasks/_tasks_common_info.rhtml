@@ -1,18 +1,15 @@
 <p>
-  
   <b>Cage owner:</b> <%=h cage.user.name %> | 
-
   <b>Bats in cage:</b> <%=h cage.bats.length %> |
-
   <% @average = cage.average_bat_weight %>
   <b>Average Weight: </b><%= @average %> g
-
 </p>
 
 <b>Current <%= task_type %> Tasks for <%=h cage.name %>:</b>
 <div class="left_indent">
-<p>
-<%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => tasks, :div_id => 'tasks_div', :same_type_task_list => true, 
-		:manage => true, :sorted_by => 'repeat_code'} %>
-</p>
+  <p>
+    <%= render :partial => 'tasks/tasks_list', :locals =>{:tasks => tasks,
+      :div_id => 'tasks_div', :same_type_task_list => true,
+      :manage => true, :sorted_by => 'repeat_code', :task_type => task_type, :cage => cage} %>
+  </p>
 </div>

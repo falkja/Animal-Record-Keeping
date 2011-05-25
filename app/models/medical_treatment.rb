@@ -8,7 +8,7 @@ class MedicalTreatment < ActiveRecord::Base
 	end
 	
 	def self.expired
-		find(:all, :conditions => 'date_closed is not null')
+		find(:all, :conditions => 'date_closed is not null', :order => "date_opened desc")
 	end
 	
 	def done_today

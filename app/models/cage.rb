@@ -128,7 +128,7 @@ class Cage < ActiveRecord::Base
   end
 	
 	def fed_every_day?
-    if self.tasks.feeding_tasks.length < 7
+    if self.tasks.feeding_tasks.empty? || self.tasks.feeding_tasks.length < 7
       return false
     end
     

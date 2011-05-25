@@ -1,26 +1,43 @@
 <h3>Showing Protocol</h3>
 
+<%= link_to 'List Protocols', protocols_path %> |
 <%= button_to 'Edit', edit_protocol_path(@protocol), :method => :get %> |
 <%= button_to 'Add bats to protocol', :action => :update_mult_bats, :act => 'add' %> |
 <%= button_to 'Remove bats from protocol', :action => :update_mult_bats, :act => 'remove' %> |
-<%= button_to 'Add/remove users from protocol', :action => :edit_users_on_protocol, :id => @protocol %> |
-<%= link_to 'List Protocols', protocols_path %>
+<%= button_to 'Add/remove users from protocol', :action => :edit_users_on_protocol, :id => @protocol %>
 
 <hr />
 
 <p>
   <b>Title:</b>
   <%=h @protocol.title %>
-</p>
-
-<p>
+  |
   <b>Number:</b>
   <%=h @protocol.number %>
 </p>
 
 <p>
+  <b>Start date:</b>
+  <%=h @protocol.start_date %>
+  |
+  <b>End date:</b>
+  <%=h @protocol.end_date %>
+</p>
+
+<p>
   <b>Summary:</b>
   <%=h simple_format @protocol.summary %>
+</p>
+
+<p>
+  <b>Users:</b>
+  <% if @protocol.users.length == 0 %>
+    No users on protocol
+  <% else %>
+    <% for u in @protocol.users %>
+      <br><%= u.name %>
+    <% end %>
+  <% end %>
 </p>
 
 <p>
@@ -62,16 +79,6 @@
 <% end %>
 
 <p>
-  <b>Start date:</b>
-  <%=h @protocol.start_date %>
-</p>
-
-<p>
-  <b>End date:</b>
-  <%=h @protocol.end_date %>
-</p>
-
-<p>
   <b>Allowed Bats:</b>
   <% if @protocol.allowed_bats.length == 0 %>
     No allowed bats
@@ -81,17 +88,6 @@
       :locals =>{:protocol => @protocol} %>
   </div>
 <% end %>
-</p>
-
-<p>
-  <b>Users:</b>
-  <% if @protocol.users.length == 0 %>
-    No users on protocol
-  <% else %>
-    <% for u in @protocol.users %>
-      <br><%= u.name %>
-    <% end %>
-  <% end %>
 </p>
 
 <p>

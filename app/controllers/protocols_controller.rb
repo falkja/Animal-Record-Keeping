@@ -138,7 +138,7 @@ class ProtocolsController < ApplicationController
         else
           b_prot = (bat.protocols - protocols).uniq
         end
-        bat.save_protocols(b_prot,Time.now)
+        bat.save_protocols(b_prot,Time.now,User.find(session[:person]))
       end
       flash[:notice] = 'Bats/Protocols updated'
       redirect_to :action=> :index
@@ -197,13 +197,14 @@ class ProtocolsController < ApplicationController
   
   def set_data_protocol(protocol)
     data = Array.new
-    params[:datum_id].each{|id, checked| checked=='1' ? data << Datum.find(id) : ''}
+    params[:datum_id] ? params[:datum_id].each{|id, checked| checked=='1' ? data << Datum.find(id) : ''} : ''
     protocol.data = data
   end
   
   def set_surgery_types_protocol(protocol)
     surgery_types = Array.new
-    params[:surgery_type_id].each{|id, checked| checked=='1' ? surgery_types << SurgeryType.find(id) : ''}
+    params[:surgery_type_id] ? 
+      params[:surgery_type_id].each{|id, checked| checked=='1' ? surgery_types << SurgeryType.find(id) : ''} : ''
     protocol.surgery_types = surgery_types
   end
 

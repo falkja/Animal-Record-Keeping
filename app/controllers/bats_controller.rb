@@ -93,8 +93,10 @@ class BatsController < ApplicationController
   def show
     @bat = Bat.find(params[:id])
     @cihs = @bat.cage_in_histories
-    @bat_changes = BatChange.find(:all, :conditions => "bat_id = #{@bat.id}", :order => 'date desc')
-    @protocol_histories = ProtocolHistory.find(:all, :conditions => {:bat_id => @bat})
+    
+    #for bat changes:
+    @bat_changes = BatChange.find(:all, 
+      :conditions => "bat_id = #{@bat.id}", :order => 'date desc')
   end
 
 	def new
@@ -176,7 +178,7 @@ class BatsController < ApplicationController
           save_weight
         end
 			
-        @bat.save_protocols(protocols,Time.now)
+        @bat.save_protocols(protocols,Time.now,User.find(session[:person]))
         if @bat.protocols != protocols
           #flash.now[:prot_notice] = 'Over the allowed bats limit on a protocol'
         end
@@ -305,7 +307,7 @@ class BatsController < ApplicationController
         bat_change.save
       end
 
-      @bat.save_protocols(protocols,Time.now)
+      @bat.save_protocols(protocols,Time.now,User.find(session[:person]))
       
       if params[:surgery]
         save_surgery
@@ -858,7 +860,7 @@ class BatsController < ApplicationController
     else
       protocols = protocols.sort_by{|p| p.number}
       unless protocols == @bat.protocols
-        @bat.save_protocols(protocols,Time.now)
+        @bat.save_protocols(protocols,Time.now,User.find(session[:person]))
         if (@bat.protocols - protocols).length == 0
           flash.now[:prot_notice] = 'Protocols saved'
         end

@@ -165,6 +165,9 @@
   </div>
 <% end %>
 
+  <%= @bat.in_cage_when(Date.civil(2007, 7, 23)).name %>
+  <%= nice_date Date.civil(2007, 7, 23) %>
+
 <% if @cihs.length >0 %>
   <h3>Cage History:</h3>
   <div class="left_indent">
@@ -184,6 +187,7 @@
             <td><%=h nice_date @bat.cage_out_histories[0].date %></td>
             <td><%=h @bat.cage_out_histories[0].note %></td>
             <td><%=h @bat.cage_out_histories[0].user.initials %></td>
+            <td><%= @bat.in_cage_when(@bat.cage_out_histories[0].date).name %></td>
           <% end %>
         </tr>
       <% end %>
@@ -201,16 +205,17 @@
           <td><%=h nice_date cih.date %></td>
           <td><%=h cih.note %></td>
           <td><%=h cih.user.initials %></td>
+          <td><%= @bat.in_cage_when(cih.date).name %></td>
         </tr>
       <% end %>
     </table>
   </div>
 <% end %>
-
+  
 <h3>Bat Changes</h3>
 <div class='left_indent'>
   <%= render :partial => 'show_bat_changes', :locals => {:bat_changes => @bat_changes,
-    :protocol_histories => @protocol_histories, :single_bat => true} %>
+    :single_bat => true} %>
 </div>
 
 <%= render :partial => 'display_weights', :locals => {:bat => @bat} %>

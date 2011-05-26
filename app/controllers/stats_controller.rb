@@ -89,6 +89,8 @@ class StatsController < ApplicationController
 	
   def bat_changes
     
+#    ProtocolHistory.populate_users
+    
     earliest = Bat.earliest_addition
     @end_year = Time.now.year
     earliest ? @start_year = earliest.year : @start_year = @end_year
@@ -104,10 +106,8 @@ class StatsController < ApplicationController
     @days_this_month = Date::civil(@year,@month,1)...Date::civil(@year, @month, -1)
     
     @bat_changes = BatChange.find(:all, 
-      :conditions => "date >= '#{Date::civil(@year,@month,1)}' and date <= '#{Date::civil(@year, @month, -1)}'",
-      :order => 'date asc')
-    @protocol_histories = ProtocolHistory.find(:all,
-      :conditions => ['date >= ? and date <= ?', Date::civil(@year,@month,1), Date::civil(@year,@month,-1)])
+      :conditions => ['date >= ? and date <= ?', Date::civil(@year,@month,1), Date::civil(@year,@month,-1)],
+      :order => 'date desc')
   end
   
 end

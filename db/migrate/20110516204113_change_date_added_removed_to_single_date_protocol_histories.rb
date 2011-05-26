@@ -3,7 +3,12 @@ class ChangeDateAddedRemovedToSingleDateProtocolHistories < ActiveRecord::Migrat
     add_column :protocol_histories, :date, :datetime
     add_column :protocol_histories, :added, :boolean
     
-    Rake::Task['ChangeDateAddedRemovedToSingleDateProtocolHistories'].invoke
+    ProtocolHistory.update_all("added = true", "date_added is not null")
+    ProtocolHistory.update_all('protocol_histories.date = protocol_histories.date_added',
+      "date_added is not null")
+    ProtocolHistory.update_all("added = false", "date_removed is not null")
+    ProtocolHistory.update_all('protocol_histories.date = protocol_histories.date_removed',
+      "date_removed is not null")
     
     remove_column :protocol_histories, :date_added
     remove_column :protocol_histories, :date_removed

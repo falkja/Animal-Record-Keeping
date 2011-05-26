@@ -3,5 +3,7 @@ class BatChange < ActiveRecord::Base
   belongs_to :medical_treatment
   belongs_to :user
   belongs_to :cage_in_history
+  belongs_to :protocol_history
+  belongs_to :surgery
   
 end

@@ -346,7 +346,7 @@ class Bat < ActiveRecord::Base
   end
   
   #protocols passed in are the entire protocols that you'd like the bat to have (not just the additions to what the bat already has)
-	def save_protocols(protocols,time_altered)
+	def save_protocols(protocols,time_altered,user)
 
     #saving history of protocols removed
 		for p_removed in (self.protocols - protocols)
@@ -356,6 +356,7 @@ class Bat < ActiveRecord::Base
       p_hist.protocol = p_removed
       p_hist.added = false
       p_hist.date = time_altered
+      p_hist.user = user
       p_hist.save
 		end
 
@@ -369,6 +370,7 @@ class Bat < ActiveRecord::Base
         p_hist.protocol = p_added
         p_hist.added = true
         p_hist.date = time_altered
+        p_hist.user = user
         p_hist.save
       else
         protocols = protocols - Array.new(1,p_added)
@@ -388,5 +390,20 @@ class Bat < ActiveRecord::Base
 
   def self.bats_on_species(bats,species)
     Bat.all(:conditions => {:id => bats, :species_id => species.id} )
+  end
+  
+  #used to determine the owner of the bat at a particular time
+  #beware - if date passed in is during a time when the bat is deactivated, it 
+  #will still return a cage
+  #also note that cage_in_histories date column is a datetime variable
+  def in_cage_when(date)
+    cih = CageInHistory.find(:first, :conditions => 
+        ['bat_id = ? and date <= ?',self.id,date],
+      :order => "date desc")
+    if cih
+      return cih.cage
+    else
+      self.cage_in_histories[-1].cage
+    end
   end
 end

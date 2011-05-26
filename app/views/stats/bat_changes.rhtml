@@ -1,24 +1,23 @@
 <div class='no_print'>
-<p>
-<% form_tag :controller => 'stats', :action => 'bat_changes' do %>
-	Show bat changes page for
-	
-	<%= select_year(@year, :start_year => @start_year, :end_year => @end_year) %>
-	<%= select_month(@month) %>
+  <p>
+    <% form_tag :controller => 'stats', :action => 'bat_changes' do %>
+          Show bat changes page for
 
-	<%= submit_tag 'Go' %>
-<% end %>
-</p>
+      <%= select_year(@year, :start_year => @start_year, :end_year => @end_year) %>
+      <%= select_month(@month) %>
+
+      <%= submit_tag 'Go' %>
+    <% end %>
+  </p>
 </div>
 
 <H2>Bat Changes Page for <%= Date::MONTHNAMES[@month] + ' ' + @year.to_s%></H2>
 
 <% if @bat_changes.length == 0 %>
-No bat changes this month
+  No bat changes this month
 <% else %>
 
-<%= render :partial => 'bats/show_bat_changes', 
-  :locals => {:bat_changes => @bat_changes, :protocol_histories => @protocol_histories,
-  :single_bat => false} %>
+  <%= render :partial => 'bats/show_bat_changes', 
+    :locals => {:bat_changes => @bat_changes, :single_bat => false} %>
 
 <% end %>

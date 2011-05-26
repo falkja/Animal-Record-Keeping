@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110524000719) do
+ActiveRecord::Schema.define(:version => 20110526184131) do
 
   create_table "allowed_bats", :force => true do |t|
     t.integer  "protocol_id"
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(:version => 20110524000719) do
     t.string   "new_band_name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "surgery_id"
+    t.integer  "protocol_history_id"
   end
 
   create_table "bat_notes", :force => true do |t|
@@ -149,6 +151,7 @@ ActiveRecord::Schema.define(:version => 20110524000719) do
     t.datetime "updated_at"
     t.datetime "date"
     t.boolean  "added"
+    t.integer  "user_id"
   end
 
   create_table "protocols", :force => true do |t|

@@ -4,12 +4,8 @@ class AddTimestampToBatChanges < ActiveRecord::Migration
       t.timestamps
     end
     
-    execute <<-SQL
-      UPDATE bat_changes SET created_at = date;
-    SQL
-    execute <<-SQL
-      UPDATE bat_changes SET updated_at = date;
-    SQL
+    BatChange.update_all('bat_changes.created_at = bat_changes.date')
+    BatChange.update_all('bat_changes.updated_at = bat_changes.date')
   end
 
   def self.down

@@ -1,88 +1,88 @@
 <div id='weigh_one_bat'>
 
-<% if !initial_weight %>
+  <% if !initial_weight %>
 
-<p>
-As you weigh the bat:
-<ul>
-<li><b>Check for abscesses.</b>  They most often occur on the face and wing joints.  If you find one, create a medical problem.</li>
-<li><b>Check for mites.</b>  They appear along the wing membrane.  Usually you can remove them singly with tweezers.<br/>
-If the bat has too many mites to remove, create a medical problem for the bat so a medical care user can administer <em>ivromectin</em>.</li>
-<li><b>Brush the bats teeth</b> (at least 1x/week).  This will help keep the bat's gums healthy.</li>
-<li><b>Flying bats</b> (at least 3x/week if not exempt).  Bat flown or given opportunity to fly for at least 30 minutes.</li>
-</ul>
-</p>
+    <p>
+      As you weigh the bat:
+    <ul>
+      <li><b>Check for abscesses.</b>  They most often occur on the face and wing joints.  If you find one, create a medical problem.</li>
+      <li><b>Check for mites.</b>  They appear along the wing membrane.  Usually you can remove them singly with tweezers.<br/>
+        If the bat has too many mites to remove, create a medical problem for the bat so a medical care user can administer <em>ivromectin</em>.</li>
+      <li><b>Brush the bats teeth</b> (at least 1x/week).  This will help keep the bat's gums healthy.</li>
+      <li><b>Flying bats</b> (at least 3x/week if not exempt).  Bat flown or given opportunity to fly for at least 30 minutes.</li>
+    </ul>
+  </p>
 
-<p>
-  <%= link_to_remote 'Add a weight for a specific day or time', :update=> 'weigh_date', 
-    :url => {:controller => :bats, :action => :weigh_date} %>
-</p>
+  <p>
+    <%= link_to_remote 'Add a weight for a specific day or time', :update=> 'weigh_date', 
+      :url => {:controller => :bats, :action => :weigh_date} %>
+  </p>
 
-<div id='weigh_date'>
-</div>
+  <div id='weigh_date'>
+  </div>
 
 <% end %>
 
 <table>
-<% if bat.band %>
-	<th>Band</th>
-<% end %>
-<th>Weight</th>
-<th>Already Fed</th>
-<th>Flown</th>
-<th align='left'>Weight Note</th>
+  <% if bat.band %>
+    <th>Band</th>
+  <% end %>
+  <th>Weight</th>
+  <th>Already Fed</th>
+  <th>Flown</th>
+  <th align='left'>Weight Note</th>
 
-<tr>
+  <tr>
 
-<% if bat.band %>
-	<td><%= link_to bat.band, :controller => :bats, :action => :show, :id => bat %></td>
-<% end %>
+    <% if bat.band %>
+      <td><%= link_to bat.band, :controller => :bats, :action => :show, :id => bat %></td>
+    <% end %>
 
-<td><%= text_field 'weight', 'weight', :size => 4, :autocomplete => 'off' %> g</td>
+    <td><%= text_field 'weight', 'weight', :size => 4, :autocomplete => 'off' %> g</td>
 
-<td><label for='checkbox_after_eating'>After Eating?</label>
-<% if bat.cage && bat.cage.fed_today? %>
-<%= check_box 'checkbox', 'after_eating', :checked=> 'checked' %>
-<%else%>
-<%= check_box 'checkbox', 'after_eating' %>
-<% end %>
-</td>
+    <td><label for='checkbox_after_eating'>After Eating?</label>
+      <% if bat.cage && bat.cage.fed_today? %>
+        <%= check_box 'checkbox', 'after_eating', :checked=> 'checked' %>
+      <%else%>
+        <%= check_box 'checkbox', 'after_eating' %>
+      <% end %>
+    </td>
 
 
-<td>
-<label for='checkbox_bat_flown'>Bat Flown?</label>
-<% if (bat.cage && bat.cage.flight_cage) || (bat.id && bat.flown_on(Date.today)) %>
-<%= check_box 'checkbox', 'bat_flown', :checked=> 'checked' %>
-<%else%>
-<%= check_box 'checkbox', 'bat_flown' %>
-<% end %>
-</td>
+    <td>
+      <label for='checkbox_bat_flown'>Bat Flown?</label>
+      <% if (bat.cage && bat.cage.flight_cage) || (bat.id && bat.flown_on(Date.today)) %>
+        <%= check_box 'checkbox', 'bat_flown', :checked=> 'checked' %>
+      <%else%>
+        <%= check_box 'checkbox', 'bat_flown' %>
+      <% end %>
+    </td>
 
-<td><%= text_field 'weight', 'note' %></td>
+    <td><%= text_field 'weight', 'note' %></td>
 
-<% if !initial_weight %>
+    <% if !initial_weight %>
 
-  <td><%= link_to 'Move Bat', :action=>'single_bat_to_move', :id=>bat %></td>
-	<td><%= submit_tag 'Submit Weight' %></td>
+      <td><%= link_to 'Move Bat', :action=>'single_bat_to_move', :id=>bat %></td>
+      <td><%= submit_tag 'Submit Weight' %></td>
 
-<% end %>
+    <% end %>
 
-</tr>
+  </tr>
 </table>
 
 <% if @weight.weight %>
-<p>
-<%= link_to_remote 'Add a new weight for today', :update => 'weigh_one_bat', :url =>{
-		:controller => :bats, :action => :todays_weight_exists, :id => bat, :new_weight => true, :initial_weight => initial_weight } %>
-</p>
+  <p>
+    <%= link_to_remote 'Add a new weight for today', :update => 'weigh_one_bat', :url =>{
+      :controller => :bats, :action => :todays_weight_exists, :id => bat, :new_weight => true, :initial_weight => initial_weight } %>
+  </p>
 <% elsif bat.weights.today %>
-<p>
-<%= link_to_remote 'Edit today\'s weight', :update => 'weigh_one_bat', :url =>{
-		:controller => :bats, :action => :todays_weight_exists, :id => bat, :initial_weight => initial_weight } %>
-<div class="hidden">
-<%= text_field 'weight', 'new_weight', :value => 'true' %>
-</div>
-</p>
+  <p>
+    <%= link_to_remote 'Edit today\'s weight', :update => 'weigh_one_bat', :url =>{
+      :controller => :bats, :action => :todays_weight_exists, :id => bat, :initial_weight => initial_weight } %>
+  <div class="hidden">
+    <%= text_field 'weight', 'new_weight', :value => 'true' %>
+  </div>
+  </p>
 <% end %>
 
 
@@ -91,5 +91,5 @@ If the bat has too many mites to remove, create a medical problem for the bat so
 
 </div>
 <% if !@creating %>
-	<%= set_focus_to_id 'weight_weight' %>
+  <%= set_focus_to_id 'weight_weight' %>
 <% end %>

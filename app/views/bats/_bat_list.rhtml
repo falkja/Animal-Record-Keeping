@@ -130,14 +130,10 @@ This partial displays the summary for a list of bats
                 <% if bat.flights.empty? %>
                   N/A
                 <% else %>
-                  <% if !bat.flown_enough?(Date.today+1.day) %>
-                    <span style="color:red">
-                    <% else %>
-                      <span>
-                      <% end %>
-                      <%= nice_date bat.flights[-1].date %>
-                    </span>
-                  <% end %>
+                  <span style="<%= !bat.flown_enough?(Date.today+1.day) ? "color:red" : '' %>">
+                    <%= nice_date_no_year bat.flights[-1].date %>
+                  </span>
+                <% end %>
               </td>
 
               <td style="text-align: center">

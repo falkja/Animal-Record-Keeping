@@ -86,6 +86,19 @@ class CagesController < ApplicationController
     render :partial => 'cage_list', :locals => {:cage_list => @cages}
   end
   
+  def list_by_feed_tasks
+    @cages = Cage.find(params[:ids], :order => 'user_id, name')
+    @cages = @cages.sort_by{|cage| cage.tasks.feeding_tasks.length}
+    initialize_values_for_list
+    render :partial => 'cage_list', :locals => {:cage_list => @cages}
+  end
+  
+  def list_by_flight_cage
+    @cages = Cage.find(params[:ids], :order => 'flight_cage, user_id, name')
+    initialize_values_for_list
+    render :partial => 'cage_list', :locals => {:cage_list => @cages}
+  end
+  
   def show
     @cage = Cage.find(params[:id])
     @tasks = @cage.tasks #should be the list of weighing tasks

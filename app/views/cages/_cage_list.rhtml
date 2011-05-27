@@ -2,37 +2,50 @@
   <th><%= link_to_remote "Name",
       :update => @div_id,
       :url =>{ :controller => 'cages', :action => 'list_by_name', :ids => cage_list, :div => @div_id, :weighing => @weighing, :list_all => @list_all } %></th>
-  <th><%= link_to_remote "Room",
-      :update => @div_id,
-      :url =>{ :controller => 'cages', :action => 'list_by_room', :ids => cage_list, :div => @div_id, :weighing => @weighing, :list_all => @list_all } %></th>
   <th><%= link_to_remote "Bats",
       :update => @div_id,
       :url =>{ :controller => 'cages', :action => 'list_by_bats', :ids => cage_list, :div => @div_id, :weighing => @weighing, :list_all => @list_all } %></th>
   <th><%= link_to_remote "Avg Weight",
-      :update => @div_id,
-      :url =>{ :controller => 'cages', :action => 'list_by_bat_weight', :ids => cage_list, :div => @div_id, :weighing => @weighing, :list_all => @list_all } %>
+      :update => @div_id, :url =>{ :controller => 'cages', 
+      :action => 'list_by_bat_weight', :ids => cage_list, :div => @div_id, 
+      :weighing => @weighing, :list_all => @list_all } %>
   </th>
-  <th><%= link_to_remote "Weigh Date",
-      :update => @div_id,
-      :url =>{ :controller => 'cages', :action => 'list_by_weigh_date', :ids => cage_list, :div => @div_id, :weighing => @weighing, :list_all => @list_all } %>
+  <th><%= link_to_remote "Weighed",
+      :update => @div_id, :url =>{ :controller => 'cages', 
+      :action => 'list_by_weigh_date', :ids => cage_list, 
+      :div => @div_id, :weighing => @weighing, :list_all => @list_all } %>
   </th>
   <th>
     <%= link_to_remote "Flown",
-      :update => @div_id,
-      :url =>{ :controller => 'cages', :action => 'list_by_flown', :ids => cage_list, :div => @div_id, :weighing => @weighing, :list_all => @list_all } %>
+      :update => @div_id, :url =>{ :controller => 'cages', 
+      :action => 'list_by_flown', :ids => cage_list, :div => @div_id, 
+      :weighing => @weighing, :list_all => @list_all } %>
   </th>
+  <th>
+    <%= link_to_remote "Flight Cage",
+      :update => @div_id, :url =>{ :controller => 'cages', 
+      :action => 'list_by_flight_cage', :ids => cage_list, :div => @div_id, 
+      :weighing => @weighing, :list_all => @list_all } %>
+  </th>
+  <th>
+    <%= link_to_remote "Feed Tasks",
+      :update => @div_id,
+      :url =>{:controller => 'cages', :action => 'list_by_feed_tasks', 
+      :ids => cage_list, :div => @div_id, :weighing => @weighing, 
+      :list_all => @list_all } %>
+  </th>
+  <th>Species</th>
+  <th><%= link_to_remote "Room",
+      :update => @div_id,
+      :url =>{ :controller => 'cages', :action => 'list_by_room', :ids => cage_list, :div => @div_id, :weighing => @weighing, :list_all => @list_all } %></th>
   <th>
     <%= link_to_remote "Owner",
       :update => @div_id,
       :url =>{ :controller => 'cages', :action => 'list_by_owner', :ids => cage_list, :div => @div_id, :weighing => @weighing, :list_all => @list_all } %>
   </th>
-  <th>Feed Tasks</th>
-  <th>Flight Cage</th>
-  <th>Species</th>
   <% if @list_all %>
     <th>Destroyed</th>
   <% end %>
-
   <% for cage in cage_list %>
     <tr>
       <td>
@@ -42,8 +55,7 @@
           <b><%= link_to cage.name, :controller => 'cages', :action => 'show', :id => cage %></b>
         <% end %>
       </td>
-      <td><%= cage.room.name %></td>
-      <td align=center><%=h cage.bats.count %></td>
+      <td align=center><%= link_to(cage.bats.count, :controller => :bats, :action => :list, :bats => cage.bats) %></td>
       <td align=center><%=h cage.average_bat_weight %></td>
       <td align=center>
         <% if (cage.last_weigh_date != 0) && cage.any_bats_monitored && Date.parse(cage.last_weigh_date.strftime('%Y/%m/%d')) <= Date.today - 7.days %>
@@ -57,48 +69,46 @@
       <td style="text-align: center">
         <% if cage.flown_enough? %>
           <span>
-        <% else %>
-          <span style="color: red">
-        <% end %>
-        <%= nice_date cage.last_flown %>
-        </span>
+          <% else %>
+            <span style="color: red">
+            <% end %>
+            <%= nice_date_no_year cage.last_flown %>
+          </span>
       </td>
-      <td><%=h cage.user ? cage.user.name : 'None' %></td>
+      <td align=center>
+        <%= cage.flight_cage.to_s.capitalize %>
+      </td>
       <% feeding = cage.tasks.feeding_tasks.length %>
       <td align=center>
-        <% if cage.fed_every_day? %>
-          <%= feeding %>
-        <% else %>
-      <warning><%= feeding %></warning>
-    <% end %>
-  </td>
-  <td align=center>
-    <%= cage.flight_cage.to_s.capitalize %>
-  </td>
-  <td align=center>
-    <em>
-      <% for species in cage.species.uniq %>
-        <%= link_to species.name[0].chr + ". " + species.name.split(" ")[1], :controller => :species,
-          :action => :show, :id => species %><br>
+        <%= (cage.fed_every_day? ? "" : "<warning>") + link_to(feeding, :controller=> :tasks, 
+          :action=>:manage_feeding_tasks, :id => cage) + (cage.fed_every_day? ? "" : "</warning>") %>
+      </td>
+      <td align=center>
+        <em>
+          <% for species in cage.species.uniq %>
+            <%= link_to species.name[0].chr + ". " + species.name.split(" ")[1], :controller => :species,
+              :action => :show, :id => species %><br>
+          <% end %>
+        </em>
+      </td>
+      <td><%= link_to cage.room.name, :controller => :cages, :action => :show, :id => cage.room %></td>
+      <td><%=h cage.user ? link_to(cage.user.name, :controller => :cages, :action => :show, :id => cage.user): 
+          'None' %></td>
+      <% if @list_all %>
+        <td><%=h nice_date(cage.date_destroyed) %></td>
       <% end %>
-    </em>
-  </td>
-
-  <% if @list_all %>
-    <td><%=h nice_date(cage.date_destroyed) %></td>
-  <% end %>
-  <% if !@weighing %>
-    <td><%= button_to 'Edit', :controller => 'cages', :action => 'edit', :id => cage %></td>
-    <td>
-      <% if cage.date_destroyed == nil %>
-        <%= button_to 'Deactivate', { :controller => 'cages', :action => 'deactivate', :id => cage }, :confirm => 'Are you sure?', :method => :post %>
-      <% else %>
-        <%=  button_to 'Reactivate', { :controller => 'cages', :action => 'reactivate', :id => cage }, :confirm => 'Are you sure?', :method => :post %>
+      <% if !@weighing %>
+        <td><%= button_to 'Edit', :controller => 'cages', :action => 'edit', :id => cage %></td>
+        <td>
+          <% if cage.date_destroyed == nil %>
+            <%= button_to 'Deactivate', { :controller => 'cages', :action => 'deactivate', :id => cage }, :confirm => 'Are you sure?', :method => :post %>
+          <% else %>
+            <%=  button_to 'Reactivate', { :controller => 'cages', :action => 'reactivate', :id => cage }, :confirm => 'Are you sure?', :method => :post %>
+          <% end %>
+        </td>
       <% end %>
-    </td>
+      <td><%= !@weighing && !cage.bats.empty? ? button_to('Weigh', :controller => 'cages', :action => 'weigh_cage', :id => cage) : '' %></td>
+      <td><%= cage.bats.empty? ? '' : button_to('Move Bats', :controller => :bats, :action => :move_bats_from_cage, :id => cage) %></td>
+    </tr>
   <% end %>
-  <td><%= !@weighing && !cage.bats.empty? ? button_to('Weigh', :controller => 'cages', :action => 'weigh_cage', :id => cage) : '' %></td>
-  <td><%= cage.bats.empty? ? '' : button_to('Move Bats', :controller => :bats, :action => :move_bats_from_cage, :id => cage) %></td>
-  </tr>
-<% end %>
 </table>

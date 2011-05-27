@@ -48,9 +48,9 @@
   <% end %>
   <% for cage in cage_list %>
     <tr>
-      <td>
+      <td style="text-align: center">
         <% if @weighing %>
-          <b><%= link_to cage.name, :controller => 'cages', :action => 'weigh_cage', :id => cage %></b>
+          <b><%= button_to cage.name, :controller => 'cages', :action => 'weigh_cage', :id => cage %></b>
         <% else %>
           <b><%= link_to cage.name, :controller => 'cages', :action => 'show', :id => cage %></b>
         <% end %>

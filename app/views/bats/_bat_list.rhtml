@@ -89,26 +89,19 @@ This partial displays the summary for a list of bats
       <% for bat in bat_list %>
         <tr>
           <% if show_weigh_link %>
-            <td><b><%= link_to bat.band, :controller => :bats, :action => :weigh_bat, :id => bat %></b></td>
-            <td>
-              <% if bat.cage %>
-                <%= bat.cage.name %>
-              <% else %>
-                <%= 'Inactive' %>
-              <% end %>
-            </td>
+            <td style="text-align: center"><b><%= button_to bat.band, :controller => :bats, :action => :weigh_bat, :id => bat %></b></td>
           <% else %>
             <td><b><%= link_to bat.band, :controller => :bats, :action => :show, :id => bat %></b></td>
-            <td>
-              <% if bat.cage %>
-                <%= link_to bat.cage.name, :controller => 'cages', :action => 'show', :id => bat.cage %>
-              <% else %>
-                <%= 'Inactive' %>
-              <% end %>
-            </td>
           <% end %>
+          <td>
+            <% if bat.cage %>
+              <%= link_to bat.cage.name, :controller => 'cages', :action => 'show', :id => bat.cage %>
+            <% else %>
+              <%= 'Inactive' %>
+            <% end %>
+          </td>
 
-          <td><% if bat.species %><i><%= bat.species.name %></i><% end %></td>
+          <td><% if bat.species %><i><%= link_to bat.species.name, :controller=>:species, :action=>:show, :id=>bat.species %></i><% end %></td>
           <td align=center><%=h bat.gender %></td>
 
           <% if bat.weights.length > 0 %></td>

@@ -583,16 +583,27 @@ class BatsController < ApplicationController
       return false
     else
       save_weight
+      
+      if params[:weight]["date(1i)"]
+        date = Date.civil(params[:weight]["date(1i)"].to_i,params[:weight]["date(2i)"].to_i, params[:weight]["date(3i)"].to_i)
+      else
+        date = Date.today
+      end
+      #saving the flight if there is one
       if params[:checkbox][:bat_flown] == '1'
-        save_flight
+        save_flight(date)
+      #removing the flight if the user deselected it and we're not entering a weight for a different day
+      elsif @bat.flights.find(:first,:conditions => {:date => date}) 
+        @bat.flights.find(:first,:conditions => {:date => date}).destroy
       end
       if params[:redirectme]
         redirect_to :controller => 'cages', :action => 'weigh_cage', :id => params[:redirectme]
       end
     end
   end
-	def save_flight
-		if !@bat.flown_on(Date.today)
+	def save_flight(date)
+    
+		if !@bat.flown_on(date)
 			flight=Flight.new
 			
 			flight.bat = @bat

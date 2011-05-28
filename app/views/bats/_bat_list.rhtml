@@ -81,7 +81,14 @@ This partial displays the summary for a list of bats
             :show_weigh_link => show_weigh_link}) %>
       </th>
       <% if show_leave_date_and_reason %>
-        <th>Leave Date</th>
+        <th>
+          <%= link_to_remote( "Leave Date",
+            :update => 'bats_div',
+            :url =>{ :controller => :bats, :action => :sort_by_deactivation_date,
+              :ids => bat_list,
+              :show_leave_date_and_reason => show_leave_date_and_reason,
+              :show_weigh_link => show_weigh_link}) %>
+        </th>
         <th>Leave Reason</th>
       <% end %>
       </tr>

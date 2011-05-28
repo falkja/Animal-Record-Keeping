@@ -37,6 +37,11 @@ class BatsController < ApplicationController
 		bat_list = bat_list.sort_by{|bat| [bat.species.name, bat.band]}
     render_bat_list(bat_list)
 	end
+
+  def sort_by_deactivation_date
+		bat_list = Bat.find(params[:ids], :order => 'leave_date')
+    render_bat_list(bat_list)
+	end
 	
 	def sort_by_gender
 		bat_list = Bat.find(params[:ids], :order => 'gender, band')

@@ -5,7 +5,7 @@
   <%= submit_tag "Create" %>
 <% end %>
 
-<div id="cal">  
+<div id="cal" style="position:fixed;top:80px;right: 10px;width:625px">
   <% if @bat %>
     <% flight_dates, flights  = @bat.flight_dates(Date.today.year,Date.today.mon) %>
     <% dates = set_calendar_date_format(flights) %>

@@ -125,7 +125,8 @@
         </td>
       <% end %>
       <td><%= !@weighing && !cage.bats.empty? ? button_to('Weigh', :controller => 'cages', :action => 'weigh_cage', :id => cage) : '' %></td>
-      <td><%= cage.bats.empty? ? '' : button_to('Move Bats', :controller => :bats, :action => :move_bats_from_cage, :id => cage) %></td>
+      <td><%= cage.bats.empty? ? '' : button_to('Move', :controller => :bats, :action => :move_bats_from_cage, :id => cage) %></td>
+      <td><%= cage.bats.empty? ? '' : button_to('Fly', :controller => :flights, :action => :new, :bats => cage.bats) %></td>
     </tr>
   <% end %>
 </table>

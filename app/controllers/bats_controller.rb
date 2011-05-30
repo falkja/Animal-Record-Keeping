@@ -90,7 +90,7 @@ class BatsController < ApplicationController
 
   def sort_by_med
     bat_list = Bat.find(params[:ids], :order => 'band')
-    bat_list = bat_list.sort_by{|bat| [-bat.medical_problems.length,
+    bat_list = bat_list.sort_by{|bat| [-bat.medical_problems.current.length,
         bat.cage.name.downcase, bat.band.downcase]}
     render_bat_list(bat_list)
   end

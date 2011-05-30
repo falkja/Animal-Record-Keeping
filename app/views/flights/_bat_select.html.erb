@@ -1,11 +1,30 @@
-<span id="bat_select">
-  <%= collection_select(:flight, :bat_id, bats, :id, :band,
-    {:prompt => 'Select a bat', :selected => (bat ? bat.id.to_i : '')} )%>
+<div id="bat_select">
+  <script>
+    function toggleAll(name)
+    {
+      boxes = document.getElementsByClassName(name);
+      for (i = 0; i < boxes.length; i++)
+        if (!boxes[i].disabled)
+      {	boxes[i].checked = !boxes[i].checked ; }
+    }
 
-  <%= observe_field "flight_bat_id",
-    :url => {:action => :remote_show, :this_month => Date.today},
-    :with => :bat_id,
-    :update => "cal" %>
+    function setAll(name,state)
+    {
+      boxes = document.getElementsByClassName(name);
+      for (i = 0; i < boxes.length; i++)
+        if (!boxes[i].disabled)
+      {	boxes[i].checked = state ; }
+    }
+  </script>
+
+  <b>Bats</b><br/>
+<%#= collection_select(:flight, :bat_id, bats, :id, :band,
+{:prompt => 'Select a bat', :selected => (bat ? bat.id.to_i : '')} )%>
+
+<%#= observe_field "flight_bat_id",
+:url => {:action => :remote_show, :this_month => Date.today},
+:with => :bat_id,
+:update => "cal" %>
 
   <%= link_to_remote "My Bats", :url => {:action => :remote_bat_select, :bats => User.find(session[:person]).bats}, :update => "bat_select" %> |
 
@@ -13,12 +32,62 @@
 
   <%= link_to_remote "Non-exempt Bats", :url => {:action => :remote_bat_select, :bats => Bat.not_exempt_from_flight}, :update => "bat_select" %> |
 
-  <%= link_to_remote "In Flight Cages", :url => {:action => :remote_bat_select, :bats => Bat.in_flight_cage}, :update => "bat_select" %> |
+  <%= link_to_remote "In Flight Cages", :url => {:action => :remote_bat_select, :bats => Bat.in_flight_cage}, :update => "bat_select" %><br />
 
   <%= link_to_remote "Current Bats", :url => {:action => :remote_bat_select, :bats => Bat.active}, :update => "bat_select" %> |
 
   <%= link_to_remote "All Bats", :url => {:action => :remote_bat_select, :bats => Bat.find(:all, :order=>"band")}, :update => "bat_select" %> |
 
-  <%= link_to_remote "Deactivated Bats", :url => {:action => :remote_bat_select, :bats => Bat.not_active}, :update => "bat_select" %>
+  <%= link_to_remote "Deactivated Bats", :url => {:action => :remote_bat_select, :bats => Bat.not_active}, :update => "bat_select" %><br />
 
-</span>
+  <%= collection_select("cage","id", Cage.active, "id", "name",
+    {:prompt => 'Bats in Cage'},
+    {:onchange => remote_function(:update => "bat_select",
+        :url => {:action => :remote_bat_select},
+        :with => 'Form.Element.serialize(this)' ) } ) %> |
+
+  <%= collection_select("room","id", Room.all, "id", "name",
+    {:prompt => 'Bats in Room'},
+    {:onchange => remote_function(:update => "bat_select",
+        :url => {:action => :remote_bat_select},
+        :with => 'Form.Element.serialize(this)' ) } ) %> |
+
+  <%= collection_select("protocol","id", Protocol.current, "id", "number",
+    {:prompt => 'Bats on Protocol'},
+    {:onchange => remote_function(:update => "bat_select",
+        :url => {:action => :remote_bat_select} ,
+        :with => 'Form.Element.serialize(this)' ) } ) %>
+  <p>
+    <label for="toggle">Toggle all</label>
+    <%= check_box_tag 'toggle' , 'toggle', false, :onclick => "toggleAll('bat_checkbox');return true;"%>
+  </p>
+
+  <table>
+    <th></th>
+    <th style="font-size: 10pt">Bat</th>
+    <th style="font-size: 10pt">Cage</th>
+    <th style="font-size: 10pt">Exempt</th>
+    <th style="font-size: 10pt">Flight Cage</th>
+    <th style="font-size: 10pt">Room</th>
+    <th style="font-size: 10pt">Protocol</th>
+    <% for b in bats %>
+      <tr>
+        <td style="vertical-align: top"><%=check_box :bat_id, b.id, :class => 'bat_checkbox', :checked => (b == bat) %></td>
+        <td style="vertical-align: top">
+          <%= link_to b.band, {:controller => :bats, :action => :show, :id => b},
+            :onmouseover => remote_function(:update => "cal", :url =>
+              {:action => :remote_show, :id => b, :this_month => Date.today})%>
+        </td>
+        <td style="text-align:center;vertical-align: top"><%= link_to b.cage.name, :controller => :cages, :action => :show, :id => b.cage %></td>
+        <td style="text-align:center;vertical-align: top"><%=h b.exempt_from_flight.to_s.capitalize %></td>
+        <td style="text-align:center;vertical-align: top"><%=h b.cage.flight_cage.to_s.capitalize %></td>
+        <td style="text-align:center;vertical-align: top"><%=h b.room.name %></td>
+        <td style="text-align:center;vertical-align: top">
+          <% for p in b.protocols %>
+            <%= p.number %><br />
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>

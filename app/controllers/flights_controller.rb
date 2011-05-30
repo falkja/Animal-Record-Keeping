@@ -67,6 +67,8 @@ class FlightsController < ApplicationController
       @bat = Bat.find(params[:bat])
       @bats = Array.new
       @bats << @bat
+    elsif params[:bats]
+      @bats = Bat.find(params[:bats])
     else
       @bats = User.find(session[:person]).bats
     end
@@ -77,20 +79,29 @@ class FlightsController < ApplicationController
     if params[:showing_only]
       redirect_to :action => :show, :id => params[:id]
     else
-      @flight = Flight.new(params[:flight])
-		
-      if @flight.date > Date.today
-        flash[:notice] = 'Flight date cannot be in the future.'
-        render :action => :new
-      else
-        @flight.user = User.find(session[:person])
-        if @flight.save
-          flash[:notice] = 'Flight was successfully created.'
-          redirect_to :action => :show, :id => @flight.bat
-        else
-          render :action => :new
-        end
+      bats = Array.new
+      if params[:bat_id]
+        params[:bat_id].each{|id, checked| checked=='1' ? bats << Bat.find(id) : '' }
       end
+
+      if bats.length > 0
+
+        for bat in bats
+          flight = Flight.new(params[:flight])
+          if flight.date > Date.today
+            flash[:notice] = 'Flight date cannot be in the future.'
+            redirect_to :action => :new, :bats => bats and return
+          end
+          flight.user = User.find(session[:person])
+          flight.bat = bat
+          flight.save
+        end
+      else
+        flash[:notice] = 'Select a bat.'
+        redirect_to :action => :new and return
+      end
+
+      redirect_to :controller => :bats, :action => :list, :bats => bats
     end
   end
   
@@ -107,6 +118,12 @@ class FlightsController < ApplicationController
   def remote_bat_select
 	  if params[:bats]
       bats = Bat.find(params[:bats], :order => "band")
+    elsif params[:cage] && params[:cage][:id] != ""
+      bats = Cage.find(params[:cage][:id]).bats
+    elsif params[:room] && params[:room][:id]
+      bats = Room.find(params[:room][:id]).bats
+    elsif params[:protocol] && params[:protocol][:id]
+      bats = Protocol.find(params[:protocol][:id]).bats
 	  else
       bats = Array.new
 	  end

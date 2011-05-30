@@ -1,28 +1,29 @@
-<% if @list_all %>
-<h1>Listing All Medical Problems</h1>
+<h1>
+  <%= image_tag("med.svg") %>
+  <% if @list_all %>
+    Listing All Medical Problems
+  <% else %>
+    Listing Current Medical Problems
+    <%= @list_of_bat && !@medical_problems.empty? ?
+      (' of ' + @medical_problems[0].bat.band) : '' %>
+  <% end %>
+</h1>
+<%= button_to 'New', :action => 'new' %> |
+<% if @list_all || @list_of_bat %>
+  <%= link_to 'List Current', :action => 'list_current' %>
 <% else %>
-<h1>Listing Current Medical Problems</h1>
+  <%= link_to 'List All', :action => 'list_all' %>
 <% end %>
-
-<div class="left_indent">
 
 <% if @medical_problems.length == 0 %>
 
-<p>There are no medical problems!</p>
+  <p>There are no medical problems!</p>
 
 <% else %>
 
-<p>
-<%= render :partial=>'show_medical_problems', :locals=>{:medical_problems => @medical_problems, :show_bat => true, 
-		:list_all => @list_all, :div_id => 'medical_problems', :show_treatments => true, :redirectme => nil, :user => nil} %>
-</p>
+  <p>
+    <%= render :partial=>'show_medical_problems', :locals=>{:medical_problems => @medical_problems, :show_bat => true,
+      :list_all => @list_all, :div_id => 'medical_problems', :show_treatments => true, :redirectme => nil, :user => nil} %>
+  </p>
 
-<% end %>
-</div>
-
-<%= link_to 'New Medical Problem', :action => 'new' %> | 
-<% if @list_all %>
-<%= link_to 'List Current Medical Problems', :action => 'list_current' %>
-<% else %>
-<%= link_to 'List All Medical Problems', :action => 'list_all' %>
 <% end %>

@@ -8,6 +8,10 @@ class MedicalProblemsController < ApplicationController
     :redirect_to => { :action => :list }
 
   def list
+    if !@medical_problems
+      @list_of_bat = true
+      @medical_problems = MedicalProblem.find(params[:medical_problems])
+    end
     render :action => 'list'
   end
 

@@ -164,4 +164,9 @@ class Cage < ActiveRecord::Base
 			return nil
 		end
   end
+
+  def current_medical_problems
+   MedicalProblem.find(:all,
+      :conditions => ['bat_id IN (?) and date_closed is not null', self.bats])
+  end
 end

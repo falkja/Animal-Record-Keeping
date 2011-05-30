@@ -34,7 +34,7 @@ class BatsController < ApplicationController
 
 	def sort_by_species
 		bat_list = Bat.find(params[:ids])
-		bat_list = bat_list.sort_by{|bat| [bat.species.name, bat.band]}
+		bat_list = bat_list.sort_by{|bat| [bat.species.name, bat.band.downcase]}
     render_bat_list(bat_list)
 	end
 
@@ -50,25 +50,25 @@ class BatsController < ApplicationController
 	
 	def sort_by_weight
 		bat_list = Bat.find(params[:ids])
-		bat_list = bat_list.sort_by{|bat| [bat.weights.recent_never_nil.weight, bat.band]}
+		bat_list = bat_list.sort_by{|bat| [bat.weights.recent_never_nil.weight, bat.band.downcase]}
 		render_bat_list(bat_list)
 	end
 
 	def sort_by_weigh_date
 		bat_list = Bat.find(params[:ids])
-		bat_list = bat_list.sort_by{|bat| [bat.weights.recent_never_nil.date.to_f, bat.band]}
+		bat_list = bat_list.sort_by{|bat| [bat.weights.recent_never_nil.date.to_f, bat.band.downcase]}
 		render_bat_list(bat_list)
 	end
   
   def sort_by_last_flown
 		bat_list = Bat.find(params[:ids])
-		bat_list = bat_list.sort_by{|bat| [bat.flights[-1].date, bat.band]}
+		bat_list = bat_list.sort_by{|bat| [bat.flights[-1].date, bat.band.downcase]}
 		render_bat_list(bat_list)
 	end
 
   def sort_by_sx
-		bat_list = Bat.find(params[:ids])
-		bat_list = bat_list.sort_by{|bat| [-bat.surgeries.length, bat.band]}
+		bat_list = Bat.find(params[:ids], :order => 'band')
+		bat_list = bat_list.sort_by{|bat| [-bat.surgeries.length, bat.band.downcase]}
 		render_bat_list(bat_list)
 	end
 	
@@ -78,8 +78,8 @@ class BatsController < ApplicationController
   end
   
   def sort_by_cage
-    bat_list = Bat.find(params[:ids])
-		bat_list = bat_list.sort_by{|bat| [bat.cage_never_nil.name, bat.band]}
+    bat_list = Bat.find(params[:ids], :order => 'band')
+		bat_list = bat_list.sort_by{|bat| bat.cage_never_nil.name.downcase}
     render_bat_list(bat_list)
   end
 	
@@ -87,6 +87,13 @@ class BatsController < ApplicationController
     bat_list = Bat.find(params[:ids], :order => 'collection_date, band')
     render_bat_list(bat_list)
 	end
+
+  def sort_by_med
+    bat_list = Bat.find(params[:ids], :order => 'band')
+    bat_list = bat_list.sort_by{|bat| [-bat.medical_problems.length,
+        bat.cage.name.downcase, bat.band.downcase]}
+    render_bat_list(bat_list)
+  end
 
   def render_bat_list(bat_list)
     render :partial => 'bat_list', :locals => {

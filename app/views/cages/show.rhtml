@@ -73,35 +73,14 @@
 </div>
 
 <p>
+  <b>Current Bats:</b><br />
   <% if @cage.bats.active.length == 0 %>
     <b>No bats are in this cage.</b>
   <% else %>
-    <b>Current Bats:</b><br />
-  <div class="left_indent">
-    <table>
-      <th>Band</th>
-      <th>Last Weight</th>
-      <th>Weigh Date</th>
-      <th>Date in</th>
-      <th>Who</th>
-      <th>Why</th>
-      <% for cih in @current_bats_cihs %>
-        <tr>
-          <td><%= link_to cih.bat.band, :controller => :bats, :action => :show, :id => cih.bat %></td>
-          <% if cih.bat.weights.length > 0 %></td>
-            <td><%=h cih.bat.weights.recent.weight %></td>
-            <td><%=h nice_date(cih.bat.weights.recent.date) %></td>
-          <% else %>
-            <td>N/A</td>
-            <td>N/A</td>
-          <% end %>
-          <td><%=h nice_date(cih.date) %></td>
-          <td><%=h cih.user.initials %></td>
-          <td><%=h cih.note %></td>
-        </tr>
-      <% end %>
-    </table>
-  </div>
+    <%= render :partial => 'bats/bat_list', :locals => {
+      :bat_list => @cage.bats,
+      :show_leave_date_and_reason => false,
+      :show_weigh_link => false } %>
 <% end %>
 </p>
 

@@ -94,7 +94,14 @@ class CagesController < ApplicationController
   end
   
   def list_by_flight_cage
-    @cages = Cage.find(params[:ids], :order => 'flight_cage, user_id, name')
+    @cages = Cage.find(params[:ids], :order => 'flight_cage desc, user_id, name')
+    initialize_values_for_list
+    render :partial => 'cage_list', :locals => {:cage_list => @cages}
+  end
+
+  def list_by_med
+    @cages = Cage.find(params[:ids], :order => 'user_id, name')
+    @cages = @cages.sort_by{|cage| -cage.current_medical_problems.length}
     initialize_values_for_list
     render :partial => 'cage_list', :locals => {:cage_list => @cages}
   end

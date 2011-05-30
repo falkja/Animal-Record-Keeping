@@ -9,6 +9,14 @@ This partial displays the summary for a list of bats
   <div id='bats_div'>
     <table>
       <th>
+        <%= link_to_remote( "Med",
+          :update => 'bats_div',
+          :url =>{ :controller => :bats, :action => :sort_by_med,
+            :ids => bat_list,
+            :show_leave_date_and_reason => show_leave_date_and_reason,
+            :show_weigh_link => show_weigh_link}) %>
+      </th>
+      <th>
         <%= link_to_remote( "Band",
           :update => 'bats_div',
           :url =>{ :controller => :bats, :action => :sort_by_band,
@@ -91,10 +99,14 @@ This partial displays the summary for a list of bats
         </th>
         <th>Leave Reason</th>
       <% end %>
-      </tr>
 
       <% for bat in bat_list %>
         <tr>
+          <td style="text-align: center">
+            <%= bat.medical_problems.current.empty? ? '' : link_to(image_tag("med.svg"),
+              :controller => :medical_problems, :action => :list,
+              :medical_problems => bat.medical_problems.current) %>
+          </td>
           <% if show_weigh_link %>
             <td style="text-align: center"><b><%= button_to bat.band, :controller => :bats, :action => :weigh_bat, :id => bat %></b></td>
           <% else %>

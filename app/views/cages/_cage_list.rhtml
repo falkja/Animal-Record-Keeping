@@ -1,10 +1,28 @@
 <table>
+  <th><%= link_to_remote "Med",
+      :update => @div_id,
+      :url =>{ :controller => 'cages', :action => 'list_by_med',
+      :ids => cage_list, :div => @div_id, :weighing => @weighing,
+      :list_all => @list_all } %>
+  </th>
+  <th>
+    <%= link_to_remote "Flight",
+      :update => @div_id, :url =>{ :controller => 'cages',
+      :action => 'list_by_flight_cage', :ids => cage_list, :div => @div_id,
+      :weighing => @weighing, :list_all => @list_all } %>
+  </th>
   <th><%= link_to_remote "Name",
       :update => @div_id,
-      :url =>{ :controller => 'cages', :action => 'list_by_name', :ids => cage_list, :div => @div_id, :weighing => @weighing, :list_all => @list_all } %></th>
+      :url =>{ :controller => 'cages', :action => 'list_by_name',
+      :ids => cage_list, :div => @div_id, :weighing => @weighing,
+      :list_all => @list_all } %>
+  </th>
   <th><%= link_to_remote "Bats",
       :update => @div_id,
-      :url =>{ :controller => 'cages', :action => 'list_by_bats', :ids => cage_list, :div => @div_id, :weighing => @weighing, :list_all => @list_all } %></th>
+      :url =>{ :controller => 'cages', :action => 'list_by_bats',
+      :ids => cage_list, :div => @div_id, :weighing => @weighing,
+      :list_all => @list_all } %>
+  </th>
   <th><%= link_to_remote "Avg Weight",
       :update => @div_id, :url =>{ :controller => 'cages', 
       :action => 'list_by_bat_weight', :ids => cage_list, :div => @div_id, 
@@ -19,12 +37,6 @@
     <%= link_to_remote "Flown",
       :update => @div_id, :url =>{ :controller => 'cages', 
       :action => 'list_by_flown', :ids => cage_list, :div => @div_id, 
-      :weighing => @weighing, :list_all => @list_all } %>
-  </th>
-  <th>
-    <%= link_to_remote "Flight Cage",
-      :update => @div_id, :url =>{ :controller => 'cages', 
-      :action => 'list_by_flight_cage', :ids => cage_list, :div => @div_id, 
       :weighing => @weighing, :list_all => @list_all } %>
   </th>
   <th>
@@ -48,6 +60,14 @@
   <% end %>
   <% for cage in cage_list %>
     <tr>
+      <td style="text-align: center">
+        <%= cage.current_medical_problems.empty? ? '' : link_to(image_tag("med.svg"),
+          :controller => :medical_problems, :action => :list, 
+          :medical_problems => cage.current_medical_problems) %>
+      </td>
+      <td align=center>
+        <%= cage.flight_cage ? image_tag("flight.svg") : '' %>
+      </td>
       <td style="text-align: center">
         <% if @weighing %>
           <b><%= button_to cage.name, :controller => 'cages', :action => 'weigh_cage', :id => cage %></b>
@@ -74,9 +94,6 @@
             <% end %>
             <%= nice_date_no_year cage.last_flown %>
           </span>
-      </td>
-      <td align=center>
-        <%= cage.flight_cage.to_s.capitalize %>
       </td>
       <% feeding = cage.tasks.feeding_tasks.length %>
       <td align=center>

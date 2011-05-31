@@ -543,7 +543,7 @@ class TasksController < ApplicationController
 		@rooms = Room.find(:all, :order => "name")
 		(params[:switch_room] == "1") ?	show_rooms = true : show_rooms = false
 		
-		params[:task] ? @task = Task.find(params[:task]) : ''
+		(params[:task] && params[:task] != '') ? @task = Task.find(params[:task]) : ''
 		
 		render :partial => 'rooms_for_tasks', :locals=>{:show_rooms => show_rooms}
 	end

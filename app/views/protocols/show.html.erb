@@ -68,9 +68,9 @@
       <% for sg in @protocol.surgeries %>
         <tr>
           <td><%=h sg.surgery_type.name %></td>
-          <td><%=h sg.bat.band %></td>
+          <td><%= link_to sg.bat.band, :controller => :bats, :action => :show, :id => sg.bat %></td>
           <td><%= nice_date_with_time sg.time %></td>
-          <td><%=h sg.user.name %></td>
+          <td><%= link_to sg.user.initials, :controller=>:users, :action=>:show, :id=>sg.user %></td>
         </tr>
       <% end %>
     </table>

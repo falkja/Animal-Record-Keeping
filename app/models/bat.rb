@@ -275,6 +275,13 @@ class Bat < ActiveRecord::Base
     end
   end
   
+  def self.not_vaccinated(bats)
+    vacc_species = Species.find(:all, :conditions => {:requires_vaccination => true})
+    return Bat.find(:all,
+      :conditions => ['id IN (?) AND vaccination_date is null AND species_id IN (?) AND collection_date < ? AND monitor_vaccination is true',
+        bats,vacc_species,(Date.today - 1.week)])
+  end
+  
   def med_problem_current_first_one_only
     med_problem = MedicalProblem.find(:first, :conditions=>{:bat_id => self.id, 
         :date_closed => nil}, :order => "date_opened")

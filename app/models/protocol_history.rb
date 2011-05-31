@@ -8,7 +8,22 @@ class ProtocolHistory < ActiveRecord::Base
     start_date=Date.today
     end_date=Date.today + 1.day
     hists = find(:all,
-      :conditions => ["((added is true and date >= ? and date < ?) or (added is false and date >= ? and date < ?))",start_date,end_date,start_date,end_date])
+      :conditions => ["((added is true and date >= ? and date < ?) or (added is false and date >= ? and date < ?))",
+        start_date,end_date,start_date,end_date])
+    hists = hists.sort_by{|h| h.bat.band}
+    return hists
+  end
+  
+  def self.users_todays_histories(user)
+    start_date=Date.today
+    end_date=Date.today + 1.day
+    #finds all the bats that you ever made a bat change to, or whose cage was yours...
+    bats = Bat.find(:all, :joins => :bat_changes, 
+      :conditions=>["bat_changes.user_id = ? OR bat_changes.new_cage_id IN (?) OR bat_changes.owner_new_id = ?",
+        user,user.cages,user], :select => 'DISTINCT bats.*')
+    hists = find(:all,
+      :conditions => ["((added is true and date >= ? and date < ?) or (added is false and date >= ? and date < ?)) AND (user_id = ? OR bat_id IN (?) )",
+        start_date,end_date,start_date,end_date,user,bats | user.bats])
     hists = hists.sort_by{|h| h.bat.band}
     return hists
   end

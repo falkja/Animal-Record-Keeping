@@ -33,11 +33,7 @@ class MyMailer < ActionMailer::Base
 
   #gives one week to vaccinate, then sends emails listing each bat that
   #isn't vaccinated
-  def self.create_msg_for_bats_not_vaccinated(bats)
-		vacc_species = Species.find(:all, :conditions => {:requires_vaccination => true})
-    b_not_vacc = Bat.find(:all,
-      :conditions => ['id IN (?) AND vaccination_date is null AND species_id IN (?) AND collection_date < ? AND monitor_vaccination is true',
-        bats,vacc_species,(Date.today - 1.week)])
+  def self.create_msg_for_bats_not_vaccinated(b_not_vacc)
     if b_not_vacc.empty?
       return ''
     else
@@ -116,13 +112,14 @@ class MyMailer < ActionMailer::Base
           rel_text = "Added to protocol:"
         end
         msg_body = msg_body + "\n#{rel_text}"
-        msg_body = msg_body + "\nBat: " + bat.band
+        msg_body = msg_body + "\n Bat: " + bat.band
         if bat.cage != nil
-          msg_body = msg_body + "\nCage: " + bat.cage.name
-          msg_body = msg_body + "\nOwner: " + bat.cage.user.name
+          msg_body = msg_body + "\n  Cage: " + bat.cage.name
+          msg_body = msg_body + "\n  Owner: " + bat.cage.user.name
         end
-        msg_body = msg_body + "\n Title: " + ph.protocol.title
-        msg_body = msg_body + "\n Number: " + ph.protocol.number + "\n"
+        msg_body = msg_body + "\n  Title: " + ph.protocol.title
+        msg_body = msg_body + "\n  Number: " + ph.protocol.number
+        msg_body = msg_body + "\n  Action by: " + ph.user.name + "\n"
       end
       msg_body = msg_body + "\n*******************************************\n\n"
 			return msg_body
@@ -131,10 +128,8 @@ class MyMailer < ActionMailer::Base
 		end
   end
 	
-  def self.create_msg_for_bats_added_removed(bats)
-    #use bat changes instead by looking at the timestamps...
-    todays_changes = BatChange.find(:all, :conditions => ['(updated_at >= ? AND updated_at < ?) AND (bat_id IN (?)) AND ((new_cage_id is null and old_cage_id is not null) OR (new_cage_id is not null and old_cage_id is null) )',
-        Date.today.to_time, (Date.today + 1.day).to_time, bats])
+  def self.create_msg_for_bats_added_removed(todays_changes)
+    #use bat changes because if leave date was set for some other day rather than today, you would not find the bat
     todays_changes.sort_by{|ch| ch.bat.band}
     if todays_changes.empty?
       return ''
@@ -153,7 +148,7 @@ class MyMailer < ActionMailer::Base
         msg_body = msg_body + "\n  Cage: " + cage.name
         msg_body = msg_body + "\n  Owner: " + cage.user.name
         msg_body = msg_body + "\n  Date Actually Removed: " + ch.date.strftime("%b %d, %Y")
-        msg_body = msg_body + "\n  Action by: " + ch.user.name
+        msg_body = msg_body + "\n  Action by: " + ch.user.name + "\n"
       end
       msg_body = msg_body + "\n*******************************************\n\n"
 			return msg_body
@@ -224,14 +219,19 @@ class MyMailer < ActionMailer::Base
         users_bats_not_weighed = Bat.not_weighed(user.bats)
         users_bats_not_flown = Bat.not_flown(user.bats)
 
-        users_protocol_changes = Array.new
-        user.protocols.each{|p| p.protocol_histories.todays_histories.length > 0 ? users_protocol_changes << p.protocol_histories.todays_histories : ''}
+        users_protocol_changes = ProtocolHistory.users_todays_histories(user)
         
-        if (users_tasks_not_done.length > 0) || (users_bats_not_weighed.length > 0)
+        users_bat_changes = BatChange.users_bats_deactivated_today(user)
+        users_bats_not_vaccinated = Bat.not_vaccinated(user.bats)
+        
+        if users_tasks_not_done.length > 0 || users_bats_not_weighed.length > 0 || 
+            users_bats_not_flown.length > 0 || users_protocol_changes.length > 0 ||
+            users_bat_changes.length > 0 || users_bats_not_vaccinated.length > 0
           greeting = "Hi " + user.name + ",\n\n"
           greeting = greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
           msg_body = MyMailer.create_msg_body(users_tasks_not_done,
-            users_bats_not_weighed,users_bats_not_flown,users_protocol_changes,user.bats)
+            users_bats_not_weighed,users_bats_not_flown,users_protocol_changes,
+            users_bat_changes,users_bats_not_vaccinated)
           salutation = "Faithfully yours, etc."
           MyMailer.deliver_mail(user.email, "tasks not done today", greeting + msg_body + salutation)
         end
@@ -246,23 +246,28 @@ class MyMailer < ActionMailer::Base
     bats_not_weighed = Bat.not_weighed(Bat.active)
     protocol_changes = ProtocolHistory.todays_histories
     bats_not_flown = Bat.not_flown(Bat.active)
+    todays_bat_changes = BatChange.deactivated_today
+    bats_not_vaccinated = Bat.not_vaccinated(Bat.active)
     
-		if (tasks_not_done.length > 0) || (bats_not_weighed.length > 0) || (protocol_changes.length > 0)
+		if tasks_not_done.length > 0 || bats_not_weighed.length > 0 || 
+        bats_not_flown.length > 0 || protocol_changes.length > 0 ||
+        todays_bat_changes.length > 0 || bats_not_vaccinated.length > 0
 			greeting = "Administrator(s),\n\n"
       greeting = greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
-      msg_body = MyMailer.create_msg_body(tasks_not_done,bats_not_weighed,bats_not_flown,protocol_changes,Bat.active)
+      msg_body = MyMailer.create_msg_body(tasks_not_done,bats_not_weighed,
+        bats_not_flown,protocol_changes,todays_bat_changes,bats_not_vaccinated)
 			salutation = "Faithfully yours, etc."
 			MyMailer.deliver_mass_mail(admin_emails, "tasks not done today", greeting + msg_body + salutation)
 		end
 	end
 
-  def self.create_msg_body(tasks_not_done,bats_not_weighed,bats_not_flown,protocol_changes,bats)
+  def self.create_msg_body(tasks_not_done,bats_not_weighed,bats_not_flown,protocol_changes,bat_changes,not_vaccinated)
     msg_body = MyMailer.create_msg_for_tasks_not_done(tasks_not_done)
     msg_body = msg_body + MyMailer.create_msg_for_bats_not_weighed(bats_not_weighed)
     msg_body = msg_body + MyMailer.create_msg_for_bats_not_flown(bats_not_flown)
-    msg_body = msg_body + MyMailer.create_msg_for_bats_not_vaccinated(bats)
     msg_body = msg_body + MyMailer.create_msg_for_protocol_changes(protocol_changes)
-    msg_body = msg_body + MyMailer.create_msg_for_bats_added_removed(bats)
+    msg_body = msg_body + MyMailer.create_msg_for_bats_added_removed(bat_changes)
+    msg_body = msg_body + MyMailer.create_msg_for_bats_not_vaccinated(not_vaccinated)
     return msg_body
   end
 end

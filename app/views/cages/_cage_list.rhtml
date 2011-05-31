@@ -1,4 +1,5 @@
 <table>
+  <th></th>
   <th><%= link_to_remote "Med",
       :update => @div_id,
       :url =>{ :controller => 'cages', :action => 'list_by_med',
@@ -58,8 +59,15 @@
   <% if @list_all %>
     <th>Destroyed</th>
   <% end %>
+        
+  <% users_length = ((cage_list.collect{|b| b.user}).uniq).length %>
+  <% current_user = User.find(session[:person]) %>
+    
   <% for cage in cage_list %>
     <tr>
+      <td style="font-weight: bold;font-size: 11pt">
+        <%= users_length > 1 && (cage.user == current_user) ? '>' : '' %>
+      </td>
       <td style="text-align: center">
         <%= cage.current_medical_problems.empty? ? '' : link_to(image_tag("med.svg"),
           :controller => :medical_problems, :action => :list, 

@@ -8,6 +8,7 @@ This partial displays the summary for a list of bats
 <% if bat_list %>
   <div id='bats_div'>
     <table>
+      <th></th>
       <th>
         <%= link_to_remote( "Med",
           :update => 'bats_div',
@@ -99,9 +100,15 @@ This partial displays the summary for a list of bats
         </th>
         <th>Leave Reason</th>
       <% end %>
+        
+      <% users_length = ((bat_list.collect{|b| b.user}).uniq).length %>
+      <% current_user = User.find(session[:person]) %>
 
       <% for bat in bat_list %>
         <tr>
+          <td style="font-weight: bold;font-size: 11pt">
+            <%= users_length > 1 && (bat.user == current_user) ? '>' : '' %>
+          </td>
           <td style="text-align: center">
             <%= bat.medical_problems.current.empty? ? '' : link_to(image_tag("med.svg"),
               :controller => :medical_problems, :action => :list,

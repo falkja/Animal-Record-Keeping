@@ -858,7 +858,9 @@ class BatsController < ApplicationController
       bat = nil
     end
     surgery = Surgery.find(params[:id])
+    bat_change = BatChange.find(:first, :conditions=>{:surgery_id=>surgery})
 		surgery.destroy
+    bat_change.destroy
     flash.now[:surgery_notice]='Surgery deleted'
 		render :partial => 'form_surgery', :locals=>{:bat=>bat,
       :show_submit_button => params[:show_submit_button], :show_surgery_form => false}

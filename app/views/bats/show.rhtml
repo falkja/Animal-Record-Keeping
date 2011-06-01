@@ -56,9 +56,24 @@
   |
   <b>Collection Place: </b>
   <a href="http://maps.google.com/maps?q=<%=h @bat.collection_place %>" target="_blank"><%=h @bat.collection_place %></a>
-  |
+  
+</p>
+
+<p>
   <b>Time in the lab: </b>
   <%= @bat.time_in_lab %> days
+  
+  <% if @bat.leave_date != nil %>
+  
+    | <b>Leave Date: </b>
+    <%= nice_date @bat.leave_date %> |
+  
+    <b>Leave Reason: </b>
+    <%= @bat.leave_reason %>
+  
+  <% else %>
+    +
+  <% end %>
 </p>
 
 <p>
@@ -117,18 +132,6 @@
   <%= render :partial => 'show_bat_protocol_histories',
     :locals => {:histories => @bat.protocol_histories } %>
 </div>
-
-<% if @bat.leave_date != nil %>
-  <p>
-    <b>Leave Date: </b>
-    <%= nice_date @bat.leave_date %>
-  </p>
-
-  <p>
-    <b>Leave Reason: </b>
-    <%= @bat.leave_reason %>
-  </p>
-<% end %>
 
 <%= render :partial => 'bats/display_bat_notes' %>
 

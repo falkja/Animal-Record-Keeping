@@ -25,14 +25,20 @@
 <h3>Protocols:</h3>
 <div class='left_indent'>
   <% if @user.protocols.length > 0 %>
-    <% for p in @user.protocols %>
-      <p>
-        <b>Title:</b> <%= p.title %><br>
-        <b>Number:</b> <%= link_to p.number, p %><br>
-        <b>Start Date:</b> <%= nice_date p.start_date %><br>
-        <b>End Date:</b> <%= nice_date p.end_date %><br>
-      </p>
-    <% end %>
+    <table>
+      <th style="font-size: 11pt">Title:</th> 
+      <th style="font-size: 11pt">Number:</th> 
+      <th style="font-size: 11pt">Start Date:</th> 
+      <th style="font-size: 11pt">End Date:</th> 
+      <% for p in @user.protocols %>
+        <tr>
+          <td><%= p.title %></td>
+          <td><%= link_to p.number, p %></td>
+          <td><%= nice_date p.start_date %></td>
+          <td><%= nice_date p.end_date %></td>
+        </tr>
+      <% end %>
+    </table>
 
   <% else %>
     No protocols assigned to user
@@ -58,3 +64,13 @@
   <p><%= link_to "Add training", :controller => :trainings, :action => :new, :selected_user => @user %></p>
 
 </div>
+
+<h3>
+  Performed bat changes:
+</h3>
+<% if @bat_changes.length == 0 %>
+  No bat changes this month
+<% else %>
+  <%= render :partial => 'bats/show_bat_changes', 
+    :locals => {:bat_changes => @bat_changes, :single_bat => false} %>
+<% end %>

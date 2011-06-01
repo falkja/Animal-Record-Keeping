@@ -21,6 +21,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @bat_changes = BatChange.find(:all, :conditions => {:user_id => @user},
+      :order => 'date desc')
   end
 
   def new

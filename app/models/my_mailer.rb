@@ -1,14 +1,13 @@
 class MyMailer < ActionMailer::Base
+  default :from => "batkeeping@zoopsych2-63.umd.edu"
 
   def mail(recipient, msg_subject, msg_body)
-    from "batkeeping@zoopsych2-63.umd.edu"
     recipients recipient
     subject msg_subject
     body :email_body => msg_body
   end
   
   def mass_mail(recipients, msg_subject, msg_body)
-    from "batkeeping@zoopsych2-63.umd.edu"
     recipients recipients
     subject msg_subject
     body :email_body => msg_body
@@ -197,31 +196,27 @@ class MyMailer < ActionMailer::Base
 	end
 	
 	def self.email_users
-	  for user in User.current
-			if !user.administrator?
-        #per user generated email minus admins
-        users_tasks_not_done = Task.tasks_not_done_today(user.all_tasks)
-        users_bats_not_weighed = Bat.not_weighed(user.bats,Time.now)
-        users_bats_not_flown = Bat.not_flown(user.bats)
-
-        users_protocol_changes = ProtocolHistory.users_todays_histories(user)
+	  for user in User.current - User.administrator
+      #per user generated email minus admins
+      users_tasks_not_done = Task.tasks_not_done_today(user.all_tasks)
+      users_bats_not_weighed = Bat.not_weighed(user.bats,Time.now)
+      users_bats_not_flown = Bat.not_flown(user.bats)
+      users_protocol_changes = ProtocolHistory.users_todays_histories(user)
+      users_bat_changes = BatChange.users_bats_deactivated_today(user)
+      users_bats_not_vaccinated = Bat.not_vaccinated(user.bats)
         
-        users_bat_changes = BatChange.users_bats_deactivated_today(user)
-        users_bats_not_vaccinated = Bat.not_vaccinated(user.bats)
-        
-        if users_tasks_not_done.length > 0 || users_bats_not_weighed.length > 0 || 
-            users_bats_not_flown.length > 0 || users_protocol_changes.length > 0 ||
-            users_bat_changes.length > 0 || users_bats_not_vaccinated.length > 0
-          greeting = "Hi " + user.name + ",\n\n"
-          greeting = greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
-          msg_body = MyMailer.create_msg_body(users_tasks_not_done,
-            users_bats_not_weighed,users_bats_not_flown,users_protocol_changes,
-            users_bat_changes,users_bats_not_vaccinated)
-          salutation = "Faithfully yours, etc."
-          MyMailer.deliver_mail(user.email, "tasks not done today", greeting + msg_body + salutation)
-        end
-			end
-		end
+      if users_tasks_not_done.length > 0 || users_bats_not_weighed.length > 0 ||
+          users_bats_not_flown.length > 0 || users_protocol_changes.length > 0 ||
+          users_bat_changes.length > 0 || users_bats_not_vaccinated.length > 0
+        greeting = "Hi " + user.name + ",\n\n"
+        greeting = greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
+        msg_body = MyMailer.create_msg_body(users_tasks_not_done,
+          users_bats_not_weighed,users_bats_not_flown,users_protocol_changes,
+          users_bat_changes,users_bats_not_vaccinated)
+        salutation = "Faithfully yours, etc."
+        MyMailer.deliver_mail(user.email, "tasks not done today", greeting + msg_body + salutation)
+      end
+    end
 		
 		#all administrators get CCed on one email and see everything
 		admin_emails = Array.new

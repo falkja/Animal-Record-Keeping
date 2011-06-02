@@ -7,12 +7,6 @@ class MainController < ApplicationController
 		@animal_care_users = User.current_animal_care
   end
   
-  #just show all cage changes
-  def cage_change_histories
-    @cih = CageInHistory.find(:all, :order => "date")
-    @coh = CageOutHistory.find(:all, :order => "date")
-  end
-  
   def login
 	  session[:person] = params[:user][:id]
 	  flash[:notice] = "Welcome " + User.find(session[:person]).name

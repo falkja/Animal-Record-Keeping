@@ -3,7 +3,7 @@
   <ul>
     <% if session[:person] %>
 
-      <% user = @user %>
+      <% @user ? user = @user : user = User.find(session[:person]) %>
 
       <span style="font-size: 14pt"><%= link_to 'Home', :controller => :main, :action => :user_summary_page, :id => user %></span>
 

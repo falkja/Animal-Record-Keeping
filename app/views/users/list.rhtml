@@ -1,54 +1,56 @@
 <h1>
-<% if @list_all %>
-Listing all users
-<% else %>
-Listing current users
-<% end %></h1>
+  <% if @list_all %>
+    Listing all users
+  <% else %>
+    Listing current users
+  <% end %></h1>
 
 <%= button_to 'New User', :action => 'new', :method => :get %> |
 <% if @list_all %>
-<%= link_to 'List Current Members', :action => 'list' %>
+  <%= link_to 'List Current Members', :action => 'list' %>
 <% else %>
-<%= link_to 'List All Members', :action => 'list_all' %>
+  <%= link_to 'List All Members', :action => 'list_all' %>
 <% end %>
 
 <hr></hr>
 
 <div class="left_indent">
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Initials</th>
-    <th>Email</th>
-    <th>Start Date</th>
-    <% if @list_all %>
-      <th>End Date</th>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Initials</th>
+      <th>Email</th>
+      <th>Start Date</th>
+      <% if @list_all %>
+        <th>End Date</th>
+      <% end %>
+      <th>Job Type</th>
+    </tr>
+
+    <% for user in @users %>
+      <tr>
+        <td>
+          <b>
+            <%= link_to user.name, :action => 'show', :id => user  %>
+          </b>
+        </td>
+        <td><%= user.initials %></td>
+        <td><%= user.email %></td>
+        <td><%= nice_date_no_day user.start_date %></td>
+        <% if @list_all %>
+          <td><%= nice_date_no_day user.end_date %></td>
+        <% end %>
+        <td><%= user.job_type %></td>
+        <td><%= link_to 'Edit', :action => 'edit', :id => user %></td>
+        <td>
+          <% if user.end_date == nil %>
+            <%=  link_to 'Deactivate', { :action => 'deactivate', :id => user }, :confirm => 'Are you sure?', :method => :post %>
+          <% else %>
+            <%=  link_to 'Reactivate', { :action => 'reactivate', :id => user }, :confirm => 'Are you sure?', :method => :post %>
+          <% end %>
+        </td>
+        <td><%= link_to 'User Summ. Pg.', :controller => :main, :action => :user_summary_page, :id => user %></td>
+      </tr>
     <% end %>
-    <th>Job Type</th>
-  </tr>
-  
-<% for user in @users %>
-		<tr>
-		<td>
-      <b>
-			<%= link_to user.name, :action => 'show', :id => user  %>
-      </b>
-    <td><%= user.initials %></td>
-    <td><%= user.email %></td>
-    <td><%= nice_date_no_day user.start_date %></td>
-    <% if @list_all %>
-      <td><%= nice_date_no_day user.end_date %></td>
-    <% end %>
-    <td><%= user.job_type %></td>
-		<td><%= link_to 'Edit', :action => 'edit', :id => user %></td>
-		<td>
-		<% if user.end_date == nil %>
-		<%=  link_to 'Deactivate', { :action => 'deactivate', :id => user }, :confirm => 'Are you sure?', :method => :post %>
-		<% else %>
-		<%=  link_to 'Reactivate', { :action => 'reactivate', :id => user }, :confirm => 'Are you sure?', :method => :post %>
-		<% end %>
-		</td>
-	</tr>
-<% end %>
-</table>
+  </table>
 </div>

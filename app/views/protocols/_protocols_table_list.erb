@@ -12,7 +12,9 @@
     <th>Title</th>
     <th>Summary</th>
     <th>Bats</th>
-    <th>Surgeries</th>
+    <th>Sx</th>
+    <th>Data</th>
+    <th>Users</th>
     <th>End date</th>
   </tr>
 
@@ -35,12 +37,26 @@
       </td>
       <td>
         <% if protocol.surgery_types.empty? %>
-          NA
+          0
         <% else %>
           <% for s in protocol.surgery_types %>
             <%= s.name %><br />
           <% end %>
         <% end %>
+      </td>
+      <td>
+        <% if protocol.data.empty? %>
+          0
+        <% else %>
+          <% for d in protocol.data %>
+            <%= d.name %><br />
+          <% end %>
+        <% end %>
+      </td>
+      <td>
+        <span title="Users: <% for u in protocol.users %>&#13; <%=h u.name %><% end %> ">
+          <%=h link_to protocol.users.length, :controller => :users, :action => :list, :ids => protocol.users %>
+        </span>
       </td>
       <td><label for='protocol_id_<%=protocol.id %>' ><%=nice_date_no_day protocol.end_date %></label></td>
       <% unless selecting%>

@@ -9,7 +9,11 @@ class UsersController < ApplicationController
     :redirect_to => { :action => :list }
 
   def list
-    @users = User.find(:all, :conditions => 'end_date is null', :order => 'name')
+    if params[:ids]
+      @users = User.find(params[:ids], :order => 'name')
+    else
+      @users = User.find(:all, :conditions => 'end_date is null', :order => 'name')
+    end
     @list_all = false
   end
   

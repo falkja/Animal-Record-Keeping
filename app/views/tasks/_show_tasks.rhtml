@@ -1,20 +1,20 @@
 <h2>[<%= link_to_remote '-', :url => {:controller => 'tasks', :action => :hide_tasks, :feeding_tasks => feeding_tasks, 
-        :general_tasks => general_tasks, :medical_tasks => medical_tasks, 
-        :div_id => div_id, :feeding_cages => feeding_cages, :cages => cages, :medical_problems => medical_problems, 
-        :same_type_task_list => same_type_task_list, :source => source, :user => user, :sorted_by => sorted_by},
-        :update => div_id %>]
-<% if div_id == 'todays_tasks' %>
-Today's Tasks
-<% elsif div_id == 'other_tasks' %>
-Tasks Not Due Today
-<% elsif div_id == 'all_tasks' %>
-All Tasks
-<% end %>
+    :general_tasks => general_tasks, :medical_tasks => medical_tasks,
+    :div_id => div_id, :feeding_cages => feeding_cages, :cages => cages, :medical_problems => medical_problems,
+    :same_type_task_list => same_type_task_list, :source => source, :user => user, :sorted_by => sorted_by},
+    :update => div_id %>]
+  <% if div_id == 'todays_tasks' %>
+    Today's Tasks
+  <% elsif div_id == 'other_tasks' %>
+    Tasks Not Due Today
+  <% elsif div_id == 'all_tasks' %>
+    All Tasks
+  <% end %>
 </h2>
 
-  <div class="left_indent">
-    <%= render :partial => 'tasks/all_tasks', :locals => {:feeding_tasks => feeding_tasks, 
-            :general_tasks => general_tasks, :medical_tasks => medical_tasks, :count => div_id, :source => source, 
-            :feeding_cages => feeding_cages, :cages => cages, :medical_problems => medical_problems, 
-            :same_type_task_list => same_type_task_list, :sorted_by => sorted_by, :user => user} %>
-  </div>
+<div class="left_indent">
+  <%= render :partial => 'tasks/all_tasks', :locals => {:feeding_tasks => feeding_tasks,
+    :general_tasks => general_tasks, :medical_tasks => medical_tasks, :count => div_id, :source => source,
+    :feeding_cages => feeding_cages, :cages => cages, :medical_problems => medical_problems,
+    :same_type_task_list => same_type_task_list, :sorted_by => sorted_by, :user => user} %>
+</div>

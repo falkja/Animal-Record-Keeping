@@ -23,6 +23,26 @@ class TasksController < ApplicationController
     @cages = Cage.has_bats
     @medical_problems = MedicalProblem.current
   end
+
+  def list_by_ids
+    tasks = Task.find(params[:ids])
+
+    @general_tasks_today = Task.find(Task.general_tasks_today & tasks)
+	  @feeding_tasks_today = Task.find(Task.feeding_tasks_today & tasks)
+	  @medical_tasks_today = Task.find(Task.medical_tasks_today & tasks)
+	  @general_tasks_not_today = Task.find(Task.general_tasks_not_today & tasks)
+	  @feeding_tasks_not_today = Task.find(Task.feeding_tasks_not_today & tasks)
+	  @medical_tasks_not_today = Task.find(Task.medical_tasks_not_today & tasks)
+    @general_tasks = Task.find(Task.general_tasks & tasks)
+    @feeding_tasks = Task.find(Task.feeding_tasks & tasks)
+    @medical_tasks = Task.find(Task.medical_tasks & tasks)
+
+    @feeding_cages = Cage.has_feeding_tasks
+    @cages = Cage.has_bats
+    @medical_problems = MedicalProblem.current
+
+    render :action=>'list'
+  end
   
   def hide_tasks
 		show_hide_tasks

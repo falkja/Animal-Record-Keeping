@@ -89,6 +89,25 @@ class User < ActiveRecord::Base
 		medical_problems.sort_by{|medical_problem| [medical_problem.bat.band, medical_problem.title]}
 	end
 
+  def all_tasks
+    users_tasks = self.tasks.today
+
+    if ((self.animal_care_user? && ( (Time.now.wday == 1) || (Time.now.wday == 2) || (Time.now.wday == 3) || (Time.now.wday == 4) || (Time.now.wday == 5))) || (self.weekend_care_user? && (Time.now.wday == 6 || Time.now.wday == 0)))
+      users_tasks = Task.animal_care_user_general_tasks_today | users_tasks
+      users_tasks = Task.animal_care_user_feeding_tasks_today | users_tasks
+    end
+
+    if self.medical_care_user?
+      users_tasks = Task.medical_user_tasks_today | users_tasks
+    end
+
+    if self.cages.active.length > 0
+      self.cages.active.each{|c| c.tasks.today.length > 0 ? c.tasks.today.each{|t| users_tasks << t} : ''}
+    end
+
+    return users_tasks
+  end
+
 #  def protocol_histories
 #    ProtocolHistory.find(:all, ["protocol_id = ?", self.protocols],
 #      :order => 'date_added')

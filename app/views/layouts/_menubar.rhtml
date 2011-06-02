@@ -1,79 +1,79 @@
 <ul id="nav">
-<li><%= link_to 'Main', :controller => :main, :action => :user_summary_page, :id => User.find(session[:person]) %>
-	<ul>
-	<li><%= link_to 'My Page', :controller => :main, :action => :user_summary_page, :id => User.find(session[:person]) %></li>
-  <li><%= link_to 'Bat Changes', :controller => :stats, :action => :bat_changes %></li>
-  <li><%= link_to 'Colony Status', :controller => :stats, :action => :index %></li>
-  <li><%= link_to 'Animal Care Staff', :controller => :main, :action => :animal_care_staff %></li>
-  <li><b><a href="">Admin ...</a></b>
-	<% if User.find(session[:person]).administrator? %>
-		<ul>
-			<li><%= link_to 'List Users', :controller => :users, :action => :list %></li>
-			<li><%= link_to 'New User', :controller => :users, :action => :new %></li>
-			<li><%= link_to 'List Species', :controller => :species, :action => :list %></li>
-			<li><%= link_to 'New Species', :controller => :species, :action => :new %></li>
-			<li><%= link_to 'List Rooms', :controller => :rooms, :action => :list %></li>
-			<li><%= link_to 'New Room', :controller => :rooms, :action => :new %></li>
-			<li><%= link_to 'List Training Types', :controller => :training_types, :action => :list %></li>
-			<li><%= link_to 'New Training Type', :controller => :training_types, :action => :new %></li>
-			<li><%= link_to 'List Trainings', :controller => :trainings, :action => :list %></li>
-			<li><%= link_to 'New Training', :controller => :trainings, :action => :new %></li>
-		</ul>
-	<% else %>
-		<ul>
-		<li><%= link_to 'Login as an Admin', :controller => :main, :action => :logout %></a></li>
-		</ul>
-	<% end %>
-	</li>
-	</ul>
-</li>
-<li><%= link_to 'Bats', :controller => :bats, :action => :list %>
-	<ul>
-	<li><%= link_to 'List', :controller => :bats, :action => :list, :bats => User.find(session[:person]).bats %></li>
-	<li><%= link_to 'New', :controller => :bats, :action => :new %></li>
-  <li><%= link_to 'Weigh', :controller => :bats, :action => :choose_bat_to_weigh, :bats => User.find(session[:person]).bats %></li>
-	<li><%= link_to 'Move', :controller => :bats, :action => :move_bats %></li>
-	</ul>
-</li>
-<li><%= link_to 'Cages', :controller => :cages, :action => :list %>
-	<ul>
-	<li><%= link_to 'List', :controller => :cages, :action => :list, :cages => User.find(session[:person]).cages.active %></li>
-	<li><%= link_to 'New', :controller => :cages, :action => :new %></li>
-	<li><%= link_to 'Weigh', :controller => :cages, :action => :choose_cage_to_weigh, :cages => User.find(session[:person]).cages.active %></li>
-	<li><%= link_to 'Move', :controller => :cages, :action => :move_cage %></li>
-	</ul>
-</li>
-<li><%= link_to 'Med. Problems', :controller => :medical_problems, :action => :list_current %>
-	<ul>
-	<li><%= link_to 'List', :controller => :medical_problems, :action => :list_current %></li>
-	<li><%= link_to 'New', :controller => :medical_problems, :action => :new %></li>
-	</ul>
-</li>
-<li><%= link_to 'Flight Logs', :controller => :flights, :action => :index %>
-  <ul>
-  <li><%= link_to 'Show', :controller => :flights, :action => :list %></li>
-  <li><%= link_to 'New', :controller => :flights, :action => :new %></li>
-  </ul>
-</li>
-<li><%= link_to 'Protocols', :protocols %>
-	<ul>
-	<li><%= link_to 'List', :protocols %></li>
-	<li><%= link_to 'New', :new_protocol %></li>
-	<li><%= link_to 'Add Bats', :controller => :protocols, :action => :update_mult_bats, :act => 'add' %></li>
-	<li><%= link_to 'Remove Bats', :controller => :protocols, :action => :update_mult_bats, :act => 'remove' %></li>
-	</ul>
-</li>
+  <li><%= link_to 'Main', :controller => :main, :action => :user_summary_page, :id => User.find(session[:person]) %>
+    <ul>
+      <li><%= link_to 'My Page', :controller => :main, :action => :user_summary_page, :id => User.find(session[:person]) %></li>
+      <li><%= link_to 'Bat Changes', :controller => :stats, :action => :bat_changes %></li>
+      <li><%= link_to 'Colony Status', :controller => :stats, :action => :index %></li>
+      <li><%= link_to 'Animal Care Staff', :controller => :main, :action => :animal_care_staff %></li>
+      <li><b><a href="">Admin ...</a></b>
+        <% if User.find(session[:person]).administrator? %>
+          <ul>
+            <li><%= link_to 'List Users', :controller => :users, :action => :list %></li>
+            <li><%= link_to 'New User', :controller => :users, :action => :new %></li>
+            <li><%= link_to 'List Species', :controller => :species, :action => :list %></li>
+            <li><%= link_to 'New Species', :controller => :species, :action => :new %></li>
+            <li><%= link_to 'List Rooms', :controller => :rooms, :action => :list %></li>
+            <li><%= link_to 'New Room', :controller => :rooms, :action => :new %></li>
+            <li><%= link_to 'List Training Types', :controller => :training_types, :action => :list %></li>
+            <li><%= link_to 'New Training Type', :controller => :training_types, :action => :new %></li>
+            <li><%= link_to 'List Trainings', :controller => :trainings, :action => :list %></li>
+            <li><%= link_to 'New Training', :controller => :trainings, :action => :new %></li>
+          </ul>
+        <% else %>
+          <ul>
+            <li><%= link_to 'Login as an Admin', :controller => :main, :action => :logout %></a></li>
+          </ul>
+        <% end %>
+      </li>
+    </ul>
+  </li>
+  <li><%= link_to 'Bats', :controller => :bats, :action => :list %>
+    <ul>
+      <li><%= link_to 'List', :controller => :bats, :action => :list, :bats => User.find(session[:person]).bats %></li>
+      <li><%= link_to 'New', :controller => :bats, :action => :new %></li>
+      <li><%= link_to 'Weigh', :controller => :bats, :action => :choose_bat_to_weigh, :bats => User.find(session[:person]).bats %></li>
+      <li><%= link_to 'Move', :controller => :bats, :action => :move_bats %></li>
+    </ul>
+  </li>
+  <li><%= link_to 'Cages', :controller => :cages, :action => :list %>
+    <ul>
+      <li><%= link_to 'List', :controller => :cages, :action => :list, :cages => User.find(session[:person]).cages.active %></li>
+      <li><%= link_to 'New', :controller => :cages, :action => :new %></li>
+      <li><%= link_to 'Weigh', :controller => :cages, :action => :choose_cage_to_weigh, :cages => User.find(session[:person]).cages.active %></li>
+      <li><%= link_to 'Move', :controller => :cages, :action => :move_cage %></li>
+    </ul>
+  </li>
+  <li><%= link_to 'Med. Problems', :controller => :medical_problems, :action => :list_current %>
+    <ul>
+      <li><%= link_to 'List', :controller => :medical_problems, :action => :list_current %></li>
+      <li><%= link_to 'New', :controller => :medical_problems, :action => :new %></li>
+    </ul>
+  </li>
+  <li><%= link_to 'Flight Logs', :controller => :flights, :action => :index %>
+    <ul>
+      <li><%= link_to 'Show', :controller => :flights, :action => :list %></li>
+      <li><%= link_to 'New', :controller => :flights, :action => :new %></li>
+    </ul>
+  </li>
+  <li><%= link_to 'Protocols', :protocols %>
+    <ul>
+      <li><%= link_to 'List', :protocols %></li>
+      <li><%= link_to 'New', :new_protocol %></li>
+      <li><%= link_to 'Add Bats', :controller => :protocols, :action => :update_mult_bats, :act => 'add' %></li>
+      <li><%= link_to 'Remove Bats', :controller => :protocols, :action => :update_mult_bats, :act => 'remove' %></li>
+    </ul>
+  </li>
 
-<li><%= link_to 'Tasks', :controller => :tasks, :action => :list %>
-	<ul>
-	<li><%= link_to 'List', :controller => :tasks, :action => :list %></li>
-	<li><%= link_to 'New', :controller => :tasks, :action => :choose_new_task %></li>
-	</ul>
-</li>
-<li><%= link_to 'Help', :controller => :help, :action => 'manual' %>
-	<ul>
-	<li><%= link_to 'Manual', :controller => :help, :action => :manual %></li>
-	<li><%= link_to 'Bug Report', :controller => :help, :action => :bug_report %></li>
-	</ul>
-</li>
+  <li><%= link_to 'Tasks', :controller => :tasks, :action => :list %>
+    <ul>
+      <li><%= link_to 'List', :controller => :tasks, :action => :list_by_ids, :ids => User.find(session[:person]).all_tasks %></li>
+      <li><%= link_to 'New', :controller => :tasks, :action => :choose_new_task %></li>
+    </ul>
+  </li>
+  <li><%= link_to 'Help', :controller => :help, :action => 'manual' %>
+    <ul>
+      <li><%= link_to 'Manual', :controller => :help, :action => :manual %></li>
+      <li><%= link_to 'Bug Report', :controller => :help, :action => :bug_report %></li>
+    </ul>
+  </li>
 </ul>

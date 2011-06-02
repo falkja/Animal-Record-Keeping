@@ -2,7 +2,11 @@ class ProtocolsController < ApplicationController
   # GET /protocols
   # GET /protocols.xml
   def index
-    @protocols = Protocol.all(:order => 'number')
+    if params[:ids]
+      @protocols = Protocol.find(params[:ids],:order => 'number')
+    else
+      @protocols = Protocol.all(:order => 'number')
+    end
 
     respond_to do |format|
       format.html # index.html.erb

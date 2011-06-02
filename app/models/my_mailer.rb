@@ -200,23 +200,8 @@ class MyMailer < ActionMailer::Base
 	  for user in User.current
 			if !user.administrator?
         #per user generated email minus admins
-        users_tasks = user.tasks.today
-        
-        if ((user.animal_care_user? && ( (Time.now.wday == 1) || (Time.now.wday == 2) || (Time.now.wday == 3) || (Time.now.wday == 4) || (Time.now.wday == 5))) || (user.weekend_care_user? && (Time.now.wday == 6 || Time.now.wday == 0)))
-          Task.animal_care_user_general_tasks_today.each{|task| users_tasks << task}
-          Task.animal_care_user_feeding_tasks_today.each{|task| users_tasks << task}
-        end
-        
-        if user.medical_care_user?
-          Task.medical_user_tasks_today.each{|task| users_tasks << task}
-        end
-
-        if user.cages.active.length > 0
-          user.cages.active.each{|c| c.tasks.today.length > 0 ? c.tasks.today.each{|t| users_tasks << t} : ''}
-        end
-        
-        users_tasks_not_done = Task.tasks_not_done_today(users_tasks)
-        users_bats_not_weighed = Bat.not_weighed(user.bats)
+        users_tasks_not_done = Task.tasks_not_done_today(user.all_tasks)
+        users_bats_not_weighed = Bat.not_weighed(user.bats,Time.now)
         users_bats_not_flown = Bat.not_flown(user.bats)
 
         users_protocol_changes = ProtocolHistory.users_todays_histories(user)
@@ -243,7 +228,7 @@ class MyMailer < ActionMailer::Base
 		User.administrator.each{|admin| admin_emails << admin.email}
 		
 		tasks_not_done = Task.tasks_not_done_today(Task.today)
-    bats_not_weighed = Bat.not_weighed(Bat.active)
+    bats_not_weighed = Bat.not_weighed(Bat.active,Time.now)
     protocol_changes = ProtocolHistory.todays_histories
     bats_not_flown = Bat.not_flown(Bat.active)
     todays_bat_changes = BatChange.deactivated_today

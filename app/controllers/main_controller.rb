@@ -96,7 +96,7 @@ class MainController < ApplicationController
     @greeting = @greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
 
     @msg_body = MyMailer.create_msg_body(Task.tasks_not_done_today(Task.today),
-      Bat.not_weighed(Bat.active),Bat.not_flown(Bat.active),ProtocolHistory.todays_histories,
+      Bat.not_weighed(Bat.active,Time.now),Bat.not_flown(Bat.active),ProtocolHistory.todays_histories,
       BatChange.deactivated_today,Bat.not_vaccinated(Bat.active))
 
     if session[:person]

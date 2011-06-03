@@ -4,6 +4,7 @@ class BatChange < ActiveRecord::Base
   belongs_to :user
   belongs_to :cage_in_history
   belongs_to :protocol_history
+  has_one :protocol, :through => :protocol_history
   belongs_to :surgery
   
   def self.deactivated_today

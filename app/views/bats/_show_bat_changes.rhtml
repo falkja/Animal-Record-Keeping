@@ -77,11 +77,11 @@
 
         <td>
           <%= bat_change.protocol_history && !bat_change.protocol_history.added ? 
-            link_to(bat_change.protocol_history.protocol.number,bat_change.protocol_history.protocol) : '' %>
+            link_to(bat_change.protocol.number,bat_change.protocol) : '' %>
         </td>
         <td>
           <%= bat_change.protocol_history && bat_change.protocol_history.added ? 
-            link_to(bat_change.protocol_history.protocol.number,bat_change.protocol_history.protocol) : '' %>
+            link_to(bat_change.protocol.number,bat_change.protocol) : '' %>
         </td>
         
         <td><%= bat_change.surgery ? bat_change.surgery.surgery_type.name : '' %></td>

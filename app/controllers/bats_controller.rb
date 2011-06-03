@@ -555,7 +555,7 @@ class BatsController < ApplicationController
     @bats = Array.new
     @bats << bat
     @cage = bat.cage
-    @cages = Cage.active - @cage
+    @cages = Cage.active - Array.new(1,@cage)
   end
 
   def move_bats_from_cage

@@ -105,12 +105,7 @@ class User < ActiveRecord::Base
       self.cages.active.each{|c| c.tasks.today.length > 0 ? c.tasks.today.each{|t| users_tasks << t} : ''}
     end
 
-    return users_tasks
+    return users_tasks.uniq
   end
-
-#  def protocol_histories
-#    ProtocolHistory.find(:all, ["protocol_id = ?", self.protocols],
-#      :order => 'date_added')
-#  end
 
 end

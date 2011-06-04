@@ -1,3 +1,5 @@
+<%= render :partial => 'bats/sidebar' %>
+
 <h1>Weigh <%= @bat.band%> in <%= @bat.cage.name %></h1>
 
 <% form_tag :action => 'submit_weight', :id => @bat, :redirectme => params[:redirectme] do %>

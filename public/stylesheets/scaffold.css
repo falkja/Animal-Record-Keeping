@@ -101,10 +101,17 @@ div.mainmenu a {
 }
 
 /* the log in name is shown here */
+div.home {
+    position:absolute;
+    top: .1cm;
+    right: .5cm;
+}
+
+/* the log in name is shown here */
 div.session {
     position:absolute;
     top: 0cm;
-    right: 1cm;
+    right: 1.5cm;
     text-align: right;
 }
 

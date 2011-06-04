@@ -1,45 +1,49 @@
 <div id='display_weights'>
 
-<h3>Weight History:</h3>
+  <h3>Weight History:</h3>
 
-<div class="left_indent">
+  <div class="left_indent">
 
-<%= link_to 'Weigh Bat', :controller => :bats, :action => :weigh_bat, :id => bat %>
+    <%= link_to 'Weigh Bat', :controller => :bats, :action => :weigh_bat, :id => bat %>
 
-<% if bat.weights.length == 0 %>
-	No weights
-<% else %>
-| <%= link_to 'Graph Weights', :controller => :bats, :action => :graph_weights, :id => bat %>
-<p>
-<table>
-  <th>Date</th>
-  <th>Weight</th>
-  <th>Fed</th>
-  <th>Notes</th>
-  <th>Who</th>
-  <% for weight in bat.weights %>
-		<tr>
-		<td><%= nice_date weight.date %></td>
-		<td><%= weight.weight %>g</td>
-		<td><%= weight.after_eating == 'y' ? 'After Eating' : 'Before Eating' %></td>
-		<td><%= weight.note %></td>
-		<td><%= weight.user.initials %></td>
-		<td>
-			<%= link_to_remote 'Destroy', :update => :display_weights, :url => {
-				:controller => 'weights', :action => 'destroy', :id => weight, :bat => bat}, :confirm => 'Are you sure?', :method => :post %>
-		</td>
-		<% if weight.weight < bat.species.lower_weight_limit %>
-			<td><warning>Warning: below species lower weight limit (<%= bat.species.lower_weight_limit %>)</warning></td>
-		<% elsif weight.weight > bat.species.upper_weight_limit %>
-			<td><warning>Warning: above species upper weight limit (<%= bat.species.upper_weight_limit %>)</warning></td>
-		<% end %>
-		
-		</tr>
-  <% end %>
-</table>
-</p>
-<% end %>
+    <% if bat.weights.length == 0 %>
+          No weights
+    <% else %>
+      | <%= link_to 'Graph Weights', :controller => :bats, :action => :graph_weights, :id => bat %>
+      <p>
+      <table>
+        <th>Date</th>
+        <th>Weight</th>
+        <th>Fed</th>
+        <th>Notes</th>
+        <th>Who</th>
+        <% for weight in bat.weights %>
+          <tr>
+            <td>
+              <span title="<%= nice_date_with_time weight.date %>">
+                <%= nice_date weight.date %>
+              </span>
+            </td>
+            <td><%= weight.weight %>g</td>
+            <td><%= weight.after_eating == 'y' ? 'After Eating' : 'Before Eating' %></td>
+            <td><%= weight.note %></td>
+            <td><%= link_to weight.user.initials, :controller => :users, :action => :show, :id => weight.user %></td>
+            <td>
+              <%= link_to_remote 'Destroy', :update => :display_weights, :url => {
+                :controller => 'weights', :action => 'destroy', :id => weight, :bat => bat}, :confirm => 'Are you sure?', :method => :post %>
+            </td>
+            <% if weight.weight < bat.species.lower_weight_limit %>
+              <td><warning>Warning: below species lower weight limit (<%= bat.species.lower_weight_limit %>)</warning></td>
+          <% elsif weight.weight > bat.species.upper_weight_limit %>
+            <td><warning>Warning: above species upper weight limit (<%= bat.species.upper_weight_limit %>)</warning></td>
+          <% end %>
 
-</div>
+          </tr>
+        <% end %>
+      </table>
+      </p>
+    <% end %>
+
+  </div>
 
 </div>

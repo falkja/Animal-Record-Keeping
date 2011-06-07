@@ -57,7 +57,7 @@
   </li>
   <li><%= link_to 'Protocols', :protocols %>
     <ul>
-      <li><%= link_to 'List', :protocols %></li>
+      <li><%= link_to 'List', :controller =>:protocols, :action => :index, :ids=> User.find(session[:person]).protocols.current  %></li>
       <li><%= link_to 'New', :new_protocol %></li>
       <li><%= link_to 'Add Bats', :controller => :protocols, :action => :update_mult_bats, :act => 'add' %></li>
       <li><%= link_to 'Remove Bats', :controller => :protocols, :action => :update_mult_bats, :act => 'remove' %></li>

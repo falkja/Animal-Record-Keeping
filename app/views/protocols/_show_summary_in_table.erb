@@ -1,0 +1,12 @@
+<% if protocol.summary %>
+
+  <%=h simple_format(protocol.summary.split("\n")[0,limit].join, :class=>'no_break') %>
+
+  <% if protocol.summary.split("\n").length > 3 %>
+    <% limit == 3 ? link_text = "[...]" : link_text = "[^]" %>
+    <b><%= link_to_remote link_text, :url => {:controller=>:protocols, 
+        :action=>:show_summary_in_table, :limit => limit, :prot=>protocol}, 
+        :update=> "summary_" + protocol.id.to_s %></b>
+  <% end %>
+
+<% end %>

@@ -82,6 +82,14 @@ This partial displays the summary for a list of bats
             :show_weigh_link => show_weigh_link}) %>
       </th>
       <th>
+        <%= link_to_remote("Protocols",
+          :update => 'bats_div',
+          :url =>{ :controller => :bats, :action => :sort_by_protocols,
+            :ids => bat_list,
+            :show_leave_date_and_reason => show_leave_date_and_reason,
+            :show_weigh_link => show_weigh_link}) %>
+      </th>
+      <th>
         <%= link_to_remote( "Collected",
           :update => 'bats_div',
           :url =>{ :controller => :bats, :action => :sort_by_collected,
@@ -157,6 +165,10 @@ This partial displays the summary for a list of bats
 
               <td style="text-align: center">
                 <%=h bat.surgeries.length %>
+              </td>
+
+              <td style="text-align: center">
+                <%=h bat.protocols.length %>
               </td>
 
               <td align=center><%=h bat.collection_date.strftime("%Y") %></td>

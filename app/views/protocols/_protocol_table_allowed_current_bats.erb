@@ -5,7 +5,7 @@
   <th style="font-size: 12px">Allowed</th>
   <% allowed_bats = protocol.allowed_bats.sort_by{|ab| ab.species.name} %>
   <% for ab in allowed_bats %>
-    <% if ab.number != 0 || Bat.bats_on_species(protocol.all_past_bats,ab.species).length > 0 ||
+    <% if ab.number > 0 || Bat.bats_on_species(protocol.all_past_bats,ab.species).length > 0 ||
         Bat.bats_on_species(protocol.all_past_bats,ab.species).length > 0 %>
       <tr>
         <td><%= link_to ab.species.name, :controller => :species, :action => :show, :id => ab.species %></td>

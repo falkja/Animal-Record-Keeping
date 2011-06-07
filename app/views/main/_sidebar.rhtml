@@ -5,11 +5,6 @@
 
       <% @user ? user = @user : user = User.find(session[:person]) %>
 
-      <span style="font-size: 14pt"><%= link_to 'Home', :controller => :main, :action => :user_summary_page, :id => user %></span>
-
-      <br />
-      <br />
-
       <% if user.job_type != '' && user.job_type != nil %>
         <span style="font-size: 12pt">
           <li><%= link_to 'My Jobs', :controller => :users, :action => :edit, :id => user %></li>
@@ -29,7 +24,7 @@
         <% bats_not_weighed = Bat.not_weighed(user.bats,Time.now+1.day) %>
         <%= bats_not_weighed.empty? ? '' : '<li>Weigh: ' +
           link_to(bats_not_weighed.length, :controller=>:bats,
-          :action=>:list, :bats=>bats_not_weighed) + '</li>' %>
+          :action=>:choose_bat_to_weigh, :bats=>bats_not_weighed) + '</li>' %>
 
         <%  users_tasks_not_done = Task.tasks_not_done_today(user.all_tasks) %>
         <%= users_tasks_not_done.empty? ? '' : '<li>Tasks: ' +
@@ -67,8 +62,8 @@
 
       <span style="font-size: 12pt"><li><%= link_to 'Protocols', :controller => :protocols %></li></span>
       <ul>
-        <% if user.protocols.length > 0 %>
-          <% for protocol in user.protocols %>
+        <% if user.protocols.current.length > 0 %>
+          <% for protocol in user.protocols.current %>
             <li><%= link_to protocol.number, :controller => :protocols, :action => :show, :id => protocol %></li>
           <% end %>
         <% else %>

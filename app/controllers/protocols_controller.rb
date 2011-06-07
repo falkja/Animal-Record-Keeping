@@ -302,4 +302,15 @@ class ProtocolsController < ApplicationController
     render :partial => "surgeries_on_protocol_form", :locals => 
       {:protocol => protocol, :surgery_types => SurgeryType.all}
   end
+  
+  def show_summary_in_table
+    protocol = Protocol.find(params[:prot])
+    if params[:limit] == "3"
+      limit = protocol.summary.split("\n").length
+    else
+      limit = 3
+    end
+    render :partial => "show_summary_in_table", 
+      :locals => {:protocol=>protocol, :limit=> limit}
+  end
 end

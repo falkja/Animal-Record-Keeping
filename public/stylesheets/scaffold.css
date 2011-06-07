@@ -130,13 +130,13 @@ a.info:hover{z-index:25; background-color:#ff0}
 a.info span{display: none}
 
 a.info:hover span{ /*the span will display just on :hover state*/
-                   display:block;
-                   position:fixed;
-                   top:5cm;
-                   left:5cm;
-                   border:1px solid #0cf;
-                   background-color:#ff0; color:#000;
-                   text-align: left;
+    display:block;
+    position:fixed;
+    top:5cm;
+    left:5cm;
+    border:1px solid #0cf;
+    background-color:#ff0; color:#000;
+    text-align: left;
 }
 
 div.scrollingdiv {
@@ -208,31 +208,34 @@ div.centered table {
 
 /* Autocomplete Popup Styling, Notice I changed the color of li.selected to red? */ 
 div.auto_complete { 
-width: 350px; 
-background: #fff; 
+    width: 350px; 
+    background: #fff; 
 }
 
 div.auto_complete ul { 
-border:1px solid #888; 
-margin:0; 
-padding:0; 
-width:100%; 
-list-style-type:none; 
+    border:1px solid #888; 
+    margin:0; 
+    padding:0; 
+    width:100%; 
+    list-style-type:none; 
 }
 
 div.auto_complete ul li { 
-margin:0; 
-padding:3px; 
+    margin:0; 
+    padding:3px; 
 }
 
 div.auto_complete ul li.selected { 
-background-color: #eedd82;
-color: #000;
+    background-color: #eedd82;
+    color: #000;
 }
 
 div.auto_complete ul strong.highlight { 
-color: #800; 
-margin:0; 
-padding:0; 
+    color: #800; 
+    margin:0; 
+    padding:0; 
 }
 
+p.no_break {
+    display: inline;
+}

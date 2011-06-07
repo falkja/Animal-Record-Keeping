@@ -11,14 +11,14 @@
 <% if @bat.flown_on(Date.today) == false and @bat.leave_date == nil%>
   <%= button_to 'Fly Bat', {:controller => :flights, :action=> :new, :bat=>@bat}, {:style=>"display:inline"} %> |
 <% end %>
-
+<%= button_to 'Weigh Bat', :controller => :bats, :action => :weigh_bat, :id => @bat %> |
+<%= button_to "Protocols", :controller => :bats, :action => :choose_protocols, :id => @bat %> |
+  
 <% if @bat.leave_date == nil %>
   <%= button_to 'Deactivate', :controller => :bats, :action => :deactivate, :id => @bat %>
 <% else %>
   <%= button_to 'Reactivate', :controller => :bats, :action => :reactivate, :id => @bat %>
 <% end %>
-| 
-<%= button_to 'Weigh Bat', :controller => :bats, :action => :weigh_bat, :id => @bat %>
 
 <% if @bat.weights.length != 0 %>
   | <%= link_to 'Graph Weights', :controller => :bats, :action => :graph_weights, :id => @bat %>
@@ -120,7 +120,8 @@
 <table>
   <% for protocol in @bat.protocols %>
     <tr>
-      <td><%= link_to protocol.title, :controller => :protocols, :action => :show, :id => protocol %></td>
+      <td><%= link_to protocol.number, :controller => :protocols, :action => :show, :id => protocol %></td>
+      <td><%=h protocol.title %></td>
       <td>Added on: <%= nice_date @bat.date_added_to_protocol(protocol) %></td>
     </tr>
   <% end %>

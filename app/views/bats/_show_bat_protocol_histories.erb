@@ -7,8 +7,8 @@
     <% for hist in (histories) %>
       <tr>
         <td><%= hist.added ? "Added to: " : "Removed from: " %></td>
-        <td><%=h hist.protocol.title %></td>
         <td><%= link_to hist.protocol.number, hist.protocol %></td>
+        <td><%=h hist.protocol.title %></td>
         <td><%= nice_date(hist.date) %></td>
       </tr>  
     <% end %>

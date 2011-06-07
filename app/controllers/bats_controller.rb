@@ -71,6 +71,12 @@ class BatsController < ApplicationController
 		bat_list = bat_list.sort_by{|bat| [-bat.surgeries.length, bat.band.downcase]}
 		render_bat_list(bat_list)
 	end
+
+  def sort_by_protocols
+		bat_list = Bat.find(params[:ids], :order => 'band')
+		bat_list = bat_list.sort_by{|bat| [bat.protocols.length, bat.band.downcase]}
+		render_bat_list(bat_list)
+	end
 	
   def sort_by_band
     bat_list = Bat.find(params[:ids], :order => 'band')
@@ -895,5 +901,9 @@ class BatsController < ApplicationController
     end
 		render :partial => 'protocols/choose_protocols', :locals => {:protocols => Protocol.current, :bat => @bat}
 	end
+  
+  def choose_protocols
+    @bat = Bat.find(params[:id])
+  end
 
 end

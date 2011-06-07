@@ -62,8 +62,8 @@
 
       <span style="font-size: 12pt"><li><%= link_to 'Protocols', :controller => :protocols %></li></span>
       <ul>
-        <% if user.protocols.length > 0 %>
-          <% for protocol in user.protocols %>
+        <% if user.protocols.current.length > 0 %>
+          <% for protocol in user.protocols.current %>
             <li><%= link_to protocol.number, :controller => :protocols, :action => :show, :id => protocol %></li>
           <% end %>
         <% else %>

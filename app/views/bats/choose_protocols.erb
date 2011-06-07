@@ -1,0 +1,8 @@
+<h3>Switch Protocol for Bat: <%= link_to @bat.band, :controller => :bats, :action => :show, :id => @bat %></h3>
+
+<% form_remote_tag :url => {:controller => :bats, :action => :remote_save_protocol, :bat => @bat}, :update => 'choose_protocols' do %>
+  <div id="choose_protocols" class="left_indent">
+    <%= render :partial => 'protocols/choose_protocols', :locals => {:protocols => Protocol.current, :bat => @bat} %>
+  </div>
+  <%= submit_tag 'Save' %>
+<% end %>

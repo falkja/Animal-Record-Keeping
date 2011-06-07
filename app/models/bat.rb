@@ -400,6 +400,11 @@ class Bat < ActiveRecord::Base
     Bat.all(:conditions => {:id => bats, :species_id => species.id} )
   end
   
+  def self.not_on_protocol(bats)
+    bats - Bat.find(:all, :joins=>:protocols,
+    :conditions=>"bats_protocols.bat_id is not null",:select => 'DISTINCT bats.*')
+  end
+  
   #used to determine the owner of the bat at a particular time
   #beware - if date passed in is during a time when the bat is deactivated, it 
   #will still return a cage

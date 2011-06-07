@@ -19,8 +19,9 @@ class ProtocolHistory < ActiveRecord::Base
     end_date=Date.today + 1.day
     #finds all the bats that you ever made a bat change to, or whose cage was yours...
     bats = Bat.find(:all, :joins => :bat_changes, 
-      :conditions=>["bat_changes.user_id = ? OR bat_changes.new_cage_id IN (?) OR bat_changes.owner_new_id = ?",
-        user,user.cages,user], :select => 'DISTINCT bats.*')
+      :conditions=>["bat_changes.user_id = ? OR bat_changes.owner_new_id = ?",
+        user,user], :select => 'DISTINCT bats.*') 
+    bats.collect{|b| b.band}
     hists = find(:all,
       :conditions => ["((added is true and date >= ? and date < ?) or (added is false and date >= ? and date < ?)) AND (user_id = ? OR bat_id IN (?) )",
         start_date,end_date,start_date,end_date,user,bats | user.bats])

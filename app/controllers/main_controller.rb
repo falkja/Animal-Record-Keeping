@@ -101,10 +101,11 @@ class MainController < ApplicationController
       protocol_changes = ProtocolHistory.users_todays_histories(user)
       bat_changes = BatChange.users_bats_deactivated_today(user)
       bats_not_vaccinated = Bat.not_vaccinated(user.bats)
+      bats_not_on_protocols = Bat.not_on_protocol(user.bats)
       
       @msg_body = MyMailer.create_msg_body(tasks_not_done,
         bats_not_weighed,bats_not_flown,protocol_changes,
-        bat_changes,bats_not_vaccinated)
+        bat_changes,bats_not_vaccinated,bats_not_on_protocols)
       
       @subject = "Batkeeping email from: " + User.find(session[:person]).name
       @msg_body = @msg_body + "This message brought to you by,\n\n" + User.find(session[:person]).name

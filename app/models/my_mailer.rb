@@ -153,6 +153,23 @@ class MyMailer < ActionMailer::Base
 			return msg_body
 		end
   end
+  
+  def self.create_msg_for_bats_not_on_protocol(bats)
+    if bats.empty?
+      return ''
+    else
+			msg_body = "The following bats do not have protocols:\n"
+			for bat in bats
+				msg_body = msg_body + "\nBat: " + bat.band
+        if bat.cage
+          msg_body = msg_body + "\nCage: " + bat.cage.name
+          msg_body = msg_body + "\nOwner: " + bat.cage.user.name + "\n"
+        end
+			end
+			msg_body = msg_body + "\n*******************************************\n\n"
+			return msg_body
+		end
+  end
      
 	def self.create_msg_for_tasks_not_done(tasks_not_done)
 		if tasks_not_done.length > 0
@@ -204,6 +221,7 @@ class MyMailer < ActionMailer::Base
       users_protocol_changes = ProtocolHistory.users_todays_histories(user)
       users_bat_changes = BatChange.users_bats_deactivated_today(user)
       users_bats_not_vaccinated = Bat.not_vaccinated(user.bats)
+      users_bats_not_on_protocols = Bat.not_on_protocol(user.bats)
         
       if users_tasks_not_done.length > 0 || users_bats_not_weighed.length > 0 ||
           users_bats_not_flown.length > 0 || users_protocol_changes.length > 0 ||
@@ -212,7 +230,7 @@ class MyMailer < ActionMailer::Base
         greeting = greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
         msg_body = MyMailer.create_msg_body(users_tasks_not_done,
           users_bats_not_weighed,users_bats_not_flown,users_protocol_changes,
-          users_bat_changes,users_bats_not_vaccinated)
+          users_bat_changes,users_bats_not_vaccinated,users_bats_not_on_protocols)
         salutation = "Faithfully yours, etc."
         MyMailer.deliver_mail(user.email, "tasks not done today", greeting + msg_body + salutation)
       end
@@ -228,6 +246,7 @@ class MyMailer < ActionMailer::Base
     bats_not_flown = Bat.not_flown(Bat.active)
     todays_bat_changes = BatChange.deactivated_today
     bats_not_vaccinated = Bat.not_vaccinated(Bat.active)
+    bats_not_on_protocols = Bat.not_on_protocol(Bat.active)
     
 		if tasks_not_done.length > 0 || bats_not_weighed.length > 0 || 
         bats_not_flown.length > 0 || protocol_changes.length > 0 ||
@@ -235,19 +254,21 @@ class MyMailer < ActionMailer::Base
 			greeting = "Administrator(s),\n\n"
       greeting = greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
       msg_body = MyMailer.create_msg_body(tasks_not_done,bats_not_weighed,
-        bats_not_flown,protocol_changes,todays_bat_changes,bats_not_vaccinated)
+        bats_not_flown,protocol_changes,todays_bat_changes,bats_not_vaccinated,
+        bats_not_on_protocols)
 			salutation = "Faithfully yours, etc."
 			MyMailer.deliver_mass_mail(admin_emails, "tasks not done today", greeting + msg_body + salutation)
 		end
 	end
 
-  def self.create_msg_body(tasks_not_done,bats_not_weighed,bats_not_flown,protocol_changes,bat_changes,not_vaccinated)
+  def self.create_msg_body(tasks_not_done,bats_not_weighed,bats_not_flown,protocol_changes,bat_changes,not_vaccinated,not_on_protocols)
     msg_body = MyMailer.create_msg_for_tasks_not_done(tasks_not_done)
     msg_body = msg_body + MyMailer.create_msg_for_bats_not_weighed(bats_not_weighed)
     msg_body = msg_body + MyMailer.create_msg_for_bats_not_flown(bats_not_flown)
     msg_body = msg_body + MyMailer.create_msg_for_protocol_changes(protocol_changes)
     msg_body = msg_body + MyMailer.create_msg_for_bats_added_removed(bat_changes)
     msg_body = msg_body + MyMailer.create_msg_for_bats_not_vaccinated(not_vaccinated)
+    msg_body = msg_body + MyMailer.create_msg_for_bats_not_on_protocol(not_on_protocols)
     return msg_body
   end
 end

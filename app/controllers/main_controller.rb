@@ -85,19 +85,32 @@ class MainController < ApplicationController
     
     @users = User.find(params[:users], :order => "name asc")
     
+    if params[:user]
+      @users = (@users + Array.new(1,User.find(params[:user][:id]))).sort_by{|u| u.name}
+    end
+    
     @greeting = "Dear Batlab,\n\n"
     
     @greeting = @greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
 
-    @msg_body = MyMailer.create_msg_body(Task.tasks_not_done_today(Task.today),
-      Bat.not_weighed(Bat.active,Time.now),Bat.not_flown(Bat.active),ProtocolHistory.todays_histories,
-      BatChange.deactivated_today,Bat.not_vaccinated(Bat.active))
-
     if session[:person]
+      user = User.find(session[:person])
+      tasks_not_done = Task.tasks_not_done_today(user.all_tasks)
+      bats_not_weighed = Bat.not_weighed(user.bats,Time.now)
+      bats_not_flown = Bat.not_flown(user.bats)
+      protocol_changes = ProtocolHistory.users_todays_histories(user)
+      bat_changes = BatChange.users_bats_deactivated_today(user)
+      bats_not_vaccinated = Bat.not_vaccinated(user.bats)
+      
+      @msg_body = MyMailer.create_msg_body(tasks_not_done,
+        bats_not_weighed,bats_not_flown,protocol_changes,
+        bat_changes,bats_not_vaccinated)
+      
       @subject = "Batkeeping email from: " + User.find(session[:person]).name
       @msg_body = @msg_body + "This message brought to you by,\n\n" + User.find(session[:person]).name
     else
       @subject = "Batkeeping email"
+      @msg_body = "\n\n"
       @msg_body = @msg_body + "This message brought to you by,\n\nBatkeeping (no user signed in)"
     end
     

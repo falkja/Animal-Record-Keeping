@@ -1,29 +1,38 @@
 <h1>Send Email to Lab</h1>
 
 <p>
-To:<br/>
+  To:<br/>
 <table>
-<% for user in @users %>
-  <tr>
-	<td><b><%= user.name %></b></td>
-	<td><%= user.email %></td>
-	</tr>
-<% end %>
+  <% for user in @users %>
+    <tr>
+      <td><b><%= user.name %></b></td>
+      <td><%= user.email %></td>
+      <td><%= link_to "X", :controller=>:main, :action=>:lab_email,:users=>@users-Array.new(1,user) %></td>
+    </tr>
+  <% end %>
 </table>
+
+<% if @users != User.current %>
+  <% form_tag :action => :lab_email, :users => @users do %>  
+    <%= select("user","id",(User.current - @users).map{|u| [u.name,u.id]}) %>
+    <%= submit_tag "Add user to email" %>
+  <% end %>
+<% end %>
+
 </p>
 
 <% form_tag :action => 'send_lab_email', :users => @users do %>
 
-<p>
-Subject:<br/>
-<%= text_field 'email', 'subject', :value => @subject %>
-</p>
+  <p>
+    Subject:<br/>
+    <%= text_field 'email', 'subject', :value => @subject %>
+  </p>
 
-<p>
-Body:<br/>
-<%= text_area 'email', 'body', :value => @greeting + @msg_body, :cols => 60 %>
-</p>
+  <p>
+    Body:<br/>
+    <%= text_area 'email', 'body', :value => @greeting + @msg_body, :cols => 60 %>
+  </p>
 
-<p><%= submit_tag "Send Email to Lab" %></p>
+  <p><%= submit_tag "Send Email to Lab"%></p>
 
 <% end %>

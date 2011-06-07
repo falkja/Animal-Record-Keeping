@@ -116,8 +116,8 @@
           <% end %>
         </em>
       </td>
-      <td><%= link_to cage.room.name, :controller => :cages, :action => :show, :id => cage.room %></td>
-      <td><%=h cage.user ? link_to(cage.user.name, :controller => :cages, :action => :show, :id => cage.user): 
+      <td><%= link_to cage.room.name, :controller => :rooms, :action => :show, :id => cage.room %></td>
+      <td><%=h cage.user ? link_to(cage.user.name, :controller => :users, :action => :show, :id => cage.user): 
           'None' %></td>
       <% if @list_all %>
         <td><%=h nice_date(cage.date_destroyed) %></td>

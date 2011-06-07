@@ -236,6 +236,11 @@ div.auto_complete ul strong.highlight {
     padding:0; 
 }
 
-p.no_break {
-    display: inline;
+p.inline {
+    display:inline;
+}
+
+p.small_break {
+    margin-top: 0em;
+    margin-bottom: .5em;
 }

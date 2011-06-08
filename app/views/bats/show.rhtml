@@ -116,7 +116,7 @@
 <% end %>
 
 <p>
-  <b>Protocols: </b>
+  <b>Protocols</b>
 <table>
   <% for protocol in @bat.protocols %>
     <tr>
@@ -128,11 +128,9 @@
 </table>
 </p>
 
-<h3>Protocol Histories</h3>
-<div class='left_indent'>
+<p><b>Protocol Histories</b></p>
   <%= render :partial => 'show_bat_protocol_histories',
     :locals => {:histories => @bat.protocol_histories } %>
-</div>
 
 <%= render :partial => 'bats/display_bat_notes' %>
 

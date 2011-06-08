@@ -112,12 +112,11 @@ class MyMailer < ActionMailer::Base
         end
         msg_body = msg_body + "\n#{rel_text}"
         msg_body = msg_body + "\n Bat: " + bat.band
-        if bat.cage != nil
-          msg_body = msg_body + "\n  Cage: " + bat.cage.name
-          msg_body = msg_body + "\n  Owner: " + bat.cage.user.name
-        end
-        msg_body = msg_body + "\n  Title: " + ph.protocol.title
         msg_body = msg_body + "\n  Number: " + ph.protocol.number
+        msg_body = msg_body + "\n  Title: " + ph.protocol.title
+        msg_body = msg_body + "\n  Bats (for " + bat.species.name +  ") currently on protocol: " + Bat.bats_on_species(ph.protocol.bats,bat.species).length.to_s
+        msg_body = msg_body + "\n  All bats (for " + bat.species.name +  ") ever on protocol: " + Bat.bats_on_species(ph.protocol.all_past_bats,bat.species).length.to_s
+        msg_body = msg_body + "\n  Bats allowed (for " + bat.species.name +  ") on protocol: " + ph.protocol.determine_allowed_bats(bat.species).to_s
         msg_body = msg_body + "\n  Action by: " + ph.user.name + "\n"
       end
       msg_body = msg_body + "\n*******************************************\n\n"
@@ -213,6 +212,7 @@ class MyMailer < ActionMailer::Base
 	end
 	
 	def self.email_users
+    salutation = "Faithfully yours, etc."
 	  for user in User.current - User.administrator
       #per user generated email minus admins
       users_tasks_not_done = Task.tasks_not_done_today(user.all_tasks)
@@ -231,14 +231,12 @@ class MyMailer < ActionMailer::Base
         msg_body = MyMailer.create_msg_body(users_tasks_not_done,
           users_bats_not_weighed,users_bats_not_flown,users_protocol_changes,
           users_bat_changes,users_bats_not_vaccinated,users_bats_not_on_protocols)
-        salutation = "Faithfully yours, etc."
-        MyMailer.deliver_mail(user.email, "tasks not done today", greeting + msg_body + salutation)
+        MyMailer.deliver_mail(user.email, "batkeeping email: daily notificiations", greeting + msg_body + salutation)
       end
     end
 		
 		#all administrators get CCed on one email and see everything
-		admin_emails = Array.new
-		User.administrator.each{|admin| admin_emails << admin.email}
+		admin_emails = User.administrator.collect{|admin| admin.email}
 		
 		tasks_not_done = Task.tasks_not_done_today(Task.today)
     bats_not_weighed = Bat.not_weighed(Bat.active,Time.now)
@@ -256,8 +254,7 @@ class MyMailer < ActionMailer::Base
       msg_body = MyMailer.create_msg_body(tasks_not_done,bats_not_weighed,
         bats_not_flown,protocol_changes,todays_bat_changes,bats_not_vaccinated,
         bats_not_on_protocols)
-			salutation = "Faithfully yours, etc."
-			MyMailer.deliver_mass_mail(admin_emails, "tasks not done today", greeting + msg_body + salutation)
+			MyMailer.deliver_mass_mail(admin_emails, "batkeeping email: daily notificiations", greeting + msg_body + salutation)
 		end
 	end
 
@@ -270,5 +267,43 @@ class MyMailer < ActionMailer::Base
     msg_body = msg_body + MyMailer.create_msg_for_bats_not_vaccinated(not_vaccinated)
     msg_body = msg_body + MyMailer.create_msg_for_bats_not_on_protocol(not_on_protocols)
     return msg_body
+  end
+  
+  def self.email_after_bats_moved(bats,old_cage,new_cage)
+		msg_body = "This is a confirmation email to notify you that the following bat(s): " + bats.collect{|b| b.band}.to_sentence
+		if old_cage && new_cage
+			msg_body = msg_body + " were moved from " + old_cage.name + " to " + new_cage.name
+		elsif new_cage
+			msg_body = msg_body + "were moved into " + new_cage.name
+		else
+			msg_body = msg_body + "were deactivated and moved out of " + old_cage.name
+		end
+		msg_body = msg_body + "\n\nFaithfully yours, etc."		
+		
+    if new_cage
+      greeting = "Hi " + new_cage.user.name + ",\n\n"
+      MyMailer.deliver_mail(new_cage.user.email, "moved bats", greeting + msg_body)
+    end
+    if (old_cage && !new_cage) || (old_cage && new_cage && (new_cage.user != old_cage.user))
+			greeting = "Hi " + old_cage.user.name + ",\n\n"
+			MyMailer.deliver_mail(old_cage.user.email, "moved bats", greeting + msg_body)
+		end
+  end
+  
+  def self.email_at_protocol_warning_limit(protocol,bat,user,allowed_bat)
+    msg_body = "This is a warning email to notify you that the following protocol is at its warning limit: "
+    msg_body = msg_body + "\n  Number: " + protocol.number
+    msg_body = msg_body + "\n  Title: " + protocol.title
+    msg_body = msg_body + "\n  Current bats (for " + bat.species.name +  "): " + Bat.bats_on_species(protocol.bats,bat.species).length.to_s
+    msg_body = msg_body + "\n  All bats (for " + bat.species.name +  ") ever: " + Bat.bats_on_species(protocol.all_past_bats,bat.species).length.to_s
+    msg_body = msg_body + "\n  Bats allowed (for " + bat.species.name +  "): " + allowed_bat.number.to_s
+    msg_body = msg_body + "\n  Warning limit (for " + bat.species.name +  "): " + allowed_bat.warning_limit.to_s
+    msg_body = msg_body + "\n  Action by: " + user.name + "\n"
+
+    greeting = "Hi " + protocol.users.collect{|u| u.name}.to_sentence + ",\n\n"
+    salutation = "Faithfully yours, etc."
+    
+    MyMailer.deliver_mass_mail(protocol.users.collect{|u| u.email}, 
+      "batkeeping email: warning limit reached on protocol!", greeting + msg_body + salutation)
   end
 end

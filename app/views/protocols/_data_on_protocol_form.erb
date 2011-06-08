@@ -4,8 +4,6 @@
 <div id ="data_list" class="centered">
   <% if data.length > 0 %>
     <table>
-      <th></th>
-      <th style="font-size:10pt;width: 150px">Data Type</th>
       <% for d in data %>
         <tr>
           <td><%= check_box :datum_id, d.id, :checked => protocol ? protocol.data.include?(d) : ''  %></td>

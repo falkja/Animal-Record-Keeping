@@ -1,16 +1,19 @@
 <table>
-  <th style="font-size: 12px">Species</th>
+  <th style="font-size: 12px;width:150px">Species</th>
   <th style="font-size: 12px">Current</th>
   <th style="font-size: 12px">Used</th>
   <th style="font-size: 12px">Allowed</th>
+  <% if !@protocols %>
+    <th style="font-size: 12px">Email At</th>
+  <% end %>
   <% allowed_bats = protocol.allowed_bats.sort_by{|ab| ab.species.name} %>
   <% for ab in allowed_bats %>
     <% if ab.number > 0 || Bat.bats_on_species(protocol.all_past_bats,ab.species).length > 0 ||
         Bat.bats_on_species(protocol.all_past_bats,ab.species).length > 0 %>
       <tr>
-        <td><%= link_to ab.species.name, :controller => :species, :action => :show, :id => ab.species %></td>
+        <td style="text-align: center"><%= link_to ab.species.name, :controller => :species, :action => :show, :id => ab.species %></td>
         <td style="text-align: center">
-          <% species_prot_bats = protocol.bats.find(:all, :conditions => {:species_id => ab.species} ) %>
+          <% species_prot_bats = Bat.bats_on_species(protocol.bats,ab.species) %>
           <label for='protocol_id_<%=protocol.id %>' >
             <span title='Bats: <% for b in species_prot_bats %>&#13; <%=b.band%><% end %>'>
               <%=h link_to species_prot_bats.length, :controller => :bats, :action => :list, :bats => species_prot_bats %>
@@ -31,6 +34,11 @@
         <td style="text-align: center">
           <%=h ab.number %>
         </td>
+        <% if !@protocols %>
+          <td style="text-align: center">
+            <%=h ab.warning_limit %>
+          </td>
+        <% end %>
       </tr>
     <% end %>
   <% end %>

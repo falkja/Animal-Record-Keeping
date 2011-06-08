@@ -14,7 +14,7 @@ class Protocol < ActiveRecord::Base
 	
 	def self.current
 		date = Date.today
-		protocols = find(:all, :conditions => ["end_date >= ?",date], :order => "number")
+		find(:all, :conditions => ["end_date >= ?",date], :order => "number")
 	end
 
   def self.has_bats

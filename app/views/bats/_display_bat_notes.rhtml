@@ -4,15 +4,14 @@
 <% if @bat.bat_notes.length > 0 %>
 <p>
 <b>Notes on bat: </b>
-<div class="left_indent">
-<table>
-<th>Note</th>
-<th>User</th>
-<th>Date</th>
+<table style="border-style: solid">
+<th style="font-size: 10pt">Note</th>
+<th style="font-size: 10pt">User</th>
+<th style="font-size: 10pt">Date</th>
 
 <% for note in @bat.bat_notes %>
 <tr>
-<td style="width: 700px"><%=h simple_format note.text %></td>
+<td style="text-align: center"><%=h simple_format note.text %></td>
 <td><%= link_to note.user.initials, :controller => :users, :action => :show, :id => note.user %></td>
 <td><%= nice_date(note.date) %></td>
 <td>
@@ -23,7 +22,6 @@
 <% end %>
 
 </table>
-</div>
 <% end %>
 </p>
 

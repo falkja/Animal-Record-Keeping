@@ -372,6 +372,8 @@ class Bat < ActiveRecord::Base
 		for p_added in (protocols - self.protocols)
       #only make p_hist if under the protocol allowed bats
 			if p_added.check_allowed_bats(Array.new(1,self))
+        before_all_bats = p_added.all_past_bats
+        
         #create a protocol history
         p_hist = ProtocolHistory.new
         p_hist.bat = self
@@ -380,6 +382,13 @@ class Bat < ActiveRecord::Base
         p_hist.date = time_altered
         p_hist.user = user
         p_hist.save
+        
+        #fire off an email if the number of bats on protocol is equal to the warning limit
+        allowed_bat = AllowedBat.find(:first, :conditions => ["protocol_id = ? and species_id = ?",p_added.id,self.species.id])
+        if before_all_bats.length < p_added.all_past_bats.length && 
+            allowed_bat.warning_limit == Bat.bats_on_species(p_added.all_past_bats,self.species).length
+          MyMailer.email_at_protocol_warning_limit(p_added,self,user,allowed_bat)
+        end
       else
         protocols = protocols - Array.new(1,p_added)
       end

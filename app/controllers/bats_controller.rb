@@ -531,28 +531,8 @@ class BatsController < ApplicationController
         new_census.save
       end
     end
-		
-		msg_body = "This is a confirmation email to notify you that the following bats: "
-		for bat in @bats
-			msg_body = msg_body + bat.band + ' '
-		end
-		if @old_cage && @new_cage
-			msg_body = msg_body + "were moved from " + @old_cage.name + " to " + @new_cage.name
-		elsif @new_cage
-			msg_body = msg_body + "were moved into " + @new_cage.name
-		else
-			msg_body = msg_body + "were deactivated and moved out of " + @old_cage.name
-		end
-		msg_body = msg_body + "\n\nFaithfully yours, etc."		
-		
-    if @new_cage
-      greeting = "Hi " + @new_cage.user.name + ",\n\n"
-      MyMailer.deliver_mail(@new_cage.user.email, "moved bats", greeting + msg_body)
-    end
-    if (@old_cage && !@new_cage) || (@old_cage && @new_cage && (@new_cage.user != @old_cage.user))
-			greeting = "Hi " + @old_cage.user.name + ",\n\n"
-			MyMailer.deliver_mail(@old_cage.user.email, "moved bats", greeting + msg_body)
-		end
+    
+    MyMailer.email_after_bats_moved(@bats,@old_cage,@new_cage)
 		
   end
 	

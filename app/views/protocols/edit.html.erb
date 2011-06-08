@@ -1,6 +1,7 @@
 <h1>Editing protocol</h1>
 
-<%= render :partial => "form" %>
-
 <%= link_to 'Show', @protocol %> |
-<%= link_to 'List Protocols', protocols_path %>
+<%= link_to 'List Protocols', protocols_path %> |
+<%= link_to 'My Protocols', :controller=>:protocols, :action=>:index, :ids=>User.find(session[:person]).protocols.current %>
+
+<%= render :partial => "form" %>

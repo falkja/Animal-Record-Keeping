@@ -313,4 +313,9 @@ class ProtocolsController < ApplicationController
     render :partial => "show_summary_in_table", 
       :locals => {:protocol=>protocol, :limit=> limit}
   end
+  
+  def edit_warning_limit
+    number = params[:number].to_i
+    render :partial => "edit_warning_limit", :locals=>{:attribute_number=>params[:attribute_number],:limit_value=>number}
+  end
 end

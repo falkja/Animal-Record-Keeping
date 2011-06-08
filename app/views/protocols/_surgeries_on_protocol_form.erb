@@ -4,8 +4,6 @@
 <div id ="surgery" class="centered">
   <% if !surgery_types.empty? %>
     <table>
-      <th></th>
-      <th style="font-size:10pt;width: 150px">Data Type</th>
       <% for sg in surgery_types %>
         <tr>
           <td><%= check_box :surgery_type_id, sg.id, :checked => protocol ? protocol.surgery_types.include?(sg) : ''  %></td>

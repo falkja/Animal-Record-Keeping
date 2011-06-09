@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110608183620) do
+ActiveRecord::Schema.define(:version => 20110609141318) do
 
   create_table "allowed_bats", :force => true do |t|
     t.integer  "protocol_id"

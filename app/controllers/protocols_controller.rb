@@ -316,6 +316,7 @@ class ProtocolsController < ApplicationController
   
   def edit_warning_limit
     number = params[:number].to_i
-    render :partial => "edit_warning_limit", :locals=>{:attribute_number=>params[:attribute_number],:limit_value=>number}
+    limit = [number - 2,0].max
+    render :partial => "edit_warning_limit", :locals=>{:attribute_number=>params[:attribute_number],:limit_value=>limit}
   end
 end

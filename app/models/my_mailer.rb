@@ -300,10 +300,12 @@ class MyMailer < ActionMailer::Base
     msg_body = msg_body + "\n  Warning limit (for " + bat.species.name +  "): " + allowed_bat.warning_limit.to_s
     msg_body = msg_body + "\n  Action by: " + user.name + "\n"
 
-    greeting = "Hi " + protocol.users.collect{|u| u.name}.to_sentence + ",\n\n"
+    users = protocol.users | User.administrator
+    
+    greeting = "Hi " + users.collect{|u| u.name}.to_sentence + ",\n\n"
     salutation = "Faithfully yours, etc."
     
-    MyMailer.deliver_mass_mail(protocol.users.collect{|u| u.email}, 
+    MyMailer.deliver_mass_mail(users.collect{|u| u.email}, 
       "batkeeping email: warning limit reached on protocol!", greeting + msg_body + salutation)
   end
 end

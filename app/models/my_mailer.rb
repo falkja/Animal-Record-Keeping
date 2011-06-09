@@ -300,7 +300,7 @@ class MyMailer < ActionMailer::Base
     msg_body = msg_body + "\n  Warning limit (for " + bat.species.name +  "): " + allowed_bat.warning_limit.to_s
     msg_body = msg_body + "\n  Action by: " + user.name + "\n"
 
-    users = (protocol.users | User.administrator) - User.not_researcher
+    users = (protocol.users | (User.administrator - User.not_researcher))
     
     greeting = "Hi " + users.collect{|u| u.name}.to_sentence + ",\n\n"
     salutation = "Faithfully yours, etc."

@@ -1,6 +1,7 @@
 class AddJobTypesColumnsToUsers < ActiveRecord::Migration
   def self.up
     add_column :users, :researcher, :boolean, :default => true
+    User.update_all('researcher = false', "end_date is not null")
     
     add_column :users, :medical_care, :boolean, :default => false
     User.update_all('medical_care = true', "job_type regexp 'Medic'")

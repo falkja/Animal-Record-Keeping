@@ -1,8 +1,8 @@
 <h1>Listing protocols</h1>
 
-<%= link_to 'All protocols' %> |
-<%= link_to 'Current protocols', :ids=>Protocol.current %> |
 <%= link_to 'My protocols', :ids=>User.find(session[:person]).protocols.current %> |
+<%= link_to 'Current protocols', :ids=>Protocol.current %> |
+<%= link_to 'All protocols', :ids=>Protocol.all(:order=>'number') %> |
 <%= button_to 'New protocol', new_protocol_path %> |
 <%= button_to 'Add bats to protocol', :action => :update_mult_bats, :act => 'add' %> | 
 <%= button_to 'Remove bats from protocol', :action => :update_mult_bats, :act => 'remove' %>

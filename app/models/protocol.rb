@@ -42,7 +42,7 @@ class Protocol < ActiveRecord::Base
     species = adding_bats.collect(&:species).uniq
     for sp in species
       ab = allowed_bats_by_species(sp)
-      tot_bats = Bat.bats_on_species(((self.all_past_bats + adding_bats).uniq),sp)
+      tot_bats = Bat.on_species(((self.all_past_bats + adding_bats).uniq),sp)
       if ab.number < tot_bats.length
         return false
       end

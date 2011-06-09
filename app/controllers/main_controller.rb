@@ -52,7 +52,7 @@ class MainController < ApplicationController
       @my_medical_tasks_today = @user.tasks.medical_tasks_today
       @my_medical_tasks_not_today = @user.tasks.medical_tasks_not_today
       
-      if @user.medical_care_user?
+      if @user.medical_care
         Task.medical_user_tasks.each{|task| @my_medical_tasks << task}
         Task.medical_user_tasks_today.each{|task| @my_medical_tasks_today << task}
         Task.medical_user_tasks_not_today.each{|task| @my_medical_tasks_not_today << task}
@@ -66,7 +66,7 @@ class MainController < ApplicationController
       @my_feeding_tasks_today = @user.tasks.feeding_tasks_today
       @my_feeding_tasks_not_today = @user.tasks.feeding_tasks_not_today
       
-      if (@user.animal_care_user? || @user.weekend_care_user?)
+      if (@user.animal_care || @user.weekend_care)
         Task.animal_care_user_general_tasks.each{|task| @my_general_tasks << task}
         Task.animal_care_user_general_tasks_today.each{|task| @my_general_tasks_today << task}
         Task.animal_care_user_general_tasks_not_today.each{|task| @my_general_tasks_not_today << task}

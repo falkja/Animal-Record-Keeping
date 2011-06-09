@@ -160,7 +160,7 @@ class BatsController < ApplicationController
     #check if protocols over the allowed limit before saving the bat
     for p_added in protocols
       sp = Species.find(@bat.species)
-      if Bat.bats_on_species(p_added.all_past_bats,sp).length >= p_added.allowed_bats_by_species(sp).number
+      if Bat.on_species(p_added.all_past_bats,sp).length >= p_added.allowed_bats_by_species(sp).number
         over_allowed = true
       end
     end

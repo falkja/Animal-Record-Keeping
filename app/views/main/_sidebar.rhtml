@@ -5,15 +5,14 @@
 
       <% @user ? user = @user : user = User.find(session[:person]) %>
 
-      <% if user.job_type != '' && user.job_type != nil %>
+      <% if user.has_jobs %>
         <span style="font-size: 12pt">
           <li><%= link_to 'My Jobs', :controller => :users, :action => :edit, :id => user %></li>
         </span>
         <ul>
-          <%= (user.animal_care_user?) ? "<li>Weekday Care</li>" : "" %>
-          <%= (user.weekend_care_user?) ? "<li>Weekend Care</li>" : "" %>
-          <%= (user.medical_care_user?) ? "<li>Medical Care</li>" : "" %>
-          <%= (user.administrator?) ? "<li>Administrator</li>" : "" %>
+          <% for job in @user.jobs %>
+            <li><%= job %></li>
+          <% end %>
         </ul>
 
         <br />

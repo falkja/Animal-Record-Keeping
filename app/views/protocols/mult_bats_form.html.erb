@@ -27,7 +27,7 @@ function setAll(name,state)
 </div>
 
 <div id="form_bats_protocols">
-<%= render :partial => 'form_bats_protocols',
+  <%= render :partial => 'form_bats_protocols',
   :locals => {:bats => @bats, :protocols => @protocols, :act => @act, 
-  :cages => @cages, :rooms => @rooms} %>
+  :cages => @cages, :rooms => @rooms, :species=>@species} %>
 </div>

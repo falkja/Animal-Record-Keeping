@@ -386,7 +386,7 @@ class Bat < ActiveRecord::Base
         #fire off an email if the number of bats on protocol is equal to the warning limit
         allowed_bat = AllowedBat.find(:first, :conditions => ["protocol_id = ? and species_id = ?",p_added.id,self.species.id])
         if before_all_bats.length < p_added.all_past_bats.length && 
-            allowed_bat.warning_limit == Bat.bats_on_species(p_added.all_past_bats,self.species).length
+            allowed_bat.warning_limit == Bat.on_species(p_added.all_past_bats,self.species).length
           MyMailer.email_at_protocol_warning_limit(p_added,self,user,allowed_bat)
         end
       else
@@ -405,7 +405,7 @@ class Bat < ActiveRecord::Base
 		return hist.date
 	end
 
-  def self.bats_on_species(bats,species)
+  def self.on_species(bats,species)
     Bat.all(:conditions => {:id => bats, :species_id => species.id} )
   end
   

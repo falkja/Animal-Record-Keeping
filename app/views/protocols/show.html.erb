@@ -1,6 +1,7 @@
 <h3>Showing Protocol</h3>
 
 <%= link_to 'List Protocols', protocols_path %> |
+<%= link_to 'My Protocols', :controller=>:protocols, :action=>:index, :ids=>User.find(session[:person]).protocols.current %> |
 <%= button_to 'Edit', edit_protocol_path(@protocol), :method => :get %> |
 <%= button_to 'Add bats to protocol', :action => :update_mult_bats, :act => 'add' %> |
 <%= button_to 'Remove bats from protocol', :action => :update_mult_bats, :act => 'remove' %> |

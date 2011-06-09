@@ -25,7 +25,7 @@ class Protocol < ActiveRecord::Base
 
   def build_allowed_bats
     self.allowed_bats = Array.new
-    for sp in Species.all
+    for sp in Species.all.sort_by{|s| s.name}
       ab = AllowedBat.new
       ab.number = 0
       ab.species = sp

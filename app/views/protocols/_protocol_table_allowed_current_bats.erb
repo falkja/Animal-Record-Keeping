@@ -8,12 +8,12 @@
   <% end %>
   <% allowed_bats = protocol.allowed_bats.sort_by{|ab| ab.species.name} %>
   <% for ab in allowed_bats %>
-    <% if ab.number > 0 || Bat.bats_on_species(protocol.all_past_bats,ab.species).length > 0 ||
-        Bat.bats_on_species(protocol.all_past_bats,ab.species).length > 0 %>
+    <% if ab.number > 0 || Bat.on_species(protocol.all_past_bats,ab.species).length > 0 ||
+        Bat.on_species(protocol.all_past_bats,ab.species).length > 0 %>
       <tr>
         <td style="text-align: center"><%= link_to ab.species.name, :controller => :species, :action => :show, :id => ab.species %></td>
         <td style="text-align: center">
-          <% species_prot_bats = Bat.bats_on_species(protocol.bats,ab.species) %>
+          <% species_prot_bats = Bat.on_species(protocol.bats,ab.species) %>
           <label for='protocol_id_<%=protocol.id %>' >
             <span title='Bats: <% for b in species_prot_bats %>&#13; <%=b.band%><% end %>'>
               <%=h link_to species_prot_bats.length, :controller => :bats, :action => :list, :bats => species_prot_bats %>
@@ -21,13 +21,13 @@
           </label>
         </td>
         <td style="text-align: center">
-          <% if ab.number < Bat.bats_on_species(protocol.all_past_bats,ab.species).length %>
+          <% if ab.number < Bat.on_species(protocol.all_past_bats,ab.species).length %>
             <% font_size = "font-size:13pt" %>
           <% else %>
             <% font_size = "" %>
           <% end %>
-            <span style ="<%=h font_size %>" title='Bats: <% for b in Bat.bats_on_species(protocol.all_past_bats,ab.species) %>&#13; <%=b.band%><% end %>'>
-              <%=h link_to Bat.bats_on_species(protocol.all_past_bats,ab.species).length, :controller => :bats, :action => :list, :bats => Bat.bats_on_species(protocol.all_past_bats,ab.species) %>
+            <span style ="<%=h font_size %>" title='Bats: <% for b in Bat.on_species(protocol.all_past_bats,ab.species) %>&#13; <%=b.band%><% end %>'>
+              <%=h link_to Bat.on_species(protocol.all_past_bats,ab.species).length, :controller => :bats, :action => :list, :bats => Bat.on_species(protocol.all_past_bats,ab.species) %>
             </span>
             </font>
         </td>

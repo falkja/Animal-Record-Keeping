@@ -5,7 +5,7 @@ class ProtocolsController < ApplicationController
     if params[:ids]
       @protocols = Protocol.find(params[:ids],:order => 'number')
     else
-      @protocols = Protocol.all(:order => 'number')
+      @protocols = Protocol.current
     end
 
     respond_to do |format|
@@ -92,6 +92,7 @@ class ProtocolsController < ApplicationController
     @rooms = Room.has_bats
     @bats = User.find(session[:person]).bats
     @protocols = Protocol.has_bats
+    @species = Species.all
     @act = params[:act]
     render :action => :mult_bats_form
   end
@@ -105,6 +106,8 @@ class ProtocolsController < ApplicationController
       @bats = Room.find(params[:room][:id]).bats
     elsif params[:protocol] && params[:protocol][:id] != ""
       @bats = Protocol.find(params[:protocol][:id]).bats
+    elsif params[:species] && params[:species][:id] != ""
+      @bats = Bat.on_species(Bat.active,Species.find(params[:species][:id]))
     elsif params[:bats]
       @bats = Bat.find(params[:bats], :order => 'band')
     else
@@ -112,7 +115,7 @@ class ProtocolsController < ApplicationController
     end
     render :partial => 'form_bats_protocols',
       :locals => {:bats => @bats, :protocols => @protocols, :act => @act,
-      :cages => Cage.has_bats, :rooms => Room.has_bats}
+      :cages => Cage.has_bats, :rooms => Room.has_bats, :species => Species.all}
   end
   
   def create_mult_prots_mult_bats

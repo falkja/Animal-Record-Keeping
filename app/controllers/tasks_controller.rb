@@ -81,19 +81,19 @@ class TasksController < ApplicationController
     if (params[:source].include? 'user_summary') && (params[:div_id].include? 'todays_tasks')
       @feeding_tasks = @user.tasks.feeding_tasks_today
       
-      if (@user.animal_care_user? || @user.weekend_care_user?)
+      if (@user.animal_care || @user.weekend_care)
         Task.animal_care_user_feeding_tasks_today.each{|task| @feeding_tasks << task}
       end
     elsif (params[:source].include? 'user_summary') && (params[:div_id].include? 'other_tasks')
       @feeding_tasks = @user.tasks.feeding_tasks_not_today
       
-      if (@user.animal_care_user? || @user.weekend_care_user?)
+      if (@user.animal_care || @user.weekend_care)
         Task.animal_care_user_feeding_tasks_not_today.each{|task| @feeding_tasks << task}
       end
     elsif (params[:source].include? 'user_summary') && (params[:div_id].include? 'all_tasks')
       @feeding_tasks = @user.tasks.feeding_tasks
       
-      if (@user.animal_care_user? || @user.weekend_care_user?)
+      if (@user.animal_care || @user.weekend_care)
         Task.animal_care_user_feeding_tasks.each{|task| @feeding_tasks << task}
       end
     elsif params[:source] == 'task_list' && (params[:div_id].include? 'todays_tasks')
@@ -254,17 +254,17 @@ class TasksController < ApplicationController
 	def find_feeding_tasks
 		if (params[:source].include? 'user_summary') && (params[:div_id].include? 'todays_tasks')
       @feeding_tasks = @user.tasks.feeding_tasks_today
-      if (@user.animal_care_user? || @user.weekend_care_user?)
+      if (@user.animal_care || @user.weekend_care)
         Task.animal_care_user_feeding_tasks_today.each{|task| @feeding_tasks << task}
       end
     elsif (params[:source].include? 'user_summary') && (params[:div_id].include? 'other_tasks')
       @feeding_tasks = @user.tasks.feeding_tasks_not_today
-      if (@user.animal_care_user? || @user.weekend_care_user?)
+      if (@user.animal_care || @user.weekend_care)
         Task.animal_care_user_feeding_tasks_not_today.each{|task| @feeding_tasks << task}
       end
     elsif (params[:source].include? 'user_summary') && (params[:div_id].include? 'all_tasks')
       @feeding_tasks = @user.tasks.feeding_tasks
-      if (@user.animal_care_user? || @user.weekend_care_user?)
+      if (@user.animal_care || @user.weekend_care)
         Task.animal_care_user_feeding_tasks.each{|task| @feeding_tasks << task}
       end
     elsif params[:source] == 'show_cage'

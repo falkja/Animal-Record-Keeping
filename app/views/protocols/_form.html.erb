@@ -51,8 +51,8 @@
     <% f.fields_for :allowed_bats do |ab_form| %>
       <tr>
         <td><i><%= ab_form.object.species.name %></i></td>
-        <td style="text-align: center"><%= Bat.bats_on_species(@protocol.bats,ab_form.object.species).length %></td>
-        <td style="text-align: center"><%= Bat.bats_on_species(@protocol.all_past_bats,ab_form.object.species).length %></td>
+        <td style="text-align: center"><%= Bat.on_species(@protocol.bats,ab_form.object.species).length %></td>
+        <td style="text-align: center"><%= Bat.on_species(@protocol.all_past_bats,ab_form.object.species).length %></td>
         <td style="text-align: center">
           <%= ab_form.text_field :number, :value => @protocol.determine_allowed_bats(ab_form.object.species), :size=>2 %>
           <%= observe_field "protocol_allowed_bats_attributes_" + ab_form.object_name[-2].chr + "_number", 

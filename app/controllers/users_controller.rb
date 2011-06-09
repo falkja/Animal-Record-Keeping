@@ -43,19 +43,6 @@ class UsersController < ApplicationController
 
   def create
 	  @user = User.new(params[:user])
-	  @user.job_type = ''
-	  if params[:medical][:checked] == '1'
-      @user.job_type = "Medical Care"
-	  end
-	  if params[:animal][:checked] == '1'
-      @user.job_type = @user.job_type + ' ' + "Animal Care"
-	  end
-	  if params[:weekend][:checked] == '1'
-      @user.job_type = @user.job_type + ' ' + "Weekend Care"
-	  end
-	  if params[:administrator][:checked] == '1'
-      @user.job_type = @user.job_type + ' ' + "Administrator"
-	  end
 	  @user.end_date = nil
 	  if @user.save
       set_protocols_user(@user)
@@ -80,7 +67,7 @@ class UsersController < ApplicationController
     elsif @user.tasks.current.length > 0
       flash[:notice] = 'Deactivation failed.  User still has tasks.'
       redirect_to :controller=> 'main', :action => 'user_summary_page', :id => @user
-    elsif @user.job_type != ''
+    elsif @user.has_jobs
       flash[:notice] = 'Deactivation failed.  User still has jobs.'
       redirect_to :controller=> 'users', :action => 'edit', :id => @user
     end
@@ -97,21 +84,6 @@ class UsersController < ApplicationController
   
   def update
     @user = User.find(params[:id])
-		
-		@user.job_type = ''
-    if params[:medical][:checked] == '1'
-      @user.job_type = "Medical Care"
-    end
-    if params[:animal][:checked] == '1'
-      @user.job_type = @user.job_type + ' ' + "Animal Care"
-    end
-    if params[:weekend][:checked] == '1'
-      @user.job_type = @user.job_type + ' ' + "Weekend Care"
-    end
-    if params[:administrator][:checked] == '1'
-      @user.job_type = @user.job_type + ' ' + "Administrator"
-    end
-    
 		if @user.update_attributes(params[:user])
       set_protocols_user(@user)
       flash[:notice] = 'User was successfully updated.'

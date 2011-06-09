@@ -114,8 +114,8 @@ class MyMailer < ActionMailer::Base
         msg_body = msg_body + "\n Bat: " + bat.band
         msg_body = msg_body + "\n  Number: " + ph.protocol.number
         msg_body = msg_body + "\n  Title: " + ph.protocol.title
-        msg_body = msg_body + "\n  Bats (for " + bat.species.name +  ") currently on protocol: " + Bat.bats_on_species(ph.protocol.bats,bat.species).length.to_s
-        msg_body = msg_body + "\n  All bats (for " + bat.species.name +  ") ever on protocol: " + Bat.bats_on_species(ph.protocol.all_past_bats,bat.species).length.to_s
+        msg_body = msg_body + "\n  Bats (for " + bat.species.name +  ") currently on protocol: " + Bat.on_species(ph.protocol.bats,bat.species).length.to_s
+        msg_body = msg_body + "\n  All bats (for " + bat.species.name +  ") ever on protocol: " + Bat.on_species(ph.protocol.all_past_bats,bat.species).length.to_s
         msg_body = msg_body + "\n  Bats allowed (for " + bat.species.name +  ") on protocol: " + ph.protocol.determine_allowed_bats(bat.species).to_s
         msg_body = msg_body + "\n  Action by: " + ph.user.name + "\n"
       end
@@ -294,13 +294,13 @@ class MyMailer < ActionMailer::Base
     msg_body = "This is a warning email to notify you that the following protocol is at its warning limit: "
     msg_body = msg_body + "\n  Number: " + protocol.number
     msg_body = msg_body + "\n  Title: " + protocol.title
-    msg_body = msg_body + "\n  Current bats (for " + bat.species.name +  "): " + Bat.bats_on_species(protocol.bats,bat.species).length.to_s
-    msg_body = msg_body + "\n  All bats (for " + bat.species.name +  ") ever: " + Bat.bats_on_species(protocol.all_past_bats,bat.species).length.to_s
+    msg_body = msg_body + "\n  Current bats (for " + bat.species.name +  "): " + Bat.on_species(protocol.bats,bat.species).length.to_s
+    msg_body = msg_body + "\n  All bats (for " + bat.species.name +  ") ever: " + Bat.on_species(protocol.all_past_bats,bat.species).length.to_s
     msg_body = msg_body + "\n  Bats allowed (for " + bat.species.name +  "): " + allowed_bat.number.to_s
     msg_body = msg_body + "\n  Warning limit (for " + bat.species.name +  "): " + allowed_bat.warning_limit.to_s
     msg_body = msg_body + "\n  Action by: " + user.name + "\n"
 
-    users = protocol.users | User.administrator
+    users = (protocol.users | (User.administrator - User.not_researcher))
     
     greeting = "Hi " + users.collect{|u| u.name}.to_sentence + ",\n\n"
     salutation = "Faithfully yours, etc."

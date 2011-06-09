@@ -40,7 +40,9 @@
         <% if @list_all %>
           <td><%= nice_date_no_day user.end_date %></td>
         <% end %>
-        <td><%= user.job_type %></td>
+        <td>
+          <%= user.jobs.to_sentence %>
+        </td>
         <td><%= link_to 'Edit', :action => 'edit', :id => user %></td>
         <td>
           <% if user.end_date == nil %>

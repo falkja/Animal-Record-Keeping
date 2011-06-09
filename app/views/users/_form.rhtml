@@ -1,44 +1,48 @@
 <%= error_messages_for 'user' %>
 
 <% if @deactivating == true %>
-<%   @disable_end_date = false %>
-<%   @everything_else = '<div class="hidden">' %>
-<%   @end_date = '<div>' %>
+  <%   @disable_end_date = false %>
+  <%   @everything_else = '<div class="hidden">' %>
+  <%   @end_date = '<div>' %>
 <% else %>
-<%   @disable_end_date = true %>
-<%   @everything_else = '<div>' %>
-<%   @end_date = '<div class="hidden">' %>
+  <%   @disable_end_date = true %>
+  <%   @everything_else = '<div>' %>
+  <%   @end_date = '<div class="hidden">' %>
 <% end %>
 
 <!--[form:user]-->
 
 <%= @everything_else %>
 <p><label for="user_name">Name</label><br/>
-<%= text_field 'user', 'name' %></p>
+  <%= text_field 'user', 'name' %></p>
 
 <p><label for="user_initials">Initials</label><br/>
-<%= text_field 'user', 'initials'  %></p>
+  <%= text_field 'user', 'initials'  %></p>
 
 <p><label for="user_email">Email</label><br/>
-<%= text_field 'user', 'email'  %></p>
+  <%= text_field 'user', 'email'  %></p>
 
 <p><label for="user_start_date">Start date</label><br/>
-<%= date_select 'user', 'start_date' %></p>
+  <%= date_select 'user', 'start_date' %></p>
 
 <p>Job Type</p>
 <div class="left_indent">
-<%= check_box('animal', 'checked', :checked => @user.animal_care_user?) %>
-<label for="animal_checked">Weekday Care Staff</label><br/>
+  <%= check_box('user', 'researcher', :checked => @user.researcher) %>
+  <label for='user_researcher'>Researcher</label><br/>
+  
+  <%= check_box('user', 'animal_care', :checked => @user.animal_care) %>
+  <label for="user_animal_care">Weekday Care Staff <i>(Animal Care)</i></label><br/>
 
-<%= check_box('weekend', 'checked', :checked => @user.weekend_care_user?) %>
-<label for="weekend_checked">Weekend Care Staff</label><br/>
+  <%= check_box('user', 'weekend_care', :checked => @user.weekend_care) %>
+  <label for="user_weekend_care">Weekend Care Staff</label><br/>
 
-<%= check_box('medical', 'checked', :checked => @user.medical_care_user?) %>
-<label for="medical_checked">Medical Care Staff</label><br/>
+  <%= check_box('user', 'medical_care', :checked => @user.medical_care) %>
+  <label for="user_medical_care">Medical Care Staff</label><br/>
 
-<%= check_box('administrator', 'checked', :checked => @user.administrator?) %>
-<label for="administrator_checked">Administrator</label><br/>
+  <%= check_box('user', 'administrator', :checked => @user.administrator) %>
+  <label for="user_administrator">Administrator</label><br/>
 </div>
+
 
 <p>
   Edit protocols for user:
@@ -53,7 +57,7 @@
 
 <%= @end_date  %>
 <p><label for="user_end_date">End date</label><br/>
-<%= date_select 'user', 'end_date', :disabled => @disable_end_date %>
+  <%= date_select 'user', 'end_date', :disabled => @disable_end_date %>
 </p>
 </div>
 

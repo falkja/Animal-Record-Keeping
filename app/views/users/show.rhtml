@@ -10,7 +10,7 @@
 <% for column in User.content_columns %>
   <p>
     <b><%= column.human_name %>:</b>
-    <% if column.name == 'start_date' or (column.name== 'end_date' and @user.end_date != nil ) %>
+    <% if column.name == 'start_date' or (column.name == 'end_date' and @user.end_date != nil ) %>
       <%=h nice_date(@user.send(column.name)) %>
     <% else %>
       <% if column.name == 'end_date' %>
@@ -23,29 +23,16 @@
 <% end %>
 
 <h3>Protocols:</h3>
-<div class='left_indent'>
-  <% if @user.protocols.length > 0 %>
-    <table>
-      <th style="font-size: 11pt">Title:</th> 
-      <th style="font-size: 11pt">Number:</th> 
-      <th style="font-size: 11pt">Start Date:</th> 
-      <th style="font-size: 11pt">End Date:</th> 
-      <% for p in @user.protocols %>
-        <tr>
-          <td><%= p.title %></td>
-          <td><%= link_to p.number, p %></td>
-          <td><%= nice_date p.start_date %></td>
-          <td><%= nice_date p.end_date %></td>
-        </tr>
-      <% end %>
-    </table>
+<% if @user.protocols.length > 0 %>
 
-  <% else %>
-    No protocols assigned to user
-  <% end %>
-  <p><%= link_to 'Add/remove from protocol', :controller => :protocols, :action => :edit_protocols_on_user, :id => @user %></p>
+  <%= render :partial=> 'protocols/protocols_table_list', 
+    :locals => {:protocols=>@user.protocols, :selecting=>false}  %>
 
-</div>
+<% else %>
+  No protocols assigned to user
+<% end %>
+<p><%= link_to 'Add/remove from protocol', :controller => :protocols, :action => :edit_protocols_on_user, :id => @user %></p>
+
 
 <h3>User trained for:</h3>
 <div class='left_indent'>

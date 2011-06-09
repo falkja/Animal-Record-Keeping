@@ -7,42 +7,49 @@
   :bats => User.find(session[:person]).bats,
   :act => act},
   :update => "form_bats_protocols" %>
-<br>
+<br />
 
 <%= link_to_remote "Current Bats",
   :url => {:action => :change_bat_list, :bats => Bat.active,
   :act => act},
   :update => "form_bats_protocols" %>
-<br>
+<br />
 
 <%= link_to_remote "Deactivated Bats",
   :url => {:action => :change_bat_list, :bats => Bat.not_active,
   :act => act},
   :update => "form_bats_protocols" %>
-<br>
+<br />
 
 <%= link_to_remote "All Bats",
   :url => {:action => :change_bat_list, :bats => Bat.find(:all),
   :act => act},
   :update => "form_bats_protocols" %>
-<br>
+<br />
 
 <%= collection_select("cage","id", cages, "id", "name",
   {:prompt => 'Bats in Cage'},
   {:onchange => remote_function(:update => "form_bats_protocols",
       :url => {:action => :change_bat_list, :act => act},
       :with => 'Form.Element.serialize(this)' ) } ) %>
-<br>
+<br />
 
 <%= collection_select("room","id", rooms, "id", "name",
   {:prompt => 'Bats in Room'},
   {:onchange => remote_function(:update => "form_bats_protocols",
       :url => {:action => :change_bat_list, :act => act},
       :with => 'Form.Element.serialize(this)' ) } ) %>
-<br>
+<br />
 
 <%= collection_select("protocol","id", protocols, "id", "number",
   {:prompt => 'Bats on Protocol'},
+  {:onchange => remote_function(:update => "form_bats_protocols",
+      :url => {:action => :change_bat_list, :act => act} ,
+      :with => 'Form.Element.serialize(this)' ) } ) %>
+<br />
+
+<%= collection_select("species","id", species, "id", "name",
+  {:include_blank => 'Bats of Species'},
   {:onchange => remote_function(:update => "form_bats_protocols",
       :url => {:action => :change_bat_list, :act => act} ,
       :with => 'Form.Element.serialize(this)' ) } ) %>

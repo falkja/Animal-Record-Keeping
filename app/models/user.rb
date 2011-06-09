@@ -20,63 +20,27 @@ class User < ActiveRecord::Base
   end
 	
 	def self.current_weekend_care
-		find :all, :conditions => "end_date is null and job_type regexp 'Weekend'", :order => 'name'
+		find :all, :conditions => "end_date is null and weekend_care is true", :order => 'name'
 	end
 	
 	def self.current_medical_care
-		find :all, :conditions => "end_date is null and job_type regexp 'Medic'", :order => 'name'
+		find :all, :conditions => "end_date is null and medical_care is true", :order => 'name'
 	end
 	
 	def self.current_animal_care
-		find :all, :conditions => "end_date is null and job_type regexp 'Anim'", :order => 'name'
+		find :all, :conditions => "end_date is null and animal_care is true", :order => 'name'
 	end
 	
   def self.administrator
-    find :all, :conditions => "end_date is null and job_type regexp 'Admin'", :order => 'name'
+    find :all, :conditions => "end_date is null and administrator is true", :order => 'name'
   end
-  
-	def medical_care_user?
-		if self.job_type == nil
-			return false
-		elsif self.job_type.include? "Med"
-			return true
-		else
-			return false
-		end
-	end
 	
-	def weekend_care_user?
-		if self.job_type == nil
-			return false
-		elsif self.job_type.include? "Wee"
-			return true
-		else
-			return false
-		end
-	end
-	
-	def animal_care_user?
-		if self.job_type == nil
-			return false
-		elsif self.job_type.include? "Ani"
-			return true
-		else
-			return false
-		end
-	end
-  
-  def administrator?
-    if self.job_type == nil
-			return false
-		elsif self.job_type.include? "Admin"
-			return true
-		else
-			return false
-    end
+  def self.not_researcher
+    find :all, :conditions => "end_date is null and researcher is false", :order => 'name'
   end
 
 	def bats_medical_problems #returns the user's bat's medical problems unless the user is a medical care user, in which case it returns all the medical problems
-		if self.medical_care_user?
+		if self.medical_care
 			return MedicalProblem.current
 		end
 		users_bats = self.bats
@@ -92,12 +56,12 @@ class User < ActiveRecord::Base
   def all_tasks
     users_tasks = self.tasks.today
 
-    if ((self.animal_care_user? && ( (Time.now.wday == 1) || (Time.now.wday == 2) || (Time.now.wday == 3) || (Time.now.wday == 4) || (Time.now.wday == 5))) || (self.weekend_care_user? && (Time.now.wday == 6 || Time.now.wday == 0)))
+    if ((self.animal_care && ( (Time.now.wday == 1) || (Time.now.wday == 2) || (Time.now.wday == 3) || (Time.now.wday == 4) || (Time.now.wday == 5))) || (self.weekend_care && (Time.now.wday == 6 || Time.now.wday == 0)))
       users_tasks = Task.animal_care_user_general_tasks_today | users_tasks
       users_tasks = Task.animal_care_user_feeding_tasks_today | users_tasks
     end
 
-    if self.medical_care_user?
+    if self.medical_care
       users_tasks = Task.medical_user_tasks_today | users_tasks
     end
 
@@ -106,6 +70,20 @@ class User < ActiveRecord::Base
     end
 
     return users_tasks.uniq
+  end
+  
+  def has_jobs
+    return (self.administrator || self.animal_care || self.medical_care || self.researcher || self.weekend_care)
+  end
+  
+  def jobs
+    jobs = Array.new
+    self.researcher ? jobs << "Researcher" : ''
+    self.administrator ? jobs << "Administrator": '' 
+    self.animal_care ? jobs << "Animal Care":'' 
+    self.weekend_care ? jobs << "Weekend Care":'' 
+    self.medical_care ? jobs << "Medical Care":'' 
+    return jobs
   end
 
 end

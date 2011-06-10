@@ -13,6 +13,18 @@ class Species < ActiveRecord::Base
 		end
 	end
 
+  def self.has_bats
+    #species = Species.find(:all, :order => :name)
+    #species.delete_if{|sp| sp.bats.active.length == 0}
+    #return species
+
+    #Bat.active.collect{|b| b.species}.uniq
+
+    Species.find(:all, :joins=>:bats, 
+      :conditions=>"bats.species_id is not null and bats.leave_date is null",
+      :select => 'DISTINCT species.*', :order => 'name')
+  end
+
   def after_create
     for p in Protocol.all
       allowed_bat = AllowedBat.new(:protocol => p, :species => self, :number => 0)

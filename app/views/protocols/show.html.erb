@@ -40,6 +40,11 @@
 </p>
 
 <p>
+  <b>Cages:</b>
+  <%=h link_to(@protocol.cages.collect(&:name).to_sentence,:controller=>:cages,:action=>:list,:cages=>@protocol.cages) %>
+</p>
+
+<p>
   <b>Data Collected:</b>
   <% for datum in @protocol.data %>
     <br /><%=h datum.name %>

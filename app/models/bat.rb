@@ -409,7 +409,7 @@ class Bat < ActiveRecord::Base
 	end
 
   def self.on_species(bats,species)
-    Bat.all(:conditions => {:id => bats, :species_id => species.id} )
+    Bat.all(:conditions => {:id => bats, :species_id => species.id} , :order => 'band')
   end
   
   def self.not_on_protocol(bats)

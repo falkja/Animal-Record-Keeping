@@ -45,7 +45,10 @@
   <b>Average Weight: </b><%= average_bat_weight %> g
 </p>
 
-
+<p>
+  <b>Protocols</b><br />
+  <%= link_to(@cage.protocols.collect(&:number).to_sentence,:controller=>:protocols,:ids=>@cage.protocols) %>
+</p>
 
 <% if @cage.date_destroyed != nil %>
   <p>

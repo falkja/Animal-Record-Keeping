@@ -6,9 +6,11 @@
 
     <tr>
       <td style="vertical-align:top;text-align: center;">
-        <div id="bat_list" style="border:1px solid gray;padding-left: 5px;padding-right: 5px;padding-top: 5px;">
+        <div id="bat_list" style="border:1px solid gray;padding-left: 5px;padding-right: 5px;padding-bottom: 5px;">
           <%= render :partial => 'bats_as_options', :locals => {:act => act,
             :cages => cages, :rooms => rooms, :protocols => protocols, :species=> species} %>
+          <hr />
+          <%= render :partial => 'protocols_as_options', :locals => {:act => act, :bats => bats} %>
         </div>
       </td>
       <td style="vertical-align:top">
@@ -28,7 +30,7 @@
           </div>
 
           <%= render :partial => 'choose_protocols',
-            :locals => {:protocols => Protocol.current, :bat => nil} %>
+            :locals => {:protocols => protocols, :bat => nil} %>
 
           <div style="width:750px; margin-right:auto; margin-left:auto;text-align:center">
             <p><%= submit_tag act.capitalize.concat(" bats") %></p>

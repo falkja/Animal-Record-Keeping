@@ -6,9 +6,14 @@ class Room < ActiveRecord::Base
 	has_many :task_census
 
   def self.has_bats
-    rooms = find :all, :order => :name
-    rooms.delete_if{|room| room.bats.length == 0}
-    return rooms
+#    rooms = Room.find(:all, :order => :name)
+#    rooms.delete_if{|room| room.bats.length == 0}
+#    return rooms
+
+    cages = Cage.has_bats
+    Room.find(:all, :joins=>:cages,
+      :conditions=>["cages.id IN (?)",cages],
+      :select => 'DISTINCT rooms.*', :order => 'name')
   end
 
   #returns the number of bats at any day for a given room

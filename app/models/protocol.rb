@@ -6,6 +6,13 @@ class Protocol < ActiveRecord::Base
   has_and_belongs_to_many :users, :order => "name"
   has_and_belongs_to_many :surgery_types, :order => "name"
   has_and_belongs_to_many :surgeries, :order => "time desc"
+
+  #have to use single quotes
+  has_many :cages, :finder_sql =>
+    'SELECT DISTINCT cages.* FROM `cages`
+    INNER JOIN `bats` ON bats.cage_id = cages.id
+    INNER JOIN `bats_protocols` ON `bats_protocols`.bat_id = `bats`.id
+    WHERE (bats_protocols.protocol_id = 2)  ORDER BY name'
   
   accepts_nested_attributes_for :allowed_bats
 		
@@ -18,9 +25,13 @@ class Protocol < ActiveRecord::Base
 	end
 
   def self.has_bats
-    prots = find :all, :order => :number
-    prots.delete_if{|prot| prot.bats.length == 0}
-    return prots
+#    prots = find :all, :order => :number
+#    prots.delete_if{|prot| prot.bats.length == 0}
+#    return prots
+
+    Protocol.find(:all, :joins=>:bats,
+      :conditions=>"bats_protocols.protocol_id is not null and bats.leave_date is null",
+      :select => 'DISTINCT protocols.*')
   end
 
   def build_allowed_bats

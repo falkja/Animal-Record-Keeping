@@ -12,7 +12,7 @@ class Protocol < ActiveRecord::Base
     'SELECT DISTINCT cages.* FROM `cages`
     INNER JOIN `bats` ON bats.cage_id = cages.id
     INNER JOIN `bats_protocols` ON `bats_protocols`.bat_id = `bats`.id
-    WHERE (bats_protocols.protocol_id = 2)  ORDER BY name'
+    WHERE (bats_protocols.protocol_id = #{id})  ORDER BY name'
   
   accepts_nested_attributes_for :allowed_bats
 		

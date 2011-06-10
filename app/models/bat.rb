@@ -388,6 +388,9 @@ class Bat < ActiveRecord::Base
         if before_all_bats.length < p_added.all_past_bats.length && 
             allowed_bat.warning_limit == Bat.on_species(p_added.all_past_bats,self.species).length
           MyMailer.email_at_protocol_warning_limit(p_added,self,user,allowed_bat)
+        elsif before_all_bats.length < p_added.all_past_bats.length &&
+            allowed_bat.number == Bat.on_species(p_added.all_past_bats,self.species).length
+          MyMailer.email_at_protocol_limit(p_added,self,user,allowed_bat)
         end
       else
         protocols = protocols - Array.new(1,p_added)

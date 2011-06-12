@@ -1,22 +1,98 @@
 <h1>
-<% if @list == "all" %>
-Listing all bats
-<% elsif @list == "current" %>
-Listing current bats
-<% else %>
-Listing deactivated bats
-<% end %>
+Listing bats
 </h1>
 
-<%= button_to 'New Bat', :controller => :bats, :action => :new %> | 
-<%= link_to 'List My Bats', :controller => :bats, :action => :list, :bats => User.find(session[:person]).bats %> | 
-<%= link_to 'List Current Bats', :controller => :bats, :action => :list %> | 
-<%= link_to 'List Deactivated Bats', :controller => :bats, :action => :list_deactivated %> | 
-<%= link_to 'List All Bats', :controller => :bats, :action => :list_all %>
+<%= button_to 'New', :controller => :bats, :action => :new %> |
+<%= link_to_remote( "My",
+          :update => 'bats_div',
+          :url =>{ :controller => :bats, :action => :change_bats_list,
+            :option => 'my',
+            :show_leave_date_and_reason => @show_leave_date_and_reason,
+            :show_weigh_link => false}) %> |
+<%= link_to_remote( "Current",
+          :update => 'bats_div',
+          :url =>{ :controller => :bats, :action => :change_bats_list,
+            :option => 'current',
+            :show_leave_date_and_reason => @show_leave_date_and_reason,
+            :show_weigh_link => false}) %> |
+<%= link_to_remote( "Deactivated",
+          :update => 'bats_div',
+          :url =>{ :controller => :bats, :action => :change_bats_list,
+            :option => 'deactivated',
+            :show_leave_date_and_reason => @show_leave_date_and_reason,
+            :show_weigh_link => false}) %> |
+<%= link_to_remote( "All",
+          :update => 'bats_div',
+          :url =>{ :controller => :bats, :action => :change_bats_list,
+            :option => 'all',
+            :show_leave_date_and_reason => @show_leave_date_and_reason,
+            :show_weigh_link => false}) %> |
+<%= link_to_remote( "Med",
+          :update => 'bats_div',
+          :url =>{ :controller => :bats, :action => :change_bats_list,
+            :option => 'med',
+            :show_leave_date_and_reason => @show_leave_date_and_reason,
+            :show_weigh_link => false}) %> |
+<%= link_to_remote( "Flight Exempt",
+          :update => 'bats_div',
+          :url =>{ :controller => :bats, :action => :change_bats_list,
+            :option => 'flight_exempt',
+            :show_leave_date_and_reason => @show_leave_date_and_reason,
+            :show_weigh_link => false}) %> |
+<%= link_to_remote( "Non Flight Exempt",
+          :update => 'bats_div',
+          :url =>{ :controller => :bats, :action => :change_bats_list,
+            :option => 'non_flight_exempt',
+            :show_leave_date_and_reason => @show_leave_date_and_reason,
+            :show_weigh_link => false}) %> |
+<%= link_to_remote( "Not Flown",
+          :update => 'bats_div',
+          :url =>{ :controller => :bats, :action => :change_bats_list,
+            :option => 'not_flown',
+            :show_leave_date_and_reason => @show_leave_date_and_reason,
+            :show_weigh_link => false}) %> |
+<%= link_to_remote( "Not Weighed",
+          :update => 'bats_div',
+          :url =>{ :controller => :bats, :action => :change_bats_list,
+            :option => 'not_weighed',
+            :show_leave_date_and_reason => @show_leave_date_and_reason,
+            :show_weigh_link => false}) %>
+
+<br />
+
+<%= collection_select("cage","id", Cage.has_bats, "id", "name",
+  {:prompt => 'In Cage'},
+  {:onchange => remote_function(:update => "bats_div",
+      :url => {:controller=> :bats, :action => :change_bats_list,
+            :show_leave_date_and_reason => @show_leave_date_and_reason,
+            :show_weigh_link => false},
+      :with => 'Form.Element.serialize(this)' ) } ) %> |
+
+<%= collection_select("protocol","id", Protocol.has_bats, "id", "number",
+  {:prompt => 'In Protocol'},
+  {:onchange => remote_function(:update => "bats_div",
+      :url => {:controller=> :bats, :action => :change_bats_list,
+            :show_leave_date_and_reason => @show_leave_date_and_reason,
+            :show_weigh_link => false},
+      :with => 'Form.Element.serialize(this)' ) } ) %> |
+
+<%= collection_select("room","id", Room.has_bats, "id", "name",
+  {:prompt => 'In Room'},
+  {:onchange => remote_function(:update => "bats_div",
+      :url => {:controller=> :bats, :action => :change_bats_list,
+            :show_leave_date_and_reason => @show_leave_date_and_reason,
+            :show_weigh_link => false},
+      :with => 'Form.Element.serialize(this)' ) } ) %> |
+
+<%= collection_select("species","id", Species.has_bats, "id", "name",
+  {:prompt => 'In Species'},
+  {:onchange => remote_function(:update => "bats_div",
+      :url => {:controller=> :bats, :action => :change_bats_list,
+            :show_leave_date_and_reason => @show_leave_date_and_reason,
+            :show_weigh_link => false},
+      :with => 'Form.Element.serialize(this)' ) } ) %>
 
 <hr />
-
-<div class="left_indent">
 
 <% if @bats.length == 0 %>
 
@@ -25,10 +101,8 @@ No bats.
 <% else %>
 
 <%= render :partial => 'bats/bat_list', :locals => { 
-		:bat_list => @bats,
-		:show_leave_date_and_reason => @show_leave_date_and_reason,
-		:show_weigh_link => false } %>
+    :bat_list => @bats,
+    :show_leave_date_and_reason => @show_leave_date_and_reason,
+    :show_weigh_link => false } %>
 
 <% end %>
-
-</div>

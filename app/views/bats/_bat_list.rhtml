@@ -170,7 +170,7 @@ This partial displays the summary for a list of bats
               <td style="text-align: center">
                 <%=h bat.protocols.length > 0 ? 
                   link_to(bat.protocols.collect{|p| p.number}.to_sentence, :controller=>:protocols, :action=>:index,:ids=> bat.protocols) :
-                  bat.protcols.length %>
+                  bat.protocols.length %>
               </td>
 
               <td align=center><%=h bat.collection_date.strftime("%Y") %></td>

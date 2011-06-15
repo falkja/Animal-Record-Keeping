@@ -3,7 +3,7 @@
 <% if protocols.length > 0 %>
 
   <%= render :partial => 'protocols/protocols_table_list',
-    :locals =>{:protocols => Protocol.current, :selecting => true, :user => nil, :bat => bat} %>
+    :locals =>{:protocols => protocols, :selecting => true, :user => nil, :bat => bat} %>
 
 <% else %>
   <div style="text-align:center;">

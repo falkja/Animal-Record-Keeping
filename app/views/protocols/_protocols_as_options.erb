@@ -1,0 +1,36 @@
+<%#
+#This is called from form_bats_protocols and it selects the protocols that show up in the choose_protocols(protocols_table_list)
+%>
+
+<h3>Protocols</h3>
+
+<%= link_to_remote "My",
+  :url => {:action => :change_protocol_list,
+  :protocols => User.find(session[:person]).protocols,
+  :bats => bats,
+  :act => act},
+  :update => "form_bats_protocols" %>
+|
+
+<%= link_to_remote "Current",
+  :url => {:action => :change_protocol_list,
+  :protocols => Protocol.current,
+  :bats => bats,
+  :act => act},
+  :update => "form_bats_protocols" %>
+|
+
+<%= link_to_remote "Has bats",
+  :url => {:action => :change_protocol_list,
+  :protocols => Protocol.has_bats,
+  :bats => bats,
+  :act => act},
+  :update => "form_bats_protocols" %>
+|
+
+<%= link_to_remote "All",
+  :url => {:action => :change_protocol_list,
+  :protocols => Protocol.all,
+  :bats => bats,
+  :act => act},
+  :update => "form_bats_protocols" %>

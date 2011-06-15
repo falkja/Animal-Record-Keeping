@@ -10,11 +10,11 @@
 <hr />
 
 <p>
-  <b>Title:</b>
-  <%=h @protocol.title %>
-  |
   <b>Number:</b>
   <%=h @protocol.number %>
+  |
+  <b>Title:</b>
+  <%=h @protocol.title %>
 </p>
 
 <p>
@@ -35,10 +35,13 @@
   <% if @protocol.users.length == 0 %>
     No users on protocol
   <% else %>
-    <% for u in @protocol.users %>
-      <br><%= u.name %>
-    <% end %>
+    <%= @protocol.users.collect{|u| u.name}.to_sentence %>
   <% end %>
+</p>
+
+<p>
+  <b>Cages:</b>
+  <%=h link_to(@protocol.cages.collect(&:name).to_sentence,:controller=>:cages,:action=>:list,:cages=>@protocol.cages) %>
 </p>
 
 <p>

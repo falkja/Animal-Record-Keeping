@@ -6,7 +6,13 @@ class Cage < ActiveRecord::Base
   has_many :tasks, :order => "repeat_code"
   belongs_to :room
 	has_many :species, :through => :bats, :order => "name"
-	
+  
+  #have to use single quotes
+  has_many :protocols, :finder_sql =>
+    'SELECT DISTINCT protocols.* FROM `protocols`
+    INNER JOIN `bats_protocols` ON `bats_protocols`.protocol_id = `protocols`.id
+    INNER JOIN `bats` ON `bats`.id = `bats_protocols`.bat_id  WHERE (bats.cage_id = #{id})'
+
 	validates_presence_of :name
 	validates_uniqueness_of :name
 	
@@ -15,9 +21,13 @@ class Cage < ActiveRecord::Base
   end
   
   def self.has_bats
-    cages = find :all, :order => "name"
-    cages.delete_if{|cage| cage.bats.length == 0}
-    return cages
+#    cages = find :all, :order => "name"
+#    cages.delete_if{|cage| cage.bats.length == 0}
+#    return cages
+
+    Cage.find(:all, :joins=>:bats,
+      :conditions=>"bats.cage_id is not null and bats.leave_date is null",
+      :select => 'DISTINCT cages.*', :order => 'name')
   end
   
   def self.has_feeding_tasks

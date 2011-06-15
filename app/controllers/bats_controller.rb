@@ -15,22 +15,52 @@ class BatsController < ApplicationController
     else
       @bats = Bat.active
     end
-    @list = "current"
   end
   
   def list_all
     @bats = Bat.find(:all, :order => 'band')
-    @list = "all"
     @show_leave_date_and_reason = true
     render :action => 'list'
   end
 
 	def list_deactivated
 		@bats = Bat.not_active
-		@list = "deactivated"
 		@show_leave_date_and_reason = true
 		render :action => 'list'
 	end
+
+  def change_bats_list
+    if params[:cage]
+      bats = Cage.find(params[:cage][:id]).bats
+    elsif params[:protocol]
+      bats = Protocol.find(params[:protocol][:id]).bats
+    elsif params[:room]
+      bats = Room.find(params[:room][:id]).bats
+    elsif params[:species]
+      bats = Species.find(params[:species][:id]).bats
+    elsif params[:option]
+      if params[:option]=='med'
+        bats = Bat.sick
+      elsif params[:option]=='flight_exempt'
+        bats = Bat.exempt_from_flight
+      elsif params[:option]=='non_flight_exempt'
+        bats = Bat.not_exempt_from_flight
+      elsif params[:option]=='not_weighed'
+        bats = Bat.not_weighed(Bat.active, Time.now)
+      elsif params[:option]=='not_flown'
+        bats = Bat.not_flown(Bat.active)
+      elsif params[:option]=='current'
+        bats = Bat.active
+      elsif params[:option]=='deactivated'
+        bats = Bat.not_active
+      elsif params[:option]=='all'
+        bats = Bat.all
+      elsif params[:option]=='my'
+        bats = User.find(session[:person]).bats
+      end
+    end
+    render_bat_list(bats)
+  end
 
 	def sort_by_species
 		bat_list = Bat.find(params[:ids])

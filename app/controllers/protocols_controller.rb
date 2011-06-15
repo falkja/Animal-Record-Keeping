@@ -90,15 +90,36 @@ class ProtocolsController < ApplicationController
   def update_mult_bats
     @cages=Cage.has_bats
     @rooms = Room.has_bats
+    @species = Species.has_bats
     @bats = User.find(session[:person]).bats
-    @protocols = Protocol.has_bats
-    @species = Species.all
+    @protocols = User.find(session[:person]).protocols
     @act = params[:act]
     render :action => :mult_bats_form
   end
+
+  def change_protocol_list
+    @act = params[:act]
+    if params[:protocols]
+      @protocols = Protocol.find(params[:protocols], :order => "number")
+    else
+      @protocols = []
+    end
+    if params[:bats]
+      @bats = Bat.find(params[:bats], :order => 'band')
+    else
+      @bats = []
+    end
+    render :partial => 'form_bats_protocols',
+      :locals => {:bats => @bats, :protocols => @protocols, :act => @act,
+      :cages => Cage.has_bats, :rooms => Room.has_bats, :species => Species.has_bats}
+  end
   
   def change_bat_list
-    @protocols = Protocol.has_bats
+    if params[:protocols]
+      @protocols = Protocol.find(params[:protocols], :order => "number")
+    else
+      @protocols = []
+    end
     @act = params[:act]
     if params[:cage] && params[:cage][:id] != ""
       @bats = Cage.find(params[:cage][:id]).bats
@@ -115,7 +136,7 @@ class ProtocolsController < ApplicationController
     end
     render :partial => 'form_bats_protocols',
       :locals => {:bats => @bats, :protocols => @protocols, :act => @act,
-      :cages => Cage.has_bats, :rooms => Room.has_bats, :species => Species.all}
+      :cages => Cage.has_bats, :rooms => Room.has_bats, :species => Species.has_bats}
   end
   
   def create_mult_prots_mult_bats

@@ -292,13 +292,7 @@ class MyMailer < ActionMailer::Base
   
   def self.email_at_protocol_warning_limit(protocol,bat,user,allowed_bat)
     msg_body = "This is a warning email to notify you that the following protocol is at its warning limit: "
-    msg_body = msg_body + "\n  Number: " + protocol.number
-    msg_body = msg_body + "\n  Title: " + protocol.title
-    msg_body = msg_body + "\n  Current bats (for " + bat.species.name +  "): " + Bat.on_species(protocol.bats,bat.species).length.to_s
-    msg_body = msg_body + "\n  All bats (for " + bat.species.name +  ") ever: " + Bat.on_species(protocol.all_past_bats,bat.species).length.to_s
-    msg_body = msg_body + "\n  Bats allowed (for " + bat.species.name +  "): " + allowed_bat.number.to_s
-    msg_body = msg_body + "\n  Warning limit (for " + bat.species.name +  "): " + allowed_bat.warning_limit.to_s
-    msg_body = msg_body + "\n  Action by: " + user.name + "\n"
+    msg_body = msg_body + MyMailer.protocol_msg(protocol,bat,allowed_bat,user)
 
     users = (protocol.users | (User.administrator - User.not_researcher))
     
@@ -307,5 +301,30 @@ class MyMailer < ActionMailer::Base
     
     MyMailer.deliver_mass_mail(users.collect{|u| u.email}, 
       "batkeeping email: warning limit reached on protocol!", greeting + msg_body + salutation)
+  end
+
+  def self.email_at_protocol_limit(protocol,bat,user,allowed_bat)
+    msg_body = "The following protocol is at its allowed bats limit for species #{bat.species.name}.\n\n"
+    msg_body = msg_body + "In order to be able to add more bats to this protocol, you will need to modify the protocol and change the allowed bats number for this species.\n\n"
+    msg_body = msg_body + MyMailer.protocol_msg(protocol,bat,allowed_bat,user)
+
+    users = (protocol.users | (User.administrator - User.not_researcher))
+
+    greeting = "Hi " + users.collect{|u| u.name}.to_sentence + ",\n\n"
+    salutation = "Faithfully yours, etc."
+
+    MyMailer.deliver_mass_mail(users.collect{|u| u.email},
+      "batkeeping email: absolute limit reached on protocol!", greeting + msg_body + salutation)
+  end
+
+  def self.protocol_msg(protocol,bat,allowed_bat,user)
+    msg_body = "\n  Number: " + protocol.number
+    msg_body = msg_body + "\n  Title: " + protocol.title
+    # we have to add one to the current bats because the bat hasn't actually been added to the protocol yet
+    msg_body = msg_body + "\n  Current bats (for " + bat.species.name + "): " + (Bat.on_species(protocol.bats,bat.species).length + 1).to_s
+    msg_body = msg_body + "\n  All bats (for " + bat.species.name + ") ever: " + Bat.on_species(protocol.all_past_bats,bat.species).length.to_s
+    msg_body = msg_body + "\n  Bats allowed (for " + bat.species.name + "): " + allowed_bat.number.to_s
+    msg_body = msg_body + "\n  Warning limit (for " + bat.species.name + "): " + allowed_bat.warning_limit.to_s
+    msg_body = msg_body + "\n  Action by: " + user.name + "\n\n"
   end
 end

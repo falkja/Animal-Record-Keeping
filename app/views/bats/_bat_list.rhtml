@@ -5,7 +5,9 @@ This partial displays the summary for a list of bats
   :show_weigh_link - boolean, should we supply a link to weigh the bat
 -->
 
-<% if bat_list %>
+<div style="color:green"><%= flash[:bat_notice] %></div>
+
+<% if bat_list && !bat_list.empty? %>
   <div id='bats_div'>
     <table>
       <th></th>

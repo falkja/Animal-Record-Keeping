@@ -101,4 +101,31 @@ class UsersController < ApplicationController
     User.find(params[:id]).destroy
     redirect_to :action => 'list'
   end
+
+  def list_bats_when
+
+    user = User.find(params[:id])
+
+    if params[:current]
+      bats = user.bats
+    else
+      start_date = Date.civil(params[:post][:"start_date(1i)"].to_i,params[:post][:"start_date(2i)"].to_i,params[:post][:"start_date(3i)"].to_i)
+      #we >> 1 to increase the date by one month and we subtract one day from the end date because we want the last day of the month
+      end_date = (Date.civil(params[:post][:"end_date(1i)"].to_i,params[:post][:"end_date(2i)"].to_i,params[:post][:"end_date(3i)"].to_i) >> 1) - 1.day
+      if start_date > end_date
+        flash.now[:bat_notice] = 'Dates do not overlap'
+        bats = []
+      elsif !user
+        flash.now[:bat_notice] = 'Problem with user'
+        bats = []
+      else
+        bats = user.bats_when(start_date,end_date)
+      end
+    end
+
+    render :partial => 'bats/bat_list', :locals => {
+      :bat_list => bats,
+      :show_leave_date_and_reason => true,
+      :show_weigh_link => false }
+  end
 end

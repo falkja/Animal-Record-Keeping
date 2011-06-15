@@ -53,6 +53,28 @@
 </div>
 
 <h3>
+<% form_remote_tag :url => {:controller => :users,
+    :action => :list_bats_when, :id => @user},
+    :update => "bats_when" do %>
+    Bats used in between:
+    <%= date_select("post","start_date", :start_year => @user.start_date.year, :end_year => Time.now.year, :discard_day => true, :use_short_month => true, :default=> @user.start_date) %>
+    and
+    <%= date_select("post","end_date", :start_year => @user.start_date.year, :end_year =>Time.now.year, :discard_day => true, :use_short_month => true, :default=> Date.today) %>
+    <%= submit_tag "Go" %>
+    or
+    <%= button_to_remote "Current", :url=>{:controller=>:users,:action=>:list_bats_when,:id=>@user,:current=>true},
+      :update=>"bats_when" %>
+<% end %>
+</h3>
+<div id="bats_when" class="left-indent">
+  <h3>Current bats:</h3>
+  <%= render :partial => 'bats/bat_list', :locals => {
+    :bat_list => @user.bats,
+    :show_leave_date_and_reason => false,
+    :show_weigh_link => false } %>
+</div>
+
+<h3>
   Performed bat changes:
 </h3>
 <% if @bat_changes.length == 0 %>

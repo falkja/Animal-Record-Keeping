@@ -185,8 +185,7 @@
             <td><%=h @bat.cage_out_histories[0].cage.name %></td>
             <td><%=h nice_date @bat.cage_out_histories[0].date %></td>
             <td><%=h @bat.cage_out_histories[0].note %></td>
-            <td><%=h @bat.cage_out_histories[0].user.initials %></td>
-            <td><%= @bat.in_cage_when(@bat.cage_out_histories[0].date).name %></td>
+            <td><%=h link_to @bat.cage_out_histories[0].user.initials,:controller=>:users,:action=>:show,:id=>@bat.cage_out_histories[0].user %></td>
           <% end %>
         </tr>
       <% end %>
@@ -203,8 +202,7 @@
           <% end %>
           <td><%=h nice_date cih.date %></td>
           <td><%=h cih.note %></td>
-          <td><%=h cih.user.initials %></td>
-          <td><%= @bat.in_cage_when(cih.date).name %></td>
+          <td><%=h link_to cih.user.initials,:controller=>:users,:action=>:show,:id=>cih.user %></td>
         </tr>
       <% end %>
     </table>

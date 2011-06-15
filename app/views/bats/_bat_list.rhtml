@@ -158,7 +158,7 @@ This partial displays the summary for a list of bats
                   N/A
                 <% else %>
                   <span style="<%= !bat.flown_enough?(Date.today+1.day) ? "color:red" : '' %>">
-                    <%= nice_date_no_year bat.flights[-1].date %>
+                    [<%= link_to(nice_date_no_year(bat.flights[-1].date), :controller=>:flights, :action=>:show, :id=>bat) %>]
                   </span>
                 <% end %>
               </td>

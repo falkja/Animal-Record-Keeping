@@ -48,6 +48,7 @@
     <th style="font-size: 10pt">Used</th>
     <th style="font-size: 10pt">Allowed</th>
     <th style="font-size: 10pt" title="Number of bas used when email notifications go out">Email at</th>
+    <% attrib_num = 0 %>
     <% f.fields_for :allowed_bats do |ab_form| %>
       <tr>
         <td><i><%= ab_form.object.species.name %></i></td>
@@ -55,17 +56,18 @@
         <td style="text-align: center"><%= Bat.on_species(@protocol.all_past_bats,ab_form.object.species).length %></td>
         <td style="text-align: center">
           <%= ab_form.text_field :number, :value => @protocol.determine_allowed_bats(ab_form.object.species), :size=>2 %>
-          <%= observe_field "protocol_allowed_bats_attributes_" + ab_form.object_name[-2].chr + "_number", 
+          <%= observe_field "protocol_allowed_bats_attributes_" + attrib_num.to_s + "_number",
             :method=>:get, :frequency=> 0.25, :with=>'number',
-            :update=> "warning_limit" + ab_form.object_name,
-            :url=> {:controller=>:protocols, :action=>:edit_warning_limit, :id=> -1, :attribute_number=> ab_form.object_name[-2].chr} %>
+            :update=> attrib_num.to_s,
+            :url=> {:controller=>:protocols, :action=>:edit_warning_limit, :id=> -1, :attribute_number=> attrib_num.to_s} %>
         </td>
-        <td style="text-align: center" id="<%= "warning_limit" + ab_form.object_name %>">
+        <td style="text-align: center" id="<%= attrib_num.to_s %>">
           <%= render :partial=>'edit_warning_limit', 
-            :locals=>{:attribute_number=>ab_form.object_name[-2].chr,:limit_value=>ab_form.object.warning_limit} %>
+            :locals=>{:attribute_number=>attrib_num.to_s,:limit_value=>ab_form.object.warning_limit} %>
         </td>
         <%= ab_form.text_field :species_id, :value => ab_form.object.species.id, :hidden => true %>
       </tr>
+      <% attrib_num = attrib_num + 1 %>
     <% end %>
   </table>
   

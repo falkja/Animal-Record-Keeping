@@ -86,4 +86,44 @@ class User < ActiveRecord::Base
     return jobs
   end
 
+  def past_bats
+    Bat.find(:all,:joins=>:bat_changes,
+      :conditions=>["bat_changes.owner_new_id = ?",self],
+      :select => 'DISTINCT bats.*',:order=>'band')
+  end
+
+  def bats_when(start_date,end_date)
+    #for each bat:
+    my_bats_when = Array.new
+    bats=self.past_bats
+
+    for b in bats
+      #step 1: find if any histories within date range, if any histories, then bat was on the protocol, return
+      hists = BatChange.find(:all, :conditions =>
+          ["bat_id = ? and (owner_old_id = ? OR owner_new_id = ?) and date >= ? and
+            date <= ?",b.id,self,self,start_date,end_date])
+      if hists.length > 0
+        my_bats_when << b
+      else
+        #step 2: else... find the last history before date range, if (+), then +, if (-) or (..) then -
+        last_added = BatChange.find(:last, :conditions =>
+            ["owner_new_id = ? and bat_id = ? and date <= ?",
+            self,b.id,start_date],:order => "date")
+        if last_added
+          last_removed = BatChange.find(:last, :conditions =>
+              ["owner_old_id = ? and bat_id = ? and date <= ?",
+              self.id,b.id,start_date],:order => "date")
+          if last_removed
+            if last_added.date > last_removed.date
+              my_bats_when << b
+            end
+          else
+            my_bats_when << b
+          end
+        end
+      end
+    end
+    return my_bats_when
+  end
+
 end

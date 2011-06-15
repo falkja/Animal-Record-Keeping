@@ -8,7 +8,9 @@ class AllowedBat < ActiveRecord::Base
   
   def validate
     if self.number < self.warning_limit
-      errors.add(:warning_limit,"cannot be above number allowed") 
+      errors.add(:warning_limit,"cannot be above number allowed")
+    elsif self.number < Bat.on_species(self.protocol.all_past_bats,self.species).length
+      errors.add(:number,"cannot be below bats used on protocol")
     end
   end
 end

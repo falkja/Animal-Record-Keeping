@@ -30,7 +30,7 @@
       <td style="text-align:left;width:250px"><b><label for='protocol_id_<%=protocol.id %>' >
             <span title='Bats: <% for b in protocol.bats %>&#13; <%=b.band%><% end %>'>
               <%=h protocol.title %></span></label></b></td>
-      <td style="text-align: left;width:250px">
+      <td style="text-align: left;width:250px;">
         <label for='protocol_id_<%=protocol.id %>' >
           <div id="summary_<%= protocol.id  %>">
             <%= render :partial => 'protocols/show_summary_in_table', :locals => {:protocol => protocol, :limit=>3, :show_full=>true} %>

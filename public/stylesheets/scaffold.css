@@ -236,11 +236,19 @@ div.auto_complete ul strong.highlight {
     padding:0; 
 }
 
-p.inline {
-    display:inline;
-}
-
 p.small_break {
     margin-top: 0em;
     margin-bottom: .5em;
+}
+
+a.right_top {
+    display:block;
+    margin-bottom:-1.5em;
+    
+    text-align:right;
+    font-weight:bold;
+    z-index: 2;
+
+    background:none;
+    color:black;
 }

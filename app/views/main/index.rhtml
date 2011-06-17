@@ -1,4 +1,3 @@
-
 <div class="centered">
   <table style="margin-left:auto;margin-right:auto">
     <tr>
@@ -29,7 +28,8 @@
   <div class="centered">
     <p>
       <%= link_to "List Users", :controller => :users, :action => :list %> |
-      <%= link_to "New User", :controller => :users, :action => :new %>
+      <%= link_to "New User", :controller => :users, :action => :new %> |
+      <%= link_to 'Manual', :controller => :help, :action => :manual %>
     </p>
   </div>
 <% end %>

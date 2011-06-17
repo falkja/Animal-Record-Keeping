@@ -53,23 +53,11 @@ class Bat < ActiveRecord::Base
 	
 	#returns all the sick bats
 	def self.sick
-		@medical_problems = MedicalProblem.current
-		bat_ids = Array.new
-		for medical_problem in @medical_problems
-			bat_ids << medical_problem.bat.id
-		end
-		Bat.find(bat_ids.uniq, :order => 'band')
+    Bat.find(:all,:joins=>:medical_problems,
+      :conditions=>"medical_problems.date_closed is null",
+      :select => 'DISTINCT bats.*', :order =>'band')
 	end
   
-  def self.sick_or_previously_sick
-    @medical_problems = MedicalProblem.find(:all)
-		bat_ids = Array.new
-		for medical_problem in @medical_problems
-			bat_ids << medical_problem.bat.id
-		end
-		Bat.find(bat_ids.uniq, :order => 'band')
-  end
-	
 	def self.not_weighed(bats,time)
 		bats_not_weighed = Array.new
 		bats.each{|bat| ( bat.weights.recent && (bat.weights.recent.date < 

@@ -1,7 +1,7 @@
 <h1>Dossier on <%= @cage.name%></h1>
 
-<%= link_to 'List My Cages', :action => 'list', :cages => User.find(session[:person]).cages.active %> |
-<%= link_to 'List Current Cages', :action => 'list' %> | 
+<%= link_to 'My', :action => 'list', :cages => User.find(session[:person]).cages.active %> |
+<%= link_to 'Current', :action => 'list' %> | 
 <%= button_to 'Edit', :action => 'edit', :id => @cage %> |
 
 <% if @cage.date_destroyed == nil %>
@@ -46,7 +46,7 @@
 </p>
 
 <p>
-  <b>Protocols</b><br />
+  <b>Protocols</b>:
   <%= link_to(@cage.protocols.collect(&:number).to_sentence,:controller=>:protocols,:ids=>@cage.protocols) %>
 </p>
 

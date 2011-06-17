@@ -1,14 +1,6 @@
 <h1>Choose Cage to Weigh</h1>
 
-<div class='left_indent'>
-
-<div id="weigh_cage">
-<% @div_id = "weigh_cage" %>
-<% @weighing = true %>
-<%= render :partial => 'cages/cage_list', :locals => {:cage_list => @cages} %>
-</div>
-
-</div>
+<%= render :partial => 'cages/cage_list', :locals => {:cage_list => @cages,:weighing=>true,:show_leave_date_and_reason=>false} %>
 
 <p>
 <%= link_to 'Choose from all cages', :controller => :cages, :action => :choose_cage_to_weigh %> | 

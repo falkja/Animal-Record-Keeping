@@ -1,5 +1,5 @@
 class Room < ActiveRecord::Base
-  has_many :cages
+  has_many :cages, :order => 'name'
   has_many :weathers
 	has_many :bats, :through => :cages, :order => 'band'
 	has_many :tasks

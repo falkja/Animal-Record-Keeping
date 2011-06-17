@@ -30,15 +30,15 @@ class BatsController < ApplicationController
 	end
 
   def change_bats_list
-    if params[:cage]
+    if params[:cage] && params[:cage][:id] != ""
       bats = Cage.find(params[:cage][:id]).bats
-    elsif params[:protocol]
+    elsif params[:protocol] && params[:protocol][:id] != ""
       bats = Protocol.find(params[:protocol][:id]).bats
-    elsif params[:room]
+    elsif params[:room] && params[:room][:id] != ""
       bats = Room.find(params[:room][:id]).bats
-    elsif params[:species]
-      bats = Species.find(params[:species][:id]).bats
-    elsif params[:user]
+    elsif params[:species] && params[:species][:id] != ""
+      bats = Species.find(params[:species][:id]).bats.active
+    elsif params[:user] && params[:user][:id] != ""
       bats = User.find(params[:user][:id]).bats
     elsif params[:option]
       if params[:option]=='med'

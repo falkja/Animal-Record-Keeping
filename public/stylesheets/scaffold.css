@@ -89,7 +89,7 @@ div.mainmenu {
     position:absolute;
     margin: 0cm;
     top: 0cm;
-    left: 0cm;
+    left: .5cm;
     right: 0cm;
     padding-bottom: .1cm;
     background-color: #eee;
@@ -104,14 +104,15 @@ div.mainmenu a {
 div.home {
     position:absolute;
     top: .1cm;
-    right: .5cm;
+    left: 0cm;
+    background: none;
 }
 
 /* the log in name is shown here */
 div.session {
     position:absolute;
     top: 0cm;
-    right: 1.5cm;
+    right: .5cm;
     text-align: right;
 }
 
@@ -202,7 +203,13 @@ input[type="submit"] {
     display: inline;
 }
 
-div.centered table {
+table.centered {
+    text-align: center;
+}
+
+div.centered {
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
 }
 

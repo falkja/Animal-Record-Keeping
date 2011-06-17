@@ -60,6 +60,8 @@ Listing bats
 
 <br />
 
+Current bats: 
+
 <%= collection_select("cage","id", Cage.has_bats, "id", "name",
   {:prompt => 'In Cage'},
   {:onchange => remote_function(:update => "bats_div",
@@ -86,6 +88,14 @@ Listing bats
 
 <%= collection_select("species","id", Species.has_bats, "id", "name",
   {:prompt => 'In Species'},
+  {:onchange => remote_function(:update => "bats_div",
+      :url => {:controller=> :bats, :action => :change_bats_list,
+            :show_leave_date_and_reason => @show_leave_date_and_reason,
+            :show_weigh_link => false},
+      :with => 'Form.Element.serialize(this)' ) } ) %> |
+
+<%= collection_select("user","id", User.has_bats, "id", "name",
+  {:prompt => 'Owned by'},
   {:onchange => remote_function(:update => "bats_div",
       :url => {:controller=> :bats, :action => :change_bats_list,
             :show_leave_date_and_reason => @show_leave_date_and_reason,

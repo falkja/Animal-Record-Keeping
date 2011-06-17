@@ -38,6 +38,8 @@ class BatsController < ApplicationController
       bats = Room.find(params[:room][:id]).bats
     elsif params[:species]
       bats = Species.find(params[:species][:id]).bats
+    elsif params[:user]
+      bats = User.find(params[:user][:id]).bats
     elsif params[:option]
       if params[:option]=='med'
         bats = Bat.sick

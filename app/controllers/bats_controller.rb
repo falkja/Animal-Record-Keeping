@@ -229,9 +229,6 @@ class BatsController < ApplicationController
         end
 			
         @bat.save_protocols(protocols,Time.now,User.find(session[:person]))
-        if @bat.protocols != protocols
-          #flash.now[:prot_notice] = 'Over the allowed bats limit on a protocol'
-        end
         
         if params[:surgery]
           save_surgery

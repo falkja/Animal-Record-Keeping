@@ -158,6 +158,15 @@ class ProtocolsController < ApplicationController
             redirect_to :action => :edit, :id => p and return
           end
         end
+      else
+        #slow but works...
+        for b in bats
+          b_prot = (b.protocols - protocols).uniq
+          if b.protocols.length != 0 && b_prot.length == 0
+            flash[:notice] = 'Bats cannot have zero protocols'
+            redirect_to :action=> :update_mult_bats, :act => params[:act] and return
+          end
+        end
       end
 
       for bat in bats
@@ -169,7 +178,7 @@ class ProtocolsController < ApplicationController
         bat.save_protocols(b_prot,Time.now,User.find(session[:person]))
       end
       flash[:notice] = 'Bats/Protocols updated'
-      redirect_to :action=> :index
+      redirect_to :action=> :update_mult_bats, :act => params[:act]
     else
       flash[:notice] = 'No protocols or bats selected'
       redirect_to :back

@@ -302,8 +302,10 @@ class TasksController < ApplicationController
 		
       medical_tasks = medical_treatment.tasks.current.sort_by{|t| [t.repeat_code, t.title]}
     
+      params[:sorted_by] ? sorted_by = params[:sorted_by] : sorted_by = 'repeat_code'
+      
       render :partial => 'tasks_list', :locals => {:tasks => medical_tasks, 
-        :sorted_by => params[:sorted_by], :div_id => params[:div_id],
+        :sorted_by => sorted_by, :div_id => params[:div_id],
         :same_type_task_list => true, :manage => true}
 		
 		end

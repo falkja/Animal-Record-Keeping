@@ -6,6 +6,7 @@ class Cage < ActiveRecord::Base
   has_many :tasks, :order => "repeat_code"
   belongs_to :room
 	has_many :species, :through => :bats, :order => "name"
+  has_many :medical_problems, :through => :bats, :order => "title"
   
   #have to use single quotes
   has_many :protocols, :finder_sql =>
@@ -27,6 +28,13 @@ class Cage < ActiveRecord::Base
 
     Cage.find(:all, :joins=>:bats,
       :conditions=>"bats.cage_id is not null and bats.leave_date is null",
+      :select => 'DISTINCT cages.*', :order => 'name')
+  end
+
+  def self.sick
+    bats=Bat.sick
+    Cage.find(:all, :joins=>:bats,
+    :conditions=>["bats.id IN (?)",bats],
       :select => 'DISTINCT cages.*', :order => 'name')
   end
   
@@ -176,7 +184,6 @@ class Cage < ActiveRecord::Base
   end
 
   def current_medical_problems
-   MedicalProblem.find(:all,
-      :conditions => ['bat_id IN (?) and date_closed is null', self.bats])
+    self.medical_problems.current
   end
 end

@@ -13,97 +13,124 @@ class CagesController < ApplicationController
     else
       @cages = Cage.find(:all, :conditions => 'date_destroyed is null', :order => 'name')
     end
-    @list_all = false
-    @div_id = 'cages_div'
+    @show_leave_date_and_reason = false
   end
   
   def list_deactivated
     @cages = Cage.find(:all, :conditions => 'date_destroyed is not null', :order => 'name')
-    @list_all = false
-    @div_id = 'cages_div'
+    @show_leave_date_and_reason = false
     render :action => 'list'
   end
   
   def list_all
     @cages = Cage.find(:all, :order => 'name')
-    @list_all = true
-    @div_id = 'cages_div'
+    @show_leave_date_and_reason = true
     render :action => 'list'
   end
-  
-  def initialize_values_for_list
-    @div_id = params[:div]
-    @weighing = params[:weighing]
-    @list_all = params[:list_all]
+
+  def change_cages_list
+    if params[:protocol] && params[:protocol][:id] != ""
+      cages = Protocol.find(params[:protocol][:id]).cages
+    elsif params[:room] && params[:room][:id] != ""
+      cages = Room.find(params[:room][:id]).cages.active
+    elsif params[:species] && params[:species][:id] != ""
+      bats = Species.find(params[:species][:id]).bats.active
+      cages = bats.collect(&:cage).uniq.sort_by{|c| c.name}
+    elsif params[:user] && params[:user][:id] != ""
+      cages = User.find(params[:user][:id]).cages.active
+    elsif params[:option]
+      if params[:option]=='med'
+        cages = Cage.sick
+      elsif params[:option]=='flight'
+        cages = Cage.find(:all,:conditions=>'date_destroyed is null and flight_cage is true',
+          :order=>'name')
+      end
+    else
+      cages = []
+    end
+
+    render :partial => 'cage_list', 
+      :locals => {:cage_list => cages,:weighing=>params[:weighing],
+      :show_leave_date_and_reason=>params[:show_leave_date_and_reason]}
   end
   
   def list_by_name
-    @cages = Cage.find(params[:ids], :order => 'name')
-    initialize_values_for_list
-    render :partial => 'cage_list', :locals => {:cage_list => @cages}
+    cages = Cage.find(params[:ids], :order => 'name')
+    render :partial => 'cage_list', 
+      :locals => {:cage_list => cages,:weighing=>params[:weighing],
+      :show_leave_date_and_reason=>params[:show_leave_date_and_reason]}
   end
   
   def list_by_room
-    @cages = Cage.find(params[:ids])
-    @cages = @cages.sort_by{|cage| [cage.room.name, cage.name]}
-    initialize_values_for_list
-    render :partial => 'cage_list', :locals => {:cage_list => @cages}
+    cages = Cage.find(params[:ids])
+    cages = cages.sort_by{|cage| [cage.room.name, cage.name]}
+    render :partial => 'cage_list', 
+      :locals => {:cage_list => cages,:weighing=>params[:weighing],
+      :show_leave_date_and_reason=>params[:show_leave_date_and_reason]}
   end
   
   def list_by_owner
-    @cages = Cage.find(params[:ids])
-    @cages = @cages.sort_by{|cage| [cage.user.name, cage.name]}
-    initialize_values_for_list
-    render :partial => 'cage_list', :locals => {:cage_list => @cages}
+    cages = Cage.find(params[:ids])
+    cages = cages.sort_by{|cage| [cage.user.name, cage.name]}
+    render :partial => 'cage_list', 
+      :locals => {:cage_list => cages,:weighing=>params[:weighing],
+      :show_leave_date_and_reason=>params[:show_leave_date_and_reason]}
   end
   
   def list_by_bats
-    @cages = Cage.find(params[:ids], :order => 'user_id, name')
-    @cages = @cages.sort_by{|cage| [-cage.bats.count, cage.name]}
-    initialize_values_for_list
-    render :partial => 'cage_list', :locals => {:cage_list => @cages}
+    cages = Cage.find(params[:ids], :order => 'user_id, name')
+    cages = cages.sort_by{|cage| [-cage.bats.count, cage.name]}
+    render :partial => 'cage_list', 
+      :locals => {:cage_list => cages,:weighing=>params[:weighing],
+      :show_leave_date_and_reason=>params[:show_leave_date_and_reason]}
   end
 
   def list_by_bat_weight
-    @cages = Cage.find(params[:ids], :order => 'user_id, name')
-    @cages = @cages.sort_by{|cage| [cage.average_bat_weight, cage.name]}
-    initialize_values_for_list
-    render :partial => 'cage_list', :locals => {:cage_list => @cages}
+    cages = Cage.find(params[:ids], :order => 'user_id, name')
+    cages = cages.sort_by{|cage| [cage.average_bat_weight, cage.name]}
+    render :partial => 'cage_list', 
+      :locals => {:cage_list => cages,:weighing=>params[:weighing],
+      :show_leave_date_and_reason=>params[:show_leave_date_and_reason]}
   end
   
   def list_by_weigh_date
-    @cages = Cage.find(params[:ids], :order => 'user_id, name')
-	  @cages = @cages.sort_by{|cage| [cage.last_weigh_date.to_f, cage.name]}
-    initialize_values_for_list
-    render :partial => 'cage_list', :locals => {:cage_list => @cages}
+    cages = Cage.find(params[:ids], :order => 'user_id, name')
+	  cages = cages.sort_by{|cage| [cage.last_weigh_date.to_f, cage.name]}
+    render :partial => 'cage_list', 
+      :locals => {:cage_list => cages,:weighing=>params[:weighing],
+      :show_leave_date_and_reason=>params[:show_leave_date_and_reason]}
   end
   
   def list_by_flown
-    @cages = Cage.find(params[:ids], :order => 'user_id, name')
-    @cages = @cages.sort_by{|cage| 
+    cages = Cage.find(params[:ids], :order => 'user_id, name')
+    cages = cages.sort_by{|cage|
       [(cage.last_flown == nil ? 0 : cage.last_flown.to_time.to_f), cage.name]}
-    initialize_values_for_list
-    render :partial => 'cage_list', :locals => {:cage_list => @cages}
+    render :partial => 'cage_list', 
+      :locals => {:cage_list => cages,:weighing=>params[:weighing],
+      :show_leave_date_and_reason=>params[:show_leave_date_and_reason]}
   end
   
   def list_by_feed_tasks
-    @cages = Cage.find(params[:ids], :order => 'user_id, name')
-    @cages = @cages.sort_by{|cage| cage.tasks.feeding_tasks.length}
-    initialize_values_for_list
-    render :partial => 'cage_list', :locals => {:cage_list => @cages}
+    cages = Cage.find(params[:ids], :order => 'user_id, name')
+    cages = cages.sort_by{|cage| cage.tasks.feeding_tasks.length}
+    render :partial => 'cage_list', 
+      :locals => {:cage_list => cages,:weighing=>params[:weighing],
+      :show_leave_date_and_reason=>params[:show_leave_date_and_reason]}
   end
   
   def list_by_flight_cage
-    @cages = Cage.find(params[:ids], :order => 'flight_cage desc, user_id, name')
-    initialize_values_for_list
-    render :partial => 'cage_list', :locals => {:cage_list => @cages}
+    cages = Cage.find(params[:ids], :order => 'flight_cage desc, user_id, name')
+    render :partial => 'cage_list', 
+      :locals => {:cage_list => cages,:weighing=>params[:weighing],
+      :show_leave_date_and_reason=>params[:show_leave_date_and_reason]}
   end
 
   def list_by_med
-    @cages = Cage.find(params[:ids], :order => 'user_id, name')
-    @cages = @cages.sort_by{|cage| -cage.current_medical_problems.length}
-    initialize_values_for_list
-    render :partial => 'cage_list', :locals => {:cage_list => @cages}
+    cages = Cage.find(params[:ids], :order => 'user_id, name')
+    cages = cages.sort_by{|cage| -cage.current_medical_problems.length}
+    render :partial => 'cage_list', 
+      :locals => {:cage_list => cages,:weighing=>params[:weighing],
+      :show_leave_date_and_reason=>params[:show_leave_date_and_reason]}
   end
   
   def show

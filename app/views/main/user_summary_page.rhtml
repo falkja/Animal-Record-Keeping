@@ -1,10 +1,14 @@
 <table>
 
-<tr>
-<td><%= image_tag ("bat_logo.png"), :width=> "48" %></td>
-<td></td>
-<TD VALIGN=BOTTOM><h1>Summary page for <%= link_to @user.name, :controller => :users, :action => :show, :id => @user %></h1></td>
-</tr>
+  <tr>
+    <td><%= image_tag ("bat_logo.png"), :width=> "48" %></td>
+    <td></td>
+    <td style="vertical-align: bottom">
+      <h1>
+        Summary page for <%= link_to @user.name, :controller => :users, :action => :show, :id => @user %>
+      </h1>
+    </td>
+  </tr>
 
 </table>
 
@@ -13,65 +17,47 @@
 <%= render :partial => 'weathers/enter_weathers' %>
 
 <% if @user.medical_care %>
-<h2>All Medical Problems</h2>
+  <h2>All Medical Problems</h2>
 <% else %>
-<h2>My Bats' Medical Problems</h2>
+  <h2>My Bats' Medical Problems</h2>
 <% end %>
 
 <p>
-<div class="left_indent">
-<% if @medical_problems.length > 0 %>
-<%= render :partial => 'medical_problems/show_medical_problems', :locals=>{:medical_problems => @medical_problems, :show_bat => true, 
-				:list_all => false, :div_id => 'medical_problems', :show_treatments => true, :redirectme => 'user_summary_page', :user => @user} %>
-<% else %>
-No medical problems
-<% end %>
-</div>
+  <% if @medical_problems.length > 0 %>
+    <%= render :partial => 'medical_problems/show_medical_problems', :locals=>{:medical_problems => @medical_problems, :show_bat => true,
+      :list_all => false, :div_id => 'medical_problems', :show_treatments => true, :redirectme => 'user_summary_page', :user => @user} %>
+  <% else %>
+    No medical problems
+  <% end %>
 </p>
 
 <h2>My Cages</h2>
 <p>
-<div class= "left_indent">
-<% if @cages.length == 0 %> 
-You have no cages
-<% else %>
-<div id= "my_cages">
-<% @div_id = "my_cages" %>
-<%= render :partial => 'cages/cage_list', :locals => {:cage_list => @cages} %>
-</div>
-<% end %>
-</div>
+    <%= render :partial => 'cages/cage_list', :locals => {:cage_list => @cages,:weighing=>false,:show_leave_date_and_reason=>false} %>
 </p>
 
 <h2>My Bats</h2>
 <p>
-<div class= "left_indent">
-<% if @bats.length == 0 %> 
-You have no cages
-<% else %>
-<%= render :partial => 'bats/bat_list', :locals => {:bat_list => @bats, :show_leave_date_and_reason => false, :show_weigh_link => false} %>
-
-<% end %>
-</div>
+    <%= render :partial => 'bats/bat_list', :locals => {:bat_list => @bats, :show_leave_date_and_reason => false, :show_weigh_link => false} %>
 </p>
 
 <div id='todays_tasks'>
   <%= render :partial => 'tasks/show_tasks', :locals => {:general_tasks => @my_general_tasks_today, :weighing_tasks => @my_weighing_tasks_today,
-                :feeding_tasks => @my_feeding_tasks_today, :medical_tasks => @my_medical_tasks_today, :div_id => 'todays_tasks', :source => 'user_summary',
-                :feeding_cages => @feeding_cages, :cages => @cages, :medical_problems => @medical_problems, :same_type_task_list => false, :user => @user,
-								:sorted_by =>'title'} %>
+    :feeding_tasks => @my_feeding_tasks_today, :medical_tasks => @my_medical_tasks_today, :div_id => 'todays_tasks', :source => 'user_summary',
+    :feeding_cages => @feeding_cages, :cages => @cages, :medical_problems => @medical_problems, :same_type_task_list => false, :user => @user,
+    :sorted_by =>'title'} %>
 </div>
-  
+
 <div id='other_tasks'>
   <%= render :partial => 'tasks/hide_tasks', :locals => {:general_tasks => @my_general_tasks_not_today, :weighing_tasks => @my_weighing_tasks_not_today,
-                :feeding_tasks => @my_feeding_tasks_not_today, :medical_tasks => @my_medical_tasks_not_today, :div_id => 'other_tasks', :source => 'user_summary',
-                :feeding_cages => @feeding_cages, :cages => @cages, :medical_problems => @medical_problems, :same_type_task_list => false, :user => @user,
-								:sorted_by =>'title'} %>
+    :feeding_tasks => @my_feeding_tasks_not_today, :medical_tasks => @my_medical_tasks_not_today, :div_id => 'other_tasks', :source => 'user_summary',
+    :feeding_cages => @feeding_cages, :cages => @cages, :medical_problems => @medical_problems, :same_type_task_list => false, :user => @user,
+    :sorted_by =>'title'} %>
 </div>
 
 <div id='all_tasks'>
   <%= render :partial => 'tasks/hide_tasks', :locals => {:general_tasks => @my_general_tasks, :weighing_tasks => @my_weighing_tasks,
-                :feeding_tasks => @my_feeding_tasks, :medical_tasks => @my_medical_tasks, :div_id => 'all_tasks', :source => 'user_summary',
-                :feeding_cages => @feeding_cages, :cages => @cages, :medical_problems => @medical_problems, :same_type_task_list => false, :user => @user,
-								:sorted_by =>'title'} %>
+    :feeding_tasks => @my_feeding_tasks, :medical_tasks => @my_medical_tasks, :div_id => 'all_tasks', :source => 'user_summary',
+    :feeding_cages => @feeding_cages, :cages => @cages, :medical_problems => @medical_problems, :same_type_task_list => false, :user => @user,
+    :sorted_by =>'title'} %>
 </div>

@@ -1,9 +1,9 @@
 <%# :locals => {:protocol => @protocol, :data => Datum.all} %>
 <div style="color:green"><%= flash[:data_notice] %></div>
 
-<div id ="data_list" class="centered">
+<div id ="data_list">
   <% if data.length > 0 %>
-    <table>
+    <table class="centered">
       <% for d in data %>
         <tr>
           <td><%= check_box :datum_id, d.id, :checked => protocol ? protocol.data.include?(d) : ''  %></td>

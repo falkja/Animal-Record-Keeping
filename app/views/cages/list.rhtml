@@ -1,24 +1,55 @@
 <h1>
-<% if @list_all %>
-Listing all cages
-<% else %>
-Listing current cages
-<% end %>
+  Listing cages
 </h1>
 
 <%= button_to 'New Cage', :action => 'new' %> | 
 <%= button_to 'Weigh Cage', :action => 'choose_cage_to_weigh', :cages => User.find(session[:person]).cages.active %> | 
-<%= link_to "List My Cages", :controller => :cages, :action => :list, :cages => User.find(session[:person]).cages.active %> | 
-<%= link_to "List Current Cages", :controller => 'cages', :action => 'list' %> | 
-<%= link_to "List Deactivated Cages", :controller => 'cages', :action => 'list_deactivated' %> | 
-<%= link_to "List All Cages", :controller => 'cages', :action => 'list_all' %>
+<%= link_to "My", :controller => :cages, :action => :list, :cages => User.find(session[:person]).cages.active %> | 
+<%= link_to "Current", :controller => 'cages', :action => 'list' %> | 
+<%= link_to "Deactivated", :controller => 'cages', :action => 'list_deactivated' %> | 
+<%= link_to "All", :controller => 'cages', :action => 'list_all' %> |
+<%= link_to_remote( "Med",
+  :update => 'cages_div',
+  :url =>{ :controller => :cages, :action => :change_cages_list,
+  :option => 'med',
+  :show_leave_date_and_reason => @show_leave_date_and_reason,
+  :weighing => false}) %> |
+<%= link_to_remote( "Flight",
+  :update => 'cages_div',
+  :url =>{ :controller => :cages, :action => :change_cages_list,
+  :option => 'flight',
+  :show_leave_date_and_reason => @show_leave_date_and_reason,
+  :weighing => false}) %>
+<br />
+
+Current cages:
+
+<%= collection_select("protocol","id", Protocol.has_bats, "id", "number",
+  {:prompt => 'In Protocol'},
+  {:onchange => remote_function(:update => "cages_div",
+      :url => {:controller=> :cages, :action => :change_cages_list,
+      :show_leave_date_and_reason=>@show_leave_date_and_reason,:weighing=>false},
+      :with => 'Form.Element.serialize(this)' ) } ) %> |
+<%= collection_select("room","id", Room.has_bats, "id", "name",
+  {:prompt => 'In Room'},
+  {:onchange => remote_function(:update => "cages_div",
+      :url => {:controller=> :cages, :action => :change_cages_list,
+      :show_leave_date_and_reason=>@show_leave_date_and_reason,:weighing=>false},
+      :with => 'Form.Element.serialize(this)' ) } ) %> |
+<%= collection_select("species","id", Species.has_bats, "id", "name",
+  {:prompt => 'Has Species'},
+  {:onchange => remote_function(:update => "cages_div",
+      :url => {:controller=> :cages, :action => :change_cages_list,
+      :show_leave_date_and_reason=>@show_leave_date_and_reason,:weighing=>false},
+      :with => 'Form.Element.serialize(this)' ) } ) %> |
+<%= collection_select("user","id", User.has_bats, "id", "name",
+  {:prompt => 'Owner'},
+  {:onchange => remote_function(:update => "cages_div",
+      :url => {:controller=> :cages, :action => :change_cages_list,
+      :show_leave_date_and_reason=>@show_leave_date_and_reason,:weighing=>false},
+      :with => 'Form.Element.serialize(this)' ) } ) %>
 
 <hr />
-
-<div class="left_indent">
-<div id = "cages_div">
-<%= render :partial => 'cages/cage_list', :locals => {:cage_list => @cages} %>
-</div>
-</div>
-<br />
+<%= render :partial => 'cages/cage_list',
+  :locals => {:cage_list => @cages,:weighing=>false,:show_leave_date_and_reason=>@show_leave_date_and_reason} %>
 

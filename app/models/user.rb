@@ -126,4 +126,11 @@ class User < ActiveRecord::Base
     return my_bats_when
   end
 
+  def self.has_bats
+    cages = Cage.has_bats
+    User.find(:all, :joins=>:cages,
+      :conditions=>["cages.id IN (?)",cages],
+      :select => 'DISTINCT users.*', :order => 'name')
+  end
+
 end

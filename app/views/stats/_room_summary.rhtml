@@ -19,12 +19,8 @@ containing <b><%= room.bats.length %></b> bats.
 <div class="left_indent">
 
 <p>
-<div id="<%=h room.name %>">
-<% @div_id = room.name %>
-<% if room.cages.active.length > 0 %>
-<%= render :partial => 'cages/cage_list', :locals => {:cage_list => room.cages.active} %>
-<% end %>
-</div>
+  <%= render :partial => 'cages/cage_list',
+    :locals => {:cage_list => room.cages.active,:weighing=>false,:show_leave_date_and_reason=>false} %>
 </p>
 
 </div>

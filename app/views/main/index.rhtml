@@ -1,36 +1,35 @@
-<table>
-
-<tr>
-<td><%= image_tag ("bat_logo.png") %></td>
-<td></td>
-<TD VALIGN=CENTER><h2>Batkeeping</h2>A weight and health management tracking application for bats</td>
-</tr>
-
-</table>
+<div class="centered">
+  <table style="margin-left:auto;margin-right:auto">
+    <tr>
+      <td><%= image_tag ("bat_logo.png") %></td>
+      <td></td>
+      <td style="vertical-align:middle">
+        <h2>Batkeeping</h2>
+        A weight and health management tracking application for bats
+      </td>
+    </tr>
+  </table>
+</div>
 
 <br />
 
 <% if !session[:person] %>
 
-<div class='left_indent' style='background-color:#eee; width:380px; border-style:dashed;border-width:1px;'>
-    
-	<div class='left_indent'>
-	
-	<h4>Please Sign In:</h4>
+  <div class='centered' style='background-color:#eee; width:380px; border-style:dashed;border-width:1px;'>
+    <h4>Please Sign In:</h4>
 
     <% form_tag :action => 'login', :id => @user do %>
-
-      
-		User: <%= select_tag("user[id]", options_from_collection_for_select(User.current, "id", "name")) %>
-		<%= submit_tag 'sign in' %>
-
+      User: <%= select_tag("user[id]", options_from_collection_for_select(User.current, "id", "name")) %>
+      <%= submit_tag 'sign in' %>
     <% end %>
-	
-	</div>
-	
-</div>
 
-<p><%= link_to "List Users", :controller => :users, :action => :list %> |
-<%= link_to "New User", :controller => :users, :action => :new %>
+  </div>
 
+  <div class="centered">
+    <p>
+      <%= link_to "List Users", :controller => :users, :action => :list %> |
+      <%= link_to "New User", :controller => :users, :action => :new %> |
+      <%= link_to 'Manual', :controller => :help, :action => :manual %>
+    </p>
+  </div>
 <% end %>

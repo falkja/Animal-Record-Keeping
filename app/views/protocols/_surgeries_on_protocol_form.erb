@@ -1,9 +1,9 @@
 <%# :locals => {:protocol => @protocol, :surgery_types => SurgeryType.all} %>
 <div style="color:green"><%= flash[:surgery_notice] %></div>
 
-<div id ="surgery" class="centered">
+<div id ="surgery">
   <% if !surgery_types.empty? %>
-    <table>
+    <table class="centered">
       <% for sg in surgery_types %>
         <tr>
           <td><%= check_box :surgery_type_id, sg.id, :checked => protocol ? protocol.surgery_types.include?(sg) : ''  %></td>

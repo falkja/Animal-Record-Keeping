@@ -2,12 +2,12 @@
 
   <% summary_split = protocol.summary.split("\n") %>
   <% if summary_split.length > 3 %>
-    <%= simple_format(summary_split[0,limit-1].join, :class=>"small_break") %>
-    <%= simple_format(summary_split[limit-1], :class=>"inline") %>
     <% limit == 3 ? link_text = "[▼]" : link_text = "[▲]" %>
-    <b><%= link_to_remote link_text, :url => {:controller=>:protocols, 
+    <%= link_to_remote link_text, {:url => {:controller=>:protocols,
         :action=>:show_summary_in_table, :limit => limit, :prot=>protocol}, 
-        :update=> "summary_" + protocol.id.to_s %></b>
+        :update=> "summary_" + protocol.id.to_s},
+        {:class=>'right_top'} %>
+    <%= simple_format(summary_split[0,limit], :class=>"small_break") %>
   <% else %>
     <%= simple_format(protocol.summary, :class=>"small_break") %>
   <% end %>

@@ -205,6 +205,10 @@ class BatsController < ApplicationController
       flash[:notice] = 'Over allowed limit on protocol.'
       instance_vars_for_new_bat
       render :action => :new
+    elsif !params[:bat][:cage_id]
+      flash[:notice] = 'Select a cage.'
+      instance_vars_for_new_bat
+      render :action => :new
     elsif ((params[:bat][:cage_id] == '0') && (params[:move][:note] == ''))
       flash[:notice] = 'Enter leave reason.'
       instance_vars_for_new_bat

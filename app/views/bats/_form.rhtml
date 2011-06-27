@@ -80,15 +80,13 @@
 
   <% if @creating %>
     <h3>Weight</h3>
-    <div class='left_indent'>
-      <%= render :partial => 'weigh_one_bat', :locals => {:bat => bat_for_weight, :initial_weight => true} %>
-    </div>
+    <%= render :partial => 'weigh_one_bat', :locals => {:bat => bat_for_weight, :initial_weight => true} %>
   <% end %>
   <%= set_focus_to_id 'bat_band' %>
 
 
   <h3>Choose Protocols</h3>
-  <div id="choose_protocols" class="left_indent">
+  <div id="choose_protocols">
     <%= render :partial => 'protocols/choose_protocols', :locals => {:protocols => @protocols, :bat => @bat} %>
   </div>
 
@@ -96,16 +94,14 @@
   <% if (@reactivating == true) || (@creating == true) %>
     <h3>Choose Cage</h3>
 
-    <div class='left_indent'>
-
       <% if @reactivating %>
         (previous cage: <%=h @bat.cage_out_histories[0].cage.name %>)
       <% end %>
       <table style="width:700px">
         <th></th>
         <th>Cage</th>
-        <th>Number of bats</th>
-        <th>Average current weight</th>
+        <th># of bats</th>
+        <th>Avg. current weight</th>
 
         <% for cage in Cage.active %>
           <tr>
@@ -131,10 +127,6 @@
       <%= observe_form 'new_bat_form', :url => { :action => :adding_deactivated_bat },
         :update => 'adding_deactivated_bat'
     %>
-
-    </div>
-
-    </p>
 
 
     <div id='adding_deactivated_bat'>

@@ -145,7 +145,7 @@ class MyMailer < ActionMailer::Base
         msg_body = msg_body + "\n#{rel_text}" + ch.bat.band
         msg_body = msg_body + "\n  Cage: " + cage.name
         msg_body = msg_body + "\n  Owner: " + cage.user.name
-        msg_body = msg_body + "\n  Date Actually Removed: " + ch.date.strftime("%b %d, %Y")
+        msg_body = msg_body + "\n  Date: " + ch.date.strftime("%b %d, %Y")
         msg_body = msg_body + "\n  Action by: " + ch.user.name + "\n"
       end
       msg_body = msg_body + "\n*******************************************\n\n"

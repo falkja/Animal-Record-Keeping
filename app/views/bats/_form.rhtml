@@ -99,12 +99,14 @@
       <% end %>
       <table style="width:700px">
         <th></th>
+        <th></th>
         <th>Cage</th>
         <th># of bats</th>
         <th>Avg. current weight</th>
 
         <% for cage in Cage.active %>
           <tr>
+            <td><%= cage.user == User.find(session[:person]) ? '>' : '' %> </td>
             <td><%=radio_button :bat, :cage_id, cage.id %></td>
             <td><label for="bat_cage_id_<%= cage.id %>"><%= cage.name %></label></td>
             <td style="text-align:center"><%= cage.bats.length %></td>
@@ -115,6 +117,7 @@
     <%# Bat already deactivated %>
         <% if !@reactivating %>
           <tr>
+            <td></td>
             <td><%=radio_button :bat, :cage_id, 0, :checked => false %></td>
             <td><label for="bat_cage_id_0">DEACTIVATED BAT (record keeping)</td>
             <td style="text-align:center">NA</td>

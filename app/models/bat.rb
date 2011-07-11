@@ -58,11 +58,19 @@ class Bat < ActiveRecord::Base
       :select => 'DISTINCT bats.*', :order =>'band')
 	end
   
+  def weighed_enough?(date)
+    number_of_days = date.wday-1
+    if number_of_days < 0 # sunday
+      number_of_days = 6
+    end
+    
+    return !self.monitor_weight || ( !(self.weights.empty?) && 
+      ( self.weights.recent.date >= (date - number_of_days.days) ) ) #between now and monday
+  end
+  
 	def self.not_weighed(bats,time)
 		bats_not_weighed = Array.new
-		bats.each{|bat| ( bat.weights.recent && (bat.weights.recent.date < 
-            (time - 7.days)) && bat.monitor_weight) ?
-            bats_not_weighed << bat : ''}
+		bats.each{|bat| bat.weighed_enough?(time) ? bats_not_weighed << bat : ''}
 		return bats_not_weighed
 	end
 	
@@ -234,9 +242,15 @@ class Bat < ActiveRecord::Base
     return bats_flight_cage
   end
   
+  #checks over the last week, week begins on monday
+  #if day of week is monday or tuesday, no chance that bat is flown enough for the entire week (only able to do one flight per day)
   def flown_enough?(date)
+    number_of_days = date.wday-1
+    if number_of_days < 0 # sunday
+      number_of_days = 6
+    end
     return self.exempt_from_flight || (self.flights.length >= 3 && 
-      ( self.flights[-3].date >= (date - 7.days) ) )
+      ( self.flights[-3].date >= (date - number_of_days.days) ) ) #between now and monday
   end
 
   def self.not_flown(bats)

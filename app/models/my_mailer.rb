@@ -213,16 +213,45 @@ class MyMailer < ActionMailer::Base
 	
 	def self.email_users
     salutation = "Faithfully yours, etc."
+    today = Date.today
 	  for user in User.current - User.administrator
       #per user generated email minus admins
       users_tasks_not_done = Task.tasks_not_done_today(user.all_tasks)
-      users_bats_not_weighed = Bat.not_weighed(user.bats,Time.now)
-      users_bats_not_flown = Bat.not_flown(user.bats)
       users_protocol_changes = ProtocolHistory.users_todays_histories(user)
       users_bat_changes = BatChange.users_bats_deactivated_today(user)
       users_bats_not_vaccinated = Bat.not_vaccinated(user.bats)
       users_bats_not_on_protocols = Bat.not_on_protocol(user.bats)
         
+      if today.wday == 0 #Sunday is day-of-week 0; Saturday is day-of-week 6
+        users_bats_not_weighed = Bat.not_weighed(user.bats,Time.now)
+        users_bats_not_flown = Bat.not_flown(user.bats)
+        user.sent_reminder_email(false)
+      else
+        users_bats_not_weighed = []
+        users_bats_not_flown = []
+        if user.wants_reminder_emails_flights && !user.got_reminder_email_flights
+          case today.wday
+            when 2 #Tue
+              #if user.bats any with zero flights between now and monday morning
+                #add message reminder about flights to email (or bats that need flight reminders)
+                #user.sent_reminder_email(true)
+              #end
+            when 3 #Wed
+              #if user.bats any with one or less flights between now and monday morning
+                #add message reminder about flights to email (or bats that need flight reminders)
+                #user.sent_reminder_email(true)
+              #end
+            when 4 #Thur
+              if Bat.not_flown(user.bats)
+                #add message reminder about flights to email (or bats that need flight reminders)
+                #user.sent_reminder_email(true)
+              end
+          end
+        if user.wants_reminder_emails_weights && today.wday == 4
+          #add message reminder about weights (or bats that need weight reminders)
+        end
+      end
+      
       if users_tasks_not_done.length > 0 || users_bats_not_weighed.length > 0 ||
           users_bats_not_flown.length > 0 || users_protocol_changes.length > 0 ||
           users_bat_changes.length > 0 || users_bats_not_vaccinated.length > 0

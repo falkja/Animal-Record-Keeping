@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110609170436) do
+ActiveRecord::Schema.define(:version => 20110711185740) do
 
   create_table "allowed_bats", :force => true do |t|
     t.integer  "protocol_id"
@@ -264,16 +264,19 @@ ActiveRecord::Schema.define(:version => 20110609170436) do
   end
 
   create_table "users", :force => true do |t|
-    t.string  "name",          :limit => 100,                    :null => false
-    t.string  "initials",      :limit => 45,                     :null => false
-    t.string  "email",         :limit => 100
+    t.string  "name",                          :limit => 100,                    :null => false
+    t.string  "initials",                      :limit => 45,                     :null => false
+    t.string  "email",                         :limit => 100
     t.date    "start_date"
     t.date    "end_date"
-    t.boolean "researcher",                   :default => true
-    t.boolean "medical_care",                 :default => false
-    t.boolean "animal_care",                  :default => false
-    t.boolean "weekend_care",                 :default => false
-    t.boolean "administrator",                :default => false
+    t.boolean "researcher",                                   :default => true
+    t.boolean "medical_care",                                 :default => false
+    t.boolean "animal_care",                                  :default => false
+    t.boolean "weekend_care",                                 :default => false
+    t.boolean "administrator",                                :default => false
+    t.boolean "wants_reminder_emails_flights",                :default => true
+    t.boolean "wants_reminder_emails_weights",                :default => true
+    t.boolean "got_reminder_email_flights",                   :default => false
   end
 
   create_table "weathers", :force => true do |t|

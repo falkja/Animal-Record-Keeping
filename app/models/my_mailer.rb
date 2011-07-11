@@ -262,8 +262,8 @@ class MyMailer < ActionMailer::Base
     msg_body = MyMailer.create_msg_for_tasks_not_done(tasks_not_done)
     msg_body = msg_body + MyMailer.create_msg_for_bats_not_weighed(bats_not_weighed)
     msg_body = msg_body + MyMailer.create_msg_for_bats_not_flown(bats_not_flown)
-    msg_body = msg_body + MyMailer.create_msg_for_protocol_changes(protocol_changes)
     msg_body = msg_body + MyMailer.create_msg_for_bats_added_removed(bat_changes)
+    msg_body = msg_body + MyMailer.create_msg_for_protocol_changes(protocol_changes)
     #msg_body = msg_body + MyMailer.create_msg_for_bats_not_vaccinated(not_vaccinated)
     msg_body = msg_body + MyMailer.create_msg_for_bats_not_on_protocol(not_on_protocols)
     return msg_body
@@ -273,21 +273,27 @@ class MyMailer < ActionMailer::Base
 		msg_body = "This is a confirmation email to notify you that the following bat(s): " + bats.collect{|b| b.band}.to_sentence
 		if old_cage && new_cage
 			msg_body = msg_body + " were moved from " + old_cage.name + " to " + new_cage.name
+      subject = "Moved bat(s)"
+      greeting = "Hi " + [old_cage.user.name, new_cage.user.name].uniq.to_sentence + ",\n\n"
+      email = [old_cage.user.email, new_cage.user.email].uniq
 		elsif new_cage
-			msg_body = msg_body + "were moved into " + new_cage.name
+			msg_body = msg_body + " were moved into " + new_cage.name
+      subject = "You have new (or reactivated) bat(s)"
+      greeting = "Hi " + new_cage.user.name + ",\n\n"
+      email = new_cage.user.email
 		else
-			msg_body = msg_body + "were deactivated and moved out of " + old_cage.name
+			msg_body = msg_body + " were deactivated and moved out of " + old_cage.name
+      subject = "Bat(s) deactivated"
+      greeting = "Hi " + old_cage.user.name + ",\n\n"
+      email = old_cage.user.email
 		end
 		msg_body = msg_body + "\n\nFaithfully yours, etc."		
 		
-    if new_cage
-      greeting = "Hi " + new_cage.user.name + ",\n\n"
-      MyMailer.deliver_mail(new_cage.user.email, "moved bats", greeting + msg_body)
+    if !email.kind_of?(Array)
+      MyMailer.deliver_mail(email, subject, greeting + msg_body)
+    else
+      MyMailer.deliver_mass_mail(email, subject, greeting + msg_body)
     end
-    if (old_cage && !new_cage) || (old_cage && new_cage && (new_cage.user != old_cage.user))
-			greeting = "Hi " + old_cage.user.name + ",\n\n"
-			MyMailer.deliver_mail(old_cage.user.email, "moved bats", greeting + msg_body)
-		end
   end
   
   def self.email_at_protocol_warning_limit(protocol,bat,user,allowed_bat)

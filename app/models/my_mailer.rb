@@ -262,8 +262,8 @@ class MyMailer < ActionMailer::Base
     msg_body = MyMailer.create_msg_for_tasks_not_done(tasks_not_done)
     msg_body = msg_body + MyMailer.create_msg_for_bats_not_weighed(bats_not_weighed)
     msg_body = msg_body + MyMailer.create_msg_for_bats_not_flown(bats_not_flown)
-    msg_body = msg_body + MyMailer.create_msg_for_protocol_changes(protocol_changes)
     msg_body = msg_body + MyMailer.create_msg_for_bats_added_removed(bat_changes)
+    msg_body = msg_body + MyMailer.create_msg_for_protocol_changes(protocol_changes)
     #msg_body = msg_body + MyMailer.create_msg_for_bats_not_vaccinated(not_vaccinated)
     msg_body = msg_body + MyMailer.create_msg_for_bats_not_on_protocol(not_on_protocols)
     return msg_body

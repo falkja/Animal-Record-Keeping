@@ -14,7 +14,7 @@
         <% for bat in bats %>
           <tr>
             <td><%=h bat.band %></td>
-            <td><%=h bat.weights[0].weight %></td>
+            <td><%=h bat.weights.length > 0 ? bat.weights[0].weight : 'NA' %></td>
             <td><%=h bat.cage.name %></td>
           </tr>
         <% end %>

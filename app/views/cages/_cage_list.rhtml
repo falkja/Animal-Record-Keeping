@@ -95,13 +95,9 @@
           <td style="text-align: center"><%= link_to(cage.bats.count, :controller => :bats, :action => :list, :bats => cage.bats) %></td>
           <td style="text-align: center"><%=h cage.average_bat_weight %></td>
           <td style="text-align: center">
-            <% if (cage.last_weigh_date != 0) && cage.any_bats_monitored && Date.parse(cage.last_weigh_date.strftime('%Y/%m/%d')) <= Date.today - 7.days %>
-              <font color=red>
-              <% else %>
-                <font>
-                <% end %>
-                <%= cage.last_weigh_date!=0 ? nice_date_no_year(cage.last_weigh_date) : 'NA' %>
-              </font>
+            <span style="<%= !Bat.not_weighed(cage.bats,Time.now).empty? ? "color:red" : '' %>">
+              <%= cage.last_weigh_date!=0 ? nice_date_no_year(cage.last_weigh_date) : 'NA' %>
+            </span>
           </td>
           <td style="text-align: center">
             <% if cage.flown_enough? %>

@@ -58,7 +58,8 @@ class Bat < ActiveRecord::Base
       :select => 'DISTINCT bats.*', :order =>'band')
 	end
   
-  def weighed_enough?(date)
+  def weighed_enough?(time)
+    date = time.to_date
     number_of_days = date.wday-1
     if number_of_days < 0 # sunday
       number_of_days = 6
@@ -70,7 +71,7 @@ class Bat < ActiveRecord::Base
   
 	def self.not_weighed(bats,time)
 		bats_not_weighed = Array.new
-		bats.each{|bat| bat.weighed_enough?(time) ? bats_not_weighed << bat : ''}
+		bats.each{|bat| !bat.weighed_enough?(time) ? bats_not_weighed << bat : ''}
 		return bats_not_weighed
 	end
 	

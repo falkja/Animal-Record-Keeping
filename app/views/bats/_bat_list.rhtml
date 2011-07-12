@@ -110,7 +110,7 @@ This partial displays the summary for a list of bats
         </th>
         <th>Leave Reason</th>
       <% end %>
-        
+
       <% users_length = ((bat_list.collect{|b| b.user}).uniq).length %>
       <% current_user = User.find(session[:person]) %>
 
@@ -143,72 +143,69 @@ This partial displays the summary for a list of bats
           <% if bat.weights.length > 0 %></td>
             <td align=center><%=h bat.weights.recent.weight %> g </td>
             <td align=center>
-              <% if bat.monitor_weight && Date.parse(bat.weights.recent.date.strftime('%Y/%m/%d')) <= (Date.today - 7.days) %>
-                <font color=red>
-                <% else %>
-                  <font>
-                  <% end %>
-                  <%= nice_date_no_year bat.weights.recent.date %></td>
-                </font>
+              <span style="<%= !bat.weighed_enough?(Time.now) ? "color:red" : '' %>">
+                <%= nice_date_no_year bat.weights.recent.date %>
+              </span>
+            </td>
+          <% else %>
+            <td align=center>N/A</td>
+            <td align=center>N/A</td>
+          <% end %>
+
+          <td style="text-align: center">
+            <% if bat.flights.empty? %>
+              N/A
+            <% else %>
+              <span style="<%= !bat.flown_enough?(Date.today) ? "color:red" : '' %>">
+                [<%= link_to(nice_date_no_year(bat.flights[-1].date), :controller=>:flights, :action=>:show, :id=>bat) %>]
+              </span>
+            <% end %>
+          </td>
+
+          <td style="text-align: center">
+            <%=h bat.surgeries.length %>
+          </td>
+
+          <td style="text-align: center">
+            <%=h bat.protocols.length > 0 ? 
+              link_to(bat.protocols.collect{|p| p.number}.to_sentence, :controller=>:protocols, :action=>:index,:ids=> bat.protocols) :
+              bat.protocols.length %>
+          </td>
+
+          <td align=center><%=h bat.collection_date.strftime("%Y") %></td>
+          <% if show_leave_date_and_reason %>
+            <td>
+              <%=h nice_date_no_day(bat.leave_date) %>
+            </td>
+            <td>
+              <%=h bat.leave_reason %>
+            </td>
+          <% end %>
+          <% if !show_weigh_link %>
+            <td><%= button_to 'Edit', {:controller=>:bats, :action => 'edit', :id => bat} %></td>
+            <td>
+              <% if bat.leave_date == nil %>
+                <%= button_to 'Deactivate', {:controller=>:bats, :action => 'deactivate', :id => bat } %>
               <% else %>
-                <td align=center>N/A</td>
-                <td align=center>N/A</td>
+                <%=  button_to 'Reactivate', {:controller=>:bats, :action => 'reactivate', :id => bat } %>
               <% end %>
-
-              <td style="text-align: center">
-                <% if bat.flights.empty? %>
-                  N/A
-                <% else %>
-                  <span style="<%= !bat.flown_enough?(Date.today) ? "color:red" : '' %>">
-                    [<%= link_to(nice_date_no_year(bat.flights[-1].date), :controller=>:flights, :action=>:show, :id=>bat) %>]
-                  </span>
-                <% end %>
-              </td>
-
-              <td style="text-align: center">
-                <%=h bat.surgeries.length %>
-              </td>
-
-              <td style="text-align: center">
-                <%=h bat.protocols.length > 0 ? 
-                  link_to(bat.protocols.collect{|p| p.number}.to_sentence, :controller=>:protocols, :action=>:index,:ids=> bat.protocols) :
-                  bat.protocols.length %>
-              </td>
-
-              <td align=center><%=h bat.collection_date.strftime("%Y") %></td>
-              <% if show_leave_date_and_reason %>
-                <td>
-                  <%=h nice_date_no_day(bat.leave_date) %>
-                </td>
-                <td>
-                  <%=h bat.leave_reason %>
-                </td>
+            </td>
+          <% end %>
+          <% if bat.cage != nil && !show_weigh_link %>
+            <td><%= button_to 'Move', {:controller => :bats, :action=>:single_bat_to_move, :id=>bat} %></td>
+          <% end %>
+          <% if bat.leave_date == nil %>
+            <td><%= show_weigh_link ? '' : (button_to 'Weigh', {:controller => :bats, :action => 'weigh_bat', :id => bat}) %></td>
+          <% end %>
+          <% if bat.leave_date == nil %>
+            <td style="text-align: center">
+              <% if bat.flown_on(Date.today) == false %>
+                <%= button_to 'Fly', {:controller => :flights, :action=>:new, :bat=>bat} %>
+              <% else %>
+                <%= button_to 'Flights', {:controller => :flights, :action=>:show, :id=>bat} %>
               <% end %>
-              <% if !show_weigh_link %>
-                <td><%= button_to 'Edit', {:controller=>:bats, :action => 'edit', :id => bat} %></td>
-                <td>
-                  <% if bat.leave_date == nil %>
-                    <%= button_to 'Deactivate', {:controller=>:bats, :action => 'deactivate', :id => bat } %>
-                  <% else %>
-                    <%=  button_to 'Reactivate', {:controller=>:bats, :action => 'reactivate', :id => bat } %>
-                  <% end %>
-                </td>
-              <% end %>
-              <% if bat.cage != nil && !show_weigh_link %>
-                <td><%= button_to 'Move', {:controller => :bats, :action=>:single_bat_to_move, :id=>bat} %></td>
-              <% end %>
-              <% if bat.leave_date == nil %>
-                <td><%= show_weigh_link ? '' : (button_to 'Weigh', {:controller => :bats, :action => 'weigh_bat', :id => bat}) %></td>
-              <% end %>
-              <% if bat.leave_date == nil %>
-                <td style="text-align: center">
-                  <% if bat.flown_on(Date.today) == false %>
-                    <%= button_to 'Fly', {:controller => :flights, :action=>:new, :bat=>bat} %>
-                  <% else %>
-                    <%= button_to 'Flights', {:controller => :flights, :action=>:show, :id=>bat} %>
-                  <% end %>
-                </td>
-              <% end %>
+            </td>
+          <% end %>
         </tr>
       <% end %>
 

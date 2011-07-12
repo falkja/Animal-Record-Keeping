@@ -247,6 +247,7 @@ class MyMailer < ActionMailer::Base
                 #user.sent_reminder_email(true)
               end
           end
+        end
         if user.wants_reminder_emails_weights && today.wday == 4
           #add message reminder about weights (or bats that need weight reminders)
         end

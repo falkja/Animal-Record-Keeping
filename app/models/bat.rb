@@ -249,7 +249,8 @@ class Bat < ActiveRecord::Base
     if number_of_days < 0 # sunday
       number_of_days = 6
     end
-    return self.exempt_from_flight || (self.flights.length >= number_needed && 
+    return self.exempt_from_flight || (self.cage && self.cage.flight_cage) ||
+      (self.flights.length >= number_needed &&
       ( self.flights[-number_needed].date >= (date - number_of_days.days) ) ) #between now and monday
   end
   

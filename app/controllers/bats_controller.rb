@@ -48,9 +48,9 @@ class BatsController < ApplicationController
       elsif params[:option]=='non_flight_exempt'
         bats = Bat.not_exempt_from_flight
       elsif params[:option]=='not_weighed'
-        bats = Bat.not_weighed(Bat.active, Time.now)
+        bats = Bat.not_weighed(Bat.active,Date.today)
       elsif params[:option]=='not_flown'
-        bats = Bat.not_flown(Bat.active)
+        bats = Bat.not_flown(Bat.active,3)
       elsif params[:option]=='current'
         bats = Bat.active
       elsif params[:option]=='deactivated'

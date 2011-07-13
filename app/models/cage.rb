@@ -90,7 +90,7 @@ class Cage < ActiveRecord::Base
     if self.bats.empty?
       return true
     else
-      flown_enoughs = self.bats.collect{|b| b.flown_enough?(Date.today)}
+      flown_enoughs = self.bats.collect{|b| b.flown_enough?(Date.today,3)}
       if flown_enoughs.include?(false)
         return false
       end

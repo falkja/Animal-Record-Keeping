@@ -20,7 +20,8 @@ class MyMailer < ActionMailer::Base
 				msg_body = msg_body + "\nBat: " + bat.band
         msg_body = msg_body + "\nCage: " + bat.cage.name
 				msg_body = msg_body + "\nOwner: " + bat.cage.user.name
-				msg_body = msg_body + "\nLast weigh date: " + 
+        msg_body = msg_body + "\nLast weight: " + 
+          bat.weights.recent.weight.to_s + "g on " + 
           bat.weights.recent.date.strftime("%a, %b %d, %Y") + "\n"
 			end
 			msg_body = msg_body + "\n*******************************************\n\n"
@@ -210,88 +211,162 @@ class MyMailer < ActionMailer::Base
 		
 		return msg_body
 	end
+  
+  def self.create_reminder_msg_for_bats_not_weighed(bats)
+    if bats.empty?
+      return ''
+    else
+      msg_body = "This is a reminder that the following bats still need to be weighed this week (Mon. starts the week)." + 
+      "\nYou have " + (7-Date.today.wday).to_s + " days left in the week (weekly checks are done on Sunday night)." +
+      "\nThis is your only weighing reminder for this week.\n"
+			for bat in bats
+				msg_body = msg_body + "\nBat: " + bat.band
+        if bat.cage
+          msg_body = msg_body + "\nCage: " + bat.cage.name
+          msg_body = msg_body + "\nOwner: " + bat.cage.user.name
+        end
+        msg_body = msg_body + "\nLast weight: " + 
+          bat.weights.recent.weight.to_s + "g on " + 
+          bat.weights.recent.date.strftime("%a, %b %d, %Y") + "\n"
+			end
+      
+			msg_body = msg_body + "\n*******************************************\n\n"
+			return msg_body
+    end
+  end
+  
+  def self.create_reminder_msg_for_bats_not_flown(bats)
+    if bats.empty?
+      return ''
+    else
+      msg_body = "This is a reminder that the following bats still need flights this week (Mon. starts the week)."+
+        "\nChecks of flights will be done in " + (7-Date.today.wday).to_s + " days (Sun. night)." +
+        "\n3 flights per bat per week are needed." +
+        "\nBatkeeping believes that you should have at least " + (Date.today.wday-1).to_s + " flights recorded so far this week." +
+        "\nThis is your final and only reminder for flights this week.\n"
+			for bat in bats
+				msg_body = msg_body + "\nBat: " + bat.band
+        if bat.cage
+          msg_body = msg_body + "\nCage: " + bat.cage.name
+          msg_body = msg_body + "\nOwner: " + bat.cage.user.name
+        end
+        msg_body = msg_body + "\nLast flown: " + 
+          bat.flights[-1].date.strftime("%a, %b %d, %Y")
+        flights_this_week = bat.flights_this_week(Date.today).length
+        msg_body = msg_body + "\n" + flights_this_week.to_s + " " +
+          (flights_this_week > 1 ? "flight".pluralize : "flight") + " recorded this week." + "\n"
+			end
+      msg_body = msg_body + "\n*******************************************\n\n"
+			return msg_body
+    end
+  end
+  
+  def self.bats_which_need_reminders(user, date)
+    bats_not_weighed_reminders = []
+    bats_not_flown_reminders = []
+    if user.wants_reminder_emails_weights && date.wday == 4
+      bats_not_weighed_reminders = Bat.not_weighed(user.bats,date)
+    end
+    if date.wday == 0 #Sunday is day-of-week 0; Saturday is day-of-week 6
+      user.sent_reminder_email(false)
+    elsif user.wants_reminder_emails_flights && !user.got_reminder_email_flights
+      case date.wday
+      when 2 #Tue
+        bats_not_flown_reminders = Bat.not_flown(user.bats,1)
+      when 3 #Wed
+        bats_not_flown_reminders = Bat.not_flown(user.bats,2)
+      when 4 #Thur
+        bats_not_flown_reminders = Bat.not_flown(user.bats,3)
+      else
+        bats_not_flown_reminders = []
+      end
+    end
+    return bats_not_weighed_reminders, bats_not_flown_reminders
+  end
 	
 	def self.email_users
     salutation = "Faithfully yours, etc."
     today = Date.today
-	  for user in User.current - User.administrator
-      #per user generated email minus admins
+	  for user in User.current - User.administrator #per user generated email minus admins
       users_tasks_not_done = Task.tasks_not_done_today(user.all_tasks)
       users_protocol_changes = ProtocolHistory.users_todays_histories(user)
       users_bat_changes = BatChange.users_bats_deactivated_today(user)
       users_bats_not_vaccinated = Bat.not_vaccinated(user.bats)
       users_bats_not_on_protocols = Bat.not_on_protocol(user.bats)
-        
-      if today.wday == 0 #Sunday is day-of-week 0; Saturday is day-of-week 6
-        users_bats_not_weighed = Bat.not_weighed(user.bats,Time.now)
-        users_bats_not_flown = Bat.not_flown(user.bats)
-        user.sent_reminder_email(false)
-      else
-        users_bats_not_weighed = []
-        users_bats_not_flown = []
-        if user.wants_reminder_emails_flights && !user.got_reminder_email_flights
-          case today.wday
-            when 2 #Tue
-              #if user.bats any with zero flights between now and monday morning
-                #add message reminder about flights to email (or bats that need flight reminders)
-                #user.sent_reminder_email(true)
-              #end
-            when 3 #Wed
-              #if user.bats any with one or less flights between now and monday morning
-                #add message reminder about flights to email (or bats that need flight reminders)
-                #user.sent_reminder_email(true)
-              #end
-            when 4 #Thur
-              if Bat.not_flown(user.bats)
-                #add message reminder about flights to email (or bats that need flight reminders)
-                #user.sent_reminder_email(true)
-              end
-          end
-        end
-        if user.wants_reminder_emails_weights && today.wday == 4
-          #add message reminder about weights (or bats that need weight reminders)
-        end
-      end
       
-      if users_tasks_not_done.length > 0 || users_bats_not_weighed.length > 0 ||
-          users_bats_not_flown.length > 0 || users_protocol_changes.length > 0 ||
-          users_bat_changes.length > 0 || users_bats_not_vaccinated.length > 0
+      users_bats_not_weighed = []
+      users_bats_not_flown = []
+      if today.wday == 0 #Sunday is day-of-week 0; Saturday is day-of-week 6
+        users_bats_not_weighed = Bat.not_weighed(user.bats,today)
+        users_bats_not_flown = Bat.not_flown(user.bats,3)
+      end
+      users_bats_not_weighed_reminders, users_bats_not_flown_reminders = 
+        self.bats_which_need_reminders(user, today)
+      
+      if !users_tasks_not_done.empty? || !users_bats_not_weighed.empty? ||
+          !users_bats_not_flown.empty? || !users_protocol_changes.empty? ||
+          !users_bat_changes.empty? || !users_bats_not_vaccinated.empty? ||
+          !users_bats_not_on_protocols.empty? ||
+          !users_bats_not_weighed_reminders.empty? || !users_bats_not_flown_reminders.empty?
         greeting = "Hi " + user.name + ",\n\n"
         greeting = greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
         msg_body = MyMailer.create_msg_body(users_tasks_not_done,
           users_bats_not_weighed,users_bats_not_flown,users_protocol_changes,
-          users_bat_changes,users_bats_not_vaccinated,users_bats_not_on_protocols)
-        MyMailer.deliver_mail(user.email, "batkeeping email: daily notificiations", greeting + msg_body + salutation)
+          users_bat_changes,users_bats_not_vaccinated,users_bats_not_on_protocols,
+          users_bats_not_weighed_reminders,users_bats_not_flown_reminders)
+        MyMailer.deliver_mail(user.email, "batkeeping email: notifications and reminders", greeting + msg_body + salutation)
+        if !users_bats_not_flown_reminders.empty?
+          user.sent_reminder_email(true)
+        end
+      end
+    end
+    
+    for user_admin in User.administrator #reminder emails for admins
+      bats_not_weighed_reminders, bats_not_flown_reminders = self.bats_which_need_reminders(user_admin, today)
+      if !bats_not_weighed_reminders.empty? || !bats_not_flown_reminders.empty?
+        greeting = "Hi " + user_admin.name + ",\n\n"
+        greeting = greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
+        msg_body = MyMailer.create_reminder_msg_for_bats_not_weighed(bats_not_weighed_reminders)
+        msg_body = msg_body + MyMailer.create_reminder_msg_for_bats_not_flown(bats_not_flown_reminders)
+        MyMailer.deliver_mail(user.email, "batkeeping email: personal reminders", greeting + msg_body + salutation)
+        if !bats_not_flown_reminders.empty?
+          user.sent_reminder_email(true)
+        end
       end
     end
 		
-		#all administrators get CCed on one email and see everything
+		#all administrators get CCed on one email and see all notifications
 		admin_emails = User.administrator.collect{|admin| admin.email}
 		
 		tasks_not_done = Task.tasks_not_done_today(Task.today)
-    bats_not_weighed = Bat.not_weighed(Bat.active,Time.now)
+    bats_not_weighed = Bat.not_weighed(Bat.active,today)
     protocol_changes = ProtocolHistory.todays_histories
-    bats_not_flown = Bat.not_flown(Bat.active)
+    bats_not_flown = Bat.not_flown(Bat.active,3)
     todays_bat_changes = BatChange.deactivated_today
     bats_not_vaccinated = Bat.not_vaccinated(Bat.active)
     bats_not_on_protocols = Bat.not_on_protocol(Bat.active)
     
 		if tasks_not_done.length > 0 || bats_not_weighed.length > 0 || 
         bats_not_flown.length > 0 || protocol_changes.length > 0 ||
-        todays_bat_changes.length > 0 || bats_not_vaccinated.length > 0
+        todays_bat_changes.length > 0 || bats_not_vaccinated.length > 0 ||
+        bats_not_on_protocols.length > 0
 			greeting = "Administrator(s),\n\n"
       greeting = greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
       msg_body = MyMailer.create_msg_body(tasks_not_done,bats_not_weighed,
         bats_not_flown,protocol_changes,todays_bat_changes,bats_not_vaccinated,
-        bats_not_on_protocols)
-			MyMailer.deliver_mass_mail(admin_emails, "batkeeping email: daily notificiations", greeting + msg_body + salutation)
+        bats_not_on_protocols,[],[])
+			MyMailer.deliver_mass_mail(admin_emails, "batkeeping email: notificiations", greeting + msg_body + salutation)
 		end
 	end
 
-  def self.create_msg_body(tasks_not_done,bats_not_weighed,bats_not_flown,protocol_changes,bat_changes,not_vaccinated,not_on_protocols)
+  def self.create_msg_body(tasks_not_done,bats_not_weighed,bats_not_flown,protocol_changes,bat_changes,not_vaccinated,not_on_protocols,bats_not_weighed_reminders,bats_not_flown_reminders)
     msg_body = MyMailer.create_msg_for_tasks_not_done(tasks_not_done)
     msg_body = msg_body + MyMailer.create_msg_for_bats_not_weighed(bats_not_weighed)
     msg_body = msg_body + MyMailer.create_msg_for_bats_not_flown(bats_not_flown)
+    
+    msg_body = msg_body + MyMailer.create_reminder_msg_for_bats_not_weighed(bats_not_weighed_reminders)
+    msg_body = msg_body + MyMailer.create_reminder_msg_for_bats_not_flown(bats_not_flown_reminders)
+    
     msg_body = msg_body + MyMailer.create_msg_for_bats_added_removed(bat_changes)
     msg_body = msg_body + MyMailer.create_msg_for_protocol_changes(protocol_changes)
     #msg_body = msg_body + MyMailer.create_msg_for_bats_not_vaccinated(not_vaccinated)

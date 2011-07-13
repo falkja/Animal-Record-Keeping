@@ -96,16 +96,17 @@ class MainController < ApplicationController
     if session[:person]
       user = User.find(session[:person])
       tasks_not_done = Task.tasks_not_done_today(user.all_tasks)
-      bats_not_weighed = Bat.not_weighed(user.bats,Time.now)
-      bats_not_flown = Bat.not_flown(user.bats)
       protocol_changes = ProtocolHistory.users_todays_histories(user)
       bat_changes = BatChange.users_bats_deactivated_today(user)
-      bats_not_vaccinated = Bat.not_vaccinated(user.bats)
       bats_not_on_protocols = Bat.not_on_protocol(user.bats)
       
+      #users_bats_not_weighed_reminders, users_bats_not_flown_reminders = 
+        #MyMailer.bats_which_need_reminders(user, Date.today)
+      
       @msg_body = MyMailer.create_msg_body(tasks_not_done,
-        bats_not_weighed,bats_not_flown,protocol_changes,
-        bat_changes,bats_not_vaccinated,bats_not_on_protocols)
+        [],[],protocol_changes,
+        bat_changes,[],bats_not_on_protocols,
+        [],[])
       
       @subject = "Batkeeping email from: " + User.find(session[:person]).name
       @msg_body = @msg_body + "This message brought to you by,\n\n" + User.find(session[:person]).name

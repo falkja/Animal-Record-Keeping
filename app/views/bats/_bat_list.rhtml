@@ -143,7 +143,7 @@ This partial displays the summary for a list of bats
           <% if bat.weights.length > 0 %></td>
             <td align=center><%=h bat.weights.recent.weight %> g </td>
             <td align=center>
-              <span style="<%= !bat.weighed_enough?(Time.now) ? "color:red" : '' %>">
+              <span style="<%= !bat.weighed_enough?(Date.today) ? "color:red" : '' %>">
                 <%= nice_date_no_year bat.weights.recent.date %>
               </span>
             </td>
@@ -156,7 +156,7 @@ This partial displays the summary for a list of bats
             <% if bat.flights.empty? %>
               N/A
             <% else %>
-              <span style="<%= !bat.flown_enough?(Date.today) ? "color:red" : '' %>">
+              <span style="<%= !bat.flown_enough?(Date.today,3) ? "color:red" : '' %>">
                 [<%= link_to(nice_date_no_year(bat.flights[-1].date), :controller=>:flights, :action=>:show, :id=>bat) %>]
               </span>
             <% end %>

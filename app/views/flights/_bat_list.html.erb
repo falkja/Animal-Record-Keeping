@@ -17,7 +17,7 @@
       <tr>
 
         <td><b>
-            <span style="<%= bat.flown_enough?(Date.today) ? "" : "color:red" %>">
+            <span style="<%= bat.flown_enough?(Date.today,3) ? "" : "color:red" %>">
               [
               <%= link_to bat.band, {:controller => :flights, :action => :show, :id => bat},
                 :onmouseover => remote_function(:update => "cal",

@@ -94,7 +94,7 @@ class BatsController < ApplicationController
   
   def sort_by_last_flown
 		bat_list = Bat.find(params[:ids])
-		bat_list = bat_list.sort_by{|bat| [bat.flights[-1].date, bat.band.downcase]}
+		bat_list = bat_list.sort_by{|bat| [bat.flights.empty? ? Date.new : bat.flights[-1].date, bat.band.downcase]}
 		render_bat_list(bat_list)
 	end
 

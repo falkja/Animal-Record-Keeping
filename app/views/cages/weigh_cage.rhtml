@@ -34,7 +34,7 @@
           <% if bat.flights.empty? %>
             N/A
           <% else %>
-            <span style="font-weight:bold;<%= !bat.flown_enough?(Date.today+1.day) ? "color:red" : '' %>">
+            <span style="font-weight:bold;<%= !bat.flown_enough?(Date.today,3) ? "color:red" : '' %>">
               [<%= link_to(nice_date_no_year(bat.flights[-1].date), :controller => :flights, :action => :show, :id => bat) %>]
             </span>
           <% end %>

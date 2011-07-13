@@ -140,16 +140,7 @@ class TasksController < ApplicationController
   
   def show
     @task = Task.find(params[:id])
-    if @task.internal_description == 'weigh'
-      tasks = Task.find(:all, :conditions => "internal_description = 'weigh' and cage_id = #{@task.cage.id}")
-      @task_histories = Array.new
-      for task in tasks
-        for task_history in task.task_histories
-          @task_histories << task_history
-        end
-      end
-      @task_histories = @task_histories.sort_by{|task_history| [Time.now - task_history.date_done]}
-    elsif @task.medical_treatment
+    if @task.medical_treatment
       @task_histories = @task.medical_treatment.task_histories
     else
       @task_histories = @task.task_histories

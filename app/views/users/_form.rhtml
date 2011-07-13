@@ -43,6 +43,15 @@
   <label for="user_administrator">Administrator</label><br/>
 </div>
 
+<p>
+  <%= check_box('user','wants_reminder_emails_weights',:checked=>@user.wants_reminder_emails_weights) %>
+  <label for="user_wants_reminder_emails_weights">Reminder Emails About Weights<br /><i>max 1 per week</i></label>
+</p>
+
+<p>
+  <%= check_box('user','wants_reminder_emails_flights',:checked=>@user.wants_reminder_emails_flights) %>
+  <label for="user_wants_reminder_emails_flights">Reminder Emails About Flights <br /><i>max 1 per week</i></label>
+</p>
 
 <p>
   Edit protocols for user:

@@ -132,5 +132,10 @@ class User < ActiveRecord::Base
       :conditions=>["cages.id IN (?)",cages],
       :select => 'DISTINCT users.*', :order => 'name')
   end
+  
+  def sent_reminder_email(value)
+    self.got_reminder_email_flights = value
+    self.save
+  end
 
 end

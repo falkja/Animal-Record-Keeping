@@ -20,7 +20,7 @@
 
       <span style="font-size: 12pt"><li>To do: </li></span>
       <ul>
-        <% bats_not_weighed = Bat.not_weighed(user.bats,Time.now+1.day) %>
+        <% bats_not_weighed = Bat.not_weighed(user.bats,Date.today) %>
         <%= bats_not_weighed.empty? ? '' : '<li>Weigh: ' +
           link_to(bats_not_weighed.length, :controller=>:bats,
           :action=>:choose_bat_to_weigh, :bats=>bats_not_weighed) + '</li>' %>
@@ -30,7 +30,7 @@
           link_to(users_tasks_not_done.length, :controller=>:tasks,
           :action=>:list_by_ids, :ids=>users_tasks_not_done) + '</li>' %>
 
-        <%  users_bats_not_flown = Bat.not_flown(user.bats) %>
+        <%  users_bats_not_flown = Bat.not_flown(user.bats,3) %>
         <%= users_bats_not_flown.empty? ? '' : '<li>Fly: ' +
           link_to(users_bats_not_flown.length, :controller=>:flights,
           :action=>:new, :bats=>users_bats_not_flown) + '</li>' %>

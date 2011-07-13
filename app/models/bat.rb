@@ -58,11 +58,19 @@ class Bat < ActiveRecord::Base
       :select => 'DISTINCT bats.*', :order =>'band')
 	end
   
-	def self.not_weighed(bats,time)
+  def weighed_enough?(date)
+    number_of_days = date.wday-1
+    if number_of_days < 0 # sunday
+      number_of_days = 6
+    end
+    
+    return !self.monitor_weight || ( !(self.weights.empty?) && 
+      ( self.weights.recent.date >= (date - number_of_days.days) ) ) #between now and monday
+  end
+  
+	def self.not_weighed(bats,date)
 		bats_not_weighed = Array.new
-		bats.each{|bat| ( bat.weights.recent && (bat.weights.recent.date < 
-            (time - 7.days)) && bat.monitor_weight) ?
-            bats_not_weighed << bat : ''}
+		bats.each{|bat| !bat.weighed_enough?(date) ? bats_not_weighed << bat : ''}
 		return bats_not_weighed
 	end
 	
@@ -234,14 +242,30 @@ class Bat < ActiveRecord::Base
     return bats_flight_cage
   end
   
-  def flown_enough?(date)
-    return self.exempt_from_flight || (self.flights.length >= 3 && 
-      ( self.flights[-3].date >= (date - 7.days) ) )
+  #checks over the last week, week begins on monday
+  #if day of week is monday or tuesday, can't have been flown enough (only able to do one flight per day)
+  def flown_enough?(date,number_needed)
+    number_of_days = date.wday-1
+    if number_of_days < 0 # sunday
+      number_of_days = 6
+    end
+    return self.exempt_from_flight || (self.cage && self.cage.flight_cage) ||
+      (self.flights.length >= number_needed &&
+      ( self.flights[-number_needed].date >= (date - number_of_days.days) ) ) #between now and monday
+  end
+  
+  def flights_this_week(date)
+    number_of_days = date.wday-1
+    if number_of_days < 0 # sunday
+      number_of_days = 6
+    end
+    Flight.find(:all, :conditions => ["bat_id = #{self.id} and date >= ?", 
+      date - number_of_days.days])
   end
 
-  def self.not_flown(bats)
+  def self.not_flown(bats,number_needed)
     bats_not_flown = Array.new
-    bats.each{|bat| bat.flown_enough?(Date.today) ? '' : bats_not_flown << bat}
+    bats.each{|bat| bat.flown_enough?(Date.today,number_needed) ? '' : bats_not_flown << bat}
     bats_not_flown = bats_not_flown.sort_by{|b| 
       [b.cage.user_id, b.cage.name, b.band]}
     return bats_not_flown

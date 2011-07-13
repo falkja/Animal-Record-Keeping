@@ -8,18 +8,21 @@
 <hr />
 
 <% for column in User.content_columns %>
-  <p>
-    <b><%= column.human_name %>:</b>
-    <% if column.name == 'start_date' or (column.name == 'end_date' and @user.end_date != nil ) %>
-      <%=h nice_date(@user.send(column.name)) %>
-    <% else %>
-      <% if column.name == 'end_date' %>
-        N/A
+  <% if column.name == 'got_reminder_email_flights' %>
+  <% else %>
+    <p>
+      <b><%= column.human_name %>:</b>
+      <% if column.name == 'start_date' or (column.name == 'end_date' and @user.end_date != nil ) %>
+        <%=h nice_date(@user.send(column.name)) %>
       <% else %>
-        <%=h @user.send(column.name) %>
+        <% if column.name == 'end_date' %>
+          N/A
+        <% else %>
+          <%=h @user.send(column.name) %>
+        <% end %>
       <% end %>
-    <% end %>
-  </p>
+    </p>
+  <% end %>
 <% end %>
 
 <h3>Protocols:</h3>

@@ -129,10 +129,10 @@ class MyMailer < ActionMailer::Base
 	
   def self.create_msg_for_bats_added_removed(todays_changes)
     #use bat changes because if leave date was set for some other day rather than today, you would not find the bat
-    todays_changes.sort_by{|ch| ch.bat.band}
     if todays_changes.empty?
       return ''
     else
+      todays_changes = todays_changes.sort_by{|ch| [ch.old_cage_id ? ch.old_cage_id : 0, ch.bat.band]}
       msg_body = "The following bats have been added or removed:\n"
       for ch in todays_changes
         if ch.old_cage_id

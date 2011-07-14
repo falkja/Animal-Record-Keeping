@@ -15,7 +15,7 @@ class MyMailer < ActionMailer::Base
 	
 	def self.create_msg_for_bats_not_weighed(bats)
 		if bats.length > 0
-			msg_body = "The following bats have not been weighed in at least 1 week:\n"
+			msg_body = "The following bats have not been weighed this past week (Mon. to Sun.):\n"
 			for bat in bats
 				msg_body = msg_body + "\nBat: " + bat.band
         msg_body = msg_body + "\nCage: " + bat.cage.name
@@ -56,7 +56,7 @@ class MyMailer < ActionMailer::Base
 
   def self.create_msg_for_bats_not_flown(bats)
 		if bats.length > 0
-			msg_body = "The following bats have not been flown at least 3 times in the last week:\n"
+			msg_body = "The following bats have not been flown at least 3 times this past week (Mon. to Sun.):\n"
 			for bat in bats
 				msg_body = msg_body + "\nBat: " + bat.band
         msg_body = msg_body + "\nCage: " + bat.cage.name
@@ -173,7 +173,7 @@ class MyMailer < ActionMailer::Base
      
 	def self.create_msg_for_tasks_not_done(tasks_not_done)
 		if tasks_not_done.length > 0
-      msg_body = "This is a warning email to notify you that the following tasks were not completed:\n\n"
+      msg_body = "The following tasks were not completed:\n\n"
       for task in tasks_not_done
         msg_body = msg_body + "Task: " + task.title
 				if task.room
@@ -216,9 +216,8 @@ class MyMailer < ActionMailer::Base
     if bats.empty?
       return ''
     else
-      msg_body = "This is a reminder that the following bats still need to be weighed this week (Mon. starts the week)." + 
-      "\nYou have " + (7-Date.today.wday).to_s + " days left in the week (weekly checks are done on Sunday night)." +
-      "\nThis is your only weighing reminder for this week.\n"
+      msg_body = "This is a weekly reminder that the following bats still need to be weighed this week (Mon. starts the week)." +
+      "\nYou have " + (7-Date.today.wday).to_s + " days left in the week (weekly checks are done on Sunday night).\n"
 			for bat in bats
 				msg_body = msg_body + "\nBat: " + bat.band
         if bat.cage

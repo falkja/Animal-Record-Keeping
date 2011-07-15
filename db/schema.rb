@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110711185740) do
+ActiveRecord::Schema.define(:version => 20110715230017) do
 
   create_table "allowed_bats", :force => true do |t|
     t.integer  "protocol_id"
@@ -49,16 +49,17 @@ ActiveRecord::Schema.define(:version => 20110711185740) do
   create_table "bats", :force => true do |t|
     t.integer "cage_id"
     t.date    "collection_date"
-    t.string  "collection_age",      :limit => 45,                    :null => false
-    t.string  "collection_place",    :limit => 100,                   :null => false
-    t.string  "gender",              :limit => 1,                     :null => false
+    t.string  "collection_age",         :limit => 45,                     :null => false
+    t.string  "collection_place",       :limit => 100,                    :null => false
+    t.string  "gender",                 :limit => 1,                      :null => false
     t.date    "leave_date"
     t.text    "leave_reason"
-    t.string  "band",                :limit => 10
+    t.string  "band",                   :limit => 10
     t.date    "vaccination_date"
     t.integer "species_id"
-    t.boolean "monitor_weight",                     :default => true, :null => false
-    t.boolean "monitor_vaccination",                :default => true
+    t.boolean "monitor_weight",                        :default => true,  :null => false
+    t.boolean "monitor_vaccination",                   :default => true
+    t.boolean "vaccination_email_sent",                :default => false
   end
 
   create_table "bats_protocols", :id => false, :force => true do |t|

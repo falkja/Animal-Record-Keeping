@@ -280,7 +280,7 @@ class Bat < ActiveRecord::Base
   #and the bat isn't deactivated
   def quarantine?
     if self.leave_date == nil && self.species.requires_vaccination && 
-        (!self.vaccination_date || self.vaccination_date >= (Date.today - 30.days))
+        (!self.vaccination_date || self.vaccination_date >= (Date.today - 1.month))
       return true
     else
       return false
@@ -291,7 +291,14 @@ class Bat < ActiveRecord::Base
     vacc_species = Species.find(:all, :conditions => {:requires_vaccination => true})
     return Bat.find(:all,
       :conditions => ['id IN (?) AND vaccination_date is null AND species_id IN (?) AND collection_date < ? AND monitor_vaccination is true',
-        bats,vacc_species,(Date.today - 1.week)])
+        bats,vacc_species,(Date.today - 2.weeks)])
+  end
+  
+  def self.not_vaccinated_needs_email(bats)
+    bats = self.not_vaccinated(bats)
+    bats = Bat.find(:all,
+      :conditions => ['id IN (?) AND vaccination_email_sent is false',
+        bats])
   end
   
   def med_problem_current_first_one_only

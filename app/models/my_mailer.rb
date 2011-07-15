@@ -33,12 +33,13 @@ class MyMailer < ActionMailer::Base
 
   #gives one week to vaccinate, then sends emails listing each bat that
   #isn't vaccinated
-  def self.create_msg_for_bats_not_vaccinated(b_not_vacc)
-    if b_not_vacc.empty?
+  def self.create_msg_for_bats_not_vaccinated(bats)
+    if bats.empty?
       return ''
     else
-			msg_body = "The following bats have not been vaccinated:\n"
-			for bat in b_not_vacc
+			msg_body = "The following bats have not been vaccinated\n" +
+        "Note that is your only notification on this bat's vaccination status\n"
+			for bat in bats
 				msg_body = msg_body + "\nBat: " + bat.band
         if bat.cage
           msg_body = msg_body + "\nCage: " + bat.cage.name
@@ -282,16 +283,25 @@ class MyMailer < ActionMailer::Base
     end
     return bats_not_weighed_reminders, bats_not_flown_reminders
   end
+  
+  def self.needs_email(tasks,not_weighed,not_flown,protocol_changes,bat_changes,not_on_protocols,not_weighed_reminder,not_flown_reminder,not_vaccinated)
+    return !tasks.empty? || !not_weighed.empty? ||
+      !not_flown.empty? || !protocol_changes.empty? ||
+      !bat_changes.empty? || !not_on_protocols.empty? ||
+      !not_weighed_reminder.empty? || !not_flown_reminder.empty? ||
+      !not_vaccinated.empty?
+  end
 	
 	def self.email_users
     salutation = "Faithfully yours, etc."
     today = Date.today
+    msg_body_total = ""
 	  for user in User.current - User.administrator #per user generated email minus admins
       users_tasks_not_done = Task.tasks_not_done_today(user.all_tasks)
       users_protocol_changes = ProtocolHistory.users_todays_histories(user)
       users_bat_changes = BatChange.users_bats_deactivated_today(user)
-      users_bats_not_vaccinated = Bat.not_vaccinated(user.bats)
       users_bats_not_on_protocols = Bat.not_on_protocol(user.bats)
+      users_bats_not_vaccinated = Bat.not_vaccinated_needs_email(user.bats)
       
       users_bats_not_weighed = []
       users_bats_not_flown = []
@@ -302,22 +312,27 @@ class MyMailer < ActionMailer::Base
       users_bats_not_weighed_reminders, users_bats_not_flown_reminders = 
         self.bats_which_need_reminders(user, today)
       
-      if !users_tasks_not_done.empty? || !users_bats_not_weighed.empty? ||
-          !users_bats_not_flown.empty? || !users_protocol_changes.empty? ||
-          !users_bat_changes.empty? || !users_bats_not_vaccinated.empty? ||
-          !users_bats_not_on_protocols.empty? ||
-          !users_bats_not_weighed_reminders.empty? || !users_bats_not_flown_reminders.empty?
+      if self.needs_email(users_tasks_not_done,users_bats_not_weighed,
+          users_bats_not_flown,users_protocol_changes,users_bat_changes,
+          users_bats_not_on_protocols,users_bats_not_weighed_reminders,
+          users_bats_not_flown_reminders,users_bats_not_vaccinated)
         greeting = "Hi " + user.name + ",\n\n"
         greeting = greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
-        msg_body = MyMailer.create_msg_body(users_tasks_not_done,
+        msg_body = self.create_msg_body(users_tasks_not_done,
           users_bats_not_weighed,users_bats_not_flown,users_protocol_changes,
           users_bat_changes,users_bats_not_vaccinated,users_bats_not_on_protocols,
           users_bats_not_weighed_reminders,users_bats_not_flown_reminders)
-        MyMailer.deliver_mail(user.email, "batkeeping email: notifications and reminders", greeting + msg_body + salutation)
+        self.deliver_mail(user.email, "batkeeping email: notifications and reminders", greeting + msg_body + salutation)
         if !users_bats_not_flown_reminders.empty?
           user.sent_reminder_email(true)
         end
+        msg_body_total = msg_body_total + user.name + "copy \n\n" + msg_body+"\n\n"
       end
+    end
+    
+    #copy to make sure it's working
+    if msg_body_total != ""
+      self.deliver_mail('falk.ben@gmail.com', "batkeeping copy of email sent to: " + user.name, greeting + msg_body_total + salutation)
     end
     
     for user_admin in User.administrator #reminder emails for admins
@@ -340,8 +355,8 @@ class MyMailer < ActionMailer::Base
 		tasks_not_done = Task.tasks_not_done_today(Task.today)
     protocol_changes = ProtocolHistory.todays_histories
     todays_bat_changes = BatChange.deactivated_today
-    bats_not_vaccinated = Bat.not_vaccinated(Bat.active)
     bats_not_on_protocols = Bat.not_on_protocol(Bat.active)
+    bats_not_vaccinated = Bat.not_vaccinated_needs_email(Bat.active)
 
     bats_not_weighed = []
     bats_not_flown = []
@@ -350,16 +365,16 @@ class MyMailer < ActionMailer::Base
       bats_not_flown = Bat.not_flown(Bat.active,3)
     end
 
-		if tasks_not_done.length > 0 || bats_not_weighed.length > 0 || 
-        bats_not_flown.length > 0 || protocol_changes.length > 0 ||
-        todays_bat_changes.length > 0 || bats_not_vaccinated.length > 0 ||
-        bats_not_on_protocols.length > 0
+		if self.needs_email(tasks_not_done,bats_not_weighed,
+          bats_not_flown,protocol_changes,todays_bat_changes,
+          bats_not_on_protocols,[],[],bats_not_vaccinated)
 			greeting = "Administrator(s),\n\n"
       greeting = greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
       msg_body = MyMailer.create_msg_body(tasks_not_done,bats_not_weighed,
         bats_not_flown,protocol_changes,todays_bat_changes,bats_not_vaccinated,
         bats_not_on_protocols,[],[])
 			MyMailer.deliver_mass_mail(admin_emails, "batkeeping email: notificiations", greeting + msg_body + salutation)
+      bats_not_vaccinated.empty? ? '' : Bat.update_all("vaccination_email_sent = true", ['id IN (?)',bats_not_vaccinated])
 		end
 	end
 
@@ -373,7 +388,7 @@ class MyMailer < ActionMailer::Base
     
     msg_body = msg_body + MyMailer.create_msg_for_bats_added_removed(bat_changes)
     msg_body = msg_body + MyMailer.create_msg_for_protocol_changes(protocol_changes)
-    #msg_body = msg_body + MyMailer.create_msg_for_bats_not_vaccinated(not_vaccinated)
+    msg_body = msg_body + MyMailer.create_msg_for_bats_not_vaccinated(not_vaccinated)
     msg_body = msg_body + MyMailer.create_msg_for_bats_not_on_protocol(not_on_protocols)
     return msg_body
   end

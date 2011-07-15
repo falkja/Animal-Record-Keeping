@@ -84,22 +84,26 @@
   <%= @bat.exempt_from_flight.to_s.capitalize %>
 </p>
 
-
 <b>Rabies Vaccination:</b>
 <div id='vaccination'>
   <%= render :partial=>'form_vaccination', :locals =>{:bat => @bat,
     :show_vaccination_date_select=> false, :reactivating=>@reactivating,
     :show_submit_button => true} %>
 </div>
+<br />
 
-<p>
+<% if @bat.quarantine? %>
   <b>Under quarantine:</b>
-  <%= @bat.quarantine?.to_s.capitalize %>
-</p>
+  <%= @bat.vaccination_date ? (@bat.vaccination_date + 1.month - Date.today).to_s + " days left" : "Not vaccinated" %>
+<br />
+<br />
+<% end %>
+
 
 <b>Surgery:</b>
 <%= render :partial=>'form_surgery', :locals =>{:bat => @bat,
   :show_surgery_form=> false, :show_submit_button => true} %>
+
 
 <% if !@bat.monitor_weight %>
   <p>

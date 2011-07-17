@@ -112,7 +112,7 @@ This partial displays the summary for a list of bats
       <% end %>
 
       <% users_length = ((bat_list.collect{|b| b.user}).uniq).length %>
-      <% current_user = User.find(session[:person]) %>
+      <% session[:person] ? current_user = User.find(session[:person]) : current_user = nil %>
 
       <% for bat in bat_list %>
         <tr>

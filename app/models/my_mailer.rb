@@ -296,6 +296,7 @@ class MyMailer < ActionMailer::Base
     salutation = "Faithfully yours, etc."
     today = Date.today
     msg_body_total = ""
+    user_total = []
 	  for user in User.current - User.administrator #per user generated email minus admins
       users_tasks_not_done = Task.tasks_not_done_today(user.all_tasks)
       users_protocol_changes = ProtocolHistory.users_todays_histories(user)
@@ -326,13 +327,18 @@ class MyMailer < ActionMailer::Base
         if !users_bats_not_flown_reminders.empty?
           user.sent_reminder_email(true)
         end
-        msg_body_total = msg_body_total + user.name + "copy \n\n" + msg_body+"\n\n"
+        msg_body_total = msg_body_total + "Sent to: " +user.name + "\n\n" + msg_body+ "\n\n"
+        user_total << user
       end
     end
     
     #copy to make sure it's working
-    if msg_body_total != ""
-      self.deliver_mail('falk.ben@gmail.com', "batkeeping copy of email sent to: " + user.name, greeting + msg_body_total + salutation)
+    if !user_total.empty?
+      greeting = "Ben" + ",\n"
+      greeting = greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
+      self.deliver_mail('falk.ben@gmail.com', 
+        "batkeeping copy of email sent to: " + user_total.collect{|u| u.name}.to_sentence,
+        greeting + msg_body_total + salutation)
     end
     
     for user_admin in User.administrator #reminder emails for admins

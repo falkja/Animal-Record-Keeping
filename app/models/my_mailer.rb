@@ -87,7 +87,7 @@ class MyMailer < ActionMailer::Base
               if flight.quarantine
                 msg_body = msg_body + "    In quarantine\n"
               end
-            elsif flight.note
+            elsif flight.note && flight.note != ''
               msg_body = msg_body + "    Note: " + flight.note + "\n"
             end
           end

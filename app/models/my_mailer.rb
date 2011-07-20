@@ -348,9 +348,9 @@ class MyMailer < ActionMailer::Base
         greeting = greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
         msg_body = MyMailer.create_reminder_msg_for_bats_not_weighed(bats_not_weighed_reminders)
         msg_body = msg_body + MyMailer.create_reminder_msg_for_bats_not_flown(bats_not_flown_reminders)
-        MyMailer.deliver_mail(user.email, "batkeeping email: personal reminders", greeting + msg_body + salutation)
+        MyMailer.deliver_mail(user_admin.email, "batkeeping email: personal reminders", greeting + msg_body + salutation)
         if !bats_not_flown_reminders.empty?
-          user.sent_reminder_email(true)
+          user_admin.sent_reminder_email(true)
         end
       end
     end

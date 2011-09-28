@@ -300,6 +300,11 @@ class Bat < ActiveRecord::Base
       :conditions => ['id IN (?) AND vaccination_email_sent is false',
         bats])
   end
+
+  def self.off_quarantine(bats)
+    Bat.find(:all,:conditions => ['id IN (?) AND vaccination_date = ?',
+        bats,Date.today-1.month])
+  end
   
   def med_problem_current_first_one_only
     med_problem = MedicalProblem.find(:first, :conditions=>{:bat_id => self.id, 

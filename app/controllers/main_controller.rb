@@ -106,7 +106,7 @@ class MainController < ApplicationController
       @msg_body = MyMailer.create_msg_body(tasks_not_done,
         [],[],protocol_changes,
         bat_changes,[],bats_not_on_protocols,
-        [],[])
+        [],[],[])
       
       @subject = "Batkeeping email from: " + User.find(session[:person]).name
       @msg_body = @msg_body + "This message brought to you by,\n\n" + User.find(session[:person]).name

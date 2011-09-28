@@ -284,12 +284,12 @@ class MyMailer < ActionMailer::Base
     return bats_not_weighed_reminders, bats_not_flown_reminders
   end
   
-  def self.needs_email(tasks,not_weighed,not_flown,protocol_changes,bat_changes,not_on_protocols,not_weighed_reminder,not_flown_reminder,not_vaccinated)
+  def self.needs_email(tasks,not_weighed,not_flown,protocol_changes,bat_changes,not_on_protocols,not_weighed_reminder,not_flown_reminder,not_vaccinated,off_quarantine)
     return !tasks.empty? || !not_weighed.empty? ||
       !not_flown.empty? || !protocol_changes.empty? ||
       !bat_changes.empty? || !not_on_protocols.empty? ||
       !not_weighed_reminder.empty? || !not_flown_reminder.empty? ||
-      !not_vaccinated.empty?
+      !not_vaccinated.empty? || !off_quarantine.empty?
   end
 	
 	def self.email_users
@@ -303,6 +303,7 @@ class MyMailer < ActionMailer::Base
       users_bat_changes = BatChange.users_bats_deactivated_today(user)
       users_bats_not_on_protocols = Bat.not_on_protocol(user.bats)
       users_bats_not_vaccinated = Bat.not_vaccinated_needs_email(user.bats)
+      users_bats_off_quarantine = Bat.off_quarantine(user.bats)
       
       users_bats_not_weighed = []
       users_bats_not_flown = []
@@ -316,13 +317,15 @@ class MyMailer < ActionMailer::Base
       if self.needs_email(users_tasks_not_done,users_bats_not_weighed,
           users_bats_not_flown,users_protocol_changes,users_bat_changes,
           users_bats_not_on_protocols,users_bats_not_weighed_reminders,
-          users_bats_not_flown_reminders,users_bats_not_vaccinated)
+          users_bats_not_flown_reminders,users_bats_not_vaccinated,
+          users_bats_off_quarantine)
         greeting = "Hi " + user.name + ",\n\n"
         greeting = greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
         msg_body = self.create_msg_body(users_tasks_not_done,
           users_bats_not_weighed,users_bats_not_flown,users_protocol_changes,
           users_bat_changes,users_bats_not_vaccinated,users_bats_not_on_protocols,
-          users_bats_not_weighed_reminders,users_bats_not_flown_reminders)
+          users_bats_not_weighed_reminders,users_bats_not_flown_reminders,
+          users_bats_off_quarantine)
         self.deliver_mail(user.email, "batkeeping email: notifications and reminders", greeting + msg_body + salutation)
         if !users_bats_not_flown_reminders.empty?
           user.sent_reminder_email(true)
@@ -363,6 +366,7 @@ class MyMailer < ActionMailer::Base
     todays_bat_changes = BatChange.deactivated_today
     bats_not_on_protocols = Bat.not_on_protocol(Bat.active)
     bats_not_vaccinated = Bat.not_vaccinated_needs_email(Bat.active)
+    bats_off_quarantine = Bat.off_quarantine(Bat.active)
 
     bats_not_weighed = []
     bats_not_flown = []
@@ -373,18 +377,19 @@ class MyMailer < ActionMailer::Base
 
 		if self.needs_email(tasks_not_done,bats_not_weighed,
           bats_not_flown,protocol_changes,todays_bat_changes,
-          bats_not_on_protocols,[],[],bats_not_vaccinated)
+          bats_not_on_protocols,[],[],bats_not_vaccinated,
+          bats_off_quarantine)
 			greeting = "Administrator(s),\n\n"
       greeting = greeting + Time.now.strftime('%A, %B %d, %Y') + "\n\n"
       msg_body = MyMailer.create_msg_body(tasks_not_done,bats_not_weighed,
         bats_not_flown,protocol_changes,todays_bat_changes,bats_not_vaccinated,
-        bats_not_on_protocols,[],[])
+        bats_not_on_protocols,[],[],bats_off_quarantine)
 			MyMailer.deliver_mass_mail(admin_emails, "batkeeping email: notificiations", greeting + msg_body + salutation)
       bats_not_vaccinated.empty? ? '' : Bat.update_all("vaccination_email_sent = true", ['id IN (?)',bats_not_vaccinated])
 		end
 	end
 
-  def self.create_msg_body(tasks_not_done,bats_not_weighed,bats_not_flown,protocol_changes,bat_changes,not_vaccinated,not_on_protocols,bats_not_weighed_reminders,bats_not_flown_reminders)
+  def self.create_msg_body(tasks_not_done,bats_not_weighed,bats_not_flown,protocol_changes,bat_changes,not_vaccinated,not_on_protocols,bats_not_weighed_reminders,bats_not_flown_reminders,off_quarantine)
     msg_body = MyMailer.create_msg_for_tasks_not_done(tasks_not_done)
     msg_body = msg_body + MyMailer.create_msg_for_bats_not_weighed(bats_not_weighed)
     msg_body = msg_body + MyMailer.create_msg_for_bats_not_flown(bats_not_flown)
@@ -396,6 +401,7 @@ class MyMailer < ActionMailer::Base
     msg_body = msg_body + MyMailer.create_msg_for_protocol_changes(protocol_changes)
     msg_body = msg_body + MyMailer.create_msg_for_bats_not_vaccinated(not_vaccinated)
     msg_body = msg_body + MyMailer.create_msg_for_bats_not_on_protocol(not_on_protocols)
+    msg_body = msg_body + MyMailer.off_quarantine_msg(off_quarantine)
     return msg_body
   end
   
@@ -462,5 +468,22 @@ class MyMailer < ActionMailer::Base
     msg_body = msg_body + "\n  Bats allowed (for " + bat.species.name + "): " + allowed_bat.number.to_s
     msg_body = msg_body + "\n  Warning limit (for " + bat.species.name + "): " + allowed_bat.warning_limit.to_s
     msg_body = msg_body + "\n  Action by: " + user.name + "\n\n"
+  end
+
+  def self.off_quarantine_msg(bats)
+    if bats.length > 0
+			msg_body = "The following bats are off quarantine beginning tomorrow, " +
+        (Date.today + 1.day).strftime("%m/%d/%Y") + ":\n"
+			for bat in bats
+				msg_body = msg_body + "\nBat: " + bat.band
+        msg_body = msg_body + "\nCage: " + bat.cage.name
+				msg_body = msg_body + "\nOwner: " + bat.cage.user.name
+        msg_body = msg_body + "\nVaccinated on: " + bat.vaccination_date.strftime("%a, %b %d, %Y") + "\n"
+			end
+			msg_body = msg_body + "\n*******************************************\n\n"
+			return msg_body
+		else
+			return ''
+		end
   end
 end

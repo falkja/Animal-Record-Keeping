@@ -197,6 +197,7 @@ class ProtocolsController < ApplicationController
       redirect_to :action => :show, :id => @protocol
     else
       @p_hist = @protocol.find_hist_btw(@start_date,@end_date)
+      @bats = @p_hist.collect{|hist| hist.bat}.uniq
     end
   end
 

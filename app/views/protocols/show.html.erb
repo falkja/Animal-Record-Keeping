@@ -93,6 +93,14 @@
 </p>
 
 <p>
+  <%= render :partial => 'form_to_show_bats_on_protocol_when', :locals =>{:protocol=>@protocol} %>
+</p>
+
+<p>
+  <%= render :partial => 'form_to_show_bats_added_removed_to_protocol_when', :locals =>{:protocol=>@protocol} %>
+</p>
+
+<p>
   <%= render :partial => 'curr_bats_on_protocol', :locals => {:protocol => @protocol} %>
 </p>
 
@@ -108,12 +116,4 @@
     </tr>
   <% end %>
 </table>
-</p>
-
-<p>
-  <%= render :partial => 'form_to_show_bats_on_protocol_when', :locals =>{:protocol=>@protocol} %>
-</p>
-
-<p>
-  <%= render :partial => 'form_to_show_bats_added_removed_to_protocol_when', :locals =>{:protocol=>@protocol} %>
 </p>

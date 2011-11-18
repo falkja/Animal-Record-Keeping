@@ -5,6 +5,14 @@
 <h3>Listing bats active on protocol <em>"<%= @protocol.title %>"</em> between: <br>
   <%= @start_date.strftime("%B %Y") %> and <%= @end_date.strftime("%B %Y") %></h3>
 
+<h4>Count: <%= @bats.length %></h4>
+
+<% sps = @bats.collect{|b| b.species}.uniq %>
+<% for sp in sps %>
+  <b><%= sp.name %></b> had <%= Bat.on_species(@bats,sp).length %> bats active on protocol<br>
+<% end %>
+<br>
+
 <% if @bats.length > 0 %>
   <% for bat in @bats %>
     <%=link_to bat.band, :controller => :bats, :action => :show, :id => bat %><br>

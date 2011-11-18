@@ -1,9 +1,19 @@
 <h3>Listing bats added/removed to protocol <em>"<%= @protocol.title %>"</em> between: <br>
   <%= @start_date.strftime("%B %Y") %> and <%= @end_date.strftime("%B %Y") %></h3>
 
+<h4>Count: <%= @bats.length %></h4>
+
+<% sps = @bats.collect{|b| b.species}.uniq %>
+<% for sp in sps %>
+  <b><%= sp.name %></b> had <%= Bat.on_species(@bats,sp).length %> bats added/removed on protocol<br>
+<% end %>
+<br>
+
 <% if @p_hist.length > 0 %>
   <% for hist in @p_hist %>
-    <%= link_to hist.bat.band, :controller => :bats, :action => :show, :id => hist.bat %><br>
+    <%= link_to hist.bat.band, :controller => :bats, :action => :show, :id => hist.bat %>
+    <%= hist.added ? "added" : "removed" %> on <%= nice_date hist.date %>
+    <br>
   <% end %>
 <% else %>
   No bats on protocol for selected dates.

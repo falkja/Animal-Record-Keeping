@@ -111,10 +111,17 @@ div.home {
 /* the log in name is shown here */
 div.session {
     position:absolute;
-    top: 0cm;
+    top: .15cm;
     right: .5cm;
     text-align: right;
 }
+
+span.search{
+    text-align: right;
+    display:inline;
+}
+
+form.inline{display:inline;}
 
 /*The info that can be popped up on hover*/
 a.info{

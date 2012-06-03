@@ -918,5 +918,11 @@ class BatsController < ApplicationController
   def choose_protocols
     @bat = Bat.find(params[:id])
   end
+  
+  def search
+    @bats = Bat.search(params[:search])
+    @show_leave_date_and_reason = true
+    render :action => 'list'
+  end
 
 end

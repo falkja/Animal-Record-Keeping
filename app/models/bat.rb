@@ -455,4 +455,16 @@ class Bat < ActiveRecord::Base
       self.cage_in_histories[-1].cage
     end
   end
+  
+  
+  def self.search(search)
+    if !search.empty?
+      find(:all, 
+        :joins=>:bat_notes,
+        :conditions => ['band LIKE ? OR text LIKE ?', "%#{search}%","%#{search}%"],
+        :select => 'DISTINCT bats.*', :order =>'band')
+    else
+      return []
+    end
+  end
 end

@@ -135,4 +135,19 @@ class Protocol < ActiveRecord::Base
       return 0
     end
   end
+  
+  def self.search(search)
+    if !search.empty?
+      prot=find(:all,
+        :conditions => ['number LIKE ? OR title LIKE ? OR summary LIKE ? ',"%#{search}%","%#{search}%","%#{search}%"],
+        :order =>'number')
+      surg = SurgeryType.find(:all,
+        :conditions => ['name LIKE ?',"%#{search}%"])
+      s_p = []
+      surg.each{|s| s.protocols.each{|p| s_p << p }}
+      return (s_p | prot).sort_by{|p| p.number}
+    else
+      return []
+    end
+  end
 end

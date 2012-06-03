@@ -132,4 +132,11 @@ class MainController < ApplicationController
     redirect_to :action => 'user_summary_page', :id => User.find(session[:person])
   end
   
+  def search
+    @bats = Bat.search(params[:search])
+    @cages = Cage.search(params[:search])
+    @medical_problems = MedicalProblem.search(params[:search])
+    @protocols = Protocol.search(params[:search])
+  end
+  
 end

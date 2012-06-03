@@ -20,7 +20,7 @@
       [ <%= link_to 'log out', :controller => 'main', :action => 'logout' %> ]
       
       <span class="search">
-        <% form_tag :controller=> :bats, :action=> 'search', :method => 'get' do %>
+        <% form_tag :controller=> :main, :action=> 'search', :method => 'get' do %>
           <%= text_field_tag :search, params[:search] %>
           <%= submit_tag "Search", :name => nil %>
         <% end %>

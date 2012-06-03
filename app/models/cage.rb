@@ -186,4 +186,15 @@ class Cage < ActiveRecord::Base
   def current_medical_problems
     self.medical_problems.current
   end
+  
+  def self.search(search)
+    if !search.empty?
+      find(:all, 
+        :joins=> :room,
+        :conditions => ['cages.name LIKE ? OR rooms.name LIKE ?', "%#{search}%","%#{search}%"],
+        :select => 'DISTINCT cages.*', :order =>'name')
+    else
+      return []
+    end
+  end
 end

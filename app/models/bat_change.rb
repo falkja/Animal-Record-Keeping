@@ -18,4 +18,14 @@ class BatChange < ActiveRecord::Base
     BatChange.find(:all, :conditions => ['(updated_at >= ? AND updated_at < ? AND ((new_cage_id is null and old_cage_id is not null) OR (new_cage_id is not null and old_cage_id is null) ) ) AND (user_id = ? OR old_cage_id IN (?) OR new_cage_id IN (?))',
         Date.today.to_time, (Date.today + 1.day).to_time, user, user.cages, user.cages])
   end
+  
+  def self.search(search)
+    if !search.empty?
+      find(:all, 
+        :conditions => ['note LIKE ?',"%#{search}%"],
+        :order => "date desc")
+    else
+      return []
+    end
+  end
 end

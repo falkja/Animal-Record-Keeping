@@ -1,11 +1,16 @@
 <h2>Search results</h2>
 
 <h3>Bats</h3>
-
 <div class="left_indent">
 <p>
     <%= render :partial => 'bats/bat_list', :locals => {:bat_list => @bats, :show_leave_date_and_reason => true, :show_weigh_link => false} %>
 </p>
+</div>
+
+<h3>Bat Changes</h3>
+<div class='left_indent'>
+  <%= render :partial => 'bats/show_bat_changes', :locals => {:bat_changes => @bat_changes,
+    :single_bat => false} %>
 </div>
 
 <h3>Cages</h3>

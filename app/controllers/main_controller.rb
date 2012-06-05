@@ -137,6 +137,7 @@ class MainController < ApplicationController
     @cages = Cage.search(params[:search])
     @medical_problems = MedicalProblem.search(params[:search])
     @protocols = Protocol.search(params[:search])
+    @bat_changes=BatChange.search(params[:search])
   end
   
 end

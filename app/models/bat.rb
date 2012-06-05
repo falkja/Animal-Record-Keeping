@@ -470,7 +470,11 @@ class Bat < ActiveRecord::Base
         :conditions => ['name LIKE ?', "%#{search}%"])
       surg_bats = []
       surg.each{|s| surg_bats << s.bat}
-      return (bats | surg_bats).sort_by{|b| b.band}
+      bats_weights = find(:all, 
+        :joins=> :weights,
+        :conditions => ['note LIKE ?',"%#{search}%"],
+        :select => 'DISTINCT bats.*', :order =>'band')
+      return (bats | surg_bats | bats_weights).sort_by{|b| b.band}
     else
       return []
     end

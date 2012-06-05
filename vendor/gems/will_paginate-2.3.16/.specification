@@ -1,0 +1,72 @@
+--- !ruby/object:Gem::Specification 
+name: will_paginate
+version: !ruby/object:Gem::Version 
+  hash: 35
+  prerelease: 
+  segments: 
+  - 2
+  - 3
+  - 16
+  version: 2.3.16
+platform: ruby
+authors: 
+- "Mislav Marohni\xC4\x87"
+- PJ Hyett
+autorequire: 
+bindir: bin
+cert_chain: []
+
+date: 2011-08-09 00:00:00 Z
+dependencies: []
+
+description: will_paginate provides a simple API for Active Record pagination and rendering of pagination links in Rails templates.
+email: mislav.marohnic@gmail.com
+executables: []
+
+extensions: []
+
+extra_rdoc_files: 
+- README.md
+- LICENSE
+- CHANGELOG.rdoc
+files: 
+- README.md
+- LICENSE
+- CHANGELOG.rdoc
+homepage: https://github.com/mislav/will_paginate/wiki
+licenses: []
+
+post_install_message: 
+rdoc_options: 
+- --main
+- README.md
+- --charset=UTF-8
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+requirements: []
+
+rubyforge_project: 
+rubygems_version: 1.8.24
+signing_key: 
+specification_version: 3
+summary: Easy pagination for Rails
+test_files: []
+

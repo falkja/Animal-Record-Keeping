@@ -1,5 +1,6 @@
 class BatsController < ApplicationController
   require "gruff"
+  require "will_paginate"
   def index
     redirect_to :action => 'list'
   end
@@ -11,9 +12,9 @@ class BatsController < ApplicationController
 	#Only list the active bats
   def list
     if params[:bats]
-      @bats = Bat.find(params[:bats])
+      @bats = Bat.find(params[:bats]).paginate(:per_page => 5, :page => params[:page])
     else
-      @bats = Bat.active
+      @bats = Bat.active.paginate(:per_page => 5, :page => params[:page])
     end
   end
   

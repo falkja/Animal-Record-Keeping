@@ -463,7 +463,7 @@ class Bat < ActiveRecord::Base
     if !search.empty?
       bats = find(:all, 
         :joins=> :bat_notes,
-        :conditions => ['leave_reason LIKE ? OR band LIKE ? OR text LIKE ?', "%#{search}%","%#{search}%","%#{search}%"],
+        :conditions => ['leave_reason LIKE ? OR band LIKE ? OR text LIKE ? OR collection_place LIKE ?', "%#{search}%","%#{search}%","%#{search}%","%#{search}%"],
         :select => 'DISTINCT bats.*', :order =>'band')
       surg = Surgery.find(:all,
         :joins => :surgery_type,

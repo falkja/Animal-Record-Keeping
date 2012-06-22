@@ -14,7 +14,7 @@ class MedicalProblem < ActiveRecord::Base
   def self.search(search)
     if !search.empty?
       find(:all, 
-        :joins=> :medical_treatments,
+        :joins=> "left join medical_treatments ON medical_treatments.medical_problem_id = medical_problems.id",
         :conditions => ['description LIKE ? OR medical_problems.title LIKE ? OR medical_treatments.title LIKE ?', "%#{search}%","%#{search}%","%#{search}%"],
         :select => 'DISTINCT medical_problems.*', :order =>'title')
     else

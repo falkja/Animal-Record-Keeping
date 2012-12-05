@@ -384,7 +384,7 @@ class MyMailer < ActionMailer::Base
       msg_body = MyMailer.create_msg_body(tasks_not_done,bats_not_weighed,
         bats_not_flown,protocol_changes,todays_bat_changes,bats_not_vaccinated,
         bats_not_on_protocols,[],[],bats_off_quarantine)
-			MyMailer.deliver_mass_mail(admin_emails, "batkeeping email: notificiations", greeting + msg_body + salutation)
+			MyMailer.deliver_mass_mail(admin_emails, "batkeeping email: notifications", greeting + msg_body + salutation)
       bats_not_vaccinated.empty? ? '' : Bat.update_all("vaccination_email_sent = true", ['id IN (?)',bats_not_vaccinated])
 		end
 	end

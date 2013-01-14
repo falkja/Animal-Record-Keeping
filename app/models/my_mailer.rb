@@ -134,10 +134,10 @@ class MyMailer < ActionMailer::Base
       return ''
     else
       todays_changes = todays_changes.sort_by{|ch| [ch.old_cage_id ? ch.old_cage_id : 0, ch.bat.band]}
-      msg_body = "The following bats have been added or removed:\n"
+      msg_body = "The following bats have been added or have died:\n"
       for ch in todays_changes
         if ch.old_cage_id
-          rel_text = "Removed: "
+          rel_text = "Died: "
           cage = Cage.find(ch.old_cage_id)
         end
         if ch.new_cage_id
@@ -148,7 +148,12 @@ class MyMailer < ActionMailer::Base
         msg_body = msg_body + "\n  Cage: " + cage.name
         msg_body = msg_body + "\n  Owner: " + cage.user.name
         msg_body = msg_body + "\n  Date: " + ch.date.strftime("%b %d, %Y")
-        msg_body = msg_body + "\n  Action by: " + ch.user.name + "\n"
+        msg_body = msg_body + "\n  Action by: " + ch.user.name
+        if ch.old_cage_id
+          msg_body = msg_body + "\n  Leave Reason: " + ch.bat.leave_reason + "\n"
+        else
+          msg_body = msg_body + "\n"
+        end
       end
       msg_body = msg_body + "\n*******************************************\n\n"
 			return msg_body

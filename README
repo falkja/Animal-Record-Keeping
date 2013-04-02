@@ -1,4 +1,4 @@
-Instructions for setting up Animal Record Keeping (Batkeeping)
+Animal Record Keeping (Batkeeping)
 
 Batkeeping is a program for keeping records of weights and health of bats in a computer database. The aim of the program is to be a user friendly web application for the organization and maintenance of laboratory animals.
 
@@ -17,12 +17,30 @@ Requirements:
 
 MySQL http://www.mysql.com/downloads/mysql/
 Ruby 1.87 http://rubyforge.org/frs/?group_id167
-RubyGems http://rubyforge.org/frs/?group_id126
-Ruby on Rails http://rubyonrails.org/
-RMagick http://rmagick.rubyforge.org/
+RubyGems 1.8 http://rubyforge.org/frs/?group_id126
+Ruby on Rails 2.3 http://rubyonrails.org/
 gruff graphs http://rubyforge.org/projects/gruff
-git http://git-scm.com/
+RMagick (for gruff graphs) http://rmagick.rubyforge.org/
+
+Installation on Windows:
+
+install Ruby 1.8.7: http://rubyforge.org/frs/?group_id=167
+install gems (from zip file): http://rubygems.org/pages/download
+install rails 2.3 branch: gem install rails -v 2.3.18
+because we are on 2.3 branch of rails, we need gem on 1.8 branch so run from command line: gem update --system 1.8.25 http://stackoverflow.com/questions/15349869/undefined-method-source-index-for-gemmodule-nomethoderror
+install mysql (installer will include workbench): http://dev.mysql.com/downloads/installer/
+add account batlab to mysql (you could do this during install of mysql)
+install git and tortoisegit: http://code.google.com/p/tortoisegit/
+install Animal Record Keeping: https://github.com/falkben/Animal-Record-Keeping
+create schema batkeeping: CREATE SCHEMA `batkeeping` ;
+allow privileges to user batlab for schema batkeeping
+grab a recent batkeeping database and install using workbench
+install mongrel: gem install mongrel
+gem install mysql (if LIBMYSQL.DLL not found: http://dev.mysql.com/get/Downloads/Connector-C/mysql-connector-c-noinstall-6.0.2-win32.zip/from/pick and place dll in C:\Ruby\bin)
+install Rmagick (challenging on windows to get latest version, so just use the previous version here) http://rubyforge.org/frs/?group_id=12&release_id=39888
+install gruff: http://nubyonrails.com/pages/gruff
+start the server from command line: ruby script\server and then browse to http://localhost:3000 and you should have the site
 
 Contact falk.ben@gmail.com with any questions
 
-Copyright (c) 2011 Ben Falk, released under the MIT license   
+Released under the MIT license: http://opensource.org/licenses/mit-license.php
